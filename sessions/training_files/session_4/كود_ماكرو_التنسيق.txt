@@ -1,0 +1,29 @@
+' ماكرو «التنسيق الأسبوعي» للسباق في أول الجلسة الرابعة
+' الطريقة: افتح تقرير_المبيعات_الأسبوعي.xlsx ← Alt+F11 ← Insert ← Module ← الصق الكود ← احفظ الملف بصيغة xlsm
+' وبعدين: إدراج ← شكل ← مستطيل ← كليك يمين ← تعيين ماكرو ← TansiqUsbui
+
+Sub TansiqUsbui()
+    Dim ws As Worksheet, lastRow As Long, r As Long
+    Set ws = ThisWorkbook.Worksheets("البيانات الخام")
+    Application.ScreenUpdating = False
+    lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row
+    ' حذف الصفوف الفاضية من تحت لفوق
+    For r = lastRow To 2 Step -1
+        If Application.WorksheetFunction.CountA(ws.Rows(r)) = 0 Then ws.Rows(r).Delete
+    Next r
+    lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row
+    ' عمود الإجمالي
+    ws.Range("G1").Value = "الإجمالي"
+    ws.Range("G2:G" & lastRow).Formula = "=D2*E2"
+    ' تنسيق العناوين
+    With ws.Range("A1:G1")
+        .Font.Bold = True
+        .Font.Color = RGB(255, 255, 255)
+        .Interior.Color = RGB(14, 79, 75)
+    End With
+    ' ترتيب حسب الفرع
+    ws.Range("A1:G" & lastRow).Sort Key1:=ws.Range("B2"), Order1:=xlAscending, Header:=xlYes
+    ws.Columns("A:G").AutoFit
+    Application.ScreenUpdating = True
+    MsgBox "تم التنسيق: " & (lastRow - 1) & " صف", vbInformation
+End Sub
