@@ -200,7 +200,7 @@
         h("div", { class: "section-head" }, h("h2", null, t("lessonsInUnit")), h("span", { class: "chip" }, App.frac(pr.done, pr.total))),
         h("div", { class: "grid", style: { gap: "10px" } }, ls.map((l, i) => {
           const s = App.lessonState(l.id);
-          return h("a", { class: "card hover", href: "#/lesson/" + l.id, style: { display: "grid", gridTemplateColumns: "48px 1fr auto", gap: "14px", alignItems: "center", padding: "14px 18px" } },
+          return h("a", { class: "card hover", href: "#/lesson/" + l.id, style: { display: "grid", gridTemplateColumns: "48px minmax(0,1fr) auto", gap: "14px", alignItems: "center", padding: "14px 18px" } },
             h("span", { style: { fontSize: "26px", textAlign: "center" } }, l.icon),
             h("span", null, h("b", { style: { fontSize: "16px" } }, App.num(i + 1) + ". " + tr(l.title)), h("div", { class: "muted", style: { fontSize: "14px" } }, tr(l.hook))),
             h("span", { class: "row", style: { gap: "6px" } }, ...App.pageLinks(l.pages).slice(0, 2), s.done ? h("span", { class: "badge ok" }, "✓") : h("span", { class: "chip" }, App.num(l.mins || 8) + " " + t("min"))));
