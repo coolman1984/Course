@@ -153,7 +153,7 @@
     x = x.replace(/\[\[([a-z0-9_]+)(?:\|([^\]]+))?\]\]/gi, (m, id, lab) => {
       const ls = A.byId[id];
       const text = lab || (ls ? L(ls.title) : id);
-      const href = ls ? "#lesson-" + id : A.labsById && A.labsById[id] ? "#lab-" + id : "#home";
+      const href = ls ? "#lesson-" + id : A.labsById && A.labsById[id] ? "#lab-" + id : A.routes.some((r) => r.id === id) ? "#" + id : "#home";
       return `<a class="xl" href="${href}">${text}</a>`;
     });
     x = x.replace(/\(\(([^)|]+)(?:\|([^)]+))?\)\)/g, (m, key, shown) => {
@@ -290,7 +290,8 @@
       closePop();
       const g = A.glossById[tb.dataset.term];
       if (!g) return;
-      pop = h("div", { class: "popover", role: "tooltip", html: "<b>" + esc(L(g.term)) + (g.en_term ? " · <span class='ltr'>" + esc(g.en_term) + "</span>" : "") + "</b>" + esc(L(g.def)) + "<div style='margin-top:6px'><a href='#glossary' class='small'>" + esc(t("openGlossary")) + "</a></div>" });
+      pop = h("div", { class: "popover", role: "tooltip", html: "<b>" + esc(L(g.term)) + (g.en_term ? " · <span class='ltr'>" + esc(g.en_term) + "</span>" : "") + "</b>" + esc(L(g.def)) + "<div style='margin-top:6px'><a href='#glossary-" + esc(g.id) + "' class='small'>" + esc(t("openGlossary")) + "</a></div>" });
+      pop._y = scrollY;
       doc.body.append(pop);
       const r = tb.getBoundingClientRect();
       const w = Math.min(320, innerWidth - 24);
@@ -304,7 +305,7 @@
     const pb = e.target.closest && e.target.closest("[data-page]");
     if (pb) { e.preventDefault(); openPage(pb.dataset.page); }
   });
-  addEventListener("scroll", closePop, { passive: true });
+  addEventListener("scroll", () => { if (pop && Math.abs(scrollY - pop._y) > 60) closePop(); }, { passive: true });
 
   /* ---------- search ---------- */
   let index = null;
@@ -398,6 +399,7 @@
     cleanup.forEach((f) => { try { f(); } catch (e) {} });
     cleanup = [];
     closePop();
+    if ($(".overlay")) closeDialog();
     let { name, arg } = parse();
     if (!views[name]) { name = "home"; arg = ""; }
     const main = $("#main");

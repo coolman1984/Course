@@ -144,6 +144,7 @@ html[dir="rtl"] .readbar i{margin-inline-start:0;background:linear-gradient(270d
 .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600;letter-spacing:.05em;color:var(--accent);text-transform:uppercase}
 .lead{font-size:1.08rem;color:var(--ink-2);max-width:68ch}
 .stack{display:grid;gap:18px}
+.stack>*,.grid>*,.card,.sec{min-width:0}
 .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .grid{display:grid;gap:16px}
 .g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))}
@@ -165,7 +166,8 @@ html[dir="rtl"] .readbar i{margin-inline-start:0;background:linear-gradient(270d
 .card.soft{background:var(--surface-2)}
 .card-link{display:block;text-decoration:none;color:inherit;transition:transform var(--dur) var(--ease),box-shadow var(--dur),border-color var(--dur)}
 .card-link:hover{transform:translateY(-2px);box-shadow:var(--shadow-2);border-color:var(--line-2)}
-.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding-inline:10px;border-radius:999px;font-size:12.5px;font-weight:500;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);white-space:nowrap;text-decoration:none}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding-inline:10px;border-radius:999px;font-size:12.5px;font-weight:500;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);white-space:nowrap;text-decoration:none;max-width:100%}
+a.chip,.related .chip{white-space:normal;height:auto;min-height:28px;padding-block:4px;line-height:1.45}
 button.chip:hover,a.chip:hover{border-color:var(--line-2);color:var(--ink)}
 .chip svg.i{width:15px;height:15px}
 .chip.book{background:var(--accent-soft);border-color:transparent;color:var(--accent)}
@@ -444,7 +446,7 @@ details.more[open]>summary{margin-bottom:8px}
 .minitable th{background:var(--surface-3);font-weight:600}
 .minitable input{width:100%;min-width:56px;border:0;background:transparent;text-align:center;padding:4px;border-radius:6px}
 .minitable input:focus{outline:2px solid var(--accent)}
-.minitable td.err{background:var(--rose-soft);color:var(--rose);font-weight:600}
+.minitable td.err{background:var(--rose-soft);color:var(--rose);font-weight:600;direction:ltr;unicode-bidi:isolate}
 .minitable td.flag{background:var(--spark-soft)}
 .minitable td.okc{background:var(--mint-soft)}
 .git-graph{width:100%;min-height:160px;border-radius:var(--r-md);background:var(--surface-2);border:1px solid var(--line)}

@@ -211,7 +211,7 @@
     {
       id: "p7", unit: "u1", pages: [11], diff: 2, min: 8, scene: "strategic", related: ["p6", "s2", "y4"], pre: ["p6"],
       title: { ar: "السيناريوهات وتحدي الأفكار والبرومبت الاستراتيجي الشامل", en: "Scenarios, challenging ideas and the all-in-one strategic prompt" },
-      sum: { ar: "ثلاثة سيناريوهات، اكتشاف نقاط الفشل مسبقًا، «لا توافقني تلقائيًا»، المعلومات الناقصة، والبرومبت الذي يفرض ترتيبًا لا يمكن القفز فوقه.", "Three scenarios, a pre-mortem, “don’t just agree with me”, missing information, and the prompt that enforces an order you can’t skip." },
+      sum: { ar: "ثلاثة سيناريوهات، اكتشاف نقاط الفشل مسبقًا، «لا توافقني تلقائيًا»، المعلومات الناقصة، والبرومبت الذي يفرض ترتيبًا لا يمكن القفز فوقه.", en: "Three scenarios, a pre-mortem, “don’t just agree with me”, missing information, and the prompt that enforces an order you can’t skip." },
       book: [
         bp(11, "**ثلاثة سيناريوهات**: متفائل وواقعي ومتحفظ، ولكل سيناريو العلامات المبكرة التي تشير إليه وما أفعله فور ظهورها.", "**Three scenarios**: optimistic, realistic and cautious, each with the early signs pointing to it and what to do when they appear."),
         bp(11, "**اكتشاف نقاط الفشل مسبقًا**: راجع الخطة كما لو كنت مسؤولًا عن كشف نقاط فشلها قبل التنفيذ — المخاطر والثغرات والافتراضات الخطرة مرتبة بالخطورة مع وقاية أو خطة بديلة.", "**Pre-mortem**: review the plan as if responsible for exposing its failure points before execution — risks, gaps and dangerous assumptions ranked by severity with prevention or a fallback."),

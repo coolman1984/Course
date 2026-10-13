@@ -34,7 +34,7 @@
       ls.forEach((l, k) => {
         const a = ang + (ls.length === 1 ? 0 : -spread / 2 + (k / (ls.length - 1)) * spread);
         const rr = 120 + (k % 2) * 34;
-        const nd = { id: l.id, unit: u.id, x: hx + Math.cos(a) * rr, y: hy + Math.sin(a) * rr, label: L(l.title), href: "#lesson-" + l.id, color: u.color, sum: L(l.sum), done: !!S.get("done")[l.id] };
+        const nd = { id: l.id, unit: u.id, x: hx + Math.cos(a) * rr, y: hy + Math.sin(a) * rr, label: L(l.title), href: "#lesson-" + l.id, color: u.color, sum: L(l.sum), done: !!S.get("done")[l.id], a };
         nodes.push(nd); byId[nd.id] = nd;
       });
     });
@@ -60,8 +60,12 @@
       const c = sv("circle", { cx: nd.x, cy: nd.y, r: nd.hub ? 22 : 9, fill: nd.color, opacity: nd.hub || nd.done ? 1 : 0.75 });
       g.append(c);
       if (nd.done && !nd.hub) g.append(sv("circle", { cx: nd.x, cy: nd.y, r: 3.5, fill: "#fff" }));
-      const lab = nd.label.length > 26 ? nd.label.slice(0, 25) + "…" : nd.label;
-      const tx = sv("text", { x: nd.x, y: nd.y + (nd.hub ? 40 : 22), "text-anchor": "middle" });
+      const lab = nd.label.length > 24 ? nd.label.slice(0, 23) + "…" : nd.label;
+      /* lesson labels point away from their hub so neighbouring labels don't pile up */
+      const cs = nd.hub ? 0 : Math.cos(nd.a), sn = nd.hub ? 1 : Math.sin(nd.a);
+      const rtl = A.lang() === "ar";
+      const anchor = nd.hub || Math.abs(cs) < 0.35 ? "middle" : (cs > 0) !== rtl ? "start" : "end";
+      const tx = sv("text", nd.hub ? { x: nd.x, y: nd.y + 40, "text-anchor": "middle" } : { x: nd.x + cs * 11, y: nd.y + (Math.abs(cs) < 0.35 ? (sn > 0 ? 20 : -12) : sn * 6 + 4), "text-anchor": anchor });
       tx.textContent = lab;
       g.append(tx);
       nd.g = g;

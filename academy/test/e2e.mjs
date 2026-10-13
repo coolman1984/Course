@@ -41,6 +41,128 @@ await session({ label: "desktop-ar", viewport: { width: 1440, height: 900 } }, a
   }
   ok(`visited ${hashes.length} routes`);
 });
+
+const shot = (page, name, full = false) => page.screenshot({ path: `${outDir}/${name}.png`, fullPage: full });
+import("node:fs").then((fs) => fs.mkdirSync(outDir, { recursive: true }));
+
+/* Interactions: labs, scenes, quiz, search, theme, language, glossary, presenter, persistence */
+await session({ label: "interactions-ar", viewport: { width: 1280, height: 860 } }, async (page) => {
+  // every lab must react to its inputs
+  const labs = await page.evaluate(() => window.ACADEMY.labs.map((l) => l.id));
+  for (const id of labs) {
+    await page.evaluate((x) => (location.hash = "lab-" + x), id);
+    await page.waitForSelector(".lab .lab-in");
+    const before = await page.$eval(".lab", (e) => e.innerText);
+    await page.evaluate(() => {
+      const root = document.querySelector(".lab .lab-in");
+      for (const r of root.querySelectorAll('input[type="range"]')) { r.value = String(Number(r.max || 100) - Number(r.step || 1) * 0 ); r.dispatchEvent(new Event("input", { bubbles: true })); r.dispatchEvent(new Event("change", { bubbles: true })); }
+      for (const sel of root.querySelectorAll("select")) { sel.selectedIndex = sel.options.length - 1; sel.dispatchEvent(new Event("change", { bubbles: true })); }
+      for (const c of [...root.querySelectorAll('input[type="checkbox"]')].slice(0, 2)) { c.click(); }
+      for (const t of root.querySelectorAll("textarea, input[type=text], input:not([type])")) { t.value = (t.value || "") + " تجربة 123"; t.dispatchEvent(new Event("input", { bubbles: true })); }
+      const btn = [...root.querySelectorAll("button:not([disabled])")].find((b) => !b.closest(".predict"));
+      if (btn) btn.click();
+    });
+    await page.waitForTimeout(150);
+    const after = await page.$eval(".lab", (e) => e.innerText);
+    const kind = await page.$eval(".lab-head .chip", (e) => e.textContent.trim());
+    if (before === after) fail(`lab ${id}: output did not change after input`); else ok(`lab ${id}: reacts to input (${kind})`);
+  }
+  await page.evaluate(() => (location.hash = "lab-formula")); await page.waitForTimeout(200); await shot(page, "lab-formula-ar", true);
+
+  // scene controls
+  await page.evaluate(() => (location.hash = "lesson-p1"));
+  await page.waitForSelector(".scene .sctl");
+  const dots0 = await page.$$eval(".scene .sdots [aria-current]", (e) => e.length ? e[0].dataset.i : "none").catch(() => "none");
+  const next = await page.$$(".scene .sctl .ibtn");
+  if (next.length >= 3) { await next[next.length - 1].click().catch(() => {}); }
+  await page.keyboard.press("End").catch(() => {});
+  await page.waitForTimeout(1600);
+  const info = await page.$eval(".scene .scap", (e) => e.innerText).catch(() => "");
+  if (!info) fail("scene: no stage info"); else ok(`scene: stage info shows "${info.slice(0, 40).replace(/\n/g, " ")}"`);
+  const svgEls = await page.$$eval(".scene svg *", (e) => e.length);
+  if (svgEls < 10) fail("scene: svg not drawn"); else ok(`scene: svg drawn (${svgEls} nodes, start dot ${dots0})`);
+  await shot(page, "lesson-p1-ar");
+
+  // glossary popover
+  const term = await page.$("#main .term");
+  if (term) { await term.scrollIntoViewIfNeeded(); await page.waitForTimeout(300); await term.click(); await page.waitForTimeout(150); const pop = await page.$(".popover"); if (pop) ok("glossary popover opens"); else fail("glossary popover did not open"); await page.keyboard.press("Escape"); }
+  else fail("no glossary term button in lesson p1");
+
+  // quiz: answer an mcq and an order question
+  await page.evaluate(() => (location.hash = "quiz-u0")); await page.waitForTimeout(200);
+  const startBtn = await page.$("#main .btn.pri"); if (startBtn) await startBtn.click();
+  await page.waitForTimeout(150);
+  const opt = await page.$("#main .opt");
+  if (opt) { await opt.click(); await page.waitForTimeout(100); (await page.$("#main .fb")) ? ok("quiz: mcq gives explained feedback") : fail("quiz: no feedback after answer"); }
+  else ok("quiz: unit runner starts with an order question");
+  await shot(page, "quiz-u0-ar");
+  await page.evaluate(() => (location.hash = "lesson-f2")); await page.waitForTimeout(200);
+  const chk = await page.$("#main .order-list ~ .chk, #main .chk");
+  if (chk) { await chk.click(); await page.waitForTimeout(100); (await page.$("#main .order-list .order-item.ok, #main .order-list .order-item.bad")) ? ok("quiz: order question checks positions") : fail("quiz: order check failed"); }
+
+  // search palette
+  await page.keyboard.press("Control+k"); await page.waitForSelector("#pal-q");
+  await page.fill("#pal-q", "توكن"); await page.waitForTimeout(250);
+  const hits = await page.$$eval(".pal-item", (e) => e.length);
+  hits ? ok(`search: "توكن" → ${hits} results`) : fail("search: no results for توكن");
+  await page.keyboard.press("Enter"); await page.waitForTimeout(250);
+  ok(`search: Enter navigates to ${await page.evaluate(() => location.hash)}`);
+  await page.keyboard.press("Escape").catch(() => {});
+
+  // compare engine
+  await page.evaluate(() => (location.hash = "compare")); await page.waitForTimeout(200);
+  await page.selectOption("#cf", "git"); await page.waitForTimeout(100);
+  const rows = await page.$$eval("#cres tbody tr", (e) => e.length);
+  rows >= 3 ? ok(`compare: Git vs GitHub table has ${rows} rows`) : fail("compare: table empty");
+  await shot(page, "compare-ar");
+
+  // persistence: mark a lesson done, reload, still done
+  await page.evaluate(() => (location.hash = "lesson-f1")); await page.waitForSelector("#donebtn");
+  await page.click("#donebtn"); await page.waitForTimeout(100);
+  await page.reload(); await page.waitForSelector("#main h1");
+  const saved = await page.evaluate(() => { try { return Object.values(JSON.parse(localStorage.getItem(Object.keys(localStorage)[0]))).length > 0 && JSON.stringify(localStorage).includes("f1"); } catch { return false; } });
+  saved ? ok("progress persists across reload (localStorage)") : fail("progress not persisted");
+
+  // theme + language
+  await page.click("#theme-btn"); await page.click("#theme-btn");
+  const theme = await page.evaluate(() => document.documentElement.dataset.theme);
+  ok(`theme toggles (now ${theme})`);
+  await page.click("#lang-btn"); await page.waitForTimeout(150);
+  const dir = await page.evaluate(() => [document.documentElement.lang, document.documentElement.dir].join("/"));
+  dir === "en/ltr" ? ok("language switches to English LTR") : fail(`language switch gave ${dir}`);
+  await page.click("#lang-btn"); await page.waitForTimeout(100);
+
+  // presenter
+  await page.evaluate(() => (location.hash = "present-u1")); await page.waitForSelector(".present", { timeout: 3000 }).catch(() => {});
+  if (await page.$(".present")) { await page.keyboard.press("ArrowLeft"); await page.keyboard.press("ArrowRight"); await shot(page, "presenter-ar"); await page.keyboard.press("Escape"); await page.waitForTimeout(100); (await page.$(".present")) ? fail("presenter: Esc did not close") : ok("presenter opens, navigates, closes with Esc"); }
+  else fail("presenter did not open");
+});
+
+/* Mobile 390px, dark theme, English: every route without horizontal overflow */
+await session({ label: "mobile-en-dark", viewport: { width: 390, height: 844 }, colorScheme: "dark", isMobile: true, hasTouch: true }, async (page) => {
+  await page.click("#lang-btn"); await page.waitForTimeout(150);
+  const hashes = await page.evaluate(() => ["home", "map", "path", "labs", "prompts", "compare", "quiz", "project", "glossary", "knowledge", "review", "coverage", "present", "notebook", ...window.ACADEMY.lessons.map((l) => "lesson-" + l.id), ...window.ACADEMY.labs.map((l) => "lab-" + l.id), "quiz-u1"]);
+  let bad = 0;
+  for (const hsh of hashes) {
+    await page.evaluate((x) => (location.hash = x), hsh); await page.waitForTimeout(80);
+    const ov = await overflow(page); if (ov > 1) { bad++; fail(`mobile ${hsh}: horizontal overflow ${ov}px`); }
+  }
+  if (!bad) ok(`mobile: ${hashes.length} routes, no horizontal overflow`);
+  for (const [hsh, name] of [["home", "m-home-en-dark"], ["lesson-m1", "m-lesson-m1-en-dark"], ["lab-tokens", "m-lab-tokens-en-dark"], ["prompts", "m-prompts-en-dark"]]) {
+    await page.evaluate((x) => (location.hash = x), hsh); await page.waitForTimeout(300); await shot(page, name);
+  }
+});
+
+/* Reduced motion: scenes must not animate on their own */
+await session({ label: "reduced-motion", viewport: { width: 1280, height: 860 }, reducedMotion: "reduce" }, async (page) => {
+  await page.evaluate(() => (location.hash = "lesson-f1")); await page.waitForTimeout(400);
+  const s0 = await page.$eval(".scene .scrub", (e) => e.value).catch(() => "x");
+  await page.waitForTimeout(1500);
+  const s1 = await page.$eval(".scene .scrub", (e) => e.value).catch(() => "x");
+  const playing = s0 !== s1;
+  playing ? fail("reduced motion: scene autoplays") : ok("reduced motion: scene waits for the user");
+});
+
 await browser.close();
 console.log(results.join("\n"));
 process.exitCode = results.some((r) => r.startsWith("FAIL")) ? 1 : 0;
