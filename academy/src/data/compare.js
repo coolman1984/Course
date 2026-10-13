@@ -1,0 +1,1 @@
+"use strict";(function(A){A.compare=[{id:"c1",name:{ar:"م",en:"f"},pages:[6],common:{ar:"ك",en:"c"},dims:[{id:"a",name:{ar:"س",en:"s"}}],items:[{id:"i1",name:{ar:"أ",en:"A"},sum:{ar:"",en:""},when:{ar:"",en:""},v:{a:{ar:"1",en:"1"}}},{id:"i2",name:{ar:"ب",en:"B"},sum:{ar:"",en:""},when:{ar:"",en:""},v:{a:{ar:"2",en:"2"}}}]}];})(window.ACADEMY);

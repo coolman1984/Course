@@ -1,0 +1,1 @@
+"use strict";(function(A){A.prompts=[{id:"x1",lesson:"f1",cat:"learn",p:7,title:{ar:"اختبار",en:"Test"},goal:{ar:"هدف",en:"goal"},text:{ar:"اكتب عن [الموضوع] لـ[الجمهور]",en:"Write about [topic] for [audience]"},vars:[{ar:"الموضوع",en:"topic"},{ar:"الجمهور",en:"audience"}],ex:{ar:"مثال",en:"ex"},tip:{ar:"نصيحة",en:"tip"}}];})(window.ACADEMY);

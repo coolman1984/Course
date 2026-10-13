@@ -1,0 +1,1 @@
+"use strict";(function(A){A.quiz=[{id:"q1",lesson:"f1",type:"mcq",q:{ar:"سؤال؟",en:"Q?"},opts:[{ar:"أ",en:"a",why:{ar:"لا",en:"no"}},{ar:"ب",en:"b"}],ans:1,explain:{ar:"شرح",en:"exp"}},{id:"q2",lesson:"f1",type:"order",q:{ar:"رتب",en:"Order"},items:[{ar:"1",en:"1"},{ar:"2",en:"2"},{ar:"3",en:"3"}],explain:{ar:"شرح",en:"exp"}}];})(window.ACADEMY);
