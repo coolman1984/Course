@@ -355,7 +355,7 @@ Chart.js for simplicity, ECharts for richly interactive dashboards, Plotly for s
       { q: L("في تشبيه المبنى، ما الذي يمثله JavaScript؟", "In the building analogy, what does JavaScript represent?"), opts: L(["الهيكل الخرساني", "التشطيب والديكور", "الكهرباء والحركة", "الأرض"], ["The concrete frame", "Finishing and decor", "Electricity and movement", "The ground"]), a: 2, why: L("HTML الهيكل، وCSS التشطيب، وJavaScript «الكهرباء والحركة في المبنى» {p28}.", "HTML the frame, CSS the finishing, JavaScript “the building’s electricity and movement” {p28}.") },
       { q: L("ما «القرار المهم للمبتدئ» في الواجهة؟", "What is “the important beginner decision” for the front end?"), opts: L(["ابدأ بـReact", "لا تبدأ بإطار عمل؛ صفحة واحدة مع Tailwind ومكتبة رسوم تكفي", "لا تستخدم CSS", "اكتب كل شيء بـJavaScript فقط"], ["Start with React", "Don’t start with a framework; one page with Tailwind and a chart library is enough", "Don’t use CSS", "Write everything in JavaScript only"]), a: 1, why: L("«لا تبدأ بإطار عمل… الإطار يُضاف حين يصبح المشروع كبيرًا فعلًا» {p28}.", "“Don’t start with a framework… it’s added when the project really grows” {p28}.") },
     ],
-    related: ["u4-backend", "u3-stages", "u2-level3"], req: ["u4-claudecode"], terms: ["html", "css", "javascript", "tailwind", "framework", "responsive", "api"],
+    related: ["u4-backend", "u3-stages", "u2-level3"], req: ["u4-claudecode"], terms: ["html", "css", "javascript", "tailwind", "framework", "responsive", "selector", "event", "api"],
   });
 
   ACAD.L({

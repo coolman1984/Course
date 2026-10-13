@@ -780,6 +780,363 @@ ACAD.img = {"hero-robot":"data:image/webp;base64,UklGRvyGAABXRUJQVlA4IPCGAAAw0AK
 ;
 ACAD.pdfPath = "../AI_Essentials_Course_For_Modern_Workspace.pdf";
 ;
+/* data/cases.js */
+/* Applied cases: problem → traditional way → the AI idea → steps → result → risks.
+   The settings are realistic workplaces; every number is hypothetical and labelled as such on screen. */
+(function () {
+  const L = (ar, en) => ({ ar, en });
+  const C = (o) => ACAD.cases.push(Object.assign({ src: "add" }, o));
+
+  /* ---- one case per guide (shown on the unit page) ---- */
+  C({ id: "capstone", icon: "🗓️", sector: "office", lesson: "u1-habit", pages: [7, 15, 16],
+    title: L("مسؤولة إدارية تستعيد ساعة يوميًا", "An admin officer wins back an hour a day"),
+    problem: L("ردود بريد متكررة، وتقرير أسبوعي يُكتب من الصفر، ومعادلات إكسل تُنسخ يدويًا — نحو ٦ ساعات أسبوعيًا (رقم افتراضي).", "Repeated email replies, a weekly report written from scratch, Excel formulas copied by hand — about 6 hours a week (hypothetical)."),
+    traditional: L("كل مهمة تُنفَّذ يدويًا كل مرة، والأخطاء تُكتشف بعد الإرسال.", "Every task done by hand each time; errors found after sending."),
+    ai: L("تطبيق «المعادلة» والعناصر الخمسة على أكثر ثلاث مهام تكرارًا، ثم حفظ الطلبات الناجحة كقوالب {p7}.", "Apply “the equation” and the five elements to the three most repeated tasks, then keep the winning prompts as templates {p7}."),
+    steps: L("١ قائمة المهام بالوقت · ٢ برومبت لكل مهمة مع «اسألني عن أي معلومة ناقصة» · ٣ معادلة الهامش مع اختبار ثلاث حالات · ٤ عادة يومية ٢٠ دقيقة لتحسين القوالب {p15}.", "1 list tasks with time · 2 a prompt per task with “ask me about missing info” · 3 the margin formula tested on three cases · 4 a daily 20-minute habit to refine templates {p15}."),
+    result: L("التقرير الأسبوعي من ٩٠ إلى ٣٠ دقيقة، وصفر أخطاء معادلات في شهرين (افتراضي).", "Weekly report from 90 to 30 minutes, zero formula errors in two months (hypothetical)."),
+    risks: L("إرسال نص لم يُراجع، أو لصق بيانات حساسة في أداة عامة. الحل: مراجعة بشرية دائمًا وإخفاء الأسماء.", "Sending unreviewed text, or pasting sensitive data into a public tool. Fix: always review, and mask names.") });
+
+  C({ id: "efficiency", icon: "🏭", sector: "factory", lesson: "u2-project", pages: [17, 22, 23],
+    title: L("مصنع: تقرير الكفاءة من نصف يوم إلى دقائق", "A factory: the efficiency report from half a day to minutes"),
+    problem: L("ملفات إنتاج وتوقفات من ثلاث ورديات تُدمج يدويًا كل أسبوع، والتعريفات تختلف بين الأقسام.", "Production and downtime files from three shifts merged by hand weekly, with definitions differing between departments."),
+    traditional: L("مهندس يقضي ٤ ساعات في النسخ والدمج والرسم، ثم تُعرض شرائح لا تجيب «ماذا نفعل؟».", "An engineer spends 4 hours copying, merging and charting, then shows slides that don’t answer “what do we do?”."),
+    ai: L("المسار الكامل للدليل الثاني: أداة أتمتة، ثم محرك تحليل بفحص جودة، ثم صفحة تنفيذية بالمحطات السبع {p21}.", "Guide 2’s full path: an automation tool, then an analysis engine with quality checks, then an executive page with the seven stations {p21}."),
+    steps: L("١ مواصفة بخمسة عناصر واختبارات · ٢ أداة تقرأ مجلد الورديات بسجل تشغيل · ٣ تقرير جودة قبل أي رسم · ٤ صفحة واحدة تبدأ بالنتيجة وتنتهي بالقرار {p22}.", "1 a five-element spec with tests · 2 a tool reading the shifts folder with a run log · 3 a quality report before any chart · 4 one page starting with the result and ending with the decision {p22}."),
+    result: L("التقرير جاهز صباح الأحد تلقائيًا، والاجتماع يبدأ بالقرار لا بالجدال حول الأرقام (افتراضي).", "The report is ready automatically on Sunday morning; the meeting starts with the decision, not arguing over numbers (hypothetical)."),
+    risks: L("تغيير شكل ملف وردية دون إبلاغ. الحل: توقف صريح برسالة واضحة، ومالك محدد للأداة.", "A shift file changing shape unannounced. Fix: an explicit stop with a clear message, and a named tool owner.") });
+
+  C({ id: "dashboard", icon: "📊", sector: "sales", lesson: "u3-stages", pages: [24, 25],
+    title: L("مدير مبيعات يحصل على لوحة قرار أسبوعية", "A sales manager gets a weekly decision board"),
+    problem: L("ملف مبيعات شهري بـ ١٢ عمودًا ولا أحد يعرف أي رقم يستحق الانتباه.", "A monthly sales file with 12 columns and nobody knows which number deserves attention."),
+    traditional: L("جدول محوري جديد كل أسبوع وألوان يدوية، والنتيجة تختلف حسب من أعدّها.", "A new pivot table each week with manual colours; the result varies by who made it."),
+    ai: L("المراحل الثماني بطلب قصير لكل مرحلة، بدءًا من «اطرح عليّ ٣–٥ أسئلة» وانتهاءً بالتحقق من الأرقام {p24}.", "The eight stages with a short request each, from “ask me 3–5 questions” to verifying the numbers {p24}."),
+    steps: L("١ تهيئة الملف بالقواعد الست · ٢ أسئلة الغرض · ٣ اشتقاق ٥ مؤشرات · ٤ المخطط نصًا · ٥ البناء والفلاتر · ٦ مطابقة رقمين يدويًا قبل المشاركة {p25}.", "1 prep the file with the six rules · 2 purpose questions · 3 derive 5 KPIs · 4 layout as text · 5 build and filters · 6 match two numbers by hand before sharing {p25}."),
+    result: L("لوحة بملف واحد تُفتح في الاجتماع، وزمن الإعداد من ساعتين إلى ٢٠ دقيقة (افتراضي).", "A one-file board opened in the meeting; prep time from two hours to 20 minutes (hypothetical)."),
+    risks: L("رقم أنيق خاطئ يقود قرارًا. الحل: المرحلة السابعة ليست اختيارية.", "A pretty but wrong number driving a decision. Fix: stage seven isn’t optional.") });
+
+  C({ id: "localapp", icon: "🏠", sector: "finance", lesson: "u4-build", pages: [30, 31],
+    title: L("محلل مالي يبني تطبيقًا لا تغادر بياناته الجهاز", "A financial analyst builds an app whose data never leaves the machine"),
+    problem: L("بيانات مصروفات حساسة لا يجوز رفعها لأي خدمة، والتحليل اليدوي يستهلك يومين شهريًا.", "Sensitive expense data that can’t be uploaded anywhere; manual analysis takes two days a month."),
+    traditional: L("إكسل ضخم بروابط بين أوراق تنكسر عند أي تعديل.", "A huge Excel with cross-sheet links that break at any change."),
+    ai: L("تطبيق ويب محلي ببرومبتات التنفيذ الخمسة بالترتيب: تخطيط، فجودة، فخادم، فواجهة، فتغليف {p31}.", "A local web app via the five execution prompts in order: plan, quality, server, front end, packaging {p31}."),
+    steps: L("١ CLAUDE.md للمشروع · ٢ تقرير جودة الملف · ٣ خادم FastAPI ونقاط وصول مفلترة · ٤ واجهة تعرض فقط · ٥ ملف تشغيل بنقرة وتعليمات لزميل {p31}.", "1 a project CLAUDE.md · 2 a file quality report · 3 a FastAPI server with filtered endpoints · 4 a display-only front end · 5 a one-click launcher and a colleague guide {p31}."),
+    result: L("التحليل الشهري في ساعة، وزميل يشغّله من التعليمات وحدها (افتراضي).", "Monthly analysis in an hour; a colleague runs it from the guide alone (hypothetical)."),
+    risks: L("بناء الواجهة قبل التأكد من الأرقام. الحل: الخادم أولًا ومطابقة يدوية غير قابلة للتخطي {p30}.", "Building the UI before checking the numbers. Fix: server first and an unskippable manual match {p30}.") });
+
+  C({ id: "team", icon: "👥", sector: "warehouse", lesson: "u5-team", pages: [37, 38, 39, 40],
+    title: L("مخزن: فريق من ثلاثة وكلاء يراقب النواقص", "A warehouse: a three-agent team watches for shortages"),
+    problem: L("تقرير النواقص اليومي يمر بأربع نقلات يدوية بين النظام والبريد وإكسل والمشتريات.", "The daily shortage report passes through four manual handoffs between the system, email, Excel and purchasing."),
+    traditional: L("أمين المخزن يجمع ويحسب ويرسل، وأي غياب يوقف التقرير.", "The storekeeper gathers, computes and sends; any absence stops the report."),
+    ai: L("شريحة عمودية واحدة (صنف حرج واحد أولًا) يديرها جامع ومحلل ومراجع، والإرسال بموافقة بشرية {p38}.", "One vertical slice (one critical item first) run by a gatherer, analyst and reviewer, with sending under human approval {p38}."),
+    steps: L("١ تشخيص العملية وعدّ النقلات · ٢ قاموس تعريفات «حد الطلب» · ٣ بطاقة لكل وكيل وأقل صلاحية · ٤ سقف للمحاولات وسجل كامل · ٥ قياس النقلات التي اختفت {p40}.", "1 diagnose the process and count handoffs · 2 a definitions dictionary for “reorder level” · 3 a card per agent with least privilege · 4 a cap on attempts and a full log · 5 measure the handoffs that vanished {p40}."),
+    result: L("أربع نقلات أصبحت واحدة (الموافقة)، والتنبيه يصل عند وصول الملف لا في الموعد (افتراضي).", "Four handoffs became one (approval); the alert arrives when the file does, not at a fixed time (hypothetical)."),
+    risks: L("وكيل بصلاحية إرسال بلا موافقة، أو حلقة لا تنتهي. الحل: ضوابط الحوكمة الأربعة {p40}.", "An agent able to send without approval, or an endless loop. Fix: the four governance controls {p40}.") });
+
+  /* ---- lesson cases (shown inside the lesson) ---- */
+  C({ id: "hr-ask", icon: "🧑‍💼", sector: "hr", lesson: "u1-ask", pages: [7],
+    title: L("الموارد البشرية: إعلان وظيفة بلا تخمين", "HR: a job ad without guessing"),
+    problem: L("إعلان وظيفة يُكتب ويُعاد ثلاث مرات لأن النموذج افترض مستوى خبرة ومزايا خاطئة.", "A job ad rewritten three times because the model assumed the wrong seniority and benefits."),
+    traditional: L("نسخ إعلان قديم وتعديله يدويًا.", "Copying an old ad and editing it by hand."),
+    ai: L("إضافة «اسألني عن أي معلومة ناقصة قبل الإجابة» فيسأل النموذج عن الخبرة والراتب ونمط العمل أولًا {p7}.", "Adding “ask me about any missing information first” so the model asks about experience, salary and work mode {p7}."),
+    steps: L("١ الطلب الأساسي · ٢ جملة الأسئلة أولًا · ٣ الإجابة عن ٤ أسئلة · ٤ طلب نسخة مختصرة لـ LinkedIn.", "1 the basic request · 2 the ask-first sentence · 3 answer 4 questions · 4 request a short LinkedIn version."),
+    result: L("نسخة صحيحة من أول مرة بعد الأسئلة (افتراضي).", "A correct version first time after the questions (hypothetical)."),
+    risks: L("لغة قد تميّز ضد فئة دون قصد. الحل: اطلب مراجعة الحياد قبل النشر.", "Wording that unintentionally discriminates. Fix: ask for a neutrality review before posting.") });
+
+  C({ id: "fin-excel", icon: "🧮", sector: "finance", lesson: "u1-excel", pages: [13],
+    title: L("المحاسبة: معادلة هامش لا تنكسر", "Accounting: a margin formula that doesn’t break"),
+    problem: L("عمود الهامش يمتلئ بأخطاء القسمة على صفر فتنهار المجاميع والرسوم.", "The margin column fills with divide-by-zero errors, breaking totals and charts."),
+    traditional: L("حذف الأخطاء يدويًا كل شهر.", "Deleting errors by hand each month."),
+    ai: L("طلب الكتاب: معادلة تظهر فارغة عند نقص البيانات، مشروحة ببساطة ومختبرة على ثلاث حالات {p13}.", "The book’s request: a formula that shows empty on missing data, explained simply and tested on three cases {p13}."),
+    steps: L("١ وصف الأعمدة بدقة · ٢ طلب المعادلة · ٣ اختبار: صف كامل، وكمية صفر، وخلية فارغة · ٤ تفضيل الشرط الصريح على إخفاء كل الأخطاء.", "1 describe the columns precisely · 2 request the formula · 3 test: full row, zero quantity, empty cell · 4 prefer an explicit condition over hiding every error."),
+    result: L("عمود نظيف ومجاميع صحيحة، وخطأ المرجع الحقيقي يبقى ظاهرًا (افتراضي).", "A clean column and correct totals, with real reference errors still visible (hypothetical)."),
+    risks: L("IFERROR يخفي أخطاء حقيقية. الحل: عالج الحالات المحددة فقط.", "IFERROR hides real errors. Fix: handle only the named cases.") });
+
+  C({ id: "mkt-think", icon: "📣", sector: "marketing", lesson: "u1-scenarios", pages: [11],
+    title: L("التسويق: حملة تُختبر قبل إطلاقها", "Marketing: a campaign tested before launch"),
+    problem: L("فريق متحمس لحملة كبيرة دون مناقشة ما قد يفشلها.", "A team excited about a big campaign without discussing what could make it fail."),
+    traditional: L("اجتماع يوافق فيه الجميع ثم مراجعة بعد الخسارة.", "A meeting where everyone agrees, then a post-mortem after the loss."),
+    ai: L("برومبت «لا توافقني تلقائيًا» مع تشريح مسبق: «افترض أن الحملة فشلت بعد ٣ أشهر؛ لماذا؟» {p11}.", "The “don’t agree automatically” prompt with a pre-mortem: “assume the campaign failed after 3 months — why?” {p11}."),
+    steps: L("١ اعرض الخطة · ٢ اطلب أقوى ٥ أسباب للفشل · ٣ ثلاثة سيناريوهات بأرقام · ٤ تعديل الخطة وتحديد مؤشر إيقاف مبكر.", "1 present the plan · 2 ask for the 5 strongest failure reasons · 3 three scenarios with numbers · 4 adjust the plan and set an early-stop indicator."),
+    result: L("إطلاق تجريبي في مدينة واحدة بدل الإطلاق الشامل (افتراضي).", "A pilot in one city instead of a full launch (hypothetical)."),
+    risks: L("طلب نقد مصطنع لتأكيد رأي مسبق. الحل: اطلب الأدلة لا الآراء.", "Asking for staged criticism to confirm a prior view. Fix: ask for evidence, not opinions.") });
+
+  C({ id: "office-brain", icon: "📚", sector: "office", lesson: "u1-brain", pages: [12, 13],
+    title: L("الإدارة القانونية: إجابات من اللوائح الداخلية فقط", "Legal department: answers from internal policies only"),
+    problem: L("موظفون يسألون نفس الأسئلة عن اللوائح، والإجابات تختلف حسب من يُسأل.", "Staff ask the same policy questions, and answers vary by who is asked."),
+    traditional: L("البحث في ملفات PDF طويلة أو سؤال زميل خبير.", "Searching long PDFs or asking an expert colleague."),
+    ai: L("دفتر معرفة يجيب من مصادرك أنت فقط مع إحالة لموضع كل إجابة {p12}.", "A notebook that answers only from your sources, citing where each answer came from {p12}."),
+    steps: L("١ رفع اللوائح المعتمدة فقط · ٢ اختبار ١٠ أسئلة معروفة الإجابة · ٣ فحص الإحالات · ٤ تحديث المصادر عند صدور لائحة جديدة.", "1 upload approved policies only · 2 test 10 questions with known answers · 3 check citations · 4 refresh sources when a new policy is issued."),
+    result: L("إجابة موحدة بإحالة خلال ثوانٍ (افتراضي).", "A consistent, cited answer in seconds (hypothetical)."),
+    risks: L("مصدر قديم يعطي إجابة قديمة بثقة. الحل: مالك للمصادر وتاريخ مراجعة.", "An outdated source giving an outdated answer confidently. Fix: a source owner and review date.") });
+
+  C({ id: "wh-auto", icon: "📦", sector: "warehouse", lesson: "u2-level1", pages: [18, 19],
+    title: L("المخازن: تجميع ملفات الفروع كل صباح", "Warehousing: gathering branch files every morning"),
+    problem: L("١٢ ملف جرد يصل بالبريد يوميًا ويُنسخ في ملف رئيسي.", "12 inventory files arrive by email daily and are copied into a master file."),
+    traditional: L("ساعة نسخ ولصق يومية مع أخطاء صفوف مكررة.", "An hour of daily copy-paste with duplicated-row errors."),
+    ai: L("أداة بايثون بأثبت طريقة (قراءة الملفات مباشرة، لا محاكاة الفأرة) تراقب المجلد وتتوقف بصراحة عند ملف غريب {p18}.", "A Python tool using the most stable way (reading files directly, no mouse simulation) that watches the folder and stops explicitly on an odd file {p18}."),
+    steps: L("١ مواصفة بخمسة عناصر · ٢ برومبت بناء أداة الأتمتة كما هو · ٣ خمس حالات اختبار بينها ملف ناقص · ٤ تشغيل تلقائي عند وصول ملف.", "1 a five-element spec · 2 the automation-tool prompt as-is · 3 five test cases including a missing file · 4 auto-run on file arrival."),
+    result: L("الملف الرئيسي جاهز قبل وصول الموظفين، مع سجل لكل ملف (افتراضي).", "The master file ready before staff arrive, with a log per file (hypothetical)."),
+    risks: L("تعديل الملفات الأصلية. الحل: قراءة فقط والكتابة في مجلد منفصل.", "Modifying original files. Fix: read only, write to a separate folder.") });
+
+  C({ id: "sb-exec", icon: "🏪", sector: "smallbiz", lesson: "u2-level3", pages: [21],
+    title: L("شركة صغيرة: صفحة واحدة للشريك المموّل", "A small business: one page for the investing partner"),
+    problem: L("الشريك يريد أن يفهم وضع الفروع في دقائق لا في ملف من ٤٠ ورقة.", "The partner wants to grasp the branches’ status in minutes, not a 40-sheet file."),
+    traditional: L("إرسال إكسل كامل وانتظار الأسئلة.", "Sending the whole Excel and waiting for questions."),
+    ai: L("الصفحة التنفيذية: النتيجة أولًا، ثم المشكلة والأسباب والأثر والقرار، ومعيار الثلاثين ثانية {p21}.", "The executive page: result first, then problem, causes, impact and decision — with the 30-second rule {p21}."),
+    steps: L("١ تحليل نظيف · ٢ برومبت الصفحة التنفيذية · ٣ حركة لتوجيه الانتباه فقط · ٤ ملف واحد يعمل بلا إنترنت.", "1 a clean analysis · 2 the executive-page prompt · 3 motion only to guide attention · 4 one file that works offline."),
+    result: L("قرار إغلاق فرع خاسر في اجتماع واحد (افتراضي).", "A decision to close a losing branch in one meeting (hypothetical)."),
+    risks: L("تجميل يخفي ضعف البيانات. الحل: جدول التفاصيل في الأسفل لمن يريد التحقق.", "Polish hiding weak data. Fix: a details table at the bottom for anyone who wants to check.") });
+
+  C({ id: "sales-backend", icon: "🛰️", sector: "sales", lesson: "u4-backend", pages: [29],
+    title: L("المبيعات: رقم واحد في كل الشاشات", "Sales: one number on every screen"),
+    problem: L("لوحتان تعرضان «صافي المبيعات» برقمين مختلفين لأن كلًا منهما يحسبه بطريقته.", "Two dashboards show “net sales” with different numbers because each computes it its own way."),
+    traditional: L("اجتماع لتحديد أي الرقمين صحيح.", "A meeting to decide which number is right."),
+    ai: L("نقل الحساب إلى الخادم في مكان واحد، والواجهات تعرض فقط عبر نقاط الوصول {p29}.", "Moving the calculation to the server in one place; interfaces only display via endpoints {p29}."),
+    steps: L("١ تعريف واحد للمؤشر · ٢ نقطة وصول /summary · ٣ ربط اللوحتين بها · ٤ اختبار الفلاتر على فترة بلا بيانات.", "1 one indicator definition · 2 a /summary endpoint · 3 connect both boards to it · 4 test filters on an empty period."),
+    result: L("نفس الرقم في كل مكان، والجدال انتهى (افتراضي).", "The same number everywhere; the arguing stopped (hypothetical)."),
+    risks: L("خادم يفشل بصمت. الحل: سجل تشغيل ورسالة واضحة.", "A server failing silently. Fix: a run log and a clear message.") });
+
+  C({ id: "local-hr", icon: "🔐", sector: "hr", lesson: "u5-local", pages: [36],
+    title: L("الموارد البشرية: تلخيص تقييمات سرية محليًا", "HR: summarising confidential reviews locally"),
+    problem: L("٣٠٠ تقييم أداء سري تحتاج تلخيصًا، ورفعها لأي خدمة سحابية ممنوع.", "300 confidential performance reviews need summarising, and uploading them to any cloud service is forbidden."),
+    traditional: L("قراءة يدوية لأسبوعين.", "Two weeks of manual reading."),
+    ai: L("نموذج 8B مضغوط (Q4_K_M) عبر LM Studio على جهاز ١٦ جيجا؛ البيانات لا تغادر الجهاز {p36}.", "A compressed 8B model (Q4_K_M) via LM Studio on a 16 GB machine; data never leaves the machine {p36}."),
+    steps: L("١ اختيار الحجم من جدول الكتاب · ٢ اختبار السرعة على ١٠ تقييمات · ٣ قالب تلخيص ثابت · ٤ مراجعة بشرية لعينة.", "1 pick the size from the book’s table · 2 test speed on 10 reviews · 3 a fixed summary template · 4 human review of a sample."),
+    result: L("التلخيص في يومين بدل أسبوعين، بلا أي رفع (افتراضي).", "Summaries in two days instead of two weeks, with no uploads (hypothetical)."),
+    risks: L("جودة أقل من القمة السحابية. الحل: مهمة تلخيص بسيطة تناسب المحلي، ومراجعة العينة.", "Lower quality than the cloud frontier. Fix: a simple summarising task that suits local, plus sample review.") });
+
+  C({ id: "fin-model", icon: "💸", sector: "finance", lesson: "u5-market", pages: [34, 35],
+    title: L("المالية: ميزانية نموذج قبل التعاقد", "Finance: a model budget before signing"),
+    problem: L("عرض اشتراك سنوي بأقوى نموذج لتصنيف ٤٠٠٠ فاتورة يوميًا.", "An annual subscription offer for the strongest model to classify 4,000 invoices daily."),
+    traditional: L("قبول العرض لأن «الأقوى أضمن».", "Accepting because “the strongest is safest”."),
+    ai: L("قاعدة «ابدأ من الأسفل»: اختبار نموذج اقتصادي ونموذج متوسط على ٢٠٠ فاتورة حقيقية بمعيار دقة محدد {p34}.", "The “start at the bottom” rule: test an economy and a mid model on 200 real invoices against a set accuracy bar {p34}."),
+    steps: L("١ برومبت اختيار النموذج · ٢ حساب التكلفة الشهرية بنطاقات الكتاب · ٣ الاختبار على العينة · ٤ فحص الفخاخ الثلاثة في العقد {p35}.", "1 the model-selection prompt · 2 monthly cost with the book’s bands · 3 test on the sample · 4 check the three traps in the contract {p35}."),
+    result: L("النموذج الاقتصادي حقق الدقة المطلوبة بجزء صغير من التكلفة (افتراضي).", "The economy model met the accuracy bar at a small fraction of the cost (hypothetical)."),
+    risks: L("سعر تمهيدي ينتهي بعد ٣ أشهر. الحل: اقرأ الحواشي قبل ميزانية سنوية.", "An introductory price that ends after 3 months. Fix: read the footnotes before an annual budget.") });
+})();
+
+;
+/* data/compare.js */
+/* Comparison engine data: concepts with the same seven fields, plus curated pairs with their key difference. */
+(function () {
+  const L = (ar, en) => ({ ar, en });
+  const X = (o) => ACAD.compare.push(o);
+  ACAD.pairs = ACAD.pairs || [];
+  const PAIR = (a, b, diff, both) => ACAD.pairs.push({ a, b, diff, both });
+
+  X({ id: "chat", unit: "u0", icon: "💬", lesson: "u0-assistant", pages: [6, 7], name: L("الشات التقليدي", "Traditional chat"),
+    what: L("سؤال، فإجابة، ثم نسيان.", "A question, an answer, then forgotten."), strength: L("سريع ومتاح للجميع.", "Fast and available to all."), limit: L("لا يتذكر سياقك ولا ينفذ شيئًا.", "Doesn’t remember context or act."),
+    useWhen: L("سؤال معلوماتي سريع.", "A quick factual question."), avoidWhen: L("مهمة متكررة أو متعددة الخطوات.", "A recurring or multi-step task."), cost: L("منخفضة.", "Low."), example: L("«ما الفرق بين المتوسط والوسيط؟»", "“What’s the difference between mean and median?”") });
+  X({ id: "assistant", unit: "u0", icon: "🧑‍💼", lesson: "u0-assistant", pages: [6], name: L("المساعد الشخصي", "Personal assistant"),
+    what: L("يفهم سياقك ويتذكر ما سبق ويساعدك باستمرار.", "Understands your context, remembers and keeps helping."), strength: L("نتائج مخصصة لعملك دون إعادة شرح.", "Results tailored to your work without re-explaining."), limit: L("ينتظر أوامرك؛ لا يكمل مهمة وحده.", "Waits for your commands; doesn’t finish a task alone."),
+    useWhen: L("كتابة وتحليل وتفكير يومي.", "Daily writing, analysis and thinking."), avoidWhen: L("تنفيذ آلي بلا إشراف.", "Unsupervised automatic execution."), cost: L("اشتراك شهري معتاد.", "A typical monthly subscription."), example: L("مساعد يعرف إدارتك وأسلوب تقاريرك.", "An assistant that knows your department and report style.") });
+  X({ id: "agent", unit: "u5", icon: "🤖", lesson: "u5-agents", pages: [39], name: L("الوكيل الذكي", "AI agent"),
+    what: L("هدف، وأدوات، وتكرار حتى الهدف أو حدّ التوقف.", "Goal, tools, iteration until the goal or a stop limit."), strength: L("ينجز مهام متعددة الخطوات وحده.", "Completes multi-step tasks alone."), limit: L("قد يدور بلا نهاية أو يتجاوز صلاحياته بلا ضوابط.", "May loop forever or overreach without controls."),
+    useWhen: L("عملية متكررة واضحة الهدف وقابلة للفحص.", "A recurring process with a clear, checkable goal."), avoidWhen: L("قرار مالي أو تنظيمي بلا موافقة بشرية.", "A financial or organisational decision without human approval."), cost: L("متغيرة؛ تحتاج سقفًا للمحاولات والإنفاق.", "Variable; needs a cap on attempts and spend."), example: L("وكيل يجمع ملفات الفروع ويوقف السلسلة عند نقص.", "An agent gathering branch files and stopping the chain on gaps.") });
+  PAIR("chat", "assistant", L("المساعد **يتذكر سياقك**؛ الشات يبدأ من الصفر كل مرة {p6}.", "The assistant **remembers your context**; chat starts from zero every time {p6}."), L("كلاهما يجيب ولا ينفذ وحده.", "Both answer and neither acts alone."));
+  PAIR("assistant", "agent", L("الوكيل **يملك أدوات ويكرر** حتى الهدف؛ المساعد يساعدك وأنت المنفذ {p39}.", "The agent **holds tools and iterates** to the goal; the assistant helps while you execute {p39}."), L("كلاهما يحتاج سياقًا واضحًا ومراجعة بشرية.", "Both need clear context and human review."));
+
+  X({ id: "one-prompt", unit: "u1", icon: "📝", lesson: "u1-conversation", pages: [8], name: L("طلب واحد طويل", "One long request"),
+    what: L("كل المتطلبات في رسالة واحدة.", "Every requirement in one message."), strength: L("سريع للمهام البسيطة الواضحة.", "Fast for simple, clear tasks."), limit: L("يصعب التعديل الجزئي، وتضيع التفاصيل.", "Hard to adjust partly; details get lost."),
+    useWhen: L("مهمة قصيرة تعرف نتيجتها جيدًا.", "A short task whose result you know well."), avoidWhen: L("لوحة أو أداة متعددة المراحل.", "A multi-stage board or tool."), cost: L("رسالة واحدة… وغالبًا إعادة كاملة.", "One message… and often a full redo."), example: L("«أنشئ لوحة معلومات» دون غرض.", "“Create a dashboard” with no purpose.") });
+  X({ id: "staged", unit: "u3", icon: "🪜", lesson: "u3-stages", pages: [24, 25], name: L("حوار متدرج", "A staged conversation"),
+    what: L("مراحل قصيرة لكل منها طلب ومعيار انتقال.", "Short stages, each with a request and exit criterion."), strength: L("دقة أعلى ومرونة أكبر وتعديل جزئي سهل.", "Higher precision, more flexibility, easy partial edits."), limit: L("يحتاج صبرًا وترتيبًا.", "Needs patience and order."),
+    useWhen: L("أي مخرج مهم: لوحة، أداة، تقرير إداري.", "Any important output: a board, a tool, a management report."), avoidWhen: L("سؤال سريع لمرة واحدة.", "A quick one-off question."), cost: L("رسائل أكثر، إعادة أقل.", "More messages, fewer redos."), example: L("المراحل الثماني للوحة المعلومات.", "The dashboard’s eight stages.") });
+  PAIR("one-prompt", "staged", L("«دمج كل المتطلبات في طلب واحد يصعّب التعديل الجزئي، والتدرج يمنح دقة أعلى ومرونة أكبر» {p25}.", "“Merging every requirement into one request makes partial edits hard; staging gives more precision and flexibility” {p25}."), L("كلاهما يحتاج غرضًا وجمهورًا واضحين.", "Both need a clear purpose and audience."));
+
+  X({ id: "formula", unit: "u1", icon: "🧮", lesson: "u1-excel", pages: [13], name: L("معادلة إكسل", "Excel formula"),
+    what: L("حساب داخل خلية يتحدث تلقائيًا.", "A calculation in a cell that updates automatically."), strength: L("فوري وبلا برمجة.", "Instant, no coding."), limit: L("لا ينفذ خطوات ولا يتعامل مع ملفات أخرى.", "Doesn’t perform steps or handle other files."),
+    useWhen: L("حساب عمود أو مؤشر.", "Computing a column or KPI."), avoidWhen: L("مهمة من عدة خطوات تتكرر.", "A recurring multi-step task."), cost: L("صفر.", "Zero."), example: L("هامش الربح مع خلية فارغة عند النقص.", "Profit margin with an empty cell on missing data.") });
+  X({ id: "macro", unit: "u1", icon: "⏺️", lesson: "u1-macro", pages: [13, 14], name: L("ماكرو (VBA)", "Macro (VBA)"),
+    what: L("خطوات مسجلة أو مكتوبة تُنفذ بضغطة داخل إكسل.", "Recorded or written steps run in one click inside Excel."), strength: L("يؤتمت التنسيق والنسخ داخل الملف.", "Automates formatting and copying inside the file."), limit: L("محصور في أوفيس، ويصعب اختباره ومشاركته.", "Confined to Office; hard to test and share."),
+    useWhen: L("مهمة متكررة داخل ملف إكسل واحد.", "A recurring task inside one Excel file."), avoidWhen: L("ملفات متعددة ومصادر مختلفة.", "Many files and different sources."), cost: L("صفر.", "Zero."), example: L("تنسيق تقرير شهري بضغطة.", "Formatting a monthly report in one click.") });
+  X({ id: "python-tool", unit: "u2", icon: "🐍", lesson: "u2-level1", pages: [18, 19], name: L("أداة بايثون", "Python tool"),
+    what: L("برنامج يقرأ الملفات ويعالجها ويكتب النتيجة بسجل واختبارات.", "A program that reads, processes and writes results, with a log and tests."), strength: L("يتعامل مع مجلدات كاملة ومصادر متعددة بثبات.", "Handles whole folders and many sources reliably."), limit: L("يحتاج إعدادًا أوليًا ومالكًا.", "Needs initial setup and an owner."),
+    useWhen: L("مهمة متكررة عبر ملفات أو برامج متعددة.", "A recurring task across several files or programs."), avoidWhen: L("حساب بسيط في خلية.", "A simple calculation in a cell."), cost: L("صفر للأدوات؛ وقت الإعداد.", "Zero for tools; setup time."), example: L("تجميع ١٢ ملف جرد يوميًا.", "Merging 12 inventory files daily.") });
+  PAIR("formula", "macro", L("المعادلة **تحسب**، والماكرو **ينفذ خطوات** {p13}.", "A formula **computes**; a macro **performs steps** {p13}."), L("كلاهما داخل إكسل وبلا تكلفة.", "Both live in Excel at no cost."));
+  PAIR("macro", "python-tool", L("الماكرو محصور في الملف؛ بايثون يعمل عبر ملفات ومجلدات وبرامج، مع سجل وفشل صريح {p17}.", "A macro is confined to the file; Python works across files, folders and programs, with a log and explicit failure {p17}."), L("كلاهما يؤتمت مهمة متكررة ويحتاج اختبارًا قبل الاعتماد.", "Both automate a recurring task and need testing before use."));
+
+  X({ id: "api-level", unit: "u2", icon: "📄", lesson: "u2-level1", pages: [18], name: L("التعامل مع البيانات (ملف/API)", "Working with data (file/API)"),
+    what: L("قراءة البيانات مباشرة من الملف أو الواجهة البرمجية.", "Reading data directly from the file or API."), strength: L("الأكثر ثباتًا؛ لا يهتم بشكل الشاشة.", "The most stable; ignores the screen."), limit: L("يتطلب وصولًا للملف أو API.", "Needs access to the file or API."),
+    useWhen: L("دائمًا كلما أمكن.", "Always, whenever possible."), avoidWhen: L("لا يوجد ملف ولا API إطلاقًا.", "There’s no file or API at all."), cost: L("منخفضة.", "Low."), example: L("قراءة تصدير CSV من النظام.", "Reading a CSV export from the system.") });
+  X({ id: "ui-sim", unit: "u2", icon: "🖱️", lesson: "u2-level1", pages: [18], name: L("محاكاة المستخدم", "User simulation"),
+    what: L("تحريك الفأرة ومطابقة صور الأزرار.", "Moving the mouse and matching button images."), strength: L("يعمل مع أي برنامج مهما كان مغلقًا.", "Works with any program, however closed."), limit: L("الأكثر عرضة للانكسار: دقة الشاشة وحجم النافذة ومكان الزر.", "The most breakable: resolution, window size, button position."),
+    useWhen: L("ملاذ أخير لا بديل له، مع تدوين السبب في الكود.", "A last resort with no alternative, documenting why in the code."), avoidWhen: L("وجود ملف أو API أو تحكم مباشر.", "A file, API or direct control exists."), cost: L("صيانة عالية.", "High maintenance."), example: L("برنامج قديم بلا تصدير ولا واجهة.", "A legacy program with no export or API.") });
+  PAIR("api-level", "ui-sim", L("كلما اقتربت من البيانات ثبتت الأتمتة؛ محاكاة الفأرة تنكسر مع أي تغيير في الشاشة {p18}.", "The closer to the data, the steadier the automation; mouse simulation breaks with any screen change {p18}."));
+
+  X({ id: "streamlit", unit: "u2", icon: "📈", lesson: "u2-level3", pages: [21], name: L("تطبيق تحليلي (Streamlit/Dash)", "Analysis app (Streamlit/Dash)"),
+    what: L("تطبيق تفاعلي يعمل على خادم بايثون.", "An interactive app running on a Python server."), strength: L("يحدّث الأرقام مباشرة ويستكشف بعمق.", "Updates numbers live and explores deeply."), limit: L("يحتاج تشغيل خادم.", "Needs a running server."),
+    useWhen: L("مستخدمون يستكشفون البيانات باستمرار.", "Users exploring data continuously."), avoidWhen: L("تقرير يُرسل لمرة واحدة.", "A report sent once."), cost: L("تشغيل خادم.", "Server running."), example: L("تطبيق متابعة يومية للإنتاج.", "A daily production-tracking app.") });
+  X({ id: "static-page", unit: "u2", icon: "📄", lesson: "u2-level3", pages: [21], name: L("صفحة مستقلة بملف واحد", "A standalone one-file page"),
+    what: L("ملف HTML واحد يحمل البيانات والرسوم ويعمل بلا إنترنت.", "One HTML file carrying data and charts, working offline."), strength: L("يُرسل ويُفتح بنقرة على أي جهاز.", "Sent and opened in a click on any device."), limit: L("لا يتحدث تلقائيًا من مصدر حي.", "Doesn’t update automatically from a live source."),
+    useWhen: L("تقرير إداري دوري.", "A periodic management report."), avoidWhen: L("بيانات تتغير كل دقيقة.", "Data changing every minute."), cost: L("صفر.", "Zero."), example: L("الصفحة التنفيذية الشهرية.", "The monthly executive page.") });
+  PAIR("streamlit", "static-page", L("التطبيق **حي** يحتاج خادمًا؛ الصفحة **ملف** يُرسل ويُفتح في أي مكان {p21}.", "The app is **live** and needs a server; the page is **a file** sent and opened anywhere {p21}."), L("كلاهما يجب أن يوصل الرسالة في ثلاثين ثانية.", "Both must land the message in thirty seconds."));
+
+  X({ id: "frontend", unit: "u4", icon: "🎨", lesson: "u4-frontend", pages: [28], name: L("الواجهة الأمامية", "Front end"),
+    what: L("ما يراه المستخدم: أزرار وجداول ورسوم وفلاتر.", "What the user sees: buttons, tables, charts, filters."), strength: L("تجربة جميلة تعمل على الحاسوب والهاتف.", "A good-looking experience on desktop and phone."), limit: L("لا تلمس البيانات مباشرة ولا تقرأ ملفات الجهاز.", "Doesn’t touch data directly or read local files."),
+    useWhen: L("العرض والتفاعل.", "Display and interaction."), avoidWhen: L("الحساب وقواعد العمل.", "Calculations and business rules."), cost: L("منخفضة.", "Low."), example: L("بطاقات المؤشرات والرسوم.", "KPI cards and charts.") });
+  X({ id: "backend", unit: "u4", icon: "⚙️", lesson: "u4-backend", pages: [29], name: L("الواجهة الخلفية", "Back end"),
+    what: L("العقل الذي يقرأ ويحسب ويطبّق القواعد.", "The brain that reads, computes and applies rules."), strength: L("المنطق في مكان واحد، ويعالج ملايين الصفوف.", "Logic in one place; handles millions of rows."), limit: L("لا يراه المستخدم؛ يحتاج تشغيلًا.", "Invisible to users; needs running."),
+    useWhen: L("أي حساب يجب أن يتطابق في كل الشاشات.", "Any calculation that must match across screens."), avoidWhen: L("صفحة ثابتة صغيرة بلا بيانات متغيرة.", "A small static page with no changing data."), cost: L("منخفضة محليًا.", "Low locally."), example: L("نقطة وصول /summary.", "A /summary endpoint.") });
+  PAIR("frontend", "backend", L("الواجهة **تعرض** فقط، والخادم **يحسب** — فلا يتضارب الرقم بين شاشة وأخرى {p29}.", "The front end only **displays**; the server **computes** — so numbers never conflict between screens {p29}."), L("يتحدثان عبر API وJSON.", "They talk through an API and JSON."));
+
+  X({ id: "cloud-model", unit: "u5", icon: "☁️", lesson: "u5-market", pages: [34, 35], name: L("نموذج سحابي", "Cloud model"),
+    what: L("نموذج تستدعيه عبر الإنترنت وتدفع بالتوكن.", "A model called over the internet, paid per token."), strength: L("أعلى جودة متاحة وبلا إعداد.", "The highest quality available, with no setup."), limit: L("البيانات تغادر جهازك والتكلفة تتراكم.", "Data leaves your machine; cost adds up."),
+    useWhen: L("تحليل معقد وبيانات غير حساسة.", "Complex analysis with non-sensitive data."), avoidWhen: L("بيانات لا يجوز رفعها.", "Data that can’t be uploaded."), cost: L("من أقل من دولار إلى ٥٠ دولارًا لكل مليون توكن إخراج.", "From under $1 to $50 per million output tokens."), example: L("تحليل عقد معقد.", "Analysing a complex contract.") });
+  X({ id: "local-model", unit: "u5", icon: "💻", lesson: "u5-local", pages: [36], name: L("نموذج محلي", "Local model"),
+    what: L("نموذج يعمل داخل حاسوبك عبر Ollama أو LM Studio.", "A model running inside your computer via Ollama or LM Studio."), strength: L("خصوصية كاملة، وبلا إنترنت، وبلا فاتورة.", "Full privacy, offline, no bill."), limit: L("طبقة أو طبقتان خلف القمة، ومحدود بذاكرة جهازك.", "A tier or two behind the top, limited by your memory."),
+    useWhen: L("بيانات حساسة، أو حجم ضخم، أو تعلّم.", "Sensitive data, huge volume, or learning."), avoidWhen: L("تحليل يحتاج أعلى جودة ممكنة.", "Analysis needing top quality."), cost: L("جهازك فقط.", "Just your hardware."), example: L("تلخيص تقييمات سرية.", "Summarising confidential reviews.") });
+  PAIR("cloud-model", "local-model", L("السحابي **أذكى**، والمحلي **أخصّ**: البيانات لا تغادر الجهاز {p36}.", "Cloud is **smarter**; local is **more private**: data never leaves the machine {p36}."), L("خادم محلي متوافق يجعل التبديل بينهما بتغيير العنوان فقط.", "A compatible local server makes switching a matter of changing the address."));
+
+  X({ id: "tool", unit: "u5", icon: "🔧", lesson: "u5-system", pages: [37], name: L("أداة منفردة", "A single tool"),
+    what: L("تحل خطوة واحدة ثم تنتظر إنسانًا ينقل مخرجها.", "Solves one step, then waits for a person to carry its output."), strength: L("سريعة البناء وواضحة.", "Quick to build and clear."), limit: L("الإنسان الناقل عنق زجاجة ومصدر خطأ.", "The human carrier is a bottleneck and error source."),
+    useWhen: L("مهمة مستقلة لا تتصل بغيرها.", "A standalone task not linked to others."), avoidWhen: L("عملية فيها نقلات يدوية متعددة.", "A process with many manual handoffs."), cost: L("منخفضة.", "Low."), example: L("أداة تنظيف ملف.", "A file-cleaning tool.") });
+  X({ id: "system", unit: "u5", icon: "🔗", lesson: "u5-system", pages: [37, 38], name: L("نظام متكامل", "An integrated system"),
+    what: L("سلسلة من حدث إلى قرار بخمس طبقات.", "A chain from event to decision in five layers."), strength: L("يلغي النقلات اليدوية، والإنسان للقرار فقط.", "Removes manual handoffs; humans only decide."), limit: L("يفشل إن بدأ كبيرًا أو بلا مالك.", "Fails if started big or without an owner."),
+    useWhen: L("عملية متكررة متعددة الخطوات والمصادر.", "A recurring multi-step, multi-source process."), avoidWhen: L("مهمة نادرة صغيرة.", "A rare small task."), cost: L("أعلى؛ يبدأ بشريحة واحدة.", "Higher; starts with one slice."), example: L("تقرير كفاءة من الحدث للإشعار.", "An efficiency report from event to alert.") });
+  PAIR("tool", "system", L("الأداة **تحل خطوة**، والنظام **يربط الخطوات** دون ساعٍ بشري {p37}.", "A tool **solves a step**; a system **links the steps** with no human runner {p37}."), L("كلاهما يحتاج سجلًا وفشلًا صريحًا.", "Both need a log and explicit failure."));
+
+  X({ id: "chain", unit: "u5", icon: "⛓️", lesson: "u5-team", pages: [39], name: L("نمط السلسلة", "Chain pattern"),
+    what: L("وكيل بعد وكيل؛ مخرج كل واحد مدخل التالي.", "Agent after agent; each output is the next input."), strength: L("الأبسط والأوضح تتبعًا.", "The simplest and easiest to trace."), limit: L("بطيء لمصادر متوازية.", "Slow for parallel sources."),
+    useWhen: L("عملية بترتيب ثابت.", "A fixed-order process."), avoidWhen: L("عدة مصادر مستقلة.", "Several independent sources."), cost: L("منخفضة.", "Low."), example: L("جامع ← محلل ← مراجع.", "Gatherer → analyst → reviewer.") });
+  X({ id: "critic", unit: "u5", icon: "🧐", lesson: "u5-team", pages: [39, 40], name: L("نمط المنفذ والناقد", "Doer & critic pattern"),
+    what: L("وكيل ينتج وآخر يراجع ويعيده، بحد أقصى دورتين.", "One produces, another reviews and returns, two rounds max."), strength: L("جودة أعلى وكشف للثغرات.", "Higher quality, gaps exposed."), limit: L("أبطأ وأغلى.", "Slower and pricier."),
+    useWhen: L("الجودة أهم من السرعة.", "Quality matters more than speed."), avoidWhen: L("مهمة سريعة منخفضة المخاطر.", "A fast, low-risk task."), cost: L("ضعف تقريبًا.", "Roughly double."), example: L("مذكرة للإدارة العليا.", "A memo for senior management.") });
+  PAIR("chain", "critic", L("السلسلة للسرعة والوضوح؛ الناقد حين تكون **الجودة أهم من السرعة** {p39}.", "Chain for speed and clarity; critic when **quality beats speed** {p39}."));
+})();
+
+;
+/* data/glossary.js */
+/* Smart glossary. Each term: Arabic and English name, a plain definition, an optional everyday analogy,
+   the book pages where it appears, and its source (book = defined or used in the book; add = academy addition).
+   Lessons and units are linked automatically from each lesson’s `terms` list (see zz-links.js). */
+(function () {
+  const L = (ar, en) => ({ ar, en });
+  const G = (id, en, ar, def, pages, more) => ACAD.glossary.push(Object.assign({ id, en, term: L(ar, en), def, pages, src: "book" }, more || {}));
+  const A = (ar, en) => ({ analogy: L(ar, en) });
+
+  /* ---- Foundations (introduction) ---- */
+  G("ai", "Artificial Intelligence", "الذكاء الاصطناعي", L("أنظمة حاسوبية تتعلم الأنماط من البيانات لتؤدي مهامًا كانت تحتاج تفكيرًا بشريًا: الكتابة، والتحليل، والبحث، والتعلم، ودعم القرار.", "Computer systems that learn patterns from data to perform tasks that used to need human thinking: writing, analysis, research, learning and decision support."), [2, 3]);
+  G("model", "AI model", "نموذج الذكاء الاصطناعي", L("البرنامج الذي تعلّم من كمية ضخمة من البيانات، ويحوّل ما تعلّمه إلى أرقام داخلية يستخدمها ليتوقع الإجابة.", "The program that learned from huge amounts of data and turned what it learned into internal numbers it uses to predict an answer."), [2, 34], A("مثل طالب ذاكر آلاف الكتب؛ لا يحفظها حرفيًا لكنه تعلّم أنماطها.", "Like a student who studied thousands of books: not memorised word for word, but learned their patterns."));
+  G("training", "Training", "التدريب", L("المرحلة التي يتعلم فيها النموذج من البيانات بتعديل أرقامه الداخلية (المعاملات) مليارات المرات حتى تصبح توقعاته أدق.", "The stage where the model learns from data by adjusting its internal numbers (parameters) billions of times until its predictions improve."), [2, 6]);
+  G("parameters", "Parameters (weights)", "المعاملات (الأوزان)", L("أرقام داخلية يتعلمها النموذج أثناء التدريب، وهي مخزن معرفته. تُقاس بالمليار (B) أو التريليون (T)؛ زيادتها ترفع القدرة والتكلفة معًا.", "Internal numbers the model learns in training — its store of knowledge. Measured in billions (B) or trillions (T); more raises both capability and cost."), [34], A("مثل مقابض ضبط صغيرة بالمليارات، كل واحد يُضبط قليلًا أثناء التعلم.", "Like billions of small tuning knobs, each nudged a little during learning."));
+  G("token", "Token", "التوكن", L("قطعة نص صغيرة (كلمة أو جزء منها) يقرأ بها النموذج ويكتب، وهي وحدة التسعير. الإدخال أرخص والإخراج أغلى ٣–٦ مرات، والعربية تستهلك توكنات أكثر.", "A small piece of text (a word or part of one) the model reads and writes in — and the billing unit. Input is cheaper; output costs 3–6× more; Arabic uses more tokens."), [34], A("عدّاد الكيلومترات في سيارة أجرة: تدفع على ما تقطعه من نص.", "A taxi’s meter: you pay for the text distance covered."));
+  G("context", "Context", "السياق", L("كل ما يعرفه النموذج عن موقفك في الطلب: من أنت، ولمن، ولماذا، وما القيود. كلما كان أوضح كانت النتيجة أدق.", "Everything the model knows about your situation in a request: who you are, for whom, why and the constraints. The clearer it is, the more precise the result."), [6, 7]);
+  G("context-window", "Context window", "نافذة السياق", L("أقصى كمية نص يستطيع النموذج قراءتها وتذكرها في الطلب الواحد، بالتوكنات. مليون توكن تقارب كتابًا ضخمًا.", "The maximum text a model can read and keep in one request, in tokens. A million tokens is roughly a huge book."), [34, 35], A("مساحة المكتب: ما لا يتسع عليه لا يراه النموذج.", "The desk surface: whatever doesn’t fit on it, the model can’t see."));
+  G("llm", "Large Language Model (LLM)", "نموذج لغوي كبير", L("نموذج تدرب على كميات هائلة من النصوص ليتوقع الكلمة التالية، فيكتب ويلخّص ويحلل ويحاور.", "A model trained on vast amounts of text to predict the next word, so it can write, summarise, analyse and converse."), [2], { src: "add" });
+  G("prompt", "Prompt", "الطلب (البرومبت)", L("التعليمات التي تكتبها للنموذج. جودتها تحدد جودة النتيجة: سياق، وهدف، وقيود، وشكل مخرج واضح.", "The instructions you write to the model. Their quality decides the result’s: context, goal, constraints and a clear output format."), [7]);
+  G("hallucination", "Hallucination", "الهلوسة", L("أن يقدّم النموذج معلومة خاطئة بثقة كاملة وكأنها حقيقة، لأنه يتوقع ما «يبدو» صحيحًا لا ما تحقق منه.", "When a model states wrong information with full confidence as if it were fact, because it predicts what “sounds” right, not what it verified."), [41], { src: "add", analogy: L("مثل شخص يكمل جملة بثقة وهو لا يعرف الإجابة.", "Like someone confidently finishing a sentence without knowing the answer.") });
+  G("human-review", "Human review", "المراجعة البشرية", L("أن يتحقق إنسان من مخرجات الذكاء الاصطناعي قبل اعتمادها أو مشاركتها، خاصة الأرقام والقرارات ذات الأثر.", "A human checking AI output before approving or sharing it — especially numbers and impactful decisions."), [25, 37, 41]);
+  G("decision-support", "Decision support", "دعم القرار", L("استخدام الذكاء الاصطناعي لتنظيم المعلومات وعرض الخيارات والمخاطر، بينما يبقى القرار نفسه للإنسان.", "Using AI to organise information and lay out options and risks, while the decision itself stays with a person."), [5, 10]);
+  G("automation", "Automation", "الأتمتة", L("جعل مهمة متكررة تُنفَّذ تلقائيًا بأداة أو برنامج بدل التنفيذ اليدوي، مع سجل واختبارات.", "Making a repetitive task run automatically by a tool or program instead of by hand, with a log and tests."), [3, 13, 17]);
+  G("system", "System", "النظام (المنظومة)", L("سلسلة خطوات مترابطة تبدأ بحدث وتنتهي بقرار؛ مخرج كل خطوة مدخل التالية تلقائيًا، والإنسان يتدخل عند الاستثناء والقرار فقط.", "A chain of linked steps from an event to a decision; each output feeds the next automatically, and the human steps in only for exceptions and decisions."), [3, 37]);
+  G("agent", "AI agent", "الوكيل الذكي", L("نظام يُعطى هدفًا ويملك أدوات، ويكرر التنفيذ والمراجعة والتصحيح حتى يتحقق الهدف أو يصل لحدّ توقف محدد سلفًا.", "A system given a goal and tools that iterates — acting, checking, correcting — until the goal is met or a preset stop limit is reached."), [6, 39], A("موظف تكلّفه بمهمة كاملة، لا موظف استعلامات يجيب ثم ينتهي.", "An employee given a whole task, not an information-desk clerk who answers and leaves."));
+
+  /* ---- Guide 1: prompting & thinking ---- */
+  G("actionable-result", "Actionable result", "نتيجة قابلة للتنفيذ", L("مخرج تستطيع العمل به مباشرة (قرار، أو خطوات، أو ملف) لا كلامًا عامًا يحتاج إعادة صياغة.", "An output you can act on directly (a decision, steps, a file), not general talk that needs reworking."), [7]);
+  G("audience", "Audience", "الجمهور", L("من سيقرأ النتيجة أو يستخدمها. تحديده يغير اللغة والعمق والطول (مدير تنفيذي ≠ فريق تشغيل).", "Who will read or use the result. Naming it changes language, depth and length (an executive ≠ an operations team)."), [7, 25]);
+  G("constraints", "Constraints", "القيود", L("الحدود التي يجب أن تلتزم بها النتيجة: الطول، والشكل، والأسلوب، وما يُمنع ذكره.", "The limits a result must respect: length, format, style and what must not be mentioned."), [7]);
+  G("assumption", "Assumption", "الافتراض", L("معلومة يملأ بها النموذج (أو الإنسان) فراغًا دون أن يتحقق منها. الخطر أنها تبقى صامتة إن لم تطلب إظهارها.", "Information the model (or a person) fills a gap with, unverified. The danger is that it stays silent unless you ask to surface it."), [7, 11]);
+  G("edge-case", "Edge case", "الحالة الاستثنائية (الحدّية)", L("مدخل غير معتاد يكشف الأخطاء: خلية فارغة، أو قيمة صفر، أو فترة بلا بيانات، أو ملف ناقص.", "An unusual input that exposes errors: an empty cell, a zero, a period with no data, a missing file."), [7, 13, 30]);
+  G("done-criterion", "Done criterion", "معيار الإنجاز", L("وصف واضح لما يعنيه «انتهت المهمة» قبل أن تبدأ، حتى تعرف متى تتوقف ومتى تكون النتيجة كافية.", "A clear description of what “done” means before you start, so you know when to stop and when the result is enough."), [9]);
+  G("acceptance-criterion", "Acceptance criterion", "معيار القبول", L("شرط قابل للفحص يجب أن تجتازه النتيجة لتُعتمد، مثل «المجموع يطابق إكسل».", "A checkable condition the result must pass to be approved, like “the total matches Excel”."), [10, 23]);
+  G("root-cause", "Root cause", "السبب الجذري", L("السبب الحقيقي وراء المشكلة لا عَرَضها الظاهر؛ علاجه يمنع تكرارها.", "The real reason behind a problem, not its visible symptom; fixing it prevents recurrence."), [10, 27]);
+  G("reversibility", "Reversibility", "قابلية التراجع", L("مدى سهولة العودة عن قرار. القرارات الصعبة التراجع تستحق تأنيًا وتحققًا أكثر.", "How easily a decision can be undone. Hard-to-reverse decisions deserve more care and checking."), [11]);
+  G("pre-mortem", "Pre-mortem", "التشريح المسبق", L("تخيّل أن الخطة فشلت بعد ستة أشهر، ثم اسأل: لماذا؟ أسلوب يكشف المخاطر قبل وقوعها.", "Imagine the plan failed six months from now, then ask: why? A way to surface risks before they happen."), [11]);
+  G("scenario", "Scenario", "السيناريو", L("صورة محتملة للمستقبل (متفائل، متوقع، متشائم) تُقارن بها القرارات قبل اتخاذها.", "A possible picture of the future (optimistic, expected, pessimistic) used to compare decisions before making them."), [11]);
+  G("notebook", "Notebook (NotebookLM)", "دفتر المعرفة", L("أداة تجيب من مصادرك أنت فقط (ملفات تضيفها) وتشير لموضع كل إجابة، فتصبح «دماغًا ثانيًا» لعملك.", "A tool that answers only from your own sources (files you add) and points to where each answer came from — a “second brain” for your work."), [12]);
+  G("source", "Source", "المصدر", L("الملف أو الوثيقة التي تُبنى عليها الإجابة. إجابة بلا مصدر تحتاج تحققًا أكثر.", "The file or document an answer is built on. An answer without a source needs more checking."), [12]);
+  G("citation", "Citation", "الإحالة (الاستشهاد)", L("إشارة داخل الإجابة إلى الموضع الدقيق في المصدر، لتتحقق منها بنفسك.", "A pointer in the answer to the exact place in the source, so you can verify it yourself."), [12]);
+  G("rag", "Retrieval-augmented generation (RAG)", "التوليد المعزز بالاسترجاع", L("أن يبحث النظام أولًا في مصادرك عن المقاطع المناسبة، ثم يكتب الإجابة منها لا من ذاكرته العامة.", "The system first searches your sources for relevant passages, then writes the answer from them rather than its general memory."), [12, 13], { src: "add" });
+  G("formula", "Excel formula", "معادلة إكسل", L("تعليمة حسابية في خلية تبدأ بعلامة يساوي. يستطيع الذكاء الاصطناعي كتابتها وشرحها وتصحيحها إذا وصفت له البيانات بدقة.", "A calculation in a cell starting with an equals sign. AI can write, explain and fix it if you describe the data precisely."), [13]);
+  G("macro", "Macro", "الماكرو", L("مجموعة خطوات مسجلة أو مكتوبة تنفذ مهمة متكررة في إكسل بضغطة واحدة.", "A recorded or written set of steps that performs a repetitive Excel task in one click."), [13, 14]);
+  G("vba", "VBA", "لغة VBA", L("لغة البرمجة المدمجة في برامج أوفيس، تُكتب بها الماكرو.", "The programming language built into Office apps, used to write macros."), [13]);
+  G("module", "Module (VBA)", "الوحدة البرمجية (Module)", L("المكان داخل محرر VBA الذي يُلصق فيه كود الماكرو.", "The place inside the VBA editor where macro code is pasted."), [14]);
+  G("thirty-seconds", "The 30-second rule", "معيار الثلاثين ثانية", L("أن تُفهم الرسالة الأساسية للعرض أو الصفحة خلال أول ثلاثين ثانية، ويُترك التعمق لمن يريده.", "The core message of a presentation or page must be understood in the first thirty seconds; depth is left to those who want it."), [15, 21, 31]);
+
+  /* ---- Guide 2: Python automation & analysis ---- */
+  G("python", "Python", "بايثون", L("لغة برمجة قريبة من الإنجليزية، ومكتباتها في التحليل والأتمتة هي الأغنى؛ الأنسب لغير المبرمج.", "A programming language close to English, with the richest analysis and automation libraries — the best fit for non-programmers."), [17, 29]);
+  G("task-spec", "Task specification", "مواصفة المهمة", L("وصف المهمة بخمسة عناصر قبل أي كود: المشكلة، والمدخلات، والقواعد، والنتيجة، والاختبارات.", "Describing a task in five elements before any code: problem, inputs, rules, output and tests."), [17]);
+  G("test-case", "Test case", "حالة الاختبار", L("مدخل محدد مع النتيجة المتوقعة منه؛ يكشف هل الأداة تعمل فعلًا لا شكلًا.", "A specific input with its expected result; reveals whether a tool really works, not just looks like it."), [17, 19]);
+  G("run-log", "Run log", "سجل التشغيل", L("سطر مكتوب لكل تشغيل: ماذا قُرئ، وكم صفًا، وما الذي استُبعد ولماذا. بدونه يستحيل تشخيص الخطأ.", "A written line per run: what was read, how many rows, what was excluded and why. Without it, diagnosis is impossible."), [17, 29, 40]);
+  G("explicit-failure", "Explicit failure", "الفشل الصريح", L("أن تتوقف الأداة برسالة واضحة عند ملف ناقص أو عمود مفقود، بدل أن تُخرج أرقامًا خاطئة بصمت.", "A tool stopping with a clear message on a missing file or column, instead of silently producing wrong numbers."), [17, 29]);
+  G("api", "API", "واجهة برمجية (API)", L("باب محدد في نظام أو خادم له عنوان، تطلب منه بيانات أو تنفيذ شيء بطريقة منظمة.", "A specific door into a system or server, with an address, that you ask for data or actions in an organised way."), [18, 29], A("الجرسون في المطعم: تطلب منه، فيحضر لك من المطبخ.", "The waiter in a restaurant: you order, and they bring it from the kitchen."));
+  G("xlwings", "xlwings", "xlwings", L("مكتبة بايثون تتحكم في إكسل مباشرة: تقرأ وتكتب وتشغّل الماكرو.", "A Python library that controls Excel directly: read, write, run macros."), [18]);
+  G("playwright", "Playwright", "Playwright", L("مكتبة تتحكم في المتصفح كأنها مستخدم: تفتح الصفحات وتملأ النماذج وتضغط الأزرار بثبات.", "A library that drives a browser like a user: opens pages, fills forms, clicks buttons reliably."), [18]);
+  G("pywinauto", "pywinauto", "pywinauto", L("مكتبة تتحكم في برامج ويندوز عبر عناصر واجهتها (أسماء الأزرار والحقول).", "A library that controls Windows programs through their UI elements (button and field names)."), [18]);
+  G("pyautogui", "PyAutoGUI", "PyAutoGUI", L("مكتبة تحاكي الفأرة ولوحة المفاتيح وتطابق الصور؛ الأكثر عرضة للانكسار، فهي الملاذ الأخير.", "A library that simulates mouse and keyboard and matches images; the most breakable, so it’s the last resort."), [18]);
+  G("watchdog", "watchdog", "watchdog", L("مكتبة تراقب مجلدًا وتشغّل الأداة تلقائيًا عند وصول ملف جديد.", "A library that watches a folder and runs the tool automatically when a new file arrives."), [18, 19]);
+  G("pyinstaller", "PyInstaller", "PyInstaller", L("أداة تحوّل برنامج بايثون إلى ملف تشغيل واحد يعمل على أجهزة لا تحتوي بايثون.", "A tool that turns a Python program into a single executable that runs on machines without Python."), [19]);
+  G("pandas", "pandas", "pandas", L("أشهر مكتبة بايثون للمعالجة: قراءة إكسل والنصوص، والتنظيف، والدمج، والتجميع.", "Python’s best-known processing library: reading Excel and text, cleaning, merging, aggregating."), [19, 29]);
+  G("polars", "Polars", "Polars", L("مكتبة معالجة بيانات سريعة جدًا للملفات الكبيرة، بديل لـ pandas عند الحجم الضخم.", "A very fast data-processing library for large files, an alternative to pandas at scale."), [19]);
+  G("duckdb", "DuckDB", "DuckDB", L("محرك استعلام يطرح أسئلة بلغة SQL مباشرة على الملفات، بل على مجلد كامل، دون قاعدة بيانات أو استيراد.", "A query engine that asks SQL questions directly on files — even a whole folder — without a database or importing."), [19, 29]);
+  G("sql", "SQL", "لغة SQL", L("لغة لطرح الأسئلة على البيانات الجدولية: اختر، وصفِّ، واجمع، ورتّب.", "A language for asking questions of tabular data: select, filter, aggregate, sort."), [19, 29]);
+  G("ydata-profiling", "ydata-profiling", "ydata-profiling", L("مكتبة تنتج تقرير جودة تلقائيًا لأي جدول: القيم الناقصة، والتوزيعات، والتكرار، والارتباطات.", "A library that auto-generates a quality report for any table: missing values, distributions, duplicates, correlations."), [19]);
+  G("data-quality", "Data quality", "جودة البيانات", L("مدى اكتمال البيانات واتساقها وصحتها قبل التحليل: لا نقص ولا تكرار ولا صيغ مختلطة.", "How complete, consistent and correct data is before analysis: no gaps, duplicates or mixed formats."), [19, 24]);
+  G("outlier", "Outlier", "القيمة الشاذة", L("رقم بعيد جدًا عن بقية القيم؛ قد يكون خطأ إدخال أو حدثًا حقيقيًا يستحق الانتباه.", "A number far from the rest; may be an entry error or a real event worth attention."), [19, 31]);
+  G("governance", "Governance", "الحوكمة", L("قواعد من يملك ماذا، ومن يصل لماذا، وكيف تُراجع التغييرات وتُسجَّل — للبيانات أو للوكلاء.", "The rules of who owns what, who can access what, and how changes are reviewed and logged — for data or for agents."), [20, 40]);
+  G("single-source-of-truth", "Single source of truth", "مصدر الحقيقة الواحد", L("لكل رقم تعريف واحد ومكان واحد يُحسب فيه، فلا تتضارب التقارير ولا تضيع الاجتماعات في الجدال.", "Each number has one definition and one place where it’s computed, so reports never conflict."), [20, 37]);
+  G("streamlit", "Streamlit", "Streamlit", L("مكتبة بايثون تبني تطبيق تحليل تفاعليًا في المتصفح بأسطر قليلة.", "A Python library that builds an interactive analysis app in the browser in a few lines."), [21]);
+  G("dash", "Dash", "Dash", L("إطار بايثون لبناء لوحات تحليل تفاعلية أغنى وأكثر تحكمًا.", "A Python framework for building richer, more controllable interactive dashboards."), [21]);
+  G("plotly", "Plotly", "Plotly", L("مكتبة رسوم تفاعلية تُحفظ كصفحة ويب واحدة مستقلة.", "An interactive charting library that saves as a single standalone web page."), [21, 28]);
+  G("jinja", "Jinja", "Jinja", L("نظام قوالب يحوّل نتائج التحليل إلى صفحة HTML منسقة تلقائيًا.", "A templating system that turns analysis results into a formatted HTML page automatically."), [21]);
+  G("gsap", "GSAP", "GSAP", L("مكتبة حركة للويب؛ تُستخدم لتوجيه الانتباه لا للزينة.", "A web animation library; used to guide attention, not to decorate."), [21]);
+  G("revealjs", "Reveal.js", "Reveal.js", L("مكتبة تحوّل صفحة الويب نفسها إلى عرض شرائح بانتقالات.", "A library that turns the web page itself into a slide deck with transitions."), [21]);
+  G("pipeline", "Pipeline", "خط المعالجة", L("سلسلة مراحل متتابعة (قراءة، تنظيف، دمج، تحليل، رسوم، صفحة) يغذي كل منها التالي.", "A sequence of stages (read, clean, merge, analyse, chart, page), each feeding the next."), [22, 23]);
+
+  /* ---- Guide 3: dashboards ---- */
+  G("dashboard", "Dashboard", "لوحة المعلومات", L("صفحة تعرض المؤشرات والرسوم والتفاصيل لتخدم قرارًا محددًا، لا لتعرض كل البيانات.", "A page showing KPIs, charts and details to serve a specific decision, not to show all the data."), [24]);
+  G("kpi", "KPI", "مؤشر الأداء الرئيسي", L("رقم يلخص أداء جانب مهم (المبيعات، الهامش، نسبة التوقف) ويستحق الظهور في صدر اللوحة.", "A number summarising an important aspect of performance (sales, margin, downtime) that deserves the top of the dashboard."), [24, 25]);
+  G("filter", "Filter", "عامل التصفية (الفلتر)", L("أداة تقطّع البيانات (بالفترة، أو المنتج، أو المنطقة) فتتحدث كل عناصر اللوحة معًا.", "A control that slices data (by period, product or region) so every dashboard element updates together."), [24, 28]);
+  G("merged-cells", "Merged cells", "الخلايا المدمجة", L("خلايا إكسل مدمجة للشكل؛ تربك قراءة البنية الجدولية ويجب فكها قبل التحليل.", "Excel cells merged for looks; they confuse the table structure and must be unmerged before analysis."), [24]);
+
+  /* ---- Guide 4: the web app ---- */
+  G("vscode", "VS Code", "محرر VS Code", L("محرر أكواد مجاني من مايكروسوفت يجمع الملفات والمحرر والطرفية والمعاينة في نافذة واحدة، وبيت المساعد البرمجي.", "Microsoft’s free code editor that gathers files, editor, terminal and preview in one window — the coding assistant’s home."), [26]);
+  G("terminal", "Terminal", "الطرفية", L("نافذة تكتب فيها أوامر نصية بدل الضغط على أزرار؛ منها تشغّل التطبيق وتثبّت المكتبات.", "A window where you type text commands instead of clicking buttons; you run apps and install libraries from it."), [26, 31]);
+  G("extension", "Extension", "الإضافة", L("برنامج صغير يضيف ميزة للمحرر. ابدأ بثلاث (العربية، وبايثون، وClaude Code)؛ كل إضافة تبطئ المحرر.", "A small add-on that gives the editor a feature. Start with three (Arabic, Python, Claude Code); each one slows the editor."), [26]);
+  G("claude-code", "Claude Code", "Claude Code", L("مساعد برمجي يقرأ مشروعك كله، وينشئ الملفات ويعدّلها، ويشغّل الأوامر ويصلح أخطاءها؛ أنت تراجع وتوافق.", "A coding assistant that reads your whole project, creates and edits files, runs commands and fixes errors; you review and approve."), [27]);
+  G("claude-md", "CLAUDE.md", "ملف CLAUDE.md", L("ملف نصي في جذر المشروع يُقرأ تلقائيًا في بداية كل جلسة: التقنيات، والقواعد، وأوامر التشغيل، وما يُمنع لمسه.", "A text file at the project root read automatically every session: tech, rules, run commands, and what must not be touched."), [27, 30]);
+  G("html", "HTML", "HTML", L("لغة هيكل الصفحة: تحدد ماذا يوجد فيها (عنوان، وجدول، وزر، وحقل).", "The page’s structure language: defines what’s on it (title, table, button, field)."), [28], A("الهيكل الخرساني للمبنى.", "The building’s concrete frame."));
+  G("css", "CSS", "CSS", L("لغة شكل الصفحة: الألوان والمسافات والخطوط والترتيب على الشاشات المختلفة.", "The page’s look language: colours, spacing, fonts and layout across screens."), [28], A("التشطيب والديكور.", "The finish and décor."));
+  G("javascript", "JavaScript", "JavaScript", L("لغة سلوك الصفحة: ماذا يحدث عند الضغط أو تغيير فلتر.", "The page’s behaviour language: what happens on a click or a filter change."), [28], A("الكهرباء والحركة في المبنى.", "The building’s wiring and motion."));
+  G("tailwind", "Tailwind CSS", "Tailwind CSS", L("طريقة تنسيق سريعة بأسماء جاهزة داخل العنصر نفسه بدل ملف تنسيق طويل.", "A fast styling approach using ready class names on the element itself instead of a long stylesheet."), [28]);
+  G("framework", "Framework", "إطار العمل", L("بنية جاهزة (مثل React) تنظم الواجهات المعقدة؛ مفيدة للتطبيقات الكبيرة ولا حاجة لها في البداية.", "A ready structure (like React) for organising complex interfaces; useful for big apps, unnecessary at the start."), [28]);
+  G("responsive", "Responsive design", "التصميم المتجاوب", L("أن تتكيف الصفحة مع حجم الشاشة فتعمل على الحاسوب والهاتف معًا.", "A page adapting to screen size so it works on desktop and phone alike."), [28]);
+  G("selector", "Selector", "المحدِّد", L("الطريقة التي يُشار بها لعنصر بعينه (بالاسم أو الفئة) لتطبيق تنسيق عليه.", "How a specific element is targeted (by name or class) to apply styling."), [28]);
+  G("event", "Event", "الحدث", L("ضغطة أو تغيير يستدعي دالة تنفذ شيئًا؛ وفي الأنظمة: وصول ملف جديد يبدأ السلسلة.", "A click or change that calls a function; in systems, a new file arriving that starts the chain."), [28, 37]);
+  G("server", "Server (back end)", "الخادم (الواجهة الخلفية)", L("العقل الذي يقرأ الملفات ويحسب ويطبّق قواعد العمل ويسلّم النتيجة للواجهة؛ لا يظهر لكنه مصدر كل رقم.", "The brain that reads files, computes, applies business rules and hands results to the interface; unseen, yet the source of every number."), [29]);
+  G("fastapi", "FastAPI", "FastAPI", L("إطار خادم بايثون يحوّل الدوال إلى نقاط وصول بأسطر قليلة ويولّد صفحة توثيق تفاعلية تلقائيًا.", "A Python server framework that turns functions into endpoints in a few lines and auto-generates interactive docs."), [29]);
+  G("sqlite", "SQLite", "SQLite", L("قاعدة بيانات كاملة في ملف واحد بلا خادم ولا تثبيت؛ مثالية للتطبيق المحلي.", "A complete database in a single file with no server or install; ideal for a local app."), [29]);
+  G("json", "JSON", "JSON", L("صيغة نصية منظمة تنتقل بها البيانات بين الواجهة والخادم.", "An organised text format carrying data between interface and server."), [29], A("الصينية المنظمة التي يحمل عليها الجرسون الطلب.", "The tidy tray the waiter carries the order on."));
+  G("endpoint", "Endpoint", "نقطة الوصول", L("عنوان باب واحد في الخادم تطلب منه بيانات بعينها، مثل «أعطني ملخص المبيعات».", "The address of one door in the server you ask for specific data, like “give me the sales summary”."), [29, 31]);
+  G("localhost", "localhost", "الخادم المحلي", L("خادم يعمل على جهازك أنت فقط ولا يراه أحد سواك.", "A server running only on your machine, invisible to anyone else."), [30, 31]);
+  G("library", "Library", "المكتبة البرمجية", L("كود جاهز كتبه غيرك تستدعيه بدل أن تبنيه بنفسك.", "Ready-made code by others that you call instead of building it yourself."), [31]);
+
+  /* ---- Guide 5: GitHub, models, system, team ---- */
+  G("git", "Git", "Git", L("برنامج على جهازك يسجّل كل تغيير في ملفات المشروع كنقطة محفوظة يمكن العودة إليها، ويعمل بلا إنترنت.", "A program on your machine that records every change to project files as a save point you can return to; works offline."), [32]);
+  G("github", "GitHub", "GitHub", L("موقع يستضيف مشاريع Git على الإنترنت، فتُحفظ نسختك خارج جهازك ويعمل فريقك معك.", "A website hosting Git projects online, so your copy is kept off your machine and your team works with you."), [32]);
+  G("repo", "Repository (repo)", "المستودع", L("مجلد المشروع كاملًا ومعه تاريخ كل تعديل حدث فيه.", "The whole project folder together with the history of every change in it."), [32], A("ملف القضية بكل أوراقه ومحاضره.", "A case file with all its papers and minutes."));
+  G("commit", "Commit", "نقطة الحفظ (Commit)", L("مجموعة تعديلات محفوظة برسالة تشرح «ماذا ولماذا»، وبصاحبها وتوقيتها.", "A saved set of changes with a “what and why” message, author and time."), [32, 33], A("محضر اجتماع موقّع ومؤرخ.", "Signed, dated meeting minutes."));
+  G("branch", "Branch", "الفرع", L("مسار جانبي تجرّب فيه دون المساس بالمسار الرئيسي؛ نجحت التجربة؟ ادمجها. فشلت؟ احذفها.", "A side track to experiment without touching main; worked? merge it. failed? delete it."), [32, 33], A("مسودة جانبية بجوار النسخة المعتمدة.", "A side draft next to the approved version."));
+  G("merge", "Merge", "الدمج", L("ضم المسار الجانبي إلى الرئيسي بعد نجاح التجربة واعتمادها.", "Bringing the side track into main after the experiment succeeds and is approved."), [32, 33]);
+  G("remote", "Remote / origin", "النسخة البعيدة (origin)", L("النسخة المستضافة على GitHub مقابل نسختك على الجهاز.", "The copy hosted on GitHub as opposed to your copy on the machine."), [32]);
+  G("clone", "Clone", "الاستنساخ (Clone)", L("تنزيل مشروع كامل بتاريخه من GitHub إلى جهازك.", "Downloading a whole project with its history from GitHub to your machine."), [32, 33]);
+  G("pull-request", "Pull request (PR)", "طلب الدمج (Pull Request)", L("طلب مراجعة تعديلاتك قبل دمجها في المسار الرئيسي.", "A request to review your changes before merging them into main."), [32, 33], A("رفع مذكرة للاعتماد قبل التنفيذ.", "Submitting a memo for approval before execution."));
+  G("gitignore", ".gitignore", "ملف ‎.gitignore‎", L("ملف يحدد ما يجب ألّا يُرفع أبدًا: الإعدادات، والمفاتيح، وكلمات المرور، وملفات البيانات الكبيرة.", "A file listing what must never be uploaded: settings, keys, passwords, large data files."), [33]);
+  G("moe", "Mixture of Experts (MoE)", "الخبراء المتفرقون (MoE)", L("بنية يكون فيها النموذج ضخمًا إجمالًا لكنه يفعّل جزءًا صغيرًا منه لكل سؤال: ذكاء الكبير بتكلفة أقرب للصغير.", "An architecture where the model is huge overall but activates only a small part per question: big-model smarts at near-small cost."), [34]);
+  G("open-weights", "Open weights", "مفتوح الأوزان", L("نموذج يمكن تنزيل أوزانه وتشغيله داخل مؤسستك. لا يعني بالضرورة رخصة حرة بالكامل، ولا أن جهازك يكفي لتشغيله.", "A model whose weights can be downloaded and run in-house. Not necessarily a fully free licence, nor small enough for your machine."), [34, 35]);
+  G("quantization", "Quantization", "الضغط (Quantization)", L("ضغط أرقام النموذج من دقة عالية إلى أقل، فينكمش حجمه إلى الربع تقريبًا مع فقد بسيط جدًا في الجودة. Q4_K_M هو التوازن المبدئي.", "Compressing a model’s numbers to lower precision, shrinking it to about a quarter with very little quality loss. Q4_K_M is the default balance."), [36], A("تحويل قاموس ضخم إلى نسخة جيب.", "Turning a giant dictionary into a pocket edition."));
+  G("ollama", "Ollama", "Ollama", L("أداة سطر أوامر خفيفة لتشغيل النماذج محليًا: pull للتنزيل، وrun للمحادثة، وlist للعرض، وrm للحذف.", "A light command-line tool to run models locally: pull to download, run to chat, list to view, rm to delete."), [36]);
+  G("lm-studio", "LM Studio", "LM Studio", L("تطبيق سطح مكتب لتشغيل النماذج محليًا بواجهة رسومية، يخبرك هل النموذج يناسب ذاكرة جهازك.", "A desktop app to run models locally with a graphical interface; tells you whether a model fits your memory."), [36]);
+  G("event-driven", "Event-driven", "البناء على الأحداث", L("أن يبدأ النظام العمل حين يقع حدث (وصول ملف جديد) لا حين تدق الساعة.", "The system starts work when an event happens (a new file arrives), not when the clock strikes."), [37]);
+  G("traceability", "Traceability", "قابلية التتبع", L("أن يمكن تتبع كل رقم في المخرج رجوعًا إلى صفه في الملف المصدر؛ شرط ثقة الناس بالنظام.", "Every output number can be traced back to its row in the source file — the condition for people to trust the system."), [37, 38]);
+  G("vertical-slice", "Vertical slice", "الشريحة العمودية", L("بناء عملية واحدة صغيرة بكل طبقات النظام حتى الإشعار والقرار، قبل التوسع لبقية العمليات.", "Building one small process through every layer of the system, through alert and decision, before expanding."), [38], A("إضاءة بيت واحد بالكامل بدل مد أسلاك القرية كلها.", "Fully lighting one house instead of wiring the whole village."));
+  G("orchestrator", "Coordinator (orchestrator)", "المنسّق", L("الوكيل الذي يفهم الطلب ويقسمه ويوزعه ويجمع النتائج، ولا يلمس البيانات مباشرة.", "The agent that understands the request, splits and assigns it and gathers results, never touching data directly."), [39]);
+  G("least-privilege", "Least privilege", "أقل صلاحية ممكنة", L("ألا يُمنح أي وكيل أو مستخدم صلاحية أوسع مما تتطلبه مهمته بالضبط؛ الإرسال والحذف بموافقة بشرية.", "No agent or user gets wider permission than the task needs; sending and deleting need human approval."), [39, 40]);
+})();
+
+;
 /* data/meta.js */
 /* Book structure: units, the 8-level journey (p4), the 41-page map, help, customiser options, project data. */
 (function () {
@@ -927,6 +1284,44 @@ ACAD.pdfPath = "../AI_Essentials_Course_For_Modern_Workspace.pdf";
     app: ["u4-p-a1", "u4-p-a2", "u4-p-a3", "u4-p-a4", "u4-p-a5"],
     system: ["u5-p-diagnose", "u5-p-define", "u5-p-slice", "u5-p-team-design", "u5-p-critic"],
   };
+})();
+
+;
+/* data/prompts-u0.js */
+/* Prompt library — the introduction (pages 1–6, 41). All are academy additions built on the book’s ideas. */
+(function () {
+  const L = (ar, en) => ({ ar, en });
+  const P = (o) => ACAD.P(Object.assign({ src: "add" }, o));
+
+  P({ id: "u0-p-explain", lesson: "u0-model", pages: [2], cat: "learn", icon: "🔍",
+    title: L("اشرح لي كيف وصلت لهذه الإجابة", "Explain how you reached this answer"),
+    goal: L("أن ترى الافتراضات والمصادر خلف الإجابة بدل أن تقبلها كصندوق أسود.", "See the assumptions and sources behind an answer instead of accepting a black box."),
+    text: L("أجبتني للتو عن: [الصق السؤال]. لا تغيّر الإجابة الآن. اشرح لي بلغة بسيطة: ما الافتراضات التي بنيت عليها؟ ما الجزء الذي تعرفه بثقة، وما الجزء الذي استنتجته أو خمّنته؟ وما المعلومة التي لو عرفتها منّي لتغيّرت إجابتك؟", "You just answered: [paste the question]. Don’t change the answer now. Explain in simple language: which assumptions did you build on? Which part do you know confidently, and which part did you infer or guess? And what information, if I gave it to you, would change your answer?"),
+    tip: L("النموذج يتوقع الكلمة التالية من أنماط تعلّمها؛ هذا البرومبت يكشف أين كان التوقع ضعيفًا.", "The model predicts the next word from learned patterns; this prompt reveals where that prediction was weak.") });
+
+  P({ id: "u0-p-map", lesson: "u0-journey", pages: [3, 4], cat: "decide", icon: "🗺️",
+    title: L("ارسم رحلتي: من مهمة إلى نظام", "Map my journey: from a task to a system"),
+    goal: L("قائمة بمهام عملك مصنفة: تحسين بالذكاء، أو أتمتة، أو ربط في نظام.", "Your work tasks sorted into: improve with AI, automate, or connect into a system."),
+    text: L("أعمل في [وظيفتك وإدارتك]. هذه مهامي الأسبوعية: [اذكرها مع الوقت التقريبي لكل مهمة]. صنّفها في ثلاث مجموعات: (١) مهام يحسّنها الذكاء الاصطناعي كشريك تفكير، (٢) مهام متكررة قابلة للأتمتة، (٣) مهام مترابطة يُنقل بينها شيء يدويًا وتصلح لتكون نظامًا. لكل مهمة اذكر السبب في سطر، ثم اقترح أول مهمة أبدأ بها هذا الأسبوع ولماذا.", "I work as [your role and department]. These are my weekly tasks: [list them with rough time each]. Sort them into three groups: (1) tasks AI improves as a thinking partner, (2) repetitive tasks that can be automated, (3) linked tasks with manual handoffs that could become a system. Give a one-line reason for each, then suggest the first task to start this week and why."),
+    tip: L("ابدأ بمهمة صغيرة متكررة؛ النجاح الأول أهم من الطموح الكبير.", "Start with a small recurring task; a first win beats a big ambition.") });
+
+  P({ id: "u0-p-capabilities", lesson: "u0-capabilities", pages: [5], cat: "work", icon: "🧭",
+    title: L("أين يفيدني الذكاء الاصطناعي في وظيفتي؟", "Where does AI help in my job?"),
+    goal: L("أمثلة عملية من دورك أنت، مع حدود كل استخدام.", "Practical examples from your own role, with each use’s limits."),
+    text: L("وظيفتي: [صفها في سطرين]. أعطني ستة استخدامات عملية للذكاء الاصطناعي في عملي اليومي موزعة على: الكتابة، والتحليل، والبحث، والتعلم، ودعم القرار، والأتمتة. لكل استخدام: مثال محدد من وظيفتي، وما الذي يجب أن أراجعه بنفسي قبل الاعتماد على النتيجة.", "My job: [describe it in two lines]. Give me six practical uses of AI in my daily work across: writing, analysis, research, learning, decision support and automation. For each: a specific example from my job, and what I must review myself before relying on the result."),
+    tip: L("الشق الثاني (ماذا أراجع) هو ما يحوّل القائمة من حماس إلى خطة آمنة.", "The second half (what to review) turns the list from enthusiasm into a safe plan.") });
+
+  P({ id: "u0-p-context", lesson: "u0-assistant", pages: [6], cat: "work", icon: "🗂️",
+    title: L("عرّف مساعدك بسياقك مرة واحدة", "Brief your assistant on your context once"),
+    goal: L("فقرة تعريف ثابتة تحوّل الشات العام إلى مساعد يفهمك.", "A fixed briefing paragraph that turns a generic chat into an assistant that knows you."),
+    text: L("ساعدني أكتب فقرة تعريف ثابتة أضعها في بداية محادثاتي (أو في التعليمات الدائمة) حتى تفهم سياقي دون إعادة شرح. اسألني سؤالًا واحدًا في كل مرة عن: وظيفتي، وجمهوري المعتاد، والأدوات التي أستخدمها، والأسلوب الذي أفضّله في الإجابات، والأشياء التي لا أريدها أبدًا. ثم اكتب الفقرة في أقل من ١٥٠ كلمة.", "Help me write a fixed briefing paragraph to put at the start of my chats (or in standing instructions) so you understand my context without re-explaining. Ask me one question at a time about: my job, my usual audience, the tools I use, the answer style I prefer, and things I never want. Then write the paragraph in under 150 words."),
+    tip: L("هذا هو الفرق بين «شات» يبدأ من الصفر و«مساعد» يتذكر سياقك.", "This is the difference between a chat that starts from zero and an assistant that remembers your context.") });
+
+  P({ id: "u0-p-verify", lesson: "u0-limits", pages: [41], cat: "decide", icon: "🛡️",
+    title: L("افحص إجابتك قبل أن أعتمدها", "Check your answer before I rely on it"),
+    goal: L("قائمة بالادعاءات التي تحتاج تحققًا بشريًا، مرتبة حسب الخطورة.", "A list of claims that need human checking, ranked by risk."),
+    text: L("راجع إجابتك السابقة كمدقق مستقل. استخرج كل رقم وتاريخ واسم ومصدر وادعاء محدد فيها. لكل عنصر: هل هو من معلومات قدمتُها أنا، أم من معرفتك العامة، أم استنتاج؟ ما درجة ثقتك (عالية/متوسطة/منخفضة)؟ وكيف أتحقق منه بنفسي في خطوة واحدة؟ رتّب العناصر بحيث يأتي أخطرها إن كان خاطئًا أولًا.", "Review your previous answer as an independent auditor. Extract every number, date, name, source and specific claim in it. For each item: did it come from information I gave, your general knowledge, or an inference? What’s your confidence (high/medium/low)? And how can I verify it myself in one step? Order the items so the most dangerous-if-wrong comes first."),
+    tip: L("المراجعة البشرية تبقى إلزامية؛ هذا البرومبت يدلّك أين تبدأ {p41}.", "Human review remains mandatory; this prompt shows you where to start {p41}.") });
 })();
 
 ;
@@ -1495,6 +1890,85 @@ ACAD.pdfPath = "../AI_Essentials_Course_For_Modern_Workspace.pdf";
     goal: L("مؤشرات وتقرير أسبوعي للإدارة بلغة النتائج لا التقنية.", "Indicators and a weekly management report in the language of results, not tech."),
     text: L("الفريق يعمل منذ [المدة]. صمّم لي طريقة قياس عملية لأدائه: ما المؤشرات التي أتابعها؟ وكيف أقيس نسبة المخرجات التي احتاجت تدخلًا بشريًا ولماذا احتاجته؟ وكيف أعرف أي وكيل تحديدًا هو مصدر الأخطاء المتكررة؟ واقترح تقريرًا أسبوعيًا مختصرًا يعرض هذه المؤشرات على الإدارة بلغة النتائج لا بلغة التقنية.", "The team has been running for [duration]. Design a practical way to measure its performance: which indicators should I track? How do I measure the share of outputs that needed human intervention and why? How do I find which specific agent is behind recurring errors? And suggest a short weekly report presenting these indicators to management in the language of results, not technology."),
     tip: L("السجل الكامل لكل خطوة هو ما يجعل هذا القياس ممكنًا {p40}.", "The full step log is what makes this measurement possible {p40}.") });
+})();
+
+;
+/* data/quizzes.js */
+/* Unit tests + the final exam (sampled from all unit questions). Each question names the lesson to review if missed.
+   Types: multiple choice (with explanation), order the steps, spot the error, compare, apply to a situation. */
+(function () {
+  const L = (ar, en) => ({ ar, en });
+  const Q = ACAD.quizzes;
+  const M = (lesson, q, opts, a, why, ex) => ({ lesson, q, opts, a, why, ex });
+  const O = (lesson, q, items, why) => ({ type: "order", lesson, q, items, why });
+
+  Q.push({ id: "u0", unit: "u0", icon: "🧭", title: L("اختبار المدخل", "Introduction test"), lead: L("ما النموذج؟ وكيف تطورنا من الشات إلى الوكيل؟ ولماذا تبقى المراجعة البشرية؟", "What is a model? How did we go from chat to agent? Why does human review remain?"), questions: [
+    M("u0-model", L("أين «تُخزَّن» معرفة النموذج؟", "Where is a model’s knowledge “stored”?"), L(["في قاعدة بيانات من الإجابات الجاهزة", "في أرقام داخلية (معاملات) تعلّمها أثناء التدريب", "في الإنترنت يبحث فيه كل مرة", "في ذاكرة المستخدم"], ["In a database of ready answers", "In internal numbers (parameters) learned in training", "On the internet, searched each time", "In the user’s memory"]), 1, L("المعرفة موزعة في المعاملات التي ضُبطت أثناء التدريب {p34}.", "Knowledge is spread across parameters tuned during training {p34}.")),
+    M("u0-model", L("النموذج يكتب الإجابة عن طريق:", "A model writes an answer by:"), L(["نسخ نص محفوظ", "توقّع الجزء التالي من النص خطوة بخطوة", "سؤال إنسان", "البحث في جوجل دائمًا"], ["Copying stored text", "Predicting the next piece of text step by step", "Asking a human", "Always searching Google"]), 1, L("التوليد توقّع متتابع للتوكن التالي؛ لذلك قد يبدو مقنعًا وهو خاطئ.", "Generation is successive next-token prediction — so it can sound convincing while being wrong.")),
+    O("u0-journey", L("رتّب رحلة التطور كما يقدّمها المدخل:", "Order the evolution as the introduction presents it:"), L(["البرامج التقليدية", "الشات (سؤال وجواب)", "المساعد الذي يفهم سياقك", "الوكيل الذي ينفذ بأدوات", "الفريق الرقمي"], ["Traditional programs", "Chat (Q&A)", "The assistant that understands context", "The agent that acts with tools", "The digital team"]), L("من أداة إلى نظام إلى فريق {p2, p6}.", "From tool to system to team {p2, p6}.")),
+    M("u0-assistant", L("ما الذي يميز «المساعد» عن «الشات التقليدي»؟", "What distinguishes the “assistant” from “traditional chat”?"), L(["أنه أسرع", "يفهم سياقك ويتذكر ما سبق ويساعدك باستمرار", "أنه مجاني", "أنه ينفذ الأوامر على جهازك"], ["It’s faster", "It understands your context, remembers and keeps helping", "It’s free", "It runs commands on your machine"]), 1, L("{p6}", "{p6}")),
+    M("u0-limits", L("🔎 اكتشف الخطأ: «طالما الإجابة مكتوبة بثقة وتنسيق احترافي، فهي صحيحة».", "🔎 Spot the error: “As long as the answer is confident and well-formatted, it’s correct.”"), L(["العبارة صحيحة", "الثقة والتنسيق لا يضمنان الصحة؛ المراجعة البشرية لازمة", "صحيحة فقط بالإنجليزية", "صحيحة للأرقام فقط"], ["The statement is right", "Confidence and formatting don’t guarantee correctness; human review is required", "Right only in English", "Right only for numbers"]), 1, L("النموذج قد يهلوس بثقة كاملة {p41}.", "A model can hallucinate with full confidence {p41}.")),
+    M("u0-capabilities", L("أي استخدام يمثل «دعم القرار»؟", "Which use is “decision support”?"), L(["أن يتخذ النموذج القرار نيابة عنك", "أن يعرض لك الخيارات والمخاطر وتبقى أنت صاحب القرار", "أن يكتب بريدًا", "أن يترجم نصًا"], ["The model decides for you", "It lays out options and risks while you stay the decider", "It writes an email", "It translates text"]), 1, L("القرار ذو الأثر يبقى للإنسان.", "Impactful decisions stay with people.")),
+    M("u0-model", L("لماذا قد تختلف إجابتان للسؤال نفسه؟", "Why might two answers to the same question differ?"), L(["لأن النموذج معطّل", "لأن التوليد احتمالي ويتأثر بالصياغة والسياق", "لأن الإنترنت انقطع", "لا تختلف أبدًا"], ["The model is broken", "Generation is probabilistic and shaped by wording and context", "The internet dropped", "They never differ"]), 1, L("لهذا نوضح السياق ونطلب شكل مخرج محددًا.", "That’s why we give context and request a specific output format.")),
+    M("u0-journey", L("ما هدف الكورس النهائي كما في صفحته؟", "What is the course’s final aim per its page?"), L(["حفظ أسماء الأدوات", "أن ترى عملك كنظام متكامل وتعرف أين تصنع التقنية أثرًا حقيقيًا", "تعلم البرمجة الاحترافية", "استبدال الموظفين"], ["Memorise tool names", "See your work as an integrated system and know where technology makes real impact", "Learn professional programming", "Replace staff"]), 1, L("{p3}", "{p3}")),
+  ] });
+
+  Q.push({ id: "u1", unit: "u1", icon: "✍️", title: L("اختبار الدليل الأول", "Guide 1 test"), lead: L("الطلب الجيد، والحوار، والتفكير الاستراتيجي، والدماغ الثاني، وإكسل والعرض.", "Good requests, conversation, strategic thinking, the second brain, Excel and presenting."), questions: [
+    M("u1-five", L("أي طلب يحتوي سياقًا وجمهورًا وقيدًا وشكل مخرج؟", "Which request has context, audience, constraint and output format?"), L(["اكتب تقريرًا عن المبيعات", "لخّص هذا", "أنا مدير مبيعات؛ لخّص هذا التقرير لمجلس الإدارة في ٥ نقاط بلا مصطلحات تقنية", "اكتب شيئًا مفيدًا"], ["Write a sales report", "Summarise this", "I’m a sales manager; summarise this report for the board in 5 bullets with no jargon", "Write something useful"]), 2, L("العناصر الخمسة ترفع جودة النتيجة {p7}.", "The five elements raise the result’s quality {p7}.")),
+    M("u1-ask", L("ما أثر جملة «اسألني عن أي معلومة ناقصة قبل الإجابة»؟", "What does “ask me about any missing info before answering” do?"), L(["تبطئ النموذج بلا فائدة", "تحوّل الافتراضات الصامتة إلى أسئلة ظاهرة", "تجعله يرفض الإجابة", "لا أثر لها"], ["Slows the model for nothing", "Turns silent assumptions into visible questions", "Makes it refuse", "No effect"]), 1, L("{p7}", "{p7}")),
+    M("u1-conversation", L("النتيجة الأولى لم تعجبك. ما الأفضل؟", "The first result isn’t right. What’s best?"), L(["ابدأ محادثة جديدة بنفس الطلب", "صحّح بإضافة حقيقة أو قيد محدد وتابع الحوار", "اكتب «خطأ» فقط", "اقبلها"], ["Start a new chat with the same request", "Correct by adding a fact or specific constraint and continue", "Just type “wrong”", "Accept it"]), 1, L("الحوار المتدرج يبني على ما سبق {p8}.", "A staged conversation builds on what came before {p8}.")),
+    M("u1-scenarios", L("ما «التشريح المسبق»؟", "What is a “pre-mortem”?"), L(["مراجعة بعد الفشل", "تخيّل أن الخطة فشلت ثم سؤال: لماذا؟ قبل التنفيذ", "حساب التكلفة", "تقرير مالي"], ["A review after failure", "Imagining the plan failed, then asking why — before executing", "A cost calculation", "A financial report"]), 1, L("{p11}", "{p11}")),
+    M("u1-brain", L("ميزة «الدماغ الثاني» (دفتر المعرفة) الأهم:", "The key advantage of the “second brain” (notebook):"), L(["يجيب من الإنترنت كله", "يجيب من مصادرك أنت مع إحالة لموضع الإجابة", "يكتب أسرع", "لا يحتاج ملفات"], ["Answers from the whole internet", "Answers from your own sources, citing where", "Writes faster", "Needs no files"]), 1, L("{p12}", "{p12}")),
+    M("u1-excel", L("🔎 اكتشف الخطأ: «IFERROR هو أفضل حل دائمًا لأنه يخفي كل الأخطاء».", "🔎 Spot the error: “IFERROR is always best because it hides all errors.”"), L(["صحيح", "إخفاء كل الأخطاء يجعل الأخطاء الحقيقية صامتة؛ الأفضل معالجة الحالات المحددة فقط", "صحيح في الجداول الكبيرة", "IFERROR غير موجود"], ["True", "Hiding every error makes real errors silent; better to handle only the named cases", "True for big tables", "IFERROR doesn’t exist"]), 1, L("الفشل الصريح أفضل من النجاح الصامت {p13, p18}.", "Explicit failure beats silent success {p13, p18}.")),
+    O("u1-macro", L("رتّب خطوات تشغيل ماكرو كتبه الذكاء الاصطناعي:", "Order the steps to run an AI-written macro:"), L(["صف المهمة بدقة واطلب الكود", "افتح محرر VBA وأضف Module", "الصق الكود واحفظ الملف بصيغة تدعم الماكرو", "جرّب على نسخة من الملف أولًا"], ["Describe the task precisely and request the code", "Open the VBA editor and add a module", "Paste the code and save as macro-enabled", "Test on a copy of the file first"]), L("{p13, p14}", "{p13, p14}")),
+    M("u1-present", L("معيار الثلاثين ثانية يعني:", "The 30-second rule means:"), L(["العرض كله ٣٠ ثانية", "تُفهم الرسالة الأساسية في أول ٣٠ ثانية", "٣٠ شريحة", "٣٠ رقمًا"], ["The whole talk is 30 seconds", "The core message lands in the first 30 seconds", "30 slides", "30 numbers"]), 1, L("{p15}", "{p15}")),
+  ] });
+
+  Q.push({ id: "u2", unit: "u2", icon: "🐍", title: L("اختبار الدليل الثاني", "Guide 2 test"), lead: L("مواصفة المهمة، وسلّم الأفضلية، ومحرك التحليل، والصفحة التنفيذية.", "The task spec, the preference ladder, the analysis engine and the executive page."), questions: [
+    M("u2-principles", L("أي عنصر من مواصفة المهمة غيابه السبب الأشيع لفشل الأدوات؟", "Which spec element, when missing, most often makes tools fail?"), L(["المشكلة", "المدخلات", "الاختبارات", "النتيجة"], ["Problem", "Inputs", "Tests", "Output"]), 2, L("بلا اختبارات لا أحد يعرف متى تكون النتيجة خاطئة {p17}.", "Without tests nobody knows when the result is wrong {p17}.")),
+    O("u2-level1", L("رتّب طرق الأتمتة من الأثبت إلى الأضعف:", "Order automation methods from most to least stable:"), L(["ملف أو واجهة برمجية", "تحكم مباشر بالتطبيق", "عناصر واجهة البرنامج", "محاكاة المستخدم بالفأرة"], ["A file or API", "Direct app control", "Program UI elements", "Mouse user simulation"]), L("كلما اقتربت من البيانات ثبتت الأتمتة {p18}.", "Closer to the data, steadier automation {p18}.")),
+    M("u2-compass", L("🔎 اكتشف الخطأ: «الأداة الجيدة تكمل العمل دائمًا حتى لو وجدت ملفًا ناقصًا».", "🔎 Spot the error: “A good tool always finishes, even with a missing file.”"), L(["صحيح", "الأداة الجيدة تتوقف برسالة صريحة بدل أرقام خاطئة صامتة", "صحيح إن كان الملف صغيرًا", "صحيح ليلًا"], ["True", "A good tool stops with a clear message instead of silently wrong numbers", "True for small files", "True at night"]), 1, L("الفشل الصريح {p17}.", "Explicit failure {p17}.")),
+    M("u2-analysis", L("ما أول خطوة في محرك التحليل؟", "What’s the first step of the analysis engine?"), L(["الرسم البياني", "فحص جودة البيانات", "الصفحة التنفيذية", "التوقع"], ["The chart", "Checking data quality", "The executive page", "The forecast"]), 1, L("الجودة قبل الرسم {p19}.", "Quality before charts {p19}.")),
+    M("u2-level3", L("في الصفحة التنفيذية، بماذا يبدأ التسلسل؟", "In the executive page, what does the sequence start with?"), L(["بجدول التفاصيل", "بالنتيجة الأساسية", "بشعار الشركة", "بالمنهجية"], ["The details table", "The core result", "The company logo", "The methodology"]), 1, L("النتيجة ← المشكلة ← الأسباب ← الأثر ← القرار {p21}.", "Result → problem → causes → impact → decision {p21}.")),
+    M("u2-level3", L("القاعدة الحاكمة للحركة (GSAP) في الصفحة:", "The governing rule for motion (GSAP) on the page:"), L(["أكبر قدر من الحركة", "الحركة لتوجيه الانتباه فقط لا للزينة", "لا حركة إطلاقًا", "حركة في كل عنصر"], ["As much motion as possible", "Motion only to guide attention, not decoration", "No motion at all", "Motion on every element"]), 1, L("{p21}", "{p21}")),
+    M("u2-platform", L("متى تفكر في ترقية الأداة إلى منصة؟", "When should you consider upgrading the tool to a platform?"), L(["من أول يوم", "حين يتعدد المستخدمون وتظهر حاجة للصلاحيات ومصدر حقيقة واحد", "عندما تريد ألوانًا أجمل", "أبدًا"], ["From day one", "When users multiply and permissions and a single source of truth are needed", "For nicer colours", "Never"]), 1, L("{p20}", "{p20}")),
+    M("u2-project", L("لماذا يُبنى المشروع التطبيقي على مراحل يختبر كل منها؟", "Why is the applied project built in stages each tested?"), L(["لزيادة عدد الملفات", "لأن الخطأ يُكتشف في مرحلته قبل أن يتراكم", "لأنه أسرع دائمًا", "لا داعي"], ["To add files", "So an error is caught in its stage before it compounds", "It’s always faster", "No reason"]), 1, L("{p22, p23}", "{p22, p23}")),
+  ] });
+
+  Q.push({ id: "u3", unit: "u3", icon: "📊", title: L("اختبار الدليل الثالث", "Guide 3 test"), lead: L("من جدول إكسل إلى لوحة قرار: التهيئة والمراحل الثماني والأخطاء الشائعة.", "From an Excel sheet to a decision board: prep, the eight stages and common mistakes."), questions: [
+    M("u3-prepare", L("أي مما يلي **ليس** من قواعد تهيئة البيانات الست؟", "Which is **not** one of the six data-prep rules?"), L(["صف أول لأسماء الأعمدة", "فك الخلايا المدمجة", "تلوين الصفوف بالتناوب", "توحيد صيغ التواريخ"], ["A first row for column names", "Unmerge cells", "Alternate row colours", "Unify date formats"]), 2, L("التلوين شكل لا يخدم القراءة {p24}.", "Colouring is cosmetic and doesn’t help reading {p24}.")),
+    O("u3-stages", L("رتّب أول خمس مراحل:", "Order the first five stages:"), L(["الغرض والجمهور", "التحليل واشتقاق المؤشرات", "اعتماد التصميم نصًا", "البناء", "الفلاتر والتفاعلية"], ["Purpose & audience", "Analysis & KPIs", "Approve the layout as text", "Build", "Filters & interactivity"]), L("{p24}", "{p24}")),
+    M("u3-stages", L("لماذا نعتمد التصميم نصًا قبل البناء؟", "Why approve the layout as text before building?"), L(["لأن النص أجمل", "لأن مراجعة المخطط أسرع وأقل كلفة من مراجعة مخرج منفذ", "لأن النموذج لا يستطيع البناء", "بلا سبب"], ["Text is prettier", "Reviewing a layout is faster and cheaper than reviewing a built output", "The model can’t build", "No reason"]), 1, L("{p24}", "{p24}")),
+    M("u3-stages", L("المرحلة الأكثر حساسية على الإطلاق:", "The most sensitive stage of all:"), L(["الهوية البصرية", "التحقق من صحة الأرقام", "الفلاتر", "الحفظ"], ["Visual identity", "Verifying the numbers", "Filters", "Saving"]), 1, L("{p25}", "{p25}")),
+    M("u3-mistakes", L("🔎 اكتشف الخطأ: «لوحة الإدارة التنفيذية ولوحة الفريق اليومية يجب أن تكونا متطابقتين».", "🔎 Spot the error: “The executive board and the daily team board should be identical.”"), L(["صحيح", "تختلفان جوهريًا حسب الجمهور والقرار", "صحيح إن كانت البيانات واحدة", "صحيح دائمًا"], ["True", "They differ fundamentally by audience and decision", "True if the data is the same", "Always true"]), 1, L("إهمال جمهور العرض من الأخطاء الشائعة {p25}.", "Ignoring the audience is a common mistake {p25}.")),
+    M("u3-mistakes", L("ملفك يتجاوز ٥٠ ألف صف. ما الحل حسب الكتاب؟", "Your file exceeds 50,000 rows. The book’s fix?"), L(["عرضها كلها", "تلخيص البيانات وتجميعها قبل العرض", "حذف نصفها عشوائيًا", "تقسيم الشاشة"], ["Show them all", "Summarise and aggregate before display", "Delete half at random", "Split the screen"]), 1, L("تجاوز عشرة آلاف صف دون تجميع يثقل الأداء {p25}.", "Over ten thousand rows without aggregation slows things {p25}.")),
+    M("u3-stages", L("المرحلة السادسة (الهوية) تحتاج:", "Stage six (identity) needs:"), L(["برومبت طويلًا مفصلًا", "تعديلات قصيرة متتابعة", "مصممًا محترفًا", "لا شيء"], ["A long detailed prompt", "Short successive tweaks", "A professional designer", "Nothing"]), 1, L("التعديلات القصيرة أدق وأسرع {p25}.", "Short tweaks are more precise and faster {p25}.")),
+    M("u3-stages", L("الناتج النهائي للمسار:", "The path’s final output:"), L(["عرض شرائح", "ملف واحد مستقل يُفتح على أي جهاز", "تطبيق موبايل", "قاعدة بيانات"], ["A slide deck", "One standalone file that opens on any device", "A mobile app", "A database"]), 1, L("{p25}", "{p25}")),
+  ] });
+
+  Q.push({ id: "u4", unit: "u4", icon: "🧑‍💻", title: L("اختبار الدليل الرابع", "Guide 4 test"), lead: L("المحرر، والمساعد البرمجي، والواجهتان، وتطبيقك المحلي.", "The editor, the coding assistant, both ends and your local app."), questions: [
+    M("u4-vscode", L("أكثر نقطة يخطئ فيها المبتدئ مع الطرفية:", "Beginners’ most common terminal slip:"), L(["لون الخط", "أن المسار الظاهر ليس مجلد المشروع", "حجم النافذة", "اللغة"], ["The font colour", "The shown path isn’t the project folder", "The window size", "The language"]), 1, L("{p26}", "{p26}")),
+    M("u4-claudecode", L("ما الفرق الجوهري بين المحادثة العادية وClaude Code؟", "The core difference between ordinary chat and Claude Code?"), L(["اللغة", "موقعك: من ناقل للكود إلى مراجع يوافق", "السعر فقط", "لا فرق"], ["Language", "Your position: from code carrier to reviewer who approves", "Only price", "None"]), 1, L("{p27}", "{p27}")),
+    M("u4-claudecode", L("وظيفة ملف CLAUDE.md:", "The job of CLAUDE.md:"), L(["تخزين البيانات", "تعريف دائم بالمشروع يُقرأ تلقائيًا في كل جلسة", "كلمات المرور", "سجل الأخطاء"], ["Storing data", "A permanent project briefing read every session", "Passwords", "The error log"]), 1, L("{p27}", "{p27}")),
+    M("u4-claudecode", L("🔎 اكتشف الخطأ: «فعّل الموافقة التلقائية على كل الأوامر من أول يوم لتوفير الوقت».", "🔎 Spot the error: “Turn on auto-approve for all commands from day one to save time.”"), L(["صحيح", "لا تفعّلها في بداية تعلمك ولو كان أبطأ", "صحيح في مجلد الصور", "صحيح للمحترفين"], ["True", "Don’t enable it while learning, even if slower", "True in the pictures folder", "True for pros"]), 1, L("ضوابط الأمان الثلاثة {p27}.", "The three safety controls {p27}.")),
+    M("u4-frontend", L("قرار المبتدئ في الواجهة:", "The beginner’s front-end decision:"), L(["ابدأ بـ React", "صفحة HTML واحدة + Tailwind + مكتبة رسوم تكفي", "اكتب كل شيء من الصفر", "استخدم إطارين"], ["Start with React", "One HTML page + Tailwind + a chart library is enough", "Write everything from scratch", "Use two frameworks"]), 1, L("{p28}", "{p28}")),
+    O("u4-backend", L("رتّب رحلة طلب واحد:", "Order one request’s journey:"), L(["المستخدم يغيّر فلترًا", "الواجهة ترسل طلبًا", "الخادم يقرأ ويحسب", "يعيد النتيجة JSON", "الواجهة ترسم"], ["User changes a filter", "Front end sends a request", "Server reads and computes", "Returns JSON", "Front end draws"]), L("{p29}", "{p29}")),
+    M("u4-localapp", L("الخطأ الأكثر تكرارًا في بناء التطبيق:", "The most frequent app-building mistake:"), L(["اختيار ألوان خاطئة", "بناء الواجهة قبل التأكد من صحة الأرقام", "اسم المجلد", "كثرة التعليقات"], ["Wrong colours", "Building the UI before checking the numbers", "The folder name", "Too many comments"]), 1, L("{p30}", "{p30}")),
+    M("u4-build", L("الاختبار الحقيقي لملف التعليمات:", "The real test of the instructions file:"), L(["طوله", "أن يشغّل زميل التطبيق منه وحده دون سؤالك", "أن يكون بالإنجليزية", "عدد الصور"], ["Its length", "A colleague runs the app from it alone without asking you", "Being in English", "Number of images"]), 1, L("{p31}", "{p31}")),
+  ] });
+
+  Q.push({ id: "u5", unit: "u5", icon: "🤖", title: L("اختبار الدليل الخامس", "Guide 5 test"), lead: L("Git، والنماذج والسوق، والتشغيل المحلي، والنظام، والفريق الرقمي.", "Git, models and the market, local running, systems and the digital team."), questions: [
+    M("u5-git", L("ما الذي يحفظه Git لكل تغيير؟", "What does Git keep for each change?"), L(["الملف فقط", "التغيير ومن أحدثه ومتى ولماذا", "حجم الملف", "لا شيء"], ["Just the file", "The change, who made it, when and why", "File size", "Nothing"]), 1, L("{p32}", "{p32}")),
+    O("u5-git-cmds", L("رتّب دورة الحفظ اليومية:", "Order the daily save cycle:"), L(["git status", "git add .", "git commit -m", "git push"], ["git status", "git add .", "git commit -m", "git push"]), L("{p33}", "{p33}")),
+    M("u5-models", L("🔎 اكتشف الخطأ: «اختر دائمًا متصدر لوحة التصنيف لأي مهمة».", "🔎 Spot the error: “Always pick the leaderboard leader for any task.”"), L(["صحيح", "اللوحات تقيس متوسطًا عامًا؛ ابدأ من الأسفل واختبر على مهمتك", "صحيح للمهام الصغيرة", "صحيح للعربية"], ["True", "Leaderboards measure a general average; start at the bottom and test on your task", "True for small tasks", "True for Arabic"]), 1, L("{p34}", "{p34}")),
+    M("u5-market", L("مهمتك تنتج نصوصًا طويلة. أي فخ تسعيري يهمك أولًا؟", "Your task produces long texts. Which pricing trap matters first?"), L(["الإخراج أغلى ٣–٦ أضعاف من الإدخال", "لون الواجهة", "عدد المستخدمين", "اسم الشركة"], ["Output costs 3–6× input", "The UI colour", "The user count", "The company name"]), 0, L("{p35}", "{p35}")),
+    M("u5-local", L("نموذج كان يحتاج ١٦ جيجا صار يعمل في ٤–٥. بسبب:", "A model needing 16 GB now runs in 4–5. Because of:"), L(["الإنترنت الأسرع", "الضغط (Quantization)", "معالج أقوى", "حذف نصف النموذج"], ["Faster internet", "Quantization", "A stronger CPU", "Deleting half the model"]), 1, L("{p36}", "{p36}")),
+    M("u5-system", L("أي مما يلي **ليس** من مبادئ النظام الأربعة؟", "Which is **not** one of the four system principles?"), L(["مصدر حقيقة واحد", "البناء على الأحداث", "قابلية التتبع", "أتمتة كل القرارات المالية"], ["One source of truth", "Build on events", "Traceability", "Automate every financial decision"]), 3, L("القرار ذو الأثر المالي يبقى بموافقة بشرية {p37}.", "Financial decisions keep human approval {p37}.")),
+    M("u5-build-system", L("الاستراتيجية الموصى بها لبناء النظام:", "The recommended strategy for building the system:"), L(["عرضًا: طبقة لكل المؤسسة", "عمقًا: شريحة عمودية واحدة حتى القرار", "كل شيء دفعة واحدة", "البدء بالذكاء"], ["Wide: one layer for the whole company", "Deep: one vertical slice to the decision", "Everything at once", "Starting with AI"]), 1, L("{p38}", "{p38}")),
+    M("u5-team", L("أي مما يلي من ضوابط الحوكمة قبل التشغيل؟", "Which is a governance control before running?"), L(["أقوى نموذج لكل الأدوار", "أقل صلاحية ممكنة وسقف للتكلفة والمحاولات", "صلاحية حذف لكل وكيل", "بلا سجل لتوفير المساحة"], ["The strongest model for every role", "Least privilege and a cap on cost and attempts", "Delete rights for every agent", "No log, to save space"]), 1, L("{p40}", "{p40}")),
+  ] });
+
+  Q.push({ id: "final", final: true, size: 20, icon: "🏆", title: L("الاختبار النهائي", "Final exam"), lead: L("٢٠ سؤالًا مختارة عشوائيًا من الكتاب كله، مع خطة مراجعة لما أخطأت فيه.", "20 questions drawn at random from the whole book, with a review plan for what you missed."), questions: [] });
 })();
 
 ;
@@ -2501,12 +2975,12 @@ Why might the model give two different answers to the same question? (Hint: prob
     },
     keys: L(["النموذج يتوقع التوكن التالي، ولا «يعرف» الحقيقة.", "المعاملات (الأوزان) هي مخزن المعرفة، وتتعلم أثناء التدريب {p34}.", "السياق الذي تعطيه يغيّر احتمالات كل كلمة في الإجابة.", "الطلاقة ليست دليلًا على الصحة: قد يخطئ بثقة {p41}.", "تطورنا من قواعد مكتوبة ← تعلم من الأمثلة ← مساعد توليدي ← وكيل بأهداف وأدوات."],
       ["The model predicts the next token; it doesn’t “know” the truth.", "Parameters (weights) store knowledge and are learned during training {p34}.", "The context you give shifts the probability of every word in the answer.", "Fluency is no proof of truth: it can be confidently wrong {p41}.", "We moved from written rules → learning from examples → generative assistants → agents with goals and tools."]),
-    scene: "model-flow", lab: "tokens",
+    scene: "model-flow", lab: "tokens", prompts: ["u0-p-explain"],
     quick: [
       { q: L("أين تُخزَّن «معرفة» النموذج حسب الكتاب؟", "Where is the model’s “knowledge” stored, according to the book?"), opts: L(["في قاعدة بيانات من الأسئلة والإجابات", "في المعاملات (الأوزان) التي تعلّمها أثناء التدريب", "في الإنترنت، يبحث فيه عند كل سؤال", "في نافذة السياق"], ["In a database of questions and answers", "In the parameters (weights) learned during training", "On the internet, searched for every question", "In the context window"]), a: 1, why: L("المعاملات أرقام داخلية يتعلمها النموذج أثناء التدريب، وهي مخزن معرفته {p34}. نافذة السياق هي ما يقرؤه في الطلب الحالي فقط.", "Parameters are internal numbers learned during training; they are its store of knowledge {p34}. The context window is only what it reads in the current request.") },
       { q: L("نموذج كتب رقمًا دقيق المظهر في تقرير. ما الاستنتاج الصحيح؟", "A model wrote a precise-looking number in a report. What is the right conclusion?"), opts: L(["الرقم صحيح لأن النموذج واثق", "الرقم يحتاج مصدرًا وتحققًا، لأن النموذج يولّد النص المحتمل لا الصحيح بالضرورة", "الرقم خاطئ دائمًا", "يكفي أن نسأله مرة ثانية"], ["The number is correct because the model is confident", "The number needs a source and a check, because the model produces likely text, not necessarily true text", "The number is always wrong", "Asking again is enough"]), a: 1, why: L("قد يعطي النموذج معلومة خاطئة بثقة {p41}، لذلك يطلب الكتاب ذكر مصدر كل رقم والتحقق من كل رقم يدخل تقريرًا رسميًا {p8, p16}.", "The model may give wrong information confidently {p41}, so the book asks for a source for every number and a check of every number that enters an official report {p8, p16}.") },
     ],
-    related: ["u0-assistant", "u0-limits", "u5-models"], terms: ["token", "parameters", "context", "context-window", "training"],
+    related: ["u0-assistant", "u0-limits", "u5-models"], terms: ["ai", "model", "llm", "token", "parameters", "context", "context-window", "training"],
   });
 
   ACAD.L({
@@ -2613,7 +3087,7 @@ Three things grow at each step:
     },
     keys: L(["الهدف: أن ترى عملك كنظام متكامل وتعرف أين تصنع التقنية أثرًا حقيقيًا {p3}.", "ثمانية مستويات: مساعد ← عقل ثانٍ ← موظف رقمي ← أتمتة ← أداة ← تطبيق ← نظام ← فريق رقمي {p4}.", "كل مستوى يعتمد على مهارة المستوى الذي قبله.", "ابدأ بأصغر مهمة متكررة، لا بأكبر مشكلة {p16}."],
       ["Goal: see your work as one integrated system and know where technology creates real impact {p3}.", "Eight levels: assistant → second brain → digital employee → automation → tool → application → system → digital team {p4}.", "Each level relies on the skill of the one before.", "Start with the smallest repetitive task, not the biggest problem {p16}."]),
-    scene: "journey",
+    scene: "journey", prompts: ["u0-p-map"],
     quick: [
       { type: "order", q: L("رتّب هذه المستويات كما وردت في رحلة التعلم:", "Put these levels in the order of the learning journey:"), items: L(["مساعد شخصي", "عقل ثانٍ", "أتمتة", "تطبيق", "فريق رقمي ذكي"], ["Personal assistant", "Second brain", "Automation", "Application", "Smart digital team"]), why: L("الترتيب في الكتاب {p4}: مساعد، عقل ثانٍ، موظف رقمي، أتمتة، أداة، تطبيق، نظام، فريق رقمي ذكي.", "The book’s order {p4}: assistant, second brain, digital employee, automation, tool, application, system, smart digital team.") },
       { q: L("ما العبارة التي يقولها المتدرب في نهاية الرحلة؟", "What does the learner say at the end of the journey?"), opts: L(["أنا أعرف أستخدم الذكاء الاصطناعي", "أنا أعرف كل الأدوات الجديدة", "عندي مشكلة، وأعرف كيف أحولها إلى نظام ذكي", "أنا أبرمج بلغة بايثون"], ["I can use AI", "I know all the new tools", "I have a problem, and I know how to turn it into a smart system", "I code in Python"]), a: 2, why: L("هذا هو التحول الذي يحدده الكتاب {p4}: من مستخدم إلى من يحوّل المشكلات إلى أنظمة.", "That is the shift the book defines {p4}: from user to someone who turns problems into systems.") },
@@ -2727,7 +3201,7 @@ Each step builds on the one before. An error in “collect” (a missing file) f
     },
     keys: L(["ست قدرات: تحليل، تلخيص، بحث في المعرفة، كتابة، مقارنة ومراجعة، دعم قرار {p5}.", "السلسلة: يجمع ← يحلل ← يختصر ← يقارن ← يقترح.", "كلما زادت جودة البيانات والسياق زادت قيمة النتيجة {p5}.", "الاقتراح ليس قرارًا: القرار ومسؤوليته لك {p41}."],
       ["Six abilities: analysis, summarising, knowledge search, writing, comparing & reviewing, decision support {p5}.", "The chain: collect → analyse → condense → compare → suggest.", "Better data and context mean more valuable results {p5}.", "A suggestion isn’t a decision: the decision and its responsibility are yours {p41}."]),
-    scene: "data-decision",
+    scene: "data-decision", prompts: ["u0-p-capabilities"],
     quick: [
       { q: L("ملف المبيعات ينقصه أسبوع كامل، وطلبت من الذكاء الاصطناعي توصية. ما المتوقع؟", "The sales file misses a whole week and you ask AI for a recommendation. What to expect?"), opts: L(["توصية دقيقة لأن النموذج قوي", "توصية مقنعة الشكل لكنها مبنية على صورة ناقصة", "رفض تلقائي للمهمة", "سيكمل الأسبوع الناقص من الإنترنت"], ["An accurate recommendation, the model is strong", "A convincing-looking recommendation built on an incomplete picture", "An automatic refusal", "It will fill the missing week from the internet"]), a: 1, why: L("كل خطوة في السلسلة تبني على التي قبلها؛ لذلك جودة البيانات تحدد قيمة النتيجة {p5}.", "Each step builds on the last; data quality decides the result’s value {p5}.") },
       { q: L("أي مما يلي ليس من القدرات الست في الكتاب؟", "Which of these is NOT one of the book’s six abilities?"), opts: L(["المقارنة والمراجعة", "دعم القرار والتوقع", "تحمّل مسؤولية القرار", "البحث داخل المعرفة"], ["Comparing and reviewing", "Decision support and forecasting", "Bearing responsibility for the decision", "Searching knowledge"]), a: 2, why: L("الذكاء الاصطناعي يدعم القرار لكنه لا يتحمل مسؤوليته {p41}.", "AI supports decisions but does not bear responsibility for them {p41}.") },
@@ -2839,7 +3313,7 @@ The book suggests {p6}: **Claude** for deep analysis, long files and coding; **C
     },
     keys: L(["القوة في فهم السياق وتحليل المشكلة، لا في الإجابة فقط {p6}.", "البرومبت جزء من السياق؛ السياق هو الصورة الكاملة.", "شات ← مساعد يتذكر ← وكيل يخطط وينفذ بأدوات.", "Claude للتحليل العميق والملفات الطويلة، وChatGPT للمحادثة والكتابة {p6}.", "كل شيء يبدأ من سياق واضح وبرومبت ذكي."],
       ["The power is in understanding context and analysing the problem, not just answering {p6}.", "The prompt is part of the context; context is the full picture.", "Chat → assistant that remembers → agent that plans and acts with tools.", "Claude for deep analysis and long files; ChatGPT for conversation and writing {p6}.", "Everything starts with clear context and a smart prompt."]),
-    scene: "chat-agent",
+    scene: "chat-agent", prompts: ["u0-p-context"],
     quick: [
       { q: L("ما العلاقة بين البرومبت والسياق حسب الكتاب؟", "What is the relation between prompt and context in the book?"), opts: L(["هما الشيء نفسه", "البرومبت جزء من السياق يحدد المهمة وشكل الإجابة", "السياق جزء من البرومبت", "لا علاقة بينهما"], ["They are the same", "The prompt is part of the context, defining the task and answer format", "Context is part of the prompt", "They are unrelated"]), a: 1, why: L("الكتاب يعرّف البرومبت بأنه «جزء من السياق، ويحدد المهمة المطلوبة والطريقة» {p6}.", "The book defines the prompt as “part of the context; it defines the task and the way” {p6}.") },
       { q: L("ما الذي يميز الوكيل الذكي عن المساعد الشخصي؟", "What distinguishes an AI agent from a personal assistant?"), opts: L(["يكتب أسرع", "يخطط ويستخدم أدوات وينفذ مهامًا ويتابع النتائج", "يتذكر السياق", "يتحدث بالعربية"], ["It writes faster", "It plans, uses tools, carries out tasks and tracks results", "It remembers context", "It speaks Arabic"]), a: 1, ex: [null, null, L("تذكّر السياق صفة المساعد الشخصي أصلًا.", "Remembering context is already the personal assistant’s trait."), null], why: L("المساعد يفهمك ويتذكر السياق، أما الوكيل فيخطط ويستخدم أدوات وينفذ ويتابع {p6}.", "The assistant understands and remembers; the agent plans, uses tools, executes and follows up {p6}.") },
@@ -2969,7 +3443,7 @@ Which task in your work can you trust after a quick review, and which needs full
     },
     keys: L(["قوي لكنه ليس معصومًا: يعمل معك لا بدلًا منك {p41}.", "قد يخطئ بثقة، ويسيء الفهم إذا نقص السياق، ولا يعرف بيانات شركتك.", "القرارات الحساسة تحتاج مراجعة بشرية؛ وهو لا يتحمل مسؤولية القرار.", "الاستخدام الواعي: هدف ← سياق ← مراجعة ← مصادر ← قرار.", "أفضل نتيجة = إنسان يفكر + بيانات جيدة + ذكاء اصطناعي."],
       ["Powerful but not infallible: it works with you, not instead of you {p41}.", "It can be confidently wrong, misunderstand with missing context, and doesn’t know your company data.", "Sensitive decisions need human review; it doesn’t bear responsibility.", "Conscious use: goal → context → review → sources → decision.", "Best result = a thinking human + good data + AI."]),
-    scene: "verify-gate",
+    scene: "verify-gate", prompts: ["u0-p-verify"],
     quick: [
       { type: "order", q: L("رتّب خطوات «أفضل استخدام واعٍ»:", "Order the steps of “the best conscious use”:"), items: L(["حدد الهدف", "أعطه السياق", "راجع النتيجة", "تأكد من المصادر", "اتخذ القرار"], ["Set the goal", "Give context", "Review the result", "Check the sources", "Make the decision"]), why: L("هذا هو الترتيب في الكتاب {p41}: كل خطوة تحمي التي بعدها.", "This is the book’s order {p41}: each step protects the next.") },
       { q: L("أكمل المعادلة: أفضل نتيجة = إنسان يفكر + … + ذكاء اصطناعي", "Complete: best result = a thinking human + … + AI"), opts: L(["أحدث نموذج", "بيانات جيدة", "سرعة عالية", "اشتراك مدفوع"], ["The newest model", "Good data", "High speed", "A paid subscription"]), a: 1, why: L("الكتاب يضع البيانات الجيدة في قلب المعادلة {p41}، وهو ما يتكرر في كل الأدلة.", "The book puts good data at the heart of the equation {p41}, a theme repeated in every guide.") },
@@ -6195,7 +6669,7 @@ Chart.js for simplicity, ECharts for richly interactive dashboards, Plotly for s
       { q: L("في تشبيه المبنى، ما الذي يمثله JavaScript؟", "In the building analogy, what does JavaScript represent?"), opts: L(["الهيكل الخرساني", "التشطيب والديكور", "الكهرباء والحركة", "الأرض"], ["The concrete frame", "Finishing and decor", "Electricity and movement", "The ground"]), a: 2, why: L("HTML الهيكل، وCSS التشطيب، وJavaScript «الكهرباء والحركة في المبنى» {p28}.", "HTML the frame, CSS the finishing, JavaScript “the building’s electricity and movement” {p28}.") },
       { q: L("ما «القرار المهم للمبتدئ» في الواجهة؟", "What is “the important beginner decision” for the front end?"), opts: L(["ابدأ بـReact", "لا تبدأ بإطار عمل؛ صفحة واحدة مع Tailwind ومكتبة رسوم تكفي", "لا تستخدم CSS", "اكتب كل شيء بـJavaScript فقط"], ["Start with React", "Don’t start with a framework; one page with Tailwind and a chart library is enough", "Don’t use CSS", "Write everything in JavaScript only"]), a: 1, why: L("«لا تبدأ بإطار عمل… الإطار يُضاف حين يصبح المشروع كبيرًا فعلًا» {p28}.", "“Don’t start with a framework… it’s added when the project really grows” {p28}.") },
     ],
-    related: ["u4-backend", "u3-stages", "u2-level3"], req: ["u4-claudecode"], terms: ["html", "css", "javascript", "tailwind", "framework", "responsive", "api"],
+    related: ["u4-backend", "u3-stages", "u2-level3"], req: ["u4-claudecode"], terms: ["html", "css", "javascript", "tailwind", "framework", "responsive", "selector", "event", "api"],
   });
 
   ACAD.L({
@@ -6564,7 +7038,7 @@ Once it works, add one feature at a time with the “plan before executing” pr
   const L = (ar, en) => ({ ar, en });
 
   ACAD.L({
-    id: "u5-git", unit: "u5", pages: [32], icon: "🌿", diff: 1, mins: 10, tags: ["git", "teamwork"],
+    id: "u5-git", unit: "u5", pages: [32], icon: "🌿", diff: 1, mins: 10, tags: ["git", "productivity"],
     title: L("GitHub: ذاكرة مشروعك وسجل تاريخه", "GitHub: your project’s memory and history"),
     hook: L("وداعًا لـ«التقرير_نهائي_٢_المعتمد_آخر_تعديل»: نسخة واحدة على جهازك، وتاريخ كامل محفوظ خلفها.", "Goodbye “report_final_2_approved_last_edit”: one copy on your machine, with full history saved behind it."),
     book: L(`**أولًا — GitHub: ذاكرة مشروعك وسجل تاريخه** {p32}. ليس مجرد مكان لتخزين الأكواد، بل نظام يحفظ **كل تغيير** حدث في مشروعك، ومن أحدثه ومتى ولماذا — ويتيح لك العودة إلى أي لحظة سابقة في ثوانٍ.
@@ -6842,7 +7316,7 @@ Compare “update” with “Fix margin calculation when quantity is zero” {p3
   });
 
   ACAD.L({
-    id: "u5-models", unit: "u5", pages: [34], icon: "🧠", diff: 2, mins: 12, tags: ["models", "cost"],
+    id: "u5-models", unit: "u5", pages: [34], icon: "🧠", diff: 2, mins: 12, tags: ["models", "strategy"],
     title: L("النماذج: الأوزان والأحجام ومعنى «الذكاء»", "Models: weights, sizes and what “intelligence” means"),
     hook: L("الأكبر ليس دائمًا الأفضل لحالتك. أربعة مفاهيم تفك كل الفروق، وقاعدة واحدة توفّر أضعاف التكلفة.", "Bigger isn’t always best for you. Four concepts explain every difference, and one rule saves multiples of the cost."),
     book: L(`**ثانيًا — النماذج: الأوزان والأحجام ومعنى «الذكاء»** {p34}. قبل مقارنة الأسماء والأسعار، لا بد من فهم ما الذي يجعل نموذجًا أقوى من آخر، ولماذا لا يعني «الأكبر» دائمًا «الأفضل لحالتك».
@@ -6971,7 +7445,7 @@ If Arabic text uses roughly twice the tokens, estimating cost for long Arabic do
   });
 
   ACAD.L({
-    id: "u5-market", unit: "u5", pages: [35], icon: "🗺️", diff: 2, mins: 11, tags: ["models", "cost"],
+    id: "u5-market", unit: "u5", pages: [35], icon: "🗺️", diff: 2, mins: 11, tags: ["models", "strategy"],
     title: L("خريطة الشركات والنماذج وفخاخ التسعير", "The map of companies, models and pricing traps"),
     hook: L("المشهد يتغير كل أسابيع؛ الأهم أن تفهم البنية والطبقات لا أن تحفظ الأسماء.", "The landscape changes every few weeks; understand the structure and tiers, don’t memorise names."),
     book: L(`**خريطة الشركات والنماذج — سبتمبر ٢٠٢٦** {p35}. صورة السوق في لحظتها الراهنة. المشهد يتغير كل أسابيع، فالأهم أن تفهم البنية والطبقات لا أن تحفظ الأسماء.
@@ -7111,7 +7585,7 @@ The open-model leader for years (Llama) moving to a closed line (Muse) reminds y
   });
 
   ACAD.L({
-    id: "u5-local", unit: "u5", pages: [36], icon: "💻", diff: 2, mins: 11, tags: ["models", "privacy"],
+    id: "u5-local", unit: "u5", pages: [36], icon: "💻", diff: 2, mins: 11, tags: ["models", "safety"],
     title: L("تشغيل النماذج على جهازك الشخصي", "Running models on your own computer"),
     hook: L("نموذج داخل حاسوبك: بلا إنترنت، وبلا اشتراك، وبلا أن تغادر بياناتك الجهاز إطلاقًا.", "A model inside your computer: no internet, no subscription, and your data never leaves the machine."),
     book: L(`**ثالثًا — تشغيل النماذج على جهازك الشخصي: Ollama · LM Studio** {p36}. نموذج يعمل داخل حاسوبك، بلا إنترنت وبلا اشتراك وبلا أن تغادر بياناتك الجهاز إطلاقًا. صار هذا عمليًا فعلًا في ٢٠٢٦، لا مجرد تجربة هواة.
@@ -7822,7 +8296,7 @@ Is every number backed by a traceable source? What assumptions are unstated? Wha
     inThisLesson: ["في هذا الدرس", "In this lesson"], prevLesson: ["الدرس السابق", "Previous lesson"], nextLesson: ["الدرس التالي", "Next lesson"], finish: ["النهاية", "The end"], finalExam: ["الاختبار النهائي", "Final exam"],
     goal: ["الهدف", "Goal"], fillVars: ["عدّل المتغيرات (اختياري) وسيتحدث الأمر فورًا", "Fill the variables (optional) — the prompt updates live"], copy: ["نسخ", "Copy"], save: ["حفظ", "Save"], saved: ["محفوظ", "Saved"], savedToNotebook: ["حُفظ في دفتر التعلم", "Saved to your notebook"],
     relatedLesson: ["الدرس المرتبط", "Related lesson"], exampleOutput: ["مثال للنتيجة", "Example output"], illustrative: ["للتوضيح فقط", "illustrative only"], tip: ["نصيحة", "Tip"],
-    cat_learn: ["التعلم والفهم", "Learning"], cat_analyze: ["التحليل", "Analysis"], cat_research: ["البحث والمعرفة", "Research & knowledge"], cat_work: ["التطبيق في العمل", "At work"], cat_automate: ["الأتمتة والإنتاجية", "Automation & productivity"], cat_build: ["البناء والتطوير", "Building"], cat_decide: ["القرار والاستراتيجية", "Decisions & strategy"],
+    category: ["الفئة", "Category"], cat_learn: ["التعلم والفهم", "Learning"], cat_analyze: ["التحليل", "Analysis"], cat_research: ["البحث والمعرفة", "Research & knowledge"], cat_work: ["التطبيق في العمل", "At work"], cat_automate: ["الأتمتة والإنتاجية", "Automation & productivity"], cat_build: ["البناء والتطوير", "Building"], cat_decide: ["القرار والاستراتيجية", "Decisions & strategy"],
     correct: ["إجابة صحيحة.", "Correct."], wrongAns: ["ليست هذه.", "Not this one."], reviewThis: ["راجع:", "Review:"], checkOrder: ["تحقق من الترتيب", "Check the order"], orderWrong: ["الترتيب غير صحيح.", "The order is not right."], rightOrder: ["الترتيب الصحيح", "Correct order"], moveUp: ["تحريك لأعلى", "Move up"], moveDown: ["تحريك لأسفل", "Move down"],
     case_problem: ["المشكلة", "The problem"], case_traditional: ["الطريقة التقليدية", "The traditional way"], case_ai: ["فكرة الذكاء الاصطناعي", "The AI idea"], case_steps: ["خطوات التطبيق", "Steps"], case_result: ["النتيجة المحتملة", "Likely result"], case_risks: ["القيود والمخاطر", "Limits & risks"],
     hypoNumbers: ["الأرقام في هذه الحالة افتراضية للتوضيح، وليست بيانات حقيقية.", "Numbers in this case are hypothetical, for illustration — not real data."], conceptExplained: ["المفهوم الذي توضحه", "The concept it illustrates"],
@@ -7893,6 +8367,19 @@ Is every number backed by a traceable source? What assumptions are unstated? Wha
     yourChain: ["سلسلة الأوامر المقترحة", "Suggested prompt chain"], chainLead: ["أوامر من الكتاب بالترتيب المناسب لمستوى مشروعك.", "Book prompts in the right order for your project’s level."], acceptance: ["معايير القبول قبل الاعتماد", "Acceptance criteria before relying on it"], exportProject: ["تصدير المشروع", "Export the project"],
   };
   for (const k in U) ACAD.UI[k] = { ar: U[k][0], en: U[k][1] };
+})();
+
+;
+/* data/zz-links.js */
+/* Runs after every other data file (alphabetical order): derives the links that would otherwise be typed twice.
+   - glossary.lessons / glossary.units  ← every lesson whose `terms` list names the term */
+(function () {
+  const byId = Object.fromEntries(ACAD.glossary.map((g) => [g.id, g]));
+  for (const l of ACAD.lessons) for (const id of l.terms || []) {
+    const g = byId[id]; if (!g) continue;
+    g.lessons = g.lessons || []; if (!g.lessons.includes(l.id)) g.lessons.push(l.id);
+    g.units = g.units || []; if (!g.units.includes(l.unit)) g.units.push(l.unit);
+  }
 })();
 
 ;

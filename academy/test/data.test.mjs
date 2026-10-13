@@ -142,3 +142,14 @@ test("lab truth values stay correct (quality lab reconciles to 21,540)", () => {
   assert.match(code, /21540/);
   assert.doesNotMatch(code, /25890/);
 });
+
+test("cases, comparisons and pairs point at real things", () => {
+  const bad = [], caseIds = new Set(A.cases.map((c) => c.id)), cmpIds = new Set(A.compare.map((c) => c.id));
+  for (const u of A.units) if (u.case && !caseIds.has(u.case)) bad.push(`unit ${u.id}: case ${u.case}`);
+  for (const c of A.cases) { if (c.lesson && !lessonIds.has(c.lesson)) bad.push(`case ${c.id}: lesson ${c.lesson}`); for (const k of ["title", "problem", "traditional", "ai", "steps", "result", "risks"]) if (!c[k]) bad.push(`case ${c.id}: ${k}`); }
+  for (const x of A.compare) { if (x.lesson && !lessonIds.has(x.lesson)) bad.push(`compare ${x.id}: lesson`); if (!unitIds.has(x.unit)) bad.push(`compare ${x.id}: unit`); }
+  for (const p of A.pairs || []) if (!cmpIds.has(p.a) || !cmpIds.has(p.b)) bad.push(`pair ${p.a}/${p.b}`);
+  assert.deepEqual(bad, []);
+  for (const u of unitIds) assert.ok(A.quizzes.some((q) => q.unit === u), "no quiz for " + u);
+  assert.ok(A.quizzes.some((q) => q.final), "final exam missing");
+});

@@ -36,6 +36,7 @@ export function* strings(v, path = "") {
 export function* pairs(v, path = "") {
   if (Array.isArray(v)) { for (let i = 0; i < v.length; i++) yield* pairs(v[i], path + "[" + i + "]"); return; }
   if (!v || typeof v !== "object") return;
-  if ("ar" in v || "en" in v) { yield [path, v]; return; }
+  const ks = Object.keys(v);
+  if (ks.length && ks.every((k) => k === "ar" || k === "en")) { yield [path, v]; return; }
   for (const k in v) if (typeof v[k] !== "function") yield* pairs(v[k], path + "." + k);
 }
