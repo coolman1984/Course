@@ -91,17 +91,21 @@ function md(src) {
       table = null;
     }
   };
+  let code = null;
   for (const raw of lines) {
     const l = raw.trim();
+    if (l.startsWith("```")) { if (code) { out += '<pre class="code" dir="ltr"><code>' + esc(code.join("\n")) + "</code></pre>"; code = null; } else { flushPara(); flushList(); flushTable(); code = []; } continue; }
+    if (code) { code.push(raw); continue; }
     if (!l) { flushPara(); flushList(); flushTable(); continue; }
     if (l.startsWith("|")) { flushPara(); flushList(); (table = table || []).push(l); continue; } else flushTable();
     let m;
     if ((m = l.match(/^##\s+(.*)/))) { flushPara(); flushList(); out += "<h4>" + inline(m[1]) + "</h4>"; continue; }
     if ((m = l.match(/^>\s?(.*)/))) { flushPara(); flushList(); out += "<blockquote>" + inline(m[1]) + "</blockquote>"; continue; }
     if ((m = l.match(/^[-•]\s+(.*)/))) { flushPara(); if (!list || list.t !== "ul") { flushList(); list = { t: "ul", items: [] }; } list.items.push(m[1]); continue; }
-    if ((m = l.match(/^\d+[.)]\s+(.*)/))) { flushPara(); if (!list || list.t !== "ol") { flushList(); list = { t: "ol", items: [] }; } list.items.push(m[1]); continue; }
+    if ((m = l.match(/^(?:\d+[.)]|[١-٩][٠-٩]?)\s+(.*)/))) { flushPara(); if (!list || list.t !== "ol") { flushList(); list = { t: "ol", items: [] }; } list.items.push(m[1]); continue; }
     flushList(); para.push(l);
   }
+  if (code) out += '<pre class="code" dir="ltr"><code>' + esc(code.join("\n")) + "</code></pre>";
   flushPara(); flushList(); flushTable();
   return out;
 }

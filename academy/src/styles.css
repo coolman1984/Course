@@ -172,6 +172,9 @@ button.chip:hover{border-color:var(--accent);color:var(--accent)}
 .prose{font-size:16.5px}
 .prose p{margin:0 0 1em}
 .prose ul,.prose ol{margin:0 0 1em;padding-inline-start:1.3em}
+[dir=rtl] .prose ol{list-style-type:arabic-indic}
+.prose pre.code{background:var(--surface-2,#f4f6fb);border:1px solid var(--line);border-radius:12px;padding:12px 14px;overflow:auto;font-family:var(--mono);font-size:13px;line-height:1.6;text-align:left;margin:0 0 1em}
+.prose pre.code code{background:none;padding:0;font-size:inherit}
 .prose li{margin:.25em 0}
 .prose li::marker{color:var(--accent)}
 .prose strong{font-weight:800;color:var(--ink)}

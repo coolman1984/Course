@@ -35,7 +35,7 @@
     for (const z of def.zones || []) {
       const g = S("g", { class: "s-el" });
       g.append(S("rect", { x: X(z.x, z.w), y: z.y, width: z.w, height: z.h, rx: 18, class: "s-zone", style: z.color ? `fill:${z.color}` : null }));
-      if (z.label) { const tx = S("text", { x: X(z.x, z.w) + (rtl ? z.w - 14 : 14), y: z.y + 22, class: "s-sub", "text-anchor": rtl ? "end" : "start", style: "font-weight:800;font-size:12.5px" }); tx.textContent = tr(z.label); g.append(tx); }
+      if (z.label) { const ar = App.isAr(); const tx = S("text", { x: X(z.x, z.w) + (rtl ? z.w - 14 : 14), y: z.y + 22, class: "s-sub", direction: ar ? "rtl" : "ltr", "text-anchor": rtl === ar ? "start" : "end", style: "font-weight:800;font-size:12.5px" }); tx.textContent = tr(z.label); g.append(tx); }
       gZones.append(g); zoneEls[z.id] = g;
     }
     const center = (n) => ({ x: X(n.x, n.w || 0) + (n.w || 0) / 2, y: n.y + (n.h || 0) / 2 });
