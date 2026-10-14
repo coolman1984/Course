@@ -82,7 +82,8 @@
     if (!active || !pill) return;
     if (instant || isQuiet()) pill.style.transition = "none";
     pill.style.width = active.offsetWidth + "px";
-    pill.style.transform = "translateX(" + active.offsetLeft + "px)";
+    pill.style.height = active.offsetHeight + "px";
+    pill.style.transform = "translate(" + active.offsetLeft + "px," + active.offsetTop + "px)";
     if (instant || isQuiet()) {
       void pill.offsetWidth;
       pill.style.transition = "";
@@ -118,7 +119,7 @@
         '<div class="motion-stages" role="group" aria-label="' + esc(i18n.unit) + '">' +
            i18n.steps.map(function (name, i) {
              return '<button type="button" class="motion-node" data-motion-stage="' + i +
-               '" aria-pressed="' + (i === 0) + '" title="' + esc(name) +
+               '" aria-pressed="' + (i === 0) + '" aria-label="' + esc(name) + '" title="' + esc(name) +
                '"><span class="motion-node-number">' + (i + 1) + '</span><span class="motion-node-label">' +
                 esc(name) + '</span></button>';
            }).join("") +
@@ -129,7 +130,7 @@
           '<div class="motion-canvas-meta"><span class="motion-step-index">' + esc(i18n.progress) +
             ' <b class="motion-current">01</b> / 05</span>' +
             '<span class="motion-specimen">' + esc(i18n.kicker) + '</span></div>' +
-          '<div class="t-page-slide motion-pages" data-page="1">' +
+          '<div class="t-page-slide motion-pages" data-page="1" aria-live="polite" aria-atomic="true">' +
             '<div class="t-page" data-page-id="1" aria-hidden="false"><div class="motion-page-body">' +
               '<div class="motion-symbol" aria-hidden="true">?</div><div class="motion-page-copy"><strong></strong><p></p></div></div></div>' +
             '<div class="t-page" data-page-id="2" aria-hidden="true"><div class="motion-page-body">' +
@@ -283,7 +284,7 @@
     if (anchor) home.insertBefore(theatre, anchor);
     else home.append(theatre);
   }
-  function decorateLessonTabs() {
+  function decorateLessonTabs(instant) {
     const tabs = doc.querySelector("#lv .tabs");
     if (!tabs) return;
     tabs.classList.add("t-tabs", "motion-level-tabs");
@@ -293,7 +294,7 @@
       pill.setAttribute("aria-hidden", "true");
       tabs.insertBefore(pill, tabs.firstChild);
     }
-    slidePill(tabs, true);
+    slidePill(tabs, !!instant);
   }
   function addLesson(id) {
     const mental = doc.querySelector("#main #sec-mental");
@@ -305,15 +306,15 @@
     flow.hidden = true;
     const hint = mental.querySelector(".mental-hint");
     if (hint) hint.hidden = true;
-    decorateLessonTabs();
+    decorateLessonTabs(true);
     const onLevelClick = function (event) {
       if (event.target.closest('[role="tab"]')) {
-        requestAnimationFrame(decorateLessonTabs);
+        requestAnimationFrame(function () { decorateLessonTabs(false); });
       }
     };
     const root = doc.querySelector("#lv");
     root.addEventListener("click", onLevelClick);
-    const onResize = function () { decorateLessonTabs(); };
+    const onResize = function () { decorateLessonTabs(true); };
     addEventListener("resize", onResize, { passive: true });
     const onLevel = function () { requestAnimationFrame(decorateLessonTabs); };
     const unsub = A.on("level", onLevel);
