@@ -95,7 +95,7 @@ await session({ label: "interactions-ar", viewport: { width: 1280, height: 860 }
 
   // glossary popover
   const term = await page.$("#main .term");
-  if (term) { await term.scrollIntoViewIfNeeded(); await page.waitForTimeout(300); await term.click(); await page.waitForTimeout(150); const pop = await page.$(".popover"); if (pop) ok("glossary popover opens"); else fail("glossary popover did not open"); await page.keyboard.press("Escape"); }
+  if (term) { await term.evaluate((el) => { for (let p = el.parentElement; p; p = p.parentElement) if (p.tagName === "DETAILS") p.open = true; }); await term.scrollIntoViewIfNeeded(); await page.waitForTimeout(300); await term.click(); await page.waitForTimeout(150); const pop = await page.$(".popover"); if (pop) ok("glossary popover opens"); else fail("glossary popover did not open"); await page.keyboard.press("Escape"); }
   else fail("no glossary term button in lesson p1");
 
   // quiz: answer an mcq and an order question
