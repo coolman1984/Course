@@ -110,7 +110,7 @@
 .motion-lesson .motion-canvas {min-height:265px;}
 /* Sliding tab indicator borrowed from transitions.dev's tab pattern. */
 .levels .tabs.t-tabs {position:relative;isolation:isolate;}
-.levels .tabs.t-tabs .t-tabs-pill {border-radius:99px;z-index:-1;background:var(--surface);box-shadow:0 1px 7px rgba(20,31,60,.14);border-color:var(--line-2);}
+.levels .tabs.t-tabs .t-tabs-pill {border-radius:99px;z-index:0;background:var(--surface);box-shadow:0 1px 7px rgba(20,31,60,.14);border-color:var(--line-2);}
 .levels .tabs.t-tabs>button[role="tab"]{position:relative;z-index:1;background:transparent!important;box-shadow:none!important;border-color:transparent!important;}
 .levels .tabs.t-tabs>button[role="tab"][aria-selected=true]{color:var(--ink);}
 /* texts-reveal from transitions.dev, remixed for an educational hero. */
