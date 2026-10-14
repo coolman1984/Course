@@ -43,9 +43,11 @@ await session({ label: "desktop-ar", viewport: { width: 1440, height: 900 } }, a
         plain: document.querySelectorAll("#lv .plain-sec").length,
         visible: [...document.querySelectorAll("#lv .plain-copy")].every((el) => el.textContent.trim().length > 35),
         original: !!document.querySelector("#lv .orig-layer:not([open])"),
-        story: !!document.querySelector("#sec-mental")
+        story: !!document.querySelector("#sec-mental"),
+        motion: document.querySelectorAll(".motion-lesson [data-motion-stage]").length === 5,
+        staticStoryHidden: !!document.querySelector("#sec-mental .mental-flow[hidden]")
       }));
-      if (proof.plain !== 2 || !proof.visible || !proof.original || !proof.story)
+      if (proof.plain !== 2 || !proof.visible || !proof.original || !proof.story || !proof.motion || !proof.staticStoryHidden)
         fail(`lesson ${hsh}: practical Arabic explanation or book reference missing ${JSON.stringify(proof)}`);
     }
   }
@@ -188,6 +190,12 @@ await session({ label: "motion-theatre-ar", viewport: { width: 1360, height: 900
   const stageQuiet = await page.$eval(".motion-home .motion-machine", el => el.dataset.stage);
   stageQuiet === "4" ? ok("motion: accessible without animation") : fail("motion: reduced animation blocks content");
   await page.click(".motion-home [data-motion-quiet]");
+  await page.click(".motion-home [data-motion-replay]");
+  await page.click(".motion-home [data-motion-play]");
+  const running = await page.$eval(".motion-home [data-motion-play]", el => el.getAttribute("aria-pressed"));
+  running === "true" ? ok("motion: playback can be started on demand") : fail("motion: playback did not start");
+  await page.click(".motion-home [data-motion-play]");
+  await shot(page, "motion-theatre-home-ar");
   await page.evaluate(() => location.hash = "lesson-p1");
   await page.waitForSelector(".motion-lesson .motion-pages");
   const check = await page.evaluate(() => ({
@@ -204,7 +212,7 @@ await session({ label: "motion-theatre-ar", viewport: { width: 1360, height: 900
   await page.click("#donebtn");
   const success = await page.$(".t-success-check[data-state=in]");
   success ? ok("motion: real lesson completion shows confirmation") : fail("motion: completion feedback missing");
-  await shot(page, "motion-theatre-home-ar");
+  await shot(page, "motion-theatre-lesson-ar");
 });
 
 /* The motor must also work in an offline, narrow phone viewport. */
