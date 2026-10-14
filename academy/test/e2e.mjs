@@ -169,7 +169,7 @@ await session({ label: "mobile-en-dark", viewport: { width: 390, height: 844 }, 
 /* Motion Theatre: real learning interactions, not decoration. */
 await session({ label: "motion-theatre-ar", viewport: { width: 1360, height: 900 } }, async (page) => {
   await page.waitForSelector(".motion-home .motion-machine");
-  const options = await page.$eval(".motion-cases [data-motion-case]", els => els.map(e => e.dataset.motionCase));
+  const options = await page.evaluate(() => Array.from(document.querySelectorAll(".motion-cases [data-motion-case]")).map(el => el.dataset.motionCase));
   options.join(",") === "p1,y4,s1" ? ok("motion: three workplace journeys") : fail("motion: missing scenarios");
   const one = await page.$eval(".motion-home .motion-pages .t-page[aria-hidden=false] p", el => el.textContent);
   await page.click('.motion-home [data-motion-stage="2"]');
