@@ -24,7 +24,9 @@ jobs:
           node --check academy/src/data/plain-talk-a.js
           node --check academy/src/data/plain-talk-b.js
           node --check academy/src/engine/render.js
+          node --check academy/src/engine/motion.js
           node --check academy/build.mjs
+          test -s academy/src/motion.css
       - name: Verify book mapping and all 41 new stories
         run: node --test academy/test/data.test.mjs
       - name: Build complete offline academy
@@ -35,6 +37,9 @@ jobs:
       - name: Check all 41 lessons use the plain Arabic teaching layer
         run: |
           node -e 'const fs=require("node:fs");const html=fs.readFileSync("AI_Academy.html","utf8");for(const key of ["plain-talk-a.js","plain-talk-b.js","plain-copy","orig-layer"])if(!html.includes(key))throw Error("Missing teaching layer: "+key);console.log("All 41 lessons use the plain-language layer");'
+      - name: Ensure educational motion is bundled and independent of networks
+        run: |
+          node -e 'const f=require("node:fs");const h=f.readFileSync("AI_Academy.html","utf8");for(const word of ["motion-theatre","data-motion-stage","t-page-slide","prefers-reduced-motion","transitions.dev"]) if(!h.includes(word))throw Error("Missing motion pattern: "+word); console.log("Offline educational motion bundled")'
       - name: Install browser for full academy tests
         run: |
           npm install --no-save playwright@1.56.1
