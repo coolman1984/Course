@@ -163,6 +163,62 @@ await session({ label: "mobile-en-dark", viewport: { width: 390, height: 844 }, 
   }
 });
 
+
+/* Motion Theatre: real learning interactions, not decoration. */
+await session({ label: "motion-theatre-ar", viewport: { width: 1360, height: 900 } }, async (page) => {
+  await page.waitForSelector(".motion-home .motion-machine");
+  const options = await page.$eval(".motion-cases [data-motion-case]", els => els.map(e => e.dataset.motionCase));
+  options.join(",") === "p1,y4,s1" ? ok("motion: three workplace journeys") : fail("motion: missing scenarios");
+  const one = await page.$eval(".motion-home .motion-pages .t-page[aria-hidden=false] p", el => el.textContent);
+  await page.click('.motion-home [data-motion-stage="2"]');
+  const state = await page.$eval(".motion-home .motion-machine", el => el.dataset.stage);
+  const two = await page.$eval(".motion-home .motion-pages .t-page[aria-hidden=false] p", el => el.textContent);
+  state === "2" && one !== two ? ok("motion: stage transitions show different educational content") : fail("motion: stage content did not change");
+  await page.click('.motion-home [data-motion-case="y4"]');
+  const switched = await page.$eval(".motion-home", el => el.dataset.motionLesson);
+  const lessonUrl = await page.$eval(".motion-home .motion-open", el => el.getAttribute("href"));
+  switched === "y4" && lessonUrl === "#lesson-y4" ? ok("motion: changing scenario updates lesson link") : fail("motion: scenario switch broken");
+  await page.click(".motion-home [data-motion-next]");
+  const nextState = await page.$eval(".motion-home .motion-machine", el => el.dataset.stage);
+  nextState === "1" ? ok("motion: next step works") : fail("motion: next step missing");
+  await page.click(".motion-home [data-motion-quiet]");
+  const motion = await page.evaluate(() => document.documentElement.dataset.motion);
+  motion === "off" ? ok("motion: accessible quiet toggle persists") : fail("motion: quiet toggle failed");
+  await page.click('.motion-home [data-motion-stage="4"]');
+  const stageQuiet = await page.$eval(".motion-home .motion-machine", el => el.dataset.stage);
+  stageQuiet === "4" ? ok("motion: accessible without animation") : fail("motion: reduced animation blocks content");
+  await page.click(".motion-home [data-motion-quiet]");
+  await page.evaluate(() => location.hash = "lesson-p1");
+  await page.waitForSelector(".motion-lesson .motion-pages");
+  const check = await page.evaluate(() => ({
+    originalHidden: !!document.querySelector("#sec-mental .mental-flow[hidden]"),
+    stage: document.querySelectorAll(".motion-lesson [data-motion-stage]").length,
+    pill: !!document.querySelector("#lv .tabs .t-tabs-pill"),
+    firstPage: document.querySelector(".motion-lesson .motion-pages .t-page[aria-hidden=false] p")?.textContent?.length > 12
+  }));
+  check.originalHidden && check.stage === 5 && check.pill && check.firstPage ?
+    ok("motion: all 41 lessons can use the stage-driven story and animated tabs") : fail("motion: lesson theatre missing " + JSON.stringify(check));
+  await page.click("#lv #tab-mech");
+  const activeTab = await page.$eval("#lv #tab-mech", el => el.getAttribute("aria-selected"));
+  activeTab === "true" ? ok("motion: original four learning levels remain interactive") : fail("motion: lesson level control broken");
+  await page.click("#donebtn");
+  const success = await page.$(".t-success-check[data-state=in]");
+  success ? ok("motion: real lesson completion shows confirmation") : fail("motion: completion feedback missing");
+  await shot(page, "motion-theatre-home-ar");
+});
+
+/* The motor must also work in an offline, narrow phone viewport. */
+await session({ label: "motion-mobile-ar", viewport: { width: 375, height: 812 }, isMobile: true, hasTouch: true }, async (page) => {
+  await page.waitForSelector(".motion-home");
+  const width = await overflow(page);
+  width <= 1 ? ok("motion: no horizontal overflow at 375px") : fail("motion: mobile overflow " + width);
+  await page.click('.motion-home [data-motion-case="s1"]');
+  await page.click('.motion-home [data-motion-stage="3"]');
+  const text = await page.$eval(".motion-home .motion-pages .t-page[aria-hidden=false] p", el => el.textContent);
+  text && text.length > 12 ? ok("motion: touch navigation works") : fail("motion: touch navigation lost content");
+  await shot(page, "motion-theatre-mobile-ar");
+});
+
 /* Reduced motion: scenes must not animate on their own */
 await session({ label: "reduced-motion", viewport: { width: 1280, height: 860 }, reducedMotion: "reduce" }, async (page) => {
   await page.evaluate(() => (location.hash = "lesson-f1")); await page.waitForTimeout(400);
