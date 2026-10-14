@@ -71,4 +71,4 @@
 - فحص سلامة البيانات: `node --test academy/test/data.test.mjs`
 - اختبار المتصفح الكامل: `node academy/test/e2e.mjs` (يحتاج Playwright)
 
-الخطوط (Alexandria وReadex Pro) مرخصة بـSIL OFL، ونص الرخصة في `academy/src/fonts`.
+الخطوط (Inter وIBM Plex Sans Arabic وJetBrains Mono) مرخصة بـSIL OFL، ونص الرخصة في `academy/src/fonts`.

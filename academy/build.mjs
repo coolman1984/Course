@@ -17,10 +17,7 @@ const ENGINE = ["engine/core.js", "engine/scene.js", "engine/render.js", "engine
 for (const f of [...DATA, ...ENGINE]) if (!existsSync(join(src, f))) throw new Error("Missing source file: " + f);
 
 let css = read("styles.css")
-  .replace("__FONT_ALEXANDRIA_AR__", "data:font/woff2;base64," + b64("fonts/Alexandria-arabic.woff2"))
-  .replace("__FONT_ALEXANDRIA_LA__", "data:font/woff2;base64," + b64("fonts/Alexandria-latin.woff2"))
-  .replace("__FONT_READEX_AR__", "data:font/woff2;base64," + b64("fonts/ReadexPro-arabic.woff2"))
-  .replace("__FONT_READEX_LA__", "data:font/woff2;base64," + b64("fonts/ReadexPro-latin.woff2"));
+  .replace(/__FONT:([\w.-]+)__/g, (m, f) => "data:font/woff2;base64," + b64("fonts/" + f));
 
 const pages = {};
 for (const f of readdirSync(join(src, "pages")).filter((x) => /^p\d+\.webp$/.test(x)).sort()) pages[Number(f.slice(1, 3))] = "data:image/webp;base64," + b64("pages/" + f);
@@ -30,7 +27,7 @@ const dataJs = DATA.map((f) => `/* ${f} */\n${read(f)}`).join("\n");
 const engineJs = ENGINE.map((f) => `/* ${f} */\n${read(f)}`).join("\n");
 const boot = `window.addEventListener("DOMContentLoaded",function(){try{window.ACADEMY.boot()}catch(e){console.error(e);var m=document.getElementById("main");if(m)m.innerHTML='<div style="padding:24px;font-family:sans-serif">تعذّر تشغيل الأكاديمية. جرّب متصفحًا حديثًا (Chrome أو Edge أو Firefox أو Safari). — The academy could not start. Try a modern browser.</div>'}});`;
 
-const licence = "Fonts: Alexandria and Readex Pro, SIL Open Font License 1.1 (see academy/src/fonts). Book content © Mohamed Fawzy.";
+const licence = "Fonts: Inter, IBM Plex Sans Arabic and JetBrains Mono, SIL Open Font License 1.1 (see academy/src/fonts). Book content © Mohamed Fawzy.";
 const head = `<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>أكاديمية أساسيات الذكاء الاصطناعي</title>

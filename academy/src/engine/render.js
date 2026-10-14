@@ -16,100 +16,183 @@
     const p = A.progress();
     const last = S.get("last") && A.byId[S.get("last")];
     const first = A.lessons[0];
-    const wrap = h("div", { class: "wrap-wide stack" });
+    const ar = A.lang() === "ar";
+    const tile = (icon, c) => `<span class="tile" style="--tc:${c}">${ico(icon)}</span>`;
+    const tick = `<span class="tick">${ico("check")}</span>`;
+    const nLessons = (n) => (ar ? (n === 2 ? "درسان" : n <= 10 ? n + " دروس" : n + " درسًا") : t("lessonsN", { n }));
+    const lines = `<div class="hero-deco" aria-hidden="true">
+      <svg class="circuit c-a" viewBox="0 0 320 360" aria-hidden="true"><path d="M0 40 H40 Q66 40 66 66 V128" class="ln v"/><circle cx="66" cy="132" r="4" class="dt v"/><path d="M0 214 H40 Q66 214 66 240 V250 Q66 262 78 262 H272" class="ln g"/><circle cx="276" cy="262" r="4" class="dt g"/><path d="M0 290 H66" class="ln b"/><circle cx="66" cy="290" r="4" class="dt b"/><path d="M0 340 H272" class="ln t"/><circle cx="276" cy="340" r="4" class="dt t"/></svg>
+      <svg class="circuit c-b" viewBox="0 0 320 360" aria-hidden="true"><path d="M320 120 H48" class="ln a"/><circle cx="44" cy="120" r="4" class="dt a"/><path d="M320 270 H48" class="ln p"/><circle cx="44" cy="270" r="4" class="dt p"/></svg></div>`;
+    const wrap = h("div", { class: "home" });
     wrap.innerHTML = `
-      <section class="hero soft-in">
-        <div class="hero-grid">
-          <div>
-            <span class="eyebrow">${ico("spark")} ${esc(t("heroEyebrow"))}</span>
-            <h1 style="margin-top:10px">${esc(A.meta.title[A.lang()])}</h1>
-            <p class="lead">${esc(t("heroLead"))}</p>
-            <div class="byline"><span class="chip">${ico("users")}${esc(t("byAuthor"))}</span><span class="chip book">${ico("book")}${esc(t("bookPagesN", { n: A.meta.pages }))}</span><span class="chip">${ico("ladder")}${esc(t("statsLine", { l: A.lessons.length, s: A.scenes.length, b: A.labs.length, p: A.prompts.length }))}</span></div>
-            <div class="cta">
-              <a class="btn pri" href="#lesson-${(last || first).id}">${ico("play")}${esc(last ? t("continueLast") : t("startHere"))}</a>
-              <a class="btn" href="#map">${ico("map")}${esc(t("nav_map"))}</a>
-              <button class="btn ghost" type="button" id="home-search">${ico("search")}${esc(t("searchShort"))}</button>
-            </div>
+      <section class="hero2">
+        ${lines}
+        <div class="hero2-in soft-in">
+          <h1>${esc(t("heroTitle"))}</h1>
+          <p class="lead">${esc(t("heroLead"))}</p>
+          <div class="cta">
+            <a class="btn pri lg" href="#lesson-${(last || first).id}">${ico("play")}${esc(last ? t("continueLast") : t("startHere"))}</a>
+            <a class="btn lg" href="#map">${esc(t("nav_map"))}</a>
           </div>
-          <div class="eq card" id="eq" aria-label="${esc(t("eqAria"))}"></div>
+          <p class="cred">${esc(t("heroCredOf", { pg: A.meta.pages, l: A.lessons.length, s: A.scenes.length, b: A.labs.length, p: A.prompts.length }))}</p>
         </div>
       </section>
-      <section class="sec">
-        ${secHead("ladder", t("ladderTitle"), t("ladderSub"))}
-        <div class="ladder" id="ladder"></div>
+
+      <section class="showcase soft-in" aria-label="${esc(t("unitsCard"))}">
+        <span class="float f1">${tile("chart", "var(--sig-amber)")}</span>
+        <span class="float f2">${tile("spark", "var(--sig-violet)")}</span>
+        <div class="win" id="win"></div>
       </section>
-      <section class="sec">
-        ${secHead("layers", t("unitsTitle"), t("unitsSub"))}
-        <div class="grid g3" id="units"></div>
-      </section>
-      <section class="sec">
-        ${secHead("route", t("journeyTitle"), t("journeySub"), "vi")}
-        <div class="journey" id="journey"></div>
-      </section>
-      <section class="sec">
-        ${secHead("flask", t("featuredLabs"), t("featuredLabsSub"), "vi")}
-        <div class="grid g3" id="flabs"></div>
-      </section>
-      <section class="sec">
-        ${secHead("shield", t("honestyTitle"), t("honestySub"), "sp")}
-        <div class="card flat stack">
-          <div class="legend"><span class="chip book">${ico("book")}${esc(t("legendBook"))}</span><span class="chip add">${ico("spark")}${esc(t("legendAdded"))}</span><span class="chip vi">${ico("flask")}${esc(t("legendSim"))}</span><span class="chip ok">${ico("check")}${esc(t("legendReal"))}</span></div>
-          <p class="muted small">${esc(t("honestyBody"))}</p>
-          <p class="small">${esc(t("progressTitle", { d: p.done, t: p.total }))} · <a href="#notebook">${esc(t("manageData"))}</a></p>
+
+      <section class="band">
+        <div class="center-head">
+          <h2>${esc(t("palTitle"))}</h2>
+          <p class="lead">${esc(t("palLead", { n: A.prompts.length }))}</p>
         </div>
+        <div class="cmdk" id="cmdk"></div>
+      </section>
+
+      <section class="split">
+        <div class="split-txt">
+          <span class="eyebrow">${ico("page")} ${esc(t("eqSecEyebrow"))}</span>
+          <h2>${esc(t("eqSecTitle"))}</h2>
+          <p class="lead">${esc(t("eqSecLead"))}</p>
+          <ul class="ticks">${["eqB1", "eqB2", "eqB3", "eqB4"].map((k) => `<li>${tick}${esc(t(k))}</li>`).join("")}</ul>
+        </div>
+        <div class="split-art"><span class="float f3">${tile("msg", "var(--sig-teal)")}</span><div class="eq card" id="eq" aria-label="${esc(t("eqAria"))}"></div></div>
+      </section>
+
+      <section class="band">
+        <div class="center-head">
+          <h2>${esc(t("ladderSecTitle"))}</h2>
+          <p class="lead">${esc(t("ladderSub"))}</p>
+        </div>
+        <ol class="ladder2" id="ladder"></ol>
+      </section>
+
+      <section class="split rev">
+        <div class="split-txt">
+          <span class="eyebrow">${ico("layers")} ${esc(t("unitsTitle"))}</span>
+          <h2>${esc(t("unitsSecTitle"))}</h2>
+          <p class="lead">${esc(t("unitsSecLead"))}</p>
+          <ul class="ticks">
+            <li>${tick}${esc(t("unitsB1", { l: A.lessons.length }))}</li><li>${tick}${esc(t("unitsB2", { s: A.scenes.length }))}</li>
+            <li>${tick}${esc(t("unitsB3", { b: A.labs.length }))}</li><li>${tick}${esc(t("unitsB4", { q: A.quiz.length }))}</li>
+          </ul>
+        </div>
+        <div class="split-art"><span class="float f4">${tile("layers", "var(--accent)")}</span>
+          <div class="ulist"><div class="ulist-h">${ico("layers")} ${esc(t("unitsCard"))}</div><div id="units"></div></div>
+        </div>
+      </section>
+
+      <section class="band">
+        <div class="center-head">
+          <h2>${esc(t("labsSecTitle"))}</h2>
+          <p class="lead">${esc(t("featuredLabsSub"))}</p>
+        </div>
+        <div class="grid g3 wrap-wide" id="flabs"></div>
+      </section>
+
+      <section class="honest wrap-wide">
+        <div class="legend"><span class="chip book">${ico("book")}${esc(t("legendBook"))}</span><span class="chip add">${ico("spark")}${esc(t("legendAdded"))}</span><span class="chip vi">${ico("flask")}${esc(t("legendSim"))}</span><span class="chip ok">${ico("check")}${esc(t("legendReal"))}</span></div>
+        <p class="muted small">${esc(t("honestyBody"))}</p>
+        <p class="small muted">${esc(t("progressTitle", { d: p.done, t: p.total }))} · <a href="#notebook">${esc(t("manageData"))}</a></p>
+        <p class="foot">${esc(t("footLine"))}</p>
       </section>`;
     main.append(wrap);
-    A.$("#home-search").onclick = () => A.openPalette();
-    // governing equation — cause & effect on the hero
+
+    /* ---- app window: units → lessons → a before/after rule from the book ---- */
+    const win = A.$("#win");
+    let cur = (last && last.unit) || "u1";
+    const drawWin = () => {
+      const u = A.unitById[cur];
+      const ls = lessonsOf(u.id);
+      const sc = A.meta.showcase[u.id];
+      const sl = A.byId[sc.lesson];
+      const done = S.get("done");
+      const badge = (l) => l.lab ? `<span class="lb g" title="${esc(t("hasLab"))}">${ar ? "خ" : "L"}</span>` : l.scene ? `<span class="lb b" title="${esc(t("hasScene"))}">${ar ? "م" : "S"}</span>` : `<span class="lb a">${ar ? "ك" : "B"}</span>`;
+      let n = 13;
+      const code = (rows) => rows.map(([k, txt]) => { const a = k === "-" ? n : k === "+" ? "" : n, b = k === "-" ? "" : ++n; return `<div class="cl ${k === "-" ? "del" : k === "+" ? "add" : ""}"><span class="ln">${a}</span><span class="ln">${b}</span><span class="cx">${k === " " ? "" : k}${esc(txt)}</span></div>`; }).join("");
+      win.innerHTML = `
+        <aside class="win-side">
+          <div class="lights" aria-hidden="true"><i></i><i></i><i></i></div>
+          <div class="win-h">${ico("chev")} ${esc(t("winUnits"))}</div>
+          <div class="win-nav" role="tablist" aria-label="${esc(t("winUnits"))}">${A.units.map((x) => `<button type="button" role="tab" data-u="${x.id}" aria-selected="${x.id === cur}"><span class="ub" style="background:${x.color}">${esc(x.badge)}</span><span>${esc(L(x.short))}</span></button>`).join("")}</div>
+          <div class="win-h">${ico("chev")} ${esc(t("winLabs"))}</div>
+          <div class="win-nav">${A.labs.slice(0, 8).map((lb) => `<a href="#lab-${lb.id}">${ico(lb.icon || "flask")}<span>${esc(L(lb.title))}</span></a>`).join("")}</div>
+        </aside>
+        <div class="win-mid" role="tabpanel">
+          <div class="win-top"><span class="pill2">${ico("route")}${ico("spark")}</span><div><b>${esc(L(u.short))}</b><small>${esc(t("pagesRange", { a: u.pages[0], b: u.pages[1] }))}</small></div></div>
+          <div class="win-sub"><b>${esc(t("winLessons"))}</b><span class="num">${ls.length}</span><span class="sp"></span><a href="#unit-${u.id}" class="small">${esc(t("winAll"))}</a></div>
+          <ul class="steps">${ls.map((l) => `<li class="${l.id === sc.lesson ? "on" : ""}"><button type="button" class="cbx" data-done="${l.id}" aria-pressed="${!!done[l.id]}" aria-label="${esc(t("winToggle") + ": " + L(l.title))}">${ico("check")}</button>${badge(l)}<a href="#lesson-${l.id}">${esc(L(l.title))}</a></li>`).join("")}</ul>
+          <p class="win-legend">${esc(t("winLegend"))}</p>
+        </div>
+        <div class="win-code">
+          <div class="cb-h"><span>${esc(L(sl.title))} · ${esc(L(sc.file))}</span><span>${esc(t("winBefore"))}</span></div>
+          <div class="code">${code([[" ", ar ? "افتح المحادثة" : "open the chat"], ...sc.del.map((x) => ["-", L({ ar: x[0], en: x[1] })]), ...sc.add.map((x) => ["+", L({ ar: x[0], en: x[1] })]), [" ", ar ? `ص ${sc.p} من الكتاب` : `book p. ${sc.p}`]])}</div>
+          <div class="cb-h"><span>${esc(t("winHumanTitle"))}</span><span>${esc(t("winHuman"))}</span></div>
+          <div class="code">${(n = 37, code([[" ", t("winH1")], ["+", t("winH2")], ["+", t("winH3")], [" ", t("winH4")]]))}</div>
+          <div class="cb-f">${pageChips([sc.p, 41])}</div>
+        </div>`;
+      A.$$("[data-u]", win).forEach((b) => (b.onclick = () => { cur = b.dataset.u; drawWin(); A.$(`[data-u="${cur}"]`, win).focus(); }));
+      A.$$("[data-done]", win).forEach((b) => (b.onclick = () => { const id = b.dataset.done; S.patch("done", id, !S.get("done")[id]); A.renderBar(); A.renderSide(); drawWin(); A.$(`[data-done="${id}"]`, win).focus(); }));
+    };
+    drawWin();
+
+    /* ---- command palette preview: real prompts from the library ---- */
+    const cmdk = A.$("#cmdk");
+    const picks = ["p5", "p7", "p9", "y4", "d1", "w2", "s2"].map((id) => A.prompts.find((x) => x.lesson === id)).filter(Boolean);
+    const catName = (c) => { const x = A.meta.promptCats.find((k) => k.id === c); return x ? L(x.name) : c; };
+    cmdk.innerHTML = `<button type="button" class="cmdk-in" id="cmdk-in">${ico("search")}<span>${esc(t("palPh"))}</span><kbd>Ctrl K</kbd></button>
+      <div class="cmdk-list">${picks.map((x, i) => `<a class="cmdk-it${i === 2 ? " on" : ""}" href="#prompts-${x.id}">${ico((A.meta.promptCats.find((k) => k.id === x.cat) || {}).icon || "msg")}<span class="tt">${esc(L(x.title))}</span><span class="cmdk-k"><span class="chip">${esc(catName(x.cat))}</span>${x.p ? `<kbd>${ar ? "ص" : "p."}${x.p}</kbd>` : ""}</span></a>`).join("")}</div>
+      <a class="cmdk-foot" href="#prompts">${esc(t("palAll"))} ${ico(ar ? "prev" : "next")}</a>`;
+    A.$("#cmdk-in").onclick = () => A.openPalette();
+
+    /* ---- governing equation (book p7) ---- */
     const eq = A.$("#eq");
     const parts = A.meta.equation;
     const on = new Set([0]);
     const draw = () => {
-      const score = parts.reduce((s, p, i) => s + (on.has(i) ? p.w : 0), 0);
+      const score = parts.reduce((s, q, i) => s + (on.has(i) ? q.w : 0), 0);
       const outKey = on.size === 4 ? "full" : on.size === 0 ? "none" : [...on].sort().join("");
       const out = A.meta.equationOut[outKey] || A.meta.equationOut.partial;
-      eq.innerHTML = `<div class="small muted" style="display:flex;justify-content:space-between;gap:8px"><b style="color:var(--ink)">${esc(t("eqTitle"))}</b>${pageChips([7])}</div>
-        <div class="eq-row">${parts.map((p, i) => `${i ? '<span class="eq-op" aria-hidden="true">+</span>' : ""}<button type="button" class="eq-b" data-i="${i}" aria-pressed="${on.has(i)}"><span class="n">${i + 1}</span><b>${esc(L(p.name))}</b><small>${esc(L(p.hint))}</small></button>`).join("")}<span class="eq-op" aria-hidden="true">=</span></div>
-        <div class="eq-res"><div style="display:flex;justify-content:space-between;align-items:center"><b>${esc(t("eqResult"))}</b><span class="num small">${score}%</span></div>
+      eq.innerHTML = `<div class="eq-head"><b>${esc(t("eqTitle"))}</b>${pageChips([7])}</div>
+        <div class="eq-row">${parts.map((q, i) => `${i ? '<span class="eq-op" aria-hidden="true">+</span>' : ""}<button type="button" class="eq-b" data-i="${i}" aria-pressed="${on.has(i)}"><span class="n">${i + 1}</span><b>${esc(L(q.name))}</b><small>${esc(L(q.hint))}</small></button>`).join("")}</div>
+        <div class="eq-res"><div class="eq-head"><b>${esc(t("eqResult"))}</b><span class="num">${score}%</span></div>
         <div class="bar-meter" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${score}" aria-label="${esc(t("eqQuality"))}"><i style="width:${score}%"></i></div>
         <p class="eq-out"><b>${esc(t("eqSample"))}</b> ${esc(L(out))}</p></div>
         <p class="hint">${esc(t("eqHint"))} <a href="#lab-prompt">${esc(t("eqLab"))}</a></p>`;
       A.$$(".eq-b", eq).forEach((b) => (b.onclick = () => { const i = Number(b.dataset.i); on.has(i) ? on.delete(i) : on.add(i); draw(); A.$(`.eq-b[data-i="${i}"]`, eq).focus(); }));
     };
     draw();
-    // ladder (book p4)
+
+    /* ---- ladder (book p4) ---- */
     const lad = A.$("#ladder");
     A.meta.ladder.forEach((r, i) => {
       const ls = (r.lessons || []).map((id) => A.byId[id]).filter(Boolean);
       const d = ls.filter((l) => S.get("done")[l.id]).length;
-      const a = h("a", { class: "rung", href: "#lesson-" + (r.lessons[0] || first.id), style: `min-height:${100 + i * 9}px`, title: L(r.desc) },
-        h("span", { class: "k num" }, String(i + 1)), h("b", null, L(r.name)), h("small", null, L(r.desc)));
-      a.append(h("span", { class: "fill", html: `<i style="width:${ls.length ? (d / ls.length) * 100 : 0}%"></i>` }));
-      lad.append(a);
+      lad.append(h("li", null, h("a", { class: "rung2", href: "#lesson-" + (r.lessons[0] || first.id), html: `<span class="k num">${String(i + 1).padStart(2, "0")}</span><b>${esc(L(r.name))}</b><small>${esc(L(r.desc))}</small><span class="fill"><i style="width:${ls.length ? (d / ls.length) * 100 : 0}%"></i></span>` })));
     });
-    // units
+
+    /* ---- units list ---- */
     const ug = A.$("#units");
     for (const u of A.units) {
       const pr = unitProgress(u.id);
-      ug.append(h("a", { class: "unit-card", href: "#unit-" + u.id, style: "--uc:" + u.color, html: `
-        <div class="row" style="justify-content:space-between"><span class="ub">${esc(u.badge)}</span>${pageChips([u.pages[0]]).replace(/data-page/, "tabindex=\"-1\" data-page")}</div>
-        <h3>${esc(L(u.title))}</h3><p>${esc(L(u.sum))}</p>
-        <div class="mini-prog"><span class="num">${pr.d}/${pr.n}</span><div class="bar-meter"><i style="width:${pr.pct}%"></i></div><span>${esc(t("pagesRange", { a: u.pages[0], b: u.pages[1] }))}</span></div>` }));
+      ug.append(h("a", { class: "urow", href: "#unit-" + u.id, html: `<span class="tile sm" style="--tc:${u.color}"><b>${esc(u.badge)}</b></span><span class="ut"><b>${esc(L(u.title))}</b><small>${esc(t("pagesRange", { a: u.pages[0], b: u.pages[1] }))} · ${esc(nLessons(pr.n))}</small></span>${pr.d === pr.n ? `<span class="tick">${ico("check")}</span>` : `<span class="ring" style="--p:${pr.pct}" title="${pr.pct}%"></span>`}` }));
     }
-    // journey
-    const j = A.$("#journey");
-    A.meta.journey.forEach((s, i) => { if (i) j.append(h("span", { class: "ar", "aria-hidden": "true", style: "border:0;background:none;padding:0" }, A.lang() === "ar" ? "←" : "→")); j.append(h("span", null, L(s))); });
-    // featured labs
+
+    /* ---- featured labs ---- */
     const fl = A.$("#flabs");
     for (const id of A.meta.featuredLabs) { const lb = A.labsById[id]; if (lb) fl.append(labCard(lb)); }
   });
 
+  const labTone = { prompt: "var(--sig-blue)", brain: "var(--sig-violet)", formula: "var(--sig-green)", worth: "var(--sig-amber)", pipeline: "var(--sig-teal)", quality: "var(--sig-green)", dashboard: "var(--sig-amber)", request: "var(--sig-blue)", git: "var(--sig-pink)", tokens: "var(--sig-violet)", local: "var(--sig-teal)", system: "var(--sig-blue)", agents: "var(--sig-pink)" };
   function labCard(lb) {
     const ls = A.byId[lb.lesson];
-    return h("a", { class: "card card-link stack", href: "#lab-" + lb.id, style: "gap:10px", html: `
-      <div class="row" style="justify-content:space-between"><span class="sec-h" style="margin:0"><span class="ic vi">${ico(lb.icon || "flask")}</span></span><span class="chip ${lb.real ? "ok" : "vi"}">${esc(lb.real ? t("realCalc") : t("eduSim"))}</span></div>
+    return h("a", { class: "card card-link labcard", href: "#lab-" + lb.id, html: `
+      <div class="row" style="justify-content:space-between"><span class="tile" style="--tc:${labTone[lb.id] || "var(--accent)"}">${ico(lb.icon || "flask")}</span><span class="chip ${lb.real ? "ok" : "vi"}">${esc(lb.real ? t("realCalc") : t("eduSim"))}</span></div>
       <h3>${esc(L(lb.title))}</h3><p class="muted small">${esc(L(lb.sum))}</p>
-      ${ls ? `<span class="small" style="color:var(--accent)">${ico("book")} ${esc(L(ls.title))}</span>` : ""}` });
+      ${ls ? `<span class="lc-l">${ico("book")} ${esc(L(ls.title))}</span>` : ""}` });
   }
   A.labCard = labCard;
 
