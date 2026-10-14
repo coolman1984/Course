@@ -300,6 +300,24 @@
     function lvBlock(k) {
       const items = (l.levels && l.levels[k]) || [];
       if (!items.length) return `<p class="muted">${esc(t("noLevel"))}</p>`;
+      // Start with the practical Egyptian-Arabic explanation. Book-level detail
+      // remains available on demand, so depth does not bury the mental model.
+      const talk = A.lang() === "ar" && A.plainTalk?.[l.id];
+      if (talk) {
+        const fields = {
+          simple: [["what", "what"], ["why", "why"]],
+          mech: [["how", "how"], ["link", "link"]],
+          practice: [["example", "example"], ["apply", "apply"]],
+          adv: [["mistakes", "mistakes"], ["whennot", "whennot"]]
+        }[k] || [];
+        const clear = fields.map(([key, field]) =>
+          `<div class="lv-sec plain-sec"><h4><span class="q">${esc(t("q_" + key))}</span></h4><p class="plain-copy">${esc(talk[field])}</p></div>`
+        ).join("");
+        const original = items.map((it) =>
+          `<div class="lv-sec"><h4><span class="q">${esc(t("q_" + it.k))}</span></h4><div class="rt">${rich(L(it))}</div></div>`
+        ).join("");
+        return clear + `<details class="orig-layer"><summary>📖 شرح أعمق من الكتاب، لو محتاج تفاصيل زيادة</summary><div class="stack">${original}</div></details>`;
+      }
       return items.map((it) => `<div class="lv-sec"><h4><span class="q">${esc(t("q_" + it.k))}</span></h4><div class="rt">${rich(L(it))}</div></div>`).join("");
     }
     function drawLevels() {

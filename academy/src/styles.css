@@ -807,3 +807,16 @@ html[lang="ar"] .ptext{font-family:var(--font-body);font-size:15px;line-height:2
 .book-original summary{cursor:pointer;font-weight:650}
 .book-original .bookpts{margin-top:16px}
 @media(max-width:660px){.mental{padding:18px}.mental-flow{flex-direction:column}.mental-arrow{transform:rotate(-90deg);align-self:center}.mental-step{padding:12px}.mental-situation{font-size:1.08rem}}
+
+
+/* Plain Arabic is the main teaching route. The more technical book notes
+   stay behind a voluntary disclosure, not in front of a beginner. */
+.plain-sec{background:var(--surface);border-inline-start:3px solid var(--accent);padding:19px 22px;gap:11px}
+.plain-sec .q{font-size:13px;padding:5px 10px}
+.plain-copy{font-size:clamp(1rem,1.8vw,1.12rem);font-weight:480;line-height:2.05;color:var(--ink);max-width:74ch;white-space:pre-line}
+.orig-layer{margin-top:4px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface-2);overflow:hidden}
+.orig-layer summary{cursor:pointer;line-height:1.7;padding:13px 17px;font-size:.9rem;color:var(--ink-2);font-weight:620}
+.orig-layer[open] summary{border-bottom:1px solid var(--line);color:var(--ink)}
+.orig-layer>.stack{display:grid;gap:10px;padding:12px}
+.orig-layer .lv-sec{background:var(--surface)}
+@media(max-width:660px){.plain-sec{padding:15px 16px}.plain-copy{line-height:1.95}.orig-layer summary{font-size:.84rem}}

@@ -38,6 +38,16 @@ await session({ label: "desktop-ar", viewport: { width: 1440, height: 900 } }, a
     if (!h1 || /حدث خطأ|could not be shown/.test(errTitle)) fail(`route ${hsh}: no h1 or error view`);
     const ov = await overflow(page);
     if (ov > 1) fail(`route ${hsh}: horizontal overflow ${ov}px`);
+    if (hsh.startsWith("lesson-")) {
+      const proof = await page.evaluate(() => ({
+        plain: document.querySelectorAll("#lv .plain-sec").length,
+        visible: [...document.querySelectorAll("#lv .plain-copy")].every((el) => el.textContent.trim().length > 35),
+        original: !!document.querySelector("#lv .orig-layer:not([open])"),
+        story: !!document.querySelector("#sec-mental")
+      }));
+      if (proof.plain !== 2 || !proof.visible || !proof.original || !proof.story)
+        fail(`lesson ${hsh}: practical Arabic explanation or book reference missing ${JSON.stringify(proof)}`);
+    }
   }
   ok(`visited ${hashes.length} routes`);
 });
@@ -85,7 +95,7 @@ await session({ label: "interactions-ar", viewport: { width: 1280, height: 860 }
 
   // glossary popover
   const term = await page.$("#main .term");
-  if (term) { await term.scrollIntoViewIfNeeded(); await page.waitForTimeout(300); await term.click(); await page.waitForTimeout(150); const pop = await page.$(".popover"); if (pop) ok("glossary popover opens"); else fail("glossary popover did not open"); await page.keyboard.press("Escape"); }
+  if (term) { await term.evaluate((el) => { for (let p = el.parentElement; p; p = p.parentElement) if (p.tagName === "DETAILS") p.open = true; }); await term.scrollIntoViewIfNeeded(); await page.waitForTimeout(300); await term.click(); await page.waitForTimeout(150); const pop = await page.$(".popover"); if (pop) ok("glossary popover opens"); else fail("glossary popover did not open"); await page.keyboard.press("Escape"); }
   else fail("no glossary term button in lesson p1");
 
   // quiz: answer an mcq and an order question

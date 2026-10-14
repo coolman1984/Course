@@ -8,7 +8,7 @@ import vm from "node:vm";
 import path from "node:path";
 
 const SRC = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "src");
-const DATA = ["ui", "meta", "stories", "scenes", "lessons-u0", "lessons-u1", "lessons-u2", "lessons-u3u4", "lessons-u5", "prompts", "quiz", "glossary", "compare"];
+const DATA = ["ui", "meta", "stories", "scenes", "lessons-u0", "lessons-u1", "lessons-u2", "lessons-u3u4", "lessons-u5", "plain-talk-a", "plain-talk-b", "prompts", "quiz", "glossary", "compare"];
 const ENGINE = ["core", "scene", "render", "quiz", "labs", "tools"];
 const ctx = { window: { ACADEMY: {} } };
 vm.createContext(ctx);
@@ -130,5 +130,19 @@ test("all lessons have complete picture-first Arabic intros", () => {
     const s = stories[l.id];
     assert.ok(Array.isArray(s) && s.length === 7, `missing story for ${l.id}`);
     assert.ok(s.every((v) => typeof v === "string" && v.trim().length > 8), `incomplete story ${l.id}`);
+  }
+});
+test("all 41 lessons lead with useful, specific Egyptian Arabic in four levels", () => {
+  const fields = ["title", "what", "why", "how", "link", "example", "apply", "mistakes", "whennot"];
+  assert.equal(Object.keys(A.plainTalk || {}).length, A.lessons.length, "missing clear lesson explanation");
+  for (const l of A.lessons) {
+    const p = A.plainTalk[l.id];
+    assert.ok(p, `no plain lesson for ${l.id}`);
+    for (const k of fields) {
+      assert.ok(typeof p[k] === "string" && p[k].trim().length >= (k === "title" ? 12 : 35), `${l.id}.${k} too vague or missing`);
+    }
+    assert.equal(l.title.ar, p.title, `${l.id} should display the simple title`);
+    assert.equal(l.sum.ar, p.what, `${l.id} should display a plain-language summary`);
+    assert.ok(l.bookTitleAr && l.book.length >= 2, `${l.id}: original book reference lost`);
   }
 });
