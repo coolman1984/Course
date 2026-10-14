@@ -16,6 +16,7 @@ async function session(opts, fn) {
   const errors = []; const net = [];
   page.on("pageerror", (e) => errors.push(e.message));
   page.on("console", (m) => { if (m.type() === "error") errors.push(m.text()); });
+  page.on("requestfailed", (r) => { errors.push("Failed resource URL: " + r.url() + " (" + (r.failure()?.errorText || "unknown") + ")"); });
   page.on("request", (r) => { if (!r.url().startsWith("file:") && !r.url().startsWith("data:") && !r.url().startsWith("blob:")) net.push(r.url()); });
   await page.goto(file);
   await page.waitForSelector("#main h1");
