@@ -16,7 +16,7 @@ const ENGINE = ["engine/core.js", "engine/scene.js", "engine/render.js", "engine
 
 for (const f of [...DATA, ...ENGINE]) if (!existsSync(join(src, f))) throw new Error("Missing source file: " + f);
 
-let css = read("styles.css") + "\n" + read("motion.css")
+let css = (read("styles.css") + "\n" + read("motion.css"))
   .replace(/__FONT:([\w.-]+)__/g, (m, f) => "data:font/woff2;base64," + b64("fonts/" + f));
 
 const pages = {};
