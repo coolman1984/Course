@@ -196,4 +196,12 @@
   ]
 };
   for (const [id,parts] of Object.entries(lessons)) A.plainTalk[id] = Object.fromEntries(names.map((name,i)=>[name,parts[i]]));
+  // Use human, everyday titles in the menu and lessons; preserve book points and page refs.
+  for (const lesson of A.lessons || []) {
+    const simple = A.plainTalk[lesson.id];
+    if (!simple) continue;
+    lesson.bookTitleAr = lesson.title.ar;
+    lesson.title.ar = simple.title;
+    lesson.sum.ar = simple.what;
+  }
 })(window.ACADEMY=window.ACADEMY||{});
