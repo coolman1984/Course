@@ -151,6 +151,17 @@
           '</div>' +
         '</div>' +
       '</div></div>';
+    // Animate the headline only when the home screen actually appears.
+    // Mounting with .is-shown already set would skip the transition.
+    const heading = host.querySelector(".motion-show-head");
+    if (heading && !isQuiet()) {
+      heading.classList.remove("is-shown");
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          if (heading.isConnected) heading.classList.add("is-shown");
+        });
+      });
+    }
     let activeLesson = id;
     let stage = 0;
     let page = 1;
