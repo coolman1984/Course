@@ -1,0 +1,32 @@
+name: Check academy changes
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "academy/**"
+      - ".github/workflows/academy-pr.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Syntax check
+        run: |
+          node --check academy/src/data/stories.js
+          node --check academy/src/engine/render.js
+          node --check academy/build.mjs
+      - name: Verify book mapping and all 41 new stories
+        run: node --test academy/test/data.test.mjs
+      - name: Build complete offline academy
+        run: node academy/build.mjs
+      - name: Verify the new visual lesson introduction exists
+        run: |
+          node -e 'const fs=require("node:fs"); const html=fs.readFileSync("AI_Academy.html","utf8"); for(const s of ["تخيّل الموقف ده","ابدأ بالمشكلة، مش بالمصطلح","من المشكلة للنتيجة"])if(!html.includes(s))throw Error("Missing visual introduction: "+s); console.log("All visual intro markers present");'

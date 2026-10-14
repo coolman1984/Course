@@ -8,7 +8,7 @@ import vm from "node:vm";
 import path from "node:path";
 
 const SRC = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "src");
-const DATA = ["ui", "meta", "scenes", "lessons-u0", "lessons-u1", "lessons-u2", "lessons-u3u4", "lessons-u5", "prompts", "quiz", "glossary", "compare"];
+const DATA = ["ui", "meta", "stories", "scenes", "lessons-u0", "lessons-u1", "lessons-u2", "lessons-u3u4", "lessons-u5", "prompts", "quiz", "glossary", "compare"];
 const ENGINE = ["core", "scene", "render", "quiz", "labs", "tools"];
 const ctx = { window: { ACADEMY: {} } };
 vm.createContext(ctx);
@@ -120,4 +120,15 @@ test("every literal t(\"key\") used by the engine exists in both languages", () 
   const keys = new Set([...engineSrc.matchAll(/\bt\("([a-zA-Z0-9_]+)"\s*[),]/g)].map((m) => m[1]));
   for (const type of ["mcq", "spot", "predict", "compare", "order"]) keys.add("qt_" + type);
   for (const k of keys) assert.ok(A.ui[k] && A.ui[k].ar && A.ui[k].en, `ui key "${k}" missing`);
+});
+// Picture-first examples must exist for every lesson and must be concrete enough to show a full causal chain.
+test("all lessons have complete picture-first Arabic intros", () => {
+  const stories = A.lessonStories;
+  assert.ok(stories, "missing stories module");
+  assert.equal(Object.keys(stories).length, A.lessons.length);
+  for (const l of A.lessons) {
+    const s = stories[l.id];
+    assert.ok(Array.isArray(s) && s.length === 7, `missing story for ${l.id}`);
+    assert.ok(s.every((v) => typeof v === "string" && v.trim().length > 8), `incomplete story ${l.id}`);
+  }
 });
