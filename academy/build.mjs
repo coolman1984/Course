@@ -12,11 +12,11 @@ const read = (p) => readFileSync(join(src, p), "utf8");
 const b64 = (p) => readFileSync(join(src, p)).toString("base64");
 
 const DATA = ["data/ui.js", "data/meta.js", "data/stories.js", "data/scenes.js", "data/lessons-u0.js", "data/lessons-u1.js", "data/lessons-u2.js", "data/lessons-u3u4.js", "data/lessons-u5.js", "data/plain-talk-a.js", "data/plain-talk-b.js", "data/prompts.js", "data/quiz.js", "data/glossary.js", "data/compare.js"];
-const ENGINE = ["engine/core.js", "engine/scene.js", "engine/render.js", "engine/quiz.js", "engine/labs.js", "engine/tools.js"];
+const ENGINE = ["engine/core.js", "engine/scene.js", "engine/render.js", "engine/quiz.js", "engine/labs.js", "engine/tools.js", "engine/motion.js"];
 
 for (const f of [...DATA, ...ENGINE]) if (!existsSync(join(src, f))) throw new Error("Missing source file: " + f);
 
-let css = read("styles.css")
+let css = read("styles.css") + "\n" + read("motion.css")
   .replace(/__FONT:([\w.-]+)__/g, (m, f) => "data:font/woff2;base64," + b64("fonts/" + f));
 
 const pages = {};
