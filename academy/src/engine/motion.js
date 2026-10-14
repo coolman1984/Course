@@ -323,27 +323,27 @@
       removeEventListener("resize", onResize);
       unsub();
     });
-    const done = doc.querySelector("#donebtn");
-    if (done) {
-      let checkTimer = null;
-      done.addEventListener("click", function () {
-        if (!A.S.get("done")[id]) return;
-        let marker = done.parentElement.querySelector(".t-success-check");
-        if (!marker) {
-          marker = doc.createElement("span");
-          marker.className = "t-success-check";
-          marker.setAttribute("aria-hidden", "true");
-          marker.innerHTML = '<svg viewBox="0 0 24 24" width="27" height="27" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>';
-          done.parentElement.append(marker);
-        }
-        marker.setAttribute("data-state", "out");
-        void marker.offsetWidth;
-        marker.setAttribute("data-state", "in");
-        clearTimeout(checkTimer);
-        checkTimer = setTimeout(function () { marker.remove(); }, 1450);
-      });
-      A.onLeave(function () { clearTimeout(checkTimer); });
+  }
+  // Completion re-renders the route immediately. Capture the intention before
+  // the original click handler replaces the DOM, then celebrate on the new DOM.
+  let pendingSuccess = null;
+  doc.addEventListener("click", function (event) {
+    if (!event.target.closest || !event.target.closest("#donebtn, #donetop")) return;
+    if (A.current && A.current.name === "lesson" && !A.S.get("done")[A.current.arg]) {
+      pendingSuccess = A.current.arg;
     }
+  }, true);
+  function showSuccess() {
+    const done = doc.querySelector(".donebox #donebtn");
+    if (!done) return;
+    const marker = doc.createElement("span");
+    marker.className = "t-success-check";
+    marker.setAttribute("data-state", "in");
+    marker.setAttribute("aria-hidden", "true");
+    marker.innerHTML = '<svg viewBox="0 0 24 24" width="27" height="27" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>';
+    done.parentElement.append(marker);
+    const timer = setTimeout(function () { marker.remove(); }, 1600);
+    A.onLeave(function () { clearTimeout(timer); });
   }
   // Register before boot; the main router calls this after each view mounts.
   A.on("route", function (route) {
@@ -353,6 +353,10 @@
     }
     if (route.name === "home") addHome();
     if (route.name === "lesson" && A.lang() === "ar") addLesson(route.arg);
+    if (route.name === "lesson" && pendingSuccess === route.arg) {
+      pendingSuccess = null;
+      showSuccess();
+    }
   });
   A.motion = { quiet: isQuiet, setQuiet: setMotion, slidePill: slidePill };
 })(window.ACADEMY = window.ACADEMY || {});
