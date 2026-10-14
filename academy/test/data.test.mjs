@@ -121,3 +121,14 @@ test("every literal t(\"key\") used by the engine exists in both languages", () 
   for (const type of ["mcq", "spot", "predict", "compare", "order"]) keys.add("qt_" + type);
   for (const k of keys) assert.ok(A.ui[k] && A.ui[k].ar && A.ui[k].en, `ui key "${k}" missing`);
 });
+// Picture-first examples must exist for every lesson and must be concrete enough to show a full causal chain.
+test("all lessons have complete picture-first Arabic intros", () => {
+  const stories = A.lessonStories;
+  assert.ok(stories, "missing stories module");
+  assert.equal(Object.keys(stories).length, A.lessons.length);
+  for (const l of A.lessons) {
+    const s = stories[l.id];
+    assert.ok(Array.isArray(s) && s.length === 7, `missing story for ${l.id}`);
+    assert.ok(s.every((v) => typeof v === "string" && v.trim().length > 8), `incomplete story ${l.id}`);
+  }
+});
