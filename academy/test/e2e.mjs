@@ -38,6 +38,16 @@ await session({ label: "desktop-ar", viewport: { width: 1440, height: 900 } }, a
     if (!h1 || /حدث خطأ|could not be shown/.test(errTitle)) fail(`route ${hsh}: no h1 or error view`);
     const ov = await overflow(page);
     if (ov > 1) fail(`route ${hsh}: horizontal overflow ${ov}px`);
+    if (hsh.startsWith("lesson-")) {
+      const proof = await page.evaluate(() => ({
+        plain: document.querySelectorAll("#lv .plain-sec").length,
+        visible: [...document.querySelectorAll("#lv .plain-copy")].every((el) => el.textContent.trim().length > 35),
+        original: !!document.querySelector("#lv .orig-layer:not([open])"),
+        story: !!document.querySelector("#sec-mental")
+      }));
+      if (proof.plain !== 2 || !proof.visible || !proof.original || !proof.story)
+        fail(`lesson ${hsh}: practical Arabic explanation or book reference missing ${JSON.stringify(proof)}`);
+    }
   }
   ok(`visited ${hashes.length} routes`);
 });
