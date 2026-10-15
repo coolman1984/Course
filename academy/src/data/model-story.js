@@ -21,10 +21,10 @@
     ui: {
       prev: u("اللي فات", "Previous"), next: u("اللي بعده", "Next"),
       play: u("شغّل الحكاية", "Play the story"), pause: u("وقّف", "Pause"), replay: u("من الأول", "From the start"),
-      skip: u("تخطّى للدرس", "Skip to the lesson"), start: u("يلا نكمّل الدرس", "Continue the lesson"),
+      skip: u("تخطّى للدرس", "Skip to the lesson"), start: u("نكمّل الدرس", "Continue the lesson"),
       slideOf: u("{n} من {t}", "{n} of {t}"), timeline: u("خطوات الحكاية", "Story steps"),
       deck: u("إزاي الموديل بيشتغل من جوه، في شرائح", "How a model works inside, in slides"), slide: u("شريحة", "slide"),
-      keys: u("استخدم الأسهم أو اسحب بصباعك", "Use the arrow keys or swipe")
+      keys: u("استخدم الأسهم أو اسحب على الشاشة", "Use the arrow keys or swipe")
     },
     slides: [
       {
@@ -32,9 +32,9 @@
         title: u("يعني إيه «موديل» أصلًا؟", "What is a “model”, really?"),
         story: [u("البرنامج العادي زي وصفة مكتوبة: مبرمج بيكتب كل قاعدة بإيده، «لو حصل كذا، اعمل كذا». بس جرّب تكتب قواعد لكل جمل اللغة العربية… مستحيل.",
           "Ordinary software is like a written recipe: a programmer writes every rule by hand — “if this happens, do that”. Now try writing rules for every sentence in a language… impossible."),
-        u("فالعلما قلبوا الفكرة: بدل ما نكتب القواعد، نبني آلة فيها مليارات «المفاتيح» الصغيرة اللي بتتظبط، ونوريها أمثلة كتير لحد ما المفاتيح تقف في الوضع الصح. الآلة دي بعد ما تتظبط هي اللي بنسميها «موديل».",
+        u("فالعلماء عكسوا الفكرة: بدل ما نكتب القواعد، نبني آلة فيها مليارات «المفاتيح» الصغيرة اللي بتتظبط، ونوريها أمثلة كتير لحد ما المفاتيح تقف في الوضع الصح. الآلة دي بعد ما تتظبط هي اللي بنسميها «موديل».",
           "So scientists flipped the idea: instead of writing the rules, build a machine with billions of small adjustable “knobs” and show it lots of examples until the knobs settle in the right place. Once tuned, that machine is what we call a “model”.")],
-        answer: u("ما نكتبش القواعد؛ نسيب الآلة تتعلّمها من الأمثلة. لأن اللغة أكبر وألخبط من إن حد يكتب قواعدها.", "Don't write the rules; let the machine learn them from examples — language is far too big and messy for anyone to write its rules."),
+        answer: u("ما نكتبش القواعد؛ نسيب الآلة تتعلّمها من الأمثلة. لأن اللغة أكبر وأعقد من إن حد يكتب قواعدها.", "Don't write the rules; let the machine learn them from examples — language is far too big and messy for anyone to write its rules."),
         idea: u("الموديل = ملف ضخم من الأرقام (المفاتيح) + طريقة حساب بتحوّل كلامك لرد.", "A model = a huge file of numbers (the knobs) + a recipe of calculations that turns your words into a reply.")
       },
       {
@@ -44,7 +44,7 @@
           "To tune those knobs we need questions with answers. If we waited for people to write millions of questions by hand, it would take centuries."),
         u("الحل كان عبقري وبسيط: أي جملة مكتوبة في الدنيا هي نفسها سؤال وإجابة. خبّي آخر كلمة في «فنجان قهوة من غير …» وخلّي الموديل يخمّن. الإجابة الصح مكتوبة أصلًا في النص.",
           "The fix was brilliant and simple: any sentence ever written is already a question and its answer. Hide the last word of “a cup of coffee without …” and let the model guess. The right answer is already in the text.")],
-        answer: u("نعلّمه بلعبة «الكلمة الجاية». لأنها بتحوّل كل كتاب وموقع ومقال لتمرين ببلاش، فنقدر ندرّبه على كمية كلام مهولة.", "Teach it with the next-word game — it turns every book, site and article into a free exercise, so it can train on an enormous amount of text."),
+        answer: u("نعلّمه بلعبة «الكلمة الجاية». لأنها بتحوّل كل كتاب وموقع ومقال لتمرين جاهز من غير تكلفة، فنقدر ندرّبه على كمية كلام مهولة.", "Teach it with the next-word game — it turns every book, site and article into a free exercise, so it can train on an enormous amount of text."),
         idea: u("عشان يكسب اللعبة دي كويس، لازم يفهم اللغة والمعنى وحاجات كتير عن الدنيا. الفهم بييجي كنتيجة جانبية للتخمين الشاطر.", "To win this game well, it has to pick up grammar, meaning and a lot about the world. Understanding arrives as a side effect of guessing well.")
       },
       {
@@ -76,13 +76,13 @@
           "“Dog bites man” is ordinary. “Man bites dog” makes the papers! Exactly the same words — the order flipped the meaning."),
         u("و«الانتباه» اللي جاي في الشريحة الجاية بيوصّل الكلمات ببعض مباشرة، من غير ما يعرف لوحده مين جه قبل مين. عشان كده بيضيفوا لكل توكن «ختم» صغير بمكانه في الجملة.",
           "And “attention”, on the next slide, links words to each other directly without knowing by itself who came first. That's why each token gets a small “stamp” with its position in the sentence.")],
-        answer: u("نضيف معلومة المكان لكل كلمة. لأن من غيرها الجملة بتبقى شنطة كلمات ملخبطة.", "Add position information to every word — without it, a sentence is just a jumbled bag of words."),
+        answer: u("نضيف معلومة المكان لكل كلمة. لأن من غيرها الجملة بتبقى كومة كلمات من غير ترتيب.", "Add position information to every word — without it, a sentence is just a jumbled bag of words."),
         idea: u("المعنى = الكلمات + ترتيبها. والموديل محتاج الاتنين.", "Meaning = the words + their order. The model needs both.")
       },
       {
         id: "attention", art: "m_attention", year: u("الانتباه", "Attention"), mark: u("٠٦", "06"), era: u("قلب التصميم", "The heart of the design"),
         title: u("الانتباه: كل كلمة بتسأل الباقيين", "Attention: every word asks all the others"),
-        story: [u("«سلّمت الملف للمدير عشان هو مستعجل». مين المستعجل؟ إنت عرفت على طول إنه المدير. الموديل بيعمل كده بـ«الانتباه»: كل كلمة بتبص على الكلمات اللي قبلها وتقرر مين يهمها أكتر، و«هو» بتشد أوي على «المدير».",
+        story: [u("«سلّمت الملف للمدير عشان هو مستعجل». مين المستعجل؟ إنت عرفت على طول إنه المدير. الموديل بيعمل كده بـ«الانتباه»: كل كلمة بتبص على الكلمات اللي قبلها وتقرر مين يهمها أكتر، و«هو» بتركّز بقوة على «المدير».",
           "“The file reached the manager, so he signed.” Who signed? The manager, of course. The model does this with “attention”: every word looks back at the words before it and decides which matter most — and “he” pulls hard on “manager”."),
         u("ليه اللي قبلها بس؟ لأنه بيتدرّب يخمّن الكلمة الجاية، فلو بص على اللي بعدها يبقى بيغش وشاف الإجابة!",
           "Why only the words before? Because it's trained to guess the next word — looking ahead would be peeking at the answer!"),
@@ -94,7 +94,7 @@
       {
         id: "layers", art: "m_layers", year: u("الطبقات", "Layers"), mark: u("٠٧", "07"), era: u("الفهم بيتعمّق", "Understanding deepens"),
         title: u("طبقة فوق طبقة: من كلام لمقصود", "Layer upon layer: from words to intent"),
-        story: [u("خطوة انتباه واحدة مش كفاية. فبيكرروا نفس الوحدة (انتباه + شوية حساب) عشرات المرات، طبقة فوق طبقة.",
+        story: [u("خطوة انتباه واحدة مش كفاية. فبيكرروا نفس الوحدة (انتباه + خطوة حساب) عشرات المرات، طبقة فوق طبقة.",
           "One round of attention isn't enough. So the same unit (attention + a bit of calculation) is repeated dozens of times, layer upon layer."),
         u("تخيلها زي خط إنتاج في مصنع: كل محطة بتضيف حاجة. الطبقات الأولى بتمسك حاجات بسيطة زي شكل الكلام وقواعده، واللي فوقها بتمسك المعنى، والأعلى بتفهم المقصود من الكلام كله. (ده تبسيط، بس هو الاتجاه العام.)",
           "Picture a factory line: each station adds something. Early layers catch simple things like word forms and grammar, higher ones catch meaning, and the top ones grasp the intent of the whole text. (A simplification, but the general direction.)")],
@@ -104,7 +104,7 @@
       {
         id: "training", art: "m_training", year: u("التدريب", "Training"), mark: u("٠٨", "08"), era: u("إزاي اتظبط", "How it gets tuned"),
         title: u("التدريب: مليارات الغلطات الصغيرة… وتصحيحها", "Training: billions of small mistakes… each one corrected"),
-        story: [u("في الأول المفاتيح كلها عشوائية، فالتخمين بيطلع ملوش أي معنى. الموديل يخمّن الكلمة الجاية، نقارن بالكلمة الصح، ونقيس هو غلط قد إيه.",
+        story: [u("في الأول المفاتيح كلها عشوائية، فالتخمينات بتكون عشوائية من غير معنى. الموديل يخمّن الكلمة الجاية، نقارن بالكلمة الصح، ونقيس هو غلط قد إيه.",
           "At first all the knobs are random, so the guesses are nonsense. The model guesses the next word, we compare it with the right word, and measure how wrong it was."),
         u("بعدها بنحرّك كل المفاتيح حركة صغيرة جدًا في الاتجاه اللي يقلل الغلط ده، زي رامي سهام كل مرة يعدّل إيده شعرة. ونكرر ده على تريليونات التوكنز، شهور على آلاف كروت الشاشة.",
           "Then every knob is nudged a tiny bit in the direction that reduces that error — like an archer adjusting their aim a hair each shot. Repeat over trillions of tokens, for months, on thousands of graphics chips.")],

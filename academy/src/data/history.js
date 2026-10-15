@@ -19,10 +19,10 @@
     ui: {
       prev: u("اللي فات", "Previous"), next: u("اللي بعده", "Next"),
       play: u("شغّل الحكاية", "Play the story"), pause: u("وقّف", "Pause"), replay: u("من الأول", "From the start"),
-      skip: u("تخطّى للدرس", "Skip to the lesson"), start: u("يلا نبدأ الدرس", "Start the lesson"),
+      skip: u("تخطّى للدرس", "Skip to the lesson"), start: u("نبدأ الدرس", "Start the lesson"),
       slideOf: u("{n} من {t}", "{n} of {t}"), timeline: u("خط الزمن", "Timeline"),
       deck: u("حكاية الذكاء الاصطناعي في شرائح", "The story of AI in slides"), slide: u("شريحة", "slide"),
-      keys: u("استخدم الأسهم أو اسحب بصباعك", "Use the arrow keys or swipe")
+      keys: u("استخدم الأسهم أو اسحب على الشاشة", "Use the arrow keys or swipe")
     },
     slides: [
       {
@@ -60,7 +60,7 @@
         title: u("إليزا: أول برنامج بيدردش", "ELIZA: the first program you could chat with"),
         story: [u("سنة ١٩٦٦، جوزيف وايزنباوم في جامعة MIT عمل «إليزا»: برنامج بيرد عليك كأنه معالج نفسي.",
           "In 1966, Joseph Weizenbaum at MIT built ELIZA, a program that replied like a therapist."),
-        u("الغريبة إنه كان بيلعب بالكلمات بقواعد بسيطة، ومع كده ناس كتير حسّت إنه فاهمهم بجد.",
+        u("المدهش إنه كان بيعيد ترتيب الكلمات بقواعد بسيطة، ومع كده ناس كتير حسّت إنه فاهمهم فعلًا.",
           "The surprise: it only shuffled your words with simple rules, yet many people felt it truly understood them.")],
         answer: u("تقدر تقلّد الكلام", "It can imitate conversation"),
         idea: u("إن الكلام يبان ذكي حاجة، وإن البرنامج يفهم فعلًا حاجة تانية خالص.", "Sounding smart and actually understanding are two very different things.")
@@ -70,7 +70,7 @@
         title: u("قواعد مكتوبة بالإيد… وشتا طويل", "Hand-written rules… and a long winter"),
         story: [u("الوعود كانت أكبر من الأجهزة، فالتمويل اتقلّص بشدة مرتين، وجه اللي اتسمّى «شتا الذكاء الاصطناعي».",
           "The promises outran the hardware, so funding dried up twice, in what became known as the “AI winters”."),
-        u("وفي النص، في التمانينات، الشركات جرّبت «الأنظمة الخبيرة»: آلاف القواعد من نوع «لو حصل كذا، اعمل كذا» بيكتبها خبرا بإيدهم. نفعت شوية، بس كانت بتتكسر أول ما تقابل حالة جديدة.",
+        u("وفي النص، في التمانينات، الشركات جرّبت «الأنظمة الخبيرة»: آلاف القواعد من نوع «لو حصل كذا، اعمل كذا» بيكتبها خبراء بإيدهم. نفعت شوية، بس كانت بتتكسر أول ما تقابل حالة جديدة.",
           "In between, in the 1980s, companies tried “expert systems”: thousands of “if this, then that” rules written by hand by experts. They helped a bit, but broke the moment they met a new case.")],
         answer: u("لسه بدري…", "Not yet…"),
         idea: u("القواعد المكتوبة بالإيد ما بتكبرش مع الدنيا؛ التعلّم من البيانات بيكبر.", "Hand-written rules don't scale with the world; learning from data does.")
@@ -88,7 +88,7 @@
       {
         id: "deeplearning", art: "deeplearning", year: u("٢٠١٢", "2012"), era: u("التعلّم العميق بيصحى", "Deep learning wakes up"),
         title: u("صور كتير، وبيانات أكتر، وكروت شاشة سريعة", "Lots of images, more data, fast graphics chips"),
-        story: [u("الإنترنت ملا الدنيا صور وبيانات، وكروت الشاشة (GPU) بقت تحسب بسرعة رهيبة.",
+        story: [u("الإنترنت ملا الدنيا صور وبيانات، وكروت الشاشة (GPU) بقت تحسب بسرعة كبيرة جدًا.",
           "The internet filled the world with images and data, and graphics chips (GPUs) became incredibly fast at math."),
         u("سنة ٢٠١٢، شبكة عصبية عميقة اسمها AlexNet كسبت مسابقة التعرّف على الصور (ImageNet) بفرق كبير. فكرة البيرسبترون القديمة رجعت… بس بطبقات كتير وبيانات ضخمة.",
           "In 2012, a deep neural network called AlexNet won the ImageNet image-recognition contest by a wide margin. The old perceptron idea was back… with many layers and huge data.")],
@@ -100,7 +100,7 @@
         title: u("ألفاجو والنقلة ٣٧", "AlphaGo and move 37"),
         story: [u("لعبة «جو» الصينية فيها احتمالات أكتر بكتير من إنك تحسبها بالقوة زي الشطرنج.",
           "The board game Go has far too many possibilities to brute-force the way chess was."),
-        u("سنة ٢٠١٦، ألفاجو من DeepMind كسب البطل لي سيدول ٤–١، وعمل نقلة (النقلة ٣٧) الخبرا افتكروها غلطة… وطلعت عبقرية.",
+        u("سنة ٢٠١٦، ألفاجو من DeepMind كسب البطل لي سيدول ٤–١، وعمل نقلة (النقلة ٣٧) الخبراء افتكروها غلطة… وطلعت عبقرية.",
           "In 2016, DeepMind's AlphaGo beat champion Lee Sedol 4–1, and played a move (move 37) that experts took for a mistake… and turned out to be brilliant.")],
         answer: u("تقدر تفاجئنا", "It can surprise us"),
         idea: u("لما الآلة تتعلّم من ملايين التجارب، ممكن تلاقي حلول إحنا ما فكرناش فيها.", "When a machine learns from millions of games, it can find answers we never thought of.")
