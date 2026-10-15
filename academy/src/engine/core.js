@@ -321,7 +321,7 @@
     for (const p of A.prompts) items.push({ type: "prompt", id: p.id, href: "#prompts-" + p.id, title: p.title, sub: p.goal, icon: "msg", hay: norm([both(p.title), both(p.goal), both(p.text)].join(" ")), th: norm(both(p.title)) });
     for (const g of A.glossary) items.push({ type: "term", id: g.id, href: "#glossary-" + g.id, title: { ar: g.term.ar + (g.en_term ? " · " + g.en_term : ""), en: g.term.en + (g.en_term && g.en_term !== g.term.en ? " · " + g.en_term : "") }, sub: g.def, icon: "abc", hay: norm([both(g.term), g.en_term, both(g.def)].join(" ")), th: norm(both(g.term) + " " + (g.en_term || "")) });
     for (const lb of A.labs) items.push({ type: "lab", id: lb.id, href: "#lab-" + lb.id, title: lb.title, sub: lb.sum, icon: "flask", hay: norm([both(lb.title), both(lb.sum)].join(" ")), th: norm(both(lb.title)) });
-    for (const c of A.coverage) items.push({ type: "page", id: "p" + c.p, page: c.p, title: { ar: "صفحة " + c.p + " — " + c.title.ar, en: "Page " + c.p + " — " + c.title.en }, sub: c.sum, icon: "page", hay: norm([both(c.title), both(c.sum), "صفحه " + c.p, "page " + c.p].join(" ")), th: norm(both(c.title)) });
+    for (const c of A.coverage) items.push({ type: "page", id: "p" + c.p, page: c.p, title: { ar: "ص " + c.p + " — " + c.title.ar, en: "Page " + c.p + " — " + c.title.en }, sub: c.sum, icon: "page", hay: norm([both(c.title), both(c.sum), "صفحه " + c.p, "ص " + c.p, "page " + c.p].join(" ")), th: norm(both(c.title)) });
     for (const r of A.routes) items.push({ type: "nav", id: r.id, href: "#" + r.id, title: r.label, sub: r.desc, icon: r.icon, hay: norm(both(r.label) + " " + both(r.desc)), th: norm(both(r.label)) });
     return items;
   }

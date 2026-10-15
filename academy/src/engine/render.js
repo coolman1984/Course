@@ -129,7 +129,7 @@
         </div>
         <div class="win-code">
           <div class="cb-h"><span>${esc(L(sl.title))} · ${esc(L(sc.file))}</span><span>${esc(t("winBefore"))}</span></div>
-          <div class="code">${code([[" ", ar ? "افتح المحادثة" : "open the chat"], ...sc.del.map((x) => ["-", L({ ar: x[0], en: x[1] })]), ...sc.add.map((x) => ["+", L({ ar: x[0], en: x[1] })]), [" ", ar ? `ص ${sc.p} من الكتاب` : `book p. ${sc.p}`]])}</div>
+          <div class="code">${code([[" ", ar ? "افتح الشات" : "open the chat"], ...sc.del.map((x) => ["-", L({ ar: x[0], en: x[1] })]), ...sc.add.map((x) => ["+", L({ ar: x[0], en: x[1] })]), [" ", ar ? `ص ${sc.p} من الكتاب` : `book p. ${sc.p}`]])}</div>
           <div class="cb-h"><span>${esc(t("winHumanTitle"))}</span><span>${esc(t("winHuman"))}</span></div>
           <div class="code">${(n = 37, code([[" ", t("winH1")], ["+", t("winH2")], ["+", t("winH3")], [" ", t("winH4")]]))}</div>
           <div class="cb-f">${pageChips([sc.p, 41])}</div>
