@@ -7,7 +7,7 @@
     brand: u("أكاديمية أساسيات الذكاء الاصطناعي", "AI Essentials Academy"),
     brandSub: u("كتاب بيئة العمل الحديثة — تفاعلي", "Modern Workspace book — interactive"),
     home: u("الرئيسية", "Home"), menu: u("القائمة", "Menu"), close: u("إغلاق", "Close"), cancel: u("إلغاء", "Cancel"), confirm: u("تأكيد", "Confirm"),
-    search: u("بحث", "Search"), searchShort: u("دور في الكتاب", "Search the book"), tourBtn: u("شاهد", "Watch"), tourTitle: u("جولة في الأكاديمية · ١٥ ثانية", "Academy tour · 15 seconds"), searchPh: u("دور على درس، مصطلح، برومبت أو صفحة…", "Search a lesson, term, prompt or page…"),
+    search: u("بحث", "Search"), searchShort: u("دور في الكتاب", "Search the book"), tourBtn: u("شاهد", "Watch"), tourTitle: u("جولة في الأكاديمية · ١٥ ثانية", "Academy tour · 15 seconds"), tourMissing: u("الفيديو مش راضي يشتغل هنا. اتأكد إن ملف AI_Academy_tour.mp4 في نفس فولدر الأكاديمية، أو افتحها من GitHub Pages.", "The tour video can't play here. Make sure AI_Academy_tour.mp4 is in the same folder as this file, or open the academy on GitHub Pages."), searchPh: u("دور على درس، مصطلح، برومبت أو صفحة…", "Search a lesson, term, prompt or page…"),
     palMove: u("للتنقل", "to move"), palOpen: u("للفتح", "to open"), noResults: u("مفيش نتائج. جرّب كلمة أبسط.", "No results. Try a simpler word."),
     grpNav: u("الأقسام", "Sections"), grpLessons: u("الدروس", "Lessons"), grpLabs: u("المختبرات", "Labs"), grpPrompts: u("البرومبتات", "Prompts"), grpTerms: u("المصطلحات", "Terms"), grpPages: u("صفحات الكتاب", "Book pages"),
     errTitle: u("حصل خطأ وإحنا بنعرض الصفحة", "This page could not be shown"), errBody: u("بياناتك محفوظة. ارجع للرئيسية وجرّب تاني.", "Your data is safe. Go back home and try again."),

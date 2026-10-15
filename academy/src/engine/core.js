@@ -444,7 +444,7 @@
         <span class="brand-txt"><b>${esc(t("brand"))}</b><small>${esc(t("brandSub"))}</small></span>
       </a>
       <span class="bar-spacer"></span>
-      <button class="watchbtn" id="watch-btn" ${tourReady ? "" : "hidden"} aria-label="${esc(t("tourTitle"))}" title="${esc(t("tourTitle"))}">${ico("play")}<span>${esc(t("tourBtn"))}</span></button>
+      <button class="watchbtn" id="watch-btn" aria-label="${esc(t("tourTitle"))}" title="${esc(t("tourTitle"))}">${ico("play")}<span>${esc(t("tourBtn"))}</span></button>
       <button class="searchbtn" id="search-btn" aria-label="${esc(t("search"))}">${ico("search")}<span class="t">${esc(t("searchShort"))}</span><kbd>Ctrl K</kbd></button>
       <div class="levelseg hide-sm" role="group" aria-label="${esc(t("levelPick"))}">
         ${A.levels.map((x) => `<button type="button" data-level="${x.id}" aria-pressed="${lv === x.id}" title="${esc(L(x.desc))}"><span class="e" aria-hidden="true">${x.e}</span><span class="t">${esc(L(x.name))}</span></button>`).join("")}
@@ -461,17 +461,12 @@
     $("#lang-btn").onclick = () => { S.set("lang", lang() === "ar" ? "en" : "ar"); index = null; applyLang(); renderAll(); };
     $("#theme-btn").onclick = () => { const order = ["auto", "light", "dark"]; S.set("theme", order[(order.indexOf(memory.theme) + 1) % 3]); applyTheme(); renderBar(); toast(t("themeBtn") + ": " + t("theme_" + memory.theme), memory.theme === "dark" ? "moon" : memory.theme === "light" ? "sun" : "auto"); };
   }
-  // the 15 s tour video lives next to the HTML file; the button appears only when the file is really there
+  // the 15 s tour video lives next to the HTML file and loads only when asked for (nothing is fetched at start-up);
+  // an offline copy without the file gets a plain message instead of a broken player
   const TOUR = "AI_Academy_tour.mp4";
-  let tourReady = false;
-  function probeTour() {
-    const v = doc.createElement("video");
-    v.preload = "metadata"; v.muted = true;
-    v.onloadedmetadata = () => { tourReady = true; const b = $("#watch-btn"); if (b) b.hidden = false; v.removeAttribute("src"); v.load(); };
-    v.src = TOUR;
-  }
   function openTour() {
     const v = h("video", { class: "tour-v", src: TOUR, controls: "", autoplay: "", playsinline: "", preload: "auto" });
+    v.onerror = () => v.replaceWith(h("p", { class: "tour-miss" }, t("tourMissing")));
     openDialog({ title: t("tourTitle"), body: v, cls: "tour" });
     const p = v.play(); if (p && p.catch) p.catch(() => {});
   }
@@ -587,7 +582,7 @@
     else if (cur.name === "unit") A._openUnits.add(cur.arg);
     else A._openUnits.add(A.units[0].id);
     applyLang(); applyTheme();
-    renderBar(); renderSide(); probeTour();
+    renderBar(); renderSide();
     addEventListener("hashchange", () => {
       const c = parse();
       if (c.name === "lesson" && A.byId[c.arg] && !A._openUnits.has(A.byId[c.arg].unit)) { A._openUnits.add(A.byId[c.arg].unit); renderSide(); }
