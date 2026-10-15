@@ -153,7 +153,11 @@ html[dir="rtl"] .unit-t[aria-expanded="false"] .chev{transform:rotate(90deg)}
 .dot{flex:none;width:7px;height:7px;margin-top:8px;border-radius:50%;border:1.5px solid var(--line-2)}
 .dot.done{background:var(--sig-green);border-color:var(--sig-green)}
 .dot.rev{background:var(--sig-amber);border-color:var(--sig-amber)}
-.side-foot{margin-top:14px;padding:12px;border-radius:10px;background:var(--surface);border:1px solid var(--line);font-size:12px;color:var(--ink-3);line-height:1.6}
+.side-motion{display:flex;align-items:center;gap:10px;width:100%;margin-top:14px;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);font:inherit;font-size:13.5px;cursor:pointer;transition:background var(--dur),color var(--dur)}
+.side-motion:hover{background:var(--surface-3);color:var(--ink)}
+.side-motion[aria-pressed="true"]{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 40%,transparent);background:var(--accent-soft)}
+.side-motion svg{width:17px;height:17px}
+.side-foot{margin-top:10px;padding:12px;border-radius:10px;background:var(--surface);border:1px solid var(--line);font-size:12px;color:var(--ink-3);line-height:1.6}
 .continue{display:flex;gap:10px;align-items:center;margin:2px 2px 12px;padding:10px 12px;border-radius:12px;background:var(--surface);border:1px solid var(--line);color:var(--ink);text-decoration:none;box-shadow:var(--shadow-1);transition:border-color var(--dur),box-shadow var(--dur)}
 .continue:hover{border-color:var(--line-2);box-shadow:var(--shadow-2)}
 .continue>svg.i{color:#fff;background:linear-gradient(180deg,var(--accent-hi),var(--accent));border-radius:8px;width:28px;height:28px;padding:6px;flex:none}
@@ -803,28 +807,66 @@ html[lang="ar"] .ptext{font-family:var(--font-body);font-size:15px;line-height:2
 }
 @media print{.bar,.side,.sctl,.pn,.readbar{display:none}.shell{display:block}}
 
-/* Picture-first Arabic explanation: situation → input → action → outcome → self-check */
-.mental{padding:24px;border:1px solid var(--line-2);border-radius:var(--r-xl);background:var(--surface);box-shadow:var(--shadow-1)}
-.mental-kicker{color:var(--accent);font-size:.84rem;font-weight:700;margin-bottom:8px}
-.mental h2{margin:0 0 12px;font-size:clamp(1.35rem,2vw,1.75rem)}
-.mental-situation{font-size:1.16rem;font-weight:550;line-height:1.85;color:var(--ink);max-width:65ch}
-.mental-note{color:var(--ink-3);font-size:.77rem;margin-top:6px}
-.mental-flow{display:flex;align-items:stretch;gap:9px;margin-block:23px 17px}
-.mental-step{flex:1;min-width:0;border:1px solid var(--line);background:var(--surface-2);padding:14px;border-radius:var(--r-md);display:flex;flex-direction:column;gap:8px}
-.mental-step span{font-size:.78rem;color:var(--ink-2);font-weight:650}
-.mental-step strong{font-size:1rem;font-weight:600;line-height:1.7}
-.mental-step.result{background:var(--mint-soft);border-color:var(--mint)}
-.mental-arrow{align-self:center;color:var(--accent);font-weight:800;font-size:1.4rem;flex:none}
-.mental-danger{background:var(--spark-soft);border-radius:var(--r-md);padding:12px 14px;font-size:.95rem;line-height:1.8}
-.mental-question{margin-top:16px;border:1px solid var(--line-2);border-radius:var(--r-md);overflow:hidden}
-.mental-question summary{cursor:pointer;padding:13px 16px;font-weight:650;line-height:1.7}
-.mental-question[open] summary{border-bottom:1px solid var(--line)}
-.mental-question p{padding:13px 16px;background:var(--accent-soft);line-height:1.75}
-.mental-hint{margin-top:15px;font-size:.82rem;color:var(--ink-2)}
+/* Picture-first Arabic opening: the situation as a scene → the whole path at a glance → one warning → think first, then check.
+   Everything is readable at once; motion is a one-time staggered arrival of the three steps (off in quiet mode). */
+.mental{padding:clamp(18px,3vw,28px);border:1px solid var(--line-2);border-radius:var(--r-xl);background:var(--surface);box-shadow:var(--shadow-1);display:grid;gap:16px}
+.mental-kicker{color:var(--accent);font-size:.84rem;font-weight:700;margin-bottom:-8px}
+.mental h2{margin:0;font-size:clamp(1.35rem,2vw,1.75rem)}
+.mental-scene{margin:0;display:flex;gap:14px;align-items:flex-start}
+.mental-avatar{flex:none;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent)}
+.mental-avatar svg{width:22px;height:22px}
+.mental-situation{position:relative;margin:0;flex:1;background:var(--surface-2);border:1px solid var(--line);border-radius:18px;border-start-start-radius:6px;padding:14px 18px;font-size:clamp(1.04rem,1rem + .3vw,1.16rem);font-weight:560;line-height:1.85;color:var(--ink)}
+.mental-flow{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;position:relative}
+.mental-step{position:relative;min-width:0;border:1px solid var(--line);background:var(--surface);padding:16px 16px 18px;border-radius:var(--r-lg);display:flex;flex-direction:column;gap:8px;box-shadow:var(--shadow-1)}
+.mental-step:not(:last-child)::after{content:"";position:absolute;top:34px;inset-inline-end:-22px;width:22px;height:2px;background:repeating-linear-gradient(90deg,var(--accent) 0 5px,transparent 5px 9px)}
+.mental-ic{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);flex:none}
+.mental-ic svg{width:19px;height:19px}
+.mental-n{font-size:.8rem;color:var(--ink-3);font-weight:700;display:flex;align-items:center;gap:6px}
+.mental-n b{display:inline-grid;place-items:center;min-width:20px;height:20px;border-radius:6px;background:var(--surface-3);color:var(--ink-2);font-size:.75rem}
+.mental-step strong{font-size:1rem;font-weight:600;line-height:1.75;color:var(--ink)}
+.mental-step.result{background:var(--mint-soft);border-color:color-mix(in srgb,var(--mint) 45%,transparent)}
+.mental-step.result .mental-ic{background:var(--mint);color:#fff}
+.mental-danger{display:flex;gap:12px;align-items:flex-start;background:var(--spark-soft);border-radius:var(--r-md);padding:12px 14px}
+.mental-danger .mental-ic{width:32px;height:32px;border-radius:10px;background:transparent;color:var(--spark)}
+.mental-danger p{margin:0;font-size:.97rem;line-height:1.85}
+.mental-quiz{border:1px dashed var(--line-2);border-radius:var(--r-lg);padding:16px 18px;display:grid;gap:10px;background:var(--surface-2);transition:border-color .3s,background .3s}
+.mental-quiz.is-open{border-style:solid;border-color:color-mix(in srgb,var(--accent) 40%,transparent);background:var(--accent-soft)}
+.mental-quiz-h{font-size:.82rem;font-weight:700;color:var(--accent)}
+.mental-quiz-q{margin:0;font-size:1.08rem;font-weight:650;line-height:1.75}
+.mental-reveal{justify-self:start}
+.mental-quiz-a{display:grid;gap:10px;animation:mq-in .35s var(--ease) both}
+.mental-quiz-ans{margin:0;line-height:1.85;font-weight:560;outline:none}
+.mental-self{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:.88rem;color:var(--ink-2)}
+.mental-self .chip[aria-pressed="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
+.mental-fb{margin:0;font-size:.92rem;line-height:1.8;min-height:0}
+.mental-fb.ok{color:var(--mint)}
+.mental-fb.go a{font-weight:700}
+.mental-note{color:var(--ink-3);font-size:.77rem;margin:0}
+@keyframes mq-in{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.mental-flow.will-in .mental-step{opacity:0;transform:translateY(14px)}
+.mental-flow.will-in .mental-step::after{transform:scaleX(0);transform-origin:var(--mq-o,right)}
+[dir="ltr"] .mental-flow{--mq-o:left}
+.mental-flow.is-in .mental-step{animation:mq-step .55s cubic-bezier(.16,.84,.3,1) calc(var(--i) * .16s) forwards}
+.mental-flow.is-in .mental-step::after{animation:mq-line .4s ease-out calc(var(--i) * .16s + .35s) forwards}
+@keyframes mq-step{to{opacity:1;transform:none}}
+@keyframes mq-line{to{transform:scaleX(1)}}
+html[data-motion="off"] .mental-flow .mental-step,html[data-motion="off"] .mental-flow .mental-step::after{opacity:1!important;transform:none!important;animation:none!important}
+html[data-motion="off"] .mental-quiz-a{animation:none}
+@media (prefers-reduced-motion:reduce){.mental-flow .mental-step,.mental-flow .mental-step::after{opacity:1!important;transform:none!important;animation:none!important}.mental-quiz-a{animation:none}}
 .book-original{border:1px solid var(--line);border-radius:var(--r-md);padding:14px;background:var(--surface-2)}
 .book-original summary{cursor:pointer;font-weight:650}
 .book-original .bookpts{margin-top:16px}
-@media(max-width:660px){.mental{padding:18px}.mental-flow{flex-direction:column}.mental-arrow{transform:rotate(-90deg);align-self:center}.mental-step{padding:12px}.mental-situation{font-size:1.08rem}}
+@media(max-width:660px){
+  .mental-flow{grid-template-columns:1fr;gap:16px}
+  .mental-step{flex-direction:row;flex-wrap:wrap;align-items:center;column-gap:12px;padding:14px}
+  .mental-step strong{flex-basis:100%}
+  .mental-step:not(:last-child)::after{top:auto;bottom:-16px;inset-inline-end:auto;inset-inline-start:34px;width:2px;height:16px;background:repeating-linear-gradient(180deg,var(--accent) 0 4px,transparent 4px 7px)}
+  .mental-flow.will-in .mental-step::after{transform:scaleY(0);transform-origin:top}
+  .mental-flow.is-in .mental-step::after{animation-name:mq-line-v}
+  .mental-avatar{width:38px;height:38px}
+  .mental-reveal{justify-self:stretch}
+}
+@keyframes mq-line-v{to{transform:scaleY(1)}}
 
 
 /* Plain Arabic is the main teaching route. The more technical book notes
@@ -1292,7 +1334,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     switchLang: u("English", "العربية"), themeBtn: u("المظهر", "Theme"), theme_auto: u("تلقائي", "Auto"), theme_light: u("فاتح", "Light"), theme_dark: u("داكن", "Dark"),
     unitOverview: u("نظرة على الوحدة", "Unit overview"), doneSr: u("(مكتمل)", "(done)"), continueLast: u("كمل من حيث وقفت", "Continue where you left off"),
     grpStart: u("ابدأ", "Start"), grpUnits: u("الوحدات والدروس", "Units & lessons"), grpPractice: u("تدرّب", "Practise"), grpReference: u("مراجع", "Reference"), grpTools: u("أدوات", "Tools"),
-    sideFoot: u("كل اللي هنا مبني على كتاب «أساسيات الذكاء الاصطناعي في بيئة العمل الحديثة» (41 صفحة). الإضافات التوضيحية بلون مختلف.", "Everything here is built on the book “AI Essentials for the Modern Workspace” (41 pages). Explanatory additions are marked in a different colour."),
+    motionOff: u("قلّل الحركة", "Reduce motion"), motionOn: u("فعّل الحركة", "Turn motion on"), sideFoot: u("كل اللي هنا مبني على كتاب «أساسيات الذكاء الاصطناعي في بيئة العمل الحديثة» (41 صفحة). الإضافات التوضيحية بلون مختلف.", "Everything here is built on the book “AI Essentials for the Modern Workspace” (41 pages). Explanatory additions are marked in a different colour."),
     savedPrompts: u("البرومبتات المحفوظة", "Saved prompts"), exported: u("الملف جاهز للتنزيل", "File ready to download"), imported: u("اتستوردت بياناتك", "Your data was imported"), importFail: u("الملف مش صالح. اختار ملف صدّرته من الأكاديمية.", "Invalid file. Pick a file exported from the academy."),
     prevPage: u("السابقة", "Previous"), nextPage: u("التالية", "Next"), pageN: u("صفحة {n}", "Page {n}"), pShort: u("ص {n}", "p.{n}"), openPdf: u("افتح ملف PDF", "Open the PDF"),
     explainedIn: u("مشروحة في:", "Explained in:"), pageAlt: u("صورة صفحة {n} من الكتاب الأصلي", "Image of page {n} of the original book"), pageMissing: u("صورة الصفحة مش متاحة في النسخة دي.", "The page image isn’t available in this copy."), bookPage: u("صفحة الكتاب الأصلية", "Original book page"), openPage: u("افتح الصفحة الأصلية", "Open the original page"), openGlossary: u("افتح القاموس", "Open the glossary"),
@@ -6467,7 +6509,10 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       ${grp("practice", t("grpPractice"), navItems(["labs", "prompts", "compare", "quiz", "project"]))}
       ${grp("reference", t("grpReference"), navItems(["glossary", "knowledge", "review", "coverage"]))}
       ${grp("tools", t("grpTools"), navItems(["present", "notebook"]))}
+      <button type="button" class="side-motion" id="motion-btn" aria-pressed="${doc.documentElement.dataset.motion === "off"}">${ico("eye")}<span>${esc(t(doc.documentElement.dataset.motion === "off" ? "motionOn" : "motionOff"))}</span></button>
       <div class="side-foot">${esc(t("sideFoot"))}</div>`;
+    // the academy-wide reduce-motion switch lives in the sidebar so it is reachable from every page (home's theatre has its own copy)
+    $("#motion-btn", side).onclick = () => { if (A.motion) { A.motion.setQuiet(doc.documentElement.dataset.motion !== "off"); toast(t(doc.documentElement.dataset.motion === "off" ? "motionOff" : "motionOn") + " ✓", "eye"); } };
     $$("[data-grp]", side).forEach((b) => (b.onclick = () => {
       const id = b.dataset.grp; const body = $(`[data-grp-body="${id}"]`, side);
       const open = body.hidden; body.hidden = !open; b.setAttribute("aria-expanded", open);
@@ -7130,27 +7175,35 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     const prompts = A.prompts.filter((p) => p.lesson === l.id);
     const qs = A.quiz.filter((q) => q.lesson === l.id);
     const story = A.lang() === "ar" ? A.lessonStories?.[l.id] : null;
-    const pictureFirst = story ? `<section class="mental sec" id="sec-mental">
+    // Picture-first opening (Arabic): the situation as a scene, the whole path at a glance, one warning, then a
+    // think-first question with a self-check. Everything is visible at once; nothing hides behind clicks.
+    const pictureFirst = story ? `<section class="mental sec" id="sec-mental" aria-labelledby="mental-h">
       <div class="mental-kicker">ابدأ بالمشكلة، مش بالمصطلح</div>
-      <h2>تخيّل الموقف ده 👇</h2>
-      <p class="mental-situation">${esc(story[0])}</p>
-      <p class="mental-note">مثال تعليمي للتوضيح. مش بيانات حقيقية عن أي شركة.</p>
-      <div class="mental-flow" role="list" aria-label="من المشكلة للنتيجة">
-        <div class="mental-step" role="listitem"><span>١ • إيه اللي معاك؟</span><strong>${esc(story[1])}</strong></div>
-        <span class="mental-arrow" aria-hidden="true">←</span>
-        <div class="mental-step" role="listitem"><span>٢ • هيحصل إيه؟</span><strong>${esc(story[2])}</strong></div>
-        <span class="mental-arrow" aria-hidden="true">←</span>
-        <div class="mental-step result" role="listitem"><span>٣ • هتستفيد بإيه؟</span><strong>${esc(story[3])}</strong></div>
+      <h2 id="mental-h">تخيّل الموقف ده 👇</h2>
+      <figure class="mental-scene"><span class="mental-avatar" aria-hidden="true">${ico("users")}</span><blockquote class="mental-situation">${esc(story[0])}</blockquote></figure>
+      <ol class="mental-flow" aria-label="من المشكلة للنتيجة">
+        <li class="mental-step" style="--i:0"><span class="mental-ic" aria-hidden="true">${ico("folder")}</span><span class="mental-n"><b>١</b>إيه اللي معاك؟</span><strong>${esc(story[1])}</strong></li>
+        <li class="mental-step" style="--i:1"><span class="mental-ic" aria-hidden="true">${ico("gear")}</span><span class="mental-n"><b>٢</b>هيحصل إيه؟</span><strong>${esc(story[2])}</strong></li>
+        <li class="mental-step result" style="--i:2"><span class="mental-ic" aria-hidden="true">${ico("check")}</span><span class="mental-n"><b>٣</b>هتطلع بإيه؟</span><strong>${esc(story[3])}</strong></li>
+      </ol>
+      <div class="mental-danger"><span class="mental-ic" aria-hidden="true">${ico("shield")}</span><p><b>خد بالك:</b> ${esc(story[4])}</p></div>
+      <div class="mental-quiz" data-mq>
+        <div class="mental-quiz-h"><span aria-hidden="true">🧠</span> جرّب تفكر قبل ما تكمل</div>
+        <p class="mental-quiz-q">${esc(story[5])}</p>
+        <button type="button" class="btn mental-reveal" data-mq-reveal aria-expanded="false" aria-controls="mq-a">فكّرت؟ اكشف الإجابة</button>
+        <div class="mental-quiz-a" id="mq-a" hidden>
+          <p class="mental-quiz-ans" tabindex="-1">${esc(story[6])}</p>
+          <div class="mental-self" role="group" aria-label="قيّم إجابتك"><span>إجابتك كانت قريبة؟</span><button type="button" class="chip" data-mq-self="yes" aria-pressed="false">👍 أيوه</button><button type="button" class="chip" data-mq-self="no" aria-pressed="false">لسه مش متأكد</button></div>
+          <p class="mental-fb" data-mq-fb aria-live="polite"></p>
+        </div>
       </div>
-      <div class="mental-danger"><b>خد بالك:</b> ${esc(story[4])}</div>
-      <details class="mental-question"><summary><span aria-hidden="true">🧠</span> جرّب تفكر: ${esc(story[5])}</summary><p>${esc(story[6])}</p></details>
-      <p class="mental-hint">دلوقتي شوف الشرح والرسوم اللي تحت. هتعرف اسم الفكرة وليه بنستخدمها.</p>
+      <p class="mental-note">مثال تعليمي للتوضيح. مش بيانات حقيقية عن أي شركة.</p>
     </section>` : "";
     const wrap = h("article", { class: "wrap" });
     const compass = A.meta.compass.map((c) => `<button type="button" class="chip" data-jump="${c.to}">${esc(L(c.q))}</button>`).join("");
     wrap.innerHTML = `
       <nav class="crumbs" aria-label="${esc(t("crumbs"))}"><a href="#home">${esc(t("home"))}</a> › <a href="#unit-${u.id}">${esc(L(u.short))}</a> › <span class="num">${esc(t("lessonOf", { n: idx + 1, t: ls.length }))}</span></nav>
-      ${head(`<span class="chip" style="background:${u.color};color:#fff;border:0">${esc(u.badge)}</span> ${esc(L(u.short))}`, L(l.title), esc(story ? story[0] : L(l.sum)),
+      ${head(`<span class="chip" style="background:${u.color};color:#fff;border:0">${esc(u.badge)}</span> ${esc(L(u.short))}`, L(l.title), esc(L(l.sum)),
         `<div class="lesson-meta">${pageChips(l.pages)}<span class="chip num">${ico("clock")}${l.min} ${esc(t("minutes"))}</span><span class="chip">${ico("target")}${esc(diffLabel(l.diff))}</span>
          <span class="bar-spacer"></span>
          <button type="button" class="chip" id="bm" aria-pressed="${bm}">${ico("bookmark")}${esc(bm ? t("bookmarked") : t("bookmark"))}</button>
@@ -7174,6 +7227,27 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       </nav>`;
     main.append(wrap);
     if (A.mountHistory && A.$("#sec-history")) A.mountHistory(A.$("#sec-history"));
+    // think-first question: reveal, then a one-tap self-check that points to the explanation when needed
+    const mq = A.$("[data-mq]", wrap);
+    if (mq) {
+      const rv = A.$("[data-mq-reveal]", mq), ans = A.$("#mq-a", mq), fb = A.$("[data-mq-fb]", mq);
+      rv.onclick = () => { ans.hidden = false; rv.setAttribute("aria-expanded", "true"); rv.hidden = true; mq.classList.add("is-open"); A.$(".mental-quiz-ans", mq).focus({ preventScroll: true }); };
+      A.$$("[data-mq-self]", mq).forEach((b) => (b.onclick = () => {
+        A.$$("[data-mq-self]", mq).forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+        const yes = b.dataset.mqSelf === "yes";
+        fb.className = "mental-fb " + (yes ? "ok" : "go");
+        fb.innerHTML = yes ? "عظيم! كده إنت ماسك الفكرة. كمّل تحت عشان تعرف اسمها وتفاصيلها." : 'ولا يهمك، الشرح اللي تحت معمول عشان كده. <a href="#" data-mq-go>وريني الشرح ↓</a>';
+        const g = A.$("[data-mq-go]", fb);
+        if (g) g.onclick = (e) => { e.preventDefault(); const to = A.$("#sec-scene.sec") || A.$("#sec-levels"); to && to.scrollIntoView({ behavior: A.reduceMotion() ? "auto" : "smooth", block: "start" }); };
+      }));
+      const flow = A.$(".mental-flow", wrap);
+      if (flow && "IntersectionObserver" in window) {   // the three steps arrive one after another the first time they are seen
+        flow.classList.add("will-in");
+        const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { flow.classList.add("is-in"); io.disconnect(); } }, { threshold: 0.3 });
+        io.observe(flow);
+        A.onLeave(() => io.disconnect());
+      }
+    }
     // compass jumps
     A.$$("[data-jump]", wrap).forEach((b) => (b.onclick = () => {
       const to = b.dataset.jump;
@@ -8885,6 +8959,8 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     motionOff = !!off;
     safeStorage.set(motionOff);
     doc.documentElement.dataset.motion = motionOff ? "off" : "on";
+    const side = doc.getElementById("motion-btn");   // keep the sidebar switch in step with the home theatre's button
+    if (side) { side.setAttribute("aria-pressed", String(motionOff)); side.querySelector("span").textContent = A.t(motionOff ? "motionOn" : "motionOff"); }
   }
   setMotion(motionOff);
   function dict() { return captions[A.lang()]; }
@@ -9125,16 +9201,11 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     }
     slidePill(tabs, !!instant);
   }
-  function addLesson(id) {
-    const mental = doc.querySelector("#main #sec-mental");
-    if (!mental || !story(id)) return;
-    const flow = mental.querySelector(".mental-flow");
-    if (!flow) return;
-    const theatre = createTheatre(id, { home: false });
-    mental.insertBefore(theatre, flow);
-    flow.hidden = true;
-    const hint = mental.querySelector(".mental-hint");
-    if (hint) hint.hidden = true;
+  // Lessons keep only the sliding level tabs. The five-station lesson theatre was removed (owner review, 2026-10-15):
+  // it repeated the lesson's situation, hid one sentence per click in a large dark box and pushed the real scene down.
+  // The picture-first section in render.js now shows the whole path at once.
+  function addLesson() {
+    if (!doc.querySelector("#main #lv")) return;
     decorateLessonTabs(true);
     const onLevelClick = function (event) {
       if (event.target.closest('[role="tab"]')) {
@@ -9181,7 +9252,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       main.firstElementChild.classList.add("motion-route-enter");
     }
     if (route.name === "home") addHome();
-    if (route.name === "lesson" && A.lang() === "ar") addLesson(route.arg);
+    if (route.name === "lesson" && A.lang() === "ar") addLesson();
     if (route.name === "lesson" && pendingSuccess === route.arg) {
       pendingSuccess = null;
       showSuccess();
