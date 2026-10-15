@@ -25,6 +25,9 @@ jobs:
           node --check academy/src/data/plain-talk-b.js
           node --check academy/src/engine/render.js
           node --check academy/src/engine/motion.js
+          node --check academy/src/data/history.js
+          node --check academy/src/engine/history.js
+          test -s academy/src/history.css
           node --check academy/build.mjs
           test -s academy/src/motion.css
       - name: Verify book mapping and all 41 new stories

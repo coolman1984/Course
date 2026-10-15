@@ -262,6 +262,7 @@
          <span class="bar-spacer"></span>
          <button type="button" class="chip" id="bm" aria-pressed="${bm}">${ico("bookmark")}${esc(bm ? t("bookmarked") : t("bookmark"))}</button>
          <button type="button" class="chip ${done ? "ok" : ""}" id="donetop" aria-pressed="${done}">${ico("check")}${esc(done ? t("done") : t("markDone"))}</button></div>`)}
+      ${A.aiHistory && A.aiHistory.lesson === l.id ? '<section id="sec-history"></section>' : ""}
       ${pictureFirst}
       <div class="compass" aria-label="${esc(t("compassAria"))}"><b>${esc(t("compassTitle"))}</b>${compass}</div>
       <div id="sec-scene"></div>
@@ -279,6 +280,7 @@
         ${next ? `<a class="nx" href="#lesson-${next.id}"><small>${esc(t("nextLesson"))}${ico(A.lang() === "ar" ? "prev" : "next")}</small><b>${esc(L(next.title))}</b></a>` : `<a class="nx" href="#project"><small>${esc(t("finalStep"))}</small><b>${esc(t("nav_project"))}</b></a>`}
       </nav>`;
     main.append(wrap);
+    if (A.mountHistory && A.$("#sec-history")) A.mountHistory(A.$("#sec-history"));
     // compass jumps
     A.$$("[data-jump]", wrap).forEach((b) => (b.onclick = () => {
       const to = b.dataset.jump;

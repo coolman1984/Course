@@ -238,6 +238,55 @@ await session({ label: "reduced-motion", viewport: { width: 1280, height: 860 },
   playing ? fail("reduced motion: scene autoplays") : ok("reduced motion: scene waits for the user");
 });
 
+/* The story-of-AI deck at the top of the first lesson */
+await session({ label: "history-deck-ar", viewport: { width: 1360, height: 900 } }, async (page) => {
+  await page.evaluate(() => (location.hash = "lesson-f1")); await page.waitForSelector("#sec-history .aih-stage");
+  const n = await page.$$eval("#sec-history .aih-slide", (s) => s.length);
+  const on = () => page.$eval("#sec-history .aih-slide.is-on", (e) => Number(e.dataset.i));
+  const shown = () => page.$$eval("#sec-history .aih-slide:not([aria-hidden])", (s) => s.length);
+  n >= 8 && (await on()) === 0 && (await shown()) === 1 ? ok(`history: ${n} slides, first one shown alone`) : fail("history: deck did not start on slide 1");
+  const art = await page.$$eval("#sec-history .aih-svg", (s) => s.every((v) => v.childElementCount > 3));
+  art ? ok("history: every slide has its drawing") : fail("history: a drawing is empty");
+  await page.click("#sec-history [data-aih-next]"); await page.waitForTimeout(80);
+  (await on()) === 1 ? ok("history: next button moves forward") : fail("history: next button broken");
+  await page.focus("#sec-history .aih-stage"); await page.keyboard.press("ArrowLeft"); await page.waitForTimeout(80);
+  (await on()) === 2 ? ok("history: ← moves forward in Arabic") : fail("history: arrow keys do not follow the reading direction");
+  await page.keyboard.press("End"); await page.waitForTimeout(80);
+  const finalQ = await page.$eval("#sec-history [data-aih-q]", (e) => e.dataset.final);
+  (await on()) === n - 1 && finalQ === "true" && (await page.isVisible("#sec-history [data-aih-start]")) ? ok("history: last slide turns the question and offers the lesson") : fail("history: final slide incomplete");
+  await page.click('#sec-history [data-aih-go="3"]'); await page.waitForTimeout(80);
+  (await on()) === 3 && (await page.$eval('#sec-history [data-aih-go="3"]', (e) => e.getAttribute("aria-current"))) === "step" ? ok("history: timeline jumps to a year") : fail("history: timeline jump broken");
+  await page.click("#sec-history [data-aih-play]"); await page.waitForTimeout(150);
+  const playing = await page.$eval("#sec-history", (e) => e.classList.contains("is-playing"));
+  await page.click("#sec-history [data-aih-play]");
+  const paused = await page.$eval("#sec-history", (e) => !e.classList.contains("is-playing"));
+  playing && paused ? ok("history: play and pause") : fail("history: play/pause broken");
+  await page.click("#sec-history [data-aih-skip]"); await page.waitForTimeout(700);
+  const below = await page.$eval("#sec-history", (e) => e.getBoundingClientRect().bottom < 200);
+  below ? ok("history: skip goes to the lesson") : fail("history: skip did not scroll past the deck");
+  await page.evaluate(() => (location.hash = "lesson-f2")); await page.waitForTimeout(150);
+  (await page.$("#sec-history")) ? fail("history: deck leaked into another lesson") : ok("history: only the first lesson opens with the story");
+});
+await session({ label: "history-deck-mobile-en", viewport: { width: 375, height: 812 }, isMobile: true, hasTouch: true, colorScheme: "dark" }, async (page) => {
+  await page.evaluate(() => { localStorage.setItem("aiAcademy.v1", JSON.stringify({ lang: "en" })); location.hash = "lesson-f1"; location.reload(); });
+  await page.waitForSelector("#sec-history .aih-stage");
+  const ov = await overflow(page);
+  ov <= 1 ? ok("history: no horizontal overflow at 375px") : fail(`history: overflow ${ov}px at 375px`);
+  await page.click("#sec-history [data-aih-next]"); await page.waitForTimeout(80);
+  const i = await page.$eval("#sec-history .aih-slide.is-on", (e) => Number(e.dataset.i));
+  const en = await page.$eval("#sec-history .aih-slide.is-on h3", (e) => /[A-Za-z]/.test(e.textContent));
+  i === 1 && en ? ok("history: English deck works on a phone") : fail("history: phone/English deck broken");
+});
+await session({ label: "history-deck-quiet", viewport: { width: 1280, height: 860 }, reducedMotion: "reduce" }, async (page) => {
+  await page.evaluate(() => (location.hash = "lesson-f1")); await page.waitForSelector("#sec-history .aih-stage");
+  await page.click('#sec-history [data-aih-go="9"]'); await page.waitForTimeout(60);
+  const st = await page.$eval("#sec-history .aih-slide.is-on", (e) => ({ anim: getComputedStyle(e.querySelector(".an")).animationName, count: e.querySelector("[data-count]").textContent }));
+  st.anim === "none" && /1|١/.test(st.count) && !/^0$|^٠$/.test(st.count) ? ok("history: reduced motion shows final drawings at once") : fail("history: reduced motion still animates (" + JSON.stringify(st) + ")");
+  await page.waitForTimeout(1200);
+  const still = await page.$eval("#sec-history .aih-slide.is-on", (e) => Number(e.dataset.i));
+  still === 9 ? ok("history: nothing advances by itself") : fail("history: deck advanced without the reader");
+});
+
 await browser.close();
 console.log(results.join("\n"));
 process.exitCode = results.some((r) => r.startsWith("FAIL")) ? 1 : 0;
