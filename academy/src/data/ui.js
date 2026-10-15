@@ -7,7 +7,7 @@
     brand: u("أكاديمية أساسيات الذكاء الاصطناعي", "AI Essentials Academy"),
     brandSub: u("كتاب بيئة العمل الحديثة — تفاعلي", "Modern Workspace book — interactive"),
     home: u("الرئيسية", "Home"), menu: u("القائمة", "Menu"), close: u("إغلاق", "Close"), cancel: u("إلغاء", "Cancel"), confirm: u("تأكيد", "Confirm"),
-    search: u("بحث", "Search"), searchShort: u("ابحث في الكتاب", "Search the book"), searchPh: u("ابحث عن درس، مصطلح، برومبت أو صفحة…", "Search a lesson, term, prompt or page…"),
+    search: u("بحث", "Search"), searchShort: u("ابحث في الكتاب", "Search the book"), tourBtn: u("شاهد", "Watch"), tourTitle: u("جولة في الأكاديمية · ١٥ ثانية", "Academy tour · 15 seconds"), searchPh: u("ابحث عن درس، مصطلح، برومبت أو صفحة…", "Search a lesson, term, prompt or page…"),
     palMove: u("للتنقل", "to move"), palOpen: u("للفتح", "to open"), noResults: u("لا توجد نتائج. جرّب كلمة أبسط.", "No results. Try a simpler word."),
     grpNav: u("الأقسام", "Sections"), grpLessons: u("الدروس", "Lessons"), grpLabs: u("المختبرات", "Labs"), grpPrompts: u("البرومبتات", "Prompts"), grpTerms: u("المصطلحات", "Terms"), grpPages: u("صفحات الكتاب", "Book pages"),
     errTitle: u("حدث خطأ في عرض هذه الصفحة", "This page could not be shown"), errBody: u("بياناتك محفوظة. ارجع للرئيسية وجرّب مرة أخرى.", "Your data is safe. Go back home and try again."),
