@@ -137,12 +137,143 @@
     }
   };
 
+  /* ---------- drawings for "inside the model" (data/model-story.js) ---------- */
+  const chip = (x, y, w, s, cls = "f-s1 s-line2", tcls = "t-ink", size = 15, extra = "") =>
+    `<rect x="${x - w / 2}" y="${y - 20}" width="${w}" height="40" rx="11" class="${cls}" stroke-width="2"/>${txt(x, y + 6, s, tcls, size, 'font-weight="600"' + extra)}`;
+  const rowX = (n, w, gap, cx = 240) => { const total = n * w + (n - 1) * gap, x0 = cx - total / 2; return (i) => x0 + (ar() ? n - 1 - i : i) * (w + gap) + w / 2; };
+  Object.assign(ART, {
+    m_idea: () => `
+      <g ${an("rise", 0.05)}><rect x="34" y="62" width="168" height="196" rx="12" class="f-s1 s-line2" stroke-width="2"/>
+        ${[0, 1, 2, 3, 4].map((i) => txt(118, 100 + i * 32, ar() ? "لو … يبقى …" : "IF … THEN …", "t-ink3", 13)).join("")}
+        ${txt(118, 286, ar() ? "قواعد مكتوبة بالإيد" : "hand-written rules", "t-ink3", 13)}</g>
+      <path ${an("draw", 0.7, `s-rose`)} pathLength="1" d="M50 80 L186 240 M186 80 L50 240" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <g ${an("rise", 0.4)}><rect x="262" y="70" width="184" height="180" rx="18" class="f-acc-soft s-acc" stroke-width="2.5"/>
+        ${[0, 1, 2].map((r) => [0, 1, 2].map((c) => { const x = 308 + c * 46, y = 116 + r * 46; return `<g transform="translate(${x} ${y})"><circle r="15" class="f-s1 s-acc" stroke-width="2.5"/><g class="an turn" style="--d:${1 + (r * 3 + c) * 0.11}s"><line x1="0" y1="0" x2="0" y2="-11" class="s-acc" stroke-width="3" stroke-linecap="round"/></g></g>`; }).join("")).join("")}
+        ${txt(354, 286, ar() ? "آلة بتتظبط من الأمثلة" : "a machine tuned by examples", "t-acc", 13, 'font-weight="700"')}</g>
+      <g ${an("rise", 1.1)}>${[0, 1, 2].map((i) => `<rect x="${(ar() ? 380 : 350) + i * 6}" y="${16 + i * 5}" width="24" height="30" rx="4" class="f-s1 s-ink3" stroke-width="2"/>`).join("")}${txt(ar() ? 322 : 418, 38, ar() ? "أمثلة" : "examples", "t-ink3", 12)}</g>
+      <path ${an("draw", 1.3, `s-ink2`)} pathLength="1" d="M${ar() ? 394 : 364} 52 v14" stroke-width="2.5" fill="none" marker-end="url(#aih-arrow)"/>`,
+    m_game: () => {
+      const words = ar() ? ["فنجان", "قهوة", "من", "غير"] : ["a cup", "of coffee", "without"];
+      const X = rowX(words.length + 1, ar() ? 76 : 96, 10);
+      const cands = ar() ? [["سكر", 0.62], ["لبن", 0.21], ["رغوة", 0.09]] : [["sugar", 0.62], ["milk", 0.21], ["foam", 0.09]];
+      return `${words.map((w, i) => `<g ${an("rise", 0.1 + i * 0.1)}>${chip(X(i), 86, ar() ? 76 : 96, w)}</g>`).join("")}
+      <g ${an("pop", 0.6)}><rect x="${X(words.length) - (ar() ? 38 : 48)}" y="66" width="${ar() ? 76 : 96}" height="40" rx="11" class="f-acc-soft s-acc" stroke-width="2.5" stroke-dasharray="6 5"/>${txt(X(words.length), 92, "?", "t-acc", 20, 'font-weight="800"')}</g>
+      ${cands.map(([w, p], i) => { const y = 160 + i * 42; const x0 = ar() ? 344 : 136; const len = 220 * p / 0.62;
+        return `<g ${an("fade", 0.9 + i * 0.15)}>${txt(ar() ? 410 : 70, y + 6, w, i ? "t-ink2" : "t-ink", 15, 'font-weight="700"')}</g>
+        <rect class="an grow ${i ? "f-s3" : "f-acc"}" style="--d:${1 + i * 0.15}s;transform-origin:${ar() ? "right" : "left"} center" x="${ar() ? x0 - len : x0}" y="${y - 12}" width="${len}" height="22" rx="6"/>
+        <g ${an("fade", 1.5 + i * 0.15)}>${txt(ar() ? x0 - len - 26 : x0 + len + 26, y + 5, Math.round(p * 100) + "%", "t-ink3", 13, 'font-weight="700" direction="ltr"')}</g>`; }).join("")}
+      ${txt(240, 300, ar() ? "النص نفسه فيه الإجابة الصح" : "the text itself holds the right answer", "t-ink3", 13)}`;
+    },
+    m_tokens: () => {
+      const rows = ar()
+        ? [["حروف", "ه ي ك ت ب و ل ه م".split(" "), "طويلة، والحرف ملوش معنى"], ["كلمات", ["هيكتبولهم"], "مش في القاموس!"], ["توكنز", ["هي", "كتب", "و", "لهم"], "قطع معروفة ✓"]]
+        : [["letters", "u n b e l i e v a b l y".split(" "), "too long, no meaning"], ["words", ["unbelievably"], "not in the dictionary!"], ["tokens", ["un", "believ", "ably"], "familiar pieces ✓"]];
+      return rows.map(([name, parts, note], r) => {
+        const y = 70 + r * 88, w = r === 0 ? 24 : r === 1 ? 150 : 58, gap = r === 0 ? 4 : 8, X = rowX(parts.length, w, gap, 270);
+        const cls = r === 2 ? "f-acc" : r === 1 ? "f-rose-soft s-rose" : "f-s1 s-line2", t = r === 2 ? "t-white" : "t-ink";
+        return `<g ${an("rise", 0.2 + r * 0.45)}>${txt(ar() ? 450 : 30, y + 5, name, "t-ink3", 13, `font-weight="700" text-anchor="${ar() ? "end" : "start"}"`)}
+          ${parts.map((p, i) => `<rect x="${X(i) - w / 2}" y="${y - 17}" width="${w}" height="34" rx="8" class="${cls}" stroke-width="2"/>${txt(X(i), y + 6, p, t, r === 0 ? 13 : 15, 'font-weight="600"')}`).join("")}
+          ${txt(270, y + 38, note, r === 2 ? "t-mint" : r === 1 ? "t-rose" : "t-ink3", 12.5, 'font-weight="600"')}</g>`;
+      }).join("");
+    },
+    m_map: () => {
+      const C = [
+        { c: "f-acc", t: "t-acc", pts: ar() ? [[120, 90, "قهوة"], [168, 74, "شاي"], [150, 128, "عصير"]] : [[120, 90, "coffee"], [168, 74, "tea"], [150, 128, "juice"]] },
+        { c: "f-mint", t: "t-mint", pts: ar() ? [[330, 214, "قطة"], [376, 236, "كلب"], [350, 266, "حصان"]] : [[330, 214, "cat"], [376, 236, "dog"], [350, 266, "horse"]] },
+        { c: "f-amber", t: "t-amber", pts: ar() ? [[338, 72, "القاهرة"], [394, 104, "باريس"], [330, 124, "روما"]] : [[338, 72, "Cairo"], [394, 104, "Paris"], [330, 124, "Rome"]] }
+      ];
+      return `<g ${an("fade", 0)}>${[0, 1, 2, 3, 4].map((i) => `<line x1="${60 + i * 90}" y1="40" x2="${60 + i * 90}" y2="290" class="s-line" stroke-width="1"/><line x1="40" y1="${50 + i * 60}" x2="440" y2="${50 + i * 60}" class="s-line" stroke-width="1"/>`).join("")}</g>
+      ${C.map((g, k) => `<ellipse ${an("pop", 0.3 + k * 0.4, g.c + " cluster")} cx="${g.pts.reduce((a, p) => a + p[0], 0) / 3}" cy="${g.pts.reduce((a, p) => a + p[1], 0) / 3}" rx="72" ry="52"/>`
+        + g.pts.map((p, i) => `<g ${an("pop", 0.45 + k * 0.4 + i * 0.08)}><circle cx="${p[0]}" cy="${p[1]}" r="7" class="${g.c}"/>${txt(p[0], p[1] - 13, p[2], g.t, 13, 'font-weight="700"')}</g>`).join("")).join("")}
+      <path ${an("draw", 1.8, `s-ink3`)} pathLength="1" d="M150 128 Q 210 210 318 214" stroke-width="2" stroke-dasharray="1" fill="none"/>
+      <g ${an("fade", 2.2)}>${txt(170, 214, ar() ? "بعيد في المعنى = بعيد" : "far in meaning = far apart", "t-ink3", 12.5)}</g>
+      ${txt(240, 312, ar() ? "قريب في المعنى = قريب في المكان" : "close in meaning = close on the map", "t-ink2", 13, 'font-weight="700"')}`;
+    },
+    m_order: () => {
+      const A1 = ar() ? ["الكلب", "عض", "الراجل"] : ["dog", "bites", "man"];
+      const A2 = ar() ? ["الراجل", "عض", "الكلب"] : ["man", "bites", "dog"];
+      const X = rowX(3, 96, 12, ar() ? 280 : 200);
+      const row = (ws, y, d, tag, tcls) => `${ws.map((w, i) => `<g ${an("rise", d + i * 0.1)}>${chip(X(i), y, 96, w, i === 1 ? "f-s2 s-line2" : "f-s1 s-acc")}<circle cx="${X(i) + (ar() ? -40 : 40)}" cy="${y - 20}" r="11" class="f-acc"/>${txt(X(i) + (ar() ? -40 : 40), y - 15.5, ar() ? "١٢٣"[i] : String(i + 1), "t-white", 12, 'font-weight="800"')}</g>`).join("")}
+        <g ${an("pop", d + 0.5)}><rect x="${ar() ? 22 : 378}" y="${y - 18}" width="82" height="36" rx="18" class="${tcls}"/>${txt(ar() ? 63 : 419, y + 6, tag, "t-white", 13, 'font-weight="700"')}</g>`;
+      return `${row(A1, 104, 0.1, ar() ? "عادي" : "normal", "f-ink3")}${row(A2, 214, 0.8, ar() ? "خبر!" : "news!", "f-rose")}
+      <path ${an("draw", 0.6, `s-ink3`)} pathLength="1" d="M${X(0)} 130 C ${X(0)} 160, ${X(2)} 160, ${X(2)} 190 M${X(2)} 130 C ${X(2)} 160, ${X(0)} 160, ${X(0)} 190" stroke-width="2" stroke-dasharray="1" fill="none"/>
+      ${txt(240, 296, ar() ? "كل كلمة معاها ختم بمكانها" : "each word carries a position stamp", "t-ink3", 13)}`;
+    },
+    m_attention: () => {
+      const words = ar() ? ["سلّمت", "الملف", "للمدير", "عشان", "هو", "مستعجل"] : ["The", "file", "reached", "the", "manager", "so", "he", "signed"];
+      const focus = ar() ? 4 : 6, link = ar() ? 2 : 4, w = ar() ? 66 : 50;
+      const X = rowX(words.length, w, 8);
+      const arcs = words.map((_, i) => i >= focus ? "" : `<path ${an("draw", 0.8 + i * 0.1, i === link ? "s-acc" : "s-line2")} pathLength="1" d="M${X(focus)} 176 Q${(X(focus) + X(i)) / 2} ${i === link ? 40 : 110} ${X(i)} 176" stroke-width="${i === link ? 5.5 : 1.8}" fill="none" stroke-linecap="round"/>`).join("");
+      return `${arcs}${words.map((s, i) => `<g ${an("rise", 0.1 + i * 0.07)}>${chip(X(i), 198, w, s, i === focus ? "f-acc" : i === link ? "f-acc-soft s-acc" : "f-s1 s-line2", i === focus ? "t-white" : "t-ink", 13.5)}</g>`).join("")}
+      <g ${an("pop", 2.0)}><rect x="${X(focus) - 72}" y="240" width="144" height="34" rx="17" class="f-mint"/>${txt(X(focus), 262, ar() ? "«هو» = المدير" : "“he” = the manager", "t-white", 13, 'font-weight="700"')}</g>
+      ${txt(240, 302, ar() ? "كل كلمة بتبص على اللي قبلها بس، مش على الإجابة" : "each word looks only at the words before it, never ahead", "t-ink3", 13)}`;
+    },
+    m_layers: () => {
+      const labels = ar() ? ["شكل الكلام", "القواعد", "المعنى", "السياق", "المقصود"] : ["word forms", "grammar", "meaning", "context", "intent"];
+      return `${labels.map((s, i) => { const y = 252 - i * 46; return `<g ${an("rise", 0.1 + i * 0.12)}><rect x="${ar() ? 150 : 90}" y="${y - 17}" width="240" height="34" rx="10" class="layer l${i}"/>${txt(ar() ? 270 : 210, y + 5, s, i > 2 ? "t-white" : "t-ink", 14, 'font-weight="700"')}</g>`; }).join("")}
+      <circle ${an("travel", 0.9, `f-amber`)} r="9"><animateMotion dur="2.8s" begin="indefinite" repeatCount="indefinite" path="M${ar() ? 120 : 360} 270 L${ar() ? 120 : 360} 50"/></circle>
+      <path ${an("draw", 0.8, `s-amber`)} pathLength="1" d="M${ar() ? 120 : 360} 272 V 46" stroke-width="2.5" stroke-dasharray="1" fill="none" marker-end="url(#aih-arrow)"/>
+      <g ${an("fade", 1.2)}>${txt(ar() ? 64 : 420, 150, ar() ? "عشرات" : "dozens", "t-ink3", 13, 'font-weight="700"')}${txt(ar() ? 64 : 420, 168, ar() ? "الطبقات" : "of layers", "t-ink3", 13)}</g>
+      ${txt(240, 300, ar() ? "كل طبقة بتبني على اللي تحتها" : "each layer builds on the one below", "t-ink3", 13)}`;
+    },
+    m_training: () => {
+      const tx = ar() ? 352 : 128;
+      const hits = [[-52, -38], [34, -40], [-20, 22], [6, -6]];
+      return `<g ${an("rise", 0.05)}>${[58, 42, 26, 10].map((r, i) => `<circle cx="${tx}" cy="140" r="${r}" class="${i % 2 ? "f-s1" : "f-rose-soft"} s-rose" stroke-width="2"/>`).join("")}</g>
+      ${hits.map(([dx, dy], i) => `<g ${an("pop", 0.5 + i * 0.35)}><line x1="${tx + dx}" y1="${140 + dy}" x2="${tx + dx + (ar() ? 22 : -22)}" y2="${140 + dy - 16}" class="s-ink2" stroke-width="3" stroke-linecap="round"/><circle cx="${tx + dx}" cy="${140 + dy}" r="5" class="${i === 3 ? "f-mint" : "f-ink2"}"/></g>`).join("")}
+      ${txt(tx, 230, ar() ? "كل محاولة أقرب شوية" : "each try a little closer", "t-ink3", 13)}
+      <g ${an("fade", 0.3)}><path d="M${ar() ? 60 : 250} 70 V 210 H ${ar() ? 240 : 430}" class="s-ink3" stroke-width="2" fill="none"/>
+      ${txt(ar() ? 150 : 340, 230, ar() ? "المحاولات ←" : "attempts →", "t-ink3", 12)}${txt(ar() ? 30 : 236, 64, ar() ? "الغلط" : "error", "t-ink3", 12, `text-anchor="${ar() ? "start" : "end"}"`)}</g>
+      <path ${an("draw", 0.8, `s-acc`)} pathLength="1" d="${ar() ? "M64 78 C 90 160, 140 186, 236 198" : "M254 78 C 280 160, 330 186, 426 198"}" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <g ${an("pop", 2.0)}><rect x="110" y="258" width="260" height="38" rx="19" class="f-ink"/>${txt(240, 282, ar() ? "خمّن ← قارن ← صحّح شعرة ← كرّر" : "guess → compare → nudge → repeat", "t-bg", 13, 'font-weight="700"')}</g>`;
+    },
+    m_scale: () => {
+      const bars = ar() ? [["البيانات", "f-acc"], ["المفاتيح", "f-amber"], ["الحساب", "f-mint"]] : [["data", "f-acc"], ["knobs", "f-amber"], ["compute", "f-mint"]];
+      const X = rowX(3, 62, 26, ar() ? 330 : 150);
+      return `${bars.map(([s, c], i) => `<rect class="an bar ${c}" style="--d:${0.2 + i * 0.15}s" x="${X(i) - 31}" y="${96 + i * 8}" width="62" height="${170 - i * 8}" rx="8"/>${txt(X(i), 290, s, "t-ink2", 13, 'font-weight="700"')}`).join("")}
+      <g ${an("fade", 0.9)}><path d="M${ar() ? 40 : 268} 80 V 266 H ${ar() ? 212 : 440}" class="s-ink3" stroke-width="2" fill="none"/>${txt(ar() ? 126 : 354, 290, ar() ? "الجودة بتطلع" : "quality rises", "t-ink2", 13, 'font-weight="700"')}</g>
+      <path ${an("draw", 1.1, `s-acc`)} pathLength="1" d="${ar() ? "M48 250 C 90 214, 130 150, 204 96" : "M276 250 C 318 214, 358 150, 432 96"}" stroke-width="4" fill="none" stroke-linecap="round"/>
+      ${["✍️", "🌍", "💻"].map((e, i) => `<g ${an("pop", 1.6 + i * 0.2)}><text x="${(ar() ? 90 : 318) + i * 48}" y="${(ar() ? 180 : 180) - i * 34}" font-size="20" text-anchor="middle">${e}</text></g>`).join("")}
+      ${txt(240, 50, ar() ? "قدرات جديدة بتظهر مع الحجم" : "new abilities appear with scale", "t-ink3", 13)}`;
+    },
+    m_tuning: () => {
+      const L1 = ar() ? 340 : 140, L2 = ar() ? 140 : 340;
+      return `<g ${an("rise", 0.05)}><rect x="${L1 - 104}" y="44" width="208" height="210" rx="16" class="f-s1 s-line2" stroke-width="2"/>${txt(L1, 70, ar() ? "بعد التدريب الكبير" : "after big training", "t-ink3", 12.5, 'font-weight="700"')}
+        <rect x="${L1 - 90}" y="84" width="180" height="32" rx="12" class="f-acc"/>${txt(L1, 105, ar() ? "إزاي أعمل كيكة؟" : "How do I bake a cake?", "t-white", 13)}
+        ${[0, 1, 2].map((i) => `<rect x="${L1 - 90}" y="${128 + i * 38}" width="180" height="30" rx="10" class="f-s2"/>${txt(L1, 148 + i * 38, ar() ? ["إزاي أعمل بسكوت؟", "إزاي أعمل تورتة؟", "إزاي أعمل…"][i] : ["How do I bake cookies?", "How do I bake a pie?", "How do I…"][i], "t-ink3", 12.5)}`).join("")}</g>
+      <path ${an("draw", 0.7, `s-ink2`)} pathLength="1" d="M${(L1 + L2) / 2 + (ar() ? 26 : -26)} 150 H ${(L1 + L2) / 2 + (ar() ? -26 : 26)}" stroke-width="3" fill="none" marker-end="url(#aih-arrow)"/>
+      <g ${an("rise", 1.0)}><rect x="${L2 - 104}" y="44" width="208" height="210" rx="16" class="f-mint-soft s-mint" stroke-width="2"/>${txt(L2, 70, ar() ? "بعد التهذيب" : "after tuning", "t-mint", 12.5, 'font-weight="700"')}
+        <rect x="${L2 - 90}" y="84" width="180" height="32" rx="12" class="f-acc"/>${txt(L2, 105, ar() ? "إزاي أعمل كيكة؟" : "How do I bake a cake?", "t-white", 13)}
+        <rect x="${L2 - 90}" y="128" width="180" height="100" rx="12" class="f-s1"/>${(ar() ? ["محتاج ٣ بيض، كوباية دقيق،", "وكوباية سكر. ١. سخّن الفرن…"] : ["You'll need 3 eggs, a cup", "of flour… 1. Preheat the oven…"]).map((l, i) => txt(L2, 156 + i * 22, l, "t-ink", 12.5)).join("")}</g>
+      <g ${an("pop", 1.6)}>${person(L2 + (ar() ? -80 : 80), 300, 0.8, "f-ink2")}<g transform="translate(${L2 + (ar() ? -56 : 104)} 266)"><circle r="12" class="f-mint"/><text y="5" font-size="13" text-anchor="middle">👍</text></g></g>
+      ${txt((L1 + L2) / 2, 300, ar() ? "أمثلة محادثات + تقييم ناس" : "example chats + human ratings", "t-ink3", 12.5)}`;
+    },
+    m_reply: () => {
+      const toks = ar() ? ["صباح", "الخير", "يا", "فريق"] : ["Good", "morning", ",", "team"];
+      const X = rowX(4, 78, 10);
+      const probs = ar() ? [["صباح", 45], ["أهلًا", 30], ["سلام", 15]] : [["Good", 45], ["Hello", 30], ["Hi", 15]];
+      return `<g ${an("rise", 0.05)}><rect x="${ar() ? 214 : 46}" y="34" width="220" height="38" rx="14" class="f-acc"/>${txt(ar() ? 324 : 156, 59, ar() ? "اكتب تحية للفريق" : "Write a greeting for the team", "t-white", 13)}</g>
+      ${probs.map(([w, p], i) => { const x0 = ar() ? 300 : 180, len = p * 2.6; return `<g ${an("fade", 0.4 + i * 0.12)}>${txt(ar() ? 360 : 120, 112 + i * 26, w, i ? "t-ink3" : "t-ink", 13, 'font-weight="700"')}</g><rect class="an grow ${i ? "f-s3" : "f-acc"}" style="--d:${0.5 + i * 0.12}s;transform-origin:${ar() ? "right" : "left"} center" x="${ar() ? x0 - len : x0}" y="${100 + i * 26}" width="${len}" height="16" rx="5"/>${txt(ar() ? x0 - len - 18 : x0 + len + 18, 113 + i * 26, p + "%", "t-ink3", 11.5, 'direction="ltr"')}`; }).join("")}
+      ${toks.map((w, i) => `<g ${an("pop", 1.3 + i * 0.45)}>${chip(X(i), 222, 78, w, i === 0 ? "f-acc" : "f-s1 s-acc", i === 0 ? "t-white" : "t-ink")}</g>`).join("")}
+      <rect ${an("fade", 3.1, `blink f-acc`)} x="${ar() ? X(3) - 52 : X(3) + 46}" y="206" width="4" height="32"/>
+      <g ${an("fade", 1.0)}>${txt(240, 286, ar() ? "درجة الحرارة: قليلة = الأرجح، عالية = أجرأ" : "temperature: low = most likely, high = bolder", "t-ink3", 12.5)}</g>`;
+    },
+    m_recap: () => {
+      const steps = ar() ? ["كلامك", "توكنز", "خريطة", "انتباه × طبقات", "احتمالات", "الكلمة الجاية"] : ["your words", "tokens", "meaning map", "attention × layers", "chances", "next word"];
+      const pos = [[0, 0], [1, 0], [2, 0], [2, 1], [1, 1], [0, 1]];
+      const at = ([c, r]) => [ar() ? 380 - c * 140 : 100 + c * 140, 92 + r * 104];
+      return `${pos.slice(1).map((p, i) => { const [x1, y1] = at(pos[i]), [x2, y2] = at(p); return `<path ${an("draw", 0.3 + i * 0.3, `s-acc`)} pathLength="1" d="M${x1 + (y1 === y2 ? (x2 > x1 ? 58 : -58) : 0)} ${y1 + (y1 === y2 ? 0 : 26)} L${x2 + (y1 === y2 ? (x2 > x1 ? -58 : 58) : 0)} ${y2 - (y1 === y2 ? 0 : 26)}" stroke-width="2.5" fill="none" marker-end="url(#aih-arrow)"/>`; }).join("")}
+      ${pos.map((p, i) => { const [x, y] = at(p); return `<g ${an("pop", 0.15 + i * 0.3)}><rect x="${x - 58}" y="${y - 24}" width="116" height="48" rx="13" class="${i === 5 ? "f-acc" : i === 0 ? "f-s2" : "f-s1 s-acc"}" stroke-width="2"/>${txt(x, y + 5, steps[i], i === 5 ? "t-white" : "t-ink", 13, 'font-weight="700"')}</g>`; }).join("")}
+      <g ${an("rise", 2.0)}>${person(ar() ? 380 : 100, 300, 0.75, "f-ink2")}${txt(ar() ? 260 : 220, 292, ar() ? "إنت: سياق واضح + مراجعة" : "you: clear context + review", "t-mint", 13, 'font-weight="700"')}</g>`;
+    }
+  });
+
   const defs = `<svg class="aih-defs" width="0" height="0" aria-hidden="true" focusable="false"><defs><marker id="aih-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" class="f-ink2"/></marker></defs></svg>`;
   const drawing = (key, label) => `<svg class="aih-svg" viewBox="0 0 480 320" role="img" aria-label="${esc(label)}">${ART[key] ? ART[key]() : ""}</svg>`;
 
   /* ---------- the deck ---------- */
-  A.mountHistory = function (host) {
-    const H = A.aiHistory;
+  // One player for every story deck (A.decks): the AI history in f1, how a model works in f2, …
+  A.mountDeck = function (host, H) {
     if (!H || !host) return;
     const S = H.slides, n = S.length, ui = H.ui;
     const fmt = (s, o) => L(s).replace(/\{(\w+)\}/g, (_, k) => o[k]);
@@ -163,12 +294,12 @@
           <a href="#" class="aih-skip" data-aih-skip>${esc(L(ui.skip))} ↓</a>
         </div>
       </div>
-      <div class="aih-stage" tabindex="0" aria-describedby="aih-keys">
+      <div class="aih-stage" tabindex="0" aria-describedby="${H.id}-keys">
         <div class="aih-q" aria-hidden="true"><span class="aih-q-mark">؟</span><span class="aih-q-t" data-aih-q>${esc(L(H.question))}</span></div>
         <div class="aih-slides">
           ${S.map((s, i) => `
           <div class="aih-slide" role="group" aria-roledescription="${esc(L(ui.slide))}" aria-label="${esc(fmt(ui.slideOf, { n: num(i + 1), t: num(n) }) + " — " + L(s.year))}" data-i="${i}" aria-hidden="true" inert>
-            <div class="aih-year" aria-hidden="true">${esc(L(s.year))}</div>
+            <div class="aih-year" aria-hidden="true">${esc(L(s.mark || s.year))}</div>
             <div class="aih-txt">
               <div class="aih-era"><span>${esc(L(s.year))}</span>${esc(L(s.era))}</div>
               <h3>${esc(L(s.title))}</h3>
@@ -190,7 +321,7 @@
           ${S.map((s, i) => `<button type="button" class="aih-dot" data-aih-go="${i}" aria-label="${esc(L(s.year) + " — " + L(s.title))}"><span>${esc(L(s.year).split(" ")[0])}</span></button>`).join("")}
         </div>
         <div class="aih-meta"><span class="aih-count num" data-aih-count></span><span class="aih-note">${esc(L(H.note))}</span></div>
-        <p class="sr-only" id="aih-keys">${esc(L(ui.keys))}</p>
+        <p class="sr-only" id="${H.id}-keys">${esc(L(ui.keys))}</p>
         <div class="sr-only" aria-live="polite" data-aih-live></div>
       </div>`;
 
@@ -321,4 +452,5 @@
 
     go(0, "init");
   };
+  A.mountHistory = (host) => A.mountDeck(host, A.aiHistory);
 })(window.ACADEMY = window.ACADEMY || {});

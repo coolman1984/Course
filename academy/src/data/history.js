@@ -6,7 +6,7 @@
 (function (A) {
   const u = (ar, en) => ({ ar, en });
   A.aiHistory = {
-    lesson: "f1",
+    id: "history", lesson: "f1",
     kicker: u("قبل ما نبدأ · الحكاية كلها في ٥ دقايق", "Before we start · the whole story in 5 minutes"),
     title: u("حكاية الذكاء الاصطناعي: من سؤال… لزميل شغل", "The story of AI: from a question… to a coworker"),
     lead: u("سؤال واحد عمره أكتر من ٧٥ سنة: «هي الآلة تقدر تفكر؟». تعالى نشوف كل جيل جاوب عليه إزاي، لحد ما وصل لإيدك النهاردة.",
@@ -137,4 +137,5 @@
       }
     ]
   };
+  A.decks = (A.decks || []).concat([A.aiHistory]);
 })(window.ACADEMY = window.ACADEMY || {});

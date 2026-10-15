@@ -282,6 +282,22 @@ await session({ label: "history-deck-ar", viewport: { width: 1360, height: 900 }
   await page.evaluate(() => (location.hash = "lesson-f2")); await page.waitForTimeout(150);
   (await page.$("#sec-history")) ? fail("history: deck leaked into another lesson") : ok("history: only the first lesson opens with the story");
 });
+/* The "inside the model" deck at the top of the second lesson */
+await session({ label: "model-deck-ar", viewport: { width: 1360, height: 900 } }, async (page) => {
+  await page.evaluate(() => (location.hash = "lesson-f2")); await page.waitForSelector("#sec-model .aih-stage");
+  const n = await page.$$eval("#sec-model .aih-slide", (s) => s.length);
+  const on = () => page.$eval("#sec-model .aih-slide.is-on", (e) => Number(e.dataset.i));
+  const art = await page.$$eval("#sec-model .aih-svg", (s) => s.every((v) => v.querySelectorAll("rect,circle,path,text,ellipse,line").length > 6));
+  n >= 10 && art && (await on()) === 0 ? ok(`model deck: ${n} slides with drawings, starts on the first`) : fail("model deck: incomplete");
+  const why = await page.$eval("#sec-model .aih-slide.is-on .aih-answer small", (e) => e.textContent);
+  /وليه/.test(why) ? ok("model deck: every slide explains the decision and why") : fail("model deck: decision label missing");
+  await page.focus("#sec-model .aih-stage"); await page.keyboard.press("ArrowLeft"); await page.keyboard.press("ArrowLeft"); await page.waitForTimeout(80);
+  (await on()) === 2 ? ok("model deck: keyboard moves through the steps") : fail("model deck: keyboard broken");
+  await page.keyboard.press("End"); await page.waitForTimeout(80);
+  const fin = await page.$eval("#sec-model [data-aih-q]", (e) => e.dataset.final === "true");
+  fin && (await page.isVisible("#sec-model [data-aih-start]")) ? ok("model deck: the question turns to the reader on the last slide") : fail("model deck: final slide incomplete");
+  (await page.$("#sec-history")) ? fail("model deck: the history deck leaked into lesson 2") : ok("model deck: lesson 2 has only its own story");
+});
 await session({ label: "history-deck-mobile-en", viewport: { width: 375, height: 812 }, isMobile: true, hasTouch: true, colorScheme: "dark" }, async (page) => {
   await page.evaluate(() => { localStorage.setItem("aiAcademy.v1", JSON.stringify({ lang: "en" })); location.hash = "lesson-f1"; location.reload(); });
   await page.waitForSelector("#sec-history .aih-stage");
