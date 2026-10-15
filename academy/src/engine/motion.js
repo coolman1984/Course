@@ -307,16 +307,11 @@
     }
     slidePill(tabs, !!instant);
   }
-  function addLesson(id) {
-    const mental = doc.querySelector("#main #sec-mental");
-    if (!mental || !story(id)) return;
-    const flow = mental.querySelector(".mental-flow");
-    if (!flow) return;
-    const theatre = createTheatre(id, { home: false });
-    mental.insertBefore(theatre, flow);
-    flow.hidden = true;
-    const hint = mental.querySelector(".mental-hint");
-    if (hint) hint.hidden = true;
+  // Lessons keep only the sliding level tabs. The five-station lesson theatre was removed (owner review, 2026-10-15):
+  // it repeated the lesson's situation, hid one sentence per click in a large dark box and pushed the real scene down.
+  // The picture-first section in render.js now shows the whole path at once.
+  function addLesson() {
+    if (!doc.querySelector("#main #lv")) return;
     decorateLessonTabs(true);
     const onLevelClick = function (event) {
       if (event.target.closest('[role="tab"]')) {
@@ -363,7 +358,7 @@
       main.firstElementChild.classList.add("motion-route-enter");
     }
     if (route.name === "home") addHome();
-    if (route.name === "lesson" && A.lang() === "ar") addLesson(route.arg);
+    if (route.name === "lesson" && A.lang() === "ar") addLesson();
     if (route.name === "lesson" && pendingSuccess === route.arg) {
       pendingSuccess = null;
       showSuccess();
