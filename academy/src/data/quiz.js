@@ -79,7 +79,7 @@
       o("اسم النموذج", "The model’s name", "اسم الأداة مش بيغيّر حاجة هنا.", "The tool’s name changes nothing here.")
     ], 0, ["الكتاب بيضرب المثال ده: مش «ساعدني في التقرير» لكن «عاوز أعرف ليه المبيعات نزلت» (ص 7).", "The book uses this example: not “help me with the report” but “I want to know why sales fell” (p. 7)."]),
 
-    Q("p2a", "p2", "mcq", ["ليه «أقوى تقنية» بتبدأ بـ «اسألني عن أي معلومة ناقصة»؟", "Why does the “strongest technique” start with “ask me about any missing information”?"], [
+    Q("p2a", "p2", "mcq", ["ليه «أهم تقنية» بتبدأ بـ «اسألني عن أي معلومة ناقصة»؟", "Why does the “strongest technique” start with “ask me about any missing information”?"], [
       o("عشان تجبر الأداة تكشف افتراضاتها بدل ما تخمّن من غير ما تقول", "To force the tool to reveal its assumptions instead of silently guessing"),
       o("عشان تطوّل المحادثة", "To make the conversation longer", "الهدف الدقة مش الطول.", "The aim is precision, not length."),
       o("عشان النموذج مش بيرد من غيرها", "Because the model won’t answer without it", "هيرد، بس هيخمّن اللي ناقص.", "It will answer, but it will guess what’s missing."),

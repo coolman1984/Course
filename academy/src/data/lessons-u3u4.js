@@ -24,7 +24,7 @@
         ],
         mech: [
           L("how", "النموذج «بيقرأ» جدولك كبنية: الصف الأول أسماء، والأعمدة أنواع. العناوين المتراكبة والخلايا المدمجة بتكسر البنية، فبيظن إن العنوان صف بيانات، أو بيدمج عمودين. التجهيز بيخلي البنية واضحة فالمؤشرات تطلع صح من أول محاولة.", "The model “reads” your sheet as a structure: first row names, columns types. Stacked headers and merged cells break that structure, so it treats a header as data or merges two columns. Prep makes the structure clear so KPIs are right first time."),
-          L("link", "دي نفس قاعدة «وصف دقيق لبنية البيانات» في معادلات إكسل ([[p9]])، ونفس «الجودة أولًا» في التحليل ([[y4]]). و«اسألني أولًا» أقوى تقنية في الكتاب ([[p2]]).", "This is the same “precise description of the data structure” as in Excel formulas ([[p9]]), and the same “quality first” as in analysis ([[y4]]). “Ask me first” is the book’s strongest technique ([[p2]])."),
+          L("link", "دي نفس قاعدة «وصف دقيق لبنية البيانات» في معادلات إكسل ([[p9]])، ونفس «الجودة أولًا» في التحليل ([[y4]]). و«اسألني أولًا» أهم تقنية في الكتاب ([[p2]]).", "This is the same “precise description of the data structure” as in Excel formulas ([[p9]]), and the same “quality first” as in analysis ([[y4]]). “Ask me first” is the book’s strongest technique ([[p2]])."),
         ],
         practice: [
           L("example", "ملف مبيعات شهرية: عنوان في الصف الأول «تقرير مبيعات 2026» فوق الأعمدة، وخلايا مدمجة للأشهر، وعمود «Column7». بعد خمس دقايق: صف أسماء واحد، أعمدة «الشهر، المنتج، المنطقة، القيمة»، مفيش دمج. وبعدين: «اللوحة هتتعرض على مدير الإدارة كل أسبوع لقرار سريع عن الأداء. اسألني 3–5 أسئلة الأول».", "A monthly sales file: a title row “Sales report 2026” above the columns, merged cells for months, and a column called “Column7”. After five minutes: one header row, columns “month, product, region, value”, no merges. Then: “The board will be shown to the department head weekly for a quick performance decision. Ask me 3–5 questions first.”"),
@@ -265,7 +265,7 @@
         ],
         mech: [
           L("how", "كل برومبت **بيفتح مرحلة ويقفل الباب على اللي بعدها**: برومبت 2 بيقول «ماتحسبش أي مؤشر لسه»، وبرومبت 4 بيقول «ماتحسبش حاجة في الواجهة». القيود دي بتحمي الترتيب.", "Each prompt **opens a stage and locks the door to the next**: prompt 2 says “don’t compute any KPI yet”, prompt 4 says “don’t compute anything in the UI”. These limits protect the order."),
-          L("link", "برومبت التأسيس بيبدأ بأقوى تقنية في الكتاب ([[p2]])، وقائمة الاعتماد هي معايير المشروع المرجعي ([[y7]]) بلغة التطبيق.", "The setup prompt opens with the book’s strongest technique ([[p2]]), and the acceptance checklist is the reference project’s criteria ([[y7]]) in app language."),
+          L("link", "برومبت التأسيس بيبدأ بأهم تقنية في الكتاب ([[p2]])، وقائمة الاعتماد هي معايير المشروع المرجعي ([[y7]]) بلغة التطبيق.", "The setup prompt opens with the book’s strongest technique ([[p2]]), and the acceptance checklist is the reference project’s criteria ([[y7]]) in app language."),
         ],
         practice: [
           L("example", "الخطوة الجاية زي ما الكتاب بيقترح: خد ملف إكسل واحد صغير إنت فعلًا بتستخدمه الأسبوع ده، ونفّذ البرومبتات الخمسة عليه بالترتيب من غير تعديل، لحد ما يبقى عندك تطبيق واحد شغال — وبعدين وسّعه.", "The book’s next step: take one small Excel file you actually use this week and run the five prompts on it in order without changes, until you have one working app — then extend it."),

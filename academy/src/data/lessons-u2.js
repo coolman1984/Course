@@ -74,7 +74,7 @@
     },
     {
       id: "y3", unit: "u2", pages: [18, 19], diff: 2, min: 9, scene: "prefer", lab: "pipeline", related: ["y2", "y7", "s1"], pre: ["y2"],
-      title: { ar: "إزاي تعمل أتمتة تشتغل كل يوم وماتبوظش بسهولة؟", en: "Level 1: run automation" },
+      title: { ar: "إزاي تبني أتمتة تشتغل كل يوم بثبات ومن غير أعطال مفاجئة؟", en: "Level 1: run automation" },
       sum: { ar: "أتمتة بتنجح ١٠٠ مرة وتفشل في المرة ١٠١ من غير ما تقول أخطر من إنك تشتغل بإيدك. الأتمتة اللي يُعتمد عليها بتتأكد من كل خطوة، ولو حاجة فشلت بتوقف وتقول السبب.", en: "The tool map, the preference order that makes tools last for years, a typical chain, and essential run controls." },
       book: [
         bp(18, "تلات مستويات ورا بعض: **التشغيل** (الملفات وإكسل والمتصفح وبرامج ويندوز مع جدولة بتشيل التدخل بالإيد)، وبعدين **التحليل** (استعلام مباشر ومعالجة سريعة وفحص جودة)، وبعدين **العرض** (صفحة تفاعلية بتنقل القارئ من النتيجة للقرار).", "Three consecutive levels: **run** (files, Excel, browser and Windows apps, with scheduling that removes manual work), then **analysis** (direct queries, fast processing, quality checks), then **reporting** (an interactive page moving the reader from result to decision)."),

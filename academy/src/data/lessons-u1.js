@@ -137,7 +137,7 @@
     },
     {
       id: "p5", unit: "u1", pages: [8, 9, 10], diff: 1, min: 9, scene: "daily", related: ["p4", "p6", "p12"], pre: ["p1"],
-      title: { ar: "إزاي الذكاء الاصطناعي يرتّب يومك بدل ما يزوّده زحمة؟", en: "Productivity prompts and running your day" },
+      title: { ar: "إزاي الذكاء الاصطناعي يرتّب يومك بدل ما يزوّده ضغط؟", en: "Productivity prompts and running your day" },
       sum: { ar: "الزحمة مش في عدد المهام، الزحمة في إنها مش مترتبة. المساعد يقدر يحوّل رسايلك ومحاضر اجتماعاتك لقائمة واضحة: مين يعمل إيه، وإمتى، وتبدأ بإيه.", en: "Organising the day, meetings, tasks, professional writing, research, follow-up, process improvement, delegation, triage and the all-in-one prompt." },
       book: [
         bp(8, "برومبتات عملية بتساعدك تنظّم وتابع وتنجز وتدير الاجتماعات بوضوح وسرعة — **ماتطلبش إجابة بس، اطلب نتيجة تقدر تنفّذها**.", "Practical prompts for organising, following up, getting things done and running meetings clearly and quickly — **don’t ask for an answer only, ask for an actionable result**."),
@@ -335,7 +335,7 @@
         mech: [
           L("how", "**المسار الأول**: سجّل الماكرو ← أوقف ← شغّل بزر. **المسار التاني**: البرومبت الذهبي ← الكود ← المطوّر ← وحدة ← لصق ← حفظ كملف ماكرو ← تشغيل على **نسخة** ← اختبار الحالات الخمس ← اعتماد.", "**Path one**: record → stop → run with a button. **Path two**: golden prompt → code → Developer → module → paste → save as macro file → run on a **copy** → test the five cases → adopt."),
           L("inside", "ليه «وحدات صغيرة»؟ لأن ((module|الوحدة)) الصغيرة اللي ليها وظيفة واحدة سهل تختبرها وتصلّحها لوحدها. الماكرو الضخم لما يغلط مش هتعرف الغلط فين — فيبقى إصلاحه شبه مستحيل.", "Why “small modules”? A small ((module|module)) with one job is easy to test and fix on its own. When a giant macro fails you can’t tell where — so it’s impossible to fix."),
-          L("link", "البرومبت الذهبي هو المعادلة الحاكمة ([[p1]]) مطبّقة على ملف، ومعاه أقوى تقنية ([[p2]]) في صورة «خمس حالات اختبار». ونفس الفكرة بتكبر في أدوات البايثون ([[y1]]) وبعدين Claude Code اللي بيكتب ويشغّل ويختبر بنفسه ([[w2]]).", "The golden prompt is the governing equation ([[p1]]) applied to a file, with the strongest technique ([[p2]]) as “five test cases”. The same idea grows into Python tools ([[y1]]) and then Claude Code, which writes, runs and tests on its own ([[w2]])."),
+          L("link", "البرومبت الذهبي هو المعادلة الحاكمة ([[p1]]) مطبّقة على ملف، ومعاه أهم تقنية ([[p2]]) في صورة «خمس حالات اختبار». ونفس الفكرة بتكبر في أدوات البايثون ([[y1]]) وبعدين Claude Code اللي بيكتب ويشغّل ويختبر بنفسه ([[w2]]).", "The golden prompt is the governing equation ([[p1]]) applied to a file, with the strongest technique ([[p2]]) as “five test cases”. The same idea grows into Python tools ([[y1]]) and then Claude Code, which writes, runs and tests on its own ([[w2]])."),
         ],
         practice: [
           L("example", "مثال الكتاب: ملف فيه ورقة «البيانات الخام». المطلوب كود يحذف الصفوف الفاضية، ويوحّد تنسيق التاريخ، ويحذف التكرار بناءً على رقم الموظف، وبعدين ينشئ ورقة «التقرير» بملخص لكل إدارة — مع شرح فين يتحط الكود وإزاي يتشغّل خطوة بخطوة.", "The book’s example: a file with a “Raw data” sheet. The code should delete blank rows, unify the date format, remove duplicates by employee ID, then create a “Report” sheet with a summary per department — with an explanation of where to put the code and how to run it step by step."),
