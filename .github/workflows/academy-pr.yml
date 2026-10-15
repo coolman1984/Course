@@ -27,6 +27,7 @@ jobs:
           node --check academy/src/engine/motion.js
           node --check academy/src/data/history.js
           node --check academy/src/engine/history.js
+          node --check academy/src/data/model-story.js
           test -s academy/src/history.css
           node --check academy/build.mjs
           test -s academy/src/motion.css

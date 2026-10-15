@@ -8,7 +8,7 @@ import vm from "node:vm";
 import path from "node:path";
 
 const SRC = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "src");
-const DATA = ["ui", "meta", "stories", "scenes", "lessons-u0", "lessons-u1", "lessons-u2", "lessons-u3u4", "lessons-u5", "plain-talk-a", "plain-talk-b", "prompts", "quiz", "glossary", "compare", "history"];
+const DATA = ["ui", "meta", "stories", "scenes", "lessons-u0", "lessons-u1", "lessons-u2", "lessons-u3u4", "lessons-u5", "plain-talk-a", "plain-talk-b", "prompts", "quiz", "glossary", "compare", "history", "model-story"];
 const ENGINE = ["core", "scene", "render", "quiz", "labs", "tools"];
 const ctx = { window: { ACADEMY: {} } };
 vm.createContext(ctx);
@@ -147,22 +147,30 @@ test("all 41 lessons lead with useful, specific Egyptian Arabic in four levels",
   }
 });
 
-test("the story-of-AI deck: real lesson, every slide complete in both languages, years in order", () => {
-  const H = A.aiHistory;
-  assert.ok(H && lessonIds.has(H.lesson), "aiHistory must point to an existing lesson");
-  for (const k of ["kicker", "title", "lead", "answerLabel", "ideaLabel", "question", "finalQuestion", "note"]) both(H[k], "aiHistory." + k);
-  for (const k of Object.keys(H.ui)) both(H.ui[k], "aiHistory.ui." + k);
-  assert.ok(H.slides.length >= 8, "the story needs its eras");
+test("story decks: real lessons, one deck per lesson, every slide complete in both languages, a drawing for every slide", () => {
+  assert.ok(Array.isArray(A.decks) && A.decks.length >= 2, "decks registry missing");
   const engine = readFileSync(path.join(SRC, "engine", "history.js"), "utf8");
-  const ids = new Set();
-  let lastYear = 0;
-  for (const s of H.slides) {
-    assert.ok(!ids.has(s.id), "duplicate slide " + s.id); ids.add(s.id);
-    for (const k of ["year", "era", "title", "answer", "idea"]) both(s[k], s.id + "." + k);
-    assert.ok(s.story.length >= 1, s.id + ": no story"); s.story.forEach((p, i) => both(p, s.id + ".story" + i));
-    assert.ok(new RegExp("\\b" + s.art + ":\\s*\\(").test(engine), s.id + ": no drawing for art " + s.art);
-    const y = parseInt(s.year.en, 10);
-    if (!Number.isNaN(y)) { assert.ok(y >= lastYear, s.id + ": years out of order"); lastYear = y; }
+  const seenLessons = new Set(), seenIds = new Set();
+  for (const H of A.decks) {
+    assert.ok(H.id && !seenIds.has(H.id), "deck id missing or duplicated: " + H.id); seenIds.add(H.id);
+    assert.ok(lessonIds.has(H.lesson), `${H.id}: unknown lesson ${H.lesson}`);
+    assert.ok(!seenLessons.has(H.lesson), `${H.id}: lesson ${H.lesson} already has a deck`); seenLessons.add(H.lesson);
+    for (const k of ["kicker", "title", "lead", "answerLabel", "ideaLabel", "question", "finalQuestion", "note"]) both(H[k], H.id + "." + k);
+    for (const k of Object.keys(H.ui)) both(H.ui[k], H.id + ".ui." + k);
+    assert.ok(H.slides.length >= 8, H.id + ": too few slides");
+    const ids = new Set();
+    let lastYear = 0;
+    for (const s of H.slides) {
+      assert.ok(!ids.has(s.id), `${H.id}: duplicate slide ${s.id}`); ids.add(s.id);
+      for (const k of ["year", "era", "title", "answer", "idea"]) both(s[k], `${H.id}.${s.id}.${k}`);
+      if (s.mark) both(s.mark, `${H.id}.${s.id}.mark`);
+      assert.ok(s.story.length >= 1, `${H.id}.${s.id}: no story`); s.story.forEach((p, i) => both(p, `${H.id}.${s.id}.story${i}`));
+      assert.ok(new RegExp("\\b" + s.art + ":\\s*\\(").test(engine), `${H.id}.${s.id}: no drawing for art ${s.art}`);
+      const y = parseInt(s.year.en, 10);
+      if (!Number.isNaN(y)) { assert.ok(y >= lastYear, `${H.id}.${s.id}: years out of order`); lastYear = y; }
+    }
   }
-  assert.ok(Number.isNaN(parseInt(H.slides[H.slides.length - 1].year.en, 10)), "the last slide is today");
+  assert.equal(A.aiHistory.lesson, "f1"); assert.ok(Number.isNaN(parseInt(A.aiHistory.slides.at(-1).year.en, 10)), "history ends today");
+  assert.equal(A.modelStory.lesson, "f2");
 });
+

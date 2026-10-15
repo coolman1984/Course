@@ -1266,7 +1266,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
 }
 @media (max-width:860px){.aih-foot{padding-inline:2px}}
 @container (max-width:560px){
-  .aih-art{max-width:340px}
+  .aih-art{max-width:100%}
   .aih-txt{gap:10px}
   .aih-txt p{line-height:1.8}
   .aih-answer{padding:8px 12px}
@@ -1278,6 +1278,19 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
   .aih-dot:not(.on) span{display:none}
   .aih-rail-line{inset-inline:14px}
 }
+
+/* extra drawing parts for the "inside the model" deck */
+.f-rose-soft{fill:var(--rose-soft)}.t-rose{fill:var(--rose)}.t-amber{fill:var(--spark)}
+.cluster{opacity:.13}
+.layer{stroke:var(--accent);stroke-width:2}
+.layer.l0{fill:var(--surface)}.layer.l1{fill:var(--accent-soft)}.layer.l2{fill:color-mix(in srgb,var(--accent) 35%,var(--surface))}.layer.l3{fill:color-mix(in srgb,var(--accent) 70%,var(--surface))}.layer.l4{fill:var(--accent)}
+.bar{transform-box:fill-box;transform-origin:bottom}
+.aih-slide.is-on .bar{animation:aih-bar .8s cubic-bezier(.16,.84,.3,1) var(--d,0s) both}
+.aih-slide.is-on .turn{animation:aih-turn 2.6s ease-in-out var(--d,0s) infinite}
+.aih-slide.is-on .cluster.pop{animation-name:aih-pop-soft}
+@keyframes aih-bar{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes aih-turn{0%,100%{transform:rotate(-40deg)}50%{transform:rotate(55deg)}}
+@keyframes aih-pop-soft{from{opacity:0;transform:scale(.4)}to{opacity:.13;transform:none}}
 </style>
 </head>
 <body>
@@ -5877,7 +5890,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
 (function (A) {
   const u = (ar, en) => ({ ar, en });
   A.aiHistory = {
-    lesson: "f1",
+    id: "history", lesson: "f1",
     kicker: u("قبل ما نبدأ · الحكاية كلها في ٥ دقايق", "Before we start · the whole story in 5 minutes"),
     title: u("حكاية الذكاء الاصطناعي: من سؤال… لزميل شغل", "The story of AI: from a question… to a coworker"),
     lead: u("سؤال واحد عمره أكتر من ٧٥ سنة: «هي الآلة تقدر تفكر؟». تعالى نشوف كل جيل جاوب عليه إزاي، لحد ما وصل لإيدك النهاردة.",
@@ -6008,6 +6021,164 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       }
     ]
   };
+  A.decks = (A.decks || []).concat([A.aiHistory]);
+})(window.ACADEMY = window.ACADEMY || {});
+
+/* data/model-story.js */
+/* Inside the model — the story deck that opens the second lesson (f2).
+   One hero runs through every slide: the game «إيه الكلمة الجاية؟». Every design decision is told as a consequence of it,
+   each with its reason («القرار، وليه؟»): why learn from examples, why next-word prediction, why tokens, why a meaning map,
+   why positions, why attention, why layers, how training nudges the weights, why scale, why a tuning stage, how a reply is
+   generated, and what that means for the reader. Analogies and numbers are simplified; the steps are what really happens.
+   Same slide schema as data/history.js; `year` is the short timeline label, `mark` the big watermark. */
+"use strict";
+(function (A) {
+  const u = (ar, en) => ({ ar, en });
+  A.modelStory = {
+    id: "model", lesson: "f2",
+    kicker: u("جوّا الموديل · الحكاية كاملة في ٧ دقايق", "Inside the model · the whole story in 7 minutes"),
+    title: u("جوّا الموديل: لعبة واحدة… بقت عقل بيكتب", "Inside the model: one simple game… that became a mind that writes"),
+    lead: u("مش محتاج تبقى مبرمج. هنمشي ورا سؤال واحد بس: «إيه الكلمة الجاية؟»، ونشوف إزاي كل قرار في تصميم الموديل طلع منطقي من اللعبة دي، من التوكنز لحد ما يرد عليك.",
+      "You don't need to be a programmer. We'll follow one question — “what's the next word?” — and see how every design decision inside a model follows from that one game, from tokens all the way to its reply."),
+    answerLabel: u("القرار، وليه؟", "The decision, and why"),
+    ideaLabel: u("الفكرة في جملة", "The idea in one line"),
+    question: u("اللعبة كلها: إيه الكلمة الجاية؟", "The whole game: what's the next word?"),
+    finalQuestion: u("وإنت هتديله إيه عشان يتوقّع صح؟", "So what will you give it to guess right?"),
+    note: u("التشبيهات والأرقام مبسّطة للتوضيح؛ الخطوات نفسها هي اللي بتحصل فعلًا. تقسيم الكلمات توضيحي.", "Analogies and numbers are simplified; the steps are what really happens. Word splits are illustrative."),
+    ui: {
+      prev: u("اللي فات", "Previous"), next: u("اللي بعده", "Next"),
+      play: u("شغّل الحكاية", "Play the story"), pause: u("وقّف", "Pause"), replay: u("من الأول", "From the start"),
+      skip: u("تخطّى للدرس", "Skip to the lesson"), start: u("يلا نكمّل الدرس", "Continue the lesson"),
+      slideOf: u("{n} من {t}", "{n} of {t}"), timeline: u("خطوات الحكاية", "Story steps"),
+      deck: u("إزاي الموديل بيشتغل من جوه، في شرائح", "How a model works inside, in slides"), slide: u("شريحة", "slide"),
+      keys: u("استخدم الأسهم أو اسحب بصباعك", "Use the arrow keys or swipe")
+    },
+    slides: [
+      {
+        id: "idea", art: "m_idea", year: u("الفكرة", "Idea"), mark: u("٠١", "01"), era: u("قبل أي حاجة", "First things first"),
+        title: u("يعني إيه «موديل» أصلًا؟", "What is a “model”, really?"),
+        story: [u("البرنامج العادي زي وصفة مكتوبة: مبرمج بيكتب كل قاعدة بإيده، «لو حصل كذا، اعمل كذا». بس جرّب تكتب قواعد لكل جمل اللغة العربية… مستحيل.",
+          "Ordinary software is like a written recipe: a programmer writes every rule by hand — “if this happens, do that”. Now try writing rules for every sentence in a language… impossible."),
+        u("فالعلما قلبوا الفكرة: بدل ما نكتب القواعد، نبني آلة فيها مليارات «المفاتيح» الصغيرة اللي بتتظبط، ونوريها أمثلة كتير لحد ما المفاتيح تقف في الوضع الصح. الآلة دي بعد ما تتظبط هي اللي بنسميها «موديل».",
+          "So scientists flipped the idea: instead of writing the rules, build a machine with billions of small adjustable “knobs” and show it lots of examples until the knobs settle in the right place. Once tuned, that machine is what we call a “model”.")],
+        answer: u("ما نكتبش القواعد؛ نسيب الآلة تتعلّمها من الأمثلة. لأن اللغة أكبر وألخبط من إن حد يكتب قواعدها.", "Don't write the rules; let the machine learn them from examples — language is far too big and messy for anyone to write its rules."),
+        idea: u("الموديل = ملف ضخم من الأرقام (المفاتيح) + طريقة حساب بتحوّل كلامك لرد.", "A model = a huge file of numbers (the knobs) + a recipe of calculations that turns your words into a reply.")
+      },
+      {
+        id: "game", art: "m_game", year: u("اللعبة", "Game"), mark: u("٠٢", "02"), era: u("طريقة التعليم", "How it learns"),
+        title: u("اتعلّم بلعبة واحدة: خمّن الكلمة الجاية", "It learns with one game: guess the next word"),
+        story: [u("عشان نظبط المفاتيح دي محتاجين أسئلة وإجاباتها. لو هنستنى ناس تكتب ملايين الأسئلة بإيدها، هناخد قرون.",
+          "To tune those knobs we need questions with answers. If we waited for people to write millions of questions by hand, it would take centuries."),
+        u("الحل كان عبقري وبسيط: أي جملة مكتوبة في الدنيا هي نفسها سؤال وإجابة. خبّي آخر كلمة في «فنجان قهوة من غير …» وخلّي الموديل يخمّن. الإجابة الصح مكتوبة أصلًا في النص.",
+          "The fix was brilliant and simple: any sentence ever written is already a question and its answer. Hide the last word of “a cup of coffee without …” and let the model guess. The right answer is already in the text.")],
+        answer: u("نعلّمه بلعبة «الكلمة الجاية». لأنها بتحوّل كل كتاب وموقع ومقال لتمرين ببلاش، فنقدر ندرّبه على كمية كلام مهولة.", "Teach it with the next-word game — it turns every book, site and article into a free exercise, so it can train on an enormous amount of text."),
+        idea: u("عشان يكسب اللعبة دي كويس، لازم يفهم اللغة والمعنى وحاجات كتير عن الدنيا. الفهم بييجي كنتيجة جانبية للتخمين الشاطر.", "To win this game well, it has to pick up grammar, meaning and a lot about the world. Understanding arrives as a side effect of guessing well.")
+      },
+      {
+        id: "tokens", art: "m_tokens", year: u("التوكنز", "Tokens"), mark: u("٠٣", "03"), era: u("تقطيع الكلام", "Cutting up text"),
+        title: u("ليه بيقطّع الكلام لـ«توكنز»؟", "Why does it cut text into “tokens”?"),
+        story: [u("الكمبيوتر ما بيفهمش غير أرقام، فلازم نقطّع الكلام لقطع ونديلها أرقام. طب نقطّع إزاي؟",
+          "Computers only understand numbers, so text has to be cut into pieces that get numbers. But cut how?"),
+        u("لو حرف حرف: الجملة هتبقى طويلة جدًا، والحرف لوحده ملوش معنى. لو كلمة كلمة: القاموس هيبقى بالملايين، وأي كلمة جديدة أو غلطة إملائية أو «هيكتبولهم» هتبقى لغز.",
+          "Letter by letter: sentences become very long, and a single letter means nothing. Word by word: the dictionary runs into millions, and any new word, typo or long compound word becomes a mystery."),
+        u("فاختاروا الحل اللي في النص: «توكنز»، قطع متوسطة. الكلمات المشهورة تبقى قطعة واحدة، والنادرة تتكسر لقطع معروفة، زي مكعبات الليجو.",
+          "So they chose the middle: “tokens”, medium-sized pieces. Common words stay whole; rare ones break into familiar pieces, like Lego bricks.")],
+        answer: u("نقطّع لقطع متوسطة. لأنها بتوازن بين قاموس حجمه معقول وجمل مش طويلة زيادة، ومفيش كلمة تبقى غريبة عليه تمامًا.", "Cut into medium pieces — a balance between a manageable dictionary and sentences that aren't too long, and no word is ever completely unknown."),
+        idea: u("عشان كده الأسعار وحدود الطول بتتحسب بالتوكن مش بالكلمة. والكلمة العربية غالبًا بتاخد توكنز أكتر من الإنجليزي.", "That's why prices and length limits are counted in tokens, not words. An Arabic word often takes more tokens than an English one.")
+      },
+      {
+        id: "map", art: "m_map", year: u("الخريطة", "Map"), mark: u("٠٤", "04"), era: u("المعنى بالأرقام", "Meaning as numbers"),
+        title: u("كل توكن بقى نقطة على خريطة معاني", "Every token becomes a point on a map of meaning"),
+        story: [u("لو أدينا كل توكن رقم مسلسل (قهوة = ٥٠٣، شاي = ٩٨١٢)، الرقم مش هيقول أي حاجة عن المعنى.",
+          "If each token just got a serial number (coffee = 503, tea = 9812), the number would say nothing about meaning."),
+        u("فبدل رقم واحد، كل توكن بياخد قائمة أرقام كأنها إحداثيات على خريطة كبيرة جدًا. والمفاجأة إن التدريب نفسه بيحرّك الكلمات اللي معناها قريب لحد ما تقرّب من بعض: «قهوة» جنب «شاي»، و«القاهرة» جنب «باريس».",
+          "So instead of one number, each token gets a list of numbers — coordinates on a huge map. The surprise: training itself pulls words with similar meanings close together: “coffee” near “tea”, “Cairo” near “Paris”.")],
+        answer: u("نحوّل كل كلمة لمكان على خريطة. لأن اللي يتعلمه عن «قهوة» يفيده في «شاي» على طول، من غير ما يحتاج أمثلة لكل كلمة لوحدها.", "Turn every word into a place on a map — what it learns about “coffee” immediately helps with “tea”, without needing examples for every word separately."),
+        idea: u("قريب في المعنى = قريب في المكان. ودي أول خطوة عشان الموديل يفهم، مش يحفظ.", "Close in meaning = close on the map. It's the first step from memorising to understanding.")
+      },
+      {
+        id: "order", art: "m_order", year: u("الترتيب", "Order"), mark: u("٠٥", "05"), era: u("مين قبل مين", "Who comes first"),
+        title: u("نفس الكلمات… معنى تاني خالص", "Same words… a completely different meaning"),
+        story: [u("«الكلب عض الراجل» خبر عادي. «الراجل عض الكلب» خبر في الجرنال! نفس الكلمات بالظبط، بس الترتيب قلب المعنى.",
+          "“Dog bites man” is ordinary. “Man bites dog” makes the papers! Exactly the same words — the order flipped the meaning."),
+        u("والموديل بيبص على الكلمات كلها مرة واحدة (هنعرف ليه في الشريحة الجاية)، فممكن ينسى مين جه قبل مين. عشان كده بيضيفوا لكل توكن «ختم» صغير بمكانه في الجملة.",
+          "And the model looks at all the words at once (the next slide shows why), so it could lose track of who came first. That's why each token gets a small “stamp” with its position in the sentence.")],
+        answer: u("نضيف معلومة المكان لكل كلمة. لأن من غيرها الجملة بتبقى شنطة كلمات ملخبطة.", "Add position information to every word — without it, a sentence is just a jumbled bag of words."),
+        idea: u("المعنى = الكلمات + ترتيبها. والموديل محتاج الاتنين.", "Meaning = the words + their order. The model needs both.")
+      },
+      {
+        id: "attention", art: "m_attention", year: u("الانتباه", "Attention"), mark: u("٠٦", "06"), era: u("قلب التصميم", "The heart of the design"),
+        title: u("الانتباه: كل كلمة بتسأل الباقيين", "Attention: every word asks all the others"),
+        story: [u("«سلّمت الملف للمدير عشان هو مستعجل». مين المستعجل؟ إنت عرفت على طول إنه المدير. الموديل بيعمل كده بـ«الانتباه»: كل كلمة بتبص على كل الكلمات التانية وتقرر مين يهمها أكتر، و«هو» بتشد أوي على «المدير».",
+          "“The file reached the manager, so he signed.” Who signed? You knew instantly: the manager. The model does this with “attention”: every word looks at every other word and decides which matter most — and “he” pulls hard on “manager”."),
+        u("النماذج القديمة كانت بتقرا كلمة ورا كلمة، فتنسى أول الجملة الطويلة وكانت بطيئة. الانتباه بيشوف الكل مرة واحدة، وده كمان بيخلّي كروت الشاشة تحسب آلاف الحاجات في نفس الوقت.",
+          "Older models read one word after another, forgot the start of long sentences and were slow. Attention sees everything at once — which also lets graphics chips compute thousands of things in parallel.")],
+        answer: u("كل كلمة تبص على كل الكلمات مرة واحدة. لأنه أدق في فهم السياق، وأسرع بكتير في التدريب على أجهزة كتير بالتوازي.", "Let every word look at all the words at once — it follows context better and trains far faster on many chips in parallel."),
+        idea: u("ده قلب تصميم «المحوّل» (Transformer) اللي شفناه في حكاية التاريخ سنة ٢٠١٧.", "This is the heart of the Transformer design we met in the history story, in 2017.")
+      },
+      {
+        id: "layers", art: "m_layers", year: u("الطبقات", "Layers"), mark: u("٠٧", "07"), era: u("الفهم بيتعمّق", "Understanding deepens"),
+        title: u("طبقة فوق طبقة: من كلام لمقصود", "Layer upon layer: from words to intent"),
+        story: [u("خطوة انتباه واحدة مش كفاية. فبيكرروا نفس الوحدة (انتباه + شوية حساب) عشرات المرات، طبقة فوق طبقة.",
+          "One round of attention isn't enough. So the same unit (attention + a bit of calculation) is repeated dozens of times, layer upon layer."),
+        u("تخيلها زي خط إنتاج في مصنع: كل محطة بتضيف حاجة. الطبقات الأولى بتمسك حاجات بسيطة زي شكل الكلام وقواعده، واللي فوقها بتمسك المعنى، والأعلى بتفهم المقصود من الكلام كله. (ده تبسيط، بس هو الاتجاه العام.)",
+          "Picture a factory line: each station adds something. Early layers catch simple things like word forms and grammar, higher ones catch meaning, and the top ones grasp the intent of the whole text. (A simplification, but the general direction.)")],
+        answer: u("نكرر وحدة بسيطة كتير بدل ما نصمم حاجة معقدة. لأن الوحدة البسيطة سهل تكبيرها، وكل طبقة بتبني على فهم اللي تحتها.", "Repeat one simple unit many times instead of designing something complicated — a simple unit is easy to scale, and each layer builds on the one below."),
+        idea: u("العمق هو اللي بيحوّل «كلمات جنب بعض» لـ«فهم» للجملة كلها.", "Depth is what turns “words side by side” into an understanding of the whole sentence.")
+      },
+      {
+        id: "training", art: "m_training", year: u("التدريب", "Training"), mark: u("٠٨", "08"), era: u("إزاي اتظبط", "How it gets tuned"),
+        title: u("التدريب: مليارات الغلطات الصغيرة… وتصحيحها", "Training: billions of small mistakes… each one corrected"),
+        story: [u("في الأول المفاتيح كلها عشوائية، فالتخمين بيطلع هبل. الموديل يخمّن الكلمة الجاية، نقارن بالكلمة الصح، ونقيس هو غلط قد إيه.",
+          "At first all the knobs are random, so the guesses are nonsense. The model guesses the next word, we compare it with the right word, and measure how wrong it was."),
+        u("بعدها بنحرّك كل المفاتيح حركة صغيرة جدًا في الاتجاه اللي يقلل الغلط ده، زي رامي سهام كل مرة يعدّل إيده شعرة. ونكرر ده على تريليونات التوكنز، شهور على آلاف كروت الشاشة.",
+          "Then every knob is nudged a tiny bit in the direction that reduces that error — like an archer adjusting their aim a hair each shot. Repeat over trillions of tokens, for months, on thousands of graphics chips.")],
+        answer: u("نصلّح غلطة صغيرة كل مرة، مليارات المرات. لأن مفيش حد يقدر يظبط مليارات المفاتيح بإيده، بس الحساب يقدر يعرف كل مفتاح يتحرك فين.", "Fix one small mistake at a time, billions of times — no one could tune billions of knobs by hand, but the math can tell each knob which way to move."),
+        idea: u("المعرفة مش متخزّنة كجمل محفوظة؛ هي متوزعة في قيم المفاتيح (الأوزان) اللي اتظبطت بالشكل ده.", "Knowledge isn't stored as memorised sentences; it's spread across the knob values (the weights) tuned this way.")
+      },
+      {
+        id: "scale", art: "m_scale", year: u("الحجم", "Scale"), mark: u("٠٩", "09"), era: u("ليه كبير كده", "Why so big"),
+        title: u("ليه بيكبّروه كده؟", "Why make it so big?"),
+        story: [u("حوالي سنة ٢٠٢٠، الباحثين لاحظوا قاعدة غريبة: كل ما تكبّر التلاتة سوا، عدد المفاتيح، وكمية الكلام، وقوة الحساب، الموديل يتحسن بشكل ثابت وتقدر تتوقعه.",
+          "Around 2020, researchers noticed a striking pattern: grow three things together — the number of knobs, the amount of text and the computing power — and the model improves steadily and predictably."),
+        u("ومع الحجم ظهرت قدرات محدش علّمها له مباشرة: يترجم، يلخّص، يكتب كود، يحل مسائل… كلها طالعة من لعبة «الكلمة الجاية».",
+          "And with size came abilities nobody taught directly: translating, summarising, writing code, solving problems… all growing out of the next-word game.")],
+        answer: u("نكبّر التلاتة مع بعض. لأن التجربة أثبتت إن الحجم الأكبر بيدّي تخمين أدق وقدرات أوسع.", "Grow all three together — experience showed that bigger means more accurate guesses and broader abilities."),
+        idea: u("عشان كده بنسمع «٧٠ مليار» و«تريليون» معامل: ده حجم مخزن المعرفة جوه الموديل.", "That's why we hear “70 billion” or “a trillion” parameters: it's the size of the model's knowledge store.")
+      },
+      {
+        id: "tuning", art: "m_tuning", year: u("التهذيب", "Tuning"), mark: u("١٠", "10"), era: u("من حافظ لمساعد", "From parrot to assistant"),
+        title: u("من آلة بتكمّل كلام… لمساعد بيفهم طلبك", "From a text-continuing machine… to an assistant that gets your request"),
+        story: [u("بعد التدريب الأول، الموديل بيكمّل أي نص وخلاص. تسأله «إزاي أعمل كيكة؟» ممكن يكمّل بـ«إزاي أعمل بسكوت؟ إزاي أعمل…» كأنه صفحة أسئلة على النت.",
+          "After the first training, the model simply continues any text. Ask “How do I bake a cake?” and it may carry on with “How do I bake cookies? How do I…” like a page of questions online."),
+        u("فبيعملوا مرحلة تانية: يدرّبوه على أمثلة محادثات مكتوبة كويس، وبعدين ناس بتقارن بين ردوده وتختار الأحسن والأأمن، والموديل يتعلّم يميل للنوع ده.",
+          "So there's a second stage: train it on well-written example conversations, then people compare its replies and pick the more helpful and safer ones, and the model learns to lean that way.")],
+        answer: u("مرحلة تهذيب بعد التدريب الكبير. لأن «يعرف كتير» حاجة، و«يساعدك صح وبأمان» حاجة تانية محتاجة تعليم مخصوص.", "Add a tuning stage after the big training — “knowing a lot” and “helping you well and safely” are different skills that need their own teaching."),
+        idea: u("التدريب الكبير بيدّيه المعرفة؛ التهذيب بيدّيه الأسلوب والأدب والحدود.", "The big training gives it knowledge; tuning gives it manners, style and limits.")
+      },
+      {
+        id: "reply", art: "m_reply", year: u("الرد", "Reply"), mark: u("١١", "11"), era: u("لما بتكلّمه", "When you talk to it"),
+        title: u("إزاي بيكتب ردّه عليك؟", "How does it write its reply?"),
+        story: [u("كلامك بيتقطّع توكنز، ويعدّي على كل الطبقات، وفي الآخر الموديل يطلّع قائمة احتمالات للتوكن الجاي: «صباح» ٤٥٪، «أهلًا» ٣٠٪، …",
+          "Your words are cut into tokens and pass through every layer, and at the end the model produces a list of chances for the next token: “Good” 45%, “Hello” 30%, …"),
+        u("يختار واحد، يضيفه للكلام، ويعيد اللفة كلها عشان التوكن اللي بعده، توكن ورا توكن لحد ما الرد يخلص. وفيه إعداد اسمه «درجة الحرارة»: لو قليلة يختار الأرجح، ولو عالية يجرّب اختيارات أجرأ.",
+          "It picks one, adds it to the text and runs the whole loop again for the next token — token after token until the reply is done. A setting called “temperature” decides how bold it is: low picks the most likely, high tries more daring choices.")],
+        answer: u("يولّد توكن ورا توكن، وكل توكن مبني على اللي قبله. لأن دي نفس اللعبة اللي اتدرّب عليها بالظبط.", "Generate one token after another, each built on the ones before — it's exactly the game it was trained on."),
+        idea: u("عشان كده ممكن يكتب حاجة شكلها مقنع وهي غلط: هو بيختار الأرجح، مش بيراجع الحقيقة. ودي نفس فكرة الدرس اللي فات.", "That's why it can write something convincing that is wrong: it picks the most likely, it doesn't check the facts — the point of the previous lesson.")
+      },
+      {
+        id: "recap", art: "m_recap", year: u("الخلاصة", "Recap"), mark: u("١٢", "12"), era: u("يبقى بيفكّر؟", "So does it think?"),
+        title: u("يبقى الموديل بيفكّر؟", "So does the model think?"),
+        story: [u("اللي جوه الموديل: كلام اتقطّع توكنز، واتحط على خريطة معاني، وعدّى على طبقات انتباه كتير، وطلّع أرجح كلمة جاية. ومن اللعبة البسيطة دي طلعت قدرات مبهرة.",
+          "Inside the model: text cut into tokens, placed on a map of meaning, passed through many layers of attention, producing the most likely next word. Out of that simple game came remarkable abilities."),
+        u("بس خد بالك: هو ما بيشوفش ملفاتك غير لو إديتهاله، وما يعرفش اللي حصل بعد آخر تدريب ليه، وبيبني ردّه على الكلام اللي قدامه. عشان كده جودة كلامك إنت هي نص النتيجة.",
+          "But note: it can't see your files unless you give them, doesn't know what happened after its last training, and builds its reply on the text in front of it. That's why the quality of your input is half the result.")],
+        answer: u("اديله سياق واضح وراجع اللي بيطلّعه. لأن تخمينه بيبقى أدق كل ما الكلام اللي قدامه أوضح.", "Give it clear context and check what it produces — its guesses get better the clearer the text in front of it."),
+        idea: u("الموديل مش سحر ولا إنسان؛ هو آلة توقّع جبّارة. وده بالظبط اللي هتتعلم تشغّله صح في الكورس.", "A model is neither magic nor a person; it's a powerful prediction machine — and this course teaches you to drive it well.")
+      }
+    ]
+  };
+  A.decks = (A.decks || []).concat([A.modelStory]);
 })(window.ACADEMY = window.ACADEMY || {});
 </script>
 <script>/* engine/core.js */
@@ -7175,6 +7346,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     const prompts = A.prompts.filter((p) => p.lesson === l.id);
     const qs = A.quiz.filter((q) => q.lesson === l.id);
     const story = A.lang() === "ar" ? A.lessonStories?.[l.id] : null;
+    const deck = (A.decks || []).find((d) => d.lesson === l.id);   // a story deck opens this lesson (engine/history.js)
     // Picture-first opening (Arabic): the situation as a scene, the whole path at a glance, one warning, then a
     // think-first question with a self-check. Everything is visible at once; nothing hides behind clicks.
     const pictureFirst = story ? `<section class="mental sec" id="sec-mental" aria-labelledby="mental-h">
@@ -7208,7 +7380,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
          <span class="bar-spacer"></span>
          <button type="button" class="chip" id="bm" aria-pressed="${bm}">${ico("bookmark")}${esc(bm ? t("bookmarked") : t("bookmark"))}</button>
          <button type="button" class="chip ${done ? "ok" : ""}" id="donetop" aria-pressed="${done}">${ico("check")}${esc(done ? t("done") : t("markDone"))}</button></div>`)}
-      ${A.aiHistory && A.aiHistory.lesson === l.id ? '<section id="sec-history"></section>' : ""}
+      ${deck ? `<section id="sec-${deck.id}"></section>` : ""}
       ${pictureFirst}
       <div class="compass" aria-label="${esc(t("compassAria"))}"><b>${esc(t("compassTitle"))}</b>${compass}</div>
       <div id="sec-scene"></div>
@@ -7226,7 +7398,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
         ${next ? `<a class="nx" href="#lesson-${next.id}"><small>${esc(t("nextLesson"))}${ico(A.lang() === "ar" ? "prev" : "next")}</small><b>${esc(L(next.title))}</b></a>` : `<a class="nx" href="#project"><small>${esc(t("finalStep"))}</small><b>${esc(t("nav_project"))}</b></a>`}
       </nav>`;
     main.append(wrap);
-    if (A.mountHistory && A.$("#sec-history")) A.mountHistory(A.$("#sec-history"));
+    if (deck && A.mountDeck) A.mountDeck(A.$("#sec-" + deck.id), deck);
     // think-first question: reveal, then a one-tap self-check that points to the explanation when needed
     const mq = A.$("[data-mq]", wrap);
     if (mq) {
@@ -9401,12 +9573,143 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     }
   };
 
+  /* ---------- drawings for "inside the model" (data/model-story.js) ---------- */
+  const chip = (x, y, w, s, cls = "f-s1 s-line2", tcls = "t-ink", size = 15, extra = "") =>
+    `<rect x="${x - w / 2}" y="${y - 20}" width="${w}" height="40" rx="11" class="${cls}" stroke-width="2"/>${txt(x, y + 6, s, tcls, size, 'font-weight="600"' + extra)}`;
+  const rowX = (n, w, gap, cx = 240) => { const total = n * w + (n - 1) * gap, x0 = cx - total / 2; return (i) => x0 + (ar() ? n - 1 - i : i) * (w + gap) + w / 2; };
+  Object.assign(ART, {
+    m_idea: () => `
+      <g ${an("rise", 0.05)}><rect x="34" y="62" width="168" height="196" rx="12" class="f-s1 s-line2" stroke-width="2"/>
+        ${[0, 1, 2, 3, 4].map((i) => txt(118, 100 + i * 32, ar() ? "لو … يبقى …" : "IF … THEN …", "t-ink3", 13)).join("")}
+        ${txt(118, 286, ar() ? "قواعد مكتوبة بالإيد" : "hand-written rules", "t-ink3", 13)}</g>
+      <path ${an("draw", 0.7, `s-rose`)} pathLength="1" d="M50 80 L186 240 M186 80 L50 240" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <g ${an("rise", 0.4)}><rect x="262" y="70" width="184" height="180" rx="18" class="f-acc-soft s-acc" stroke-width="2.5"/>
+        ${[0, 1, 2].map((r) => [0, 1, 2].map((c) => { const x = 308 + c * 46, y = 116 + r * 46; return `<g transform="translate(${x} ${y})"><circle r="15" class="f-s1 s-acc" stroke-width="2.5"/><g class="an turn" style="--d:${1 + (r * 3 + c) * 0.11}s"><line x1="0" y1="0" x2="0" y2="-11" class="s-acc" stroke-width="3" stroke-linecap="round"/></g></g>`; }).join("")).join("")}
+        ${txt(354, 286, ar() ? "آلة بتتظبط من الأمثلة" : "a machine tuned by examples", "t-acc", 13, 'font-weight="700"')}</g>
+      <g ${an("rise", 1.1)}>${[0, 1, 2].map((i) => `<rect x="${(ar() ? 380 : 350) + i * 6}" y="${16 + i * 5}" width="24" height="30" rx="4" class="f-s1 s-ink3" stroke-width="2"/>`).join("")}${txt(ar() ? 322 : 418, 38, ar() ? "أمثلة" : "examples", "t-ink3", 12)}</g>
+      <path ${an("draw", 1.3, `s-ink2`)} pathLength="1" d="M${ar() ? 394 : 364} 52 v14" stroke-width="2.5" fill="none" marker-end="url(#aih-arrow)"/>`,
+    m_game: () => {
+      const words = ar() ? ["فنجان", "قهوة", "من", "غير"] : ["a cup", "of coffee", "without"];
+      const X = rowX(words.length + 1, ar() ? 76 : 96, 10);
+      const cands = ar() ? [["سكر", 0.62], ["لبن", 0.21], ["رغوة", 0.09]] : [["sugar", 0.62], ["milk", 0.21], ["foam", 0.09]];
+      return `${words.map((w, i) => `<g ${an("rise", 0.1 + i * 0.1)}>${chip(X(i), 86, ar() ? 76 : 96, w)}</g>`).join("")}
+      <g ${an("pop", 0.6)}><rect x="${X(words.length) - (ar() ? 38 : 48)}" y="66" width="${ar() ? 76 : 96}" height="40" rx="11" class="f-acc-soft s-acc" stroke-width="2.5" stroke-dasharray="6 5"/>${txt(X(words.length), 92, "?", "t-acc", 20, 'font-weight="800"')}</g>
+      ${cands.map(([w, p], i) => { const y = 160 + i * 42; const x0 = ar() ? 344 : 136; const len = 220 * p / 0.62;
+        return `<g ${an("fade", 0.9 + i * 0.15)}>${txt(ar() ? 410 : 70, y + 6, w, i ? "t-ink2" : "t-ink", 15, 'font-weight="700"')}</g>
+        <rect class="an grow ${i ? "f-s3" : "f-acc"}" style="--d:${1 + i * 0.15}s;transform-origin:${ar() ? "right" : "left"} center" x="${ar() ? x0 - len : x0}" y="${y - 12}" width="${len}" height="22" rx="6"/>
+        <g ${an("fade", 1.5 + i * 0.15)}>${txt(ar() ? x0 - len - 26 : x0 + len + 26, y + 5, Math.round(p * 100) + "%", "t-ink3", 13, 'font-weight="700" direction="ltr"')}</g>`; }).join("")}
+      ${txt(240, 300, ar() ? "النص نفسه فيه الإجابة الصح" : "the text itself holds the right answer", "t-ink3", 13)}`;
+    },
+    m_tokens: () => {
+      const rows = ar()
+        ? [["حروف", "ه ي ك ت ب و ل ه م".split(" "), "طويلة، والحرف ملوش معنى"], ["كلمات", ["هيكتبولهم"], "مش في القاموس!"], ["توكنز", ["هي", "كتب", "و", "لهم"], "قطع معروفة ✓"]]
+        : [["letters", "u n b e l i e v a b l y".split(" "), "too long, no meaning"], ["words", ["unbelievably"], "not in the dictionary!"], ["tokens", ["un", "believ", "ably"], "familiar pieces ✓"]];
+      return rows.map(([name, parts, note], r) => {
+        const y = 70 + r * 88, w = r === 0 ? 24 : r === 1 ? 150 : 58, gap = r === 0 ? 4 : 8, X = rowX(parts.length, w, gap, 270);
+        const cls = r === 2 ? "f-acc" : r === 1 ? "f-rose-soft s-rose" : "f-s1 s-line2", t = r === 2 ? "t-white" : "t-ink";
+        return `<g ${an("rise", 0.2 + r * 0.45)}>${txt(ar() ? 450 : 30, y + 5, name, "t-ink3", 13, `font-weight="700" text-anchor="${ar() ? "end" : "start"}"`)}
+          ${parts.map((p, i) => `<rect x="${X(i) - w / 2}" y="${y - 17}" width="${w}" height="34" rx="8" class="${cls}" stroke-width="2"/>${txt(X(i), y + 6, p, t, r === 0 ? 13 : 15, 'font-weight="600"')}`).join("")}
+          ${txt(270, y + 38, note, r === 2 ? "t-mint" : r === 1 ? "t-rose" : "t-ink3", 12.5, 'font-weight="600"')}</g>`;
+      }).join("");
+    },
+    m_map: () => {
+      const C = [
+        { c: "f-acc", t: "t-acc", pts: ar() ? [[120, 90, "قهوة"], [168, 74, "شاي"], [150, 128, "عصير"]] : [[120, 90, "coffee"], [168, 74, "tea"], [150, 128, "juice"]] },
+        { c: "f-mint", t: "t-mint", pts: ar() ? [[330, 214, "قطة"], [376, 236, "كلب"], [350, 266, "حصان"]] : [[330, 214, "cat"], [376, 236, "dog"], [350, 266, "horse"]] },
+        { c: "f-amber", t: "t-amber", pts: ar() ? [[338, 72, "القاهرة"], [394, 104, "باريس"], [330, 124, "روما"]] : [[338, 72, "Cairo"], [394, 104, "Paris"], [330, 124, "Rome"]] }
+      ];
+      return `<g ${an("fade", 0)}>${[0, 1, 2, 3, 4].map((i) => `<line x1="${60 + i * 90}" y1="40" x2="${60 + i * 90}" y2="290" class="s-line" stroke-width="1"/><line x1="40" y1="${50 + i * 60}" x2="440" y2="${50 + i * 60}" class="s-line" stroke-width="1"/>`).join("")}</g>
+      ${C.map((g, k) => `<ellipse ${an("pop", 0.3 + k * 0.4, g.c + " cluster")} cx="${g.pts.reduce((a, p) => a + p[0], 0) / 3}" cy="${g.pts.reduce((a, p) => a + p[1], 0) / 3}" rx="72" ry="52"/>`
+        + g.pts.map((p, i) => `<g ${an("pop", 0.45 + k * 0.4 + i * 0.08)}><circle cx="${p[0]}" cy="${p[1]}" r="7" class="${g.c}"/>${txt(p[0], p[1] - 13, p[2], g.t, 13, 'font-weight="700"')}</g>`).join("")).join("")}
+      <path ${an("draw", 1.8, `s-ink3`)} pathLength="1" d="M150 128 Q 210 210 318 214" stroke-width="2" stroke-dasharray="1" fill="none"/>
+      <g ${an("fade", 2.2)}>${txt(170, 214, ar() ? "بعيد في المعنى = بعيد" : "far in meaning = far apart", "t-ink3", 12.5)}</g>
+      ${txt(240, 312, ar() ? "قريب في المعنى = قريب في المكان" : "close in meaning = close on the map", "t-ink2", 13, 'font-weight="700"')}`;
+    },
+    m_order: () => {
+      const A1 = ar() ? ["الكلب", "عض", "الراجل"] : ["dog", "bites", "man"];
+      const A2 = ar() ? ["الراجل", "عض", "الكلب"] : ["man", "bites", "dog"];
+      const X = rowX(3, 96, 12, ar() ? 280 : 200);
+      const row = (ws, y, d, tag, tcls) => `${ws.map((w, i) => `<g ${an("rise", d + i * 0.1)}>${chip(X(i), y, 96, w, i === 1 ? "f-s2 s-line2" : "f-s1 s-acc")}<circle cx="${X(i) + (ar() ? -40 : 40)}" cy="${y - 20}" r="11" class="f-acc"/>${txt(X(i) + (ar() ? -40 : 40), y - 15.5, ar() ? "١٢٣"[i] : String(i + 1), "t-white", 12, 'font-weight="800"')}</g>`).join("")}
+        <g ${an("pop", d + 0.5)}><rect x="${ar() ? 22 : 378}" y="${y - 18}" width="82" height="36" rx="18" class="${tcls}"/>${txt(ar() ? 63 : 419, y + 6, tag, "t-white", 13, 'font-weight="700"')}</g>`;
+      return `${row(A1, 104, 0.1, ar() ? "عادي" : "normal", "f-ink3")}${row(A2, 214, 0.8, ar() ? "خبر!" : "news!", "f-rose")}
+      <path ${an("draw", 0.6, `s-ink3`)} pathLength="1" d="M${X(0)} 130 C ${X(0)} 160, ${X(2)} 160, ${X(2)} 190 M${X(2)} 130 C ${X(2)} 160, ${X(0)} 160, ${X(0)} 190" stroke-width="2" stroke-dasharray="1" fill="none"/>
+      ${txt(240, 296, ar() ? "كل كلمة معاها ختم بمكانها" : "each word carries a position stamp", "t-ink3", 13)}`;
+    },
+    m_attention: () => {
+      const words = ar() ? ["سلّمت", "الملف", "للمدير", "عشان", "هو", "مستعجل"] : ["The", "file", "reached", "the", "manager", "so", "he", "signed"];
+      const focus = ar() ? 4 : 6, link = ar() ? 2 : 4, w = ar() ? 66 : 50;
+      const X = rowX(words.length, w, 8);
+      const arcs = words.map((_, i) => i === focus ? "" : `<path ${an("draw", 0.8 + i * 0.1, i === link ? "s-acc" : "s-line2")} pathLength="1" d="M${X(focus)} 176 Q${(X(focus) + X(i)) / 2} ${i === link ? 40 : 110} ${X(i)} 176" stroke-width="${i === link ? 5.5 : 1.8}" fill="none" stroke-linecap="round"/>`).join("");
+      return `${arcs}${words.map((s, i) => `<g ${an("rise", 0.1 + i * 0.07)}>${chip(X(i), 198, w, s, i === focus ? "f-acc" : i === link ? "f-acc-soft s-acc" : "f-s1 s-line2", i === focus ? "t-white" : "t-ink", 13.5)}</g>`).join("")}
+      <g ${an("pop", 2.0)}><rect x="${X(focus) - 72}" y="240" width="144" height="34" rx="17" class="f-mint"/>${txt(X(focus), 262, ar() ? "«هو» = المدير" : "“he” = the manager", "t-white", 13, 'font-weight="700"')}</g>
+      ${txt(240, 302, ar() ? "كل كلمة بتبص على الكل مرة واحدة" : "every word looks at all the others at once", "t-ink3", 13)}`;
+    },
+    m_layers: () => {
+      const labels = ar() ? ["شكل الكلام", "القواعد", "المعنى", "السياق", "المقصود"] : ["word forms", "grammar", "meaning", "context", "intent"];
+      return `${labels.map((s, i) => { const y = 252 - i * 46; return `<g ${an("rise", 0.1 + i * 0.12)}><rect x="${ar() ? 150 : 90}" y="${y - 17}" width="240" height="34" rx="10" class="layer l${i}"/>${txt(ar() ? 270 : 210, y + 5, s, i > 2 ? "t-white" : "t-ink", 14, 'font-weight="700"')}</g>`; }).join("")}
+      <circle ${an("travel", 0.9, `f-amber`)} r="9"><animateMotion dur="2.8s" begin="indefinite" repeatCount="indefinite" path="M${ar() ? 120 : 360} 270 L${ar() ? 120 : 360} 50"/></circle>
+      <path ${an("draw", 0.8, `s-amber`)} pathLength="1" d="M${ar() ? 120 : 360} 272 V 46" stroke-width="2.5" stroke-dasharray="1" fill="none" marker-end="url(#aih-arrow)"/>
+      <g ${an("fade", 1.2)}>${txt(ar() ? 64 : 420, 150, ar() ? "عشرات" : "dozens", "t-ink3", 13, 'font-weight="700"')}${txt(ar() ? 64 : 420, 168, ar() ? "الطبقات" : "of layers", "t-ink3", 13)}</g>
+      ${txt(240, 300, ar() ? "كل طبقة بتبني على اللي تحتها" : "each layer builds on the one below", "t-ink3", 13)}`;
+    },
+    m_training: () => {
+      const tx = ar() ? 352 : 128;
+      const hits = [[-52, -38], [34, -40], [-20, 22], [6, -6]];
+      return `<g ${an("rise", 0.05)}>${[58, 42, 26, 10].map((r, i) => `<circle cx="${tx}" cy="140" r="${r}" class="${i % 2 ? "f-s1" : "f-rose-soft"} s-rose" stroke-width="2"/>`).join("")}</g>
+      ${hits.map(([dx, dy], i) => `<g ${an("pop", 0.5 + i * 0.35)}><line x1="${tx + dx}" y1="${140 + dy}" x2="${tx + dx + (ar() ? 22 : -22)}" y2="${140 + dy - 16}" class="s-ink2" stroke-width="3" stroke-linecap="round"/><circle cx="${tx + dx}" cy="${140 + dy}" r="5" class="${i === 3 ? "f-mint" : "f-ink2"}"/></g>`).join("")}
+      ${txt(tx, 230, ar() ? "كل محاولة أقرب شوية" : "each try a little closer", "t-ink3", 13)}
+      <g ${an("fade", 0.3)}><path d="M${ar() ? 60 : 250} 70 V 210 H ${ar() ? 240 : 430}" class="s-ink3" stroke-width="2" fill="none"/>
+      ${txt(ar() ? 150 : 340, 230, ar() ? "المحاولات ←" : "attempts →", "t-ink3", 12)}${txt(ar() ? 30 : 236, 64, ar() ? "الغلط" : "error", "t-ink3", 12, `text-anchor="${ar() ? "start" : "end"}"`)}</g>
+      <path ${an("draw", 0.8, `s-acc`)} pathLength="1" d="${ar() ? "M64 78 C 90 160, 140 186, 236 198" : "M254 78 C 280 160, 330 186, 426 198"}" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <g ${an("pop", 2.0)}><rect x="110" y="258" width="260" height="38" rx="19" class="f-ink"/>${txt(240, 282, ar() ? "خمّن ← قارن ← صحّح شعرة ← كرّر" : "guess → compare → nudge → repeat", "t-bg", 13, 'font-weight="700"')}</g>`;
+    },
+    m_scale: () => {
+      const bars = ar() ? [["البيانات", "f-acc"], ["المفاتيح", "f-amber"], ["الحساب", "f-mint"]] : [["data", "f-acc"], ["knobs", "f-amber"], ["compute", "f-mint"]];
+      const X = rowX(3, 62, 26, ar() ? 330 : 150);
+      return `${bars.map(([s, c], i) => `<rect class="an bar ${c}" style="--d:${0.2 + i * 0.15}s" x="${X(i) - 31}" y="${96 + i * 8}" width="62" height="${170 - i * 8}" rx="8"/>${txt(X(i), 290, s, "t-ink2", 13, 'font-weight="700"')}`).join("")}
+      <g ${an("fade", 0.9)}><path d="M${ar() ? 40 : 268} 80 V 266 H ${ar() ? 212 : 440}" class="s-ink3" stroke-width="2" fill="none"/>${txt(ar() ? 126 : 354, 290, ar() ? "الجودة بتطلع" : "quality rises", "t-ink2", 13, 'font-weight="700"')}</g>
+      <path ${an("draw", 1.1, `s-acc`)} pathLength="1" d="${ar() ? "M48 250 C 90 214, 130 150, 204 96" : "M276 250 C 318 214, 358 150, 432 96"}" stroke-width="4" fill="none" stroke-linecap="round"/>
+      ${["✍️", "🌍", "💻"].map((e, i) => `<g ${an("pop", 1.6 + i * 0.2)}><text x="${(ar() ? 90 : 318) + i * 48}" y="${(ar() ? 180 : 180) - i * 34}" font-size="20" text-anchor="middle">${e}</text></g>`).join("")}
+      ${txt(240, 50, ar() ? "قدرات جديدة بتظهر مع الحجم" : "new abilities appear with scale", "t-ink3", 13)}`;
+    },
+    m_tuning: () => {
+      const L1 = ar() ? 340 : 140, L2 = ar() ? 140 : 340;
+      return `<g ${an("rise", 0.05)}><rect x="${L1 - 104}" y="44" width="208" height="210" rx="16" class="f-s1 s-line2" stroke-width="2"/>${txt(L1, 70, ar() ? "بعد التدريب الكبير" : "after big training", "t-ink3", 12.5, 'font-weight="700"')}
+        <rect x="${L1 - 90}" y="84" width="180" height="32" rx="12" class="f-acc"/>${txt(L1, 105, ar() ? "إزاي أعمل كيكة؟" : "How do I bake a cake?", "t-white", 13)}
+        ${[0, 1, 2].map((i) => `<rect x="${L1 - 90}" y="${128 + i * 38}" width="180" height="30" rx="10" class="f-s2"/>${txt(L1, 148 + i * 38, ar() ? ["إزاي أعمل بسكوت؟", "إزاي أعمل تورتة؟", "إزاي أعمل…"][i] : ["How do I bake cookies?", "How do I bake a pie?", "How do I…"][i], "t-ink3", 12.5)}`).join("")}</g>
+      <path ${an("draw", 0.7, `s-ink2`)} pathLength="1" d="M${(L1 + L2) / 2 + (ar() ? 26 : -26)} 150 H ${(L1 + L2) / 2 + (ar() ? -26 : 26)}" stroke-width="3" fill="none" marker-end="url(#aih-arrow)"/>
+      <g ${an("rise", 1.0)}><rect x="${L2 - 104}" y="44" width="208" height="210" rx="16" class="f-mint-soft s-mint" stroke-width="2"/>${txt(L2, 70, ar() ? "بعد التهذيب" : "after tuning", "t-mint", 12.5, 'font-weight="700"')}
+        <rect x="${L2 - 90}" y="84" width="180" height="32" rx="12" class="f-acc"/>${txt(L2, 105, ar() ? "إزاي أعمل كيكة؟" : "How do I bake a cake?", "t-white", 13)}
+        <rect x="${L2 - 90}" y="128" width="180" height="100" rx="12" class="f-s1"/>${(ar() ? ["محتاج ٣ بيض، كوباية دقيق،", "وكوباية سكر. ١. سخّن الفرن…"] : ["You'll need 3 eggs, a cup", "of flour… 1. Preheat the oven…"]).map((l, i) => txt(L2, 156 + i * 22, l, "t-ink", 12.5)).join("")}</g>
+      <g ${an("pop", 1.6)}>${person(L2 + (ar() ? -80 : 80), 300, 0.8, "f-ink2")}<g transform="translate(${L2 + (ar() ? -56 : 104)} 266)"><circle r="12" class="f-mint"/><text y="5" font-size="13" text-anchor="middle">👍</text></g></g>
+      ${txt((L1 + L2) / 2, 300, ar() ? "أمثلة محادثات + تقييم ناس" : "example chats + human ratings", "t-ink3", 12.5)}`;
+    },
+    m_reply: () => {
+      const toks = ar() ? ["صباح", "الخير", "يا", "فريق"] : ["Good", "morning", ",", "team"];
+      const X = rowX(4, 78, 10);
+      const probs = ar() ? [["صباح", 45], ["أهلًا", 30], ["سلام", 15]] : [["Good", 45], ["Hello", 30], ["Hi", 15]];
+      return `<g ${an("rise", 0.05)}><rect x="${ar() ? 214 : 46}" y="34" width="220" height="38" rx="14" class="f-acc"/>${txt(ar() ? 324 : 156, 59, ar() ? "اكتب تحية للفريق" : "Write a greeting for the team", "t-white", 13)}</g>
+      ${probs.map(([w, p], i) => { const x0 = ar() ? 300 : 180, len = p * 2.6; return `<g ${an("fade", 0.4 + i * 0.12)}>${txt(ar() ? 360 : 120, 112 + i * 26, w, i ? "t-ink3" : "t-ink", 13, 'font-weight="700"')}</g><rect class="an grow ${i ? "f-s3" : "f-acc"}" style="--d:${0.5 + i * 0.12}s;transform-origin:${ar() ? "right" : "left"} center" x="${ar() ? x0 - len : x0}" y="${100 + i * 26}" width="${len}" height="16" rx="5"/>${txt(ar() ? x0 - len - 18 : x0 + len + 18, 113 + i * 26, p + "%", "t-ink3", 11.5, 'direction="ltr"')}`; }).join("")}
+      ${toks.map((w, i) => `<g ${an("pop", 1.3 + i * 0.45)}>${chip(X(i), 222, 78, w, i === 0 ? "f-acc" : "f-s1 s-acc", i === 0 ? "t-white" : "t-ink")}</g>`).join("")}
+      <rect ${an("fade", 3.1, `blink f-acc`)} x="${ar() ? X(3) - 52 : X(3) + 46}" y="206" width="4" height="32"/>
+      <g ${an("fade", 1.0)}>${txt(240, 286, ar() ? "درجة الحرارة: قليلة = الأرجح، عالية = أجرأ" : "temperature: low = most likely, high = bolder", "t-ink3", 12.5)}</g>`;
+    },
+    m_recap: () => {
+      const steps = ar() ? ["كلامك", "توكنز", "خريطة", "انتباه × طبقات", "احتمالات", "الكلمة الجاية"] : ["your words", "tokens", "meaning map", "attention × layers", "chances", "next word"];
+      const pos = [[0, 0], [1, 0], [2, 0], [2, 1], [1, 1], [0, 1]];
+      const at = ([c, r]) => [ar() ? 380 - c * 140 : 100 + c * 140, 92 + r * 104];
+      return `${pos.slice(1).map((p, i) => { const [x1, y1] = at(pos[i]), [x2, y2] = at(p); return `<path ${an("draw", 0.3 + i * 0.3, `s-acc`)} pathLength="1" d="M${x1 + (y1 === y2 ? (x2 > x1 ? 58 : -58) : 0)} ${y1 + (y1 === y2 ? 0 : 26)} L${x2 + (y1 === y2 ? (x2 > x1 ? -58 : 58) : 0)} ${y2 - (y1 === y2 ? 0 : 26)}" stroke-width="2.5" fill="none" marker-end="url(#aih-arrow)"/>`; }).join("")}
+      ${pos.map((p, i) => { const [x, y] = at(p); return `<g ${an("pop", 0.15 + i * 0.3)}><rect x="${x - 58}" y="${y - 24}" width="116" height="48" rx="13" class="${i === 5 ? "f-acc" : i === 0 ? "f-s2" : "f-s1 s-acc"}" stroke-width="2"/>${txt(x, y + 5, steps[i], i === 5 ? "t-white" : "t-ink", 13, 'font-weight="700"')}</g>`; }).join("")}
+      <g ${an("rise", 2.0)}>${person(ar() ? 380 : 100, 300, 0.75, "f-ink2")}${txt(ar() ? 260 : 220, 292, ar() ? "إنت: سياق واضح + مراجعة" : "you: clear context + review", "t-mint", 13, 'font-weight="700"')}</g>`;
+    }
+  });
+
   const defs = `<svg class="aih-defs" width="0" height="0" aria-hidden="true" focusable="false"><defs><marker id="aih-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" class="f-ink2"/></marker></defs></svg>`;
   const drawing = (key, label) => `<svg class="aih-svg" viewBox="0 0 480 320" role="img" aria-label="${esc(label)}">${ART[key] ? ART[key]() : ""}</svg>`;
 
   /* ---------- the deck ---------- */
-  A.mountHistory = function (host) {
-    const H = A.aiHistory;
+  // One player for every story deck (A.decks): the AI history in f1, how a model works in f2, …
+  A.mountDeck = function (host, H) {
     if (!H || !host) return;
     const S = H.slides, n = S.length, ui = H.ui;
     const fmt = (s, o) => L(s).replace(/\{(\w+)\}/g, (_, k) => o[k]);
@@ -9427,12 +9730,12 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
           <a href="#" class="aih-skip" data-aih-skip>${esc(L(ui.skip))} ↓</a>
         </div>
       </div>
-      <div class="aih-stage" tabindex="0" aria-describedby="aih-keys">
+      <div class="aih-stage" tabindex="0" aria-describedby="${H.id}-keys">
         <div class="aih-q" aria-hidden="true"><span class="aih-q-mark">؟</span><span class="aih-q-t" data-aih-q>${esc(L(H.question))}</span></div>
         <div class="aih-slides">
           ${S.map((s, i) => `
           <div class="aih-slide" role="group" aria-roledescription="${esc(L(ui.slide))}" aria-label="${esc(fmt(ui.slideOf, { n: num(i + 1), t: num(n) }) + " — " + L(s.year))}" data-i="${i}" aria-hidden="true" inert>
-            <div class="aih-year" aria-hidden="true">${esc(L(s.year))}</div>
+            <div class="aih-year" aria-hidden="true">${esc(L(s.mark || s.year))}</div>
             <div class="aih-txt">
               <div class="aih-era"><span>${esc(L(s.year))}</span>${esc(L(s.era))}</div>
               <h3>${esc(L(s.title))}</h3>
@@ -9454,7 +9757,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
           ${S.map((s, i) => `<button type="button" class="aih-dot" data-aih-go="${i}" aria-label="${esc(L(s.year) + " — " + L(s.title))}"><span>${esc(L(s.year).split(" ")[0])}</span></button>`).join("")}
         </div>
         <div class="aih-meta"><span class="aih-count num" data-aih-count></span><span class="aih-note">${esc(L(H.note))}</span></div>
-        <p class="sr-only" id="aih-keys">${esc(L(ui.keys))}</p>
+        <p class="sr-only" id="${H.id}-keys">${esc(L(ui.keys))}</p>
         <div class="sr-only" aria-live="polite" data-aih-live></div>
       </div>`;
 
@@ -9585,6 +9888,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
 
     go(0, "init");
   };
+  A.mountHistory = (host) => A.mountDeck(host, A.aiHistory);
 })(window.ACADEMY = window.ACADEMY || {});
 </script>
 <script>window.addEventListener("DOMContentLoaded",function(){try{window.ACADEMY.boot()}catch(e){console.error(e);var m=document.getElementById("main");if(m)m.innerHTML='<div style="padding:24px;font-family:sans-serif">تعذّر تشغيل الأكاديمية. جرّب متصفحًا حديثًا (Chrome أو Edge أو Firefox أو Safari). — The academy could not start. Try a modern browser.</div>'}});</script>

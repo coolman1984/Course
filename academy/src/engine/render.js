@@ -237,6 +237,7 @@
     const prompts = A.prompts.filter((p) => p.lesson === l.id);
     const qs = A.quiz.filter((q) => q.lesson === l.id);
     const story = A.lang() === "ar" ? A.lessonStories?.[l.id] : null;
+    const deck = (A.decks || []).find((d) => d.lesson === l.id);   // a story deck opens this lesson (engine/history.js)
     // Picture-first opening (Arabic): the situation as a scene, the whole path at a glance, one warning, then a
     // think-first question with a self-check. Everything is visible at once; nothing hides behind clicks.
     const pictureFirst = story ? `<section class="mental sec" id="sec-mental" aria-labelledby="mental-h">
@@ -270,7 +271,7 @@
          <span class="bar-spacer"></span>
          <button type="button" class="chip" id="bm" aria-pressed="${bm}">${ico("bookmark")}${esc(bm ? t("bookmarked") : t("bookmark"))}</button>
          <button type="button" class="chip ${done ? "ok" : ""}" id="donetop" aria-pressed="${done}">${ico("check")}${esc(done ? t("done") : t("markDone"))}</button></div>`)}
-      ${A.aiHistory && A.aiHistory.lesson === l.id ? '<section id="sec-history"></section>' : ""}
+      ${deck ? `<section id="sec-${deck.id}"></section>` : ""}
       ${pictureFirst}
       <div class="compass" aria-label="${esc(t("compassAria"))}"><b>${esc(t("compassTitle"))}</b>${compass}</div>
       <div id="sec-scene"></div>
@@ -288,7 +289,7 @@
         ${next ? `<a class="nx" href="#lesson-${next.id}"><small>${esc(t("nextLesson"))}${ico(A.lang() === "ar" ? "prev" : "next")}</small><b>${esc(L(next.title))}</b></a>` : `<a class="nx" href="#project"><small>${esc(t("finalStep"))}</small><b>${esc(t("nav_project"))}</b></a>`}
       </nav>`;
     main.append(wrap);
-    if (A.mountHistory && A.$("#sec-history")) A.mountHistory(A.$("#sec-history"));
+    if (deck && A.mountDeck) A.mountDeck(A.$("#sec-" + deck.id), deck);
     // think-first question: reveal, then a one-tap self-check that points to the explanation when needed
     const mq = A.$("[data-mq]", wrap);
     if (mq) {
