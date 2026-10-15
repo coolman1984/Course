@@ -1,0 +1,38 @@
+# One-off owner-approved cleanup (2026-10-15): delete the superseded prototype branch
+# `claude/book-website-project-osv1dk` (an older, separate build of the academy that main replaced),
+# keep its last commit as the tag `archive/book-website-project-osv1dk`, then remove this workflow.
+name: Clean up superseded branches
+
+on:
+  push:
+    branches: [main]
+    paths: [".github/workflows/cleanup-branches.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Archive and delete the old prototype branch
+        run: |
+          B=claude/book-website-project-osv1dk
+          if git ls-remote --exit-code --heads origin "$B" >/dev/null; then
+            git push origin "refs/remotes/origin/$B:refs/tags/archive/book-website-project-osv1dk"
+            git push origin --delete "$B"
+          else
+            echo "branch already gone"
+          fi
+      - name: Remove this one-off workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git pull --ff-only origin main
+          git rm .github/workflows/cleanup-branches.yml
+          git commit -m "Remove the one-off branch cleanup workflow [skip ci]"
+          git push origin HEAD:main
