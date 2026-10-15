@@ -216,6 +216,11 @@ await session({ label: "motion-theatre-ar", viewport: { width: 1360, height: 900
   await page.click("[data-mq-go]"); await page.waitForTimeout(700);
   const moved = await page.$eval("#sec-scene", (e) => e.getBoundingClientRect().top < 300);
   opened && fb && moved ? ok("lesson opening: think-first question reveals, self-check points to the explanation") : fail("lesson opening: question flow broken");
+  await page.click("#motion-btn");
+  const off = await page.evaluate(() => document.documentElement.dataset.motion === "off" && document.querySelector("#motion-btn").getAttribute("aria-pressed") === "true");
+  await page.click("#motion-btn");
+  const on = await page.evaluate(() => document.documentElement.dataset.motion === "on");
+  off && on ? ok("motion: reduce-motion switch is reachable from a lesson (sidebar)") : fail("motion: sidebar motion switch broken");
   await page.click("#lv #tab-mech");
   const activeTab = await page.$eval("#lv #tab-mech", el => el.getAttribute("aria-selected"));
   activeTab === "true" ? ok("motion: original four learning levels remain interactive") : fail("motion: lesson level control broken");

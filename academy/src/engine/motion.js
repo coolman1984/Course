@@ -67,6 +67,8 @@
     motionOff = !!off;
     safeStorage.set(motionOff);
     doc.documentElement.dataset.motion = motionOff ? "off" : "on";
+    const side = doc.getElementById("motion-btn");   // keep the sidebar switch in step with the home theatre's button
+    if (side) { side.setAttribute("aria-pressed", String(motionOff)); side.querySelector("span").textContent = A.t(motionOff ? "motionOn" : "motionOff"); }
   }
   setMotion(motionOff);
   function dict() { return captions[A.lang()]; }

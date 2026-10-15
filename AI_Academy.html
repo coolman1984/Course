@@ -153,7 +153,11 @@ html[dir="rtl"] .unit-t[aria-expanded="false"] .chev{transform:rotate(90deg)}
 .dot{flex:none;width:7px;height:7px;margin-top:8px;border-radius:50%;border:1.5px solid var(--line-2)}
 .dot.done{background:var(--sig-green);border-color:var(--sig-green)}
 .dot.rev{background:var(--sig-amber);border-color:var(--sig-amber)}
-.side-foot{margin-top:14px;padding:12px;border-radius:10px;background:var(--surface);border:1px solid var(--line);font-size:12px;color:var(--ink-3);line-height:1.6}
+.side-motion{display:flex;align-items:center;gap:10px;width:100%;margin-top:14px;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);font:inherit;font-size:13.5px;cursor:pointer;transition:background var(--dur),color var(--dur)}
+.side-motion:hover{background:var(--surface-3);color:var(--ink)}
+.side-motion[aria-pressed="true"]{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 40%,transparent);background:var(--accent-soft)}
+.side-motion svg{width:17px;height:17px}
+.side-foot{margin-top:10px;padding:12px;border-radius:10px;background:var(--surface);border:1px solid var(--line);font-size:12px;color:var(--ink-3);line-height:1.6}
 .continue{display:flex;gap:10px;align-items:center;margin:2px 2px 12px;padding:10px 12px;border-radius:12px;background:var(--surface);border:1px solid var(--line);color:var(--ink);text-decoration:none;box-shadow:var(--shadow-1);transition:border-color var(--dur),box-shadow var(--dur)}
 .continue:hover{border-color:var(--line-2);box-shadow:var(--shadow-2)}
 .continue>svg.i{color:#fff;background:linear-gradient(180deg,var(--accent-hi),var(--accent));border-radius:8px;width:28px;height:28px;padding:6px;flex:none}
@@ -1330,7 +1334,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     switchLang: u("English", "العربية"), themeBtn: u("المظهر", "Theme"), theme_auto: u("تلقائي", "Auto"), theme_light: u("فاتح", "Light"), theme_dark: u("داكن", "Dark"),
     unitOverview: u("نظرة على الوحدة", "Unit overview"), doneSr: u("(مكتمل)", "(done)"), continueLast: u("كمل من حيث وقفت", "Continue where you left off"),
     grpStart: u("ابدأ", "Start"), grpUnits: u("الوحدات والدروس", "Units & lessons"), grpPractice: u("تدرّب", "Practise"), grpReference: u("مراجع", "Reference"), grpTools: u("أدوات", "Tools"),
-    sideFoot: u("كل اللي هنا مبني على كتاب «أساسيات الذكاء الاصطناعي في بيئة العمل الحديثة» (41 صفحة). الإضافات التوضيحية بلون مختلف.", "Everything here is built on the book “AI Essentials for the Modern Workspace” (41 pages). Explanatory additions are marked in a different colour."),
+    motionOff: u("قلّل الحركة", "Reduce motion"), motionOn: u("فعّل الحركة", "Turn motion on"), sideFoot: u("كل اللي هنا مبني على كتاب «أساسيات الذكاء الاصطناعي في بيئة العمل الحديثة» (41 صفحة). الإضافات التوضيحية بلون مختلف.", "Everything here is built on the book “AI Essentials for the Modern Workspace” (41 pages). Explanatory additions are marked in a different colour."),
     savedPrompts: u("البرومبتات المحفوظة", "Saved prompts"), exported: u("الملف جاهز للتنزيل", "File ready to download"), imported: u("اتستوردت بياناتك", "Your data was imported"), importFail: u("الملف مش صالح. اختار ملف صدّرته من الأكاديمية.", "Invalid file. Pick a file exported from the academy."),
     prevPage: u("السابقة", "Previous"), nextPage: u("التالية", "Next"), pageN: u("صفحة {n}", "Page {n}"), pShort: u("ص {n}", "p.{n}"), openPdf: u("افتح ملف PDF", "Open the PDF"),
     explainedIn: u("مشروحة في:", "Explained in:"), pageAlt: u("صورة صفحة {n} من الكتاب الأصلي", "Image of page {n} of the original book"), pageMissing: u("صورة الصفحة مش متاحة في النسخة دي.", "The page image isn’t available in this copy."), bookPage: u("صفحة الكتاب الأصلية", "Original book page"), openPage: u("افتح الصفحة الأصلية", "Open the original page"), openGlossary: u("افتح القاموس", "Open the glossary"),
@@ -6505,7 +6509,10 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       ${grp("practice", t("grpPractice"), navItems(["labs", "prompts", "compare", "quiz", "project"]))}
       ${grp("reference", t("grpReference"), navItems(["glossary", "knowledge", "review", "coverage"]))}
       ${grp("tools", t("grpTools"), navItems(["present", "notebook"]))}
+      <button type="button" class="side-motion" id="motion-btn" aria-pressed="${doc.documentElement.dataset.motion === "off"}">${ico("eye")}<span>${esc(t(doc.documentElement.dataset.motion === "off" ? "motionOn" : "motionOff"))}</span></button>
       <div class="side-foot">${esc(t("sideFoot"))}</div>`;
+    // the academy-wide reduce-motion switch lives in the sidebar so it is reachable from every page (home's theatre has its own copy)
+    $("#motion-btn", side).onclick = () => { if (A.motion) { A.motion.setQuiet(doc.documentElement.dataset.motion !== "off"); toast(t(doc.documentElement.dataset.motion === "off" ? "motionOff" : "motionOn") + " ✓", "eye"); } };
     $$("[data-grp]", side).forEach((b) => (b.onclick = () => {
       const id = b.dataset.grp; const body = $(`[data-grp-body="${id}"]`, side);
       const open = body.hidden; body.hidden = !open; b.setAttribute("aria-expanded", open);
@@ -8952,6 +8959,8 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     motionOff = !!off;
     safeStorage.set(motionOff);
     doc.documentElement.dataset.motion = motionOff ? "off" : "on";
+    const side = doc.getElementById("motion-btn");   // keep the sidebar switch in step with the home theatre's button
+    if (side) { side.setAttribute("aria-pressed", String(motionOff)); side.querySelector("span").textContent = A.t(motionOff ? "motionOn" : "motionOff"); }
   }
   setMotion(motionOff);
   function dict() { return captions[A.lang()]; }

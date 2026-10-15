@@ -496,7 +496,10 @@
       ${grp("practice", t("grpPractice"), navItems(["labs", "prompts", "compare", "quiz", "project"]))}
       ${grp("reference", t("grpReference"), navItems(["glossary", "knowledge", "review", "coverage"]))}
       ${grp("tools", t("grpTools"), navItems(["present", "notebook"]))}
+      <button type="button" class="side-motion" id="motion-btn" aria-pressed="${doc.documentElement.dataset.motion === "off"}">${ico("eye")}<span>${esc(t(doc.documentElement.dataset.motion === "off" ? "motionOn" : "motionOff"))}</span></button>
       <div class="side-foot">${esc(t("sideFoot"))}</div>`;
+    // the academy-wide reduce-motion switch lives in the sidebar so it is reachable from every page (home's theatre has its own copy)
+    $("#motion-btn", side).onclick = () => { if (A.motion) { A.motion.setQuiet(doc.documentElement.dataset.motion !== "off"); toast(t(doc.documentElement.dataset.motion === "off" ? "motionOff" : "motionOn") + " ✓", "eye"); } };
     $$("[data-grp]", side).forEach((b) => (b.onclick = () => {
       const id = b.dataset.grp; const body = $(`[data-grp-body="${id}"]`, side);
       const open = body.hidden; body.hidden = !open; b.setAttribute("aria-expanded", open);
