@@ -19,11 +19,11 @@
       levels: {
         simple: [
           L("what", "الأدوات اللي بتستخدمها في الشغل زي ChatGPT وClaude بتعتمد على **((model|نموذج لغوي))** اتعلّم من كمية نصوص ضخمة جدًا إزاي اللغة بتتكتب وإزاي الأفكار بتترابط.\n\nتشبيه بسيط: تخيّل موظف قرا ملايين الكتب والتقارير والرسائل، وبقى يعرف «الكلام بيتقال إزاي عادةً» في أي موضوع — بس **ما شاف ملفات شركتك خالص**.", "Tools you use at work, like ChatGPT and Claude, run on a **((model|language model))** that learned from a huge amount of text how language is written and how ideas connect.\n\nA simple picture: imagine an employee who read millions of books, reports and emails, so they know “how things are usually said” on any topic — but **has never seen your company’s files**."),
-          L("why", "لأن الكتاب بيبدأ من هنا: لما تفهم إيه اللي بيحصل ورا الشاشة هتعرف **ليه** شاطر في التلخيص والصياغة، و**ليه** بيغلط أحيانًا بثقة، و**ليه** بيتحسّن كتير لما تديله سياق من شغلك. الفهم ده هو اللي بيحوّلك من مستخدم مندهش لمستخدم شاطر.", "Because the book starts here: once you understand what happens behind the screen, you know **why** it’s good at summarising and wording, **why** it’s sometimes confidently wrong, and **why** it improves so much with context from your work. That understanding turns an amazed user into a skilled one."),
+          L("why", "لأن الكتاب بيبدأ من هنا: لما تفهم إيه اللي بيحصل ورا الشاشة هتعرف **ليه** شاطر في التلخيص والصياغة، و**ليه** بيغلط أحيانًا بثقة، و**ليه** بيتحسّن كتير لما تديله سياق من شغلك. الفهم ده هو اللي بيحوّلك من مستخدم مندهش لمستخدم متمكّن.", "Because the book starts here: once you understand what happens behind the screen, you know **why** it’s good at summarising and wording, **why** it’s sometimes confidently wrong, and **why** it improves so much with context from your work. That understanding turns an amazed user into a skilled one."),
         ],
         mech: [
           L("how", "1. بتكتب سؤالك.\n2. النص بيتقطّع لقطع صغيرة اسمها ((token|توكنات)).\n3. التوكنات بتمر على النموذج: مليارات الأرقام الجوّا (((parameters|المعاملات))) اللي التدريب ضبطها.\n4. النموذج بيتوقع أنسب قطعة جاية، بيضيفها، وبعدين يتوقع اللي بعدها… لحد ما الإجابة تكمل.", "1. You type your question.\n2. The text is cut into small pieces called ((token|tokens)).\n3. The tokens pass through the model: billions of internal numbers (((parameters|parameters))) tuned by training.\n4. The model predicts the most fitting next piece, adds it, predicts the next… until the answer is complete."),
-          L("inside", "**اتعلّم من البيانات إزاي؟** وقت التدريب بيعرض عليه نص وبيطلب منه يتوقع اللي جاي بعده تريليونات المرات؛ وكل مرة المعاملات بتتعدّل شوية عشان توقعاته تبقى أدق.\n\n**المعرفة متخزّنة فين؟** مش جمل محفوظة في قاعدة بيانات، لكن **أنماط موزّعة جوّا المعاملات**. عشان كده يقدر يصيغ كلام جديد ما اتكتب قبل كده، ومش يقدر «يتذكر مصدر» بدقة إلا لو إنت اديته المصدر. وكل اللي بيشوفه في الطلب الواحد محدود بـ((context_window|نافذة السياق)).", "**How did it learn from data?** In training it’s shown text and asked to predict what comes next, trillions of times; each time the parameters are nudged so its predictions get better.\n\n**Where is knowledge stored?** Not as saved sentences in a database but as **patterns spread across the parameters**. That’s why it can phrase things never written before, and why it can’t precisely “remember a source” unless you give it one. Everything it sees in one request is limited by the ((context_window|context window))."),
+          L("inside", "**اتعلّم من البيانات إزاي؟** وقت التدريب بيعرض عليه نص وبيطلب منه يتوقع اللي جاي بعده تريليونات المرات؛ وكل مرة المعاملات بتتعدّل شوية عشان توقعاته تبقى أدق.\n\n**المعرفة متخزّنة فين؟** مش جمل محفوظة في قاعدة بيانات، لكن **أنماط موزّعة جوّا المعاملات**. عشان كده يقدر يصيغ كلام جديد ما اتكتبش قبل كده، وما يقدرش «يتذكر مصدر» بدقة إلا لو إنت اديته المصدر. وكل اللي بيشوفه في الطلب الواحد محدود بـ((context_window|نافذة السياق)).", "**How did it learn from data?** In training it’s shown text and asked to predict what comes next, trillions of times; each time the parameters are nudged so its predictions get better.\n\n**Where is knowledge stored?** Not as saved sentences in a database but as **patterns spread across the parameters**. That’s why it can phrase things never written before, and why it can’t precisely “remember a source” unless you give it one. Everything it sees in one request is limited by the ((context_window|context window))."),
           L("link", "ده بيفسّر قاعدة الكتاب الأساسية: **البرومبت جزء من السياق**، وكل ما السياق يبقى أوضح الفهم يبقى أدق ([[f4]]). وبيفسّر ليه الكتاب بيقدّم «العقل الثاني» ([[p8]]): إنك تديله مصادرك إنت بدل ما يعتمد على ذاكرته العامة. وأرقام (المعاملات، التوكنات، الحجم والسعر) هتلاقيها مفصّلة في [[m1]].", "This explains the book’s core rule: **the prompt is part of the context**, and the clearer the context the sharper the understanding ([[f4]]). It also explains the “second brain” ([[p8]]): giving it your own sources instead of relying on its general memory. The numbers (parameters, tokens, size and price) are detailed in [[m1]]."),
         ],
         practice: [
@@ -32,7 +32,7 @@
         ],
         adv: [
           L("mistakes", "- **تتعامل معاه كمحرك بحث عارف الحقيقة**: هو بيولّد الأرجح، مش بيجيب الحقيقة.\n- **تفترض إنه عارف بيانات شركتك** أو آخر الأخبار — مش هيعرفها إلا لو إنت اديتهاله (صفحة 41).\n- **الثقة في نبرة الإجابة**: الأسلوب الواثق مش دليل على الصحة.", "- **Treating it like a search engine that knows the truth**: it generates the likely, it doesn’t retrieve the truth.\n- **Assuming it knows your company’s data** or the latest news — it doesn’t unless you give it (page 41).\n- **Trusting the tone**: a confident style is no proof of correctness."),
-          L("whennot", "متعتمدش عليه لوحده في رقم هيدخل تقرير رسمي، أو قرار مالي أو قانوني، أو معلومة حديثة جدًا، من غير مصدر ومراجعة بشرية. استخدمه عشان تسرّع التفكير والكتابة والتحليل — مش عشان يحلّ محل التحقق ([[f5]]).", "Don’t rely on it alone for a number in an official report, a financial or legal decision, or very recent information without a source and human review. Use it to speed up thinking, writing and analysis — not to replace verification ([[f5]])."),
+          L("whennot", "ما تعتمدش عليه لوحده في رقم هيدخل تقرير رسمي، أو قرار مالي أو قانوني، أو معلومة حديثة جدًا، من غير مصدر ومراجعة بشرية. استخدمه عشان تسرّع التفكير والكتابة والتحليل — مش عشان يحلّ محل التحقق ([[f5]]).", "Don’t rely on it alone for a number in an official report, a financial or legal decision, or very recent information without a source and human review. Use it to speed up thinking, writing and analysis — not to replace verification ([[f5]])."),
         ],
       },
     },
@@ -50,8 +50,8 @@
       ],
       levels: {
         simple: [
-          L("what", "سلّم من تمان درجات بيوصف رحلتك: بتبدأ بأداة تساعدك في الكتابة والبحث، وبتنتهي بفريق وكلاء أذكياء بيدير جزء من شغلك. زي أي موظف جديد: بيتقن مهمة محددة الأول، وبعدين بياخد مسؤوليات أكبر.", "An eight-step ladder describing your journey: you start with a tool that helps you write and search, and end with a team of smart agents running part of your work. Like learning to drive — you don’t start on the motorway but in the car park."),
-          L("why", "لأن أكتر حاجة بتبوّظ التجربة هي **التشتت**: تجربة كل أداة جديدة من غير أثر حقيقي. السلّم بيديك ترتيب واضح: متقفزش للأنظمة والوكلاء قبل ما تتقن الطلب الجيد والعقل الثاني.", "Because what ruins the experience most is **scatter**: trying every new tool with no real impact. The ladder gives a clear order: don’t jump to systems and agents before mastering good requests and the second brain."),
+          L("what", "سلّم من تمان درجات بيوصف رحلتك: بتبدأ بأداة تساعدك في الكتابة والبحث، وبتنتهي بفريق وكلاء أذكياء بيدير جزء من شغلك. زي أي موظف جديد: بيتقن مهمة محددة الأول، وبعدين بياخد مسؤوليات أكبر.", "An eight-step ladder describing your journey: you start with a tool that helps you write and search, and end with a team of smart agents running part of your work. Like any new employee: you master one defined task first, then take on bigger responsibilities."),
+          L("why", "لأن أكتر ما يفسد التجربة هو **التشتت**: تجربة كل أداة جديدة من غير أثر حقيقي. السلّم بيديك ترتيب واضح: ما تقفزش للأنظمة والوكلاء قبل ما تتقن الطلب الجيد والعقل الثاني.", "Because what ruins the experience most is **scatter**: trying every new tool with no real impact. The ladder gives a clear order: don’t jump to systems and agents before mastering good requests and the second brain."),
         ],
         mech: [
           L("how", "كل درجة بتضيف قدرة واحدة فوق اللي قبلها:\n- **مساعد شخصي** و**عقل ثانٍ**: إنت اللي بتستخدم الأداة.\n- **موظف رقمي** و**أتمتة**: الأداة بتنجز مهام كاملة ومتكررة.\n- **أداة** و**تطبيق**: إنت اللي بتبني حلول غيرك بيستخدمها.\n- **نظام** و**فريق رقمي**: الحلول بتتصل ببعض وبتشتغل مع بعض.", "Each step adds one ability on top of the last:\n- **Assistant** and **second brain**: you use the tool.\n- **Digital employee** and **automation**: the tool does whole, recurring tasks.\n- **Tool** and **application**: you build solutions others use.\n- **System** and **digital team**: solutions connect and work together."),
@@ -63,7 +63,7 @@
         ],
         adv: [
           L("mistakes", "- القفز لـ«فريق وكلاء» قبل ما تتقن الطلب الجيد: النتيجة فوضى أسرع.\n- الوقوف في الدرجة الأولى للأبد: الأداة بتبقى محرك بحث سريع بس — وده أضعف استخدام ممكن (صفحة 7).", "- Jumping to an “agent team” before mastering good requests: you just get faster chaos.\n- Staying on step one forever: the tool becomes a quick search engine — the weakest possible use (page 7)."),
-          L("whennot", "السلّم ترتيب للتعلّم مش سباق: مش كل مهمة محتاجة نظام أو فريق. مهام كتير يكفيها برومبت كويس، وبعضها يفضل أسرع بالإيد ([[y2]]).", "The ladder is a learning order, not a race: not every task needs a system or a team. Many tasks only need a good prompt, and some stay faster by hand ([[y2]])."),
+          L("whennot", "السلّم ترتيب للتعلّم مش سباق: مش كل مهمة محتاجة نظام أو فريق. مهام كتير يكفيها برومبت كويس، وبعضها إنجازه يدويًا أسرع ([[y2]]).", "The ladder is a learning order, not a race: not every task needs a system or a team. Many tasks only need a good prompt, and some stay faster by hand ([[y2]])."),
         ],
       },
     },
@@ -85,7 +85,7 @@
           L("why", "لأن معرفة القدرات بتخليك تشوف الفرص في شغلك: كل تقرير طويل فرصة تلخيص، وكل ملفين شبه بعض فرصة مقارنة، وكل قرار متكرر فرصة سيناريوهات.", "Knowing the capabilities lets you see opportunities at work: every long report is a summarising chance, every two similar files a comparison, every recurring decision a scenario exercise."),
         ],
         mech: [
-          L("how", "السلسلة في الكتاب ترتيب منطقي: مش ممكن «يقترح» قبل ما «يقارن»، ومش يقارن قبل ما «يحلل»، ومش يحلل قبل ما «يجمع». كل حلقة معتمدة على جودة اللي قبلها.", "The book’s chain is a logical order: it can’t “suggest” before it “compares”, compare before it “analyses”, or analyse before it “collects”. Each link depends on the quality of the one before."),
+          L("how", "السلسلة في الكتاب ترتيب منطقي: مش ممكن «يقترح» قبل ما «يقارن»، ولا يقارن قبل ما «يحلل»، ولا يحلل قبل ما «يجمع». كل حلقة معتمدة على جودة اللي قبلها.", "The book’s chain is a logical order: it can’t “suggest” before it “compares”, compare before it “analyses”, or analyse before it “collects”. Each link depends on the quality of the one before."),
           L("link", "قاعدة «جودة البيانات والسياق» هنا هي نفس قاعدة [[f1]] (النموذج بيكمّل بالأرجح لو السياق ناقص)، ونفسها اللي بتتحوّل بعدين لـ«الجودة أولًا» في [[y4]].", "The “data and context quality” rule here is the same as in [[f1]] (the model completes with the likely when context is missing), and it later becomes “quality first” in [[y4]]."),
         ],
         practice: [
@@ -93,7 +93,7 @@
           L("apply", "اكتب قائمة بخمس مهام من أسبوعك، وجنب كل مهمة اكتب أي قدرة من الست تناسبها. ابدأ بالمهمة الأصغر والأكتر تكرارًا.", "List five tasks from your week, and next to each write which of the six capabilities fits. Start with the smallest, most frequent one."),
         ],
         adv: [
-          L("mistakes", "- تطلب «اقتراح» على طول من غير ما تدي بيانات للتحليل: اقتراح عام.\n- تدي بيانات معطوبة وبعدين تثق في التحليل: نتيجة شكلها دقيق ومضمونها غلط.", "- Asking for a “suggestion” straight away with no data to analyse: a generic suggestion.\n- Feeding broken data then trusting the analysis: precise-looking, wrong-in-substance results."),
+          L("mistakes", "- تطلب «اقتراح» على طول من غير ما تدي بيانات للتحليل: اقتراح عام.\n- تدي بيانات فيها أخطاء وبعدين تثق في التحليل: نتيجة شكلها دقيق ومضمونها غلط.", "- Asking for a “suggestion” straight away with no data to analyse: a generic suggestion.\n- Feeding broken data then trusting the analysis: precise-looking, wrong-in-substance results."),
           L("whennot", "في «دعم القرار» القرار يفضل ليك: الأداة بتقترح وبتعرض البدائل والمخاطر، بس مش هتتحمل مسؤولية القرار ([[f5]]).", "In “decision support” the decision stays yours: the tool suggests and lays out options and risks but doesn’t own the decision ([[f5]])."),
         ],
       },
@@ -122,7 +122,7 @@
       levels: {
         simple: [
           L("what", "**السياق** هو كل اللي بتقوله للأداة عن وضعك. و**البرومبت** هو الجزء اللي بيقوللها «اعمل ده بالطريقة دي». تشبيه: لما تكلف زميل جديد بمهمة، بتشرحله الخلفية (سياق) وبعدين المطلوب (برومبت).", "**Context** is everything you tell the tool about your situation. The **prompt** is the part that says “do this, this way”. Like briefing a new colleague: you explain the background (context) and then the task (prompt)."),
-          L("why", "لأن نفس السؤال بسياقين مختلفين بيدي إجابتين مختلفتين تمامًا. والانتقال من «شات» لـ«مساعد» لـ«وكيل» هو في الحقيقة زيادة في السياق والقدرة على الفعل.", "Because the same question with two different contexts gives two completely different answers. And moving from “chat” to “assistant” to “agent” is really an increase in context and ability to act."),
+          L("why", "لأن نفس السؤال بسياقين مختلفين بيدي إجابتين مختلفتين تمامًا. والانتقال من «شات» لـ«مساعد» لـ«وكيل» هو في جوهره زيادة في السياق والقدرة على الفعل.", "Because the same question with two different contexts gives two completely different answers. And moving from “chat” to “assistant” to “agent” is really an increase in context and ability to act."),
         ],
         mech: [
           L("how", "- **الشات**: سؤال ← إجابة، من غير ذاكرة طويلة.\n- **المساعد**: بيحفظ سياقك (مشروعك، أسلوبك، ملفاتك) وبيبني عليه كل مرة.\n- **الوكيل**: بيتاخد هدف وأدوات (قراءة ملف، إرسال رسالة…) ويكرر: يخطط ← ينفّذ ← يشوف النتيجة ← يصحّح.", "- **Chat**: question → answer, no long memory.\n- **Assistant**: keeps your context (project, style, files) and builds on it each time.\n- **Agent**: given a goal and tools (read a file, send a message…), it loops: plan → act → observe → correct."),
@@ -153,7 +153,7 @@
       ],
       levels: {
         simple: [
-          L("what", "قائمة باللي الذكاء الاصطناعي **مش** يقدر يضمنه: الصحة دايمًا، ومعرفة بياناتك، وحداثة المعلومات، وتحمّل مسؤولية القرار. تشبيه: مستشار سريع وذكي — بس إنت اللي بتوقّع.", "A list of what AI **can’t** guarantee: always being right, knowing your data, current information, and owning the decision. Think of a fast, smart adviser — but you are the one who signs."),
+          L("what", "قائمة باللي الذكاء الاصطناعي **ما يقدرش** يضمنه: الصحة دايمًا، ومعرفة بياناتك، وحداثة المعلومات، وتحمّل مسؤولية القرار. تشبيه: مستشار سريع وذكي — بس إنت اللي بتوقّع.", "A list of what AI **can’t** guarantee: always being right, knowing your data, current information, and owning the decision. Think of a fast, smart adviser — but you are the one who signs."),
           L("why", "لأن غلطة واحدة بثقة في تقرير للإدارة ممكن تكلف أكتر من كل الوقت اللي وفّرته الأداة. معرفة الحدود هي اللي بتخليك تستخدم القوة بأمان.", "Because one confident mistake in a management report can cost more than all the time the tool saved. Knowing the limits lets you use the power safely."),
         ],
         mech: [
@@ -166,7 +166,7 @@
         ],
         adv: [
           L("mistakes", "- «الأداة قالت كذا» كمبرر لقرار: المسؤولية ما بتتفوّض للأداة.\n- رفع بيانات العملاء أو الرواتب من غير ضوابط.\n- تفترض إن المعلومة حديثة لأنها مكتوبة بثقة.", "- “The tool said so” as a justification: responsibility can’t be delegated to a tool.\n- Uploading customer or salary data without controls.\n- Assuming information is current because it sounds confident."),
-          L("whennot", "متستخدمهش بدال القرار البشري في حاجات ليها أثر مالي أو تنظيمي، ولا في أي بيانات سياسة شركتك بتمنع رفعها. في الحالات دي استخدمه في التحضير بس، أو استخدم نموذج محلي ([[m3]]).", "Don’t use it in place of human decisions with financial or organisational impact, or with data your company forbids uploading. In those cases use it only for preparation, or use a local model ([[m3]])."),
+          L("whennot", "ما تستخدموش بدل القرار البشري في حاجات ليها أثر مالي أو تنظيمي، ولا في أي بيانات سياسة شركتك بتمنع رفعها. في الحالات دي استخدمه في التحضير بس، أو استخدم نموذج محلي ([[m3]]).", "Don’t use it in place of human decisions with financial or organisational impact, or with data your company forbids uploading. In those cases use it only for preparation, or use a local model ([[m3]])."),
         ],
       },
     },

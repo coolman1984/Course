@@ -17,7 +17,7 @@
       stages: [
         S("سؤالك", "Your question", "بتكتب سؤال بلغتك. النموذج مش بيشوف «كلمات» زي ما إحنا بنشوفها.", "You type a question in your language. The model doesn’t see “words” the way we do.", 3.5),
         S("تقطيع إلى توكنات", "Split into tokens", "النص بيتقسّم لقطع صغيرة اسمها **توكنات** — والعربي بياخد توكنات أكتر من الإنجليزي لنفس المعنى.", "The text is cut into small pieces called **tokens** — Arabic uses more tokens than English for the same meaning.", 4),
-        S("النموذج ونافذة السياق", "The model and its context window", "النموذج فيه مليارات أرقام جوّاه (**معاملات**) اتعلّمت أنماط اللغة من بيانات ضخمة. **نافذة السياق** هي اللي يقدر يقراها ويفتكرها في الطلب الواحد.", "The model is billions of internal numbers (**parameters**) that learned language patterns from huge data. The **context window** is what it can read and remember in one request.", 5, [250, 10, 520, 330]),
+        S("النموذج ونافذة السياق", "The model and its context window", "جوّا النموذج مليارات من الأرقام (**معاملات**) اتعلّمت أنماط اللغة من بيانات ضخمة. **نافذة السياق** هي اللي يقدر يقراها ويفتكرها في الطلب الواحد.", "The model is billions of internal numbers (**parameters**) that learned language patterns from huge data. The **context window** is what it can read and remember in one request.", 5, [250, 10, 520, 330]),
         S("توقّع الكلمة التالية", "Predict the next piece", "النموذج بيتوقع أنسب قطعة جاية، ويضيفها وبيتوقع اللي بعدها… وكده لحد ما الإجابة تكمل.", "The model predicts the most fitting next piece, adds it, predicts the next… until the answer is complete.", 5),
         S("الإجابة", "The answer", "الإجابة بتتبني قطعة ورا قطعة من الأنماط اللي اتعلّمها ومن السياق اللي اديتهوله.", "The answer is built piece by piece from learned patterns and the context you gave.", 3.5),
         S("لماذا يخطئ أحيانًا؟", "Why is it sometimes wrong?", "لو السياق ناقص، بيكمّل بالأرجح مش بالأصح — فيديك معلومة غلط بثقة. عشان كده السياق الكويس والمراجعة البشرية أساس.", "When context is missing it completes with the most likely, not the most correct — confidently wrong. Hence good context and human review.", 5),
@@ -74,8 +74,8 @@
 
     { id: "chatagent", title: u("من شات لوكيل ذكي", "From chat to smart agent"),
       stages: [
-        S("الشات التقليدي", "Traditional chat", "بتسأل سؤال وبتاخد إجابة، وخلاص.", "You ask, you get an answer, and that’s it.", 3.5),
-        S("المساعد الشخصي", "Personal assistant", "بيفهمك، وبيفتكر السياق، وبيساعدك على طول.", "It understands you, remembers context and keeps helping.", 4),
+        S("الشات التقليدي", "Traditional chat", "بتسأل سؤال وبتاخد إجابة، والتفاعل بيقف عند كده.", "You ask, you get an answer, and that’s it.", 3.5),
+        S("المساعد الشخصي", "Personal assistant", "بيفهمك، وبيفتكر السياق، وبيساعدك باستمرار.", "It understands you, remembers context and keeps helping.", 4),
         S("الوكيل الذكي", "Smart agent", "بيخطط، وبيستخدم أدوات، وبينفّذ مهام، وبيتابع النتائج.", "It plans, uses tools, carries out tasks and follows up on results.", 5),
         S("المشترك بينها", "What they share", "كل حاجة بتبدأ من **سياق واضح وبرومبت ذكي** — البرومبت جزء من السياق.", "Everything starts with **clear context and a smart prompt** — the prompt is part of the context.", 4.5),
       ],
@@ -123,8 +123,8 @@
     /* ---------- U1 ---------- */
     { id: "equation", title: u("المعادلة اللي بتحكم كل برومبت ناجح", "The governing equation of every good prompt"),
       stages: [
-        S("طلب عادي", "An ordinary request", "«ساعدني في التقرير» — الأداة مش عارفة إنت عاوز إيه وليه وللمين، فبتطلعلك نتيجة عامة.", "“Help me with the report” — the tool doesn’t know what, why or for whom, so the result is generic.", 4),
-        S("1 · هدف واضح", "1 · A clear goal", "ليس «ساعدني في التقرير» بل «عايز أعرف ليه المبيعات نزلت».", "Not “help me with the report” but “I want to know why sales fell”.", 3.5),
+        S("طلب عادي", "An ordinary request", "«ساعدني في التقرير» — الأداة مش عارفة إنت عاوز إيه وليه وعشان مين، فبتديك نتيجة عامة.", "“Help me with the report” — the tool doesn’t know what, why or for whom, so the result is generic.", 4),
+        S("1 · هدف واضح", "1 · A clear goal", "مش «ساعدني في التقرير»، لكن «عايز أعرف ليه المبيعات نزلت».", "Not “help me with the report” but “I want to know why sales fell”.", 3.5),
         S("2 · سياق كافٍ", "2 · Enough context", "الخلفية والوضع الحالي: الأداة مش عارفة عن شغلك حاجة إلا اللي إنت بتقولهولها.", "Background and situation: the tool knows nothing about your work except what you tell it.", 3.5),
         S("3 · طلب محدد", "3 · A specific request", "المهمة نفسها بالظبط: حلّل، قارن، اقترح… بمعايير واضحة.", "The task itself, precisely: analyse, compare, suggest… with clear criteria.", 3.5),
         S("4 · شكل النتيجة", "4 · Output format", "نقاط؟ جدول؟ خطة؟ رسالة؟ لما تحدّد الشكل بتوفر جولة تعديل كاملة.", "Bullets, table, plan or message? Setting the format saves a whole revision round.", 3.5),
@@ -142,10 +142,10 @@
         M("q", 200, 420, 400, 14, [0.12, 0.35, 0.58, 0.78, 0.9, 1], "قابلية التنفيذ", "Actionability", { tone: "mint" }),
       ] },
 
-    { id: "technique", title: u("أقوى تقنية: جملة واحدة بتحل تلات مشاكل", "The strongest technique: one sentence, three fixes"),
+    { id: "technique", title: u("أهم تقنية: جملة واحدة بتحل تلات مشاكل", "The strongest technique: one sentence, three fixes"),
       stages: [
-        S("ثلاث مشكلات صامتة", "Three silent problems", "الأداة بتخمّن افتراضاتها في السكت، وبتميل للتعقيد، ومش بتختبر الحالات الاستثنائية.", "The tool silently guesses its assumptions, drifts into complexity, and doesn’t test edge cases.", 4),
-        S("«اسألني عن الناقص»", "“Ask me what’s missing”", "بتجبر الأداة تكشف افتراضاتها بدل ما تخمّنها في السكت.", "Forces the tool to reveal its assumptions instead of silently guessing.", 3.5),
+        S("ثلاث مشكلات صامتة", "Three silent problems", "الأداة بتبني على افتراضات من غير ما تصرّح بيها، وبتميل للتعقيد، ومش بتختبر الحالات الاستثنائية.", "The tool silently guesses its assumptions, drifts into complexity, and doesn’t test edge cases.", 4),
+        S("«اسألني عن الناقص»", "“Ask me what’s missing”", "بتجبر الأداة تكشف افتراضاتها بدل ما تبني عليها من غير ما تقول.", "Forces the tool to reveal its assumptions instead of silently guessing.", 3.5),
         S("«أبسط حل ممكن»", "“The simplest possible solution”", "بيمنع التعقيد اللي مش هتعرف تصونه أو تفهمه بعدين.", "Prevents complexity you won’t be able to maintain or understand later.", 3.5),
         S("«اختبر الحالات الاستثنائية»", "“Test the edge cases”", "بيكشف الأخطاء قبل ما توصل لتقرير الإدارة، مش بعده.", "Catches errors before they reach the management report, not after.", 3.5),
         S("اجعلها بداية كل طلب مهم", "Start every important request with it", "جملة واحدة بتحل تلات مشاكل مرة واحدة.", "One sentence fixes three problems at once.", 4),
@@ -168,10 +168,10 @@
     { id: "convo", title: u("إدارة المحادثة: الدورة الخماسية", "Managing the conversation: the five-step loop"),
       stages: [
         S("1 · اطلب", "1 · Ask", "ابدأ بطلب مبني على الخمس عناصر.", "Start with a request built on the five elements.", 3),
-        S("2 · اقرأ بعين ناقدة", "2 · Read critically", "ماتاخدش أول نتيجة وتمشي. اقرأ كأنك المراجع.", "Don’t take the first result and run. Read like a reviewer.", 3),
-        S("3 · حدّد الخلل بدقة", "3 · Pinpoint the flaw", "طويلة ومشتتة؟ صح بس مش مناسبة ليك؟ شكلها متاخدة على الخفيف؟", "Long and scattered? Right but unfit? Looks made up?", 3.5),
-        S("4 · صحّح في المحادثة نفسها", "4 · Fix in the same chat", "المبتدئ بيفتح محادثة جديدة؛ الشاطر بيصحّح هنا عشان السياق موجود.", "Beginners start a new chat; skilled users correct course here because the context is here.", 4),
-        S("5 · اعتمد أو كرّر", "5 · Adopt or repeat", "لو ظبطت، اعتمدها؛ وإلا كرّر الدورة.", "If it’s good, adopt it; otherwise repeat the loop.", 3.5),
+        S("2 · اقرأ بعين ناقدة", "2 · Read critically", "ما تقبلش أول نتيجة على طول. اقرأها بعين المراجع.", "Don’t take the first result and run. Read like a reviewer.", 3),
+        S("3 · حدّد الخلل بدقة", "3 · Pinpoint the flaw", "طويلة ومشتتة؟ صح بس مش مناسبة ليك؟ فيها معلومات مش موثوقة؟", "Long and scattered? Right but unfit? Looks made up?", 3.5),
+        S("4 · صحّح في المحادثة نفسها", "4 · Fix in the same chat", "المبتدئ بيفتح محادثة جديدة؛ المحترف بيصحّح هنا عشان السياق موجود.", "Beginners start a new chat; skilled users correct course here because the context is here.", 4),
+        S("5 · اعتمد أو كرّر", "5 · Adopt or repeat", "لو النتيجة مناسبة، اعتمدها؛ وإلا كرّر الدورة.", "If it’s good, adopt it; otherwise repeat the loop.", 3.5),
       ],
       els: [
         ...[["اطلب", "Ask", "msg"], ["اقرأ بعين ناقدة", "Read critically", "eye"], ["حدّد الخلل", "Pinpoint the flaw", "target"], ["صحّح هنا", "Fix here", "pen"], ["اعتمد أو كرّر", "Adopt or repeat", "check"]].map((n, i) => {
@@ -193,12 +193,12 @@
         ...[["افهم", "Understand", "target"], ["نظّم", "Organise", "layers"], ["قرّر", "Decide", "compare"], ["نفّذ", "Execute", "route"], ["راجع", "Review", "restart"]].map((n, i) => B("d" + i, 20 + i * 155, 170, 135, 80, n[0], n[1], { in: i, tone: "blue", ico: n[2], hi: [i] })),
         ...[0, 1, 2, 3].map((i) => R("d" + i, "d" + (i + 1), i + 1, { flow: true })),
         R("d4", "d0", 4, { bend: 120, l: u("الدورة بتتكرر", "the cycle repeats") }),
-        X("t", 150, 330, 500, 60, "اطلب نتيجة تنفع تنفيذها، مش إجابة بس", "Ask for an actionable result, not just an answer", { in: 4, size: 18, color: "--accent" }),
+        X("t", 150, 330, 500, 60, "اطلب نتيجة قابلة للتنفيذ، مش مجرد إجابة", "Ask for an actionable result, not just an answer", { in: 4, size: 18, color: "--accent" }),
       ] },
 
     { id: "strategic", title: u("ليه البرومبت الاستراتيجي بينفع؟", "Why the strategic prompt works"),
       stages: [
-        S("القفز إلى الحل", "Jumping to the solution", "أغلب القرارات الوحشة بتيجي من إنك تبدأ بالحل قبل ما تفهم المشكلة.", "Most bad decisions come from starting with the solution before understanding the problem.", 4),
+        S("القفز إلى الحل", "Jumping to the solution", "أغلب القرارات السيئة بتيجي من إنك تبدأ بالحل قبل ما تفهم المشكلة.", "Most bad decisions come from starting with the solution before understanding the problem.", 4),
         S("الفهم ثم التحليل ثم التشخيص", "Understand, analyse, diagnose", "البرومبت بيفرض ترتيب ماتقدرش تقفز عليه.", "The prompt enforces an order that can’t be skipped.", 4),
         S("المخاطر والبدائل", "Risks and options", "اكشف المخاطر والفرص، وبعدين اعرض البدائل.", "Reveal risks and opportunities, then lay out options.", 3.5),
         S("القرار والخطوات", "Decision and steps", "انصح بأحسن قرار، توقّع النتائج، وبعدين حوّله لخطوات تنفيذ.", "Recommend the best decision, forecast outcomes, then turn it into steps.", 4),
@@ -218,7 +218,7 @@
     { id: "brain", title: u("دورة العقل التاني", "The second-brain cycle"),
       stages: [
         S("اجمع المصادر", "Collect sources", "تقارير رسمية ووثائق الشركة وأبحاث وأدلة تشغيل — وبعدين المصادر الثانوية.", "Official reports, company documents, research and manuals — then secondary sources.", 3.5),
-        S("صفِّ المصادر", "Filter sources", "استخدم البحث تكتشف المصادر، وبعدين راجعها بنفسك وحط الأحسن بس.", "Use search to discover sources, review them yourself, and add only the best.", 3.5),
+        S("صفِّ المصادر", "Filter sources", "استخدم البحث عشان تكتشف المصادر، وبعدين راجعها بنفسك وضيف الأفضل بس.", "Use search to discover sources, review them yourself, and add only the best.", 3.5),
         S("دفتر واحد لهدف واحد", "One notebook, one goal", "كل الإجابات بتيجي من مصادرك إنت بس، مش من بحث برّه.", "Every answer comes only from your sources, not outside search.", 4),
         S("اكتشف التناقضات", "Find contradictions", "المصادر بتختلف فين؟ كل مصدر بيأكد إيه؟ إيه الادعاءات ضعيفة الدليل؟", "Where do sources disagree? What does each confirm? Which claims have weak evidence?", 4),
         S("استنتاجات موثقة", "Documented conclusions", "كل إجابة معاها استشهاد يرجّعك للمكان الأصلي — عشان تتأكد بنفسك.", "Every answer carries a citation back to the original place — so you verify yourself.", 4),
@@ -241,7 +241,7 @@
     { id: "leap", title: u("القفزة: من معادلة لقرار", "The leap: from a formula to a decision"),
       stages: [
         S("بيانات خام", "Raw data", "نقطة البداية: «أنا عارف النتيجة اللي عايزها، بس مش عارف أكتب المعادلة إزاي».", "The starting point: “I know the result I want but not how to write the formula.”", 3.5),
-        S("معادلة في إكسل", "An Excel formula", "الأداة بتبني المعادلات وبشرحها وبصلّح اللي موجود.", "The tool builds formulas, explains them and fixes existing ones.", 3.5),
+        S("معادلة في إكسل", "An Excel formula", "الأداة بتبني المعادلات وبتشرحها وبتصلّح اللي موجود.", "The tool builds formulas, explains them and fixes existing ones.", 3.5),
         S("ماكرو مسجّل", "A recorded macro", "مسجّل الماكرو بيحوّل خطواتك اليدوية لكود من غير ما تكتب حرف.", "The macro recorder turns your manual steps into code without typing a letter.", 3.5),
         S("كود يكتبه الذكاء الاصطناعي", "AI-written code", "المطلوب منك توصف العملية بالظبط: الملف، الأوراق، الأعمدة، الخطوات، الناتج.", "Your job is to describe the process precisely: file, sheets, columns, steps, output.", 4),
         S("عرض جاهز للإدارة", "A management-ready pitch", "سلسلة واحدة بتبدأ ببيانات خام وبتنتهي بقرار.", "One chain that starts with raw data and ends with a decision.", 4),
@@ -262,7 +262,7 @@
         S("شغّل التسجيل ونفّذ الخطوات", "Start recording, do the steps", "الأداة بتسجّل خطواتك وإنت بتنفّذها بإيدك.", "The tool records your steps as you do them.", 3.5),
         S("أوقف التسجيل", "Stop recording", "الخطوات بتتحوّل تلقائيًا لكود جاهز — بتقراه فبتفهم خطواتك بقت أوامر إزاي.", "The steps become ready code — you read it and see how your steps turn into commands.", 4),
         S("اضغط زرًا واحدًا", "Press one button", "التقرير بينسّق لوحده: أتمتة فورية من أول مرة.", "And the report formats itself: instant automation, first time.", 3.5),
-        S("قاعدتان لا تُكسران", "Two unbreakable rules", "دايمًا اشتغل على نسخة (الماكرو مفيهوش تراجع عادي)، ووحدات صغيرة مش وحش كبير.", "Always work on a copy (macros have no normal undo), and small modules, not one monster.", 4.5),
+        S("قاعدتان لا تُكسران", "Two unbreakable rules", "دايمًا اشتغل على نسخة (الماكرو مفيهوش تراجع عادي)، وقسّم الكود لوحدات صغيرة بدل كتلة واحدة ضخمة.", "Always work on a copy (macros have no normal undo), and small modules, not one monster.", 4.5),
       ],
       els: [
         ...[["نسّق يدويًا", "Format by hand", "pen"], ["شغّل التسجيل", "Start recording", "film"], ["نفّذ الخطوات", "Do the steps", "route"], ["أوقف التسجيل", "Stop recording", "pause"], ["زر واحد", "One button", "play"]].map((n, i) => B("m" + i, 20 + i * 155, 110, 135, 76, n[0], n[1], { in: [0, 1, 1, 2, 3][i], tone: i === 4 ? "solid" : "blue", ico: n[2], hi: [[0, 1, 1, 2, 3][i]] })),
@@ -270,7 +270,7 @@
         B("code", 330, 240, 150, 56, "كود تقراه", "Code you can read", { in: 2, tone: "violet", ico: "code" }),
         R("m3", "code", 2),
         B("r1", 80, 340, 280, 64, "دايمًا اشتغل على نسخة", "Always work on a copy", { in: 4, tone: "rose", ico: "shield" }),
-        B("r2", 440, 340, 280, 64, "وحدات صغيرة مش وحش كبير", "Small modules, not a monster", { in: 4, tone: "rose", ico: "layers" }),
+        B("r2", 440, 340, 280, 64, "وحدات صغيرة لا كتلة ضخمة", "Small modules, not a monster", { in: 4, tone: "rose", ico: "layers" }),
       ] },
 
     { id: "capstone", title: u("من التقرير لعرض يقنع الإدارة", "From report to a convincing pitch"),
@@ -279,7 +279,7 @@
         S("مدير القصة — المساعد المحادثي", "Story director — the chat assistant", "مسؤول عن الرسالة والترتيب: الرسالة إيه؟ الجمهور مين؟ أهم تلات أفكار؟ إيه اللي يتشال؟", "Owns message and order: what’s the message, who’s the audience, top three ideas, what to cut?", 4),
         S("الاستوديو البصري — مولّد الصور", "Visual studio — the image generator", "مسؤول عن الفهم البصري: صور افتتاحية ومخططات وإنفوجرافيك.", "Owns visual understanding: opening images, diagrams, infographics.", 4),
         S("الترتيب مهم", "Order matters", "ماتبدأش بالتصميم أبدًا: المصدر الأول، وبعدين القصة، وبعدين الصورة.", "Never start with design: source first, then story, then image.", 4),
-        S("خلط الأدوار هو الخطأ القاتل", "Mixing roles is the fatal mistake", "بيعمل عرض حلو من غير معنى، أو صح من غير تأثير.", "It produces a pretty deck without meaning, or a correct one without impact.", 4),
+        S("خلط الأدوار هو الخطأ القاتل", "Mixing roles is the fatal mistake", "بينتج عرض شكله جميل من غير معنى، أو صحيح من غير تأثير.", "It produces a pretty deck without meaning, or a correct one without impact.", 4),
       ],
       els: [
         B("nb", 40, 90, 200, 90, "الدفتر", "The notebook", { tone: "blue", ico: "db", ...s2("الصدق والمصادر", "truth & sources"), hi: [0, 3] }),
@@ -288,13 +288,13 @@
         R("nb", "ch", 3, { flow: true, l: u("الأول", "first") }), R("ch", "im", 3, { flow: true, l: u("بعدين", "then") }),
         B("deck", 280, 260, 240, 76, "عرض إداري ينتهي بقرار", "A pitch ending in a decision", { in: 3, tone: "solid", ico: "screen" }),
         R("im", "deck", 3),
-        B("mix", 40, 360, 300, 60, "عرض حلو من غير معنى", "Pretty deck, no meaning", { in: 4, tone: "rose" }),
-        B("mix2", 460, 360, 300, 60, "عرض صح من غير تأثير", "Correct deck, no impact", { in: 4, tone: "rose" }),
+        B("mix", 40, 360, 300, 60, "عرض جميل من غير معنى", "Pretty deck, no meaning", { in: 4, tone: "rose" }),
+        B("mix2", 460, 360, 300, 60, "عرض صحيح من غير تأثير", "Correct deck, no impact", { in: 4, tone: "rose" }),
       ] },
 
     { id: "plan30", title: u("خطة التلاتين يوم", "The 30-day plan"),
       stages: [
-        S("الأسبوع 1 — الصياغة", "Week 1 — wording", "اكتب تاني كل طلب مهم بالخمس عناصر وابدأه بـ«اسألني عن أي معلومة ناقصة».", "Rewrite every important request with the five elements and start it with “ask me about anything missing”.", 3.5),
+        S("الأسبوع 1 — الصياغة", "Week 1 — wording", "اكتب من جديد كل طلب مهم بالخمس عناصر وابدأه بـ«اسألني عن أي معلومة ناقصة».", "Rewrite every important request with the five elements and start it with “ask me about anything missing”.", 3.5),
         S("الأسبوع 2 — الإنتاجية", "Week 2 — productivity", "طبّق برومبتات تنظيم اليوم والاجتماعات كل يوم. الهدف: توفّر ساعة في الأسبوع على الأقل.", "Use the day and meeting prompts daily. Goal: save at least an hour a week.", 3.5),
         S("الأسبوع 3 — القرار والمعرفة", "Week 3 — decisions & knowledge", "طبّق البرومبت الاستراتيجي على قرار حقيقي، واعمل دفتر واحد لمشروع واحد.", "Apply the strategic prompt to a real decision and create one notebook for one project.", 3.5),
         S("الأسبوع 4 — الأتمتة", "Week 4 — automation", "سجّل ماكرو لأصغر مهمة بتكررها، وبعدين البرومبت الذهبي للكود.", "Record a macro for your smallest recurring task, then use the golden code prompt.", 3.5),
@@ -328,7 +328,7 @@
         S("الثبات", "Stability", "قواعدها مش بتتغيّر، والاستثناءات قليلة وممكن تحصرها من الأول.", "Its rules don’t change; exceptions are few and can be listed upfront.", 3),
         S("كلفة الخطأ اليدوي", "Manual error cost", "النسخ واللصق بيطلع أخطاء صامتة ما بتتكشفش إلا بعد ما يفوت الوقت.", "Copy-paste creates silent errors found too late.", 3),
         S("قابلية التحقق", "Verifiability", "تقدر تقارن ناتج الأداة بناتج يدوي معروف ولو مرة.", "The tool’s output can be compared with a known manual result, even once.", 3),
-        S("القرار", "The decision", "لو الشروط اتحققت، تستاهل أداة؛ وإلا أسرع بالإيد.", "If the conditions hold, build a tool; otherwise it stays faster by hand.", 3.5),
+        S("القرار", "The decision", "لو الشروط اتحققت، تستاهل أداة؛ وإلا فالشغل اليدوي أسرع.", "If the conditions hold, build a tool; otherwise it stays faster by hand.", 3.5),
         S("أربع قواعد تحمي الأداة", "Four rules that protect the tool", "ماتلمسش الأصل، سجل تشغيل، وحدات صغيرة، الفشل الصريح أحسن من النجاح الصامت.", "Don’t touch originals, run log, small modules, explicit failure beats silent success.", 4.5),
       ],
       els: [
@@ -356,7 +356,7 @@
 
     { id: "drill7", title: u("لما التقرير يقول: «الكفاءة نزلت 7%»", "When the report says “efficiency fell 7%”"),
       stages: [
-        S("رقم وحده", "A number alone", "الرقم لوحده مش بيوصلك لقرار.", "A number alone leads to no decision.", 3.5, [250, 130, 300, 190]),
+        S("رقم لوحده", "A number alone", "الرقم لوحده مش بيوصلك لقرار.", "A number alone leads to no decision.", 3.5, [250, 130, 300, 190]),
         S("فكّك: أين؟", "Break it down: where?", "أي موديل أو منتج؟ أي خط إنتاج أو فرع؟ أي وردية أو فترة؟", "Which model or product? Which line or branch? Which shift or period?", 4.5),
         S("فكّك: لماذا؟", "Break it down: why?", "إيه التوقفات وأسبابها؟ الخامات نقصت؟ تغيير الموديل أخد قد إيه؟", "What stoppages and causes? Material shortage? How long did the model changeover take?", 4.5),
         S("فكّك: متى وكم؟", "Break it down: when and how much?", "من إمتى بدأ؟ حصل قبل كده؟ الكمية كانت أقل من العادي؟ الأثر المالي إيه؟", "Since when? Has it happened before? Was output below normal? What’s the financial impact?", 4.5),
@@ -384,7 +384,7 @@
         S("أين المشكلة؟ لماذا حدثت؟", "Where is the problem? Why?", "رسم تفاعلي واحد للتصفية والتعمق، وتحليل الأسباب مرتب من الأكثر تأثيرًا.", "One interactive chart for filtering and drilling, and causes ranked by impact.", 4),
         S("أين التركيز؟ ماذا لو استمر؟", "Where to focus? What if it continues?", "أعلى تلات مناطق تأثير بس، وتوقع بسيط بأثر رقمي واضح.", "Only the top three impact areas, and a simple forecast with a clear numeric effect.", 4),
         S("ماذا نفعل الآن؟", "What do we do now?", "تلات قرارات واضحة بس، كل واحد بمسؤول وموعد.", "Only three clear decisions, each with an owner and a date.", 4),
-        S("معيار النجاح الوحيد", "The only success criterion", "الرسالة تتفهم في أول تلاتين ثانية، والتعمق لمن عايزه بس.", "The message is understood in the first thirty seconds; deeper detail only for those who want it.", 4),
+        S("معيار النجاح الوحيد", "The only success criterion", "الرسالة تتفهم في أول تلاتين ثانية، والتعمق للي عايزه بس.", "The message is understood in the first thirty seconds; deeper detail only for those who want it.", 4),
       ],
       els: [
         ...[["ماذا حدث؟", "What happened?"], ["جيد أم سيئ؟", "Good or bad?"], ["أين المشكلة؟", "Where?"], ["لماذا؟", "Why?"], ["أين التركيز؟", "Focus where?"], ["ماذا لو استمر؟", "If it continues?"], ["ماذا نفعل الآن؟", "What now?"]].map((n, i) => {
@@ -440,9 +440,9 @@
         S("الغرض والمؤشرات", "Purpose and KPIs", "ابدأ من القرار اللي اللوحة هتخدمه، واطلب من النموذج 3–5 أسئلة الأول، وبعدين اشتق المؤشرات من بنية البيانات.", "Start from the decision; have the model ask 3–5 questions first, then derive KPIs from the data.", 4),
         S("اعتماد التصميم قبل التنفيذ", "Approve the design first", "مراجعة المخطط كنص أسرع وأرخص من مراجعة مخرَج منفّذ.", "Reviewing a text outline is faster and cheaper than reviewing a built output.", 3.5),
         S("البناء والتفاعل", "Build and interact", "نفّذ على التصور المعتمد، وبعدين ضيف فلاتر بتحدّث كل حاجة مع بعض.", "Build to the approved outline, then add filters that update everything together.", 3.5),
-        S("الهوية البصرية", "Visual identity", "تعديلات قصيرة ورا بعض أدق: لون، حجم أرقام، وضع داكن، طباعة.", "Short successive tweaks work best: colour, number size, dark mode, print.", 3),
+        S("الهوية البصرية", "Visual identity", "تعديلات صغيرة متتالية بتدي نتيجة أدق: لون، حجم أرقام، وضع داكن، طباعة.", "Short successive tweaks work best: colour, number size, dark mode, print.", 3),
         S("التحقق — الأكثر حساسية", "Verify — the most sensitive", "مخرجات النماذج ممكن تغلط؛ المراجعة البشرية شرط قبل أي مشاركة.", "Model outputs can be wrong; human review is required before sharing.", 4),
-        S("الحفظ والمشاركة", "Save and share", "ملف واحد بيفتح على أي جهاز. التحديث من نظام حي مرحلة بعدين ومحتاجة ربط مصدر.", "One file that opens anywhere. Live updates are a later stage needing a data connection.", 3.5),
+        S("الحفظ والمشاركة", "Save and share", "ملف واحد بيفتح على أي جهاز. التحديث من نظام حي مرحلة لاحقة ومحتاجة ربط بمصدر البيانات.", "One file that opens anywhere. Live updates are a later stage needing a data connection.", 3.5),
       ],
       els: [
         ...[["الغرض", "Purpose"], ["المؤشرات", "KPIs"], ["التصميم نصًا", "Design as text"], ["البناء", "Build"], ["التفاعل", "Interactivity"], ["الهوية", "Identity"], ["التحقق", "Verify"], ["المشاركة", "Share"]].map((n, i) => {
@@ -450,7 +450,7 @@
           return B("s" + i, 30 + col * 190, row ? 260 : 80, 160, 72, n[0], n[1], { in: [0, 0, 1, 2, 2, 3, 4, 5][i], tone: i === 6 ? "rose" : i === 7 ? "solid" : "blue", ...s2(String(i + 1), String(i + 1)), hi: [[0, 0, 1, 2, 2, 3, 4, 5][i]] });
         }),
         ...[0, 1, 2, 3, 4, 5, 6].map((i) => R("s" + i, "s" + (i + 1), [0, 1, 2, 2, 3, 4, 5][i], { flow: true })),
-        X("v", 200, 380, 400, 50, "المخرَج الشيك ≠ المخرَج الصح", "Polished ≠ correct", { in: 4, size: 19, color: "--rose" }),
+        X("v", 200, 380, 400, 50, "المخرَج الأنيق ≠ المخرَج الصحيح", "Polished ≠ correct", { in: 4, size: 19, color: "--rose" }),
       ] },
 
     /* ---------- U4 ---------- */
@@ -460,7 +460,7 @@
         S("مستكشف الملفات", "File explorer", "شجرة مجلد المشروع — افتح المجلد مش الملف.", "The project folder tree — open the folder, not a file.", 3),
         S("منطقة المحرر", "Editor area", "هنا الملفات بتتعرض وبتتعدّل بتبويبات كتير زي المتصفح.", "Where files are shown and edited, in tabs like a browser.", 3),
         S("الطرفية", "Terminal", "سطر الأوامر جوّا المحرر: بتشغّل التطبيق وبتثبّت المكتبات وبتنادي المساعد البرمجي. اتأكد إن المسار هو مجلد مشروعك.", "The command line inside the editor: run the app, install libraries, call the assistant. Check the path is your project folder.", 4),
-        S("لوحة الأوامر", "Command palette", "مربع بحث يوصلك لكل أمر بالاسم — أسرع طريقة تعمل أي حاجة.", "A search box reaching every command by name — the fastest way to do anything.", 3.5),
+        S("لوحة الأوامر", "Command palette", "مربع بحث يوصلك لكل أمر بالاسم — أسرع طريقة لتنفيذ أي أمر.", "A search box reaching every command by name — the fastest way to do anything.", 3.5),
       ],
       els: [
         B("frame", 40, 30, 720, 390, "", "", { tone: "ink", r: 16 }),
@@ -475,7 +475,7 @@
       stages: [
         S("أنت الوسيط", "You are the middleman", "في المحادثة العادية: بيديك كود كنص، بتنسخه وتلصقه وتشغّله وترجع بالخطأ — في كل خطوة.", "In ordinary chat: it gives you text code; you copy, paste, run and bring back the error — every step.", 4.5),
         S("Claude Code يقرأ المشروع", "Claude Code reads the project", "بيقرأ مشروعك كله وبيفهم بنيته — وبيقرأ CLAUDE.md في أول كل جلسة.", "It reads your whole project and its structure — and reads CLAUDE.md at the start of every session.", 3.5),
-        S("يعدّل ويشغّل ويرى الخطأ", "Edits, runs, sees the error", "بينشئ الملفات وبعدّلها على طول، وبيشغّل الأمر، وبيشوف الخطأ بنفسه.", "It creates and edits files directly, runs the command and sees the error itself.", 4),
+        S("يعدّل ويشغّل ويرى الخطأ", "Edits, runs, sees the error", "بينشئ الملفات وبيعدّلها مباشرةً، وبيشغّل الأمر، وبيشوف الخطأ بنفسه.", "It creates and edits files directly, runs the command and sees the error itself.", 4),
         S("يصلح ويعيد التشغيل", "Fixes and reruns", "بيصلّح السبب الحقيقي مش العرض، وبعدين بيعيد التشغيل للتأكد.", "It fixes the real cause, not the symptom, then reruns to confirm.", 3.5),
         S("أنت تراجع وتوافق", "You review and approve", "بيعرض إيه اللي هيتغيّر قبل التنفيذ. اقرأ قبل الموافقة، خصوصًا في أول أسبوع.", "It shows what it will change before executing. Read before approving, especially the first week.", 4),
       ],
@@ -498,7 +498,7 @@
         S("HTML — الهيكل", "HTML — the structure", "بيحدد إيه الموجود في الصفحة: عنوان وجدول وزر وحقل. زي الهيكل الخرساني: بيحدد الغرف من غير ما يزيّنها.", "Defines what’s on the page: title, table, button, field. Like the concrete frame: rooms without decoration.", 4),
         S("CSS — الشكل", "CSS — the look", "بيحدد العناصر شكلها إزاي: الألوان والمسافات والخطوط والترتيب على شاشات مختلفة. التشطيب والديكور.", "Defines how things look: colours, spacing, fonts, layout on different screens. The finishing and décor.", 4),
         S("JavaScript — السلوك", "JavaScript — behaviour", "بيحدد إيه اللي بيحصل لما تتفاعل: ضغطة زر بتحدّث الرسم، وفلتر بيعيد الحساب. الكهرباء والحركة في المبنى.", "Defines what happens on interaction: a click updates a chart, a filter recalculates. The electricity and motion.", 4),
-        S("صفحة كاملة", "A complete page", "الواجهة بتعرض بس ومش بتمس البيانات على طول — بتطلبها من الخادم.", "The front-end only displays and doesn’t touch data directly — it asks the server.", 4),
+        S("صفحة كاملة", "A complete page", "الواجهة بتعرض بس ومش بتمس البيانات مباشرةً — بتطلبها من الخادم.", "The front-end only displays and doesn’t touch data directly — it asks the server.", 4),
       ],
       els: [
         B("html", 60, 260, 200, 110, "HTML", "HTML", { tone: "blue", ico: "layers", ...s2("الهيكل", "structure"), hi: [0] }),
@@ -512,7 +512,7 @@
       stages: [
         S("المستخدم يغيّر فلترًا", "The user changes a filter", "كل حاجة بتبدأ بتفاعل على الشاشة.", "It all starts with an interaction on screen.", 3),
         S("الواجهة ترسل طلبًا", "The front-end sends a request", "بتطلب من باب محدد في الخادم (API) ليه عنوان (Endpoint).", "It asks a specific door in the server (API) at an address (endpoint).", 3.5),
-        S("الخادم يستقبله ويقرأ البيانات", "The server receives and reads", "بيقرأ الملفات وبيطلع الحساب وبيطبّق قواعد الشغل — في مكان واحد.", "It reads files, computes and applies business rules — in one place.", 4),
+        S("الخادم يستقبله ويقرأ البيانات", "The server receives and reads", "بيقرأ الملفات وبيعمل الحسابات وبيطبّق قواعد الشغل — في مكان واحد.", "It reads files, computes and applies business rules — in one place.", 4),
         S("يعيد النتيجة منظمة", "It returns an organised result", "بصيغة JSON النصية المنظمة.", "In the organised text format JSON.", 3),
         S("الواجهة ترسم النتيجة", "The front-end draws it", "الواجهة مش بتحسب حاجة — بتعرض اللي الخادم رجّعه.", "The front-end computes nothing — it shows what the server returned.", 3.5),
       ],
@@ -554,7 +554,7 @@
         S("المشكلة التي يعرفها الجميع", "The problem everyone knows", "«التقرير_نهائي»، «التقرير_نهائي_2»، «التقرير_نهائي_المعتمد_آخر_تعديل» — أيّهم الأحدث؟ وإيه الفرق؟", "“report_final”, “report_final_2”, “report_final_approved_latest” — which is newest? What changed?", 4),
         S("نسخة واحدة وتاريخ كامل", "One copy, full history", "Git بيسجّل كل تغيير كنقطة محفوظة تقدر ترجع لها — وبيشتغل من غير إنترنت.", "Git records every change as a saved point you can return to — and works offline.", 4),
         S("من، متى، ولماذا", "Who, when and why", "كل نقطة حفظ برسالة بتشرح ليه، فالسجل بيبقى وثيقة حية لقرارات المشروع.", "Every commit has a message explaining why, so the log becomes a living record of decisions.", 3.5),
-        S("GitHub: نسخة خارج جهازك", "GitHub: a copy off your machine", "بيستضيف المشروع على النت، ففريقك بيشتغل عليه من غير ما حد يمسح شغل التاني.", "Hosts the project online so your team works on it without overwriting each other.", 4),
+        S("GitHub: نسخة خارج جهازك", "GitHub: a copy off your machine", "بيستضيف المشروع على الإنترنت، ففريقك يشتغل عليه من غير ما حد يكتب فوق شغل زميله.", "Hosts the project online so your team works on it without overwriting each other.", 4),
       ],
       els: [
         B("f1", 40, 60, 210, 54, "التقرير_نهائي", "report_final", { tone: "rose", out: 1 }),
@@ -563,13 +563,13 @@
         B("one", 40, 170, 200, 76, "نسخة واحدة", "One copy", { in: 1, tone: "solid", ico: "page" }),
         ...[1, 2, 3, 4].map((i) => B("c" + i, 290 + (i - 1) * 120, 180, 90, 56, "c" + i, "c" + i, { in: i === 1 ? 1 : 2, tone: "blue", ico: "check", ...s2(["البداية", "الهامش", "الرسم", "إصلاح"][i - 1], ["start", "margin", "chart", "fix"][i - 1]) })),
         R("one", "c1", 1), R("c1", "c2", 2), R("c2", "c3", 2), R("c3", "c4", 2),
-        B("gh", 420, 330, 240, 70, "GitHub", "GitHub", { in: 3, tone: "violet", ico: "users", ...s2("الفريق والنسخة الاحتياطي", "team & backup") }),
+        B("gh", 420, 330, 240, 70, "GitHub", "GitHub", { in: 3, tone: "violet", ico: "users", ...s2("الفريق والنسخة الاحتياطية", "team & backup") }),
         R("c4", "gh", 3, { flow: true, l: u("push", "push") }),
       ] },
 
     { id: "gitflow", title: u("دورة الشغل الكاملة على GitHub", "The full GitHub workflow"),
       stages: [
-        S("pull ثم branch", "pull, then branch", "ابدأ يومك بسحب تعديلات زمايلك، وبعدين افتح فرع للمهمة مهما كانت صغيرة.", "Start the day by pulling teammates’ changes, then open a branch for the task, however small.", 4),
+        S("pull ثم branch", "pull, then branch", "ابدأ يومك بسحب تعديلات زملائك، وبعدين افتح فرع للمهمة مهما كانت صغيرة.", "Start the day by pulling teammates’ changes, then open a branch for the task, however small.", 4),
         S("اعمل وعدّل ثم status", "Work, edit, then status", "status أكتر أمر هتستخدمه: إيه اللي اتغيّر وإيه الجاهز للحفظ.", "status is the command you’ll use most: what changed and what’s ready.", 3.5),
         S("add ثم commit", "add, then commit", "اختار التعديلات وبعدين احفظها برسالة «إيه اللي عملته وليه» — مش «تعديل».", "Stage changes then commit with a “what and why” message — not “update”.", 4),
         S("push ثم Pull Request", "push, then a Pull Request", "ارفع على GitHub، واطلب مراجعة قبل الدمج في المسار الرئيسي.", "Push to GitHub and ask for review before merging into the main line.", 4),
@@ -624,7 +624,7 @@
         S("أربع عمليات وخمس طبقات", "Four processes, five layers", "كل عملية محتاجة الطبقات الخمس عشان تشتغل فعلًا.", "Every process needs all five layers to actually work.", 3.5),
         S("الطريق الفاشل: عرضًا", "The failing way: across", "بتبني طبقة التجميع لكل بيانات المؤسسة وبعدين تنتقل للي بعدها — شهور من غير مخرج حد يشوفه.", "Build the collection layer for all company data first — months with nothing anyone can see.", 4),
         S("الطريق الناجح: عمقًا", "The winning way: deep", "اختار عملية واحدة صغيرة وابنِ لها الطبقات الخمس كاملة لحد الإشعار والقرار.", "Pick one small process and build all five layers up to notification and decision.", 4),
-        S("ثم توسّع بثقة", "Then widen with confidence", "نظام شغّال فعلًا ونموذج مثبت تتوسع منه أفقيًا بمعرفة اكتسبتها.", "A real working system and a proven model to widen from, with knowledge gained.", 4),
+        S("ثم توسّع بثقة", "Then widen with confidence", "بيبقى عندك نظام شغّال فعلًا ونموذج مُثبت تتوسع منه أفقيًا بالخبرة اللي اكتسبتها.", "A real working system and a proven model to widen from, with knowledge gained.", 4),
       ],
       els: [
         ...[0, 1, 2, 3].flatMap((c) => [0, 1, 2, 3, 4].map((r) => B(`g${c}${r}`, 200 + c * 140, 360 - r * 74, 120, 56, ["مصادر", "تجميع", "قواعد", "ذكاء", "إجراء"][r], ["Sources", "Collect", "Rules", "Intelligence", "Action"][r], { tone: "ink", hi: c === 0 ? [2, 3] : r === 0 ? [1] : [] }))),
@@ -636,8 +636,8 @@
     { id: "team", title: u("تلات أنماط لتنسيق الفريق الرقمي", "Three ways to coordinate a digital team"),
       stages: [
         S("السلسلة", "Chain", "وكيل ورا وكيل؛ مخرج كل واحد مدخل اللي بعده. الأبسط والأوضح في التتبع، للعمليات بترتيب ثابت.", "Agent after agent; each output feeds the next. Simplest and easiest to trace, for fixed-order processes.", 4.5),
-        S("التوزيع والتجميع", "Fan-out / fan-in", "كذا وكيل بيشتغلوا مع بعض على أجزاء مختلفة، وبعدين المنسق بيدمج نتائجهم. لتحليل مصادر أو أقسام كتير.", "Several agents work on different parts at once, then the coordinator merges. For several sources or departments.", 4.5),
-        S("المنفذ والناقد", "Executor and critic", "وكيل بيطلع ووكيل بيراجع وبيرجّعه للتصحيح، في دورتين أو تلات. لما الجودة أهم من السرعة.", "One agent produces, another reviews and sends it back, two or three rounds. When quality beats speed.", 4.5),
+        S("التوزيع والتجميع", "Fan-out / fan-in", "أكتر من وكيل بيشتغلوا في نفس الوقت على أجزاء مختلفة، وبعدين المنسق بيدمج نتائجهم. لتحليل مصادر أو أقسام كتير.", "Several agents work on different parts at once, then the coordinator merges. For several sources or departments.", 4.5),
+        S("المنفذ والناقد", "Executor and critic", "وكيل بينتج ووكيل تاني بيراجع وبيرجّع الشغل للتصحيح، في دورتين أو تلات. لما الجودة أهم من السرعة.", "One agent produces, another reviews and sends it back, two or three rounds. When quality beats speed.", 4.5),
         S("ابدأ بثلاثة", "Start with three", "جامع ومحلل ومراجع: نواة بتدي معظم الفايدة بأقل تعقيد.", "Collector, analyst, critic: a core that gives most of the value with least complexity.", 4),
       ],
       els: [
