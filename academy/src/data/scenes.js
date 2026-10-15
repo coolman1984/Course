@@ -142,7 +142,7 @@
         M("q", 200, 420, 400, 14, [0.12, 0.35, 0.58, 0.78, 0.9, 1], "قابلية التنفيذ", "Actionability", { tone: "mint" }),
       ] },
 
-    { id: "technique", title: u("أقوى تقنية: جملة واحدة بتحل تلات مشاكل", "The strongest technique: one sentence, three fixes"),
+    { id: "technique", title: u("أهم تقنية: جملة واحدة بتحل تلات مشاكل", "The strongest technique: one sentence, three fixes"),
       stages: [
         S("ثلاث مشكلات صامتة", "Three silent problems", "الأداة بتبني على افتراضات من غير ما تصرّح بيها، وبتميل للتعقيد، ومش بتختبر الحالات الاستثنائية.", "The tool silently guesses its assumptions, drifts into complexity, and doesn’t test edge cases.", 4),
         S("«اسألني عن الناقص»", "“Ask me what’s missing”", "بتجبر الأداة تكشف افتراضاتها بدل ما تبني عليها من غير ما تقول.", "Forces the tool to reveal its assumptions instead of silently guessing.", 3.5),

@@ -19,7 +19,7 @@
       ],
       levels: {
         simple: [
-          L("what", "**((prompt|البرومبت))** هو الطلب المكتوب اللي بتبعته للأداة. والمعادلة بتقول إن الطلب الجيد ليه أربع أجزاء: **إيه اللي عايزه** (هدف)، **وضعي إيه** (سياق)، **المهمة بالضبط إيه** (طلب محدد)، **عايز النتيجة إزاي** (شكل). الخمس عناصر بتضيف **الجمهور** و**القيود**.\n\nمثال: أمر شغل مكتوب فيه «صيانة» بس طلب ضعيف. الطلب القوي: «ماكينة رقم ٣، صوت غير طبيعي في الموتور، وقفت ١٠ دقايق امبارح، والمطلوب فحص قبل الوردية التانية».", "The **((prompt|prompt))** is the written request you send the tool. The equation says a good request has four parts: **what I want** (goal), **my situation** (context), **the exact task** (specific request), **how I want the result** (format). The five elements add **audience** and **constraints**.\n\nA weak prompt is like telling a taxi driver “take me somewhere”. A strong one: “to this hospital, fastest route, because my appointment is in 20 minutes.”"),
+          L("what", "**((prompt|البرومبت))** هو الطلب المكتوب اللي بتبعته للأداة. والمعادلة بتقول إن الطلب الجيد ليه أربع أجزاء: **إيه اللي عايزه** (هدف)، **وضعي إيه** (سياق)، **المهمة بالضبط إيه** (طلب محدد)، **عايز النتيجة إزاي** (شكل). الخمس عناصر بتضيف **الجمهور** و**القيود**.\n\nمثال: أمر شغل مكتوب فيه «صيانة» بس طلب ضعيف. الطلب القوي: «ماكينة رقم ٣، صوت غير طبيعي في الموتور، وقفت ١٠ دقايق امبارح، والمطلوب فحص قبل الوردية التانية».", "The **((prompt|prompt))** is the written request you send the tool. The equation says a good request has four parts: **what I want** (goal), **my situation** (context), **the exact task** (specific request), **how I want the result** (format). The five elements add **audience** and **constraints**.\n\nExample: a work order that just says “maintenance” is a weak request. A strong one: “Machine 3, abnormal motor noise, stopped for 10 minutes yesterday; inspect it before the second shift.”"),
           L("why", "لأن الأداة مش بتقرأ أفكارك. كل عنصر ناقص بتملاه بالتخمين — والتخمين بيديك نتيجة صحيحة بشكل عام، لكنها ما بتغيّرش حاجة في شغلك.", "Because the tool can’t read your mind. Every missing element is filled by guessing — and guessing gives you something generally true that changes nothing at work."),
         ],
         mech: [
@@ -118,7 +118,7 @@
       ],
       levels: {
         simple: [
-          L("what", "لما الإجابة مش عاجباك، ما تقفلش المحادثة. اقرأها، حدّد إيه الغلط بالضبط، واطلب التعديل في نفس المحادثة.\n\nزي مراجعة مسودة عقد: ما بتطلبش عقد جديد، بتعلّم على البند اللي محتاج تعديل وبتقول التعديل المطلوب.", "When you don’t like the answer, don’t close the chat. Read it, pinpoint exactly what’s wrong, and ask for the fix in the same chat.\n\nLike a tailor fitting a suit — you don’t throw it away for another tailor; you say “the sleeve is a bit long”."),
+          L("what", "لما الإجابة مش عاجباك، ما تقفلش المحادثة. اقرأها، حدّد إيه الغلط بالضبط، واطلب التعديل في نفس المحادثة.\n\nزي مراجعة مسودة عقد: ما بتطلبش عقد جديد، بتعلّم على البند اللي محتاج تعديل وبتقول التعديل المطلوب.", "When you don’t like the answer, don’t close the chat. Read it, pinpoint exactly what’s wrong, and ask for the fix in the same chat.\n\nLike reviewing a draft contract: you don’t ask for a new contract; you mark the clause that needs changing and state the change."),
           L("why", "لأن المحادثة الحالية فيها كل السياق اللي بنيته. المحادثة الجديدة بتبدأ من صفر فبتعيد نفس الغلطات.", "Because the current chat holds all the context you built. A new chat starts from zero and repeats the same mistakes."),
         ],
         mech: [

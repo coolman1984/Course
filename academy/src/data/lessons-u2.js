@@ -16,7 +16,7 @@
       ],
       levels: {
         simple: [
-          L("what", "قبل ما تطلب أداة، اكتب «ورقة مواصفات» من خمسة أسطر: إيه المشكلة؟ إيه الملفات؟ إيه القواعد؟ شكل النتيجة إيه؟ وإزاي أعرف إنها صح؟\n\nزي طلب عرض سعر من مورّد: لو كتبت «عايزين خامة كويسة» هيبعت اللي عنده. لو حددت المواصفات والكمية والميزانية وطريقة الفحص عند الاستلام، هيبعت المطلوب بالظبط.", "Before asking for a tool, write a five-line “spec sheet”: what’s the problem? which files? what rules? what result? how will I know it’s right?\n\nLike ordering a kitchen from a carpenter — “a nice kitchen” gets you what he imagines. Measurements, materials, budget and how you’ll inspect it get you what you need."),
+          L("what", "قبل ما تطلب أداة، اكتب «ورقة مواصفات» من خمسة أسطر: إيه المشكلة؟ إيه الملفات؟ إيه القواعد؟ شكل النتيجة إيه؟ وإزاي أعرف إنها صح؟\n\nزي طلب عرض سعر من مورّد: لو كتبت «عايزين خامة كويسة» هيبعت اللي عنده. لو حددت المواصفات والكمية والميزانية وطريقة الفحص عند الاستلام، هيبعت المطلوب بالظبط.", "Before asking for a tool, write a five-line “spec sheet”: what’s the problem? which files? what rules? what result? how will I know it’s right?\n\nLike requesting a quotation from a supplier: “good material” gets you whatever they stock. Specifications, quantity, budget and the acceptance check get you exactly what you need."),
           L("why", "لأن الذكاء الاصطناعي بيكتب الكود بسرعة، بس مش عارف قواعد شغلك واستثناءاتها. المواصفة بتنقل له المعرفة دي، والاختبارات بتحميك من أداة «شكلها» صح.", "Because AI writes code fast but doesn’t know your business rules and exceptions. The spec transfers that knowledge, and the tests protect you from a tool that only “looks” right."),
         ],
         mech: [
@@ -161,7 +161,7 @@
       ],
       levels: {
         simple: [
-          L("what", "قرار بين طريقين: **سكربت بايثون** تبنيه بنفسك بسرعة لفريق صغير، أو **منصة تقارير** مؤسسية لكل الشركة بصلاحيات وتحديث مركزي. زي ملف إكسل بيستخدمه قسم واحد مقابل نظام مركزي للشركة كلها: لكل واحد حجم شغل يناسبه.", "A choice between two paths: a **Python script** you build quickly for a small team, or an enterprise **reporting platform** for the whole company with permissions and central refresh. Like a private car vs the company bus — each has its moment."),
+          L("what", "قرار بين طريقين: **سكربت بايثون** تبنيه بنفسك بسرعة لفريق صغير، أو **منصة تقارير** مؤسسية لكل الشركة بصلاحيات وتحديث مركزي. زي ملف إكسل بيستخدمه قسم واحد مقابل نظام مركزي للشركة كلها: لكل واحد حجم شغل يناسبه.", "A choice between two paths: a **Python script** you build quickly for a small team, or an enterprise **reporting platform** for the whole company with permissions and central refresh. Like a spreadsheet one department uses versus a central system for the whole company — each suits a different scale of work."),
           L("why", "لأن الغلط مكلف في الاتجاهين: منصة كاملة لسؤال بسيط بتضيّع أسابيع، وسكربت على جهاز موظف واحد والإدارة كلها معتمدة عليه خطر لما يغيب.", "Because the mistake is costly both ways: a full platform for a simple question wastes weeks, and a script on one person’s PC that all management depends on is a risk when they’re away."),
         ],
         mech: [
