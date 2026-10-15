@@ -444,6 +444,7 @@
         <span class="brand-txt"><b>${esc(t("brand"))}</b><small>${esc(t("brandSub"))}</small></span>
       </a>
       <span class="bar-spacer"></span>
+      <button class="watchbtn" id="watch-btn" aria-label="${esc(t("tourTitle"))}" title="${esc(t("tourTitle"))}">${ico("play")}<span>${esc(t("tourBtn"))}</span></button>
       <button class="searchbtn" id="search-btn" aria-label="${esc(t("search"))}">${ico("search")}<span class="t">${esc(t("searchShort"))}</span><kbd>Ctrl K</kbd></button>
       <div class="levelseg hide-sm" role="group" aria-label="${esc(t("levelPick"))}">
         ${A.levels.map((x) => `<button type="button" data-level="${x.id}" aria-pressed="${lv === x.id}" title="${esc(L(x.desc))}"><span class="e" aria-hidden="true">${x.e}</span><span class="t">${esc(L(x.name))}</span></button>`).join("")}
@@ -455,9 +456,19 @@
       <button class="ibtn" id="theme-btn" aria-label="${esc(t("themeBtn") + ": " + themeLbl)}" title="${esc(t("themeBtn") + ": " + themeLbl)}">${ico(themeIcon)}</button>`;
     $("#menu-btn").onclick = () => { doc.body.classList.toggle("nav-open"); $("#menu-btn").setAttribute("aria-expanded", doc.body.classList.contains("nav-open")); };
     $("#search-btn").onclick = () => openPalette();
+    $("#watch-btn").onclick = openTour;
     $$("[data-level]", bar).forEach((b) => (b.onclick = () => { S.set("level", b.dataset.level); renderBar(); A.emit("level", b.dataset.level); }));
     $("#lang-btn").onclick = () => { S.set("lang", lang() === "ar" ? "en" : "ar"); index = null; applyLang(); renderAll(); };
     $("#theme-btn").onclick = () => { const order = ["auto", "light", "dark"]; S.set("theme", order[(order.indexOf(memory.theme) + 1) % 3]); applyTheme(); renderBar(); toast(t("themeBtn") + ": " + t("theme_" + memory.theme), memory.theme === "dark" ? "moon" : memory.theme === "light" ? "sun" : "auto"); };
+  }
+  // the 15 s tour video lives next to the HTML file and loads only when asked for (nothing is fetched at start-up);
+  // an offline copy without the file gets a plain message instead of a broken player
+  const TOUR = "AI_Academy_tour.mp4";
+  function openTour() {
+    const v = h("video", { class: "tour-v", src: TOUR, controls: "", autoplay: "", playsinline: "", preload: "auto" });
+    v.onerror = () => v.replaceWith(h("p", { class: "tour-miss" }, t("tourMissing")));
+    openDialog({ title: t("tourTitle"), body: v, cls: "tour" });
+    const p = v.play(); if (p && p.catch) p.catch(() => {});
   }
   const openGroups = new Set(["start", "units", "practice", "reference", "tools"]);
   function renderSide() {
