@@ -6101,19 +6101,21 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
         title: u("نفس الكلمات… معنى تاني خالص", "Same words… a completely different meaning"),
         story: [u("«الكلب عض الراجل» خبر عادي. «الراجل عض الكلب» خبر في الجرنال! نفس الكلمات بالظبط، بس الترتيب قلب المعنى.",
           "“Dog bites man” is ordinary. “Man bites dog” makes the papers! Exactly the same words — the order flipped the meaning."),
-        u("والموديل بيبص على الكلمات كلها مرة واحدة (هنعرف ليه في الشريحة الجاية)، فممكن ينسى مين جه قبل مين. عشان كده بيضيفوا لكل توكن «ختم» صغير بمكانه في الجملة.",
-          "And the model looks at all the words at once (the next slide shows why), so it could lose track of who came first. That's why each token gets a small “stamp” with its position in the sentence.")],
+        u("و«الانتباه» اللي جاي في الشريحة الجاية بيوصّل الكلمات ببعض مباشرة، من غير ما يعرف لوحده مين جه قبل مين. عشان كده بيضيفوا لكل توكن «ختم» صغير بمكانه في الجملة.",
+          "And “attention”, on the next slide, links words to each other directly without knowing by itself who came first. That's why each token gets a small “stamp” with its position in the sentence.")],
         answer: u("نضيف معلومة المكان لكل كلمة. لأن من غيرها الجملة بتبقى شنطة كلمات ملخبطة.", "Add position information to every word — without it, a sentence is just a jumbled bag of words."),
         idea: u("المعنى = الكلمات + ترتيبها. والموديل محتاج الاتنين.", "Meaning = the words + their order. The model needs both.")
       },
       {
         id: "attention", art: "m_attention", year: u("الانتباه", "Attention"), mark: u("٠٦", "06"), era: u("قلب التصميم", "The heart of the design"),
         title: u("الانتباه: كل كلمة بتسأل الباقيين", "Attention: every word asks all the others"),
-        story: [u("«سلّمت الملف للمدير عشان هو مستعجل». مين المستعجل؟ إنت عرفت على طول إنه المدير. الموديل بيعمل كده بـ«الانتباه»: كل كلمة بتبص على كل الكلمات التانية وتقرر مين يهمها أكتر، و«هو» بتشد أوي على «المدير».",
-          "“The file reached the manager, so he signed.” Who signed? You knew instantly: the manager. The model does this with “attention”: every word looks at every other word and decides which matter most — and “he” pulls hard on “manager”."),
-        u("النماذج القديمة كانت بتقرا كلمة ورا كلمة، فتنسى أول الجملة الطويلة وكانت بطيئة. الانتباه بيشوف الكل مرة واحدة، وده كمان بيخلّي كروت الشاشة تحسب آلاف الحاجات في نفس الوقت.",
-          "Older models read one word after another, forgot the start of long sentences and were slow. Attention sees everything at once — which also lets graphics chips compute thousands of things in parallel.")],
-        answer: u("كل كلمة تبص على كل الكلمات مرة واحدة. لأنه أدق في فهم السياق، وأسرع بكتير في التدريب على أجهزة كتير بالتوازي.", "Let every word look at all the words at once — it follows context better and trains far faster on many chips in parallel."),
+        story: [u("«سلّمت الملف للمدير عشان هو مستعجل». مين المستعجل؟ إنت عرفت على طول إنه المدير. الموديل بيعمل كده بـ«الانتباه»: كل كلمة بتبص على الكلمات اللي قبلها وتقرر مين يهمها أكتر، و«هو» بتشد أوي على «المدير».",
+          "“The file reached the manager, so he signed.” Who signed? The manager, of course. The model does this with “attention”: every word looks back at the words before it and decides which matter most — and “he” pulls hard on “manager”."),
+        u("ليه اللي قبلها بس؟ لأنه بيتدرّب يخمّن الكلمة الجاية، فلو بص على اللي بعدها يبقى بيغش وشاف الإجابة!",
+          "Why only the words before? Because it's trained to guess the next word — looking ahead would be peeking at the answer!"),
+        u("النماذج القديمة كانت بتقرا كلمة ورا كلمة وتشيل الملخص في ذاكرة صغيرة، فتنسى أول الجملة الطويلة وكانت بطيئة. الانتباه بيخلّي كل كلمة توصل مباشرة لأي كلمة قبلها مهما كانت بعيدة، وفي التدريب بيتحسب ده لكل المواضع في نفس الوقت، فكروت الشاشة تشتغل بالتوازي.",
+          "Older models read one word at a time, squeezing what they'd read into a small memory, so they forgot the start of long sentences and were slow. Attention lets each word reach any earlier word directly, however far back, and in training this is computed for every position at once, so graphics chips work in parallel.")],
+        answer: u("كل كلمة توصل مباشرة لكل الكلمات اللي قبلها، ومش اللي بعدها. لأنه كده بيفهم السياق كويس من غير ما يغش في لعبة «الكلمة الجاية»، ويتدرّب بسرعة بالتوازي.", "Every word reaches straight back to all the words before it, never ahead — it follows context well without cheating at the next-word game, and trains fast in parallel."),
         idea: u("ده قلب تصميم «المحوّل» (Transformer) اللي شفناه في حكاية التاريخ سنة ٢٠١٧.", "This is the heart of the Transformer design we met in the history story, in 2017.")
       },
       {
@@ -9639,10 +9641,10 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       const words = ar() ? ["سلّمت", "الملف", "للمدير", "عشان", "هو", "مستعجل"] : ["The", "file", "reached", "the", "manager", "so", "he", "signed"];
       const focus = ar() ? 4 : 6, link = ar() ? 2 : 4, w = ar() ? 66 : 50;
       const X = rowX(words.length, w, 8);
-      const arcs = words.map((_, i) => i === focus ? "" : `<path ${an("draw", 0.8 + i * 0.1, i === link ? "s-acc" : "s-line2")} pathLength="1" d="M${X(focus)} 176 Q${(X(focus) + X(i)) / 2} ${i === link ? 40 : 110} ${X(i)} 176" stroke-width="${i === link ? 5.5 : 1.8}" fill="none" stroke-linecap="round"/>`).join("");
+      const arcs = words.map((_, i) => i >= focus ? "" : `<path ${an("draw", 0.8 + i * 0.1, i === link ? "s-acc" : "s-line2")} pathLength="1" d="M${X(focus)} 176 Q${(X(focus) + X(i)) / 2} ${i === link ? 40 : 110} ${X(i)} 176" stroke-width="${i === link ? 5.5 : 1.8}" fill="none" stroke-linecap="round"/>`).join("");
       return `${arcs}${words.map((s, i) => `<g ${an("rise", 0.1 + i * 0.07)}>${chip(X(i), 198, w, s, i === focus ? "f-acc" : i === link ? "f-acc-soft s-acc" : "f-s1 s-line2", i === focus ? "t-white" : "t-ink", 13.5)}</g>`).join("")}
       <g ${an("pop", 2.0)}><rect x="${X(focus) - 72}" y="240" width="144" height="34" rx="17" class="f-mint"/>${txt(X(focus), 262, ar() ? "«هو» = المدير" : "“he” = the manager", "t-white", 13, 'font-weight="700"')}</g>
-      ${txt(240, 302, ar() ? "كل كلمة بتبص على الكل مرة واحدة" : "every word looks at all the others at once", "t-ink3", 13)}`;
+      ${txt(240, 302, ar() ? "كل كلمة بتبص على اللي قبلها بس، مش على الإجابة" : "each word looks only at the words before it, never ahead", "t-ink3", 13)}`;
     },
     m_layers: () => {
       const labels = ar() ? ["شكل الكلام", "القواعد", "المعنى", "السياق", "المقصود"] : ["word forms", "grammar", "meaning", "context", "intent"];
