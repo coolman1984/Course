@@ -7,7 +7,7 @@
     {
       id: "p1", unit: "u1", pages: [7], diff: 1, min: 9, scene: "equation", lab: "prompt", related: ["f4", "p2", "p3", "d1"], pre: ["f4"],
       title: { ar: "إزاي تطلب منه حاجة ويطلع المطلوب من أول مرة؟", en: "The governing equation and the five elements" },
-      sum: { ar: "واحد قال لصنايعي «صلّحلي المكان»، والتاني قال «غيّر لمبة المطبخ وافصل الكهرباء الأول». الثاني فرصة نجاحه أعلى لأن الكلام محدد.", en: "Clear goal + enough context + specific request + output format = an actionable result; and the five elements of any good request." },
+      sum: { ar: "الطلب العام زي «حلل الملف» بيرجّع نتيجة عامة. الطلب اللي فيه الهدف والظروف والمهمة بالظبط وشكل النتيجة بيطلّع المطلوب من أول مرة.", en: "Clear goal + enough context + specific request + output format = an actionable result; and the five elements of any good request." },
       book: [
         bp(7, "معظم الناس اللي بتستخدم الذكاء الاصطناعي النهارده بيستخدموه كمحرك بحث سريع: سؤال، جواب، وبعدين نسيان. **وده أضعف استخدام ممكن.**", "Most people use AI like a quick search engine: question, answer, forget. **That’s the weakest possible use.**"),
         bp(7, "الاستخدام الحقيقي بيبدأ لما تتوقف عن طلب «إجابة» وتبدأ تطلب **نتيجة تقدر تنفّذها**: خطة، قرار، أو أداة تشتغل بدّالك.", "Real use begins when you stop asking for “an answer” and start asking for **an actionable result**: a plan, a decision, or a tool working for you."),
@@ -19,7 +19,7 @@
       ],
       levels: {
         simple: [
-          L("what", "**((prompt|البرومبت))** هو الطلب المكتوب اللي بتبعته للأداة. والمعادلة بتقول إن الطلب الجيد ليه أربع أجزاء: **إيه اللي عايزه** (هدف)، **وضعي إيه** (سياق)، **المهمة بالضبط إيه** (طلب محدد)، **عايز النتيجة إزاي** (شكل). الخمس عناصر بتضيف **الجمهور** و**القيود**.\n\nتشبيه: الطلب الضعيف زي ما تقول لسواق تاكسي «وصّلني». والطلب القوي: «لمستشفى كذا، بأقصر طريق، عندي موعد بعد 20 دقيقة».", "The **((prompt|prompt))** is the written request you send the tool. The equation says a good request has four parts: **what I want** (goal), **my situation** (context), **the exact task** (specific request), **how I want the result** (format). The five elements add **audience** and **constraints**.\n\nA weak prompt is like telling a taxi driver “take me somewhere”. A strong one: “to this hospital, fastest route, because my appointment is in 20 minutes.”"),
+          L("what", "**((prompt|البرومبت))** هو الطلب المكتوب اللي بتبعته للأداة. والمعادلة بتقول إن الطلب الجيد ليه أربع أجزاء: **إيه اللي عايزه** (هدف)، **وضعي إيه** (سياق)، **المهمة بالضبط إيه** (طلب محدد)، **عايز النتيجة إزاي** (شكل). الخمس عناصر بتضيف **الجمهور** و**القيود**.\n\nمثال: أمر شغل مكتوب فيه «صيانة» بس طلب ضعيف. الطلب القوي: «ماكينة رقم ٣، صوت غير طبيعي في الموتور، وقفت ١٠ دقايق امبارح، والمطلوب فحص قبل الوردية التانية».", "The **((prompt|prompt))** is the written request you send the tool. The equation says a good request has four parts: **what I want** (goal), **my situation** (context), **the exact task** (specific request), **how I want the result** (format). The five elements add **audience** and **constraints**.\n\nA weak prompt is like telling a taxi driver “take me somewhere”. A strong one: “to this hospital, fastest route, because my appointment is in 20 minutes.”"),
           L("why", "لأن الأداة مش بتقرأ أفكارك. كل عنصر ناقص بتملاه بالتخمين — والتخمين بيديك نتيجة صح بشكل عام بس مش بتغيّر حاجة في شغلك.", "Because the tool can’t read your mind. Every missing element is filled by guessing — and guessing gives you something generally true that changes nothing at work."),
         ],
         mech: [
@@ -49,7 +49,7 @@
     {
       id: "p2", unit: "u1", pages: [7], diff: 1, min: 5, scene: "technique", related: ["p1", "p3", "w2"], pre: ["p1"],
       title: { ar: "الجملة اللي تمنع التخمين قبل ما يبدأ", en: "The guide’s strongest technique" },
-      sum: { ar: "تخيّل إنك بتطلب حساب المكافأة، ونسيت تقول عن أنهي شهر. المساعد ممكن يختار شهر من دماغه؛ هنا بتبدأ المشكلة.", en: "One sentence at the start of every important request fixes three problems: silent assumptions, complexity and untested errors." },
+      sum: { ar: "لو الطلب ناقصه معلومة مؤثرة، زي الشهر أو سعر الخامة، المساعد غالبًا هيفترض قيمة ويكمّل. جملة واحدة في أول الطلب بتخليه يسألك بدل ما يخمّن.", en: "One sentence at the start of every important request fixes three problems: silent assumptions, complexity and untested errors." },
       book: [
         bp(7, "خلّيها بداية كل طلب مهم: «**قبل ما تديني الإجابة، اسألني عن أي معلومة ناقصة محتاجها. وبعد ما أجاوبك، ادّيني أبسط حل ممكن، واشرحهولي ببساطة، واختبر الحالات الاستثنائية.**»", "Make it the start of every important request: “**Before you give me the answer, ask me about any missing information you need. After I reply, give me the simplest possible solution, explain it simply, and test the edge cases.**”"),
         bp(7, "ليه الجملة دي بالذات؟ لأنها بتحل تلات مشاكل مرة واحدة: «اسألني عن الناقص» بيجبر الأداة **تكشف افتراضاتها** بدل ما تخمّن في صمت.", "Why this sentence? It fixes three problems at once: “ask me what’s missing” forces the tool to **reveal its assumptions** instead of silently guessing."),
@@ -78,7 +78,7 @@
     {
       id: "p3", unit: "u1", pages: [8], diff: 1, min: 6, related: ["p1", "p4", "p9"], pre: ["p1"],
       title: { ar: "أربع غلطات بتضيّع فايدة أي طلب", en: "Four mistakes that ruin results, three prompts that fix them" },
-      sum: { ar: "إنت مستعجل تخلص تقرير. أول رد شكله كويس فتنسخه، وبعدين تكتشف رقم غلط أو خطوة ناقصة.", en: "Vague descriptions, accepting the first answer, ignoring missing cases, applying straight to the real file — and how to fix them." },
+      sum: { ar: "أغلب إعادة الشغل جاية من أربع غلطات: وصف مبهم للبيانات، وقبول أول إجابة، وتجاهل الخلايا الفاضية والحالات الناقصة، والتجربة على الملف الأصلي على طول.", en: "Vague descriptions, accepting the first answer, ignoring missing cases, applying straight to the real file — and how to fix them." },
       book: [
         bp(8, "**وصف مبهم للمعطيات** — الغلطة: «عندي جدول مبيعات». الصح: سمّي الأعمدة بأسمائها الحقيقية، وقول نوع كل عمود، وعدد الصفوف تقريبًا.", "**Vague data description** — wrong: “I have a sales table”. Right: name the real columns, state each column’s type and the approximate row count."),
         bp(8, "**قبول أول إجابة** — الغلطة: تاخد أول نتيجة وتكمل بيها. الصح: اطلب نسخة أبسط، وبعدين قارن بين النسختين قبل ما تعتمد.", "**Accepting the first answer** — wrong: taking the first result and running. Right: ask for a simpler version, then compare both before adopting."),
@@ -108,17 +108,17 @@
     {
       id: "p4", unit: "u1", pages: [8], diff: 1, min: 5, scene: "convo", related: ["p3", "p1", "t1"], pre: ["p1"],
       title: { ar: "الرد مش عاجبك؟ إزاي تصلحه من غير ما تبدأ من الصفر", en: "Managing the conversation: what to do when you dislike the result" },
-      sum: { ar: "زي لما تقول لزميلك «التقرير مش كويس» فيحتار. بس لو قلت «الأرقام ناقصة والملخص طويل»، هيعرف يصلح إيه.", en: "The biggest gap between beginner and skilled isn’t the first request but what follows: the five-step loop and three common situations." },
+      sum: { ar: "لما الرد ما يعجبكش، ما تبدأش من الأول. حدّد العيب بالظبط، زي «الأرقام ناقصة» أو «الملخص طويل»، والمساعد هيصلّح الجزء ده بس.", en: "The biggest gap between beginner and skilled isn’t the first request but what follows: the five-step loop and three common situations." },
       book: [
         bp(8, "أكبر فرق بين مستخدم مبتدئ ومتمكن مش في الطلب الأول، لكن في اللي بيعمله بعده. **المبتدئ بيفتح محادثة جديدة، والمتمكن بيصحّح المسار في نفس المحادثة.**", "The biggest difference between a beginner and a skilled user isn’t the first request but what they do next. **The beginner starts a new chat; the skilled user corrects course in the same chat.**"),
         bp(8, "الدورة: اطلب ← اقرأ بعين ناقدة ← حدّد الخلل بدقة ← صحّح في نفس المحادثة ← اعتمد أو كرّر.", "The loop: ask → read critically → pinpoint the flaw → correct in the same chat → adopt or repeat."),
         bp(8, "النتيجة طويلة ومشتتة؟ قول: «اختصرها لنص الطول مع الحفاظ على كل نقطة تقدر تنفّذها، وامسح كل تمهيد أو تكرار».", "Long and scattered? Say: “Cut it to half the length while keeping every actionable point, and delete all preamble and repetition.”"),
         bp(8, "النتيجة صح بس مش مناسبة ليك؟ قول: «ده صح بشكل عام، بس وضعي مختلف في [حدّد الفرق]. أعد الحل بناءً على القيد ده بالذات».", "Correct but not right for you? Say: “This is generally right, but my situation differs in [state the difference]. Redo the solution based on that constraint.”"),
-        bp(8, "النتيجة شكلها متاخدة من دماغها؟ قول: «اذكر لكل رقم أو ادعاء مصدره، وفرّق بوضوح بين اللي إنت واثق منه واللي ترجيح منك».", "Looks made up? Say: “Give the source for every number or claim, and clearly separate what you’re sure of from what you’re guessing.”"),
+        bp(8, "النتيجة فيها أرقام مش واضح مصدرها؟ قول: «اذكر لكل رقم أو ادعاء مصدره، وفرّق بوضوح بين اللي إنت واثق منه واللي ترجيح منك».", "Looks made up? Say: “Give the source for every number or claim, and clearly separate what you’re sure of from what you’re guessing.”"),
       ],
       levels: {
         simple: [
-          L("what", "لما الإجابة مش عاجباك، ما تقفلش المحادثة. اقرأها، حدّد إيه الغلط بالضبط، واطلب التعديل في نفس المحادثة.\n\nتشبيه: زي خيّاط بيجرب عليك البدلة — ما ترميهاش وتروح لخيّاط تاني، قوله «الكم أطول شوية».", "When you don’t like the answer, don’t close the chat. Read it, pinpoint exactly what’s wrong, and ask for the fix in the same chat.\n\nLike a tailor fitting a suit — you don’t throw it away for another tailor; you say “the sleeve is a bit long”."),
+          L("what", "لما الإجابة مش عاجباك، ما تقفلش المحادثة. اقرأها، حدّد إيه الغلط بالضبط، واطلب التعديل في نفس المحادثة.\n\nزي مراجعة مسودة عقد: ما بتطلبش عقد جديد، بتعلّم على البند اللي محتاج تعديل وبتقول التعديل المطلوب.", "When you don’t like the answer, don’t close the chat. Read it, pinpoint exactly what’s wrong, and ask for the fix in the same chat.\n\nLike a tailor fitting a suit — you don’t throw it away for another tailor; you say “the sleeve is a bit long”."),
           L("why", "لأن المحادثة الحالية فيها كل السياق اللي بنيته. المحادثة الجديدة بتبدأ من صفر فبتعيد نفس الغلطات.", "Because the current chat holds all the context you built. A new chat starts from zero and repeats the same mistakes."),
         ],
         mech: [
@@ -138,7 +138,7 @@
     {
       id: "p5", unit: "u1", pages: [8, 9, 10], diff: 1, min: 9, scene: "daily", related: ["p4", "p6", "p12"], pre: ["p1"],
       title: { ar: "إزاي الذكاء الاصطناعي يرتّب يومك بدل ما يزوّده زحمة؟", en: "Productivity prompts and running your day" },
-      sum: { ar: "صباحك فيه ١٢ رسالة واجتماعين وتقرير متأخر. المشكلة مش عدد المهام، المشكلة إنك مش عارف تبدأ بإيه.", en: "Organising the day, meetings, tasks, professional writing, research, follow-up, process improvement, delegation, triage and the all-in-one prompt." },
+      sum: { ar: "الزحمة مش في عدد المهام، الزحمة في إنها مش مترتبة. المساعد يقدر يحوّل رسايلك ومحاضر اجتماعاتك لقائمة واضحة: مين يعمل إيه، وإمتى، وتبدأ بإيه.", en: "Organising the day, meetings, tasks, professional writing, research, follow-up, process improvement, delegation, triage and the all-in-one prompt." },
       book: [
         bp(8, "برومبتات عملية بتساعدك تنظّم وتابع وتنجز وتدير الاجتماعات بوضوح وسرعة — **ماتطلبش إجابة بس، اطلب نتيجة تقدر تنفّذها**.", "Practical prompts for organising, following up, getting things done and running meetings clearly and quickly — **don’t ask for an answer only, ask for an actionable result**."),
         bp(8, "**تنظيم اليوم**: رتّب المهام حسب الأولوية والوقت والطاقة الذهنية مع أول تلات مهام وليه اخترت كل واحدة، وقسّم اليوم لفترات تركيز عميق وراحة ومتابعة.", "**Organising the day**: ranking tasks by priority, time and mental energy with the first three tasks and why, and splitting the day into deep focus, rest and follow-up blocks."),
@@ -178,8 +178,8 @@
     },
     {
       id: "p6", unit: "u1", pages: [10, 11], diff: 2, min: 8, related: ["p5", "p7", "y4"], pre: ["p1"],
-      title: { ar: "قبل ما تدور على الحل، افهم المشكلة بجد", en: "Strategic prompts: understanding, diagnosis and priorities" },
-      sum: { ar: "المدير قال: «الإنتاج نزل». واحد اقترح أوفر تايم على طول. بس ممكن السبب يكون نقص خامة لمدة ساعتين.", en: "The previous section helps you get work done; this one helps you know which work is worth doing at all." },
+      title: { ar: "قبل ما تدور على حل، افهم المشكلة الأول", en: "Strategic prompts: understanding, diagnosis and priorities" },
+      sum: { ar: "«الإنتاج نزل» عَرَض، مش سبب. قبل ما تقترح حل، قسّم الرقم حسب الخط والوردية واليوم، واختبر كل تفسير بدليل.", en: "The previous section helps you get work done; this one helps you know which work is worth doing at all." },
       book: [
         bp(10, "القسم اللي فات بيساعدك تنجز الشغل. والقسم ده بيساعدك **تعرف أي شغل يستاهل الإنجاز أصلًا** — وده فرق جوهري.", "The previous section helps you get work done. This one helps you **know which work is worth doing at all** — a fundamental difference."),
         bp(10, "**الفهم والتعلم**: تعلّم موضوع من الصفر بالصورة الكبيرة الأول، وبعدين العناصر، وبعدين مثال واختبار، وثبّت اللي اتعلمته بأسئلة بتختبر الفهم والتطبيق مش الحفظ.", "**Understanding and learning**: learn a topic from zero — big picture first, then elements, then an example and a quiz — and consolidate with questions that test understanding and application, not memory."),
@@ -211,7 +211,7 @@
     {
       id: "p7", unit: "u1", pages: [11], diff: 2, min: 8, scene: "strategic", related: ["p6", "s2", "y4"], pre: ["p6"],
       title: { ar: "إزاي تختار بين كذا قرار من غير ما تتحيز لرأيك؟", en: "Scenarios, challenging ideas and the all-in-one strategic prompt" },
-      sum: { ar: "إنت بتفكر تشتري ماكينة جديدة. الطبيعي تتحمس للحل اللي في دماغك، بس يمكن صيانة القديمة أحسن اقتصاديًا.", en: "Three scenarios, a pre-mortem, “don’t just agree with me”, missing information, and the prompt that enforces an order you can’t skip." },
+      sum: { ar: "أول حل بييجي في بالك بيكسب انحيازك من غير ما تاخد بالك. اطلب من المساعد يبني بدائل ويعارض فكرتك بالأرقام قبل ما تصرف فلوس.", en: "Three scenarios, a pre-mortem, “don’t just agree with me”, missing information, and the prompt that enforces an order you can’t skip." },
       book: [
         bp(11, "**تلات سيناريوهات**: متفائل وواقعي ومتحفظ، ولكل سيناريو العلامات المبكرة اللي بتشير له وإيه اللي تعمله أول ما تظهر.", "**Three scenarios**: optimistic, realistic and cautious, each with the early signs pointing to it and what to do when they appear."),
         bp(11, "**اكتشاف نقاط الفشل مسبقًا**: راجع الخطة كأنك مسؤول عن كشف نقاط فشلها قبل التنفيذ — المخاطر والثغرات والافتراضات الخطرة مرتبة بالخطورة مع وقاية أو خطة بديلة.", "**Pre-mortem**: review the plan as if responsible for exposing its failure points before execution — risks, gaps and dangerous assumptions ranked by severity with prevention or a fallback."),
@@ -243,7 +243,7 @@
     {
       id: "p8", unit: "u1", pages: [12, 13], diff: 2, min: 10, scene: "brain", lab: "brain", related: ["f1", "p11", "s1"], pre: ["p1"],
       title: { ar: "إزاي تخلي ملفات القسم تبقى عقل تقدر تسأله؟", en: "The second brain: from scattered files to a knowledge system" },
-      sum: { ar: "كل موظف بيسأل عن الإجازات، وكل واحد يسمع إجابة مختلفة. تخيّل بدل ده مكتبة مرتبة تقدر تسألها وتقولك المصدر.", en: "NotebookLM: you set the knowledge AI may think with, and every answer comes with a citation back to the source." },
+      sum: { ar: "لما سياسات القسم تبقى متفرقة، كل حد بيجاوب من ذاكرته. لو جمعت المستندات المعتمدة في مكان واحد، تقدر تسألها وتاخد الإجابة ومعاها مرجعها.", en: "NotebookLM: you set the knowledge AI may think with, and every answer comes with a citation back to the source." },
       book: [
         bp(12, "**جيميني نوتبوك (NotebookLM)**: أداة بتخليك تحدد بالضبط المعرفة اللي مسموح للذكاء الاصطناعي يفكر عليها — وهنا بتبدأ قيمتها الحقيقية.", "**NotebookLM**: a tool that lets you define exactly the knowledge AI may think with — and that’s where its real value begins."),
         bp(12, "**المبدأ**: بتنشئ «دفتر» لموضوع أو مشروع وتحط فيه المصادر اللي إنت واثق فيها، فكل الإجابات بتيجي منها بس. **الفرق**: المساعد العادي ممكن يخلط مصادرك بالبحث الخارجي. **الضمانة**: كل إجابة معاها استشهادات بترجعك للمكان الأصلي عشان تتحقق بنفسك.", "**Principle**: you create a “notebook” for a topic or project with sources you trust, and every answer comes only from them. **Difference**: an ordinary assistant may mix your sources with outside search. **Guarantee**: every answer carries citations back to the original place so you can verify."),
@@ -285,7 +285,7 @@
     {
       id: "p9", unit: "u1", pages: [13], diff: 2, min: 8, scene: "leap", lab: "formula", related: ["p3", "p10", "d1"], pre: ["p1", "p3"],
       title: { ar: "إزاي تخلي إكسل يعمل حساباتك من غير ما تحفظ معادلات؟", en: "The leap: Excel with AI" },
-      sum: { ar: "عندك أسعار بيع وتكلفة، وعايز تعرف هامش الربح. مش لازم تبدأ بحفظ معادلة معقدة، ابدأ بشرح المطلوب.", en: "Don’t start with code, start with a problem: the right formula request, its three elements, and the nine-stage ladder." },
+      sum: { ar: "مش لازم تحفظ معادلات إكسل. اشرح الحساب اللي محتاجه بالكلام، وخلّي المساعد يكتب المعادلة، واختبرها على كام صف قبل ما تعمّمها.", en: "Don’t start with code, start with a problem: the right formula request, its three elements, and the nine-stage ladder." },
       book: [
         bp(13, "نقطة البداية الحقيقية لأي متدرب: «**أنا عارف النتيجة اللي عايزها، بس مش عارف أكتب المعادلة إزاي**». وده بالضبط الفجوة اللي الذكاء الاصطناعي بيملاها النهارده.", "Every trainee’s real starting point: “**I know the result I want, but I don’t know how to write the formula.**” That’s exactly the gap AI fills today."),
         bp(13, "**لا تبدأ بالكود، ابدأ بمشكلة.** الأداة النهارده بتبني المعادلات وبتشرحها وبتصلّح اللي موجود، وبتنفّذ البحث بين الجداول، وتحلّل الاتجاهات والقيم الشاذة، وبتقترح أعمدة حسابية جديدة.", "**Don’t start with code, start with a problem.** Today the tool builds formulas, explains and fixes them, looks up across tables, analyses trends and outliers, and suggests new calculated columns."),
@@ -317,7 +317,7 @@
     {
       id: "p10", unit: "u1", pages: [13, 14], diff: 2, min: 9, scene: "macro", related: ["p9", "y1", "w2"], pre: ["p9"],
       title: { ar: "إزاي تخلي الخطوات اللي بتكررها تحصل بضغطة؟", en: "First real automation: macros and AI-written code" },
-      sum: { ar: "كل يوم بتفتح نفس الملف، تنسق نفس الأعمدة، وتنسخ نفس الجدول. كأنك بتعيد نفس الفيلم بإيدك.", en: "The macro recorder, then let AI write the code, two unbreakable rules, and the golden code prompt." },
+      sum: { ar: "أي خطوات بتكررها كل يوم بنفس الترتيب، زي فتح ملف وتنسيقه ونسخ جدول منه، ممكن تتسجل مرة وتتنفذ بضغطة، بشرط تجربها على نسخة الأول.", en: "The macro recorder, then let AI write the code, two unbreakable rules, and the golden code prompt." },
       book: [
         bp(13, "الرسالة المحورية: ما تقولش «هنتعلم برمجة». قول: «الذكاء الاصطناعي محتاج يفهم منطق الشغل وخطواته عشان يكتب كود صح». **المهارة الجديدة إنك توصف العملية بدقة، مش إنك تكتب الكود.**", "The core message: don’t say “we’ll learn programming”. Say: “AI needs to understand the business logic and steps to write correct code.” **The new skill is describing the process precisely, not writing code.**"),
         bp(13, "**مسجّل الماكرو**: أداة جوّا إكسل بتسجّل خطواتك وإنت بتنفّذها بإيدك وبعدين بتحوّلها تلقائيًا لكود جاهز. فايدة مزدوجة: أتمتة فورية من أول مرة، وكود قدامك بتقراه فبتفهم إزاي خطواتك بتترجم لأوامر.", "**The macro recorder**: an Excel tool that records your steps as you do them and turns them into ready code. Double benefit: instant automation first time, and code in front of you that shows how your steps become commands."),
@@ -359,7 +359,7 @@
     {
       id: "p11", unit: "u1", pages: [14, 15], diff: 2, min: 8, scene: "capstone", related: ["p8", "y6", "d2"], pre: ["p8"],
       title: { ar: "إزاي تحول التحليل لكلام الإدارة تفهمه وتقرر عليه؟", en: "From the report to a pitch that convinces management" },
-      sum: { ar: "تخيّل قدمت للمدير ٢٥ شريحة مليانة أرقام؛ هيقفل قبل ما يعرف المطلوب. المطلوب قصة تبدأ بالمشكلة وتنتهي بقرار.", en: "Three tools, three roles; mixing them is the fatal mistake; story and review prompts; the capstone and its criteria." },
+      sum: { ar: "الإدارة مش محتاجة كل الأرقام اللي عندك. محتاجة تعرف إيه اللي اتغير، وليه، والقرار المطلوب منها، بالترتيب ده.", en: "Three tools, three roles; mixing them is the fatal mistake; story and review prompts; the capstone and its criteria." },
       book: [
         bp(14, "لو التقرير خلص… ليه تعمل العرض بنفسك؟ تلات أدوات بيكمّلوا بعض، ومشروع واحد بيجمع الدليل كله.", "If the report is done… why build the deck yourself? Three tools complement each other, and one project pulls the guide together."),
         bp(14, "**عقل المحتوى — الدفتر**: مسؤول عن الصدق والمصادر. **مدير القصة — المساعد المحادثي**: مسؤول عن الرسالة والترتيب. **الاستوديو البصري — مولّد الصور**: مسؤول عن الفهم البصري.", "**Content brain — the notebook**: owns truth and sources. **Story director — the chat assistant**: owns message and order. **Visual studio — the image generator**: owns visual understanding."),
@@ -399,7 +399,7 @@
     {
       id: "p12", unit: "u1", pages: [15, 16], diff: 1, min: 7, scene: "plan30", related: ["f2", "p2", "f5"], pre: ["p1"],
       title: { ar: "إزاي تخلي اللي اتعلمته عادة شغل مش حماس يومين؟", en: "From a guide to a habit: the index, the plan and the checklist" },
-      sum: { ar: "حضرت كورس جميل، وبعد أسبوع رجعت لنفس النسخ واللصق. السبب إنك ما اخترتش عادة صغيرة تمارسها.", en: "Which prompt when, where to actually start, the 30-day plan, the checklist, and three mistakes that block the change." },
+      sum: { ar: "قيمة أي كورس بتتقاس بالعادة اللي بتفضل بعده. اختار مهمة واحدة متكررة، طبّق عليها كل أسبوع، وقيس الوقت والجودة قبل وبعد.", en: "Which prompt when, where to actually start, the 30-day plan, the checklist, and three mistakes that block the change." },
       book: [
         bp(15, "الفهرس السريع: مش عارف تبدأ منين ← الشامل للإنتاجية · قرار كبير غامض ← الشامل الاستراتيجي · يوم مليان ← ترتيب المهام وتقسيم اليوم · ملاحظات اجتماع ← ما بعد الاجتماع · فكرة فيها خلل ← «لا توافقني تلقائيًا» · خطة خايف تفشل ← نقاط الفشل · معلومات ناقصة ← المعلومات الناقصة · مصادر متضاربة ← كشف التناقضات · مهمة إكسل أسبوعية ← البرومبت الذهبي · تقرير محتاج عرض ← القصة والمراجعة.", "Quick index: don’t know where to start → all-in-one productivity · big ambiguous decision → all-in-one strategic · full day → task ranking and day blocks · meeting notes → after-the-meeting · flawed idea → “don’t agree automatically” · plan you fear → pre-mortem · missing info → missing information · conflicting sources → contradictions · weekly Excel task → golden code prompt · report needing a deck → story and review."),
         bp(15, "خارطة التطبيق: مبتدئ خالص ← اكتب أحدث طلب تاني بالخمس عناصر · غارق في المهام ← برومبت تنظيم اليوم على مهام بكرة · قدام قرار صعب ← البرومبت الاستراتيجي · ملفات مبعثرة ← دفتر واحد لمشروع واحد · مهمة متكررة ← سجّل ماكرو لأصغرها.", "Application map: complete beginner → rewrite your latest request with the five elements · drowning in tasks → day-planning prompt on tomorrow’s tasks · hard decision → strategic prompt · scattered files → one notebook for one project · recurring task → record a macro for the smallest."),

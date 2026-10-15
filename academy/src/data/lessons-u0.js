@@ -50,7 +50,7 @@
       ],
       levels: {
         simple: [
-          L("what", "سلّم من تمان درجات بيوصف رحلتك: بتبدأ بأداة تساعدك في الكتابة والبحث، وبتنتهي بفريق وكلاء أذكياء بيدير جزء من شغلك. تشبيه: زي تعلّم القيادة — ماتبدأش على الطريق السريع، ابدأ في موقف العربيات.", "An eight-step ladder describing your journey: you start with a tool that helps you write and search, and end with a team of smart agents running part of your work. Like learning to drive — you don’t start on the motorway but in the car park."),
+          L("what", "سلّم من تمان درجات بيوصف رحلتك: بتبدأ بأداة تساعدك في الكتابة والبحث، وبتنتهي بفريق وكلاء أذكياء بيدير جزء من شغلك. زي أي موظف جديد: بيتقن مهمة محددة الأول، وبعدين بياخد مسؤوليات أكبر.", "An eight-step ladder describing your journey: you start with a tool that helps you write and search, and end with a team of smart agents running part of your work. Like learning to drive — you don’t start on the motorway but in the car park."),
           L("why", "لأن أكتر حاجة بتبوّظ التجربة هي **التشتت**: تجربة كل أداة جديدة من غير أثر حقيقي. السلّم بيديك ترتيب واضح: متقفزش للأنظمة والوكلاء قبل ما تتقن الطلب الجيد والعقل الثاني.", "Because what ruins the experience most is **scatter**: trying every new tool with no real impact. The ladder gives a clear order: don’t jump to systems and agents before mastering good requests and the second brain."),
         ],
         mech: [

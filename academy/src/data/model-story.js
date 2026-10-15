@@ -104,7 +104,7 @@
       {
         id: "training", art: "m_training", year: u("التدريب", "Training"), mark: u("٠٨", "08"), era: u("إزاي اتظبط", "How it gets tuned"),
         title: u("التدريب: مليارات الغلطات الصغيرة… وتصحيحها", "Training: billions of small mistakes… each one corrected"),
-        story: [u("في الأول المفاتيح كلها عشوائية، فالتخمين بيطلع هبل. الموديل يخمّن الكلمة الجاية، نقارن بالكلمة الصح، ونقيس هو غلط قد إيه.",
+        story: [u("في الأول المفاتيح كلها عشوائية، فالتخمين بيطلع ملوش أي معنى. الموديل يخمّن الكلمة الجاية، نقارن بالكلمة الصح، ونقيس هو غلط قد إيه.",
           "At first all the knobs are random, so the guesses are nonsense. The model guesses the next word, we compare it with the right word, and measure how wrong it was."),
         u("بعدها بنحرّك كل المفاتيح حركة صغيرة جدًا في الاتجاه اللي يقلل الغلط ده، زي رامي سهام كل مرة يعدّل إيده شعرة. ونكرر ده على تريليونات التوكنز، شهور على آلاف كروت الشاشة.",
           "Then every knob is nudged a tiny bit in the direction that reduces that error — like an archer adjusting their aim a hair each shot. Repeat over trillions of tokens, for months, on thousands of graphics chips.")],
