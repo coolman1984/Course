@@ -121,7 +121,7 @@ test("every literal t(\"key\") used by the engine exists in both languages", () 
   for (const type of ["mcq", "spot", "predict", "compare", "order"]) keys.add("qt_" + type);
   for (const k of keys) assert.ok(A.ui[k] && A.ui[k].ar && A.ui[k].en, `ui key "${k}" missing`);
 });
-// Picture-first examples must exist for every lesson and must be concrete enough to show a full causal chain.
+// The per-lesson stories still feed the home-page motion theatre (engine/motion.js), so every lesson keeps one.
 test("all lessons have complete picture-first Arabic intros", () => {
   const stories = A.lessonStories;
   assert.ok(stories, "missing stories module");

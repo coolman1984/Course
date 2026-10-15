@@ -236,32 +236,8 @@
     const bm = S.get("bookmarks").includes(l.id);
     const prompts = A.prompts.filter((p) => p.lesson === l.id);
     const qs = A.quiz.filter((q) => q.lesson === l.id);
-    const story = A.lang() === "ar" ? A.lessonStories?.[l.id] : null;
+    const ar = A.lang() === "ar";
     const deck = (A.decks || []).find((d) => d.lesson === l.id);   // a story deck opens this lesson (engine/history.js)
-    // Picture-first opening (Arabic): the situation as a scene, the whole path at a glance, one warning, then a
-    // think-first question with a self-check. Everything is visible at once; nothing hides behind clicks.
-    const pictureFirst = story ? `<section class="mental sec" id="sec-mental" aria-labelledby="mental-h">
-      <div class="mental-kicker">ابدأ بالمشكلة، مش بالمصطلح</div>
-      <h2 id="mental-h">تخيّل الموقف ده 👇</h2>
-      <figure class="mental-scene"><span class="mental-avatar" aria-hidden="true">${ico("users")}</span><blockquote class="mental-situation">${esc(story[0])}</blockquote></figure>
-      <ol class="mental-flow" aria-label="من المشكلة للنتيجة">
-        <li class="mental-step" style="--i:0"><span class="mental-ic" aria-hidden="true">${ico("folder")}</span><span class="mental-n"><b>١</b>إيه اللي معاك؟</span><strong>${esc(story[1])}</strong></li>
-        <li class="mental-step" style="--i:1"><span class="mental-ic" aria-hidden="true">${ico("gear")}</span><span class="mental-n"><b>٢</b>هيحصل إيه؟</span><strong>${esc(story[2])}</strong></li>
-        <li class="mental-step result" style="--i:2"><span class="mental-ic" aria-hidden="true">${ico("check")}</span><span class="mental-n"><b>٣</b>هتطلع بإيه؟</span><strong>${esc(story[3])}</strong></li>
-      </ol>
-      <div class="mental-danger"><span class="mental-ic" aria-hidden="true">${ico("shield")}</span><p><b>خد بالك:</b> ${esc(story[4])}</p></div>
-      <div class="mental-quiz" data-mq>
-        <div class="mental-quiz-h"><span aria-hidden="true">🧠</span> جرّب تفكر قبل ما تكمل</div>
-        <p class="mental-quiz-q">${esc(story[5])}</p>
-        <button type="button" class="btn mental-reveal" data-mq-reveal aria-expanded="false" aria-controls="mq-a">فكّرت؟ اكشف الإجابة</button>
-        <div class="mental-quiz-a" id="mq-a" hidden>
-          <p class="mental-quiz-ans" tabindex="-1">${esc(story[6])}</p>
-          <div class="mental-self" role="group" aria-label="قيّم إجابتك"><span>إجابتك كانت قريبة؟</span><button type="button" class="chip" data-mq-self="yes" aria-pressed="false">👍 أيوه</button><button type="button" class="chip" data-mq-self="no" aria-pressed="false">لسه مش متأكد</button></div>
-          <p class="mental-fb" data-mq-fb aria-live="polite"></p>
-        </div>
-      </div>
-      <p class="mental-note">مثال تعليمي للتوضيح. مش بيانات حقيقية عن أي شركة.</p>
-    </section>` : "";
     const wrap = h("article", { class: "wrap" });
     const compass = A.meta.compass.map((c) => `<button type="button" class="chip" data-jump="${c.to}">${esc(L(c.q))}</button>`).join("");
     wrap.innerHTML = `
@@ -272,10 +248,9 @@
          <button type="button" class="chip" id="bm" aria-pressed="${bm}">${ico("bookmark")}${esc(bm ? t("bookmarked") : t("bookmark"))}</button>
          <button type="button" class="chip ${done ? "ok" : ""}" id="donetop" aria-pressed="${done}">${ico("check")}${esc(done ? t("done") : t("markDone"))}</button></div>`)}
       ${deck ? `<section id="sec-${deck.id}"></section>` : ""}
-      ${pictureFirst}
       <div class="compass" aria-label="${esc(t("compassAria"))}"><b>${esc(t("compassTitle"))}</b>${compass}</div>
       <div id="sec-scene"></div>
-      <section class="sec" id="sec-book">${story ? '<details class="book-original"><summary>📖 افتح كلام الكتاب الأصلي وربطه بصفحاته</summary>' : secHead("book", t("bookSays"), t("bookSaysSub"))}<div class="bookpts">${(l.book || []).map((b) => `<div class="bookpt"><div>${A.inline(L(b))}</div>${pageChips([b.p])}</div>`).join("")}</div>${story ? "</details>" : ""}</section>
+      <section class="sec" id="sec-book">${ar ? '<details class="book-original"><summary>📖 افتح كلام الكتاب الأصلي وربطه بصفحاته</summary>' : secHead("book", t("bookSays"), t("bookSaysSub"))}<div class="bookpts">${(l.book || []).map((b) => `<div class="bookpt"><div>${A.inline(L(b))}</div>${pageChips([b.p])}</div>`).join("")}</div>${ar ? "</details>" : ""}</section>
       <section class="sec levels" id="sec-levels">${secHead("layers", t("levelsTitle"), t("levelsSub"), "sp")}<div id="lv"></div></section>
       <div id="sec-lab"></div>
       <div id="sec-case"></div>
@@ -290,27 +265,6 @@
       </nav>`;
     main.append(wrap);
     if (deck && A.mountDeck) A.mountDeck(A.$("#sec-" + deck.id), deck);
-    // think-first question: reveal, then a one-tap self-check that points to the explanation when needed
-    const mq = A.$("[data-mq]", wrap);
-    if (mq) {
-      const rv = A.$("[data-mq-reveal]", mq), ans = A.$("#mq-a", mq), fb = A.$("[data-mq-fb]", mq);
-      rv.onclick = () => { ans.hidden = false; rv.setAttribute("aria-expanded", "true"); rv.hidden = true; mq.classList.add("is-open"); A.$(".mental-quiz-ans", mq).focus({ preventScroll: true }); };
-      A.$$("[data-mq-self]", mq).forEach((b) => (b.onclick = () => {
-        A.$$("[data-mq-self]", mq).forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
-        const yes = b.dataset.mqSelf === "yes";
-        fb.className = "mental-fb " + (yes ? "ok" : "go");
-        fb.innerHTML = yes ? "عظيم! كده إنت ماسك الفكرة. كمّل تحت عشان تعرف اسمها وتفاصيلها." : 'ولا يهمك، الشرح اللي تحت معمول عشان كده. <a href="#" data-mq-go>وريني الشرح ↓</a>';
-        const g = A.$("[data-mq-go]", fb);
-        if (g) g.onclick = (e) => { e.preventDefault(); const to = A.$("#sec-scene.sec") || A.$("#sec-levels"); to && to.scrollIntoView({ behavior: A.reduceMotion() ? "auto" : "smooth", block: "start" }); };
-      }));
-      const flow = A.$(".mental-flow", wrap);
-      if (flow && "IntersectionObserver" in window) {   // the three steps arrive one after another the first time they are seen
-        flow.classList.add("will-in");
-        const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { flow.classList.add("is-in"); io.disconnect(); } }, { threshold: 0.3 });
-        io.observe(flow);
-        A.onLeave(() => io.disconnect());
-      }
-    }
     // compass jumps
     A.$$("[data-jump]", wrap).forEach((b) => (b.onclick = () => {
       const to = b.dataset.jump;
