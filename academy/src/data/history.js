@@ -68,7 +68,7 @@
       {
         id: "winter", art: "winter", year: u("١٩٧٤ – ١٩٩٣", "1974 – 1993"), era: u("الشتا", "The winters"),
         title: u("قواعد مكتوبة بالإيد… وشتا طويل", "Hand-written rules… and a long winter"),
-        story: [u("الوعود كانت أكبر من الأجهزة، فالتمويل قلّ جامد مرتين، وجه اللي اتسمّى «شتا الذكاء الاصطناعي».",
+        story: [u("الوعود كانت أكبر من الأجهزة، فالتمويل اتقلّص بشدة مرتين، وجه اللي اتسمّى «شتا الذكاء الاصطناعي».",
           "The promises outran the hardware, so funding dried up twice, in what became known as the “AI winters”."),
         u("وفي النص، في التمانينات، الشركات جرّبت «الأنظمة الخبيرة»: آلاف القواعد من نوع «لو حصل كذا، اعمل كذا» بيكتبها خبرا بإيدهم. نفعت شوية، بس كانت بتتكسر أول ما تقابل حالة جديدة.",
           "In between, in the 1980s, companies tried “expert systems”: thousands of “if this, then that” rules written by hand by experts. They helped a bit, but broke the moment they met a new case.")],

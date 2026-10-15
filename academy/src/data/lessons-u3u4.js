@@ -156,7 +156,7 @@
       ],
       levels: {
         simple: [
-          L("what", "الواجهة الأمامية هي «واجهة المحل»: كل اللي الزبون بيشوفه ويلمسه. مبنية من تلات طبقات: هيكل (HTML)، تشطيب (CSS)، وكهرباء بتخلي الحاجات تتحرك (JavaScript).", "The front-end is the “shop window”: everything the customer sees and touches. It’s built from three layers: structure (HTML), finishing (CSS), and electricity that makes things move (JavaScript)."),
+          L("what", "الواجهة الأمامية هي كل اللي المستخدم بيشوفه ويتعامل معه على الشاشة. مبنية من تلات طبقات: هيكل بيحدد العناصر (HTML)، ومظهر بيحدد شكلها (CSS)، وسلوك بيحدد اللي يحصل لما المستخدم يضغط أو يكتب (JavaScript).", "The front-end is the “shop window”: everything the customer sees and touches. It’s built from three layers: structure (HTML), finishing (CSS), and electricity that makes things move (JavaScript)."),
           L("why", "لأنك هتطلب من المساعد البرمجي تعديلات في الواجهة، ومعرفة المفاهيم دي بتخليك توصف اللي عايزه بدقة («غيّر لون الكارت الأول» بدل «خلّيها أحلى»).", "Because you’ll ask the assistant to change the interface, and knowing these concepts lets you describe precisely (“change the first card’s colour” instead of “make it nicer”)."),
         ],
         mech: [
@@ -188,7 +188,7 @@
       ],
       levels: {
         simple: [
-          L("what", "لو الواجهة «صالة المطعم»، الخادم هو «المطبخ»: الزبون مش بيشوفه، بس بيطلب منه (الطلب)، والمطبخ بيجهّز الطبق (يحسب)، والنادل (JSON) بيوصله للطاولة (الواجهة).", "If the front-end is the restaurant floor, the server is the kitchen: the customer never sees it, but orders from it (the request); the kitchen prepares the dish (computes) and sends it with the waiter (JSON) to the table (the front-end)."),
+          L("what", "زي استمارة طلب في شركة: الموظف بيملاها ويقدّمها (الواجهة)، والقسم المختص بيراجعها ويتأكد من الصلاحية ويسجّلها (الخادم)، والرد بيرجع بصيغة متفق عليها (JSON) عشان يتعرض على الشاشة.", "If the front-end is the restaurant floor, the server is the kitchen: the customer never sees it, but orders from it (the request); the kitchen prepares the dish (computes) and sends it with the waiter (JSON) to the table (the front-end)."),
           L("why", "لأن الحسابات في مكان واحد يعني أرقام متسقة في كل الشاشات، والمتصفح لوحده مش قادر يقرأ ملفات جهازك أو يعالج بيانات كبيرة.", "Because calculations in one place mean consistent numbers on every screen, and because the browser alone can’t read your files or process big data."),
         ],
         mech: [

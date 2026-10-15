@@ -229,7 +229,7 @@
       ],
       levels: {
         simple: [
-          L("what", "**الشريحة العمودية** = عملية واحدة صغيرة بتبنيها كاملة من أولها لآخرها، بدل ما تبني جزء صغير من كل العمليات. تشبيه: تفتح فرع واحد كامل لمطعمك شغال وبياكل، أحسن من ما تبني مطابخ عشرة فروع من غير صالة ولا زباين.", "A **vertical slice** = one small process built completely, end to end, instead of a sliver of every process. Like opening one complete restaurant branch that serves and sells, rather than building kitchens for ten branches with no dining room or customers."),
+          L("what", "**الشريحة العمودية** = عملية واحدة صغيرة بتبنيها كاملة من أولها لآخرها، بدل ما تبني جزء صغير من كل العمليات. مثال: دورة طلب شراء واحدة شغالة من الإنشاء للاستلام أنفع من عشر شاشات لعمليات مختلفة ولا واحدة فيها بتكمّل لآخرها.", "A **vertical slice** = one small process built completely, end to end, instead of a sliver of every process. Like opening one complete restaurant branch that serves and sells, rather than building kitchens for ten branches with no dining room or customers."),
           L("why", "لأن المشروع اللي ما بيورّيش نتيجة في أسابيع بيخسر الدعم والميزانية. الشريحة العمودية بتديك نظام شغال ورقم توفير تعرضه على الإدارة عشان توسّع المشروع.", "Because a project showing no result within weeks loses support and budget. A vertical slice gives you a working system and a savings number to show management to expand."),
         ],
         mech: [

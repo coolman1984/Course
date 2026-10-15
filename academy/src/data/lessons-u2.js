@@ -7,7 +7,7 @@
     {
       id: "y1", unit: "u2", pages: [17], diff: 2, min: 8, scene: "spec", related: ["p1", "p10", "y2"], pre: ["p10"],
       title: { ar: "قبل ما تطلب برنامج، اكتب بالضبط هو المفروض يعمل إيه", en: "Describe the process, not the code: the task spec" },
-      sum: { ar: "عامل قال للمبرمج: «عايز أداة تدمج الملفات». بس أي ملفات؟ ولو عمود ناقص؟ ولو فيه تكرار؟ هنا بيبدأ الانهيار.", en: "Three ideas that govern everything after, and five elements before writing any line — tests above all." },
+      sum: { ar: "طلب زي «عايز أداة تدمج الملفات» ناقصه أهم حاجة: أنهي ملفات؟ وإيه اللي يحصل لو فيه عمود ناقص أو صف متكرر؟ المواصفة الواضحة بتحسم ده قبل ما يتكتب سطر كود.", en: "Three ideas that govern everything after, and five elements before writing any line — tests above all." },
       book: [
         bp(17, "دلوقتي أي موظف — من غير خلفية برمجة — يقدر يطلب من الذكاء الاصطناعي يبني أداة ((python|بايثون)) تنفّذ مهمة متكررة على جهازه، وبعدين تحلّل النتائج، وبعدين تعرضها في تقرير تفاعلي أي زميل يفتحه بنقرة واحدة.", "Any employee — with no coding background — can now ask AI to build a ((python|Python)) tool that runs a recurring task on their PC, analyses the results, and shows them in an interactive report any colleague opens with one click."),
         bp(17, "**المبدأ**: المهارة المطلوبة مش كتابة الكود، لكن وصف العملية بوضوح وقابل للتنفيذ — زي ما بتحكيها لموظف جديد. **البنية**: تلات مستويات ورا بعض: أتمتة التشغيل، وبعدين التحليل، وبعدين العرض الإداري. **الحد الفاصل**: ماتبنيش أداة إلا لمهمة متكررة، قواعدها ثابتة، والنتيجة تتقدر تتأكد منها.", "**Principle**: the skill isn’t writing code but describing the process precisely and actionably — as you would to a new employee. **Structure**: three consecutive levels: run automation, then analysis, then executive reporting. **Boundary**: build a tool only for a recurring task with stable rules and a verifiable result."),
@@ -16,7 +16,7 @@
       ],
       levels: {
         simple: [
-          L("what", "قبل ما تطلب أداة، اكتب «ورقة مواصفات» من خمسة أسطر: إيه المشكلة؟ إيه الملفات؟ إيه القواعد؟ شكل النتيجة إيه؟ وإزاي أعرف إنها صح؟\n\nتشبيه: زي ما تطلب مطبخ من نجّار — لو قلت «عايز مطبخ حلو» هيجيبلك اللي في خياله. لو اديته المقاسات والخامات والميزانية وطريقة الفحص، هتاخد اللي محتاجه.", "Before asking for a tool, write a five-line “spec sheet”: what’s the problem? which files? what rules? what result? how will I know it’s right?\n\nLike ordering a kitchen from a carpenter — “a nice kitchen” gets you what he imagines. Measurements, materials, budget and how you’ll inspect it get you what you need."),
+          L("what", "قبل ما تطلب أداة، اكتب «ورقة مواصفات» من خمسة أسطر: إيه المشكلة؟ إيه الملفات؟ إيه القواعد؟ شكل النتيجة إيه؟ وإزاي أعرف إنها صح؟\n\nزي طلب عرض سعر من مورّد: لو كتبت «عايزين خامة كويسة» هيبعت اللي عنده. لو حددت المواصفات والكمية والميزانية وطريقة الفحص عند الاستلام، هيبعت المطلوب بالظبط.", "Before asking for a tool, write a five-line “spec sheet”: what’s the problem? which files? what rules? what result? how will I know it’s right?\n\nLike ordering a kitchen from a carpenter — “a nice kitchen” gets you what he imagines. Measurements, materials, budget and how you’ll inspect it get you what you need."),
           L("why", "لأن الذكاء الاصطناعي بيكتب الكود بسرعة، بس مش عارف قواعد شغلك واستثناءاتها. المواصفة بنقلها له المعرفة، والاختبارات بتحميك من أداة «شكلها» صح.", "Because AI writes code fast but doesn’t know your business rules and exceptions. The spec transfers that knowledge, and the tests protect you from a tool that only “looks” right."),
         ],
         mech: [
@@ -36,7 +36,7 @@
     {
       id: "y2", unit: "u2", pages: [17, 18], diff: 2, min: 7, scene: "compass", lab: "worth", related: ["y1", "y3", "p12"], pre: ["y1"],
       title: { ar: "هل كل مهمة متكررة تستاهل برنامج؟", en: "Decision compass: when does a task deserve a tool?" },
-      sum: { ar: "تخيّل هتصرف ٣ أيام تعمل أداة لتقرير بياخد ٣ دقائق مرة كل ٦ شهور. ده مش توفير، ده استثمار خاسر.", en: "Four questions decide whether automation is worth it, and four engineering rules protect the tool from rebuilds." },
+      sum: { ar: "مش كل مهمة متكررة تستاهل برنامج. اضرب وقت المهمة في عدد مرات تكرارها، وقارن الناتج بوقت بناء الأداة وصيانتها، وبعدين قرر.", en: "Four questions decide whether automation is worth it, and four engineering rules protect the tool from rebuilds." },
       book: [
         bp(17, "قبل أي طلب للذكاء الاصطناعي: أربعة أسئلة بتحدد الأتمتة تستاهل الوقت فعلًا ولا لأ، وأربع قواعد بتحمي الأداة من إعادة البناء بعد أول تعديل.", "Before any AI request: four questions decide whether automation is really worth the time, and four rules protect the tool from a rebuild after the first change."),
         bp(17, "**التكرار**: بتتنفّذ أسبوعي أو أكتر، أو شهري بس بتاخد ساعات. **الثبات**: قواعدها مش بتتغير والاستثناءات محدودة وتقدر تحصرها. **كلفة الغلط بالإيد**: النسخ واللصق بيطلّع أخطاء صامتة ما بتتكتشف غير بعد ما يفوت الوقت. **إنك تتأكد**: تقدر تقارن ناتج الأداة بناتج إيد معروف ولو مرة.", "**Frequency**: weekly or more, or monthly but taking hours. **Stability**: rules don’t change; exceptions are few and listable. **Manual error cost**: copy-paste creates silent errors found too late. **Verifiability**: the output can be compared with a known manual result, even once."),
@@ -75,7 +75,7 @@
     {
       id: "y3", unit: "u2", pages: [18, 19], diff: 2, min: 9, scene: "prefer", lab: "pipeline", related: ["y2", "y7", "s1"], pre: ["y2"],
       title: { ar: "إزاي تعمل أتمتة تشتغل كل يوم وماتبوظش بسهولة؟", en: "Level 1: run automation" },
-      sum: { ar: "البرنامج عمل ١٠٠ عملية صح، وفي المرة ١٠١ الشاشة اتغيرت فوقف. الأتمتة الشاطرة تعرف تتصرف أو تتوقف بوضوح.", en: "The tool map, the preference order that makes tools last for years, a typical chain, and essential run controls." },
+      sum: { ar: "أتمتة بتنجح ١٠٠ مرة وتفشل في المرة ١٠١ من غير ما تقول أخطر من إنك تشتغل بإيدك. الأتمتة اللي يُعتمد عليها بتتأكد من كل خطوة، ولو حاجة فشلت بتوقف وتقول السبب.", en: "The tool map, the preference order that makes tools last for years, a typical chain, and essential run controls." },
       book: [
         bp(18, "تلات مستويات ورا بعض: **التشغيل** (الملفات وإكسل والمتصفح وبرامج ويندوز مع جدولة بتشيل التدخل بالإيد)، وبعدين **التحليل** (استعلام مباشر ومعالجة سريعة وفحص جودة)، وبعدين **العرض** (صفحة تفاعلية بتنقل القارئ من النتيجة للقرار).", "Three consecutive levels: **run** (files, Excel, browser and Windows apps, with scheduling that removes manual work), then **analysis** (direct queries, fast processing, quality checks), then **reporting** (an interactive page moving the reader from result to decision)."),
         bp(18, "خريطة الأدوات: **((playwright|Playwright))** بيتحكم في المتصفح · **((xlwings|xlwings))** بيتحكم في ملفات إكسل الحقيقية · **((pyautogui|PyAutoGUI))** بيحاكي الماوس ولوحة المفاتيح (أكتر حاجة ممكن تتكسر) · **((pywinauto|pywinauto))** بيتعامل مع برامج ويندوز من أزرارها الحقيقية · **((watchdog|watchdog))** بيبدأ التنفيذ لحظة ما ملف جديد يوصل · **جدولة ويندوز + ((pyinstaller|PyInstaller))** لتشغيل تلقائي وملف واحد يشتغل على أي جهاز.", "Tool map: **((playwright|Playwright))** drives the browser · **((xlwings|xlwings))** drives real Excel files · **((pyautogui|PyAutoGUI))** simulates mouse and keyboard (most fragile) · **((pywinauto|pywinauto))** handles Windows apps via their real buttons · **((watchdog|watchdog))** starts work the moment a new file arrives · **Windows Task Scheduler + ((pyinstaller|PyInstaller))** for automatic runs and one file that works on any PC."),
@@ -108,7 +108,7 @@
     {
       id: "y4", unit: "u2", pages: [19, 20], diff: 2, min: 9, scene: "drill7", lab: "quality", related: ["p6", "f3", "d2"], pre: ["y3"],
       title: { ar: "ليه لازم نفحص البيانات قبل ما نحللها؟", en: "Level 2: the analysis engine — quality first" },
-      sum: { ar: "تخيّل ميزان بيزود ٥ كيلو كل مرة. مهما كان شكل التقرير حلو، النتائج هتطلع غلط. البيانات هي الميزان بتاعك.", en: "DuckDB, Polars and ydata-profiling, why quality checks are mandatory, the seven questions before any chart, and breaking down “efficiency fell 7%”." },
+      sum: { ar: "لو البيانات فيها تكرار أو تواريخ ناقصة أو وحدات مختلفة، أي تحليل مبني عليها هيطلع غلط مهما كان شكله مقنع. فحص البيانات بييجي قبل أي حساب.", en: "DuckDB, Polars and ydata-profiling, why quality checks are mandatory, the seven questions before any chart, and breaking down “efficiency fell 7%”." },
       book: [
         bp(19, "تلات أدوات بيكفي غالبية الحالات على جهاز واحد: **((duckdb|DuckDB))** لاستعلام SQL مباشر على ملفات إكسل أو نصوص ولا حتى مجلد كامل مرة واحدة · **((polars|Polars))** لمعالجة الجداول الكبيرة بسرعة عالية جدًا حتى لو عدّت الذاكرة · **((profiling|ydata-profiling))** بيطلع تقرير فوري عن أي ملف جديد: القيم الناقصة والتكرارات والأرقام الشاذة والعلاقات.", "Three tools cover most cases on one machine: **((duckdb|DuckDB))** for direct SQL queries on Excel or text files, even a whole folder at once · **((polars|Polars))** for very fast processing of big tables, even beyond memory · **((profiling|ydata-profiling))** produces an instant report on any new file: missing values, duplicates, outliers and relationships."),
         bp(19, "**ليه الجودة الأول؟** نتيجة دقيقة على بيانات بايظة بتدي قرار غلط بثقة عالية جدًا. فحص الجودة خطوة أولى لازمة، مش خطوة اختيارية تسيبها لآخر الوقت.", "**Why quality first?** A precise result on broken data gives a wrong decision with very high confidence. The quality check is a mandatory first step, not an optional one left for the end."),
@@ -149,7 +149,7 @@
     {
       id: "y5", unit: "u2", pages: [20, 21], diff: 3, min: 7, related: ["y4", "y6", "s1"], pre: ["y4"],
       title: { ar: "بايثون ولا منصة كبيرة للشركة؟", en: "Python or an enterprise reporting platform?" },
-      sum: { ar: "لو عندك ٣ مستخدمين بيشوفوا تقرير أسبوعي، ممكن أداة صغيرة تكفي. لو بقى عندك مئات الموظفين وصلاحيات ومراجعات، الوضع اتغير.", en: "The question isn’t which is stronger but which fits your scale and governance: when Python is enough, when a platform is needed, and four signals to switch." },
+      sum: { ar: "أداة صغيرة تكفي لتقرير بيشوفه ٣ أشخاص. لكن لما يبقى عندك مئات المستخدمين وصلاحيات ومراجعات، هتحتاج منصة. اللي بيحدد الاختيار حجم المسؤولية، مش شهرة الأداة.", en: "The question isn’t which is stronger but which fits your scale and governance: when Python is enough, when a platform is needed, and four signals to switch." },
       book: [
         bp(20, "السؤال مش مين أقوى، لكن **مين يطابق حجم الاستخدام ومتطلبات الحوكمة** في شركتك فعلًا.", "The question isn’t which is stronger but **which matches your actual scale of use and governance needs**."),
         bp(20, "حل بايثون بيكفي لما: النطاق محدود (إدارة أو موقع أو فريق صغير)، والمنطق خاص بالشركة (قواعد داخلية، تنبؤ، سيناريوهات القوالب مش بتدعمها)، والتوزيع بسيط (ملف أو صفحة لعدد محدود)، والسلسلة متكاملة في أداة واحدة.", "Python suffices when: the scope is limited (one department, site or small team), the logic is company-specific (internal rules, forecasting, scenarios templates don’t support), distribution is simple (a file or page for a few people), and the chain is integrated in one tool."),
@@ -161,7 +161,7 @@
       ],
       levels: {
         simple: [
-          L("what", "قرار بين طريقين: **سكربت بايثون** تبنيه بنفسك بسرعة لفريق صغير، أو **منصة تقارير** مؤسسية لكل الشركة بصلاحيات وتحديث مركزي. تشبيه: عربية خاصة مقابل أتوبيس الشركة — لكل واحد وقته.", "A choice between two paths: a **Python script** you build quickly for a small team, or an enterprise **reporting platform** for the whole company with permissions and central refresh. Like a private car vs the company bus — each has its moment."),
+          L("what", "قرار بين طريقين: **سكربت بايثون** تبنيه بنفسك بسرعة لفريق صغير، أو **منصة تقارير** مؤسسية لكل الشركة بصلاحيات وتحديث مركزي. زي ملف إكسل بيستخدمه قسم واحد مقابل نظام مركزي للشركة كلها: لكل واحد حجم شغل يناسبه.", "A choice between two paths: a **Python script** you build quickly for a small team, or an enterprise **reporting platform** for the whole company with permissions and central refresh. Like a private car vs the company bus — each has its moment."),
           L("why", "لأن الغلط مكلف في الاتجاهين: منصة كاملة لسؤال بسيط بتضيّع أسابيع، وسكربت على جهاز موظف واحد والإدارة كلها معتمدة عليه خطر لما يغيب.", "Because the mistake is costly both ways: a full platform for a simple question wastes weeks, and a script on one person’s PC that all management depends on is a risk when they’re away."),
         ],
         mech: [
@@ -182,7 +182,7 @@
     {
       id: "y6", unit: "u2", pages: [21, 22], diff: 2, min: 8, scene: "stations", related: ["p11", "d2", "w3"], pre: ["y4"],
       title: { ar: "إزاي تخلي المدير يفهم التقرير في دقيقة؟", en: "Level 3: from analysis to an interactive executive experience" },
-      sum: { ar: "المدير مش داخل معرض رسوم. هو عايز يعرف: المشكلة فين؟ حجمها قد إيه؟ وهنعمل إيه؟", en: "One page that opens in a click and leads its reader from result to decision in minutes: seven stations, the 30-second test, six mistakes." },
+      sum: { ar: "المدير عايز يعرف في دقيقة: المشكلة فين، وحجمها قد إيه، والمطلوب إيه. التقرير لازم يجاوب الأسئلة دي بالترتيب ده، والتفاصيل تيجي بعدها.", en: "One page that opens in a click and leads its reader from result to decision in minutes: seven stations, the 30-second test, six mistakes." },
       book: [
         bp(21, "الهدف مش تجميل الأرقام، لكن **تبني صفحة واحدة تتفتح بضغطة، وتقود اللي بيقراها من النتيجة للقرار في دقائق**.", "The goal isn’t prettifying numbers but **building one page that opens in a click and leads its reader from result to decision in minutes**."),
         bp(21, "طريقتين: **مخرج مستقل** — ((plotly|Plotly)) بيوفر أكتر من أربعين نوع رسم تفاعلي وبيحفظهم كصفحة ويب واحدة تشتغل من غير نت ومن غير تثبيت. **تطبيق تحليلي كامل** — ((streamlit|Streamlit)) بيبني تطبيق بأسطر قليلة للنماذج السريعة، و((dash|Dash)) أنسب لما المشروع يبقى أداة دائمة بتحكم أدق.", "Two ways: **a standalone output** — ((plotly|Plotly)) offers 40+ interactive chart types and saves them as one web page that works offline with no install. **A full analytics app** — ((streamlit|Streamlit)) builds an app in a few lines for quick prototypes; ((dash|Dash)) suits a permanent tool with finer control."),
@@ -225,7 +225,7 @@
     {
       id: "y7", unit: "u2", pages: [22, 23], diff: 3, min: 8, scene: "pipeline10", related: ["y3", "w5", "s2"], pre: ["y6"],
       title: { ar: "من ٤ ملفات خام لتقرير يفتح بضغطة واحدة", en: "The reference project: from raw files to a one-click report" },
-      sum: { ar: "كل أسبوع موظفين بينزلوا ملفات ويظبطوها ويعملوا تقرير. تخيّل السلسلة اتسجلت مرة وبقت تتكرر بفحص عند كل خطوة.", en: "A ten-step pipeline joining the three levels, acceptance criteria, a delivery checklist, and the decision and learning map." },
+      sum: { ar: "ملفات بتتنزل وتتنضف وتتجمع كل أسبوع بإيد موظفين ممكن تتحول لسلسلة واحدة بتشتغل بضغطة، وفيها فحص عند كل خطوة بيوقفها لو فيه حاجة غلط.", en: "A ten-step pipeline joining the three levels, acceptance criteria, a delivery checklist, and the decision and learning map." },
       book: [
         bp(22, "مشروع واحد بيجمع الأتمتة والتحليل والعرض في نظام متكامل يشتغل لوحده، من غير تدخل بالإيد بعد الإعداد الأول.", "One project joining automation, analysis and reporting into a self-running system, with no manual work after setup."),
         bp(22, "خط الأنابيب الكامل — عشر خطوات: مراقبة المجلد ← قراءة أوتوماتيك ← تنظيف ودمج ← فحص الجودة ← محرك التحليل ← اكتشاف المشاكل ← حساب المؤشرات ← بناء الرسوم ← صفحة تفاعلية ← ملف واحد يتبعت.", "The full pipeline — ten steps: watch the folder → auto-read → clean and merge → quality check → analysis engine → detect problems → compute KPIs → build charts → interactive page → one file sent."),
