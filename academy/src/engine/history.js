@@ -281,7 +281,12 @@
       setPlaying(false);
       let next = host.nextElementSibling;
       while (next && !next.offsetHeight) next = next.nextElementSibling;
-      if (next) { next.scrollIntoView({ behavior: quiet() ? "auto" : "smooth", block: "start" }); const f = next.querySelector("h2,summary,button,a"); f && f.focus({ preventScroll: true }); }
+      if (next) {
+        next.scrollIntoView({ behavior: quiet() ? "auto" : "smooth", block: "start" });
+        const f = next.querySelector("h2") || next;   // a heading is not focusable by itself: make it a focus target so Tab continues in the lesson
+        if (!f.hasAttribute("tabindex")) f.setAttribute("tabindex", "-1");
+        f.focus({ preventScroll: true });
+      }
     };
     $("[data-aih-skip]").onclick = toLesson;
     const startBtn = $("[data-aih-start]"); if (startBtn) startBtn.onclick = toLesson;

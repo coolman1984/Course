@@ -263,7 +263,8 @@ await session({ label: "history-deck-ar", viewport: { width: 1360, height: 900 }
   playing && paused ? ok("history: play and pause") : fail("history: play/pause broken");
   await page.click("#sec-history [data-aih-skip]"); await page.waitForTimeout(700);
   const below = await page.$eval("#sec-history", (e) => e.getBoundingClientRect().bottom < 200);
-  below ? ok("history: skip goes to the lesson") : fail("history: skip did not scroll past the deck");
+  const focusOut = await page.evaluate(() => !document.querySelector("#sec-history").contains(document.activeElement) && document.activeElement !== document.body);
+  below && focusOut ? ok("history: skip goes to the lesson and moves focus there") : fail("history: skip did not move the reader (and focus) past the deck");
   await page.evaluate(() => (location.hash = "lesson-f2")); await page.waitForTimeout(150);
   (await page.$("#sec-history")) ? fail("history: deck leaked into another lesson") : ok("history: only the first lesson opens with the story");
 });
