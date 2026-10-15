@@ -44,12 +44,10 @@ await session({ label: "desktop-ar", viewport: { width: 1440, height: 900 } }, a
         plain: document.querySelectorAll("#lv .plain-sec").length,
         visible: [...document.querySelectorAll("#lv .plain-copy")].every((el) => el.textContent.trim().length > 35),
         original: !!document.querySelector("#lv .orig-layer:not([open])"),
-        story: !!document.querySelector("#sec-mental"),
-        steps: document.querySelectorAll("#sec-mental .mental-step").length === 3 && !document.querySelector("#sec-mental .mental-flow[hidden]"),
-        quiz: !!document.querySelector("#sec-mental [data-mq-reveal]") && !!document.querySelector("#sec-mental #mq-a[hidden]"),
+        noSituation: !document.querySelector("#sec-mental"),
         noTheatre: !document.querySelector(".motion-lesson")
       }));
-      if (proof.plain !== 2 || !proof.visible || !proof.original || !proof.story || !proof.steps || !proof.quiz || !proof.noTheatre)
+      if (proof.plain !== 2 || !proof.visible || !proof.original || !proof.noSituation || !proof.noTheatre)
         fail(`lesson ${hsh}: practical Arabic explanation or book reference missing ${JSON.stringify(proof)}`);
     }
   }
@@ -199,23 +197,14 @@ await session({ label: "motion-theatre-ar", viewport: { width: 1360, height: 900
   await page.click(".motion-home [data-motion-play]");
   await shot(page, "motion-theatre-home-ar");
   await page.evaluate(() => location.hash = "lesson-p1");
-  await page.waitForSelector("#sec-mental .mental-flow");
-  await page.$eval("#sec-mental", (e) => e.scrollIntoView()); await page.waitForTimeout(900);
+  await page.waitForSelector("#lv .tabs");
   const check = await page.evaluate(() => ({
-    steps: [...document.querySelectorAll("#sec-mental .mental-step")].filter((e) => +getComputedStyle(e).opacity > 0.95 && e.textContent.trim().length > 12).length,
+    noSituation: !document.querySelector("#sec-mental"),
     noTheatre: !document.querySelector(".motion-lesson"),
-    pill: !!document.querySelector("#lv .tabs .t-tabs-pill"),
-    sub: document.querySelector(".page-head .lead")?.textContent !== document.querySelector("#sec-mental .mental-situation")?.textContent
+    pill: !!document.querySelector("#lv .tabs .t-tabs-pill")
   }));
-  check.steps === 3 && check.noTheatre && check.pill && check.sub ?
-    ok("lesson opening: the whole path is visible at once, not repeated, tabs still animated") : fail("lesson opening incomplete " + JSON.stringify(check));
-  await page.click("#sec-mental [data-mq-reveal]");
-  const opened = await page.$eval("#mq-a", (e) => !e.hidden && e.textContent.trim().length > 8);
-  await page.click('#sec-mental [data-mq-self="no"]');
-  const fb = await page.$eval("[data-mq-fb]", (e) => !!e.querySelector("[data-mq-go]"));
-  await page.click("[data-mq-go]"); await page.waitForTimeout(700);
-  const moved = await page.$eval("#sec-scene", (e) => e.getBoundingClientRect().top < 300);
-  opened && fb && moved ? ok("lesson opening: think-first question reveals, self-check points to the explanation") : fail("lesson opening: question flow broken");
+  check.noSituation && check.noTheatre && check.pill ?
+    ok("lesson opening: no situation section, tabs still animated") : fail("lesson opening " + JSON.stringify(check));
   await page.click("#motion-btn");
   const off = await page.evaluate(() => document.documentElement.dataset.motion === "off" && document.querySelector("#motion-btn").getAttribute("aria-pressed") === "true");
   await page.click("#motion-btn");
