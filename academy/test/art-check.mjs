@@ -19,24 +19,34 @@ const want = args.length ? args : Object.keys(DECKS);
 const browser = await pw.chromium.launch();
 let problems = 0;
 for (const lang of ["ar", "en"]) {
-  const page = await browser.newPage({ viewport: { width: 1360, height: 900 } });
+  // reduced motion: every drawing is shown in its final state at once, so boxes are measured where they end up
+  const page = await browser.newPage({ viewport: { width: 1360, height: 900 }, reducedMotion: "reduce" });
   await page.goto(file);
-  await page.evaluate((lang) => { localStorage.setItem("aiAcademy.v1", JSON.stringify({ lang })); document.documentElement.dataset.motion = "off"; }, lang);
+  await page.evaluate((lang) => localStorage.setItem("aiAcademy.v1", JSON.stringify({ lang })), lang);
   for (const id of want) {
     await page.evaluate((l) => { location.hash = "lesson-" + l; location.reload(); }, DECKS[id]);
     await page.waitForSelector(`#sec-${id} .aih-stage`);
     const n = await page.$$eval(`#sec-${id} .aih-slide`, (s) => s.length);
     for (let i = 0; i < n; i++) {
       await page.click(`#sec-${id} [data-aih-go="${i}"]`);
-      await page.waitForTimeout(450);
+      await page.waitForTimeout(150);
       const found = await page.$eval(`#sec-${id} .aih-slide[data-i="${i}"] svg`, (svg) => {
-        const T = [...svg.querySelectorAll("text")].map((t) => { const b = t.getBBox(); return { s: t.textContent, x: b.x, y: b.y, w: b.width, h: b.height }; });
-        const out = T.filter((t) => t.x < -1 || t.y < -1 || t.x + t.w > 481 || t.y + t.h > 321).map((t) => ["OUT", t.s]);
+        // boxes in the root SVG's coordinates: getBBox() ignores ancestor transforms (rotated stamps, translated groups),
+        // so map the four corners through the element's CTM relative to the root
+        const root = svg.getScreenCTM().inverse();
+        const T = [...svg.querySelectorAll("text")].map((t) => {
+          const b = t.getBBox(), m = root.multiply(t.getScreenCTM()), P = svg.createSVGPoint();
+          const pts = [[b.x, b.y], [b.x + b.width, b.y], [b.x, b.y + b.height], [b.x + b.width, b.y + b.height]].map(([x, y]) => { P.x = x; P.y = y; return P.matrixTransform(m); });
+          const xs = pts.map((p) => p.x), ys = pts.map((p) => p.y);
+          return { s: t.textContent, x: Math.min(...xs), y: Math.min(...ys), w: Math.max(...xs) - Math.min(...xs), h: Math.max(...ys) - Math.min(...ys) };
+        });
+        // a 4px safety margin: text widths differ by a few pixels between machines (CI renders slightly wider)
+        const out = T.filter((t) => t.x < 4 || t.y < 1 || t.x + t.w > 476 || t.y + t.h > 319).map((t) => ["OUT", t.s]);
         const ov = [];
         for (let a = 0; a < T.length; a++) for (let c = a + 1; c < T.length; c++) {
           const A = T[a], B = T[c];
           const ix = Math.min(A.x + A.w, B.x + B.w) - Math.max(A.x, B.x), iy = Math.min(A.y + A.h, B.y + B.h) - Math.max(A.y, B.y);
-          if (ix > 2 && iy > 2) ov.push(["OVERLAP", A.s, B.s]);
+          if (ix > -2 && iy > 2) ov.push(["OVERLAP", A.s, B.s]);   // side by side, labels need at least 2px between them (same reason)
         }
         return [...out, ...ov];
       });

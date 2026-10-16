@@ -10650,7 +10650,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       const arcs = words.map((_, i) => i === focus ? "" : `<path ${an("draw", 0.9 + i * 0.12, `${i === link ? "s-acc" : "s-line2"}`)} pathLength="1" d="M${xOf(focus)} 168 Q${(xOf(focus) + xOf(i)) / 2} ${i === link ? 46 : 96} ${xOf(i)} 168" stroke-width="${i === link ? 5 : 2}" fill="none" stroke-linecap="round"/>`).join("");
       return `${arcs}
       ${words.map((s, i) => `<g ${an("rise", 0.1 + i * 0.1)}><rect x="${xOf(i) - w / 2}" y="170" width="${w}" height="44" rx="12" class="${i === focus ? "f-acc" : i === link ? "f-acc-soft s-acc" : "f-s1 s-line2"}" stroke-width="2"/>${txt(xOf(i), 198, s, i === focus ? "t-white" : "t-ink", 15, 'font-weight="600"')}</g>`).join("")}
-      <g ${an("pop", 1.9)}><rect x="${xOf(focus) - 70}" y="236" width="140" height="34" rx="17" class="f-mint"/>${txt(xOf(focus), 258, ar() ? "ضفة = شط مش بنك" : "bank = riverside", "t-white", 13, 'font-weight="700"')}</g>
+      <g ${an("pop", 1.9)}><rect x="${Math.min(380, Math.max(100, xOf(focus))) - 70}" y="236" width="140" height="34" rx="17" class="f-mint"/>${txt(Math.min(380, Math.max(100, xOf(focus))), 258, ar() ? "ضفة = شط مش بنك" : "bank = riverside", "t-white", 13, 'font-weight="700"')}</g>
       ${txt(240, 300, ar() ? "كل كلمة بتنتبه للكلمات اللي بتشرح معناها" : "each word attends to the words that explain it", "t-ink3", 13)}`;
     },
     chatgpt: () => `
@@ -11153,7 +11153,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       const nb = mx(82), tb = mx(252), md = mx(410);
       return `<g ${an("rise", 0.05)}>${box(nb, 150, 116, 150, "f-s1 s-amber", 2.5)}${[0, 1, 2, 3, 4].map((i) => `<circle cx="${nb - dirx() * 58}" cy="${94 + i * 28}" r="4" class="f-amber"/>`).join("")}
         ${txt(nb, 104, ar() ? "مديري: منى" : "manager: Mona", "t-ink2", 11, bold)}${txt(nb, 130, ar() ? "قسم الجودة" : "quality dept.", "t-ink2", 11, bold)}${txt(nb, 156, ar() ? "التقرير جدول" : "report as table", "t-ink2", 11, bold)}${[180, 202].map((y) => `<rect x="${nb - 36}" y="${y}" width="72" height="8" rx="4" class="f-s3"/>`).join("")}
-        ${txt(nb, 248, ar() ? "دفتر الذاكرة (برّه)" : "memory notebook (outside)", "t-amber", 12, bold)}</g>
+        ${txt(nb, 248, ar() ? "دفتر الذاكرة (برّه)" : "notebook (outside)", "t-amber", 12, bold)}</g>
       <g ${an("rise", 0.4)}>${box(tb, 200, 170, 104, "f-s2 s-acc", 2.5)}${txt(tb, 168, ar() ? "مساحة العمل" : "the workspace", "t-acc", 12.5, 'font-weight="800"')}
         <rect x="${tb - 64}" y="180" width="128" height="12" rx="6" class="f-s3"/><rect x="${tb - 64}" y="222" width="100" height="12" rx="6" class="f-acc-soft"/></g>
       ${grow(252 - 64, 200, 112, 12, "f-amber", 1.2)}
@@ -11263,7 +11263,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       <g ${an("rise", 1.3)}>${box(nt, 82, 150, 92, "f-s1 s-mint", 2.5)}${txt(nt, 56, ar() ? "ملف ملاحظات (برّه)" : "notes file (outside)", "t-mint", 11.5, 'font-weight="800"')}
         ${(ar() ? ["✓ من غير طنطا", "✓ بالجنيه", "☐ مسودة الإيميل"] : ["✓ excl. Tanta", "✓ in EGP", "☐ email draft"]).map((s, i) => txt(nt, 80 + i * 20, s, "t-ink2", 11.5, bold)).join("")}</g>
       <path ${an("draw", 1.6, "s-mint")} pathLength="1" d="M${sm + d * 30} 116 C ${sm + d * 40} 86, ${nt - d * 100} 70, ${nt - d * 78} 76" stroke-width="2.5" fill="none" marker-end="url(#aih-arrow)"/>
-      <g ${an("fade", 1.8)}>${txt(nt, 146, ar() ? "بيرجع يقراه بعد كل ضغط" : "re-read after each compaction", "t-mint", 11, bold)}</g>
+      <g ${an("fade", 1.8)}>${txt(nt, 146, ar() ? "بيرجع يقراه بعد كل ضغط" : "re-read after compacting", "t-mint", 11, bold)}</g>
       ${[mx(340), mx(436)].map((x, i) => `<g ${an("pop", 2.0 + i * 0.15)}>${box(x, 248, 84, 40, "f-s1 s-acc")}${txt(x, 246, ar() ? "مساعد " + digits(i + 1) : "helper " + (i + 1), "t-ink", 11.5, bold)}${txt(x, 261, ar() ? "مساحة جديدة" : "fresh workspace", "t-ink3", 9.5, bold)}</g>
         <path ${an("draw", 2.3 + i * 0.15, "s-acc")} pathLength="1" d="M${x} 226 Q ${x} 190, ${sm + d * 30} 176" stroke-width="2" stroke-dasharray="1" fill="none" marker-end="url(#aih-arrow)"/>`).join("")}
       ${txt(240, 306, ar() ? "بيلخّص ويكمّل… ويرجع لملاحظاته برّه" : "it summarises, goes on… and returns to its notes", "t-ink2", 12.5, bold)}`;
@@ -11445,7 +11445,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       <g ${an("rise", 0.8)}>${box(B, Y[0], 176, 56, "f-mint-soft s-mint")}${txt(B, Y[0] - 4, ar() ? "المورّد ب: جودة أعلى" : "Supplier B: higher quality", "t-mint", 12, 'font-weight="800"')}${txt(B, Y[0] + 14, ar() ? "اللي كان مقصود" : "what was meant", "t-mint", 10.5, bold)}</g>
       <g ${an("rise", 1.0)}>${box(B, Y[1], 176, 56, "f-rose-soft s-rose")}${txt(B, Y[1] - 4, ar() ? "المورّد ج: سعر أقل" : "Supplier C: lower price", "t-rose", 12, 'font-weight="800"')}${txt(B, Y[1] + 14, ar() ? "اللي الموديل اختاره" : "what the model chose", "t-rose", 10.5, bold)}</g>
       ${check(B + d * 100, Y[1] - 26, 1.3, false)}
-      <g ${an("fade", 1.5)}>${box(q, 250, 196, 34, "f-s2 s-line2")}${txt(q, 255, ar() ? "«اكتب فهمك للمطلوب في سطرين»" : "“State your understanding in two lines”", "t-ink2", 11.5, bold)}</g>
+      <g ${an("fade", 1.5)}>${box(q, 250, 196, 34, "f-s2 s-line2")}${txt(q, 255, ar() ? "«اكتب فهمك للمطلوب في سطرين»" : "“Restate the task in two lines”", "t-ink2", 11.5, bold)}</g>
       ${txt(240, 302, ar() ? "المعلومة الناقصة بتتملي بالأرجح" : "a missing fact is filled with the likeliest guess", "t-ink2", 13, bold)}`;
     },
     l_data: () => {
@@ -11617,7 +11617,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       <g ${an("rise", 2.2)}>${box(240, 262, 360, 46, "f-mint-soft s-mint")}${txt(240, 256, ar() ? "من غير ما تنزّل حاجة: إكسل وPowerShell موجودين" : "nothing to install: Excel and PowerShell are already there", "t-mint", 11.5, 'font-weight="800"')}${txt(240, 274, ar() ? "فولدر كامل · الأصل ما يتلمسش · سجل بكل خطوة" : "a whole folder · originals untouched · a log of every step", "t-mint", 11, bold)}</g>`;
     },
     x_recipe: () => {
-      const I = ar() ? ["المشكلة ووقتها", "المدخلات الحقيقية", "القواعد واستثناءاتها", "شكل النتيجة", "الاختبارات"] : ["problem & time", "real inputs", "rules & exceptions", "result's shape", "tests"];
+      const I = ar() ? ["المشكلة ووقتها", "المدخلات الحقيقية", "القواعد واستثناءاتها", "شكل النتيجة", "الاختبارات"] : ["problem & time", "real inputs", "rules & cases", "result shape", "tests"];
       const G = ar() ? ["على نسخة", "سجل تشغيل", "توقف واضح", "قفل إكسل"] : ["on a copy", "run log", "clear stop", "close Excel"];
       const X = rowX(5, 86, 6), Y = rowX(4, 104, 10);
       return `<g ${an("fade", 0.05)}>${txt(240, 46, ar() ? "خمس حاجات في الوصف" : "five parts of the description", "t-ink3", 12, bold)}</g>
