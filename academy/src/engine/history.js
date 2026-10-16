@@ -1134,14 +1134,15 @@
 
   /* ---------- the deck ---------- */
   // One player for every story deck (A.decks): the AI history in f1, how a model works in f2, …
-  A.mountDeck = function (host, H) {
+  A.mountDeck = function (host, H, opts = {}) {   // opts.present: the presenter's full-screen player drives it (no own chrome)
     if (!H || !host) return;
+    const present = !!opts.present;
     const S = H.slides, n = S.length, ui = H.ui;
     const fmt = (s, o) => L(s).replace(/\{(\w+)\}/g, (_, k) => o[k]);
     const num = (v) => (ar() ? Number(v).toLocaleString("ar-EG") : String(v));
     const readSecs = (s) => Math.min(18, Math.max(9, (L(s.title) + s.story.map(L).join(" ") + L(s.idea)).length / 17));
 
-    host.className = "sec aih";
+    host.className = present ? "aih aih-present" : "sec aih";
     host.setAttribute("aria-roledescription", ar() ? "عرض شرائح" : "carousel");
     host.setAttribute("aria-label", L(ui.deck));
     host.innerHTML = `
@@ -1323,10 +1324,12 @@
       io = new IntersectionObserver((es) => es.forEach((en) => { visible = en.intersectionRatio > 0.35; host.classList.toggle("is-away", !en.isIntersecting); }), { threshold: [0, 0.35, 0.6] });
       io.observe(stage);
     }
-    A.onLeave(() => { io && io.disconnect(); playing = false; cancelAnimationFrame(raf); cancelAnimationFrame(countRaf); alive = false; cancelIdle(); });
+    const stop = () => { io && io.disconnect(); playing = false; cancelAnimationFrame(raf); cancelAnimationFrame(countRaf); alive = false; cancelIdle(); };
+    A.onLeave(stop);
 
-    go(0, "init");
+    go(Math.max(0, Math.min(n - 1, opts.start || 0)), "init");
     idleDraw();
+    return { n, get cur() { return cur; }, go: (i) => go(i, "user"), destroy: stop };
   };
   A.mountHistory = (host) => A.mountDeck(host, A.aiHistory);
 })(window.ACADEMY = window.ACADEMY || {});

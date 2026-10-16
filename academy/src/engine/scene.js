@@ -250,10 +250,18 @@
     }
     function frame(now) {
       const dt = Math.min(0.1, (now - last) / 1000); last = now;
-      tNow = Math.min(total, tNow + dt * Number(speed.value));
+      const end = stopAt == null ? total : stopAt;
+      tNow = Math.min(end, tNow + dt * Number(speed.value));
       render(tNow);
-      if (tNow >= total) { pause(); return; }
+      if (tNow >= end) { stopAt = null; pause(); return; }
       raf = requestAnimationFrame(frame);
+    }
+    let stopAt = null;   // presenter mode plays one stage and stops at its end
+    function playStage(i) {
+      i = Math.max(0, Math.min(stages.length - 1, i));
+      if (rm) return goto(i, false);
+      if (playing) { playing = false; cancelAnimationFrame(raf); }
+      full = false; tNow = T[i]; stopAt = T[i] + (stages[i].d || 4) * 0.999; render(tNow); play();
     }
     function play() {
       if (playing) return;
@@ -264,6 +272,7 @@
       raf = requestAnimationFrame(frame);
     }
     function pause() {
+      if (!playing) stopAt = null;
       playing = false; cancelAnimationFrame(raf);
       bPlay.innerHTML = ico("play"); bPlay.setAttribute("aria-label", tr("sPlay")); bPlay.title = tr("sPlay");
       render(tNow);
@@ -308,7 +317,7 @@
       }, { threshold: [0, 0.45, 0.8] });
       io.observe(wrap);
     }
-    const api = { root, play, pause, goto: (i) => goto(i, false), next: () => bNext.click(), prev: () => bPrev.click(), get stage() { return curStage; }, get count() { return stages.length; }, destroy() { pause(); io && io.disconnect(); root.remove(); } };
+    const api = { root, play, pause, playStage, goto: (i) => goto(i, false), next: () => bNext.click(), prev: () => bPrev.click(), get stage() { return curStage; }, get count() { return stages.length; }, destroy() { pause(); io && io.disconnect(); root.remove(); } };
     A.onLeave && A.onLeave(() => { pause(); io && io.disconnect(); });
     return api;
   }

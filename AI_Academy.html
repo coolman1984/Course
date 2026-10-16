@@ -935,6 +935,100 @@ html[data-font="naskh"]{--font-body:"R Naskh","UI Latin","UI Symbols",system-ui,
 @media (prefers-reduced-motion:reduce){.vpanel{animation:none}}
 svg text{font-family:var(--font-art)}   /* every drawing keeps the measured font whatever the reading font */
 
+/* ---- presenter: a full-screen player (engine/tools.js openPresenter) ---- */
+.cine{position:fixed;inset:0;z-index:150;display:grid;grid-template-rows:auto minmax(0,1fr) auto;background:var(--bg);color:var(--ink)}
+.cine-top,.cine-bot{display:flex;align-items:center;gap:8px;padding:10px 16px;transition:opacity .35s ease,transform .35s ease;z-index:3}
+.cine-top{border-bottom:1px solid var(--line)}
+.cine-bot{border-top:1px solid var(--line);gap:10px}
+.cine-badge{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:var(--uc);color:#fff;font-weight:800}
+.cine-tt{display:grid;line-height:1.3;min-width:0}.cine-tt b{font-family:var(--font-display);font-size:15px}.cine-tt small{color:var(--ink-3);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cine-sp{flex:1}
+.cine-ib{display:inline-flex;align-items:center;gap:6px;height:36px;min-width:36px;justify-content:center;padding-inline:9px;border-radius:10px;border:1px solid transparent;background:transparent;color:var(--ink-2);font:inherit;font-size:13.5px;cursor:pointer}
+.cine-ib:hover{background:var(--surface-3);color:var(--ink)}.cine-ib[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent)}
+.cine-ib svg,.cine-pb svg{width:18px;height:18px}
+.cine-pb{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line-2);background:var(--surface);color:var(--ink);cursor:pointer}
+.cine-pb.main{width:50px;height:50px;background:var(--accent);border-color:var(--accent);color:#fff}
+.cine-pb:disabled{opacity:.35;cursor:default}
+.cine-scrub{position:relative;flex:1;height:34px;display:flex;align-items:center;cursor:pointer;outline:none}
+.cine-track{position:relative;width:100%;height:6px;border-radius:99px;background:var(--surface-3);overflow:hidden}
+.cine-track i{position:absolute;inset-block:0;inset-inline-start:0;background:var(--uc);border-radius:99px;transition:width .3s ease}
+.cine-scrub:focus-visible .cine-track{box-shadow:0 0 0 3px var(--accent-soft)}
+.cine-marks{position:absolute;inset:0;pointer-events:none}
+.cine-mark{position:absolute;top:50%;transform:translate(calc(-50% * var(--dirx,1)),-50%);width:20px;height:20px;border-radius:50%;border:2px solid var(--uc);background:var(--surface);color:var(--ink-2);font:700 10px/1 var(--font-body);display:grid;place-items:center;padding:0;pointer-events:auto;cursor:pointer}
+html[dir="rtl"] .cine-mark{transform:translate(50%,-50%)}
+.cine-mark.on{background:var(--uc);color:#fff}
+.cine-tip{position:absolute;bottom:38px;width:220px;padding:6px 10px;border-radius:8px;background:var(--ink);color:var(--bg);font-size:12.5px;text-align:center;pointer-events:none}
+.cine-time,.cine-count{font-size:13px;color:var(--ink-3);white-space:nowrap}
+.cine-count{min-width:62px;text-align:end;font-weight:600;color:var(--ink-2)}
+.cine-view{position:relative;display:flex;align-items:center;justify-content:center;min-height:0;overflow:hidden}
+.cine-frame{width:1280px;height:720px;flex:none;position:relative;display:grid;align-items:center;overflow:hidden;animation:cine-in .45s var(--ease,ease) both}
+.cine-frame.back{animation-name:cine-in-b}
+@keyframes cine-in{from{opacity:0;transform:translateX(calc(24px * var(--dirx,1)))}to{opacity:1;transform:none}}
+@keyframes cine-in-b{from{opacity:0;transform:translateX(calc(-24px * var(--dirx,1)))}to{opacity:1;transform:none}}
+html[dir="rtl"] .cine{--dirx:-1}
+.cine-notes{flex:none;width:min(380px,30%);align-self:stretch;overflow:auto;padding:18px 20px;border-inline-start:1px solid var(--line);background:var(--surface-2);font-size:15px;line-height:1.9}
+.cine-notes b{display:block;font-family:var(--font-display);font-size:16px;margin-bottom:6px}.cine-notes p{margin:0 0 10px;color:var(--ink-2)}
+.cine-n-rule{color:var(--accent)!important;font-weight:600}
+/* cards: title, lesson, question, review */
+.cine-card{position:relative;isolation:isolate;padding:72px 96px;display:grid;gap:22px;align-content:center;height:100%;background:radial-gradient(900px 520px at 85% 15%,color-mix(in srgb,var(--uc) 12%,transparent),transparent 70%),radial-gradient(700px 420px at 10% 95%,color-mix(in srgb,var(--uc) 8%,transparent),transparent 70%)}
+html[dir="rtl"] .cine-card{background:radial-gradient(900px 520px at 15% 15%,color-mix(in srgb,var(--uc) 12%,transparent),transparent 70%),radial-gradient(700px 420px at 90% 95%,color-mix(in srgb,var(--uc) 8%,transparent),transparent 70%)}
+.cine-card.lesson::after{content:attr(data-n);position:absolute;z-index:-1;inset-inline-end:56px;bottom:-60px;font:800 420px/1 var(--font-art);color:color-mix(in srgb,var(--uc) 9%,transparent);letter-spacing:-.04em}
+.cine-card > *{animation:cine-up .6s var(--ease,ease) both}.cine-card > :nth-child(2){animation-delay:.08s}.cine-card > :nth-child(3){animation-delay:.16s}.cine-card > :nth-child(4){animation-delay:.24s}
+@keyframes cine-up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.cine-card > *{animation:none}}
+.cine-card h1{font-size:54px;line-height:1.2;letter-spacing:-.02em;text-wrap:balance;margin:0}
+.cine-card.big h1{font-size:62px}
+.cine-card p{font-size:24px;line-height:1.75;color:var(--ink-2);margin:0;max-width:980px}
+.cine-k{display:inline-flex;align-items:center;gap:8px;width:max-content;padding:6px 14px;border-radius:99px;background:color-mix(in srgb,var(--uc) 14%,transparent);color:var(--uc);font-weight:700;font-size:16px}
+.cine-k svg{width:16px;height:16px}
+.cine-chain{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:20px;font-weight:600;color:var(--ink-2)}
+.cine-chain span{padding:8px 14px;border-radius:12px;background:var(--surface-2);border:1px solid var(--line)}.cine-chain i{font-style:normal;color:var(--ink-3)}
+.cine-pts{display:grid;gap:14px;margin:0;padding-inline-start:28px;font-size:23px;line-height:1.6;color:var(--ink-2)}
+.cine-rem{font-weight:700;color:var(--uc)!important}
+.cine-card.ask h1{font-size:42px}
+.cine-opts{display:grid;gap:12px;margin:0;padding-inline-start:34px;font-size:24px;line-height:1.5}
+.cine-opts li{padding:10px 14px;border-radius:12px;transition:background .3s,opacity .3s}
+.cine-opts li.ok{background:var(--mint-soft,rgba(16,150,90,.12));color:var(--mint);font-weight:700}
+.cine-opts li.dim{opacity:.45}
+.cine-why{font-size:21px;line-height:1.7;padding:16px 20px;border-radius:14px;background:var(--surface-2);border-inline-start:5px solid var(--mint)}
+.cine-hint{font-size:16px!important;color:var(--ink-3)!important}
+/* the story deck inside the frame: no chrome of its own, larger drawing, story text optional */
+.cine-frame .aih-present{width:100%;margin:0;padding:0;height:720px}
+.cine-frame .aih-head,.cine-frame .aih-foot,.cine-frame .aih-nav,.cine-frame .aih-timer{display:none}
+.cine-frame .aih-stage{height:720px;border:0;border-radius:0;background:var(--surface-2)}
+.cine-frame .aih-slide{height:720px;padding:96px 72px 56px;grid-template-columns:minmax(0,.9fr) minmax(0,1.25fr);gap:48px}
+.cine-frame .aih-q{top:26px;font-size:20px;padding:10px 20px 10px 12px}
+.cine-frame .aih-q-mark{width:32px;height:32px;font-size:18px}
+.cine-frame .aih-txt h3{font-size:36px}
+.cine-frame .aih-txt p{font-size:19px}
+.cine-frame .aih-answer b{font-size:22px}
+.cine-frame .aih-idea{font-size:18px}
+.cine-frame:not(.full-text) .aih-txt p{display:none}
+.cine-frame .aih-start{display:none}
+/* scenes inside the frame */
+.cine-frame.k-scene{align-content:center;padding:20px 40px}
+.cine-sc{min-height:0}
+/* black / white screen, spotlight, jump, menus */
+.cine-screen{position:absolute;inset:0;z-index:6}.cine-screen.black{background:#000}.cine-screen.white{background:#fff}
+.cine-spot{position:absolute;inset:0;z-index:5;pointer-events:none;background:radial-gradient(circle 150px at var(--x,50%) var(--y,50%),transparent 0 96%,rgba(0,0,0,.72) 100%)}
+.cine-jump{position:absolute;z-index:7;top:70px;inset-inline-end:24px;padding:10px 16px;border-radius:12px;background:var(--ink);color:var(--bg);font-weight:700}
+.cine-menu,.cine-help{position:absolute;z-index:7;top:60px;inset-inline-end:16px;width:min(420px,calc(100vw - 32px));max-height:calc(100vh - 140px);overflow:auto;padding:16px;border-radius:16px;background:var(--surface);border:1px solid var(--line-2);box-shadow:0 18px 48px rgba(10,14,30,.25)}
+.cine-menu ol{list-style:none;margin:10px 0;padding:0;display:grid;gap:4px}
+.cine-menu button{width:100%;display:flex;gap:10px;align-items:center;text-align:start;padding:9px 10px;border-radius:10px;border:0;background:transparent;color:var(--ink);font:inherit;font-size:14.5px;cursor:pointer}
+.cine-menu button:hover,.cine-menu button.on{background:var(--surface-2)}.cine-menu button.on{color:var(--accent);font-weight:600}
+.cine-menu .num{width:24px;height:24px;border-radius:7px;display:grid;place-items:center;background:var(--surface-3);font-size:12px;flex:none}
+.cine-opt{display:flex;gap:8px;align-items:center;font-size:14px;color:var(--ink-2);padding-top:8px;border-top:1px solid var(--line)}
+.cine-help dl{display:grid;grid-template-columns:auto 1fr;gap:8px 14px;margin:12px 0;font-size:14px;align-items:center}
+.cine-help dd{margin:0;color:var(--ink-2)}.cine-help p{font-size:13px;color:var(--ink-3);margin:0;line-height:1.7}
+/* idle in a lecture: the controls and the cursor fade away */
+.cine.idle .cine-top,.cine.idle .cine-bot{opacity:0;pointer-events:none}
+.cine.idle{cursor:none}
+.cine:fullscreen .cine-top,.cine:fullscreen .cine-bot{position:absolute;inset-inline:0;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(6px)}
+.cine:fullscreen .cine-top{top:0}.cine:fullscreen .cine-bot{bottom:0}
+.cine:fullscreen{grid-template-rows:minmax(0,1fr)}.cine:fullscreen .cine-view{grid-row:1/-1;height:100vh}
+@media (max-width:760px){.cine-ib span,.cine-time{display:none}.cine-top,.cine-bot{padding:8px 10px;gap:6px}}
+@media (prefers-reduced-motion:reduce){.cine-frame,.cine-frame.back{animation:none}.cine-track i{transition:none}}
+
 /*
  Learning Motion Theatre: adapted selected free transition patterns from
  Jakub Antalik / transitions.dev (© 2026), https://transitions.dev/
@@ -1512,6 +1606,12 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     kgSearch: u("دور على مفهوم…", "Find a concept…"), zoomIn: u("تكبير", "Zoom in"), zoomOut: u("تصغير", "Zoom out"), zoomReset: u("الصورة الكاملة", "Fit all"),
     kgHint: u("اسحب للتحريك، واضغط مرتين للتكبير (أو Ctrl مع عجلة الماوس). مرّر على عقدة عشان تشوف روابطها، واضغط عشان تفتحها.", "Drag to pan, double-click to zoom (or Ctrl + wheel). Hover a node to see its links, click to open it."),
     kgList: u("عرض الروابط كقائمة", "Show links as a list"), kgLinks: u("مرتبط بـ", "Linked to"), kgLinksN: u("{n} روابط", "{n} links"),
+    lessonN: u("الدرس {n}", "Lesson {n}"), prThisLesson: u("اعرض في القاعة", "Present in the hall"), cnChapters: u("الدروس", "Lessons"), cnFullText: u("النص الكامل للحكاية", "Full story text"), cnSpot: u("كشّاف", "Spotlight"),
+    cnBlack: u("شاشة سودا", "Black screen"), cnHelp: u("الاختصارات", "Shortcuts"), cnPlay: u("تشغيل تلقائي", "Auto-play"), cnPause: u("إيقاف مؤقت", "Pause"),
+    cnProgress: u("مكانك في العرض", "Your place in the show"), cnRevealHint: u("التالي يكشف الإجابة", "Next reveals the answer"), cnQuestions: u("أسئلة للقاعة بعد كل درس", "A question for the room after each lesson"),
+    cnGoTo: u("انتقل للشريحة {n} — اضغط Enter", "Go to slide {n} — press Enter"),
+    cnKeys: u("→ ← أو PageDown PageUp=التالي والسابق|Space أو Enter=التالي|B أو .=شاشة سودا (أي زرار يرجّعها)|W أو ,=شاشة بيضا|رقم + Enter=انتقل لشريحة|Home End=أول وآخر العرض|P=تشغيل تلقائي أو إيقاف|F أو F5=ملء الشاشة|C=قائمة الدروس|N=ملاحظاتك|S=النص الكامل للحكاية|L=كشّاف بالماوس|Esc=اقفل القايمة، ثم اخرج", "→ ← or PageDown PageUp=Next and previous|Space or Enter=Next|B or .=Black screen (any key brings it back)|W or ,=White screen|Number + Enter=Go to a slide|Home End=Start and end|P=Auto-play or pause|F or F5=Full screen|C=Lessons menu|N=Your notes|S=Full story text|L=Mouse spotlight|Esc=Close a menu, then exit"),
+    cnRemote: u("ريموت العرض اللي بيتوصل بالـ USB بيشتغل على طول: زرارين التقليب، وزرار الشاشة السودا، وزرار بدء العرض. والعرض بيفتكر وقفت فين، والشاشة مش بتطفي وهو شغال.", "A USB presenter remote works out of the box: the two page buttons, the blank-screen button and the start-show button. The show remembers where you stopped, and the screen stays awake while it runs."),
     prTitle: u("وضع المحاضر", "Presenter mode"), prLead: u("اعرض أي وحدة على شاشة كبيرة: شرائح متتابعة، مشاهد بالأسهم، أسئلة للجمهور، وملاحظات تعليمية.", "Present any unit on a big screen: sequential slides, scenes driven by arrows, audience questions and teaching notes."),
     prKeys: u("الأسهم أو المسافة للتنقل · N للملاحظات · R لكشف الإجابة · F لملء الشاشة · Esc للخروج.", "Arrows or Space to move · N notes · R reveal answer · F fullscreen · Esc exit."),
     prSlidesN: u("{n} شريحة", "{n} slides"), prNoteTeach: u("تقول إيه", "What to say"), prNoteScene: u("تعرض المشهد إزاي", "How to present the scene"), prNoteSceneBody: u("اضغط السهم مرحلة بمرحلة، واسأل الجمهور: إيه اللي متوقعينه في المرحلة اللي جاية؟", "Advance stage by stage and ask: what do you expect next?"),
@@ -8350,10 +8450,18 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     }
     function frame(now) {
       const dt = Math.min(0.1, (now - last) / 1000); last = now;
-      tNow = Math.min(total, tNow + dt * Number(speed.value));
+      const end = stopAt == null ? total : stopAt;
+      tNow = Math.min(end, tNow + dt * Number(speed.value));
       render(tNow);
-      if (tNow >= total) { pause(); return; }
+      if (tNow >= end) { stopAt = null; pause(); return; }
       raf = requestAnimationFrame(frame);
+    }
+    let stopAt = null;   // presenter mode plays one stage and stops at its end
+    function playStage(i) {
+      i = Math.max(0, Math.min(stages.length - 1, i));
+      if (rm) return goto(i, false);
+      if (playing) { playing = false; cancelAnimationFrame(raf); }
+      full = false; tNow = T[i]; stopAt = T[i] + (stages[i].d || 4) * 0.999; render(tNow); play();
     }
     function play() {
       if (playing) return;
@@ -8364,6 +8472,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       raf = requestAnimationFrame(frame);
     }
     function pause() {
+      if (!playing) stopAt = null;
       playing = false; cancelAnimationFrame(raf);
       bPlay.innerHTML = ico("play"); bPlay.setAttribute("aria-label", tr("sPlay")); bPlay.title = tr("sPlay");
       render(tNow);
@@ -8408,7 +8517,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       }, { threshold: [0, 0.45, 0.8] });
       io.observe(wrap);
     }
-    const api = { root, play, pause, goto: (i) => goto(i, false), next: () => bNext.click(), prev: () => bPrev.click(), get stage() { return curStage; }, get count() { return stages.length; }, destroy() { pause(); io && io.disconnect(); root.remove(); } };
+    const api = { root, play, pause, playStage, goto: (i) => goto(i, false), next: () => bNext.click(), prev: () => bPrev.click(), get stage() { return curStage; }, get count() { return stages.length; }, destroy() { pause(); io && io.disconnect(); root.remove(); } };
     A.onLeave && A.onLeave(() => { pause(); io && io.disconnect(); });
     return api;
   }
@@ -8663,6 +8772,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       ${head(`<span class="chip" style="background:${u.color};color:#fff;border:0">${esc(u.badge)}</span> ${esc(L(u.short))}`, L(l.title), esc(L(l.sum)),
         `<div class="lesson-meta">${pageChips(l.pages)}<span class="chip num">${ico("clock")}${l.min} ${esc(t("minutes"))}</span><span class="chip">${ico("target")}${esc(diffLabel(l.diff))}</span>
          <span class="bar-spacer"></span>
+         <button type="button" class="chip" id="present-l" title="${esc(t("prThisLesson"))}">${ico("screen")}${esc(t("prThisLesson"))}</button>
          <button type="button" class="chip" id="bm" aria-pressed="${bm}">${ico("bookmark")}${esc(bm ? t("bookmarked") : t("bookmark"))}</button>
          <button type="button" class="chip ${done ? "ok" : ""}" id="donetop" aria-pressed="${done}">${ico("check")}${esc(done ? t("done") : t("markDone"))}</button></div>`)}
       ${deck ? `<section id="sec-${deck.id}"></section>` : ""}
@@ -8804,6 +8914,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     };
     A.$("#donebtn").onclick = toggleDone;
     A.$("#donetop").onclick = toggleDone;
+    A.$("#present-l").onclick = () => A.openPresenter(l.unit, l.id);
     A.$("#bm").onclick = () => {
       const list = S.get("bookmarks").slice(); const i = list.indexOf(l.id);
       i >= 0 ? list.splice(i, 1) : list.push(l.id);
@@ -10226,100 +10337,288 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     main.append(wrap);
     const prl = A.$("#prl");
     for (const u of A.units) {
-      const b = h("button", { type: "button", class: "unit-card", style: "--uc:" + u.color + ";text-align:start;font:inherit;cursor:pointer", html: `<span class="ub">${esc(u.badge)}</span><h3>${esc(L(u.title))}</h3><p>${esc(t("prSlidesN", { n: buildSlides(u).length }))}</p>` });
+      const b = h("button", { type: "button", class: "unit-card", style: "--uc:" + u.color + ";text-align:start;font:inherit;cursor:pointer", html: `<span class="ub">${esc(u.badge)}</span><h3>${esc(L(u.title))}</h3><p>${esc(t("prSlidesN", { n: buildSlides(u, S.get("presenter") || {}).steps.length }))}</p>` });
       b.onclick = () => openPresenter(u.id);
       prl.append(b);
     }
     if (uid && A.unitById[uid]) setTimeout(() => openPresenter(uid), 0);
   });
 
-  function buildSlides(u) {
-    const slides = [{ kind: "title", u }];
-    slides.push({ kind: "big", u });
-    for (const l of A.lessons.filter((x) => x.unit === u.id)) {
-      slides.push({ kind: "lesson", l });
-      if (l.scene && A.sceneById[l.scene]) slides.push({ kind: "scene", l });
-      const q = A.quiz.find((x) => x.lesson === l.id && x.type !== "order");
-      if (q) slides.push({ kind: "ask", l, q });
-    }
-    slides.push({ kind: "review", u });
-    return slides;
+  /* The presenter: a full-screen player for one unit. Each lesson plays as a chapter: a title card, its story deck
+     (the same animated slides as the lesson page), then its animated scene stage by stage, then a question for the room.
+     Built for a lecture hall: works with a USB presenter remote (PageUp/PageDown, arrows, B/. for a black screen,
+     F5/Esc), hides its controls and the cursor when idle, keeps the screen awake, and resumes where it stopped. */
+  function buildSlides(u, opts = {}) {
+    const blocks = [{ kind: "title", n: 1 }];
+    const lessons = A.lessons.filter((x) => x.unit === u.id);
+    lessons.forEach((l, li) => {
+      const ch = li;
+      blocks.push({ kind: "lesson", l, ch, n: 1 });
+      const deck = (A.decks || []).find((d) => d.lesson === l.id);
+      if (deck) blocks.push({ kind: "deck", l, ch, deck, n: deck.slides.length });
+      const sc = l.scene && A.sceneById[l.scene];
+      if (sc) blocks.push({ kind: "scene", l, ch, sc, n: sc.stages.length });
+      const q = opts.questions === false ? null : A.quiz.find((x) => x.lesson === l.id && x.type !== "order");
+      if (q) blocks.push({ kind: "ask", l, ch, q, n: 2 });
+    });
+    blocks.push({ kind: "review", n: 1 });
+    const steps = [];
+    blocks.forEach((b, bi) => { for (let k = 0; k < b.n; k++) steps.push({ b: bi, k }); });
+    return { blocks, steps, lessons };
   }
-  function openPresenter(uid) {
+
+  function openPresenter(uid, lessonId) {
     const u = A.unitById[uid];
-    const slides = buildSlides(u);
-    let i = 0, reveal = false, notesOn = innerWidth > 1024, sceneApi = null;
+    if (!u || document.querySelector(".cine")) return;
+    const pref = Object.assign({ questions: true, full: false, notes: false }, S.get("presenter") || {});
+    let plan = buildSlides(u, pref);
+    // start at the lesson asked for, else where the last show of this unit stopped
+    const atLesson = lessonId ? plan.steps.findIndex((s) => (plan.blocks[s.b].l || {}).id === lessonId) : -1;
+    let pos = atLesson >= 0 ? atLesson : Math.min(plan.steps.length - 1, Number((S.get("presentPos") || {})[uid]) || 0);
+    let cur = { b: -1 }, api = null, playing = false, playT = 0, screen = "", spot = false, jump = "", jumpT = 0, idleT = 0, clockT = 0, lock = null;
+    const t0 = Date.now();
+    const rtl = A.lang() === "ar";
     const prevFocus = document.activeElement;
-    const ov = h("div", { class: "present", role: "dialog", "aria-modal": "true", "aria-label": t("nav_present") + ": " + L(u.title) });
+    const ov = h("div", { class: "cine", role: "dialog", "aria-modal": "true", "aria-label": t("nav_present") + ": " + L(u.title), style: "--uc:" + u.color });
+    ov.innerHTML = `
+      <div class="cine-top">
+        <span class="cine-badge">${esc(u.badge)}</span>
+        <div class="cine-tt"><b>${esc(L(u.title))}</b><small data-c-chapter></small></div>
+        <span class="cine-sp"></span>
+        <button type="button" class="cine-ib" data-c="chapters" aria-haspopup="true" title="${esc(t("cnChapters"))} (C)">${ico("layers")}<span>${esc(t("cnChapters"))}</span></button>
+        <button type="button" class="cine-ib" data-c="notes" title="${esc(t("prNotes"))} (N)">${ico("note")}</button>
+        <button type="button" class="cine-ib" data-c="text" title="${esc(t("cnFullText"))} (S)">${ico("page")}</button>
+        <button type="button" class="cine-ib" data-c="spot" title="${esc(t("cnSpot"))} (L)">${ico("target")}</button>
+        <button type="button" class="cine-ib" data-c="black" title="${esc(t("cnBlack"))} (B)">${ico("moon")}</button>
+        <button type="button" class="cine-ib" data-c="help" title="${esc(t("cnHelp"))} (?)">${ico("info")}</button>
+        <button type="button" class="cine-ib" data-c="fs" title="${esc(t("prFull"))} (F)">${ico("full")}</button>
+        <button type="button" class="cine-ib" data-c="close" title="${esc(t("prExit"))} (Esc)">${ico("x")}</button>
+      </div>
+      <div class="cine-view"><div class="cine-frame" data-c-frame></div><aside class="cine-notes" data-c-notes hidden></aside></div>
+      <div class="cine-bot">
+        <button type="button" class="cine-pb" data-c="prev" aria-label="${esc(t("prev"))}">${ico(rtl ? "next" : "prev")}</button>
+        <button type="button" class="cine-pb main" data-c="play" aria-label="${esc(t("cnPlay"))}">${ico("play")}</button>
+        <button type="button" class="cine-pb" data-c="next" aria-label="${esc(t("next"))}">${ico(rtl ? "prev" : "next")}</button>
+        <div class="cine-scrub" data-c-scrub role="slider" tabindex="0" aria-label="${esc(t("cnProgress"))}"><div class="cine-track"><i data-c-fill></i></div><div class="cine-marks" data-c-marks></div><div class="cine-tip" data-c-tip hidden></div></div>
+        <span class="cine-time num" dir="ltr" data-c-time></span>
+        <span class="cine-count num" dir="ltr" data-c-count></span>
+      </div>
+      <div class="cine-screen" data-c-screen hidden></div>
+      <div class="cine-spot" data-c-spotlight hidden></div>
+      <div class="cine-jump num" data-c-jump hidden></div>
+      <div class="cine-menu" data-c-menu hidden></div>
+      <div class="cine-help" data-c-help hidden></div>`;
     document.body.append(ov);
     document.body.style.overflow = "hidden";
-    function notesFor(s) {
-      const pick = (l, keys) => keys.flatMap((k) => (l.levels && l.levels[k]) || []).slice(0, 3).map((x) => A.rich(L(x))).join("");
-      if (s.kind === "lesson") return `<b>${esc(t("prNoteTeach"))}</b><div class="rt" style="font-size:14.5px">${pick(s.l, ["simple", "practice"])}</div>`;
-      if (s.kind === "scene") return `<b>${esc(t("prNoteScene"))}</b><p>${esc(t("prNoteSceneBody"))}</p>`;
-      if (s.kind === "ask") return `<b>${esc(t("prNoteAsk"))}</b><p>${A.inline(L(s.q.explain))}</p>`;
-      if (s.kind === "big" || s.kind === "title") return `<b>${esc(t("prNoteOpen"))}</b><p>${A.inline(L(s.u.sum))}</p>`;
-      return `<b>${esc(t("prNoteClose"))}</b><p>${A.inline(L(s.u.review.remember || s.u.big))}</p>`;
+    const q = (s) => ov.querySelector(s);
+    const frame = q("[data-c-frame]"), notes = q("[data-c-notes]");
+
+    // the frame is laid out at 1280 × 720 and scaled to the screen, so a slide looks the same on a laptop and a projector
+    function fit() {
+      const v = q(".cine-view").getBoundingClientRect();
+      const w = v.width - (pref.notes ? Math.min(380, v.width * 0.3) : 0);
+      const z = Math.max(0.3, Math.min(w / 1280, v.height / 720));
+      frame.style.zoom = z;
     }
-    function draw() {
-      sceneApi && sceneApi.destroy(); sceneApi = null;
-      const s = slides[i];
-      const rtl = A.lang() === "ar";
-      ov.innerHTML = `
-        <div class="pr-top"><span class="chip" style="background:${u.color};color:#fff;border:0">${esc(u.badge)}</span><b>${esc(L(u.title))}</b><span class="bar-spacer" style="flex:1"></span>
-          <button type="button" class="ibtn" id="pr-notes" aria-pressed="${notesOn}">${ico("note")}<span class="lbl">${esc(t("prNotes"))}</span></button>
-          <button type="button" class="ibtn" id="pr-fs" aria-label="${esc(t("prFull"))}">${ico("full")}</button>
-          <button type="button" class="ibtn" id="pr-x" aria-label="${esc(t("prExit"))}">${ico("x")}<span class="lbl">${esc(t("prExit"))}</span></button></div>
-        <div class="pr-stage ${notesOn ? "notes" : ""}"><div class="pr-slide" id="pr-s"></div><aside class="pr-notes" ${notesOn ? "" : "hidden"} aria-label="${esc(t("prNotes"))}">${notesFor(s)}</aside></div>
-        <div class="pr-bot"><button type="button" class="btn sm" id="pr-p">${ico(rtl ? "next" : "prev")}${esc(t("prev"))}</button><div class="qprog"><i style="width:${((i + 1) / slides.length) * 100}%"></i></div><span class="num small muted">${i + 1} / ${slides.length}</span><button type="button" class="btn sm pri" id="pr-n">${esc(t("next"))}${ico(rtl ? "prev" : "next")}</button></div>`;
-      const box = ov.querySelector("#pr-s");
-      if (s.kind === "title") box.innerHTML = `<span class="eyebrow">${esc(t("unitN", { n: u.n }))} · ${esc(t("bookPagesN", { n: u.bookPages.length }))}</span><h1>${esc(L(u.title))}</h1><p class="lead">${esc(L(u.sum))}</p>`;
-      else if (s.kind === "big") box.innerHTML = `<span class="eyebrow">${esc(t("bigIdea"))}</span><h1 style="font-size:clamp(1.6rem,1rem + 2.6vw,3rem)">${A.inline(L(u.big))}</h1>`;
-      else if (s.kind === "lesson") box.innerHTML = `<span class="eyebrow">${A.pageChips(s.l.pages)}</span><h1>${esc(L(s.l.title))}</h1><p class="lead">${esc(L(s.l.sum))}</p><ul class="pr-points">${(s.l.book || []).slice(0, 5).map((b) => `<li>${A.inline(L(b))}</li>`).join("")}</ul>`;
-      else if (s.kind === "scene") { box.innerHTML = `<h2>${esc(L(s.l.title))}</h2>`; sceneApi = A.mountScene(box, s.l.scene, { autoplay: false, initialStage: 0 }); }
-      else if (s.kind === "ask") {
-        const q = s.q;
-        box.innerHTML = `<span class="eyebrow">${ico("users")} ${esc(t("prAsk"))}</span><h1 style="font-size:clamp(1.4rem,1rem + 2vw,2.4rem)">${A.inline(L(q.q))}</h1>
-          <ol class="pr-points" type="A">${q.opts.map((o, k) => `<li style="${reveal && k === q.ans ? "color:var(--mint);font-weight:700" : ""}">${A.inline(L(o))}</li>`).join("")}</ol>
-          ${reveal ? `<div class="note ok">${ico("check")}<div>${A.inline(L(q.explain))}</div></div>` : `<button type="button" class="btn" id="pr-r">${ico("eye")}${esc(t("prReveal"))} <kbd>R</kbd></button>`}`;
-        const rb = box.querySelector("#pr-r"); if (rb) rb.onclick = () => { reveal = true; draw(); };
-      } else box.innerHTML = `<span class="eyebrow">${esc(t("nav_review"))}</span><h1>${esc(L(u.title))}</h1><div class="journey">${u.review.chain.map((x, k) => (k ? `<span class="ar" style="border:0;background:none">${rtl ? "←" : "→"}</span>` : "") + `<span style="font-size:1.1rem">${esc(L(x))}</span>`).join("")}</div>${u.review.remember ? `<div class="note sp">${ico("star")}<div>${A.inline(L(u.review.remember))}</div></div>` : ""}`;
-      ov.querySelector("#pr-p").disabled = i === 0;
-      ov.querySelector("#pr-n").disabled = i === slides.length - 1;
-      ov.querySelector("#pr-p").onclick = prev;
-      ov.querySelector("#pr-n").onclick = next;
-      ov.querySelector("#pr-x").onclick = close;
-      ov.querySelector("#pr-notes").onclick = () => { notesOn = !notesOn; draw(); };
-      ov.querySelector("#pr-fs").onclick = () => { try { document.fullscreenElement ? document.exitFullscreen() : ov.requestFullscreen(); } catch (e) {} };
-      ov.querySelector("#pr-n").focus({ preventScroll: true });
+    const ro = "ResizeObserver" in window ? new ResizeObserver(fit) : null;
+    ro ? ro.observe(q(".cine-view")) : addEventListener("resize", fit);
+
+    // chapter marks on the scrubber: one segment per lesson
+    function marks() {
+      const total = plan.steps.length;
+      const firsts = plan.lessons.map((l) => plan.steps.findIndex((s) => plan.blocks[s.b].l === l));
+      q("[data-c-marks]").innerHTML = firsts.map((f, i) => `<button type="button" class="cine-mark" data-go="${f}" style="inset-inline-start:${(f / total) * 100}%" aria-label="${esc(t("lessonN", { n: i + 1 }) + ": " + L(plan.lessons[i].title))}"><span>${i + 1}</span></button>`).join("");
     }
-    function next() {
-      if (sceneApi && sceneApi.stage < sceneApi.count - 1) { sceneApi.next(); return; }
-      if (i < slides.length - 1) { i++; reveal = false; draw(); }
+
+    function lessonCard(l, ch) {
+      return `<div class="cine-card lesson" data-n="${ch + 1}"><span class="cine-k">${esc(t("lessonN", { n: ch + 1 }))} · ${esc(L(u.short))}</span><h1>${esc(L(l.title))}</h1><p>${esc(L(l.sum))}</p></div>`;
     }
-    function prev() {
-      if (sceneApi && sceneApi.stage > 0) { sceneApi.prev(); return; }
-      if (i > 0) { i--; reveal = false; draw(); }
+    function render(step, dir) {
+      const s = plan.steps[step], b = plan.blocks[s.b];
+      const same = cur.b === s.b && api;
+      if (!same) {
+        api && api.destroy && api.destroy(); api = null;
+        frame.className = "cine-frame k-" + b.kind + (dir < 0 ? " back" : "");
+        frame.innerHTML = "";
+        if (b.kind === "title") frame.innerHTML = `<div class="cine-card big"><span class="cine-k">${esc(t("unitN", { n: u.n }))}</span><h1>${esc(L(u.title))}</h1><p>${A.inline(L(u.big))}</p><div class="cine-chain">${u.review.chain.map((x) => `<span>${esc(L(x))}</span>`).join(`<i>${rtl ? "←" : "→"}</i>`)}</div></div>`;
+        else if (b.kind === "lesson") frame.innerHTML = lessonCard(b.l, b.ch);
+        else if (b.kind === "deck") { const host = h("section", {}); frame.append(host); api = A.mountDeck(host, b.deck, { present: true, start: s.k }); }
+        else if (b.kind === "scene") {
+          const box = h("div", { class: "cine-sc" }); frame.append(box);
+          api = A.mountScene(box, b.sc.id, { autoplay: false, initialStage: s.k });
+          if (dir > 0 && s.k === 0 && api.playStage) api.playStage(0);
+        } else if (b.kind === "ask") frame.innerHTML = askHtml(b.q, s.k === 1);
+        else frame.innerHTML = `<div class="cine-card big"><span class="cine-k">${esc(t("nav_review"))}</span><h1>${esc(L(u.title))}</h1><ul class="cine-pts">${u.review.points.slice(0, 5).map((x) => `<li>${A.inline(L(x))}</li>`).join("")}</ul>${u.review.remember ? `<p class="cine-rem">${A.inline(L(u.review.remember))}</p>` : ""}</div>`;
+        frame.classList.toggle("full-text", !!pref.full);
+        fit();
+      } else if (b.kind === "deck") api.go(s.k);
+      else if (b.kind === "scene") { dir > 0 && api.playStage ? api.playStage(s.k) : api.goto(s.k); }
+      if (b.kind === "ask" && same) frame.innerHTML = askHtml(b.q, s.k === 1);
+      cur = { b: s.b, k: s.k };
+      pos = step;
+      S.patch("presentPos", uid, pos);
+      // chrome: chapter, counter, progress, notes
+      q("[data-c-chapter]").textContent = b.l ? t("lessonN", { n: b.ch + 1 }) + " · " + L(b.l.title) : "";
+      q("[data-c-count]").textContent = `${step + 1} / ${plan.steps.length}`;
+      q("[data-c-fill]").style.width = ((step + 1) / plan.steps.length) * 100 + "%";
+      q("[data-c-scrub]").setAttribute("aria-valuenow", step + 1); q("[data-c-scrub]").setAttribute("aria-valuemax", plan.steps.length);
+      ov.querySelectorAll(".cine-mark").forEach((m) => m.classList.toggle("on", Number(m.dataset.go) <= step));
+      q('[data-c="prev"]').disabled = step === 0; q('[data-c="next"]').disabled = step === plan.steps.length - 1;
+      notes.innerHTML = notesFor(b, s.k);
+      if (playing) schedule();
     }
+    function askHtml(qq, shown) {
+      return `<div class="cine-card ask"><span class="cine-k">${ico("users")} ${esc(t("prAsk"))}</span><h1>${A.inline(L(qq.q))}</h1>
+        <ol class="cine-opts" type="A">${qq.opts.map((o, k) => `<li class="${shown && k === qq.ans ? "ok" : shown ? "dim" : ""}">${A.inline(L(o))}</li>`).join("")}</ol>
+        ${shown ? `<div class="cine-why">${A.inline(L(qq.explain))}</div>` : `<p class="cine-hint">${esc(t("cnRevealHint"))}</p>`}</div>`;
+    }
+    function notesFor(b, k) {
+      const lv = (l, key) => ((l.levels && l.levels[key]) || []).slice(0, 2).map((x) => `<div class="rt">${A.rich(L(x))}</div>`).join("");
+      if (b.kind === "deck") { const s = b.deck.slides[k]; return `<b>${esc(L(s.title))}</b>${s.story.map((p) => `<p>${esc(L(p))}</p>`).join("")}<p class="cine-n-rule">${esc(L(s.answer))}</p>`; }
+      if (b.kind === "scene") { const st = b.sc.stages[k]; return `<b>${esc(L(st.t))}</b><p>${esc(L(st.c))}</p>`; }
+      if (b.kind === "lesson") return `<b>${esc(t("prNoteTeach"))}</b>${lv(b.l, "simple")}`;
+      if (b.kind === "ask") return `<b>${esc(t("prNoteAsk"))}</b><p>${A.inline(L(b.q.explain))}</p>`;
+      if (b.kind === "title") return `<b>${esc(t("prNoteOpen"))}</b><p>${A.inline(L(u.sum))}</p>`;
+      return `<b>${esc(t("prNoteClose"))}</b><p>${A.inline(L(u.review.remember || u.big))}</p>`;
+    }
+
+    // auto-advance ("play"): each step waits as long as it needs to be read or animated
+    function dwell() {
+      const s = plan.steps[pos], b = plan.blocks[s.b];
+      if (b.kind === "deck") { const x = b.deck.slides[s.k]; return Math.min(16, Math.max(8, (L(x.title) + L(x.answer) + L(x.idea)).length / 9)) * 1000; }
+      if (b.kind === "scene") return ((b.sc.stages[s.k].d || 4) + 2.5) * 1000;
+      if (b.kind === "ask") return s.k === 0 ? 12000 : 9000;
+      return 6000;
+    }
+    function schedule() { clearTimeout(playT); playT = setTimeout(() => { if (pos < plan.steps.length - 1) go(pos + 1); else setPlay(false); }, dwell()); }
+    function setPlay(on) {
+      playing = on; clearTimeout(playT);
+      const b = q('[data-c="play"]'); b.innerHTML = ico(on ? "pause" : "play"); b.setAttribute("aria-label", t(on ? "cnPause" : "cnPlay"));
+      ov.classList.toggle("is-playing", on);
+      if (on) schedule();
+    }
+
+    function go(step) {
+      step = Math.max(0, Math.min(plan.steps.length - 1, step));
+      if (step === pos && cur.b >= 0) return;
+      const dir = step > pos ? 1 : -1;
+      setScreen("");
+      render(step, dir);
+    }
+    const next = () => go(pos + 1), prev = () => go(pos - 1);
+
+    function setScreen(kind) { screen = screen === kind ? "" : kind; const el = q("[data-c-screen]"); el.hidden = !screen; el.className = "cine-screen " + screen; if (screen) setPlay(false); }
+    function toggleSpot() { spot = !spot; q("[data-c-spotlight]").hidden = !spot; q('[data-c="spot"]').setAttribute("aria-pressed", spot); }
+    function toggleNotes() { pref.notes = !pref.notes; savePref(); notes.hidden = !pref.notes; q('[data-c="notes"]').setAttribute("aria-pressed", pref.notes); fit(); }
+    function toggleText() { pref.full = !pref.full; savePref(); frame.classList.toggle("full-text", pref.full); q('[data-c="text"]').setAttribute("aria-pressed", pref.full); }
+    function savePref() { S.set("presenter", pref); }
+    function fullscreen(on) {
+      try {
+        const is = !!document.fullscreenElement;
+        if (on === undefined) on = !is;
+        if (on && !is) ov.requestFullscreen({ navigationUI: "hide" }).catch(() => {});
+        else if (!on && is) document.exitFullscreen().catch(() => {});
+      } catch (e) { /* fullscreen unavailable */ }
+    }
+    function menu(open) {
+      const m = q("[data-c-menu]");
+      if (open === undefined) open = m.hidden;
+      m.hidden = !open;
+      if (!open) return;
+      m.innerHTML = `<b>${esc(t("cnChapters"))}</b><ol>${plan.lessons.map((l, i) => { const f = plan.steps.findIndex((s) => plan.blocks[s.b].l === l); const on = plan.blocks[plan.steps[pos].b].l === l; return `<li><button type="button" data-go="${f}" class="${on ? "on" : ""}"><span class="num">${i + 1}</span>${esc(L(l.title))}</button></li>`; }).join("")}</ol>
+        <label class="cine-opt"><input type="checkbox" data-c-qs ${pref.questions ? "checked" : ""}> ${esc(t("cnQuestions"))}</label>`;
+      m.querySelectorAll("[data-go]").forEach((x) => (x.onclick = () => { menu(false); go(Number(x.dataset.go)); }));
+      q("[data-c-qs]").onchange = (e) => { const l = plan.blocks[plan.steps[pos].b].l; pref.questions = e.target.checked; savePref(); plan = buildSlides(u, pref); marks(); const f = l ? plan.steps.findIndex((s) => plan.blocks[s.b].l === l) : 0; cur = { b: -1 }; pos = -1; render(Math.max(0, f), 1); };
+      (m.querySelector("button.on") || m.querySelector("button")).focus();
+    }
+    function help(open) {
+      const hp = q("[data-c-help]");
+      if (open === undefined) open = hp.hidden;
+      hp.hidden = !open;
+      if (open) hp.innerHTML = `<b>${esc(t("cnHelp"))}</b><dl>${A.ui.cnKeys ? L(A.ui.cnKeys).split("|").map((r) => { const [k, d] = r.split("="); return `<dt>${k.split("+").map((x) => `<kbd>${esc(x.trim())}</kbd>`).join(" ")}</dt><dd>${esc(d)}</dd>`; }).join("") : ""}</dl><p>${esc(t("cnRemote"))}</p>`;
+    }
+
+    // controls
+    ov.addEventListener("click", (e) => {
+      const b = e.target.closest("[data-c],[data-go]");
+      if (!b) return;
+      if (b.dataset.go != null && !b.closest("[data-c-menu]")) return go(Number(b.dataset.go));
+      const c = b.dataset.c;
+      if (c === "prev") prev(); else if (c === "next") next(); else if (c === "play") setPlay(!playing);
+      else if (c === "fs") fullscreen(); else if (c === "close") close(); else if (c === "notes") toggleNotes(); else if (c === "text") toggleText();
+      else if (c === "spot") toggleSpot(); else if (c === "black") setScreen("black"); else if (c === "help") help(); else if (c === "chapters") menu();
+    });
+    const scrub = q("[data-c-scrub]"), tip = q("[data-c-tip]");
+    const stepAt = (x) => { const r = scrub.getBoundingClientRect(); let f = (x - r.left) / r.width; if (rtl) f = 1 - f; return Math.max(0, Math.min(plan.steps.length - 1, Math.floor(f * plan.steps.length))); };
+    scrub.addEventListener("pointerdown", (e) => { if (e.target.closest(".cine-mark")) return; go(stepAt(e.clientX)); });
+    scrub.addEventListener("pointermove", (e) => { const s = plan.steps[stepAt(e.clientX)], b = plan.blocks[s.b]; tip.hidden = false; tip.textContent = b.l ? `${t("lessonN", { n: b.ch + 1 })} · ${L(b.l.title)}` : L(u.short); const r = scrub.getBoundingClientRect(); tip.style.left = Math.max(0, Math.min(r.width - 220, e.clientX - r.left - 110)) + "px"; });
+    scrub.addEventListener("pointerleave", () => (tip.hidden = true));
+    scrub.addEventListener("keydown", (e) => { if (e.key === "Home") { e.preventDefault(); go(0); } else if (e.key === "End") { e.preventDefault(); go(plan.steps.length - 1); } });
+    ov.addEventListener("pointermove", (e) => {
+      wake();
+      if (spot) { const sp = q("[data-c-spotlight]"); sp.style.setProperty("--x", e.clientX + "px"); sp.style.setProperty("--y", e.clientY + "px"); }
+    });
+    // swipe on touch screens
+    let sx = 0, sy = 0, sdown = false;
+    q(".cine-view").addEventListener("pointerdown", (e) => { if (e.pointerType === "mouse") return; sdown = true; sx = e.clientX; sy = e.clientY; });
+    q(".cine-view").addEventListener("pointerup", (e) => { if (!sdown) return; sdown = false; const dx = e.clientX - sx, dy = e.clientY - sy; if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.3) (rtl ? dx > 0 : dx < 0) ? next() : prev(); });
+
+    // idle: hide the controls and the cursor after a few quiet seconds
+    function wake() { ov.classList.remove("idle"); clearTimeout(idleT); idleT = setTimeout(() => { if (q("[data-c-menu]").hidden && q("[data-c-help]").hidden) ov.classList.add("idle"); }, 2600); }
+    // the session clock (since opening) and the time of day
+    function clock() { const s = Math.floor((Date.now() - t0) / 1000), mm = String(Math.floor(s / 60)).padStart(2, "0"), ss = String(s % 60).padStart(2, "0"); const now = new Date(); q("[data-c-time]").textContent = `${mm}:${ss} · ${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`; }
+    clockT = setInterval(clock, 1000); clock();
+    async function keepAwake() { try { if ("wakeLock" in navigator && !document.hidden) lock = await navigator.wakeLock.request("screen"); } catch (e) { lock = null; } }
+    const vis = () => { if (!document.hidden) keepAwake(); };
+    document.addEventListener("visibilitychange", vis); keepAwake();
+
+    // keys: arrows follow the reading direction; presenter remotes send PageUp/PageDown, B or "." (black), F5/Esc
     function key(e) {
-      const rtl = A.lang() === "ar";
-      if (e.key === "Escape") { e.preventDefault(); close(); }
-      else if (e.key === (rtl ? "ArrowLeft" : "ArrowRight") || e.key === "PageDown" || (e.key === " " && e.target.tagName !== "BUTTON")) { e.preventDefault(); next(); }
-      else if (e.key === (rtl ? "ArrowRight" : "ArrowLeft") || e.key === "PageUp") { e.preventDefault(); prev(); }
-      else if (e.key.toLowerCase() === "n") { notesOn = !notesOn; draw(); }
-      else if (e.key.toLowerCase() === "r" && slides[i].kind === "ask") { reveal = true; draw(); }
-      else if (e.key.toLowerCase() === "f") { try { document.fullscreenElement ? document.exitFullscreen() : ov.requestFullscreen(); } catch (er) {} }
+      if (e.altKey || e.ctrlKey || e.metaKey) return;
+      const k = e.key, low = k.length === 1 ? k.toLowerCase() : k;
+      const fwd = rtl ? "ArrowLeft" : "ArrowRight", back = rtl ? "ArrowRight" : "ArrowLeft";
+      const inMenu = e.target.closest && e.target.closest("[data-c-menu]");
+      let done = true;
+      wake();
+      if (/^[0-9]$/.test(k)) { jump += k; clearTimeout(jumpT); const j = q("[data-c-jump]"); j.hidden = false; j.textContent = t("cnGoTo", { n: jump }); jumpT = setTimeout(() => { jump = ""; j.hidden = true; }, 2200); }
+      else if (k === "Enter" && jump) { const n = Number(jump); jump = ""; q("[data-c-jump]").hidden = true; go(n - 1); }
+      else if (k === "Escape") { if (!q("[data-c-menu]").hidden) menu(false); else if (!q("[data-c-help]").hidden) help(false); else if (screen) setScreen(screen); else if (spot) toggleSpot(); else if (!document.fullscreenElement) close(); }
+      else if (inMenu && (k === "Enter" || k === " " || k === "ArrowUp" || k === "ArrowDown" || k === "Tab")) done = false;
+      else if (screen && (k === "PageDown" || k === "PageUp" || k === fwd || k === back || k === " ")) setScreen(screen);   // any move key brings the picture back
+      else if (k === "PageDown" || k === fwd || k === "ArrowDown" || (k === " " && !(e.target.closest && e.target.closest("button"))) || k === "Enter") next();
+      else if (k === "PageUp" || k === back || k === "ArrowUp" || k === "Backspace") prev();
+      else if (k === "Home") go(0); else if (k === "End") go(plan.steps.length - 1);
+      else if (low === "b" || k === ".") setScreen("black");
+      else if (low === "w" || k === ",") setScreen("white");
+      else if (k === "F5") fullscreen(true);
+      else if (low === "f") fullscreen();
+      else if (low === "p" || low === "k") setPlay(!playing);
+      else if (low === "n") toggleNotes(); else if (low === "s") toggleText(); else if (low === "l") toggleSpot();
+      else if (low === "c") menu(); else if (k === "?" || low === "h") help();
+      else done = false;
+      if (done) { e.preventDefault(); e.stopPropagation(); }
     }
+
     function close() {
-      sceneApi && sceneApi.destroy();
+      setPlay(false); clearInterval(clockT); clearTimeout(idleT);
+      api && api.destroy && api.destroy();
+      ro && ro.disconnect(); removeEventListener("resize", fit);
       removeEventListener("keydown", key, true);
-      try { if (document.fullscreenElement) document.exitFullscreen(); } catch (e) {}
+      document.removeEventListener("visibilitychange", vis);
+      try { lock && lock.release(); } catch (e) { /* already released */ }
+      try { if (document.fullscreenElement) document.exitFullscreen(); } catch (e) { /* not fullscreen */ }
       ov.remove(); document.body.style.overflow = "";
       prevFocus && prevFocus.focus && prevFocus.focus();
     }
     addEventListener("keydown", key, true);
     A.onLeave(() => { if (document.body.contains(ov)) close(); });
-    draw();
+    notes.hidden = !pref.notes;
+    q('[data-c="notes"]').setAttribute("aria-pressed", pref.notes); q('[data-c="text"]').setAttribute("aria-pressed", pref.full); q('[data-c="spot"]').setAttribute("aria-pressed", false);
+    marks();
+    render(pos, 1);
+    wake();
+    q('[data-c="next"]').focus({ preventScroll: true });
+    return { go, next, prev, close, get pos() { return pos; }, get total() { return plan.steps.length; } };
   }
   A.openPresenter = openPresenter;
 })(window.ACADEMY);
@@ -11833,14 +12132,15 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
 
   /* ---------- the deck ---------- */
   // One player for every story deck (A.decks): the AI history in f1, how a model works in f2, …
-  A.mountDeck = function (host, H) {
+  A.mountDeck = function (host, H, opts = {}) {   // opts.present: the presenter's full-screen player drives it (no own chrome)
     if (!H || !host) return;
+    const present = !!opts.present;
     const S = H.slides, n = S.length, ui = H.ui;
     const fmt = (s, o) => L(s).replace(/\{(\w+)\}/g, (_, k) => o[k]);
     const num = (v) => (ar() ? Number(v).toLocaleString("ar-EG") : String(v));
     const readSecs = (s) => Math.min(18, Math.max(9, (L(s.title) + s.story.map(L).join(" ") + L(s.idea)).length / 17));
 
-    host.className = "sec aih";
+    host.className = present ? "aih aih-present" : "sec aih";
     host.setAttribute("aria-roledescription", ar() ? "عرض شرائح" : "carousel");
     host.setAttribute("aria-label", L(ui.deck));
     host.innerHTML = `
@@ -12022,10 +12322,12 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       io = new IntersectionObserver((es) => es.forEach((en) => { visible = en.intersectionRatio > 0.35; host.classList.toggle("is-away", !en.isIntersecting); }), { threshold: [0, 0.35, 0.6] });
       io.observe(stage);
     }
-    A.onLeave(() => { io && io.disconnect(); playing = false; cancelAnimationFrame(raf); cancelAnimationFrame(countRaf); alive = false; cancelIdle(); });
+    const stop = () => { io && io.disconnect(); playing = false; cancelAnimationFrame(raf); cancelAnimationFrame(countRaf); alive = false; cancelIdle(); };
+    A.onLeave(stop);
 
-    go(0, "init");
+    go(Math.max(0, Math.min(n - 1, opts.start || 0)), "init");
     idleDraw();
+    return { n, get cur() { return cur; }, go: (i) => go(i, "user"), destroy: stop };
   };
   A.mountHistory = (host) => A.mountDeck(host, A.aiHistory);
 })(window.ACADEMY = window.ACADEMY || {});

@@ -144,10 +144,34 @@ await session({ label: "interactions-ar", viewport: { width: 1280, height: 860 }
   dir === "en/ltr" ? ok("language switches to English LTR") : fail(`language switch gave ${dir}`);
   await page.click("#lang-btn"); await page.waitForTimeout(100);
 
-  // presenter
-  await page.evaluate(() => (location.hash = "present-u1")); await page.waitForSelector(".present", { timeout: 3000 }).catch(() => {});
-  if (await page.$(".present")) { await page.keyboard.press("ArrowLeft"); await page.keyboard.press("ArrowRight"); await shot(page, "presenter-ar"); await page.keyboard.press("Escape"); await page.waitForTimeout(100); (await page.$(".present")) ? fail("presenter: Esc did not close") : ok("presenter opens, navigates, closes with Esc"); }
-  else fail("presenter did not open");
+  // presenter: a full-screen player per unit; remote keys, black screen, resume, a lesson's own button
+  await page.evaluate(() => (location.hash = "present-u0")); await page.waitForSelector(".cine", { timeout: 3000 }).catch(() => {});
+  if (await page.$(".cine")) {
+    const cnt = () => page.$eval("[data-c-count]", (e) => Number(e.textContent.split("/")[0]));
+    const a = await cnt();
+    await page.keyboard.press("PageDown"); await page.keyboard.press("PageDown"); await page.keyboard.press("PageDown"); await page.waitForTimeout(200);
+    const b = await cnt();
+    const deckOn = await page.$(".cine-frame .aih-present .aih-slide.is-on");
+    b === a + 3 && deckOn ? ok("presenter: remote PageDown steps into the lesson's story deck") : fail(`presenter: PageDown ${a} → ${b}, deck ${!!deckOn}`);
+    await page.keyboard.press("PageUp"); await page.waitForTimeout(150);
+    (await cnt()) === b - 1 ? ok("presenter: PageUp goes back") : fail("presenter: PageUp did not go back");
+    await page.keyboard.press("b"); const black = await page.$eval("[data-c-screen]", (e) => !e.hidden && e.classList.contains("black"));
+    await page.keyboard.press("PageDown"); const back = await page.$eval("[data-c-screen]", (e) => e.hidden);
+    black && back && (await cnt()) === b - 1 ? ok("presenter: B blanks the screen, the next key only brings the picture back") : fail("presenter: black screen");
+    await page.keyboard.press("3"); await page.keyboard.press("0"); await page.keyboard.press("Enter"); await page.waitForTimeout(150);
+    (await cnt()) === 30 ? ok("presenter: typing a number + Enter jumps to that slide") : fail("presenter: jump went to " + (await cnt()));
+    await shot(page, "presenter-ar");
+    await page.keyboard.press("Escape"); await page.waitForTimeout(100);
+    (await page.$(".cine")) ? fail("presenter: Escape did not close it") : ok("presenter: Escape closes it");
+    await page.evaluate(() => window.ACADEMY.openPresenter("u0")); await page.waitForSelector(".cine");
+    (await cnt()) === 30 ? ok("presenter: reopens where it stopped") : fail("presenter: did not resume (" + (await cnt()) + ")");
+    await page.keyboard.press("Escape");
+    await page.evaluate(() => (location.hash = "lesson-f6")); await page.waitForSelector("#present-l");
+    await page.click("#present-l"); await page.waitForSelector(".cine");
+    const ch = await page.$eval("[data-c-chapter]", (e) => e.textContent);
+    /4/.test(ch) ? ok("presenter: a lesson's button opens the show at that lesson") : fail("presenter: lesson button opened at " + ch);
+    await page.keyboard.press("Escape");
+  } else fail("presenter did not open");
 });
 
 /* Mobile 390px, dark theme, English: every route without horizontal overflow */
