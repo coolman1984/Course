@@ -6,7 +6,7 @@
   A.lessons = (A.lessons || []).concat([
     /* ---------------- UNIT 3 ---------------- */
     {
-      id: "d1", unit: "u4", pages: [24], diff: 1, min: 7, scene: "prep", related: ["p9", "y4", "d2"], pre: ["p1"],
+      id: "d1", unit: "u4", pages: [24], diff: 1, min: 7, scene: "prep", related: ["p9", "y4", "d2", "p1"], pre: ["f4"],
       title: { ar: "جهّز البيانات وحدّد الغرض", en: "Preparing data and defining the purpose" },
       sum: { ar: "خمس دقائق تجهيز بتوفرّ ساعات مراجعة، وبعدين أول 3 مراحل: الغرض والجمهور، المؤشرات، والموافقة على التصميم قبل ما تبني.", en: "Five minutes of prep save hours of review, then the first three stages: purpose and audience, KPIs, and approving the design before building." },
       book: [

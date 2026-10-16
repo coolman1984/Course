@@ -222,3 +222,8 @@ test("the course plan: eight units, every lesson placed exactly once, and each l
   const files = readdirSync(path.join(SRC, "data")).filter((f) => f.startsWith("lessons-")).map((f) => readFileSync(path.join(SRC, "data", f), "utf8")).join("\n");
   for (const l of A.lessons) assert.ok(files.includes(`id: "${l.id}", unit: "${l.unit}"`), `${l.id}: its file should say unit "${l.unit}"`);
 });
+
+test("prerequisites come earlier in the course than the lessons that need them", () => {
+  const pos = Object.fromEntries(A.lessons.map((l, i) => [l.id, i]));
+  for (const l of A.lessons) for (const p of l.pre || []) assert.ok(pos[p] < pos[l.id], `${l.id} lists ${p} as a prerequisite, but ${p} comes later`);
+});

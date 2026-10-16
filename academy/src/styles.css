@@ -10,6 +10,23 @@
 @font-face{font-family:"UI Sans";font-style:normal;font-weight:700 900;font-display:swap;src:url(__FONT:PlexArabic-700.woff2__) format("woff2");unicode-range:U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC}
 @font-face{font-family:"UI Symbols";font-style:normal;font-weight:100 550;font-display:swap;src:url(__FONT:Inter-symbols-400.woff2__) format("woff2");unicode-range:U+03A3,U+2161,U+2190,U+2192,U+2191,U+2193,U+2194,U+2197,U+21B3,U+21BB,U+2248,U+2260,U+2264,U+2265,U+2212,U+25A1,U+25B6,U+2605,U+2713,U+2717,U+27F5}
 @font-face{font-family:"UI Symbols";font-style:normal;font-weight:551 900;font-display:swap;src:url(__FONT:Inter-symbols-700.woff2__) format("woff2");unicode-range:U+03A3,U+2161,U+2190,U+2192,U+2191,U+2193,U+2194,U+2197,U+21B3,U+21BB,U+2248,U+2260,U+2264,U+2265,U+2212,U+25A1,U+25B6,U+2605,U+2713,U+2717,U+27F5}
+/* optional reading fonts (Reading settings); each family pairs Arabic and Latin faces with the same weights */
+@font-face{font-family:"R Cairo";font-style:normal;font-weight:400;font-display:swap;src:url(__FONT:cairo-arabic-400-normal.woff2__) format("woff2");unicode-range:U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC}
+@font-face{font-family:"R Cairo";font-style:normal;font-weight:700;font-display:swap;src:url(__FONT:cairo-arabic-700-normal.woff2__) format("woff2");unicode-range:U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC}
+@font-face{font-family:"R Cairo";font-style:normal;font-weight:400;font-display:swap;src:url(__FONT:cairo-latin-400-normal.woff2__) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"R Cairo";font-style:normal;font-weight:700;font-display:swap;src:url(__FONT:cairo-latin-700-normal.woff2__) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"R Tajawal";font-style:normal;font-weight:400;font-display:swap;src:url(__FONT:tajawal-arabic-400-normal.woff2__) format("woff2");unicode-range:U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC}
+@font-face{font-family:"R Tajawal";font-style:normal;font-weight:700;font-display:swap;src:url(__FONT:tajawal-arabic-700-normal.woff2__) format("woff2");unicode-range:U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC}
+@font-face{font-family:"R Tajawal";font-style:normal;font-weight:400;font-display:swap;src:url(__FONT:tajawal-latin-400-normal.woff2__) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"R Tajawal";font-style:normal;font-weight:700;font-display:swap;src:url(__FONT:tajawal-latin-700-normal.woff2__) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"R Almarai";font-style:normal;font-weight:400;font-display:swap;src:url(__FONT:almarai-arabic-400-normal.woff2__) format("woff2");unicode-range:U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC}
+@font-face{font-family:"R Almarai";font-style:normal;font-weight:700;font-display:swap;src:url(__FONT:almarai-arabic-700-normal.woff2__) format("woff2");unicode-range:U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC}
+@font-face{font-family:"R Almarai";font-style:normal;font-weight:400;font-display:swap;src:url(__FONT:almarai-latin-400-normal.woff2__) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"R Almarai";font-style:normal;font-weight:700;font-display:swap;src:url(__FONT:almarai-latin-700-normal.woff2__) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"R Naskh";font-style:normal;font-weight:400;font-display:swap;src:url(__FONT:noto-naskh-arabic-arabic-400-normal.woff2__) format("woff2");unicode-range:U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC}
+@font-face{font-family:"R Naskh";font-style:normal;font-weight:700;font-display:swap;src:url(__FONT:noto-naskh-arabic-arabic-700-normal.woff2__) format("woff2");unicode-range:U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC}
+@font-face{font-family:"R Naskh";font-style:normal;font-weight:400;font-display:swap;src:url(__FONT:noto-naskh-arabic-latin-400-normal.woff2__) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"R Naskh";font-style:normal;font-weight:700;font-display:swap;src:url(__FONT:noto-naskh-arabic-latin-700-normal.woff2__) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 @font-face{font-family:"UI Mono";font-style:normal;font-weight:100 800;font-display:swap;src:url(__FONT:JetBrainsMono-latin.woff2__) format("woff2");unicode-range:U+0000-00FF,U+2000-206F,U+2190-2199}
 
 :root{
@@ -26,6 +43,8 @@
   --shadow-win:0 1px 1px rgba(17,17,20,.03),0 12px 28px rgba(17,17,20,.06),0 40px 90px rgba(17,17,20,.08);
   --font-display:"UI Latin","UI Sans","UI Symbols",-apple-system,"Segoe UI",Tahoma,system-ui,sans-serif;
   --font-body:"UI Latin","UI Sans","UI Symbols",-apple-system,"Segoe UI",Tahoma,system-ui,sans-serif;
+  --font-art:"UI Latin","UI Sans","UI Symbols",-apple-system,"Segoe UI",Tahoma,system-ui,sans-serif;   /* drawings: fixed, labels are measured in it */
+  --wide-w:1180px;
   --font-mono:"UI Mono","UI Latin","UI Sans","UI Symbols",ui-monospace,"SF Mono",Consolas,monospace;
   --r-xs:6px;--r-sm:8px;--r-md:12px;--r-lg:16px;--r-xl:22px;
   --bar-h:60px;--side-w:272px;--read-w:820px;
@@ -162,7 +181,7 @@ main{min-width:0;padding:32px clamp(16px,3.4vw,48px) 96px;outline:none}
 .readbar{position:fixed;top:calc(var(--bar-h) + env(safe-area-inset-top,0px));inset-inline:0;height:2px;z-index:59;pointer-events:none}
 .readbar i{display:block;height:100%;width:0;background:var(--accent);transition:width 80ms linear}
 .wrap{max-width:var(--read-w);margin-inline:auto}
-.wrap-wide{max-width:1180px;margin-inline:auto}
+.wrap-wide{max-width:var(--wide-w);margin-inline:auto}
 .crumbs{display:flex;flex-wrap:wrap;align-items:center;gap:6px;color:var(--ink-3);font-size:13px;margin-bottom:18px}
 .crumbs a{color:var(--ink-3);text-decoration:none}
 .crumbs a:hover{color:var(--ink)}
@@ -304,7 +323,7 @@ html[lang="en"] .hero2 h1{letter-spacing:-.045em;line-height:1.02;max-width:14ch
 .f3{bottom:-26px;inset-inline-end:36px;transform:rotate(8deg)}
 .f4{top:-26px;inset-inline-end:-14px;transform:rotate(-7deg)}
 /* app window */
-.showcase{max-width:1180px;margin:0 auto clamp(56px,7vw,96px)}
+.showcase{max-width:var(--wide-w);margin:0 auto clamp(56px,7vw,96px)}
 .win{display:grid;grid-template-columns:minmax(200px,.82fr) minmax(0,1.05fr) minmax(0,1.35fr);border-radius:18px;border:1px solid var(--line);background:var(--surface);box-shadow:var(--shadow-win);overflow:hidden;min-height:440px;text-align:start}
 .win-side{background:var(--surface-2);border-inline-end:1px solid var(--line);padding:16px 10px 18px;display:grid;align-content:start;gap:2px;min-width:0}
 .lights{display:flex;gap:7px;padding:2px 8px 14px}
@@ -365,7 +384,7 @@ html[lang="en"] .hero2 h1{letter-spacing:-.045em;line-height:1.02;max-width:14ch
 .cmdk-foot{display:flex;align-items:center;justify-content:center;gap:6px;padding:12px;border-top:1px solid var(--line);font-size:13.5px;font-weight:500;text-decoration:none}
 .cmdk-foot svg.i{width:15px;height:15px}
 /* split feature sections */
-.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(28px,5vw,72px);align-items:center;max-width:1180px;margin:0 auto;padding-block:clamp(56px,7vw,96px)}
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(28px,5vw,72px);align-items:center;max-width:var(--wide-w);margin:0 auto;padding-block:clamp(56px,7vw,96px)}
 .split.rev .split-art{order:-1}
 .split-txt{display:grid;gap:16px;align-content:center}
 .split-txt .lead{max-width:52ch}
@@ -402,7 +421,7 @@ html[lang="en"] .hero2 h1{letter-spacing:-.045em;line-height:1.02;max-width:14ch
 html[dir="rtl"] .eq-res .bar-meter i{background:linear-gradient(270deg,var(--sig-pink),var(--sig-amber),var(--sig-green))}
 .eq-out{font-size:14px;color:var(--ink-2);min-height:3.4em}
 /* ladder */
-.ladder2{list-style:none;margin:0 auto;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;max-width:1180px}
+.ladder2{list-style:none;margin:0 auto;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;max-width:var(--wide-w)}
 .rung2{position:relative;display:grid;gap:6px;align-content:start;height:100%;padding:18px 18px 22px;border-radius:14px;border:1px solid var(--line);background:var(--surface);text-decoration:none;color:var(--ink);overflow:hidden;transition:transform var(--dur) var(--ease),box-shadow var(--dur),border-color var(--dur)}
 .rung2:hover{transform:translateY(-2px);box-shadow:var(--shadow-2);border-color:var(--line-2)}
 .rung2 .k{font-family:var(--font-mono);font-size:12px;color:var(--accent);font-weight:600}
@@ -658,7 +677,7 @@ details.more[open]>summary{margin-bottom:8px}
 .kg-edge.hi{stroke:var(--accent);stroke-width:2.2}
 .kg-node{cursor:pointer}
 .kg-node circle{stroke:var(--surface);stroke-width:2.5;transition:r var(--dur)}
-.kg-node text{font-family:var(--font-body);font-size:11px;fill:var(--ink-2);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round}
+.kg-node text{font-family:var(--font-art);font-size:11px;fill:var(--ink-2);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round}
 .kg-node.hub text{font-family:var(--font-display);font-size:14px;font-weight:700;fill:var(--ink)}
 .kg-node.dim{opacity:.18}
 .kg-node:focus-visible circle{stroke:var(--accent);stroke-width:4}
@@ -817,3 +836,35 @@ html[lang="ar"] .ptext{font-family:var(--font-body);font-size:15px;line-height:2
 .orig-layer>.stack{display:grid;gap:10px;padding:12px}
 .orig-layer .lv-sec{background:var(--surface)}
 @media(max-width:660px){.plain-sec{padding:15px 16px}.plain-copy{line-height:1.95}.orig-layer summary{font-size:.84rem}}
+
+/* ---- reading settings: width, text size, font (html data-width / data-fsize / data-font) ---- */
+html[data-width="sm"]{--read-w:680px;--wide-w:960px}
+html[data-width="lg"]{--read-w:100%;--wide-w:100%}
+html[data-fsize="sm"] #main{zoom:.92}
+html[data-fsize="lg"] #main{zoom:1.12}
+html[data-fsize="xl"] #main{zoom:1.25}
+html[data-font="cairo"]{--font-body:"R Cairo","UI Symbols",system-ui,sans-serif;--font-display:var(--font-body)}
+html[data-font="tajawal"]{--font-body:"R Tajawal","UI Symbols",system-ui,sans-serif;--font-display:var(--font-body)}
+html[data-font="almarai"]{--font-body:"R Almarai","UI Symbols",system-ui,sans-serif;--font-display:var(--font-body)}
+html[data-font="naskh"]{--font-body:"R Naskh","UI Latin","UI Symbols",system-ui,serif;--font-display:var(--font-body)}
+.vseg [data-font-preview="plex"]{font-family:"UI Latin","UI Sans",sans-serif}
+.vseg [data-font-preview="cairo"]{font-family:"R Cairo",sans-serif}
+.vseg [data-font-preview="tajawal"]{font-family:"R Tajawal",sans-serif}
+.vseg [data-font-preview="almarai"]{font-family:"R Almarai",sans-serif}
+.vseg [data-font-preview="naskh"]{font-family:"R Naskh",serif}
+.vpanel{position:fixed;z-index:80;width:min(340px,calc(100vw - 16px));background:var(--surface);border:1px solid var(--line-2);border-radius:16px;box-shadow:0 18px 48px rgba(10,14,30,.18);padding:14px;display:grid;gap:12px;font-size:14px;animation:vp-in .18s ease-out}
+@keyframes vp-in{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.vp-h{display:flex;align-items:center;justify-content:space-between}
+.vp-g{display:grid;gap:6px}
+.vp-l{font-size:12.5px;color:var(--ink-3);font-weight:600}
+.vseg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:4px;background:var(--surface-2);padding:4px;border-radius:12px}
+.vseg.font{grid-auto-flow:row;grid-template-columns:1fr 1fr}
+.vseg.font button:first-child{grid-column:1 / -1}
+.vseg button{display:flex;align-items:center;justify-content:center;gap:6px;min-height:36px;padding:6px 8px;border:0;border-radius:9px;background:transparent;color:var(--ink-2);font:inherit;font-size:13.5px;cursor:pointer}
+.vseg.font button{font-size:15px}
+.vseg button:hover{color:var(--ink)}
+.vseg button[aria-pressed="true"]{background:var(--surface);color:var(--accent);box-shadow:0 1px 3px rgba(10,14,30,.12);font-weight:600}
+.vp-a{font-weight:700;line-height:1}.vp-sm{font-size:11px}.vp-md{font-size:13px}.vp-lg{font-size:15px}.vp-xl{font-size:17px}
+.vp-note{margin:0;font-size:12px;color:var(--ink-3);line-height:1.6}
+@media (prefers-reduced-motion:reduce){.vpanel{animation:none}}
+svg text{font-family:var(--font-art)}   /* every drawing keeps the measured font whatever the reading font */

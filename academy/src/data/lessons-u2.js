@@ -106,7 +106,7 @@
       },
     },
     {
-      id: "y4", unit: "u1", pages: [19, 20], diff: 2, min: 9, scene: "drill7", lab: "quality", related: ["p6", "f3", "d2"], pre: ["y3"],
+      id: "y4", unit: "u1", pages: [19, 20], diff: 2, min: 9, scene: "drill7", lab: "quality", related: ["p6", "f3", "d2", "y3"], pre: ["f8"],
       title: { ar: "ليه لازم نفحص البيانات قبل ما نحللها؟", en: "Level 2: the analysis engine — quality first" },
       sum: { ar: "لو البيانات فيها تكرار أو تواريخ ناقصة أو وحدات مختلفة، أي تحليل مبني عليها هيطلع غلط مهما كان شكله مقنع. فحص البيانات بييجي قبل أي حساب.", en: "DuckDB, Polars and ydata-profiling, why quality checks are mandatory, the seven questions before any chart, and breaking down “efficiency fell 7%”." },
       book: [

@@ -283,7 +283,7 @@
         } },
     },
     {
-      id: "p9", unit: "u1", pages: [13], diff: 2, min: 8, scene: "leap", lab: "formula", related: ["p3", "p10", "d1"], pre: ["p1", "p3"],
+      id: "p9", unit: "u1", pages: [13], diff: 2, min: 8, scene: "leap", lab: "formula", related: ["p3", "p10", "d1", "p1"], pre: ["f4", "f8"],
       title: { ar: "إزاي تخلي إكسل يعمل حساباتك من غير ما تحفظ معادلات؟", en: "The leap: Excel with AI" },
       sum: { ar: "مش لازم تحفظ معادلات إكسل. اشرح الحساب اللي محتاجه بالكلام، وخلّي المساعد يكتب المعادلة، واختبرها على كام صف قبل ما تعمّمها.", en: "Don’t start with code, start with a problem: the right formula request, its three elements, and the nine-stage ladder." },
       book: [
