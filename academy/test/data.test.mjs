@@ -2,13 +2,13 @@
 // Run: node --test academy/test/data.test.mjs
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import vm from "node:vm";
 import path from "node:path";
 
 const SRC = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "src");
-const DATA = ["ui", "meta", "stories", "scenes", "lessons-u0", "lessons-u1", "lessons-u2", "lessons-u3u4", "lessons-u5", "plain-talk-a", "plain-talk-b", "prompts", "quiz", "glossary", "compare", "history", "model-story", "context-story"];
+const DATA = ["ui", "meta", "stories", "scenes", "lessons-u0", "lessons-u1", "lessons-u2", "lessons-u3u4", "lessons-u5", "plain-talk-a", "plain-talk-b", "prompts", "quiz", "glossary", "compare", "history", "model-story", "context-story", "window-story", "agents-story"];
 const ENGINE = ["core", "scene", "render", "quiz", "labs", "tools"];
 const ctx = { window: { ACADEMY: {} } };
 vm.createContext(ctx);
@@ -20,6 +20,14 @@ const labIds = new Set(A.labs.map((l) => l.id));
 const glossIds = new Set(A.glossary.map((g) => g.id));
 const sceneIds = new Set(A.scenes.map((s) => s.id));
 const both = (x, label) => { assert.ok(x && typeof x.ar === "string" && x.ar.trim() && typeof x.en === "string" && x.en.trim(), `${label} needs ar and en`); };
+
+test("every data file is loaded here and bundled by the build", () => {
+  const build = readFileSync(path.join(SRC, "..", "build.mjs"), "utf8");
+  for (const f of readdirSync(path.join(SRC, "data")).filter((x) => x.endsWith(".js"))) {
+    assert.ok(DATA.includes(f.slice(0, -3)), `${f} is not loaded by this test`);
+    assert.ok(build.includes(`"data/${f}"`), `${f} is not bundled by build.mjs`);
+  }
+});
 
 test("ids are unique", () => {
   for (const [name, arr] of [["lessons", A.lessons], ["prompts", A.prompts], ["quiz", A.quiz], ["glossary", A.glossary], ["scenes", A.scenes], ["labs", A.labs], ["compare", A.compare]]) {
@@ -173,5 +181,20 @@ test("story decks: real lessons, one deck per lesson, every slide complete in bo
   assert.equal(A.aiHistory.lesson, "f1"); assert.ok(Number.isNaN(parseInt(A.aiHistory.slides.at(-1).year.en, 10)), "history ends today");
   assert.equal(A.modelStory.lesson, "f2");
   assert.equal(A.contextStory.lesson, "f4");
+  assert.equal(A.windowStory.lesson, "f6");
+  assert.equal(A.agentsStory.lesson, "f7");
+  const u0 = A.lessons.filter((l) => l.unit === "u0").map((l) => l.id);
+  assert.equal(u0.slice(0, 5).join(" "), "f1 f2 f4 f6 f7", "unit 0 order: history, inside the model, Prompt & Context, the Context's limits, chat/memory/agents");
 });
 
+test("deck drawings give every SVG element one class and one style attribute (a second one is silently dropped)", () => {
+  const engine = readFileSync(path.join(SRC, "engine", "history.js"), "utf8");
+  const bad = engine.split("\n").map((l, i) => [i + 1, l]).filter(([, l]) => /\$\{an\([^)]*\)\}[^<>]*\s(class|style)="/.test(l));
+  assert.equal(bad.length, 0, "an() already writes class= and style=; pass extra classes as its third argument (and use grow() for bars): lines " + bad.map(([n]) => n).join(", "));
+});
+
+test("Arabic and English point to the same lessons in every explanation", () => {
+  const ids = (t) => [...String(t).matchAll(/\[\[([a-z0-9_-]+)/g)].map((m) => m[1]).sort().join(",");
+  for (const l of A.lessons) for (const k of Object.keys(l.levels)) for (const x of l.levels[k])
+    assert.equal(ids(x.en), ids(x.ar), `${l.id}.${k}.${x.k}: Arabic and English link different lessons`);
+});

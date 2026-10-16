@@ -291,6 +291,26 @@ await session({ label: "model-deck-ar", viewport: { width: 1360, height: 900 } }
   const cart = await page.$$eval("#sec-context .aih-svg", (s) => s.every((v) => v.querySelectorAll("rect,circle,path,text,ellipse,line").length > 6));
   const crule = await page.$eval("#sec-context .aih-slide.is-on .aih-answer small", (e) => e.textContent);
   cn >= 10 && cart && /وليه/.test(crule) && !(await page.$("#sec-model")) ? ok(`context deck: ${cn} slides with drawings in lesson f4, each with its rule and why`) : fail("context deck: incomplete");
+  await page.evaluate(() => (location.hash = "lesson-f6")); await page.waitForSelector("#sec-window .aih-stage");
+  const wn = await page.$$eval("#sec-window .aih-slide", (s) => s.length);
+  const wart = await page.$$eval("#sec-window .aih-svg", (s) => s.every((v) => v.querySelectorAll("rect,circle,path,text,ellipse,line").length > 6));
+  const wrule = await page.$eval("#sec-window .aih-slide.is-on .aih-answer small", (e) => e.textContent);
+  const wcrumb = await page.$eval(".crumbs .num", (e) => e.textContent);
+  wn >= 10 && wart && /وليه/.test(wrule) && !(await page.$("#sec-context")) && /4 من/.test(wcrumb) ? ok(`window deck: ${wn} slides with drawings open lesson f6, the unit's fourth lesson`) : fail(`window deck: incomplete (${wn} slides, crumb «${wcrumb}»)`);
+  await page.click("#sec-window [data-aih-next]"); await page.click("#sec-window [data-aih-next]"); await page.click("#sec-window [data-aih-prev]"); await page.waitForTimeout(700);
+  const settled = await page.$$eval("#sec-window .aih-slide", (s) => s.filter((e) => getComputedStyle(e).visibility === "visible").map((e) => Number(e.dataset.i)));
+  settled.length === 1 && settled[0] === 1 ? ok("window deck: fast back-and-forth leaves exactly one slide showing") : fail("window deck: slides left showing after fast clicks: " + settled.join(","));
+  await page.evaluate(() => (location.hash = "lesson-f7")); await page.waitForSelector("#sec-agents .aih-stage");
+  const an_ = await page.$$eval("#sec-agents .aih-slide", (s) => s.length);
+  const aart = await page.$$eval("#sec-agents .aih-svg", (s) => s.every((v) => v.querySelectorAll("rect,circle,path,text,ellipse,line").length > 6));
+  const acrumb = await page.$eval(".crumbs .num", (e) => e.textContent);
+  const ascene = await page.$("#sec-scene .scene, #sec-scene [data-scene], #sec-scene *");
+  an_ >= 10 && aart && !(await page.$("#sec-window")) && /5 من/.test(acrumb) && ascene ? ok(`agents deck: ${an_} slides with drawings open lesson f7, the unit's fifth lesson, with the chat→agent scene`) : fail(`agents deck: incomplete (${an_} slides, crumb «${acrumb}»)`);
+  await page.click('#sec-agents [data-aih-go="6"]'); await page.waitForTimeout(400);
+  const loopDot = await page.$eval('#sec-agents .aih-slide[data-i="6"] .travel', (e) => getComputedStyle(e).opacity);
+  loopDot === "1" ? ok("agents deck: the agent loop's travelling dot shows on its slide") : fail("agents deck: loop dot hidden (" + loopDot + ")");
+  await page.evaluate(() => (location.hash = "lesson-f4")); await page.waitForSelector("#sec-context .aih-stage");
+  (await page.$("#sec-scene *")) ? fail("lesson f4 still carries the chat→agent scene that moved to f7") : ok("lesson f4 is about the Prompt and the Context only");
 });
 await session({ label: "history-deck-mobile-en", viewport: { width: 375, height: 812 }, isMobile: true, hasTouch: true, colorScheme: "dark" }, async (page) => {
   await page.evaluate(() => { localStorage.setItem("aiAcademy.v1", JSON.stringify({ lang: "en" })); location.hash = "lesson-f1"; location.reload(); });
