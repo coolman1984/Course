@@ -257,7 +257,7 @@
         } },
     },
     {
-      id: "t1", unit: "u5", pages: [39], diff: 3, min: 9, scene: "team", lab: "agents", related: ["f4", "s1", "t2"], pre: ["f4", "s1"],
+      id: "t1", unit: "u5", pages: [39], diff: 3, min: 9, scene: "team", lab: "agents", related: ["f7", "s1", "t2"], pre: ["f7", "s1"],
       title: { ar: "الفريق الرقمي الذكي", en: "The smart digital team" },
       sum: { ar: "الوكيل إيه (هدف وأدوات وتكرار)، وليه فريق مش وكيل واحد، والأدوار السبعة، وابدأ بتلتة، وتلات أنماط تنسيق.", en: "What an agent is (goal, tools, repetition), why a team rather than one agent, seven roles, start with three, and three coordination patterns." },
       book: [
@@ -276,7 +276,7 @@
         mech: [
           L("how", "**حلقة الوكيل**: هدف ← يخطط ← يستخدم أداة ← يشوف النتيجة ← يصحّح ← يكرر لحد النجاح أو الحد. **في الفريق**: المنسق بيقسّم المهمة، والوكلاء بينفّذوا بأدوار وصلاحيات محدودة، والمراجع بيرجّع الشغل لو في ثغرات، والمنفذ بيستنى موافقة الإنسان.", "**The agent loop**: goal → plan → use a tool → observe → correct → repeat until success or the limit. **In a team**: the coordinator splits the task, agents act with limited roles and permissions, the critic returns work with gaps, and the executor waits for human approval."),
           L("inside", "ليه «المنفذ والناقد» بينجح؟ لأن المراجعة من «عين تانية» بتكسر ميل المنفّذ يأكّد شغله — نفس فكرة «ما توافقني تلقائي» ([[p7]]) بس بين وكيلين. والحد الأقصى دورتين أو تلات، وبعدها الباقي يروح للإنسان.", "Why does “executor and critic” work? Review by “another pair of eyes” breaks the doer’s tendency to confirm its own work — the same idea as “don’t agree with me automatically” ([[p7]]) but between two agents. The cap is two or three rounds, then the rest goes to a human."),
-          L("link", "دي الدرجة التامنة في سلّم [[f2]]، وامتداد للوكيل اللي شفته في [[f4]]، واللي بيتولّى طبقة «الذكاء» في النظام ([[s1]]). Claude Code نفسه وكيل حقيقي ([[w2]]).", "This is step eight on the [[f2]] ladder, an extension of the agent in [[f4]], and the team that takes on the system’s “intelligence” layer ([[s1]]). Claude Code itself is a real agent ([[w2]])."),
+          L("link", "دي الدرجة التامنة في سلّم [[f2]]، وامتداد للوكيل اللي شفته في [[f7]]، واللي بيتولّى طبقة «الذكاء» في النظام ([[s1]]). Claude Code نفسه وكيل حقيقي ([[w2]]).", "This is step eight on the [[f2]] ladder, an extension of the agent in [[f4]], and the team that takes on the system’s “intelligence” layer ([[s1]]). Claude Code itself is a real agent ([[w2]])."),
         ],
         practice: [
           L("example", "تقرير المبيعات الأسبوعي بفريق من تلاتة: **الجامع** بيقرأ ملفات الفروع (قراءة بس) ← **المحلل** بيحسب الإجماليات والانحرافات ← **المراجع** بيتأكد إن مجموع الفروع بيطابق الإجمالي وإن لكل رقم مصدر، وبيرجّع الشغل للمحلل لو في غلط — بعدين إنسان أو محرر بيكتب الملخص ويوافق على الإرسال.", "The weekly sales report with a team of three: the **collector** reads branch files (read-only) → the **analyst** computes totals and deviations → the **critic** checks branch sums match the total and every number has a source, returning work to the analyst on error — then a human or editor writes the summary and approves sending."),

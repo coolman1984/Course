@@ -42,7 +42,7 @@
       ["جمع", "Collect"], ["تحليل", "Analyse"], ["تلخيص", "Summarise"], ["مقارنة", "Compare"], ["اقتراح", "Suggest"]
     ], ["جمع ← تحليل ← تلخيص ← مقارنة ← اقتراح (ص 5).", "Collect → analyse → summarise → compare → suggest (p. 5)."]),
 
-    Q("f4a", "f4", "compare", ["إنت محتاج حد يخطط ويستخدم أدوات وينفّذ المهمة ويتابعها. هتختار إيه؟", "You need something that plans, uses tools, carries out the task and follows up. Which do you pick?"], [
+    Q("f7a", "f7", "compare", ["إنت محتاج حد يخطط ويستخدم أدوات وينفّذ المهمة ويتابعها. هتختار إيه؟", "You need something that plans, uses tools, carries out the task and follows up. Which do you pick?"], [
       o("وكيل ذكي", "A smart agent"),
       o("دردشة عادية", "Traditional chat", "الدردشة: بتسأل وتاخد إجابة وبعدين بتقف.", "Chat: you ask, get an answer, and it stops."),
       o("مساعد شخصي", "A personal assistant", "المساعد بيفهمك وبيذكّر الـ Context، بس التخطيط والتنفيذ بالأدوات صفة الوكيل.", "An assistant understands and remembers context, but planning and executing with tools is the agent’s trait."),
@@ -67,6 +67,13 @@
       o("لأن الموديل بيحفظ المحادثات القديمة في أوزانه", "Because the model stores old chats in its weights", "الأوزان ما بتتغيّرش وإنت بتكلّمه؛ المحادثة كلها بتتقري تاني في الـ Context مع كل رسالة.", "The weights don’t change while you talk; the whole chat is re-read in the Context with every message."),
       o("لأن العربي ما ينفعش في النصوص الطويلة", "Because Arabic doesn’t work for long texts", "العربي بياخد توكنز أكتر، لكنه مش سبب الحد.", "Arabic takes more tokens, but it isn’t the cause of the limit.")
     ], 0, ["الانتباه بيخلّي كل كلمة تبص على كل اللي قبلها: ضعف الكلام ≈ ٤ أضعاف الشغل، ومعاه ذاكرة ووقت وتكلفة أكتر. وحتى لو الكلام دخل كله، النص بياخد انتباه أقل.", "Attention makes every word look at everything before it: double the text ≈ 4× the work, plus more memory, time and cost. And even when everything fits, the middle gets less attention."]),
+
+    Q("f7b", "f7", "mcq", ["التطبيق قالك «أنا فاكر إنك في قسم الجودة». ده معناه إيه فعلًا؟", "The app says “I remember you work in quality”. What does that really mean?"], [
+      o("التطبيق حافظ ملاحظة عنك برّه الموديل، وبيحطها على الترابيزة في أول كل محادثة", "The app keeps a note about you outside the model and places it on the table at the start of each chat"),
+      o("أوزان الموديل اتغيّرت واتعلّم عنك", "The model’s weights changed and it learned about you", "الأوزان ما بتتغيّرش من محادثاتك؛ اتحددت وقت التدريب.", "The weights don’t change from your chats; they were fixed in training."),
+      o("الموديل بيفتكر كل محادثاتك القديمة كلها بالتفصيل", "The model remembers all your old chats in full detail", "الذاكرة ملاحظات مختارة ومحدودة، وبتاخد من مساحة الترابيزة.", "Memory is selected, limited notes that take table space."),
+      o("المعلومة دي مستحيل تبقى غلط أو قديمة", "That information can never be wrong or stale", "الذاكرة ممكن تبقى قديمة؛ راجعها وامسح اللي اتغيّر.", "Memory can go stale; review it and delete what has changed.")
+    ], 0, ["الذاكرة نص متخزّن برّه الموديل (تعليمات، أو ذاكرة تلقائية، أو ملفات مشروع)، والتطبيق بيحطه على الترابيزة. علشان كده ممكن تراجعه وتمسحه، وممكن يبقى قديم.", "Memory is text stored outside the model (instructions, automatic memory or project files) that the app places on the table — so you can review and delete it, and it can go stale."]),
 
     Q("f5a", "f5", "mcq", ["إيه المعادلة اللي الكتاب بيختم بيها لأحسن نتيجة؟", "Which equation does the book end with for the best result?"], [
       o("إنسان بيفكّر + بيانات كويسة + ذكاء اصطناعي", "A thinking human + good data + AI"),

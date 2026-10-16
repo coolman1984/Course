@@ -8,7 +8,7 @@ import vm from "node:vm";
 import path from "node:path";
 
 const SRC = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "src");
-const DATA = ["ui", "meta", "stories", "scenes", "lessons-u0", "lessons-u1", "lessons-u2", "lessons-u3u4", "lessons-u5", "plain-talk-a", "plain-talk-b", "prompts", "quiz", "glossary", "compare", "history", "model-story", "context-story", "window-story"];
+const DATA = ["ui", "meta", "stories", "scenes", "lessons-u0", "lessons-u1", "lessons-u2", "lessons-u3u4", "lessons-u5", "plain-talk-a", "plain-talk-b", "prompts", "quiz", "glossary", "compare", "history", "model-story", "context-story", "window-story", "agents-story"];
 const ENGINE = ["core", "scene", "render", "quiz", "labs", "tools"];
 const ctx = { window: { ACADEMY: {} } };
 vm.createContext(ctx);
@@ -182,12 +182,13 @@ test("story decks: real lessons, one deck per lesson, every slide complete in bo
   assert.equal(A.modelStory.lesson, "f2");
   assert.equal(A.contextStory.lesson, "f4");
   assert.equal(A.windowStory.lesson, "f6");
+  assert.equal(A.agentsStory.lesson, "f7");
   const u0 = A.lessons.filter((l) => l.unit === "u0").map((l) => l.id);
-  assert.equal(u0.slice(0, 4).join(" "), "f1 f2 f4 f6", "unit 0 order: history, inside the model, Prompt & Context, the Context's limits");
+  assert.equal(u0.slice(0, 5).join(" "), "f1 f2 f4 f6 f7", "unit 0 order: history, inside the model, Prompt & Context, the Context's limits, chat/memory/agents");
 });
 
-test("deck drawings give every SVG element one class attribute (a second one is silently dropped)", () => {
+test("deck drawings give every SVG element one class and one style attribute (a second one is silently dropped)", () => {
   const engine = readFileSync(path.join(SRC, "engine", "history.js"), "utf8");
-  const bad = engine.split("\n").map((l, i) => [i + 1, l]).filter(([, l]) => /\$\{an\([^)]*\)\}[^<>]*\sclass="/.test(l));
-  assert.equal(bad.length, 0, "an() already writes class=; pass extra classes as its third argument: lines " + bad.map(([n]) => n).join(", "));
+  const bad = engine.split("\n").map((l, i) => [i + 1, l]).filter(([, l]) => /\$\{an\([^)]*\)\}[^<>]*\s(class|style)="/.test(l));
+  assert.equal(bad.length, 0, "an() already writes class= and style=; pass extra classes as its third argument (and use grow() for bars): lines " + bad.map(([n]) => n).join(", "));
 });
