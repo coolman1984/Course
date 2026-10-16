@@ -1,25 +1,12 @@
 # CLAUDE.md — working on this repository
 
-> ملخّص بالعربي: ده دليل أي مساعد ذكي (أو مطوّر) بيشتغل على المشروع. فيه المشروع بيتبني إزاي، وقواعد الأسلوب واللغة،
-> وإزاي تضيف درس أو حكاية، والاختبارات المطلوبة قبل أي دمج. التاريخ في `docs/HISTORY.md` والدروس المستفادة في
-> `docs/LESSONS-LEARNED.md`.
+> ملخّص بالعربي: ده دليل فني لأي حد بيطوّر الموقع: بيتبني إزاي، وقواعد الكتابة والرسومات، والاختبارات المطلوبة قبل أي دمج.
 
 ## What this is
 
-An internal company course, **«أساسيات الذكاء الاصطناعي في بيئة العمل الحديثة»** (AI essentials for the modern workplace),
-by Mohamed Fawzy, for office and factory staff with no programming background. It is taught live as **8 lectures**. The
-main deliverable is **`AI_Academy.html`**: the whole course as one offline HTML file (also published to GitHub Pages:
-https://coolman1984.github.io/Course/). Other folders hold the original book PDF, trainer scripts, exams and training files.
-
-The owner's direction (October 2026):
-- The site is organised as **8 units = 8 lectures**. Unit 0 is lecture one and is complete (8 lessons).
-- **Teaching logic beats book order.** The book is a reference, not the structure. Lessons are ordered by how the idea
-  builds in a trainee's head on stage, and new lessons are added freely.
-- **Every lecture ends strongly**, like a series episode: a practical close and a cliffhanger into the next lecture.
-  Unit 0 ends with lesson f8 (first Excel automation) and the question «طب لو البيانات طلعت من إكسل خالص؟»; unit 1
-  (lecture two) is planned around data extraction from Excel, SQLite and Python's standard library, and first tools.
-- Trainees mostly use **free chat models** on **locked company laptops**: allowed are Excel macros (VBA), PowerShell
-  (including driving Excel through COM) and the official Python **without extra libraries**. Nothing can be installed.
+A bilingual (Arabic/English) course site, **«أساسيات الذكاء الاصطناعي في بيئة العمل الحديثة»**, for learners with no
+programming background. The deliverable is **`AI_Academy.html`**: the whole course as one offline HTML file, built from
+`academy/src`. Other folders hold the reference book PDF, session scripts, exams and training files.
 
 ## Repository layout
 
@@ -30,11 +17,12 @@ academy/src/ai-guide.txt   short guide for an AI reading the HTML; injected at t
 academy/src/data/*.js      all content (lessons, decks, prompts, quiz, glossary, plain-language layer, stories, ui)
 academy/src/engine/*.js    behaviour (core router/search, render, decks in history.js, labs, motion, quiz, tools)
 academy/src/*.css          styles (styles.css, motion.css, history.css for decks)
+academy/src/fonts/         inlined fonts (SIL OFL): Inter («UI Latin»), IBM Plex Sans Arabic («UI Sans»),
+                           an Inter symbol subset («UI Symbols»), JetBrains Mono («UI Mono»)
 academy/test/data.test.mjs node --test: data integrity
 academy/test/e2e.mjs       Playwright journey over every route, both languages, phone and desktop, offline
-academy/test/art-check.mjs every drawing label inside its frame and clear of others, both languages
+academy/test/art-check.mjs every drawing label inside its frame, clear of others, in an inlined font, both languages
 .github/workflows/         academy-pr.yml (checks on PRs), pages.yml (publishes on merge to main)
-docs/HISTORY.md, docs/LESSONS-LEARNED.md
 ```
 
 ## Build and test (run all before every push)
@@ -59,7 +47,7 @@ Commit the rebuilt `AI_Academy.html` together with source changes. CI runs the s
 - Unit 0 order today: `f1 f2 f4 f6 f7 f3 f5 f8` (history → inside the model → Prompt & Context → Context limits →
   chat/memory/agents → AI at work → limits → first automation). A data test pins this order; update it deliberately.
 
-## Story decks (the signature of unit 0)
+## Story decks
 
 Each unit-0 lesson opens with a 12-slide deck: `academy/src/data/<name>-story.js` registers `A.<name>Story` in `A.decks`
 with `lesson: "<id>"`; the player is `A.mountDeck` in `engine/history.js` (one player for all decks).
@@ -68,7 +56,7 @@ Writing rules:
 - **One hero and one question** carried through every slide; the last slide turns it to the reader (`finalQuestion`).
 - Each slide: `year` (short label), `era`, `title`, `story` (2 paragraphs), `answer` (the rule + «لأن…» reason),
   `idea` (one line). Twelve slides, about 7–8 minutes.
-- Build on earlier decks explicitly («فاكر …؟») so the lecture forms one chain.
+- Build on earlier decks explicitly («فاكر …؟») so the unit forms one chain.
 
 Drawing rules (`ART.<prefix>_<slide>` in `engine/history.js`, viewBox 480 × 320):
 - `an(kind, delay, extraClasses)` writes **both** `class` and `style`; never add a second `class=` or `style=` to the
@@ -78,16 +66,15 @@ Drawing rules (`ART.<prefix>_<slide>` in `engine/history.js`, viewBox 480 × 320
 - Avoid emoji and font-dependent glyphs inside SVG; draw icons with shapes.
 - After any drawing change run `art-check.mjs` and look at screenshots in both languages.
 
-## Language and style (non-negotiable — the owner reviews wording closely)
+## Language and style
 
 - Polished, respectful **Egyptian Arabic**: clear, warm, professional. No street slang, no cheap or odd images.
 - Never use: «كوم» / «كومة», «ترابيزة» (the context window is **«مساحة العمل»**), «بيلف / لفّات» (use «بيكرر الخطوات»),
   «إنت إيده» (use «التنفيذ لسه عليك»), «ببلاش», «بايظ / يبوّظ», «حشو», «تايه», «قعدة», «العين التعبانة», «من دماغه»,
   «متألّف», «Context نضيف». When unsure, choose the plainer, more formal Egyptian word.
 - Keep **Prompt** and **Context** as English terms (course-wide decision). Explain any other term in one line.
-- Examples come from the trainees' world: factory lines, sales branches, finance, HR, quality. Figures are illustrative
+- Examples come from the learners' world: factory lines, sales branches, finance, HR, quality. Figures are illustrative
   and say so (`note` on each deck).
-- Replies to the owner in chat: short, Egyptian Arabic, non-technical, with emoji, no English words mixed in.
 
 ## Performance rules
 
@@ -95,11 +82,22 @@ Drawing rules (`ART.<prefix>_<slide>` in `engine/history.js`, viewBox 480 × 320
 - Deck drawings are built on demand (current slide now, neighbours and the rest at idle) and never after the reader
   leaves (`alive` flag). Off-screen decks pause looping animations (`.aih.is-away`).
 - Measure before claiming: Playwright + CDP CPU throttling (4×) and rAF frame sampling; compare A/B builds with
-  repeated runs — the cloud container has no GPU, so desktop compositing numbers are pessimistic.
+  repeated runs — a machine without a GPU makes desktop compositing numbers pessimistic.
 
 ## Pull requests
 
-- Work on the session branch; open a PR to `main` only when asked; the owner usually says «اعمل طلب دمج وادمجه».
+- Work on a branch; open a PR to `main`.
 - CI (`Check academy changes`) and a Codex review run on every PR. Treat Codex findings as claims: reproduce, fix with a
   test, reply on the thread with the commit, resolve. Merge when CI is green and threads are resolved.
 - After a merge, restart the branch from `origin/main` for the next piece of work.
+
+## Known pitfalls
+
+- A second `class` or `style` attribute on an SVG element is silently ignored (see the drawing rules).
+- Mirroring: if a fill uses `grow()` (which mirrors), its background bar must be mirrored too.
+- Fonts: faces that share a family name must not mix weight descriptors (a 100–900 range next to fixed weights), or
+  Chromium ignores some of them and falls back to system fonts. Keep Latin, Arabic and symbols in separate families.
+- Bidirectional text: a word joiner after a hyphen (`GPT-⁠4`) keeps model names whole in Arabic paragraphs.
+- Objects created inside a `vm` context belong to another realm; compare joined strings, not `deepEqual` on arrays.
+- Idle work scheduled by a deck must stop when the reader leaves (`alive` flag), or it lands on the next page.
+- A test that never fails proves nothing: reproduce the bug first, then show the test passing with the fix.
