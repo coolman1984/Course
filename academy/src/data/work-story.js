@@ -1,6 +1,6 @@
 /* What AI does at work — the story deck that opens lesson f3 (sixth in unit 0, right after "chat, memory and agents").
    One hero runs through every slide: a sales supervisor who spends a full day each month turning three branch files into a
-   report (the lesson's own case), and the question «الكوم ده يبقى قرار إمتى؟». Each slide shows one of the book's six
+   report (the lesson's own case), and the question «إزاي الملفات دي تتحول لقرار؟». Each slide shows one of the book's six
    capabilities on that same pile, with the way to ask for it, and the chain collect → analyse → summarise → compare → suggest.
    Each slide gives one rule with its reason («القاعدة، وليه؟»). Figures are illustrative. Same slide schema as
    data/model-story.js; drawings are the k_* entries in engine/history.js. */
@@ -10,12 +10,12 @@
   A.workStory = {
     id: "work", lesson: "f3",
     kicker: u("الذكاء الاصطناعي في شغلك · الحكاية كاملة في ٧ دقايق", "AI at work · the whole story in 7 minutes"),
-    title: u("من كوم ملفات لقرار: ست قدرات وسلسلة واحدة", "From a pile of files to a decision: six capabilities, one chain"),
-    lead: u("عرفنا الموديل بيفكّر إزاي، ونكلّمه إزاي، وحدوده فين، ونختار له أنهي أداة. فاضل السؤال العملي: يعملّي إيه في شغلي؟ في الحكاية دي هنمشي مع مشرف مبيعات من كوم ملفات لقرار، ونشوف الست قدرات اللي في الكتاب واحدة واحدة، وإزاي تطلب كل واحدة صح.",
+    title: u("من الملفات للقرار: ست قدرات وسلسلة واحدة", "From files to a decision: six capabilities, one chain"),
+    lead: u("عرفنا الموديل بيفكّر إزاي، ونكلّمه إزاي، وحدوده فين، ونختار له أنهي أداة. فاضل السؤال العملي: يعملّي إيه في شغلي؟ في الحكاية دي هنمشي مع مشرف مبيعات من ملفات الفروع لحد القرار، ونشوف الست قدرات اللي في الكتاب واحدة واحدة، وإزاي تطلب كل واحدة صح.",
       "We know how the model thinks, how to talk to it, where its limits are and which tool to pick. One practical question is left: what can it do in my work? In this story we follow a sales supervisor from a pile of files to a decision, take the book's six capabilities one by one, and see how to ask for each one properly."),
     answerLabel: u("القاعدة، وليه؟", "The rule, and why"),
     ideaLabel: u("الفكرة في جملة", "The idea in one line"),
-    question: u("الكوم ده يبقى قرار إمتى؟", "When does this pile become a decision?"),
+    question: u("إزاي الملفات دي تتحول لقرار؟", "How do these files become a decision?"),
     finalQuestion: u("أنهي مهمة في أسبوعك هتبدأ بيها؟", "Which task in your week will you start with?"),
     note: u("الأرقام والأمثلة توضيحية، والنتايج لازم تتراجع على البيانات الحقيقية قبل ما تتبعت.", "Figures and examples are illustrative; results must be checked against the real data before they are sent."),
     ui: {
@@ -34,15 +34,15 @@
           "At the start of every month the sales supervisor receives three files from three branches. Each branch names its columns its own way; one writes dates month-first, another day-first. He spends a full day copying, pasting, unifying and reading numbers by eye."),
         u("وفي الآخر بيكتب للمدير فقرة زي «المبيعات كويسة الشهر ده». المدير ما بياخدش منها قرار، لأنها ما بتقولش إيه اللي اتغيّر، ولا فين المشكلة، ولا يعمل إيه. طب الذكاء الاصطناعي ممكن يساعد في أنهي خطوة بالظبط؟",
           "And at the end he writes the manager a paragraph like “sales were good this month”. The manager can't decide anything from it: it doesn't say what changed, where the problem is, or what to do. So which step exactly can AI help with?")],
-        answer: u("ابدأ من المهمة المتكررة اللي بتاكل وقتك، مش من الأداة. لأن المهمة هي اللي بتحدد القدرة اللي محتاجها.", "Start from the recurring task that eats your time, not from the tool — the task decides which capability you need."),
-        idea: u("التقرير اللي ما بيطلّعش قرار… شغل ضايع.", "A report that leads to no decision is wasted work.")
+        answer: u("ابدأ من المهمة المتكررة اللي بتاخد وقت كبير، مش من الأداة. لأن المهمة هي اللي بتحدد القدرة اللي محتاجها.", "Start from the recurring task that eats your time, not from the tool — the task decides which capability you need."),
+        idea: u("التقرير اللي ما بيساعدش في قرار… وقت ضايع.", "A report that leads to no decision is wasted work.")
       },
       {
         id: "six", art: "k_six", year: u("القدرات", "Capabilities"), mark: u("٠٢", "02"), era: u("ست مهارات", "Six skills"),
         title: u("ست قدرات تقدر تطلبها في شغلك", "Six capabilities you can ask for at work"),
         story: [u("الكتاب بيجمع اللي الذكاء الاصطناعي بيعمله في الشغل في ست قدرات: يحلل البيانات والملفات، ويلخّص ويستخرج القرارات والأرقام، ويدوّر جوّه معرفة الشركة، ويكتب ويعيد الصياغة، ويقارن ويراجع ويكشف التناقضات، ويدعم القرار بسيناريوهات وبدائل ومخاطر.",
           "The book groups what AI does at work into six capabilities: analyse data and files; summarise and extract decisions and figures; search the company's knowledge; write and rewrite; compare, review and spot contradictions; and support decisions with scenarios, options and risks."),
-        u("القدرات دي مش أدوات منفصلة، دي طرق مختلفة تكلّم بيها نفس الموديل. والفرق بينها في الطلب نفسه: «حلّل» غير «لخّص» غير «قارن». وكل شريحة جاية هتوريك قدرة منهم على نفس كوم الملفات.",
+        u("القدرات دي مش أدوات منفصلة، دي طرق مختلفة تكلّم بيها نفس الموديل. والفرق بينها في الطلب نفسه: «حلّل» غير «لخّص» غير «قارن». وكل شريحة جاية هتوريك قدرة منهم على نفس الملفات.",
           "These aren't separate tools; they are different ways of asking the same model. The difference is in the request itself: “analyse” is not “summarise” is not “compare”. Each coming slide shows one of them on the same pile of files.")],
         answer: u("سمّي القدرة اللي عايزها في أول الطلب: حلّل، لخّص، قارن. لأن الفعل الدقيق بيحدد نوع الشغل اللي الموديل هيعمله.", "Name the capability you want at the start of the request — analyse, summarise, compare — the precise verb sets the kind of work the model does."),
         idea: u("نفس الموديل، ست طرق تطلب بيها.", "One model, six ways to ask.")
@@ -52,9 +52,9 @@
         title: u("يجمع: اللي مش قدامه مش هيتحلل", "Collect: what isn't in front of it won't be analysed"),
         story: [u("أول خطوة إن الملفات التلاتة تبقى قدام الموديل في مكان واحد. والأهم إنك توصف الأعمدة: «عمود Date في فرع ١ هو نفسه تاريخ البيع في فرع ٢، والتاريخ في فرع ٣ يوم/شهر». من غير الوصف ده هيخمّن، وممكن يخمّن غلط.",
           "The first step is getting all three files in front of the model in one place. More importantly, describe the columns: “Date in branch 1 is the same as sale date in branch 2; branch 3 writes day/month.” Without that description it guesses, and it may guess wrong."),
-        u("وافتكر الترابيزة: فرع رابع ما رفعتلوش ملف مش موجود بالنسبة له خالص. هيكتب تقرير «كل الفروع» وهو شايف تلاتة بس. علشان كده اطلب منه في الأول يقولك إيه اللي شايفه: كام ملف، وكام صف، وأنهي أعمدة.",
-          "And remember the table: a fourth branch whose file you didn't upload doesn't exist for it at all. It will write an “all branches” report while seeing only three. So ask it first to tell you what it sees: how many files, how many rows, which columns.")],
-        answer: u("قبل التحليل اسأله: «إنت شايف إيه؟». لأن أي ملف ناقص أو عمود مفهوم غلط هيبوّظ كل اللي بعده.", "Before analysing, ask “what do you see?” — a missing file or a misread column spoils everything after it."),
+        u("وافتكر مساحة العمل: فرع رابع ما رفعتلوش ملف مش موجود بالنسبة له خالص. هيكتب تقرير «كل الفروع» وهو شايف تلاتة بس. علشان كده اطلب منه في الأول يقولك إيه اللي شايفه: كام ملف، وكام صف، وأنهي أعمدة.",
+          "And remember the workspace: a fourth branch whose file you didn't upload doesn't exist for it at all. It will write an “all branches” report while seeing only three. So ask it first to tell you what it sees: how many files, how many rows, which columns.")],
+        answer: u("قبل التحليل اسأله: «إنت شايف إيه؟». لأن أي ملف ناقص أو عمود مفهوم غلط هيأثر على كل اللي بعده.", "Before analysing, ask “what do you see?” — a missing file or a misread column spoils everything after it."),
         idea: u("التحليل على قد اللي اتجمع.", "Analysis is only as good as what was collected.")
       },
       {
@@ -62,7 +62,7 @@
         title: u("يحلل: يلاقي النمط اللي العين ما بتشوفهوش", "Analyse: find the pattern the eye misses"),
         story: [u("بعد ما الملفات اتجمعت، بتطلب: «حلّل الفروق بين الفروع والأيام، وطلّع أكبر تلات ملاحظات». فيلاقي حاجة ما كانتش باينة: المرتجعات في فرع ٣ بتتضاعف تلات مرات يوم الخميس، وأغلبها من صنف واحد.",
           "Once the files are together you ask: “Analyse the differences between branches and days and give me the three biggest findings.” It finds something that wasn't visible: returns at branch 3 triple on Thursdays, mostly for one product."),
-        u("بس خلّي بالك: الموديل آلة توقّع كلام، مش آلة حاسبة. لو الأرقام كتير، اطلب منه يحسب بأداة الحساب أو بكود يشغّله، ويوريك الطريقة، بدل ما «يقدّر» الإجمالي من دماغه. وراجع رقم أو اتنين بنفسك.",
+        u("بس خلّي بالك: الموديل آلة توقّع كلام، مش آلة حاسبة. لو الأرقام كتير، اطلب منه يحسب بأداة الحساب أو بكود يشغّله، ويوريك الطريقة، بدل ما «يقدّر» الإجمالي تقدير. وراجع رقم أو اتنين بنفسك.",
           "But careful: the model predicts words; it isn't a calculator. With many figures, ask it to compute with a calculation tool or code it runs, and to show the method — instead of “estimating” totals. And check one or two numbers yourself.")],
         answer: u("اطلب الحساب يتعمل بأداة أو كود، والطريقة تتكتب. لأن الرقم اللي اتحسب تقدر تراجعه، والرقم اللي اتخمّن لأ.", "Ask for calculations to be done with a tool or code, with the method shown — a computed number can be checked; a guessed one can't."),
         idea: u("التحليل الكويس بيلاقي «فين» و«إمتى»، مش «كويس» و«وحش».", "Good analysis finds “where” and “when”, not “good” and “bad”.")
@@ -72,7 +72,7 @@
         title: u("يلخّص ويستخرج: القرارات والأرقام والمسؤولين", "Summarise and extract: decisions, figures, owners"),
         story: [u("مع الملفات فيه تقرير الإدارة الشهري، ٤٠ صفحة. بدل ما تقراه كله، بتطلب: «استخرج القرارات اللي اتاخدت، والأرقام المهمة، ومين مسؤول عن إيه، في جدول، ومع كل بند رقم الصفحة».",
           "Alongside the files there's the monthly management report, 40 pages. Instead of reading it all you ask: “Extract the decisions taken, the key figures and who owns what, as a table, with the page number for each item.”"),
-        u("رقم الصفحة ده مش رفاهية: هو اللي بيخلّيك تتأكد في ثانية إن البند موجود فعلًا ومش متألّف. والتلخيص الكويس بيبقى ليه شكل ثابت إنت محدده: جدول، أو خمس سطور، أو «قرار - رقم - مسؤول».",
+        u("رقم الصفحة ده مش رفاهية: هو اللي بيخلّيك تتأكد في ثانية إن البند موجود فعلًا في الأصل. والتلخيص الكويس بيبقى ليه شكل ثابت إنت محدده: جدول، أو خمس سطور، أو «قرار - رقم - مسؤول».",
           "That page number isn't a luxury: it lets you confirm in a second that the item really exists and wasn't made up. A good summary has a fixed shape you define: a table, five lines, or “decision – figure – owner”.")],
         answer: u("اطلب مع كل معلومة مستخرجة مكانها في الأصل. لأن ده بيحوّل الثقة لحاجة تقدر تتحقق منها.", "Ask for the source location of every extracted fact — it turns trust into something you can verify."),
         idea: u("ملخص من غير مصدر… رأي.", "A summary without sources is an opinion.")
@@ -102,15 +102,15 @@
         title: u("يقارن ويراجع: يمسك اللي اتغيّر واللي ناقص", "Compare and review: catch what changed and what's missing"),
         story: [u("الإدارة بعتت نسخة معدّلة من خطة الربع. بدل ما تقرا النسختين جنب بعض، بتطلب: «قارن النسختين: إيه اللي اتغيّر، وإيه اللي اتشال، وإيه الجديد، وفين التناقض». فيطلع إن هدف فرع ٣ اتغيّر، وبند التدريب اتشال، وفيه رقمين مش متطابقين بين الجدول والملخص.",
           "Management sent a revised quarterly plan. Instead of reading both side by side you ask: “Compare the two versions: what changed, what was removed, what's new, and where the contradictions are.” It turns out branch 3's target changed, the training item was dropped, and two figures don't match between the table and the summary."),
-        u("المراجعة دي من أقوى استخدامات الذكاء الاصطناعي، لأنها بتمسك الحاجات اللي العين بتعدّي عليها لما تبقى تعبان. بس اطلب منه يوريك المكان في كل نسخة، علشان تتأكد إن الفرق حقيقي.",
+        u("المراجعة دي من أقوى استخدامات الذكاء الاصطناعي، لأنها بتمسك التفاصيل اللي العين بتعدّي عليها مع التعب. بس اطلب منه يوريك المكان في كل نسخة، علشان تتأكد إن الفرق حقيقي.",
           "This kind of review is one of AI's strongest uses, because it catches what a tired eye passes over. But ask it to show the location in each version so you can confirm the difference is real.")],
         answer: u("اطلب الفروق في جدول: البند، والنسخة الأولى، والتانية، ونوع التغيير. لأن الجدول بيخلّي كل فرق قدامك تقدر تراجعه.", "Ask for differences as a table — item, version one, version two, kind of change — so every difference is in front of you to check."),
-        idea: u("المقارنة بتمسك اللي العين التعبانة بتفوّته.", "Comparison catches what a tired eye misses.")
+        idea: u("المقارنة بتمسك اللي العين بتفوّته مع التعب.", "Comparison catches what a tired eye misses.")
       },
       {
         id: "suggest", art: "k_suggest", year: u("يقترح", "Suggest"), mark: u("٠٩", "09"), era: u("سيناريوهات وبدائل", "Scenarios and options"),
         title: u("يدعم القرار: تلات بدائل، وكل واحد بمخاطره", "Support the decision: three options, each with its risks"),
-        story: [u("دلوقتي بس تقدر تطلب: «اقترح تلات حلول لمرتجعات فرع ٣، ومع كل حل التكلفة والمخاطرة وإزاي نقيس نجاحه». فيقترح مثلًا: فحص الشحنة اللي بتوصل الأربع، أو تدريب البيّاعين على الصنف، أو خصم ١٠٪ في حدود السياسة.",
+        story: [u("دلوقتي بس تقدر تطلب: «اقترح تلات حلول لمرتجعات فرع ٣، ومع كل حل التكلفة والمخاطرة وإزاي نقيس نجاحه». فيقترح مثلًا: فحص الشحنة اللي بتوصل الأربع، أو تدريب موظفي المبيعات على الصنف، أو خصم ١٠٪ في حدود السياسة.",
           "Only now can you ask: “Suggest three solutions for branch 3's returns, each with its cost, its risk and how we measure success.” It may suggest: inspecting the Wednesday delivery, training staff on the product, or a 10% discount within policy."),
         u("لاحظ إن الاقتراح جه في الآخر، بعد ما جمع وحلل ولخّص وقارن. لو كنت سألت «أعمل إيه في المبيعات؟» من الأول، كان هيديك نصايح عامة تنفع أي شركة. وفي كل الأحوال القرار بتاعك إنت، لأنك اللي هتتحاسب عليه.",
           "Notice the suggestion came last, after collecting, analysing, summarising and comparing. Had you asked “what should I do about sales?” at the start, you'd have got generic advice that fits any company. And either way, the decision is yours — you are the one accountable for it.")],
@@ -129,21 +129,21 @@
       },
       {
         id: "garbage", art: "k_garbage", year: u("التحذير", "Warning"), mark: u("١١", "11"), era: u("شكله مظبوط", "Looks right"),
-        title: u("بيانات بايظة = نتيجة شكلها مظبوط ومضمونها غلط", "Broken data = a result that looks right and is wrong"),
-        story: [u("في ملف فرع ٢ صف متكرر مرتين، وفاتورة مكتوبة ١٠٠٠٠٠ بدل ١٠٠٠٠. الموديل مش هيقولك «البيانات دي شكلها غريب» إلا لو طلبت منه. هيحلل اللي قدامه بأمانة، ويطلّع رسم بياني نضيف وتقرير مرتب… وفرع ٢ طالع الأول بفرق ضخم.",
+        title: u("بيانات فيها أخطاء = نتيجة شكلها مظبوط ومضمونها غلط", "Broken data = a result that looks right and is wrong"),
+        story: [u("في ملف فرع ٢ صف متكرر مرتين، وفاتورة مكتوبة ١٠٠٠٠٠ بدل ١٠٠٠٠. الموديل مش هيقولك «البيانات دي شكلها غريب» إلا لو طلبت منه. هيحلل اللي قدامه زي ما هو، ويطلّع رسم بياني مرتب وتقرير منظم… وفرع ٢ طالع الأول بفرق ضخم.",
           "Branch 2's file has a row duplicated twice and an invoice written as 100000 instead of 10000. The model won't say “this data looks odd” unless you ask. It analyses what's in front of it faithfully and produces a clean chart and a tidy report… with branch 2 first by a huge margin."),
         u("ودي أخطر نتيجة: لأنها شكلها احترافي جدًا، محدش بيشك فيها. الحل بسيط: اطلب منه يفحص البيانات قبل التحليل (المتكرر، والقيم الشاذة، والخانات الفاضية)، وراجع بنفسك تلات أرقام من الملف الأصلي قبل ما التقرير يخرج.",
           "That's the most dangerous result: because it looks so professional, nobody doubts it. The fix is simple: ask it to check the data before analysing (duplicates, outliers, empty cells), and check three figures yourself against the original file before the report goes out.")],
         answer: u("اطلب فحص جودة البيانات قبل أي تحليل، وراجع تلات أرقام بإيدك. لأن الشكل الاحترافي مش دليل إن الرقم صح.", "Ask for a data-quality check before any analysis and verify three figures by hand — a professional look is no proof a number is right."),
-        idea: u("الرسم النضيف مش معناه رقم صح.", "A clean chart doesn't mean a correct number.")
+        idea: u("الرسم المرتب مش معناه إن الرقم صح.", "A clean chart doesn't mean a correct number.")
       },
       {
         id: "recap", art: "k_recap", year: u("الخلاصة", "Summary"), mark: u("١٢", "12"), era: u("الحكاية في سطر", "The story in one line"),
-        title: u("الخلاصة: من يوم ملفات لساعة قرار", "In short: from a day of files to an hour of decision"),
+        title: u("الخلاصة: من يوم شغل كامل لساعة واحدة", "In short: from a full day of work to one hour"),
         story: [u("نرجع لمشرف المبيعات. بدل يوم كامل وفقرة عامة، بقى عنده في حوالي ساعة مسودة فيها: إيه اللي اتغيّر، وفين المشكلة بالظبط، والسياسة بتقول إيه، وتلات بدائل بمخاطرها. وهو بيراجع الأرقام وبيقرر.",
           "Back to the sales supervisor. Instead of a full day and a vague paragraph, in about an hour he has a draft with what changed, exactly where the problem is, what the policy says, and three options with their risks. He checks the figures and decides."),
-        u("والقدرات الست مش سحر: كل واحدة طلب واضح بتكتبه إنت، على بيانات إنت جامعها، في ترابيزة إنت بتنظّمها. ده كل اللي اتعلمناه في الوحدة دي مع بعض. وفي الدرس الجاي هنشوف حدود الذكاء الاصطناعي، وإمتى ما نعتمدش عليه.",
-          "And the six capabilities aren't magic: each is a clear request you write, on data you collected, on a table you organise. That's everything this unit taught, put together. In the next lesson we'll look at AI's limits, and when not to rely on it.")],
+        u("والقدرات الست مش سحر: كل واحدة طلب واضح بتكتبه إنت، على بيانات إنت جامعها، في مساحة عمل إنت بتنظّمها. ده كل اللي اتعلمناه في الوحدة دي مع بعض. وفي الدرس الجاي هنشوف حدود الذكاء الاصطناعي، وإمتى ما نعتمدش عليه.",
+          "And the six capabilities aren't magic: each is a clear request you write, on data you collected, in a workspace you organise. That's everything this unit taught, put together. In the next lesson we'll look at AI's limits, and when not to rely on it.")],
         answer: u("ابدأ بمهمة واحدة صغيرة ومتكررة، وطبّق عليها السلسلة، وقيس الوقت قبل وبعد. لأن نجاح صغير ومقاس بيقنع أكتر من فكرة كبيرة.", "Start with one small recurring task, apply the chain, and measure the time before and after — a small measured win convinces more than a big idea."),
         idea: u("الذكاء الاصطناعي بيجهّز… وإنت اللي بتقرر.", "AI prepares… you decide.")
       }
