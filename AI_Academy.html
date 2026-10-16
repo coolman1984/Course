@@ -961,52 +961,48 @@ html[dir="rtl"] .cine-mark{transform:translate(50%,-50%)}
 .cine-time,.cine-count{font-size:13px;color:var(--ink-3);white-space:nowrap}
 .cine-count{min-width:62px;text-align:end;font-weight:600;color:var(--ink-2)}
 .cine-view{position:relative;display:flex;align-items:center;justify-content:center;min-height:0;overflow:hidden}
-.cine-frame{width:1280px;height:720px;flex:none;position:relative;display:grid;align-items:center;overflow:hidden;animation:cine-in .45s var(--ease,ease) both}
+.cine-frame{width:1600px;height:900px;flex:none;position:relative;display:grid;align-items:center;overflow:hidden;animation:cine-in .45s var(--ease,ease) both}
 .cine-frame.back{animation-name:cine-in-b}
 @keyframes cine-in{from{opacity:0;transform:translateX(calc(24px * var(--dirx,1)))}to{opacity:1;transform:none}}
 @keyframes cine-in-b{from{opacity:0;transform:translateX(calc(-24px * var(--dirx,1)))}to{opacity:1;transform:none}}
 html[dir="rtl"] .cine{--dirx:-1}
-.cine-notes{flex:none;width:min(380px,30%);align-self:stretch;overflow:auto;padding:18px 20px;border-inline-start:1px solid var(--line);background:var(--surface-2);font-size:15px;line-height:1.9}
-.cine-notes b{display:block;font-family:var(--font-display);font-size:16px;margin-bottom:6px}.cine-notes p{margin:0 0 10px;color:var(--ink-2)}
-.cine-n-rule{color:var(--accent)!important;font-weight:600}
 /* cards: title, lesson, question, review */
-.cine-card{position:relative;isolation:isolate;padding:72px 96px;display:grid;gap:22px;align-content:center;height:100%;background:radial-gradient(900px 520px at 85% 15%,color-mix(in srgb,var(--uc) 12%,transparent),transparent 70%),radial-gradient(700px 420px at 10% 95%,color-mix(in srgb,var(--uc) 8%,transparent),transparent 70%)}
+.cine-card{position:relative;isolation:isolate;padding:90px 120px;display:grid;gap:22px;align-content:center;height:100%;background:radial-gradient(900px 520px at 85% 15%,color-mix(in srgb,var(--uc) 12%,transparent),transparent 70%),radial-gradient(700px 420px at 10% 95%,color-mix(in srgb,var(--uc) 8%,transparent),transparent 70%)}
 html[dir="rtl"] .cine-card{background:radial-gradient(900px 520px at 15% 15%,color-mix(in srgb,var(--uc) 12%,transparent),transparent 70%),radial-gradient(700px 420px at 90% 95%,color-mix(in srgb,var(--uc) 8%,transparent),transparent 70%)}
-.cine-card.lesson::after{content:attr(data-n);position:absolute;z-index:-1;inset-inline-end:56px;bottom:-60px;font:800 420px/1 var(--font-art);color:color-mix(in srgb,var(--uc) 9%,transparent);letter-spacing:-.04em}
+.cine-card.lesson::after{content:attr(data-n);position:absolute;z-index:-1;inset-inline-end:72px;bottom:-80px;font:800 520px/1 var(--font-art);color:color-mix(in srgb,var(--uc) 9%,transparent);letter-spacing:-.04em}
 .cine-card > *{animation:cine-up .6s var(--ease,ease) both}.cine-card > :nth-child(2){animation-delay:.08s}.cine-card > :nth-child(3){animation-delay:.16s}.cine-card > :nth-child(4){animation-delay:.24s}
 @keyframes cine-up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.cine-card > *{animation:none}}
-.cine-card h1{font-size:54px;line-height:1.2;letter-spacing:-.02em;text-wrap:balance;margin:0}
-.cine-card.big h1{font-size:62px}
-.cine-card p{font-size:24px;line-height:1.75;color:var(--ink-2);margin:0;max-width:980px}
-.cine-k{display:inline-flex;align-items:center;gap:8px;width:max-content;padding:6px 14px;border-radius:99px;background:color-mix(in srgb,var(--uc) 14%,transparent);color:var(--uc);font-weight:700;font-size:16px}
+.cine-card h1{font-size:64px;line-height:1.2;letter-spacing:-.02em;text-wrap:balance;margin:0}
+.cine-card.big h1{font-size:74px}
+.cine-card p{font-size:28px;line-height:1.75;color:var(--ink-2);margin:0;max-width:1200px}
+.cine-k{display:inline-flex;align-items:center;gap:8px;width:max-content;padding:8px 18px;border-radius:99px;background:color-mix(in srgb,var(--uc) 14%,transparent);color:var(--uc);font-weight:700;font-size:20px}
 .cine-k svg{width:16px;height:16px}
-.cine-chain{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:20px;font-weight:600;color:var(--ink-2)}
+.cine-chain{display:flex;flex-wrap:wrap;gap:12px;align-items:center;font-size:24px;font-weight:600;color:var(--ink-2)}
 .cine-chain span{padding:8px 14px;border-radius:12px;background:var(--surface-2);border:1px solid var(--line)}.cine-chain i{font-style:normal;color:var(--ink-3)}
-.cine-pts{display:grid;gap:14px;margin:0;padding-inline-start:28px;font-size:23px;line-height:1.6;color:var(--ink-2)}
+.cine-pts{display:grid;gap:16px;margin:0;padding-inline-start:32px;font-size:27px;line-height:1.6;color:var(--ink-2)}
 .cine-rem{font-weight:700;color:var(--uc)!important}
-.cine-card.ask h1{font-size:42px}
-.cine-opts{display:grid;gap:12px;margin:0;padding-inline-start:34px;font-size:24px;line-height:1.5}
+.cine-card.ask h1{font-size:50px}
+.cine-opts{display:grid;gap:12px;margin:0;padding-inline-start:40px;font-size:28px;line-height:1.5}
 .cine-opts li{padding:10px 14px;border-radius:12px;transition:background .3s,opacity .3s}
 .cine-opts li.ok{background:var(--mint-soft,rgba(16,150,90,.12));color:var(--mint);font-weight:700}
 .cine-opts li.dim{opacity:.45}
-.cine-why{font-size:21px;line-height:1.7;padding:16px 20px;border-radius:14px;background:var(--surface-2);border-inline-start:5px solid var(--mint)}
+.cine-why{font-size:24px;line-height:1.7;padding:16px 20px;border-radius:14px;background:var(--surface-2);border-inline-start:5px solid var(--mint)}
 .cine-hint{font-size:16px!important;color:var(--ink-3)!important}
 /* the story deck inside the frame: no chrome of its own, larger drawing, story text optional */
-.cine-frame .aih-present{width:100%;margin:0;padding:0;height:720px}
+.cine-frame .aih-present{width:100%;margin:0;padding:0;height:900px}
 .cine-frame .aih-head,.cine-frame .aih-foot,.cine-frame .aih-nav,.cine-frame .aih-timer{display:none}
-.cine-frame .aih-stage{height:720px;border:0;border-radius:0;background:var(--surface-2)}
-.cine-frame .aih-slide{height:720px;padding:96px 72px 56px;grid-template-columns:minmax(0,.9fr) minmax(0,1.25fr);gap:48px}
-.cine-frame .aih-q{top:26px;font-size:20px;padding:10px 20px 10px 12px}
-.cine-frame .aih-q-mark{width:32px;height:32px;font-size:18px}
-.cine-frame .aih-txt h3{font-size:36px}
-.cine-frame .aih-txt p{font-size:19px}
-.cine-frame .aih-answer b{font-size:22px}
-.cine-frame .aih-idea{font-size:18px}
-.cine-frame:not(.full-text) .aih-txt p{display:none}
+.cine-frame .aih-stage{height:900px;border:0;border-radius:0;background:var(--surface-2)}
+.cine-frame .aih-slide{height:900px;padding:104px 72px 48px;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:52px;align-items:center}
+.cine-frame .aih-q{top:30px;font-size:24px;padding:12px 24px 12px 14px}
+.cine-frame .aih-q-mark{width:36px;height:36px;font-size:20px}
+.cine-frame .aih-txt{gap:12px}.cine-frame .aih-txt h3{font-size:34px}
+.cine-frame .aih-txt p{font-size:19.5px;line-height:1.72}
+.cine-frame .aih-answer b{font-size:22px;line-height:1.55}
+.cine-frame .aih-idea{font-size:19px}
 .cine-frame .aih-start{display:none}
 /* scenes inside the frame */
-.cine-frame.k-scene{align-content:center;padding:20px 40px}
+.cine-frame.k-scene{align-content:center;padding:24px 56px}
 .cine-sc{min-height:0}
 /* black / white screen, spotlight, jump, menus */
 .cine-screen{position:absolute;inset:0;z-index:6}.cine-screen.black{background:#000}.cine-screen.white{background:#fff}
@@ -1606,11 +1602,11 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     kgSearch: u("دور على مفهوم…", "Find a concept…"), zoomIn: u("تكبير", "Zoom in"), zoomOut: u("تصغير", "Zoom out"), zoomReset: u("الصورة الكاملة", "Fit all"),
     kgHint: u("اسحب للتحريك، واضغط مرتين للتكبير (أو Ctrl مع عجلة الماوس). مرّر على عقدة عشان تشوف روابطها، واضغط عشان تفتحها.", "Drag to pan, double-click to zoom (or Ctrl + wheel). Hover a node to see its links, click to open it."),
     kgList: u("عرض الروابط كقائمة", "Show links as a list"), kgLinks: u("مرتبط بـ", "Linked to"), kgLinksN: u("{n} روابط", "{n} links"),
-    lessonN: u("الدرس {n}", "Lesson {n}"), prThisLesson: u("اعرض في القاعة", "Present in the hall"), cnChapters: u("الدروس", "Lessons"), cnFullText: u("النص الكامل للحكاية", "Full story text"), cnSpot: u("كشّاف", "Spotlight"),
+    lessonN: u("الدرس {n}", "Lesson {n}"), prThisLesson: u("اعرض في القاعة", "Present in the hall"), cnChapters: u("الدروس", "Lessons"), cnSpot: u("كشّاف", "Spotlight"),
     cnBlack: u("شاشة سودا", "Black screen"), cnHelp: u("الاختصارات", "Shortcuts"), cnPlay: u("تشغيل تلقائي", "Auto-play"), cnPause: u("إيقاف مؤقت", "Pause"),
     cnProgress: u("مكانك في العرض", "Your place in the show"), cnRevealHint: u("التالي يكشف الإجابة", "Next reveals the answer"), cnQuestions: u("أسئلة للقاعة بعد كل درس", "A question for the room after each lesson"),
     cnGoTo: u("انتقل للشريحة {n} — اضغط Enter", "Go to slide {n} — press Enter"),
-    cnKeys: u("→ ← أو PageDown PageUp=التالي والسابق|Space أو Enter=التالي|B أو .=شاشة سودا (أي زرار يرجّعها)|W أو ,=شاشة بيضا|رقم + Enter=انتقل لشريحة|Home End=أول وآخر العرض|P=تشغيل تلقائي أو إيقاف|F أو F5=ملء الشاشة|C=قائمة الدروس|N=ملاحظاتك|S=النص الكامل للحكاية|L=كشّاف بالماوس|Esc=اقفل القايمة، ثم اخرج", "→ ← or PageDown PageUp=Next and previous|Space or Enter=Next|B or .=Black screen (any key brings it back)|W or ,=White screen|Number + Enter=Go to a slide|Home End=Start and end|P=Auto-play or pause|F or F5=Full screen|C=Lessons menu|N=Your notes|S=Full story text|L=Mouse spotlight|Esc=Close a menu, then exit"),
+    cnKeys: u("→ ← أو PageDown PageUp=التالي والسابق|Space أو Enter=التالي|B أو .=شاشة سودا (أي زرار يرجّعها)|W أو ,=شاشة بيضا|رقم + Enter=انتقل لشريحة|Home End=أول وآخر العرض|P=تشغيل تلقائي أو إيقاف|F أو F5=ملء الشاشة|C=قائمة الدروس|L=كشّاف بالماوس|Esc=اقفل القايمة، ثم اخرج", "→ ← or PageDown PageUp=Next and previous|Space or Enter=Next|B or .=Black screen (any key brings it back)|W or ,=White screen|Number + Enter=Go to a slide|Home End=Start and end|P=Auto-play or pause|F or F5=Full screen|C=Lessons menu|L=Mouse spotlight|Esc=Close a menu, then exit"),
     cnRemote: u("ريموت العرض اللي بيتوصل بالـ USB بيشتغل على طول: زرارين التقليب، وزرار الشاشة السودا، وزرار بدء العرض. والعرض بيفتكر وقفت فين، والشاشة مش بتطفي وهو شغال.", "A USB presenter remote works out of the box: the two page buttons, the blank-screen button and the start-show button. The show remembers where you stopped, and the screen stays awake while it runs."),
     prTitle: u("وضع المحاضر", "Presenter mode"), prLead: u("اعرض أي وحدة على شاشة كبيرة: شرائح متتابعة، مشاهد بالأسهم، أسئلة للجمهور، وملاحظات تعليمية.", "Present any unit on a big screen: sequential slides, scenes driven by arrows, audience questions and teaching notes."),
     prKeys: u("الأسهم أو المسافة للتنقل · N للملاحظات · R لكشف الإجابة · F لملء الشاشة · Esc للخروج.", "Arrows or Space to move · N notes · R reveal answer · F fullscreen · Esc exit."),
@@ -10370,11 +10366,18 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
   function openPresenter(uid, lessonId) {
     const u = A.unitById[uid];
     if (!u || document.querySelector(".cine")) return;
-    const pref = Object.assign({ questions: true, full: false, notes: false }, S.get("presenter") || {});
+    const pref = Object.assign({ questions: true }, S.get("presenter") || {});
     let plan = buildSlides(u, pref);
     // start at the lesson asked for, else where the last show of this unit stopped
     const atLesson = lessonId ? plan.steps.findIndex((s) => (plan.blocks[s.b].l || {}).id === lessonId) : -1;
-    let pos = atLesson >= 0 ? atLesson : Math.min(plan.steps.length - 1, Number((S.get("presentPos") || {})[uid]) || 0);
+    // the place is saved as (lesson, part, sub-step), not a raw index: the plan's length changes with the questions setting
+    const saved = (S.get("presentPos") || {})[uid];
+    const findPlace = (p) => {
+      if (!p || typeof p !== "object") return -1;
+      const i = plan.steps.findIndex((s) => { const b = plan.blocks[s.b]; return b.kind === p.kind && ((b.l || {}).id || null) === (p.l || null) && s.k === p.k; });
+      return i >= 0 ? i : p.l ? plan.steps.findIndex((s) => (plan.blocks[s.b].l || {}).id === p.l) : -1;
+    };
+    let pos = atLesson >= 0 ? atLesson : Math.max(0, findPlace(saved));
     let cur = { b: -1 }, api = null, playing = false, playT = 0, screen = "", spot = false, jump = "", jumpT = 0, idleT = 0, clockT = 0, lock = null;
     const t0 = Date.now();
     const rtl = A.lang() === "ar";
@@ -10386,15 +10389,13 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
         <div class="cine-tt"><b>${esc(L(u.title))}</b><small data-c-chapter></small></div>
         <span class="cine-sp"></span>
         <button type="button" class="cine-ib" data-c="chapters" aria-haspopup="true" title="${esc(t("cnChapters"))} (C)">${ico("layers")}<span>${esc(t("cnChapters"))}</span></button>
-        <button type="button" class="cine-ib" data-c="notes" title="${esc(t("prNotes"))} (N)">${ico("note")}</button>
-        <button type="button" class="cine-ib" data-c="text" title="${esc(t("cnFullText"))} (S)">${ico("page")}</button>
         <button type="button" class="cine-ib" data-c="spot" title="${esc(t("cnSpot"))} (L)">${ico("target")}</button>
         <button type="button" class="cine-ib" data-c="black" title="${esc(t("cnBlack"))} (B)">${ico("moon")}</button>
         <button type="button" class="cine-ib" data-c="help" title="${esc(t("cnHelp"))} (?)">${ico("info")}</button>
         <button type="button" class="cine-ib" data-c="fs" title="${esc(t("prFull"))} (F)">${ico("full")}</button>
         <button type="button" class="cine-ib" data-c="close" title="${esc(t("prExit"))} (Esc)">${ico("x")}</button>
       </div>
-      <div class="cine-view"><div class="cine-frame" data-c-frame></div><aside class="cine-notes" data-c-notes hidden></aside></div>
+      <div class="cine-view"><div class="cine-frame" data-c-frame></div></div>
       <div class="cine-bot">
         <button type="button" class="cine-pb" data-c="prev" aria-label="${esc(t("prev"))}">${ico(rtl ? "next" : "prev")}</button>
         <button type="button" class="cine-pb main" data-c="play" aria-label="${esc(t("cnPlay"))}">${ico("play")}</button>
@@ -10411,13 +10412,12 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     document.body.append(ov);
     document.body.style.overflow = "hidden";
     const q = (s) => ov.querySelector(s);
-    const frame = q("[data-c-frame]"), notes = q("[data-c-notes]");
+    const frame = q("[data-c-frame]");
 
-    // the frame is laid out at 1280 × 720 and scaled to the screen, so a slide looks the same on a laptop and a projector
+    // the frame is laid out at 1600 × 900 and scaled to the screen, so a slide looks the same on a laptop and a projector
     function fit() {
       const v = q(".cine-view").getBoundingClientRect();
-      const w = v.width - (pref.notes ? Math.min(380, v.width * 0.3) : 0);
-      const z = Math.max(0.3, Math.min(w / 1280, v.height / 720));
+      const z = Math.max(0.25, Math.min(v.width / 1600, v.height / 900));
       frame.style.zoom = z;
     }
     const ro = "ResizeObserver" in window ? new ResizeObserver(fit) : null;
@@ -10449,22 +10449,20 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
           if (dir > 0 && s.k === 0 && api.playStage) api.playStage(0);
         } else if (b.kind === "ask") frame.innerHTML = askHtml(b.q, s.k === 1);
         else frame.innerHTML = `<div class="cine-card big"><span class="cine-k">${esc(t("nav_review"))}</span><h1>${esc(L(u.title))}</h1><ul class="cine-pts">${u.review.points.slice(0, 5).map((x) => `<li>${A.inline(L(x))}</li>`).join("")}</ul>${u.review.remember ? `<p class="cine-rem">${A.inline(L(u.review.remember))}</p>` : ""}</div>`;
-        frame.classList.toggle("full-text", !!pref.full);
         fit();
       } else if (b.kind === "deck") api.go(s.k);
       else if (b.kind === "scene") { dir > 0 && api.playStage ? api.playStage(s.k) : api.goto(s.k); }
       if (b.kind === "ask" && same) frame.innerHTML = askHtml(b.q, s.k === 1);
       cur = { b: s.b, k: s.k };
       pos = step;
-      S.patch("presentPos", uid, pos);
-      // chrome: chapter, counter, progress, notes
+      S.patch("presentPos", uid, { l: b.l ? b.l.id : null, kind: b.kind, k: s.k });
+      // chrome: chapter, counter, progress
       q("[data-c-chapter]").textContent = b.l ? t("lessonN", { n: b.ch + 1 }) + " · " + L(b.l.title) : "";
       q("[data-c-count]").textContent = `${step + 1} / ${plan.steps.length}`;
       q("[data-c-fill]").style.width = ((step + 1) / plan.steps.length) * 100 + "%";
       q("[data-c-scrub]").setAttribute("aria-valuenow", step + 1); q("[data-c-scrub]").setAttribute("aria-valuemax", plan.steps.length);
       ov.querySelectorAll(".cine-mark").forEach((m) => m.classList.toggle("on", Number(m.dataset.go) <= step));
       q('[data-c="prev"]').disabled = step === 0; q('[data-c="next"]').disabled = step === plan.steps.length - 1;
-      notes.innerHTML = notesFor(b, s.k);
       if (playing) schedule();
     }
     function askHtml(qq, shown) {
@@ -10472,16 +10470,6 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
         <ol class="cine-opts" type="A">${qq.opts.map((o, k) => `<li class="${shown && k === qq.ans ? "ok" : shown ? "dim" : ""}">${A.inline(L(o))}</li>`).join("")}</ol>
         ${shown ? `<div class="cine-why">${A.inline(L(qq.explain))}</div>` : `<p class="cine-hint">${esc(t("cnRevealHint"))}</p>`}</div>`;
     }
-    function notesFor(b, k) {
-      const lv = (l, key) => ((l.levels && l.levels[key]) || []).slice(0, 2).map((x) => `<div class="rt">${A.rich(L(x))}</div>`).join("");
-      if (b.kind === "deck") { const s = b.deck.slides[k]; return `<b>${esc(L(s.title))}</b>${s.story.map((p) => `<p>${esc(L(p))}</p>`).join("")}<p class="cine-n-rule">${esc(L(s.answer))}</p>`; }
-      if (b.kind === "scene") { const st = b.sc.stages[k]; return `<b>${esc(L(st.t))}</b><p>${esc(L(st.c))}</p>`; }
-      if (b.kind === "lesson") return `<b>${esc(t("prNoteTeach"))}</b>${lv(b.l, "simple")}`;
-      if (b.kind === "ask") return `<b>${esc(t("prNoteAsk"))}</b><p>${A.inline(L(b.q.explain))}</p>`;
-      if (b.kind === "title") return `<b>${esc(t("prNoteOpen"))}</b><p>${A.inline(L(u.sum))}</p>`;
-      return `<b>${esc(t("prNoteClose"))}</b><p>${A.inline(L(u.review.remember || u.big))}</p>`;
-    }
-
     // auto-advance ("play"): each step waits as long as it needs to be read or animated
     function dwell() {
       const s = plan.steps[pos], b = plan.blocks[s.b];
@@ -10509,8 +10497,6 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
 
     function setScreen(kind) { screen = screen === kind ? "" : kind; const el = q("[data-c-screen]"); el.hidden = !screen; el.className = "cine-screen " + screen; if (screen) setPlay(false); }
     function toggleSpot() { spot = !spot; q("[data-c-spotlight]").hidden = !spot; q('[data-c="spot"]').setAttribute("aria-pressed", spot); }
-    function toggleNotes() { pref.notes = !pref.notes; savePref(); notes.hidden = !pref.notes; q('[data-c="notes"]').setAttribute("aria-pressed", pref.notes); fit(); }
-    function toggleText() { pref.full = !pref.full; savePref(); frame.classList.toggle("full-text", pref.full); q('[data-c="text"]').setAttribute("aria-pressed", pref.full); }
     function savePref() { S.set("presenter", pref); }
     function fullscreen(on) {
       try {
@@ -10528,7 +10514,11 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       m.innerHTML = `<b>${esc(t("cnChapters"))}</b><ol>${plan.lessons.map((l, i) => { const f = plan.steps.findIndex((s) => plan.blocks[s.b].l === l); const on = plan.blocks[plan.steps[pos].b].l === l; return `<li><button type="button" data-go="${f}" class="${on ? "on" : ""}"><span class="num">${i + 1}</span>${esc(L(l.title))}</button></li>`; }).join("")}</ol>
         <label class="cine-opt"><input type="checkbox" data-c-qs ${pref.questions ? "checked" : ""}> ${esc(t("cnQuestions"))}</label>`;
       m.querySelectorAll("[data-go]").forEach((x) => (x.onclick = () => { menu(false); go(Number(x.dataset.go)); }));
-      q("[data-c-qs]").onchange = (e) => { const l = plan.blocks[plan.steps[pos].b].l; pref.questions = e.target.checked; savePref(); plan = buildSlides(u, pref); marks(); const f = l ? plan.steps.findIndex((s) => plan.blocks[s.b].l === l) : 0; cur = { b: -1 }; pos = -1; render(Math.max(0, f), 1); };
+      q("[data-c-qs]").onchange = (e) => {   // rebuild the plan and stay on the same slide (or its lesson, if a question was removed)
+        const s0 = plan.steps[pos], b0 = plan.blocks[s0.b], here = { l: b0.l ? b0.l.id : null, kind: b0.kind, k: s0.k };
+        pref.questions = e.target.checked; savePref(); plan = buildSlides(u, pref); marks();
+        cur = { b: -1 }; pos = -1; render(Math.max(0, findPlace(here)), 1);
+      };
       (m.querySelector("button.on") || m.querySelector("button")).focus();
     }
     function help(open) {
@@ -10545,7 +10535,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       if (b.dataset.go != null && !b.closest("[data-c-menu]")) return go(Number(b.dataset.go));
       const c = b.dataset.c;
       if (c === "prev") prev(); else if (c === "next") next(); else if (c === "play") setPlay(!playing);
-      else if (c === "fs") fullscreen(); else if (c === "close") close(); else if (c === "notes") toggleNotes(); else if (c === "text") toggleText();
+      else if (c === "fs") fullscreen(); else if (c === "close") close();
       else if (c === "spot") toggleSpot(); else if (c === "black") setScreen("black"); else if (c === "help") help(); else if (c === "chapters") menu();
     });
     const scrub = q("[data-c-scrub]"), tip = q("[data-c-tip]");
@@ -10580,11 +10570,11 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       const inMenu = e.target.closest && e.target.closest("[data-c-menu]");
       let done = true;
       wake();
+      if (screen && !["Shift", "Control", "Alt", "Meta", "CapsLock"].includes(k)) { setScreen(screen); e.preventDefault(); e.stopPropagation(); return; }   // a blank screen: any key only brings the picture back
       if (/^[0-9]$/.test(k)) { jump += k; clearTimeout(jumpT); const j = q("[data-c-jump]"); j.hidden = false; j.textContent = t("cnGoTo", { n: jump }); jumpT = setTimeout(() => { jump = ""; j.hidden = true; }, 2200); }
       else if (k === "Enter" && jump) { const n = Number(jump); jump = ""; q("[data-c-jump]").hidden = true; go(n - 1); }
       else if (k === "Escape") { if (!q("[data-c-menu]").hidden) menu(false); else if (!q("[data-c-help]").hidden) help(false); else if (screen) setScreen(screen); else if (spot) toggleSpot(); else if (!document.fullscreenElement) close(); }
       else if (inMenu && (k === "Enter" || k === " " || k === "ArrowUp" || k === "ArrowDown" || k === "Tab")) done = false;
-      else if (screen && (k === "PageDown" || k === "PageUp" || k === fwd || k === back || k === " ")) setScreen(screen);   // any move key brings the picture back
       else if (k === "PageDown" || k === fwd || k === "ArrowDown" || (k === " " && !(e.target.closest && e.target.closest("button"))) || k === "Enter") next();
       else if (k === "PageUp" || k === back || k === "ArrowUp" || k === "Backspace") prev();
       else if (k === "Home") go(0); else if (k === "End") go(plan.steps.length - 1);
@@ -10593,7 +10583,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       else if (k === "F5") fullscreen(true);
       else if (low === "f") fullscreen();
       else if (low === "p" || low === "k") setPlay(!playing);
-      else if (low === "n") toggleNotes(); else if (low === "s") toggleText(); else if (low === "l") toggleSpot();
+      else if (low === "l") toggleSpot();
       else if (low === "c") menu(); else if (k === "?" || low === "h") help();
       else done = false;
       if (done) { e.preventDefault(); e.stopPropagation(); }
@@ -10612,8 +10602,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     }
     addEventListener("keydown", key, true);
     A.onLeave(() => { if (document.body.contains(ov)) close(); });
-    notes.hidden = !pref.notes;
-    q('[data-c="notes"]').setAttribute("aria-pressed", pref.notes); q('[data-c="text"]').setAttribute("aria-pressed", pref.full); q('[data-c="spot"]').setAttribute("aria-pressed", false);
+    q('[data-c="spot"]').setAttribute("aria-pressed", false);
     marks();
     render(pos, 1);
     wake();

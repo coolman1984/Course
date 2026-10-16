@@ -170,11 +170,18 @@
   function openPresenter(uid, lessonId) {
     const u = A.unitById[uid];
     if (!u || document.querySelector(".cine")) return;
-    const pref = Object.assign({ questions: true, full: false, notes: false }, S.get("presenter") || {});
+    const pref = Object.assign({ questions: true }, S.get("presenter") || {});
     let plan = buildSlides(u, pref);
     // start at the lesson asked for, else where the last show of this unit stopped
     const atLesson = lessonId ? plan.steps.findIndex((s) => (plan.blocks[s.b].l || {}).id === lessonId) : -1;
-    let pos = atLesson >= 0 ? atLesson : Math.min(plan.steps.length - 1, Number((S.get("presentPos") || {})[uid]) || 0);
+    // the place is saved as (lesson, part, sub-step), not a raw index: the plan's length changes with the questions setting
+    const saved = (S.get("presentPos") || {})[uid];
+    const findPlace = (p) => {
+      if (!p || typeof p !== "object") return -1;
+      const i = plan.steps.findIndex((s) => { const b = plan.blocks[s.b]; return b.kind === p.kind && ((b.l || {}).id || null) === (p.l || null) && s.k === p.k; });
+      return i >= 0 ? i : p.l ? plan.steps.findIndex((s) => (plan.blocks[s.b].l || {}).id === p.l) : -1;
+    };
+    let pos = atLesson >= 0 ? atLesson : Math.max(0, findPlace(saved));
     let cur = { b: -1 }, api = null, playing = false, playT = 0, screen = "", spot = false, jump = "", jumpT = 0, idleT = 0, clockT = 0, lock = null;
     const t0 = Date.now();
     const rtl = A.lang() === "ar";
@@ -186,15 +193,13 @@
         <div class="cine-tt"><b>${esc(L(u.title))}</b><small data-c-chapter></small></div>
         <span class="cine-sp"></span>
         <button type="button" class="cine-ib" data-c="chapters" aria-haspopup="true" title="${esc(t("cnChapters"))} (C)">${ico("layers")}<span>${esc(t("cnChapters"))}</span></button>
-        <button type="button" class="cine-ib" data-c="notes" title="${esc(t("prNotes"))} (N)">${ico("note")}</button>
-        <button type="button" class="cine-ib" data-c="text" title="${esc(t("cnFullText"))} (S)">${ico("page")}</button>
         <button type="button" class="cine-ib" data-c="spot" title="${esc(t("cnSpot"))} (L)">${ico("target")}</button>
         <button type="button" class="cine-ib" data-c="black" title="${esc(t("cnBlack"))} (B)">${ico("moon")}</button>
         <button type="button" class="cine-ib" data-c="help" title="${esc(t("cnHelp"))} (?)">${ico("info")}</button>
         <button type="button" class="cine-ib" data-c="fs" title="${esc(t("prFull"))} (F)">${ico("full")}</button>
         <button type="button" class="cine-ib" data-c="close" title="${esc(t("prExit"))} (Esc)">${ico("x")}</button>
       </div>
-      <div class="cine-view"><div class="cine-frame" data-c-frame></div><aside class="cine-notes" data-c-notes hidden></aside></div>
+      <div class="cine-view"><div class="cine-frame" data-c-frame></div></div>
       <div class="cine-bot">
         <button type="button" class="cine-pb" data-c="prev" aria-label="${esc(t("prev"))}">${ico(rtl ? "next" : "prev")}</button>
         <button type="button" class="cine-pb main" data-c="play" aria-label="${esc(t("cnPlay"))}">${ico("play")}</button>
@@ -211,13 +216,12 @@
     document.body.append(ov);
     document.body.style.overflow = "hidden";
     const q = (s) => ov.querySelector(s);
-    const frame = q("[data-c-frame]"), notes = q("[data-c-notes]");
+    const frame = q("[data-c-frame]");
 
-    // the frame is laid out at 1280 × 720 and scaled to the screen, so a slide looks the same on a laptop and a projector
+    // the frame is laid out at 1600 × 900 and scaled to the screen, so a slide looks the same on a laptop and a projector
     function fit() {
       const v = q(".cine-view").getBoundingClientRect();
-      const w = v.width - (pref.notes ? Math.min(380, v.width * 0.3) : 0);
-      const z = Math.max(0.3, Math.min(w / 1280, v.height / 720));
+      const z = Math.max(0.25, Math.min(v.width / 1600, v.height / 900));
       frame.style.zoom = z;
     }
     const ro = "ResizeObserver" in window ? new ResizeObserver(fit) : null;
@@ -249,22 +253,20 @@
           if (dir > 0 && s.k === 0 && api.playStage) api.playStage(0);
         } else if (b.kind === "ask") frame.innerHTML = askHtml(b.q, s.k === 1);
         else frame.innerHTML = `<div class="cine-card big"><span class="cine-k">${esc(t("nav_review"))}</span><h1>${esc(L(u.title))}</h1><ul class="cine-pts">${u.review.points.slice(0, 5).map((x) => `<li>${A.inline(L(x))}</li>`).join("")}</ul>${u.review.remember ? `<p class="cine-rem">${A.inline(L(u.review.remember))}</p>` : ""}</div>`;
-        frame.classList.toggle("full-text", !!pref.full);
         fit();
       } else if (b.kind === "deck") api.go(s.k);
       else if (b.kind === "scene") { dir > 0 && api.playStage ? api.playStage(s.k) : api.goto(s.k); }
       if (b.kind === "ask" && same) frame.innerHTML = askHtml(b.q, s.k === 1);
       cur = { b: s.b, k: s.k };
       pos = step;
-      S.patch("presentPos", uid, pos);
-      // chrome: chapter, counter, progress, notes
+      S.patch("presentPos", uid, { l: b.l ? b.l.id : null, kind: b.kind, k: s.k });
+      // chrome: chapter, counter, progress
       q("[data-c-chapter]").textContent = b.l ? t("lessonN", { n: b.ch + 1 }) + " · " + L(b.l.title) : "";
       q("[data-c-count]").textContent = `${step + 1} / ${plan.steps.length}`;
       q("[data-c-fill]").style.width = ((step + 1) / plan.steps.length) * 100 + "%";
       q("[data-c-scrub]").setAttribute("aria-valuenow", step + 1); q("[data-c-scrub]").setAttribute("aria-valuemax", plan.steps.length);
       ov.querySelectorAll(".cine-mark").forEach((m) => m.classList.toggle("on", Number(m.dataset.go) <= step));
       q('[data-c="prev"]').disabled = step === 0; q('[data-c="next"]').disabled = step === plan.steps.length - 1;
-      notes.innerHTML = notesFor(b, s.k);
       if (playing) schedule();
     }
     function askHtml(qq, shown) {
@@ -272,16 +274,6 @@
         <ol class="cine-opts" type="A">${qq.opts.map((o, k) => `<li class="${shown && k === qq.ans ? "ok" : shown ? "dim" : ""}">${A.inline(L(o))}</li>`).join("")}</ol>
         ${shown ? `<div class="cine-why">${A.inline(L(qq.explain))}</div>` : `<p class="cine-hint">${esc(t("cnRevealHint"))}</p>`}</div>`;
     }
-    function notesFor(b, k) {
-      const lv = (l, key) => ((l.levels && l.levels[key]) || []).slice(0, 2).map((x) => `<div class="rt">${A.rich(L(x))}</div>`).join("");
-      if (b.kind === "deck") { const s = b.deck.slides[k]; return `<b>${esc(L(s.title))}</b>${s.story.map((p) => `<p>${esc(L(p))}</p>`).join("")}<p class="cine-n-rule">${esc(L(s.answer))}</p>`; }
-      if (b.kind === "scene") { const st = b.sc.stages[k]; return `<b>${esc(L(st.t))}</b><p>${esc(L(st.c))}</p>`; }
-      if (b.kind === "lesson") return `<b>${esc(t("prNoteTeach"))}</b>${lv(b.l, "simple")}`;
-      if (b.kind === "ask") return `<b>${esc(t("prNoteAsk"))}</b><p>${A.inline(L(b.q.explain))}</p>`;
-      if (b.kind === "title") return `<b>${esc(t("prNoteOpen"))}</b><p>${A.inline(L(u.sum))}</p>`;
-      return `<b>${esc(t("prNoteClose"))}</b><p>${A.inline(L(u.review.remember || u.big))}</p>`;
-    }
-
     // auto-advance ("play"): each step waits as long as it needs to be read or animated
     function dwell() {
       const s = plan.steps[pos], b = plan.blocks[s.b];
@@ -309,8 +301,6 @@
 
     function setScreen(kind) { screen = screen === kind ? "" : kind; const el = q("[data-c-screen]"); el.hidden = !screen; el.className = "cine-screen " + screen; if (screen) setPlay(false); }
     function toggleSpot() { spot = !spot; q("[data-c-spotlight]").hidden = !spot; q('[data-c="spot"]').setAttribute("aria-pressed", spot); }
-    function toggleNotes() { pref.notes = !pref.notes; savePref(); notes.hidden = !pref.notes; q('[data-c="notes"]').setAttribute("aria-pressed", pref.notes); fit(); }
-    function toggleText() { pref.full = !pref.full; savePref(); frame.classList.toggle("full-text", pref.full); q('[data-c="text"]').setAttribute("aria-pressed", pref.full); }
     function savePref() { S.set("presenter", pref); }
     function fullscreen(on) {
       try {
@@ -328,7 +318,11 @@
       m.innerHTML = `<b>${esc(t("cnChapters"))}</b><ol>${plan.lessons.map((l, i) => { const f = plan.steps.findIndex((s) => plan.blocks[s.b].l === l); const on = plan.blocks[plan.steps[pos].b].l === l; return `<li><button type="button" data-go="${f}" class="${on ? "on" : ""}"><span class="num">${i + 1}</span>${esc(L(l.title))}</button></li>`; }).join("")}</ol>
         <label class="cine-opt"><input type="checkbox" data-c-qs ${pref.questions ? "checked" : ""}> ${esc(t("cnQuestions"))}</label>`;
       m.querySelectorAll("[data-go]").forEach((x) => (x.onclick = () => { menu(false); go(Number(x.dataset.go)); }));
-      q("[data-c-qs]").onchange = (e) => { const l = plan.blocks[plan.steps[pos].b].l; pref.questions = e.target.checked; savePref(); plan = buildSlides(u, pref); marks(); const f = l ? plan.steps.findIndex((s) => plan.blocks[s.b].l === l) : 0; cur = { b: -1 }; pos = -1; render(Math.max(0, f), 1); };
+      q("[data-c-qs]").onchange = (e) => {   // rebuild the plan and stay on the same slide (or its lesson, if a question was removed)
+        const s0 = plan.steps[pos], b0 = plan.blocks[s0.b], here = { l: b0.l ? b0.l.id : null, kind: b0.kind, k: s0.k };
+        pref.questions = e.target.checked; savePref(); plan = buildSlides(u, pref); marks();
+        cur = { b: -1 }; pos = -1; render(Math.max(0, findPlace(here)), 1);
+      };
       (m.querySelector("button.on") || m.querySelector("button")).focus();
     }
     function help(open) {
@@ -345,7 +339,7 @@
       if (b.dataset.go != null && !b.closest("[data-c-menu]")) return go(Number(b.dataset.go));
       const c = b.dataset.c;
       if (c === "prev") prev(); else if (c === "next") next(); else if (c === "play") setPlay(!playing);
-      else if (c === "fs") fullscreen(); else if (c === "close") close(); else if (c === "notes") toggleNotes(); else if (c === "text") toggleText();
+      else if (c === "fs") fullscreen(); else if (c === "close") close();
       else if (c === "spot") toggleSpot(); else if (c === "black") setScreen("black"); else if (c === "help") help(); else if (c === "chapters") menu();
     });
     const scrub = q("[data-c-scrub]"), tip = q("[data-c-tip]");
@@ -380,11 +374,11 @@
       const inMenu = e.target.closest && e.target.closest("[data-c-menu]");
       let done = true;
       wake();
+      if (screen && !["Shift", "Control", "Alt", "Meta", "CapsLock"].includes(k)) { setScreen(screen); e.preventDefault(); e.stopPropagation(); return; }   // a blank screen: any key only brings the picture back
       if (/^[0-9]$/.test(k)) { jump += k; clearTimeout(jumpT); const j = q("[data-c-jump]"); j.hidden = false; j.textContent = t("cnGoTo", { n: jump }); jumpT = setTimeout(() => { jump = ""; j.hidden = true; }, 2200); }
       else if (k === "Enter" && jump) { const n = Number(jump); jump = ""; q("[data-c-jump]").hidden = true; go(n - 1); }
       else if (k === "Escape") { if (!q("[data-c-menu]").hidden) menu(false); else if (!q("[data-c-help]").hidden) help(false); else if (screen) setScreen(screen); else if (spot) toggleSpot(); else if (!document.fullscreenElement) close(); }
       else if (inMenu && (k === "Enter" || k === " " || k === "ArrowUp" || k === "ArrowDown" || k === "Tab")) done = false;
-      else if (screen && (k === "PageDown" || k === "PageUp" || k === fwd || k === back || k === " ")) setScreen(screen);   // any move key brings the picture back
       else if (k === "PageDown" || k === fwd || k === "ArrowDown" || (k === " " && !(e.target.closest && e.target.closest("button"))) || k === "Enter") next();
       else if (k === "PageUp" || k === back || k === "ArrowUp" || k === "Backspace") prev();
       else if (k === "Home") go(0); else if (k === "End") go(plan.steps.length - 1);
@@ -393,7 +387,7 @@
       else if (k === "F5") fullscreen(true);
       else if (low === "f") fullscreen();
       else if (low === "p" || low === "k") setPlay(!playing);
-      else if (low === "n") toggleNotes(); else if (low === "s") toggleText(); else if (low === "l") toggleSpot();
+      else if (low === "l") toggleSpot();
       else if (low === "c") menu(); else if (k === "?" || low === "h") help();
       else done = false;
       if (done) { e.preventDefault(); e.stopPropagation(); }
@@ -412,8 +406,7 @@
     }
     addEventListener("keydown", key, true);
     A.onLeave(() => { if (document.body.contains(ov)) close(); });
-    notes.hidden = !pref.notes;
-    q('[data-c="notes"]').setAttribute("aria-pressed", pref.notes); q('[data-c="text"]').setAttribute("aria-pressed", pref.full); q('[data-c="spot"]').setAttribute("aria-pressed", false);
+    q('[data-c="spot"]').setAttribute("aria-pressed", false);
     marks();
     render(pos, 1);
     wake();

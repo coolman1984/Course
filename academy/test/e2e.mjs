@@ -158,13 +158,28 @@ await session({ label: "interactions-ar", viewport: { width: 1280, height: 860 }
     await page.keyboard.press("b"); const black = await page.$eval("[data-c-screen]", (e) => !e.hidden && e.classList.contains("black"));
     await page.keyboard.press("PageDown"); const back = await page.$eval("[data-c-screen]", (e) => e.hidden);
     black && back && (await cnt()) === b - 1 ? ok("presenter: B blanks the screen, the next key only brings the picture back") : fail("presenter: black screen");
+    await page.keyboard.press("b"); await page.keyboard.press("l"); await page.waitForTimeout(60);
+    const nb = await page.evaluate(() => ({ screen: document.querySelector("[data-c-screen]").hidden, spot: document.querySelector("[data-c-spotlight]").hidden }));
+    nb.screen && nb.spot ? ok("presenter: on a blank screen any key (even L) only brings the picture back") : fail("presenter: shortcut acted behind the blank screen " + JSON.stringify(nb));
     await page.keyboard.press("3"); await page.keyboard.press("0"); await page.keyboard.press("Enter"); await page.waitForTimeout(150);
     (await cnt()) === 30 ? ok("presenter: typing a number + Enter jumps to that slide") : fail("presenter: jump went to " + (await cnt()));
+    // the whole story is on screen (no notes panel): both paragraphs of the current deck slide are visible inside the frame
+    const fits = await page.evaluate(() => { const sl = document.querySelector(".cine-frame .aih-slide.is-on"); if (!sl) return "no deck slide"; const f = document.querySelector(".cine-frame").getBoundingClientRect(); const ps = [...sl.querySelectorAll(".aih-txt p, .aih-answer, .aih-idea")]; return ps.length >= 4 && ps.every((p) => { const r = p.getBoundingClientRect(); return r.height > 0 && r.top >= f.top - 1 && r.bottom <= f.bottom + 1; }) ? "ok" : "cut"; });
+    fits === "ok" ? ok("presenter: the full story text shows inside the frame") : fail("presenter: story text " + fits);
     await shot(page, "presenter-ar");
     await page.keyboard.press("Escape"); await page.waitForTimeout(100);
     (await page.$(".cine")) ? fail("presenter: Escape did not close it") : ok("presenter: Escape closes it");
     await page.evaluate(() => window.ACADEMY.openPresenter("u0")); await page.waitForSelector(".cine");
     (await cnt()) === 30 ? ok("presenter: reopens where it stopped") : fail("presenter: did not resume (" + (await cnt()) + ")");
+    // the saved place survives turning the questions off (the plan gets shorter): it is kept by lesson and part, not index
+    const place = () => page.evaluate(() => document.querySelector("[data-c-chapter]").textContent + " · slide " + (document.querySelector(".cine-frame .aih-slide.is-on") || {}).dataset?.i);
+    const before = await place();
+    await page.keyboard.press("c"); await page.waitForSelector("[data-c-qs]"); await page.click("[data-c-qs]"); await page.keyboard.press("Escape");
+    await page.keyboard.press("Escape"); await page.waitForTimeout(80);
+    await page.evaluate(() => window.ACADEMY.openPresenter("u0")); await page.waitForSelector(".cine");
+    const after = await place();
+    after === before ? ok("presenter: resumes on the same slide after the questions setting changes") : fail(`presenter: resumed at «${after}», expected «${before}»`);
+    await page.keyboard.press("c"); await page.waitForSelector("[data-c-qs]"); await page.click("[data-c-qs]"); await page.keyboard.press("Escape");
     await page.keyboard.press("Escape");
     await page.evaluate(() => (location.hash = "lesson-f6")); await page.waitForSelector("#present-l");
     await page.click("#present-l"); await page.waitForSelector(".cine");
