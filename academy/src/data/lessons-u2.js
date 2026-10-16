@@ -5,7 +5,7 @@
   const L = (k, ar, en) => ({ k, ar, en });
   A.lessons = (A.lessons || []).concat([
     {
-      id: "y1", unit: "u2", pages: [17], diff: 2, min: 8, scene: "spec", related: ["p1", "p10", "y2"], pre: ["p10"],
+      id: "y1", unit: "u5", pages: [17], diff: 2, min: 8, scene: "spec", related: ["p1", "p10", "y2"], pre: ["p10"],
       title: { ar: "قبل ما تطلب برنامج، اكتب بالضبط هو المفروض يعمل إيه", en: "Describe the process, not the code: the task spec" },
       sum: { ar: "طلب زي «عايز أداة تدمج الملفات» ناقصه أهم حاجة: أنهي ملفات؟ وإيه اللي يحصل لو فيه عمود ناقص أو صف متكرر؟ المواصفة الواضحة بتحسم ده قبل ما يتكتب سطر كود.", en: "Three ideas that govern everything after, and five elements before writing any line — tests above all." },
       book: [
@@ -34,7 +34,7 @@
       },
     },
     {
-      id: "y2", unit: "u2", pages: [17, 18], diff: 2, min: 7, scene: "compass", lab: "worth", related: ["y1", "y3", "p12"], pre: ["y1"],
+      id: "y2", unit: "u5", pages: [17, 18], diff: 2, min: 7, scene: "compass", lab: "worth", related: ["y1", "y3", "p12"], pre: ["y1"],
       title: { ar: "هل كل مهمة متكررة تستاهل برنامج؟", en: "Decision compass: when does a task deserve a tool?" },
       sum: { ar: "مش كل مهمة متكررة تستاهل برنامج. اضرب وقت المهمة في عدد مرات تكرارها، وقارن الناتج بوقت بناء الأداة وصيانتها، وبعدين قرر.", en: "Four questions decide whether automation is worth it, and four engineering rules protect the tool from rebuilds." },
       book: [
@@ -73,7 +73,7 @@
         } },
     },
     {
-      id: "y3", unit: "u2", pages: [18, 19], diff: 2, min: 9, scene: "prefer", lab: "pipeline", related: ["y2", "y7", "s1"], pre: ["y2"],
+      id: "y3", unit: "u5", pages: [18, 19], diff: 2, min: 9, scene: "prefer", lab: "pipeline", related: ["y2", "y7", "s1"], pre: ["y2"],
       title: { ar: "إزاي تبني أتمتة تشتغل كل يوم بثبات ومن غير أعطال مفاجئة؟", en: "Level 1: run automation" },
       sum: { ar: "أتمتة بتنجح ١٠٠ مرة وتفشل في المرة ١٠١ من غير ما تقول أخطر من إنك تشتغل بإيدك. الأتمتة اللي يُعتمد عليها بتتأكد من كل خطوة، ولو حاجة فشلت بتوقف وتقول السبب.", en: "The tool map, the preference order that makes tools last for years, a typical chain, and essential run controls." },
       book: [
@@ -106,7 +106,7 @@
       },
     },
     {
-      id: "y4", unit: "u2", pages: [19, 20], diff: 2, min: 9, scene: "drill7", lab: "quality", related: ["p6", "f3", "d2"], pre: ["y3"],
+      id: "y4", unit: "u1", pages: [19, 20], diff: 2, min: 9, scene: "drill7", lab: "quality", related: ["p6", "f3", "d2"], pre: ["y3"],
       title: { ar: "ليه لازم نفحص البيانات قبل ما نحللها؟", en: "Level 2: the analysis engine — quality first" },
       sum: { ar: "لو البيانات فيها تكرار أو تواريخ ناقصة أو وحدات مختلفة، أي تحليل مبني عليها هيطلع غلط مهما كان شكله مقنع. فحص البيانات بييجي قبل أي حساب.", en: "DuckDB, Polars and ydata-profiling, why quality checks are mandatory, the seven questions before any chart, and breaking down “efficiency fell 7%”." },
       book: [
@@ -147,7 +147,7 @@
         } },
     },
     {
-      id: "y5", unit: "u2", pages: [20, 21], diff: 3, min: 7, related: ["y4", "y6", "s1"], pre: ["y4"],
+      id: "y5", unit: "u4", pages: [20, 21], diff: 3, min: 7, related: ["y4", "y6", "s1"], pre: ["y4"],
       title: { ar: "بايثون ولا منصة كبيرة للشركة؟", en: "Python or an enterprise reporting platform?" },
       sum: { ar: "أداة صغيرة تكفي لتقرير بيشوفه ٣ أشخاص. لكن لما يبقى عندك مئات المستخدمين وصلاحيات ومراجعات، هتحتاج منصة. اللي بيحدد الاختيار حجم المسؤولية، مش شهرة الأداة.", en: "The question isn’t which is stronger but which fits your scale and governance: when Python is enough, when a platform is needed, and four signals to switch." },
       book: [
@@ -180,7 +180,7 @@
       },
     },
     {
-      id: "y6", unit: "u2", pages: [21, 22], diff: 2, min: 8, scene: "stations", related: ["p11", "d2", "w3"], pre: ["y4"],
+      id: "y6", unit: "u4", pages: [21, 22], diff: 2, min: 8, scene: "stations", related: ["p11", "d2", "w3"], pre: ["y4"],
       title: { ar: "إزاي تخلي المدير يفهم التقرير في دقيقة؟", en: "Level 3: from analysis to an interactive executive experience" },
       sum: { ar: "المدير عايز يعرف في دقيقة: المشكلة فين، وحجمها قد إيه، والمطلوب إيه. التقرير لازم يجاوب الأسئلة دي بالترتيب ده، والتفاصيل تيجي بعدها.", en: "One page that opens in a click and leads its reader from result to decision in minutes: seven stations, the 30-second test, six mistakes." },
       book: [
@@ -223,7 +223,7 @@
         } },
     },
     {
-      id: "y7", unit: "u2", pages: [22, 23], diff: 3, min: 8, scene: "pipeline10", related: ["y3", "w5", "s2"], pre: ["y6"],
+      id: "y7", unit: "u5", pages: [22, 23], diff: 3, min: 8, scene: "pipeline10", related: ["y3", "w5", "s2"], pre: ["y6"],
       title: { ar: "من ٤ ملفات خام لتقرير يفتح بضغطة واحدة", en: "The reference project: from raw files to a one-click report" },
       sum: { ar: "ملفات بتتنزل وتتنضف وتتجمع كل أسبوع بإيد موظفين ممكن تتحول لسلسلة واحدة بتشتغل بضغطة، وفيها فحص عند كل خطوة بيوقفها لو فيه حاجة غلط.", en: "A ten-step pipeline joining the three levels, acceptance criteria, a delivery checklist, and the decision and learning map." },
       book: [
@@ -243,7 +243,7 @@
         mech: [
           L("how", "الخطوات العشر هي المستويات التلاتة متصلة: **التشغيل** (مراقبة، قراءة، تنظيف) ← **التحليل** (جودة، محرك، مشاكل، مؤشرات) ← **العرض** (رسوم، صفحة، إرسال). كل خطوة وحدة مستقلة تقدر تختبرها لوحدها.", "The ten steps are the three levels connected: **run** (watch, read, clean) → **analysis** (quality, engine, problems, KPIs) → **reporting** (charts, page, send). Each step is an independent module testable on its own."),
           L("inside", "لاحظ إن قائمة التسليم بتطلب **مسار مجرب لاسترجاع النسخة اللي فاتت**: الأتمتة الناضجة بتفترض إنها هتغلط يوم، فبتجهز طريق الرجوع من بدري.", "Note the checklist asks for **a tested path to restore the previous version**: mature automation assumes it will fail one day and prepares the way back in advance."),
-          L("link", "ده «النظام» في صورته الأولى؛ الدليل الخامس هيعمّمه لطبقات خمس وشريحة عمودية ([[s1]]، [[s2]])، والدليل الرابع هيحوّله لتطبيق ويب محلي ([[w5]]).", "This is the “system” in its first form; guide 5 generalises it into five layers and a vertical slice ([[s1]], [[s2]]), and guide 4 turns it into a local web app ([[w5]])."),
+          L("link", "ده «النظام» في صورته الأولى؛ في نفس الوحدة بيتحوّل لتطبيق على جهازك ([[w5]])، والوحدة الأخيرة بتعمّمه لنظام بطبقات خمس وشريحة عمودية ([[s1]]، [[s2]]).", "This is the “system” in its first form; later in this unit it becomes an app on your machine ([[w5]]), and the last unit generalises it into five layers and a vertical slice ([[s1]], [[s2]])."),
         ],
         practice: [
           L("example", "**قسم الجودة**: كل يوم ملفات فحص من تلات خطوط بتوصل لمجلد مشترك. السلسلة بتقراهم، بتستبعد الصفوف التالفة وتسجّل السبب، بتحسب نسبة العيوب لكل خط، بتكشف أي خط عدّى الحد، وبتبني صفحة رابطها يتبعت لمدير الجودة.", "**Quality department**: inspection files from three lines land daily in a shared folder. The chain reads them, excludes corrupt rows and logs why, computes the defect rate per line, flags any line over the limit, and builds a page whose link goes to the quality manager."),

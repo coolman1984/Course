@@ -6,7 +6,7 @@
   A.lessons = (A.lessons || []).concat([
     /* ---------------- UNIT 3 ---------------- */
     {
-      id: "d1", unit: "u3", pages: [24], diff: 1, min: 7, scene: "prep", related: ["p9", "y4", "d2"], pre: ["p1"],
+      id: "d1", unit: "u4", pages: [24], diff: 1, min: 7, scene: "prep", related: ["p9", "y4", "d2"], pre: ["p1"],
       title: { ar: "جهّز البيانات وحدّد الغرض", en: "Preparing data and defining the purpose" },
       sum: { ar: "خمس دقائق تجهيز بتوفرّ ساعات مراجعة، وبعدين أول 3 مراحل: الغرض والجمهور، المؤشرات، والموافقة على التصميم قبل ما تبني.", en: "Five minutes of prep save hours of review, then the first three stages: purpose and audience, KPIs, and approving the design before building." },
       book: [
@@ -37,7 +37,7 @@
       },
     },
     {
-      id: "d2", unit: "u3", pages: [24, 25], diff: 2, min: 9, scene: "dash8", lab: "dashboard", related: ["d1", "y6", "w3"], pre: ["d1"],
+      id: "d2", unit: "u4", pages: [24, 25], diff: 2, min: 9, scene: "dash8", lab: "dashboard", related: ["d1", "y6", "w3"], pre: ["d1"],
       title: { ar: "البناء والتفاعل والتحقق والمشاركة", en: "Build, interact, verify and share" },
       sum: { ar: "المراحل من 4 لـ 8: البناء حسب التصور، فلاتر متزامنة، الهوية البصرية، التحقق من الأرقام، الحفظ والمشاركة — وست أماكن غلط شائعة.", en: "Stages 4 to 8: build to the outline, synced filters, visual identity, number verification, saving and sharing — and the six common pitfalls." },
       book: [
@@ -80,11 +80,11 @@
     },
     /* ---------------- UNIT 4 ---------------- */
     {
-      id: "w1", unit: "u4", pages: [26], diff: 1, min: 6, scene: "vscode", related: ["w2", "w5", "g2"], pre: [],
+      id: "w1", unit: "u1", pages: [26], diff: 1, min: 6, scene: "vscode", related: ["w2", "w5", "g2"], pre: [],
       title: { ar: "بيئة الشغل: محرر VS Code", en: "Your workspace: the VS Code editor" },
       sum: { ar: "مكان واحد تشوف فيه ملفاتك وتكتب وتشغّل الأوامر: خمس مناطق، أول خمس خطوات، وتلات أخطاء شائعة.", en: "One place to see your files, write and run commands: five areas, the first five steps, and three common mistakes." },
       book: [
-        bp(26, "قبل أي كود محتاج مكان واحد تشوف فيه ملفاتك وتكتب فيه وتشغّل منه الأوامر — ده دور المحرر، وأهم برنامج هتفتحه كل يوم في الوحدة دي.", "Before any code you need one place to see your files, write and run commands — that’s the editor, the most important program you’ll open daily in this unit."),
+        bp(26, "قبل أي كود محتاج مكان واحد تشوف فيه ملفاتك وتكتب فيه وتشغّل منه الأوامر — ده دور المحرر، وأهم برنامج هتفتحه كل يوم لما تشتغل على مشروع.", "Before any code you need one place to see your files, write and run commands — that’s the editor, the most important program you’ll open daily when you work on a project."),
         bp(26, "**((vscode|VS Code))** محرر نصوص وأكواد مجاني من مايكروسوفت، شغال على ويندوز وماك ولينكس، خفيف وسريع وبقى المعيار العملي لمعظم المطورين. بيجمع في نافذة واحدة متصفح الملفات ومحرر الكود والطرفية ومعاينة النتيجة. **والأهم للمبتدئ**: ده بيت المساعد البرمجي Claude Code.", "**((vscode|VS Code))** is a free text and code editor from Microsoft for Windows, Mac and Linux — light, fast and the practical standard for most developers. One window combines the file browser, code editor, terminal and preview. **Most important for beginners**: it’s home to the Claude Code coding assistant."),
         bp(26, "الواجهة في خمس مناطق: شريط الأنشطة · مستكشف الملفات · منطقة المحرر (تبويبات زي المتصفح) · ((terminal|الطرفية)) (بتشغّل التطبيق وبتثبّت المكتبات وبتنادي المساعد) · لوحة الأوامر (توصل لكل أمر بالاسم).", "Five areas: activity bar · file explorer · editor area (tabs like a browser) · ((terminal|terminal)) (run the app, install libraries, call the assistant) · command palette (every command by name)."),
         bp(26, "أول خمس خطوات: ثبّته من الموقع الرسمي · اعمل مجلد المشروع وافتحه من المحرر · ثبّت الإضافات الأساسية (حزمة العربية، Python، Claude Code) · افتح الطرفية وتأكد إن المسار هو مجلد مشروعك (أكتر نقطة المبتدئين بيغلطوا فيها) · فعّل الحفظ التلقائي.", "First five steps: install from the official site · create the project folder and open it from the editor · install the core extensions (Arabic pack, Python, Claude Code) · open the terminal and check the path is your project folder (where beginners slip most) · turn on auto-save."),
@@ -110,7 +110,7 @@
       },
     },
     {
-      id: "w2", unit: "u4", pages: [27], diff: 2, min: 8, scene: "claude", related: ["w1", "p10", "g2"], pre: ["w1"],
+      id: "w2", unit: "u2", pages: [27], diff: 2, min: 8, scene: "claude", related: ["w1", "p10", "g2"], pre: ["w1"],
       title: { ar: "المساعد البرمجي Claude Code", en: "The coding assistant: Claude Code" },
       sum: { ar: "بيقرأ مشروعك ويكتب الملفات ويشغّل الأوامر ويصلح الأخطاء؛ إنت بتراجع وتوافق. ومعاه CLAUDE.md و Prompt «الخطة قبل التنفيذ» وتلات ضوابط أمان.", en: "It reads your project, writes files, runs commands and fixes errors; you review and approve. Plus CLAUDE.md, the “plan before executing” prompt and three security controls." },
       book: [
@@ -143,7 +143,7 @@
       },
     },
     {
-      id: "w3", unit: "u4", pages: [28], diff: 2, min: 7, scene: "building", related: ["w4", "d2", "y6"], pre: ["w1"],
+      id: "w3", unit: "u5", pages: [28], diff: 2, min: 7, scene: "building", related: ["w4", "d2", "y6"], pre: ["w1"],
       title: { ar: "الواجهة الأمامية: اللي المستخدم بيشوفه", en: "The front-end: what the user sees" },
       sum: { ar: "HTML للهيكل، CSS للشكل، JavaScript للسلوك؛ أدوات بتوفر وقت، وقرار مهم: ماتبدأش بإطار عمل.", en: "HTML for structure, CSS for look, JavaScript for behaviour; time-saving tools, and one key decision: don’t start with a framework." },
       book: [
@@ -175,7 +175,7 @@
       },
     },
     {
-      id: "w4", unit: "u4", pages: [29], diff: 2, min: 8, scene: "request", lab: "request", related: ["w3", "w5", "s1"], pre: ["w3"],
+      id: "w4", unit: "u5", pages: [29], diff: 2, min: 8, scene: "request", lab: "request", related: ["w3", "w5", "s1"], pre: ["w3"],
       title: { ar: "الواجهة الخلفية: اللي المستخدم مش بيشوفه", en: "The back-end: what the user doesn’t see" },
       sum: { ar: "العقل اللي بيقرأ ويحسب ويطبق القواعد: ليه محتاجين خادم، الطقم الموصى بيه، رحلة طلب واحد، ومبادئ تصميم ماتتنازلش عنها.", en: "The brain that reads, computes and applies rules: why we need a server, the recommended kit, one request’s journey, and non-negotiable design principles." },
       book: [
@@ -207,7 +207,7 @@
       },
     },
     {
-      id: "w5", unit: "u4", pages: [30], diff: 2, min: 8, scene: "appbuild", related: ["w4", "w6", "y7"], pre: ["w4"],
+      id: "w5", unit: "u5", pages: [30], diff: 2, min: 8, scene: "appbuild", related: ["w4", "w6", "y7"], pre: ["w4"],
       title: { ar: "بناء تطبيق ويب كامل على جهازك", en: "Building a full web app on your machine" },
       sum: { ar: "ليه تطبيق ويب محلي، بنية خمس مجلدات، والمسار في تمان مراحل — والترتيب مش اقتراح.", en: "Why a local web app, a five-folder structure, and the eight-stage path — the order isn’t a suggestion." },
       book: [
@@ -247,7 +247,7 @@
         } },
     },
     {
-      id: "w6", unit: "u4", pages: [31], diff: 2, min: 7, related: ["w5", "w2", "p2"], pre: ["w5"],
+      id: "w6", unit: "u5", pages: [31], diff: 2, min: 7, related: ["w5", "w2", "p2"], pre: ["w5"],
       title: { ar: "Prompts التنفيذ وقائمة الاعتماد", en: "Execution prompts and the acceptance checklist" },
       sum: { ar: "خمس Prompts ورا بعض بتبني التطبيق، ست أسئلة قبل ما تعتمده، مسرد سريع، والدرس الأهم: الترتيب.", en: "Five sequential prompts that build the app, six questions before adopting it, a quick glossary, and the key lesson: order." },
       book: [

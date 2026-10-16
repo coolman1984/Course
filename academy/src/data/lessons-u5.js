@@ -78,7 +78,7 @@
         } },
     },
     {
-      id: "m1", unit: "u5", pages: [34], diff: 2, min: 9, scene: "moe", lab: "tokens", related: ["f1", "m2", "m3"], pre: ["f1"],
+      id: "m1", unit: "u1", pages: [34], diff: 2, min: 9, scene: "moe", lab: "tokens", related: ["f1", "m2", "m3"], pre: ["f1"],
       title: { ar: "النماذج: الأوزان والأحجام ومعنى «الذكاء»", en: "Models: weights, sizes and what “smart” means" },
       sum: { ar: "أربعة مفاهيم بيفكّوا كل الفروق (المعاملات، نافذة الـ Context، الخبراء المتفرقون، التوكنات)، وليه الأكبر مش الأفضل دايمًا، وطبقات النماذج وقاعدة الاختيار.", en: "Four concepts that explain every difference (parameters, context window, mixture of experts, tokens), why bigger isn’t always best, model tiers and the selection rule." },
       book: [
@@ -111,7 +111,7 @@
       },
     },
     {
-      id: "m2", unit: "u5", pages: [35], diff: 2, min: 8, related: ["m1", "m3", "t2"], pre: ["m1"],
+      id: "m2", unit: "u4", pages: [35], diff: 2, min: 8, related: ["m1", "m3", "t2"], pre: ["m1"],
       title: { ar: "خريطة الشركات والنماذج والأسعار — سبتمبر 2026", en: "Companies, models and prices — September 2026" },
       sum: { ar: "صورة السوق في لحظتها: العائلات الكبرى، ونطاقات الأسعار، وتلات فخاخ تسعيرية، والنماذج الصينية، و«مفتوح الأوزان» يعني إيه عمليًا.", en: "The market at that moment: major families, price ranges, three pricing traps, Chinese models, and what “open weights” means in practice." },
       book: [
@@ -152,14 +152,14 @@
         } },
     },
     {
-      id: "m3", unit: "u5", pages: [36], diff: 2, min: 7, lab: "local", related: ["m1", "m2", "f5"], pre: ["m1"],
+      id: "m3", unit: "u3", pages: [36], diff: 2, min: 7, lab: "local", related: ["m1", "m2", "f5"], pre: ["m1"],
       title: { ar: "تشغيل النماذج على جهازك", en: "Running models on your own machine" },
       sum: { ar: "نموذج جوّه حاسوبك من غير إنترنت ولا اشتراك وبياناتك ما بتخرجش من الجهاز: ليه بقى ممكن، وLM Studio وOllama، وإيه اللي يناسب جهازك، وإمتى تستخدمه.", en: "A model inside your PC with no internet, no subscription and no data leaving: why it’s possible now, LM Studio and Ollama, what fits your machine, and when to use it." },
       book: [
         bp(36, "نموذج بيشتغل جوّه حاسوبك، **من غير إنترنت ولا اشتراك وبياناتك ما بتسيب الجهاز خالص**. ده بقى عملي فعلًا في 2026، مش تجربة هواة بس.", "A model running inside your PC, **with no internet, no subscription, and no data ever leaving the device**. In 2026 this became genuinely practical, not just a hobbyist experiment."),
         bp(36, "ليه بقى ممكن؟ حاجتين مع بعض: المختبرات بتنشر أوزان نماذج قوية مجانًا، وتقنية **((quantization|Quantization))** — ضغط أرقام النموذج من دقة عالية لأقل فحجمه بينكمش لحوالي الربع مع فقد بسيط جدًا في الجودة. نموذج كان محتاج 16 جيجابايت ذاكرة كرت الشاشة بقى يشتغل في 4 لـ 5.", "Why now? Two things together: labs publishing capable model weights for free, and **((quantization|quantization))** — compressing the model’s numbers to lower precision, shrinking it to about a quarter with very little quality loss. A model needing 16 GB of GPU memory now runs in 4–5."),
         bp(36, "**LM Studio** — الواجهة الرسومية: تطبيق سطح مكتب بتدور فيه على النموذج وتنزّله بضغطة ويقولك يناسب ذاكرة جهازك ولا لأ، وبعدها تحادثه — الأنسب للي بيبدأ. **Ollama** — سطر الأوامر: خفيف ويتدمج في المشاريع: ollama pull للتنزيل، ollama run للمحادثة، ollama list للمنزّل، ollama rm للحذف.", "**LM Studio** — the GUI: a desktop app where you search, download with a click, see if it fits your memory, then chat — best for beginners. **Ollama** — the command line: light and easy to embed: ollama pull to download, ollama run to chat, ollama list for what’s installed, ollama rm to delete."),
-        bp(36, "النقطة اللي بتخليهم مفيدين فعلًا: الأداتين بيوفّروا **خادم محلي متوافق مع واجهة OpenAI** — أي تطبيق مكتوب لخدمة سحابية يشتغل مع نموذجك المحلي **بتغيير العنوان بس**، فتربط تطبيق الوحدة اللي فاتت بنموذج محلي من غير ما تكتب حاجة تاني.", "What makes them really useful: both provide **a local server compatible with the OpenAI API** — any app written for a cloud service works with your local model **by changing only the address**, so you can connect the previous unit’s app to a local model without rewriting."),
+        bp(36, "النقطة اللي بتخليهم مفيدين فعلًا: الأداتين بيوفّروا **خادم محلي متوافق مع واجهة OpenAI** — أي تطبيق مكتوب لخدمة سحابية يشتغل مع نموذجك المحلي **بتغيير العنوان بس**، فتربط أي تطبيق بنيته بنموذج محلي من غير ما تكتب حاجة تاني.", "What makes them really useful: both provide **a local server compatible with the OpenAI API** — any app written for a cloud service works with your local model **by changing only the address**, so you can connect any app you built to a local model without rewriting."),
         bp(36, "دليل تقريبي: 8 جيجابايت ← 3–4 مليارات معامل (تلخيص وتصنيف وأسئلة بسيطة) · 16 ← 7–9 مليارات (استخدام يومي وأكواد قصيرة) · 24–32 ← 14–32 مليارًا (تحليل أعمق ومهام متعددة الخطوات) · 64 فأكثر ← 70 مليارًا فأعلى (أقرب ما يكون لجودة السحابة).", "Rough guide: 8 GB → 3–4B parameters (summaries, classification, simple Q&A) · 16 → 7–9B (daily use, short code) · 24–32 → 14–32B (deeper analysis, multi-step tasks) · 64+ → 70B+ (closest to cloud quality)."),
         bp(36, "تلات ملاحظات بتحسم الأداء: **الذاكرة قبل المعالج** (سرعة التوليد بتتحكّم فيها سعة الذاكرة وعرض النطاق) · **Q4_K_M هو مستوى الضغط المبدئي** وأفضل توازن — ما ترفعهوش إلا لو لاحظت ضعف في مهمتك · **أجهزة آبل الحديثة** بذاكرتها الموحدة قوية جدًا هنا مقارنة بسعرها.", "Three notes that decide performance: **memory before processor** (generation speed depends on memory size and bandwidth) · **Q4_K_M is the default compression** and best balance — only raise it if you notice weakness in your task · **recent Apple machines** with unified memory are very strong here for their price."),
         bp(36, "القاعدة الفاصلة: استخدمه لما **البيانات حساسة** ومش مسموح ترفعها، أو محتاج **شغل من غير إنترنت**، أو بتعالج **حجم هائل** يخلي السحابة غالية، أو **بتجرّب وبتتعلّم** من غير فاتورة. **وماتستخدمهوش** لما محتاج أعلى جودة ممكنة في تحليل معقّد، أو مهمة نادرة ما تبرّرش إعداد بيئة كاملة — النماذج المحلية لسه طبقة أو اتنين ورا قمة السحابة.", "The dividing rule: use it when **data is sensitive** and can’t be uploaded, you need **offline work**, you process a **huge volume** that makes cloud costly, or you **experiment and learn** with no bill. **Don’t use it** when you need the highest quality for complex analysis, or for a rare task that doesn’t justify setting up — local models stay a tier or two behind the cloud top."),
@@ -185,7 +185,7 @@
       },
     },
     {
-      id: "s1", unit: "u5", pages: [37], diff: 3, min: 8, scene: "layers", related: ["y7", "s2", "t1"], pre: ["y7"],
+      id: "s1", unit: "u7", pages: [37], diff: 3, min: 8, scene: "layers", related: ["y7", "s2", "t1"], pre: ["y7"],
       title: { ar: "النظام: اربط العمليات والبيانات في منظومة متكاملة", en: "The system: connect processes and data into one" },
       sum: { ar: "الفرق بين أداة ونظام، والاختبار الحاسم (عدّ النقلات اليدوية)، والطبقات الخمس، والمبادئ الأربعة، ورحلة حدث واحد.", en: "Tool vs system, the decisive test (count manual hand-offs), the five layers, the four principles, and one event’s journey." },
       book: [
@@ -217,7 +217,7 @@
       },
     },
     {
-      id: "s2", unit: "u5", pages: [38], diff: 3, min: 8, scene: "slice", lab: "system", related: ["s1", "p7", "t1"], pre: ["s1"],
+      id: "s2", unit: "u7", pages: [38], diff: 3, min: 8, scene: "slice", lab: "system", related: ["s1", "p7", "t1"], pre: ["s1"],
       title: { ar: "بناء النظام من غير ما ينهار: الشريحة العمودية", en: "Building the system without collapse: the vertical slice" },
       sum: { ar: "أكتر مشاريع المنظومات بتفشل لأنها بتبدأ كبيرة: ابنِ عمق مش عرض، والمراحل السبعة، وتلات أخطاء بتسقط المشروع، وتلات Prompts.", en: "Most system projects fail because they start big: build deep, not wide; seven stages; three project-killing mistakes; three prompts." },
       book: [
@@ -257,7 +257,7 @@
         } },
     },
     {
-      id: "t1", unit: "u5", pages: [39], diff: 3, min: 9, scene: "team", lab: "agents", related: ["f7", "s1", "t2"], pre: ["f7", "s1"],
+      id: "t1", unit: "u7", pages: [39], diff: 3, min: 9, scene: "team", lab: "agents", related: ["f7", "s1", "t2"], pre: ["f7", "s1"],
       title: { ar: "الفريق الرقمي الذكي", en: "The smart digital team" },
       sum: { ar: "الوكيل إيه (هدف وأدوات وتكرار)، وليه فريق مش وكيل واحد، والأدوار السبعة، وابدأ بتلتة، وتلات أنماط تنسيق.", en: "What an agent is (goal, tools, repetition), why a team rather than one agent, seven roles, start with three, and three coordination patterns." },
       book: [
@@ -298,7 +298,7 @@
         } },
     },
     {
-      id: "t2", unit: "u5", pages: [40], diff: 3, min: 8, scene: "card", related: ["t1", "m1", "s2"], pre: ["t1"],
+      id: "t2", unit: "u7", pages: [40], diff: 3, min: 8, scene: "card", related: ["t1", "m1", "s2"], pre: ["t1"],
       title: { ar: "تصميم الفريق الرقمي وحوكمته", en: "Designing and governing the digital team" },
       sum: { ar: "بطاقة تعريف الوكيل بخمس عناصر، وأربعة ضوابط حوكمة قبل أي تشغيل حقيقي، وأربعة Prompts للبناء والقياس، والخيط الجامع للكتاب.", en: "The five-element agent card, four governance controls before any real run, four prompts to build and measure, and the book’s unifying thread." },
       book: [

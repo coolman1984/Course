@@ -23,14 +23,19 @@ WHO YOU ARE TALKING TO
   «كوم», «ترابيزة», «بيلف», «إنت إيده», «ببلاش», «بايظ», «حشو», «تايه». The picture for the context window is
   «مساحة العمل» (the workspace).
 
-HOW THE COURSE IS ORGANISED (unit 0, in teaching order)
+HOW THE COURSE IS ORGANISED (eight units, shown as 1–8; ids u0–u7; the book is a reference, not the order)
+ 1 Foundations   2 Big data (many files, quality, the editor, model levels)   3 Office (Word, email, decks; Claude Code)
+ 4 PDF files (cloud or local, free tools)   5 Dashboards (Codex, companies and models)   6 Small tools (shared
+ features, saving versions, studying with AI)   7 Your assistant at work (prompts, decisions, pitch, career)
+ 8 The big picture (systems and digital teams, in general terms) and the graduation project.
+Unit 1 lessons, in teaching order:
  1. f1  The story of AI (history deck)          5. f7  Chat, memory and agents
  2. f2  Inside the model (next-word prediction)  6. f3  From files to a decision (six capabilities)
  3. f4  The Prompt and the Context                7. f5  Limits of AI and wise use (eight limits)
  4. f6  Why the Context is limited (workspace)    8. f8  Your first automation (Excel; three ready prompts)
 Each of these lessons opens with a 12-slide story deck: one hero, one question carried through every slide, each slide
-gives a rule and its reason («القاعدة، وليه؟»), and the last slide turns the question to the reader. Units 1–5 follow
-the reference book.
+gives a rule and its reason («القاعدة، وليه؟»), and the last slide turns the question to the reader. The order of every
+unit is in `A.courseOrder`.
 
 WHERE THINGS ARE INSIDE THIS FILE (search for these names)
 - Lessons: `A.lessons = ` (fields: id, unit, title, sum, book points with page numbers, levels simple/mech/practice/adv).
@@ -1341,7 +1346,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     eqSecLead: u("الفرق بين إجابة عامة مش بتفيد وإجابة تغيّر قرارك مش في الأداة، في أربعة عناصر تحطها في طلبك. شغّل كل عنصر وشوف النتيجة بتتحسن.", "The gap between a generic answer and one that changes your decision isn’t the tool — it’s four elements in your request. Switch each one on and watch the result improve."),
     eqB1: u("هدف واضح: إنت عاوز تعرف إيه أو تقرر إيه", "A clear goal: what you want to know or decide"), eqB2: u("Context كافي: الأداة مش عارفة عن شغلك غير اللي إنت تقوله", "Enough context: the tool knows only what you tell it"), eqB3: u("طلب محدد: مهمة واحدة واضحة", "A specific request: one clear task"), eqB4: u("شكل المخرج: يوفر عليك جولة تعديل كاملة", "An output format: it saves a whole revision round"),
     unitsSecTitle: u("الكتاب كله، مرتب زي ما الفهم محتاج.", "The whole book, in the order understanding needs."),
-    unitsSecLead: u("المقدمة والأدلة الخمسة في ست وحدات. كل درس بيوصلك لصفحته في الكتاب، وبيفسّر الفكرة على أربع مستويات.", "The introduction and five guides in six units. Every lesson points to its book page and explains the idea at four levels."),
+    unitsSecLead: u("ثمان وحدات مرتّبة علشان كل فكرة تبني على اللي قبلها، والكتاب مرجع ليها. كل درس بيوصلك لصفحته في الكتاب، وبيفسّر الفكرة على أربع مستويات.", "Eight units ordered so each idea builds on the one before, with the book as their reference. Every lesson points to its book page and explains the idea at four levels."),
     unitsB1: u("{l} درس، كل درس بأربع مستويات شرح", "{l} lessons, each at four levels"), unitsB2: u("{s} مشهد متحرك إنت بتتحكم فيه", "{s} animated scenes you control"), unitsB3: u("{b} مختبر، على كل واحد مكتوب نوعه", "{b} labs, each labelled real or simulated"), unitsB4: u("{q} سؤال وكل إجابة لها تفسير", "{q} questions with an explanation for every answer"),
     unitsCard: u("وحدات الكتاب", "The book’s units"), lessonsN: u("{n} دروس", "{n} lessons"),
     ladderSecTitle: u("من سؤال عابر لفريق رقمي.", "From a passing question to a digital team."),
@@ -1370,7 +1375,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     legendBook: u("من الكتاب (برقم الصفحة)", "From the book (with page)"), legendAdded: u("إضافة توضيحية من الأكاديمية", "Academy explanation"), legendSim: u("محاكاة تعليمية", "Educational simulation"), legendReal: u("حساب حقيقي قدامك", "Real calculation"),
     honestyBody: u("مفيش جزء في الأكاديمية بيتصل بنموذج ذكاء اصطناعي. المختبرات بتحسب بقواعد ثابتة قدامك، والأمثلة والأرقام الافتراضية مكتوب عليها إنها للتوضيح. أسماء النماذج وأسعارها زي ما في الكتاب (سبتمبر 2026) وبتتغير بسرعة.", "No part of the academy calls an AI model. Labs calculate with fixed rules in front of you, and hypothetical examples and numbers are clearly labelled. Model names and prices are as the book states them (September 2026) and change quickly."),
     manageData: u("إدارة بياناتك", "Manage your data"),
-    pagesRange: u("ص {a}–{b}", "pp. {a}–{b}"), realCalc: u("حساب حقيقي", "Real calculation"), eduSim: u("محاكاة تعليمية", "Educational simulation"),
+    pagesRange: u("ص {a}–{b}", "pp. {a}–{b}"), bookPagesN: u("{n} صفحة من الكتاب", "{n} book pages"), realCalc: u("حساب حقيقي", "Real calculation"), eduSim: u("محاكاة تعليمية", "Educational simulation"),
     realCalcHint: u("الحساب بيتم فعلًا على البيانات اللي قدامك.", "The calculation really runs on the data shown."), eduSimHint: u("تمثيل مبسّط بقواعد ثابتة؛ مفيش ذكاء اصطناعي حقيقي.", "A simplified model with fixed rules; no real AI involved."),
     crumbs: u("مسار التنقل", "Breadcrumbs"), unitN: u("الوحدة {n}", "Unit {n}"), lessonsWord: u("دروس", "lessons"), bigIdea: u("الفكرة الكبرى", "The big idea"),
     unitLessons: u("دروس الوحدة", "Unit lessons"), unitTools: u("أدوات هذه الوحدة", "Tools for this unit"), unitQuiz: u("اختبار الوحدة", "Unit quiz"),     unitQuizSub: u("أسئلة وكل إجابة لها تفسير.", "Questions with an explanation for every answer."),
@@ -1588,36 +1593,46 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
   };
 
   A.units = [
-    { id: "u0", n: 0, badge: "0", color: "#7a5cf0", pages: [1, 6], extraPages: [41],
+    { id: "u0", n: 1, badge: "1", color: "#7a5cf0",
       title: u("الأساسيات: إيه اللي بيحصل ورا الشاشة؟", "Foundations: what happens behind the screen?"), short: u("الأساسيات", "Foundations"),
-      sum: u("المقدمة والأسئلة اللي بتقود الرحلة، هدف الكورس، سلّم التدرج، قدرات الذكاء الاصطناعي في الشغل، من الشات للوكيل، وحدود الاستخدام.", "The introduction and guiding questions, the course goal, the learning ladder, AI capabilities at work, from chat to agent, and the limits."),
+      sum: u("حكاية الذكاء الاصطناعي، وجوّا الموديل، والـ Prompt والـ Context، وليه مساحة العمل محدودة، والشات والذاكرة والوكيل، وقدراته في الشغل، وحدوده، وأول أتمتة في حياتك.", "The story of AI, inside the model, the Prompt and the Context, why the workspace is limited, chat, memory and agents, what it does at work, its limits, and your first automation."),
       big: u("الغموض بيتحول لفهم، والفهم لقدرة حقيقية على الاستخدام — **أفضل نتيجة = إنسان يفكر + بيانات كويسة + ذكاء اصطناعي**.", "Mystery becomes understanding, and understanding becomes real ability — **best result = a thinking human + good data + AI**."),
       review: { points: [u("النموذج اتعلّم أنماط من بيانات كتير وخزّنها في أرقام جواه (معاملات)، وبيكوّن الإجابة كلمة بعد كلمة حسب الـ Context.", "A model learned patterns from lots of data, stored them in internal numbers (parameters), and generates the answer word by word from the context."), u("هدف الكورس: تشوف شغلك كنظام متكامل، مش تجمع أدوات.", "The course goal: see your work as a whole system, not collect tools."), u("السلّم: مساعد ← عقل تاني ← موظف رقمي ← أتمتة ← أداة ← تطبيق ← نظام ← فريق رقمي.", "The ladder: assistant → second brain → digital employee → automation → tool → app → system → digital team."), u("من البيانات للقرار: يجمع ← يحلل ← يلخّص ← يقارن ← يقترح؛ وكل ما جودة البيانات والـ Context زادت، قيمة النتيجة بتزيد.", "From data to decision: collect → analyse → summarise → compare → suggest; better data and context, better results."), u("الـ Prompt جزء من الـ Context؛ والوكيل بيخطط وبيستخدم أدوات وينفّذ ويتابع.", "The prompt is part of the context; an agent plans, uses tools, acts and follows up."), u("الحدود: ممكن يغلط بثقة، ومش عارف بيانات شركتك إلا لو اديتهاله، ومش بيتحمّل مسؤولية القرار.", "Limits: it can be confidently wrong, knows your company’s data only if you provide it, and doesn’t own the decision.")], chain: [u("بيانات", "Data"), u("نموذج", "Model"), u("Context + Prompt", "Context + prompt"), u("مساعد", "Assistant"), u("وكيل", "Agent"), u("قرار بشري", "Human decision")], remember: u("استخدمه بذكاء… وماتعتمدش عليه لوحده.", "Use it wisely… and don’t rely on it alone.") } },
-    { id: "u1", n: 1, badge: "1", color: "#2f5fe6", pages: [7, 16],
-      title: u("من الـ Prompt لنظام شغل كامل", "From the prompt to a complete work system"), short: u("من الـ Prompt للنظام", "Prompt to system"),
-      sum: u("الدليل الأول: إزاي تكتب طلب قوي، وبعدين تنجز يومك، وتفكر استراتيجيًا، وتبني عقل تاني، وتخلص بأتمتة شغلك فعلًا لحد العرض النهائي للإدارة.", "Guide 1: write a strong request, run your day, think strategically, build a second brain, and end by actually automating your work — up to the final management presentation."),
-      big: u("الاستخدام الحقيقي بيبدأ لما تبطل تطلب «إجابة» وتطلب **نتيجة تنفع في التنفيذ**: خطة، أو قرار، أو أداة تشتغل بدالك.", "Real use begins when you stop asking for “an answer” and ask for **an actionable result**: a plan, a decision, or a tool working for you."),
-      review: { points: [u("المعادلة: هدف واضح + Context كفاية + طلب محدد + شكل النتيجة = نتيجة تنفع في التنفيذ.", "The equation: clear goal + enough context + specific request + output format = actionable result."), u("العناصر الخمسة: الهدف، الـ Context، الجمهور، شكل النتيجة، القيود والأمثلة.", "The five elements: goal, context, audience, format, constraints & examples."), u("أهم تقنية: «اسألني عن أي معلومة ناقصة… أبسط حل… اختبر الحالات الاستثنائية».", "Strongest technique: “ask me what’s missing… simplest solution… test edge cases”."), u("صحّح في نفس المحادثة؛ المحترف مابيبدأش من الأول.", "Correct in the same conversation; skilled users don’t start over."), u("الاستراتيجي: الفهم ← التحليل ← التشخيص ← المخاطر ← البدائل ← القرار ← الخطوات.", "Strategic order: understand → analyse → diagnose → risks → options → decision → steps."), u("العقل التاني: دفتر واحد لهدف واحد، وكل إجابة باستشهاد.", "Second brain: one notebook per goal, every answer cited."), u("القفزة: إكسل ← ماكرو ← كود يكتبه الذكاء الاصطناعي ← عرض إداري.", "The leap: Excel → macro → AI-written code → management presentation."), u("المصدر الأول، وبعدين القصة، وبعدين الصورة.", "Source first, then story, then visuals.")], chain: [u("صياغة", "Wording"), u("إنتاجية", "Productivity"), u("استراتيجية", "Strategy"), u("عقل تاني", "Second brain"), u("أتمتة", "Automation"), u("عرض لقرار", "Pitch for a decision")], remember: u("ماتحفظش الـ Prompt؛ افهم هدفه، عشان تقدر تعدّله لأي موقف.", "Don’t memorise prompts; understand their purpose so you can adapt them.") } },
-    { id: "u2", n: 2, badge: "2", color: "#11908c", pages: [17, 23],
-      title: u("بناء أدوات وأنظمة شغل ببايثون", "Building work tools and systems with Python"), short: u("أدوات بايثون", "Python tools"),
-      sum: u("الدليل التاني: من أتمتة مهمة متكررة، لمحرك تحليل، لتقرير إداري تفاعلي يفتح بضغطة — من غير خبرة برمجة قبل كده.", "Guide 2: from automating a recurring task, to an analysis engine, to an interactive management report that opens in one click — with no prior coding."),
-      big: u("المهارة المطلوبة مش كتابة الكود، **وصف العملية بدقة وبطريقة تنفع في التنفيذ** — زي ما تشرحها لموظف جديد.", "The skill isn’t writing code but **describing the process precisely and actionably** — as you would to a new employee."),
-      review: { points: [u("ماتبنيش أداة إلا لمهمة متكررة، قواعدها ثابتة، ونتيجة تقدر تتحقق منها.", "Only build a tool for a recurring task with stable rules and a verifiable result."), u("مواصفة المهمة: المشكلة، المدخلات، القواعد، النتيجة، الاختبارات — والاختبارات أهم جزء فيها.", "Task spec: problem, inputs, rules, result, tests — tests matter most."), u("قواعد هندسية: متلمس الأصل، سجل تشغيل، وحدات صغيرة، فشل واضح.", "Engineering rules: don’t touch originals, run log, small modules, explicit failure."), u("ترتيب الأفضلية: ملف/API ← تحكم مباشر ← عناصر الواجهة ← محاكاة المستخدم.", "Preference order: file/API → direct app control → UI elements → user simulation."), u("الجودة الأول، وبعدين الأسئلة السبعة، وبعدين الرسم.", "Quality first, then the seven questions, then charts."), u("ابنِ الحل الأخف الأول، وانتقل للمنصة المؤسسية لما تظهر إشاراتها.", "Build the lightest solution first; move to an enterprise platform when its signals appear."), u("صفحة واحدة بسبع محطات تتفهم في 30 ثانية وتخلص بقرار.", "One page, seven stations, clear in 30 seconds, ending with a decision.")], chain: [u("وصف دقيق", "Precise description"), u("أتمتة التشغيل", "Run automation"), u("فحص الجودة", "Quality check"), u("التحليل", "Analysis"), u("العرض الإداري", "Executive page"), u("قرار", "Decision")], remember: u("ماتطلعش لمستوى جديد قبل ما اللي قبله يشتغل بثبات ومن غير أخطاء صامتة.", "Don’t move up a level until the one before runs reliably with no silent errors.") } },
-    { id: "u3", n: 3, badge: "3", color: "#c47d14", pages: [24, 25],
+    { id: "u1", n: 2, badge: "2", color: "#2f5fe6",
+      title: u("البيانات الكبيرة: من ملفات كتير لجدول واحد نضيف", "Big data: from many files to one clean table"), short: u("البيانات الكبيرة", "Big data"),
+      sum: u("تجميع ملفات كتير تحت بعض، وفحص البيانات وتنضيفها قبل التحليل، وربط الجداول، ولما الملف يكبر على إكسل. ومعاها: المحرر وفولدر المشروع، ومستويات ذكاء النماذج.", "Stacking many files into one, checking and cleaning data before analysis, linking tables, and what to do when a file outgrows Excel. Alongside: the editor and the project folder, and the levels of model intelligence."),
+      big: u("البيانات النضيفة نص الشغل: **افحص قبل ما تحلل**، واشتغل من فولدر مشروع منظّم مش من ملفات متفرقة.", "Clean data is half the work: **check before you analyse**, and work from one organised project folder, not scattered files."),
+      review: { points: [u("جمّع الملفات المتشابهة في جدول واحد، وسجّل كل صف جه من أنهي ملف.", "Stack similar files into one table, and record which file each row came from."), u("افحص الجودة الأول: صفوف ناقصة، وتكرار، وصيغ مختلفة، وأرقام شاذة.", "Check quality first: missing rows, duplicates, mixed formats and outliers."), u("اربط الجداول بعمود مشترك، وطلّع اللي ما اتربطش في شيت لوحده.", "Link tables on a shared column, and put whatever didn't match on its own sheet."), u("فولدر المشروع بيخلّي المساعد يشوف كل الملفات مرة واحدة.", "A project folder lets the assistant see all the files at once."), u("النموذج السريع للمهام البسيطة، والعميق للتحليل والتخطيط.", "A fast model for simple tasks, a deeper one for analysis and planning.")], chain: [u("ملفات كتير", "Many files"), u("تجميع", "Stack"), u("فحص الجودة", "Quality check"), u("ربط", "Link"), u("جدول نضيف", "Clean table"), u("تحليل", "Analysis")], remember: u("ما تحللش بيانات ما فحصتهاش.", "Never analyse data you haven’t checked.") } },
+    { id: "u2", n: 3, badge: "3", color: "#11908c",
+      title: u("الأوفيس كله: تقارير وخطابات وإيميلات وعروض بتطلع لوحدها", "The whole Office suite: reports, letters, emails and decks that build themselves"), short: u("الأوفيس", "Office"),
+      sum: u("إزاي البيانات تتحول لخطابات وتقارير في وورد، وإيميلات جماعية، وعروض تقديمية، من غير نسخ ولصق. ومعاها: كلود كود على جهازك، واستهلاك التوكنز وترشيده.", "How data turns into Word letters and reports, bulk emails and presentations, without copy and paste. Alongside: Claude Code on your machine, and how tokens are spent and saved."),
+      big: u("النسخ واللصق المتكرر علامة إن الشغل ده **مستني أتمتة**: البيانات في مكان واحد، والمستندات بتتولّد منها.", "Repeated copy and paste is a sign the job is **waiting to be automated**: keep the data in one place and generate the documents from it."),
+      review: { points: [u("قالب ثابت + بيانات متغيرة = مستند لكل صف.", "A fixed template + changing data = one document per row."), u("الماكرو والكود اللي بيكتبه الذكاء الاصطناعي بينفّذوا الخطوات اللي بتكررها.", "Macros and AI-written code carry out the steps you repeat."), u("كلود كود بيقرا فولدرك ويقترح وينفّذ، وإنت اللي بتوافق على كل خطوة.", "Claude Code reads your folder, proposes and carries out the work, and you approve every step."), u("كل كلمة وكل ملف بيدخل المحادثة بيستهلك توكنز: ابعت اللي محتاجه بس.", "Every word and file in the conversation costs tokens: send only what is needed."), u("جرّب على نسخة وعلى صفين قبل ما تشغّل على الكل.", "Try it on a copy and two rows before running it on everything.")], chain: [u("بيانات", "Data"), u("قالب", "Template"), u("مستندات", "Documents"), u("مراجعة", "Review"), u("إرسال", "Send")], remember: u("اللي بتعمله كل أسبوع بإيدك، اسأل نفسك: ينفع يتولّد لوحده؟", "Whatever you do by hand every week, ask: could it generate itself?") } },
+    { id: "u3", n: 4, badge: "4", color: "#c47d14",
+      title: u("ملفات الـ PDF: من ملف مقفول لبيانات تشتغل عليها", "PDF files: from a locked file to data you can work with"), short: u("ملفات الـ PDF", "PDF files"),
+      sum: u("استخراج الجداول والنصوص من ملفات الـ PDF، والدمج والتقسيم، وطلوع تقرير PDF نهائي جاهز. ومعاها: الشغل على السحابة ولا على جهازك، والأدوات المجانية وحدودها.", "Extracting tables and text from PDF files, merging and splitting them, and producing a finished PDF report. Alongside: working in the cloud or on your machine, and free tools and their limits."),
+      big: u("الـ PDF مخزن معلومات مش نهاية الطريق: **طلّع البيانات، وراجعها، واشتغل عليها**.", "A PDF is a store of information, not the end of the road: **extract the data, check it, and work with it**."),
+      review: { points: [u("الـ PDF المكتوب غير الـ PDF المصوّر: الأول بيتقري على طول، والتاني محتاج قراءة للصورة.", "A text PDF differs from a scanned one: the first reads directly, the second needs the image read."), u("راجع الأرقام المستخرجة مع الأصل قبل ما تعتمد عليها.", "Check extracted figures against the original before relying on them."), u("السحابة أسرع وأقوى، وجهازك أأمن للبيانات الحساسة.", "The cloud is faster and stronger; your own machine is safer for sensitive data."), u("بيانات الشركة الحقيقية ما تتحطش على أداة سحابية إلا لو مسموح.", "Real company data goes into a cloud tool only when that is allowed."), u("الأدوات المجانية بتعمل كتير، بس ليها حدود في الحجم والعدد.", "Free tools do a lot, but they have limits on size and volume.")], chain: [u("PDF", "PDF"), u("استخراج", "Extract"), u("مراجعة", "Check"), u("جدول", "Table"), u("تقرير", "Report")], remember: u("الرقم اللي اتنقل من PDF يتراجع قبل ما يتصدّق.", "A figure copied out of a PDF is checked before it is trusted.") } },
+    { id: "u4", n: 5, badge: "5", color: "#d4427c",
       title: u("من جدول البيانات للوحة معلومات احترافية", "From spreadsheet to professional dashboard"), short: u("لوحة المعلومات", "Dashboard"),
-      sum: u("الدليل التالت: تحويل ملف Excel للوحة معلومات تفاعلية في تمان مراحل مع صياغة طلب لكل مرحلة، في 15–30 دقيقة.", "Guide 3: turn an Excel file into an interactive dashboard in eight stages with a prompt for each, in 15–30 minutes."),
+      sum: u("تحويل ملف إكسل للوحة معلومات بتخدم قرار، وتجربة إدارية بتتفهم في دقيقة. ومعاها: كودكس ومقارنته بكلود كود، وخريطة الشركات والنماذج ونقط قوتها وضعفها.", "Turning an Excel file into a dashboard that serves a decision, and an executive view understood in a minute. Alongside: Codex compared with Claude Code, and the map of companies and models with their strengths and weaknesses."),
       big: u("الفرق في جودة اللوحة مش من الأداة، **من إزاي بتدير الحوار مع النموذج**: الطلب العام يطلع لوحة عامة، والمسار المتدرج يطلع أداة قرار.", "Dashboard quality depends not on the tool but on **how you run the conversation**: a vague request gives a generic board; a staged path gives a decision tool."),
       review: { points: [u("جهّز البيانات الأول: صف عناوين واحد، أسماء أعمدة واضحة، مفيش فراغات، مفيش خلايا مدمجة، صيغ موحّدة، وورقة واحدة محورية.", "Prepare data first: one header row, meaningful names, no gaps, no merged cells, unified formats, one core sheet."), u("ابدأ من القرار اللي اللوحة هتخدمه، مش من البيانات المتاحة.", "Start from the decision the board serves, not the data you have."), u("اعتمد التصميم كتابة قبل البناء.", "Approve the design as text before building."), u("الفلاتر بتحدّث كل العناصر مع بعض.", "Filters update every element together."), u("مرحلة التحقق من الأرقام مش اختيارية.", "Number verification isn’t optional.")], chain: [u("تهيئة", "Prepare"), u("الغرض", "Purpose"), u("المؤشرات", "KPIs"), u("التصميم نصًا", "Design as text"), u("البناء", "Build"), u("التفاعل", "Interact"), u("الهوية", "Identity"), u("التحقق", "Verify"), u("المشاركة", "Share")], remember: u("المخرج اللي شكله احترافي مش بالضرورة صح.", "A polished output isn’t necessarily correct.") } },
-    { id: "u4", n: 4, badge: "4", color: "#d4427c", pages: [26, 31],
-      title: u("من المحرر لتطبيق ويب متكامل على جهازك", "From the editor to a full web app on your machine"), short: u("تطبيق الويب المحلي", "Local web app"),
-      sum: u("الدليل الرابع: بيئة الشغل VS Code، المساعد البرمجي Claude Code، الواجهة الأمامية والخلفية، وبعدين بناء تطبيق تحليل يشتغل على جهازك كأنه برنامج مثبّت.", "Guide 4: the VS Code workspace, the Claude Code coding assistant, front-end and back-end, then building an analysis app that runs on your machine like installed software."),
-      big: u("إنت مش بتتعلم برمجة، **بتتعلم تدير مشروع برمجي**: توصف اللي عايزه بدقة، وتراجع اللي بيتبنى لك، وتتأكد إنه صح — والترتيب هو أهم درس.", "You don’t learn programming; you **learn to manage a software project**: describe precisely, review what’s built, verify it — and the order is the key lesson."),
-      review: { points: [u("افتح المجلد مش الملف، وسمّي المجلدات بالإنجليزي من غير مسافات.", "Open the folder, not a file; name folders in English with no spaces."), u("Claude Code بيقرأ ويكتب ويشغّل ويصلّح؛ إنت بتراجع وتوافق.", "Claude Code reads, writes, runs and fixes; you review and approve."), u("CLAUDE.md بيتقرا في بداية كل جلسة.", "CLAUDE.md is read at the start of every session."), u("الواجهة بتعرض بس؛ الخادم بيحسب وبيطبّق القواعد في مكان واحد.", "The front-end only displays; the server computes and applies rules in one place."), u("الترتيب: البيانات ← صحة الأرقام ← العرض ← التجميل.", "Order: data → correct numbers → display → polish.")], chain: [u("المحرر", "Editor"), u("المساعد البرمجي", "Coding assistant"), u("الخادم", "Server"), u("الواجهة", "Front-end"), u("مطابقة الأرقام", "Match numbers"), u("تشغيل بنقرة", "One-click run")], remember: u("بناء الواجهة قبل ما تتأكد من صحة الأرقام هو الغلطة الأكتر تكرارًا.", "Building the UI before checking the numbers is the most common mistake.") } },
-    { id: "u5", n: 5, badge: "5", color: "#2a9a5c", pages: [32, 40],
-      title: u("GitHub · النماذج · النظام · الفريق الرقمي", "GitHub · Models · Systems · The digital team"), short: u("النماذج والنظام والفريق", "Models, system, team"),
-      sum: u("الدليل الخامس: إدارة الأكواد على GitHub، خريطة النماذج وأحجامها وأسعارها لحد سبتمبر 2026، تشغيل النماذج محليًا، وبعدين بناء منظومة فريق رقمي من الوكلاء بيديرها.", "Guide 5: managing code on GitHub, the map of models, sizes and prices up to September 2026, running models locally, then building a system run by a digital team of agents."),
+    { id: "u5", n: 6, badge: "6", color: "#2a9a5c",
+      title: u("أدوات وبرامج صغيرة بتشتغل بضغطة", "Small tools and programs that run in one click"), short: u("الأدوات", "Tools"),
+      sum: u("إزاي توصف أداة بدقة، وتقرر تستاهل ولا لأ، وتجرّبها وتعتمد عليها؛ وفهم مبسّط للبرنامج بيتكوّن من إيه، وحفظ نسخ الشغل، والخصائص المشتركة في المساعدات البرمجية. ومعاها: المذاكرة بالذكاء الاصطناعي.", "How to describe a tool precisely, decide whether it is worth building, test it and rely on it; a simple picture of what a program is made of, saving versions of your work, and the features coding assistants share. Alongside: studying with AI."),
+      big: u("المهارة المطلوبة مش كتابة الكود، **وصف العملية بدقة وبطريقة تنفع في التنفيذ** — زي ما تشرحها لموظف جديد.", "The skill isn’t writing code but **describing the process precisely and actionably** — as you would to a new employee."),
+      review: { points: [u("ماتبنيش أداة إلا لمهمة متكررة، قواعدها ثابتة، ونتيجتها تقدر تتحقق منها.", "Only build a tool for a recurring task with stable rules and a result you can verify."), u("مواصفة المهمة: المشكلة، والمدخلات، والقواعد، والنتيجة، والاختبارات.", "The task spec: problem, inputs, rules, result and tests."), u("قواعد ثابتة: ما تلمسش الأصل، وسجل تشغيل، وفشل واضح.", "Fixed rules: never touch the original, keep a run log, fail clearly."), u("البرنامج واجهة بتعرض وجزء بيحسب؛ والأرقام تتأكد قبل الشكل.", "A program is a screen that shows and a part that calculates; check the numbers before the looks."), u("حفظ النسخ بيخلّيك ترجع لأي نقطة لو حصلت مشكلة.", "Saving versions lets you go back to any point if something goes wrong."), u("ملف التعليمات الدائمة بيفهّم المساعد مشروعك من أول جلسة.", "A standing-instructions file lets the assistant understand your project from the first session.")], chain: [u("وصف", "Describe"), u("قرار", "Decide"), u("بناء", "Build"), u("اختبار", "Test"), u("حفظ نسخة", "Save a version"), u("تشغيل بضغطة", "One-click run")], remember: u("ماتطلعش لمستوى جديد قبل ما اللي قبله يشتغل بثبات ومن غير أخطاء صامتة.", "Don’t move up a level until the one before runs reliably with no silent errors.") } },
+    { id: "u6", n: 7, badge: "7", color: "#0e7fb8",
+      title: u("مساعدك في الشغل: تفكير وقرار وعرض يقنع", "Your assistant at work: thinking, deciding and a pitch that convinces"), short: u("مساعدك في الشغل", "Assistant at work"),
+      sum: u("طلبات قوية من أول مرة، وتنظيم اليوم، وفهم المشكلة قبل حلها، وعقل تاني لملفات القسم، وعرض يقنع الإدارة. ومعاها: تختار الأداة المناسبة، والتطور المهني في المنافسة الجاية.", "Strong requests the first time, running your day, understanding a problem before solving it, a second brain for your department’s files, and a pitch that convinces management. Alongside: choosing the right tool, and growing professionally in the competition ahead."),
+      big: u("الاستخدام الحقيقي بيبدأ لما تبطل تطلب «إجابة» وتطلب **نتيجة تنفع في التنفيذ**: خطة، أو قرار، أو أداة تشتغل بدالك.", "Real use begins when you stop asking for “an answer” and ask for **an actionable result**: a plan, a decision, or a tool working for you."),
+      review: { points: [u("المعادلة: هدف واضح + Context كفاية + طلب محدد + شكل النتيجة = نتيجة تنفع في التنفيذ.", "The equation: clear goal + enough context + specific request + output format = actionable result."), u("أهم تقنية: «اسألني عن أي معلومة ناقصة… أبسط حل… اختبر الحالات الاستثنائية».", "Strongest technique: “ask me what’s missing… simplest solution… test edge cases”."), u("صحّح في نفس المحادثة؛ المحترف مابيبدأش من الأول.", "Correct in the same conversation; skilled users don’t start over."), u("الاستراتيجي: الفهم ← التحليل ← التشخيص ← المخاطر ← البدائل ← القرار ← الخطوات.", "Strategic order: understand → analyse → diagnose → risks → options → decision → steps."), u("العقل التاني: دفتر واحد لهدف واحد، وكل إجابة باستشهاد.", "Second brain: one notebook per goal, every answer cited."), u("المصدر الأول، وبعدين القصة، وبعدين الصورة.", "Source first, then story, then visuals.")], chain: [u("صياغة", "Wording"), u("إنتاجية", "Productivity"), u("استراتيجية", "Strategy"), u("عقل تاني", "Second brain"), u("عرض لقرار", "Pitch for a decision"), u("عادة", "Habit")], remember: u("ماتحفظش الـ Prompt؛ افهم هدفه، عشان تقدر تعدّله لأي موقف.", "Don’t memorise prompts; understand their purpose so you can adapt them.") } },
+    { id: "u7", n: 8, badge: "8", color: "#8a5a2b",
+      title: u("الصورة الكبيرة: من الأداة للنظام للفريق الرقمي", "The big picture: from tool to system to digital team"), short: u("الصورة الكبيرة", "The big picture"),
+      sum: u("نظرة عامة تفتح الآفاق: إزاي الأدوات بتتربط في نظام واحد، ويعني إيه فريق رقمي من الوكلاء، وفين مكان الإنسان، ومشروع التخرج.", "A broad view that opens horizons: how tools connect into one system, what a digital team of agents means, where the human stands, and the graduation project."),
       big: u("التدرج من **الأداة للنظام للفريق** — وابدأ ضيق وعميق: شريحة واحدة تشتغل من أولها لآخرها أغلى من خطة شاملة ما اتنفّذتش.", "Progress from **tool to system to team** — start narrow and deep: one slice working end to end beats a grand plan never built."),
-      review: { points: [u("Git نسخة واحدة على جهازك وتاريخ كامل وراها؛ GitHub بيحفظها بره وبيخلّي الشغل الجماعي ممكن.", "Git: one copy on your machine with full history behind it; GitHub keeps it off-machine and enables teamwork."), u("الأكبر مش الأحسن دايمًا: التكلفة والسرعة والتخصص.", "Bigger isn’t always better: cost, speed, specialisation."), u("ابدأ من الطبقة الأرخص وماتطلعش إلا لما الأقل يفشل في مهمتك.", "Start from the cheapest tier; move up only when the lower one fails your task."), u("المحلي للبيانات الحساسة والشغل من غير نت؛ والسحابة لأعلى جودة.", "Local for sensitive data and offline work; cloud for top quality."), u("النظام بيربط الخطوات من غير وسيط بشري؛ والإنسان عند الاستثناء والقرار.", "A system links steps with no human courier; the human handles exceptions and decisions."), u("الفريق الرقمي: ابدأ بتلت أدوار (جامع، محلل، مراجع) وسقف للتكلفة والمحاولات.", "Digital team: start with three roles (collector, analyst, critic) and caps on cost and attempts.")], chain: [u("GitHub", "GitHub"), u("اختيار النموذج", "Model choice"), u("محلي أو سحابي", "Local or cloud"), u("نظام بطبقات خمس", "Five-layer system"), u("شريحة عمودية", "Vertical slice"), u("فريق وكلاء", "Agent team")], remember: u("تلات أدوار شغالة بثبات أحسن من سبعة محدش عارف مين فيهم غلط.", "Three roles working with confidence beat seven where nobody knows which one failed.") } },
+      review: { points: [u("النظام بيربط الخطوات من غير وسيط بشري؛ والإنسان عند الاستثناء والقرار.", "A system links steps with no human courier; the human handles exceptions and decisions."), u("ابدأ ضيق وعميق: جزء واحد شغّال من أوله لآخره أحسن من خطة كبيرة ما اتنفّذتش.", "Start narrow and deep: one part working end to end beats a big plan never built."), u("الفريق الرقمي فكرته أدوار واضحة وحدود للتكلفة والمحاولات.", "A digital team means clear roles and limits on cost and attempts."), u("القرار والمسؤولية بيفضلوا عند الإنسان.", "The decision and the responsibility stay with the human.")], chain: [u("أداة", "Tool"), u("نظام", "System"), u("فريق رقمي", "Digital team"), u("قرار بشري", "Human decision")], remember: u("تلات أدوار شغالة بثبات أحسن من سبعة محدش عارف مين فيهم غلط.", "Three roles working with confidence beat seven where nobody knows which one failed.") } },
   ];
 
   A.labs = [
@@ -1688,16 +1703,22 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     u1: { lesson: "p9", p: 13, file: { ar: "طلب معادلة الهامش", en: "Margin formula request" },
       del: [["عايز معادلة هامش الربح", "I want a profit margin formula"]],
       add: [["العمود A المنتج، B الكمية، C السعر، D التكلفة", "column A product, B qty, C price, D cost"], ["الناتج: هامش الربح كنسبة مئوية", "output: profit margin as a percentage"], ["لو البيانات ناقصة الخلية تفضل فاضية", "if data is missing, leave the cell blank"]] },
-    u2: { lesson: "y2", p: 18, file: { ar: "قواعد أداة الأتمتة", en: "Automation tool rules" },
+    u5: { lesson: "y2", p: 18, file: { ar: "قواعد أداة الأتمتة", en: "Automation tool rules" },
       del: [["بكتب فوق الملف الأصلي", "write over the original file"], ["بكمل بصمت لو البنية غريبة", "carry on silently on a strange structure"]],
       add: [["اكتب في نسخة أو مجلد مخرجات", "write to a copy or an output folder"], ["سطر في سجل التشغيل لكل مرة", "one run-log line per run"], ["قف برسالة واضحة", "stop with a clear message"]] },
-    u3: { lesson: "d1", p: 24, file: { ar: "طلب لوحة المعلومات", en: "Dashboard request" },
+    u4: { lesson: "d1", p: 24, file: { ar: "طلب لوحة المعلومات", en: "Dashboard request" },
       del: [["اعملي لوحة من الملف", "build me a dashboard from this file"], ["شاركها على طول", "share it right away"]],
       add: [["اسألني 3–5 أسئلة عن القرار الأول", "ask me 3–5 questions about the decision first"], ["اعتمد تصور كتابة قبل البناء", "approve a text outline before building"], ["اتأكد من كل رقم قبل المشاركة", "verify every number before sharing"]] },
-    u4: { lesson: "w5", p: 30, file: { ar: "ترتيب بناء التطبيق", en: "App build order" },
-      del: [["ابدأ بتجميل الواجهة", "start by polishing the UI"]],
-      add: [["ابنِ الخادم الأول", "build the server first"], ["طابق الأرقام في صفحة التوثيق", "check the numbers on the docs page"], ["بعدين الواجهة، وبعدين التلميع", "then the UI, then polish"]] },
-    u5: { lesson: "s2", p: 38, file: { ar: "بناء النظام", en: "Building the system" },
+    u2: { lesson: "p10", p: 14, file: { ar: "طلب ماكرو التقرير الأسبوعي", en: "Weekly report macro request" },
+      del: [["اعملي ماكرو للتقرير", "make me a macro for the report"]],
+      add: [["اشتغل على نسخة من الملف", "work on a copy of the file"], ["اكتب سجل بكل خطوة اتنفّذت", "log every step that ran"], ["جرّب على صفين قبل الكل", "try two rows before all of them"]] },
+    u3: { lesson: "m3", p: 36, file: { ar: "قاعدة البيانات الحساسة", en: "Sensitive data rule" },
+      del: [["برفع ملف المرتبات لأي أداة على النت", "upload the payroll file to any online tool"]],
+      add: [["البيانات الحساسة تفضل على الجهاز", "sensitive data stays on the machine"], ["السحابة للبيانات المسموح بيها بس", "the cloud only for data that is allowed"], ["الرقم المستخرج يتراجع مع الأصل", "an extracted figure is checked against the original"]] },
+    u6: { lesson: "p1", p: 7, file: { ar: "طلب تقرير للمدير", en: "A report request for the manager" },
+      del: [["اكتبلي تقرير عن المبيعات", "write me a report on sales"]],
+      add: [["الهدف: قرار بزيادة مخزون فرعين", "goal: a decision to raise stock at two branches"], ["الجمهور: المدير العام، صفحة واحدة", "audience: the general manager, one page"], ["اسألني عن أي معلومة ناقصة قبل ما تبدأ", "ask me about anything missing before you start"]] },
+    u7: { lesson: "s2", p: 38, file: { ar: "بناء النظام", en: "Building the system" },
       del: [["ابدأ بأصعب عملية", "start with the hardest process"], ["سيب النموذج يحسب المؤشرات", "let the model compute the KPIs"]],
       add: [["شريحة عمودية ضيقة من الأول للآخر", "one narrow vertical slice end to end"], ["القواعد بتحسب، والذكاء الاصطناعي بيشرح", "rules compute, AI explains"], ["موافقة بشرية قبل الإرسال", "human approval before sending"]] }
   };
@@ -3039,7 +3060,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
         mech: [
           L("how", "- **Power Query**: جوّه إكسل، بيسجّل خطوات الجلب والتحويل (فولدر ملفات، تحت بعض، ربط جداول) وتعيدها بزرار «تحديث».\n- **الماكرو**: كود VBA جوّه الملف، بيعمل أي حاجة إنت بتعملها، بس ما بيتلغيش بـ «تراجع».\n- **برنامج من برّه (COM)**: سكريبت PowerShell بيفتح إكسل في الخلفية ويشتغل على الملفات ويقفله، من غير ما تنزّل حاجة.", "- **Power Query**: inside Excel; records import and transform steps (a folder of files, stacking, joining tables) and reruns them with “Refresh”.\n- **Macros**: VBA code inside the workbook; does anything you do, but can’t be undone with “Undo”.\n- **An outside program (COM)**: a PowerShell script opens Excel in the background, works on the files and closes it, with nothing to install."),
           L("inside", "إكسل بيقبل أوامر من برامج تانية على نفس الجهاز، ودي فكرة COM. السكريبت بيقول لإكسل: افتح الملف ده للقراءة بس، وهات القيم دي، واكتب النتيجة في ملف جديد، واقفل. ولازم في الآخر يقفل إكسل ويحرره من الذاكرة حتى لو حصل خطأ، وإلا هتلاقي نسخ إكسل شغالة في الخلفية.", "Excel accepts commands from other programs on the same computer — that is COM. The script tells Excel: open this file read-only, fetch these values, write the result to a new file, close. And at the end it must close Excel and release it from memory even after an error, otherwise you’ll find copies of Excel running in the background."),
-          L("link", "ده تطبيق مباشر لسلسلة [[f3]] على ملفاتك، وبقواعد الأمان من [[f5]]. والوحدة الجاية بتكمّل من هنا: البيانات بتطلع من إكسل لقاعدة بيانات وأدوات بايثون ([[y1]]).", "This applies the [[f3]] chain directly to your files, with the safety rules from [[f5]]. The next unit continues from here: data leaves Excel for a database and Python tools ([[y1]])."),
+          L("link", "ده تطبيق مباشر لسلسلة [[f3]] على ملفاتك، وبقواعد الأمان من [[f5]]. والوحدة الجاية بتكمّل من هنا: ملفات كتير وبيانات أكبر من إكسل، ونبدأ بفحص جودتها ([[y4]]).", "This applies the [[f3]] chain directly to your files, with the safety rules from [[f5]]. The next unit continues from here: many files and data bigger than Excel, starting with checking their quality ([[y4]])."),
         ],
         practice: [
           L("example", "**تحت بعض**: ٥٢ ملف أسبوعي بنفس الأعمدة في جدول واحد، مع عمود «من أنهي ملف» وجدول محوري.\n**بحث وربط**: جدول خام كبير فيه أكواد بس، بياخد اسم الصنف وفئته واسم الفرع ومنطقته من شيتات صغيرة، مع شيت للأكواد اللي ما اتربطتش.\n**تقرير من ملفين**: المبيعات من ملف والأهداف من ملف، وتقرير بنسبة التحقيق لكل فرع، مع مراجعة إن الإجمالي مطابق للمصدر.", "**Stacking**: 52 weekly files with the same columns into one table, with a “source file” column and a pivot table.\n**Lookups**: a big raw table holding only codes takes product name and category, branch name and region from small sheets, plus a sheet of codes that didn’t match.\n**Two-file report**: sales from one workbook and targets from another, a report of achievement per branch, with a check that the total matches the source."),
@@ -3062,7 +3083,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
   const L = (k, ar, en) => ({ k, ar, en });
   A.lessons = (A.lessons || []).concat([
     {
-      id: "p1", unit: "u1", pages: [7], diff: 1, min: 9, scene: "equation", lab: "prompt", related: ["f4", "p2", "p3", "d1"], pre: ["f4"],
+      id: "p1", unit: "u6", pages: [7], diff: 1, min: 9, scene: "equation", lab: "prompt", related: ["f4", "p2", "p3", "d1"], pre: ["f4"],
       title: { ar: "إزاي تطلب منه حاجة ويطلع المطلوب من أول مرة؟", en: "The governing equation and the five elements" },
       sum: { ar: "الطلب العام زي «حلل الملف» بيرجّع نتيجة عامة. الطلب اللي فيه الهدف والظروف والمهمة بالظبط وشكل النتيجة بيطلّع المطلوب من أول مرة.", en: "Clear goal + enough context + specific request + output format = an actionable result; and the five elements of any good request." },
       book: [
@@ -3104,7 +3125,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
         } },
     },
     {
-      id: "p2", unit: "u1", pages: [7], diff: 1, min: 5, scene: "technique", related: ["p1", "p3", "w2"], pre: ["p1"],
+      id: "p2", unit: "u6", pages: [7], diff: 1, min: 5, scene: "technique", related: ["p1", "p3", "w2"], pre: ["p1"],
       title: { ar: "الجملة اللي تمنع التخمين قبل ما يبدأ", en: "The guide’s strongest technique" },
       sum: { ar: "لو الطلب ناقصه معلومة مؤثرة، زي الشهر أو سعر الخامة، المساعد غالبًا هيفترض قيمة ويكمّل. جملة واحدة في أول الطلب بتخليه يسألك بدل ما يخمّن.", en: "One sentence at the start of every important request fixes three problems: silent assumptions, complexity and untested errors." },
       book: [
@@ -3133,7 +3154,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       },
     },
     {
-      id: "p3", unit: "u1", pages: [8], diff: 1, min: 6, related: ["p1", "p4", "p9"], pre: ["p1"],
+      id: "p3", unit: "u6", pages: [8], diff: 1, min: 6, related: ["p1", "p4", "p9"], pre: ["p1"],
       title: { ar: "أربع غلطات بتضيّع فايدة أي طلب", en: "Four mistakes that ruin results, three prompts that fix them" },
       sum: { ar: "أغلب إعادة الشغل جاية من أربع غلطات: وصف مبهم للبيانات، وقبول أول إجابة، وتجاهل الخلايا الفاضية والحالات الناقصة، والتجربة على الملف الأصلي على طول.", en: "Vague descriptions, accepting the first answer, ignoring missing cases, applying straight to the real file — and how to fix them." },
       book: [
@@ -3163,7 +3184,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       },
     },
     {
-      id: "p4", unit: "u1", pages: [8], diff: 1, min: 5, scene: "convo", related: ["p3", "p1", "t1"], pre: ["p1"],
+      id: "p4", unit: "u6", pages: [8], diff: 1, min: 5, scene: "convo", related: ["p3", "p1", "t1"], pre: ["p1"],
       title: { ar: "الرد مش عاجبك؟ إزاي تصلحه من غير ما تبدأ من الصفر", en: "Managing the conversation: what to do when you dislike the result" },
       sum: { ar: "لما الرد ما يعجبكش، ما تبدأش من الأول. حدّد العيب بالظبط، زي «الأرقام ناقصة» أو «الملخص طويل»، والمساعد هيصلّح الجزء ده بس.", en: "The biggest gap between beginner and skilled isn’t the first request but what follows: the five-step loop and three common situations." },
       book: [
@@ -3193,7 +3214,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       },
     },
     {
-      id: "p5", unit: "u1", pages: [8, 9, 10], diff: 1, min: 9, scene: "daily", related: ["p4", "p6", "p12"], pre: ["p1"],
+      id: "p5", unit: "u6", pages: [8, 9, 10], diff: 1, min: 9, scene: "daily", related: ["p4", "p6", "p12"], pre: ["p1"],
       title: { ar: "إزاي الذكاء الاصطناعي يرتّب يومك بدل ما يزوّده ضغط؟", en: "Productivity prompts and running your day" },
       sum: { ar: "الزحمة مش في عدد المهام، الزحمة في إنها مش مترتبة. المساعد يقدر يحوّل رسايلك ومحاضر اجتماعاتك لقائمة واضحة: مين يعمل إيه، وإمتى، وتبدأ بإيه.", en: "Organising the day, meetings, tasks, professional writing, research, follow-up, process improvement, delegation, triage and the all-in-one prompt." },
       book: [
@@ -3234,7 +3255,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
         } },
     },
     {
-      id: "p6", unit: "u1", pages: [10, 11], diff: 2, min: 8, related: ["p5", "p7", "y4"], pre: ["p1"],
+      id: "p6", unit: "u6", pages: [10, 11], diff: 2, min: 8, related: ["p5", "p7", "y4"], pre: ["p1"],
       title: { ar: "قبل ما تدور على حل، افهم المشكلة الأول", en: "Strategic prompts: understanding, diagnosis and priorities" },
       sum: { ar: "«الإنتاج نزل» عَرَض، مش سبب. قبل ما تقترح حل، قسّم الرقم حسب الخط والوردية واليوم، واختبر كل تفسير بدليل.", en: "The previous section helps you get work done; this one helps you know which work is worth doing at all." },
       book: [
@@ -3266,7 +3287,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       },
     },
     {
-      id: "p7", unit: "u1", pages: [11], diff: 2, min: 8, scene: "strategic", related: ["p6", "s2", "y4"], pre: ["p6"],
+      id: "p7", unit: "u6", pages: [11], diff: 2, min: 8, scene: "strategic", related: ["p6", "s2", "y4"], pre: ["p6"],
       title: { ar: "إزاي تختار بين كذا قرار من غير ما تتحيز لرأيك؟", en: "Scenarios, challenging ideas and the all-in-one strategic prompt" },
       sum: { ar: "أول حل بييجي في بالك بيكسب انحيازك من غير ما تاخد بالك. اطلب من المساعد يبني بدائل ويعارض فكرتك بالأرقام قبل ما تصرف فلوس.", en: "Three scenarios, a pre-mortem, “don’t just agree with me”, missing information, and the prompt that enforces an order you can’t skip." },
       book: [
@@ -3298,7 +3319,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       },
     },
     {
-      id: "p8", unit: "u1", pages: [12, 13], diff: 2, min: 10, scene: "brain", lab: "brain", related: ["f1", "p11", "s1"], pre: ["p1"],
+      id: "p8", unit: "u6", pages: [12, 13], diff: 2, min: 10, scene: "brain", lab: "brain", related: ["f1", "p11", "s1"], pre: ["p1"],
       title: { ar: "إزاي تخلي ملفات القسم تبقى عقل تقدر تسأله؟", en: "The second brain: from scattered files to a knowledge system" },
       sum: { ar: "لما سياسات القسم تبقى متفرقة، كل حد بيجاوب من ذاكرته. لو جمعت المستندات المعتمدة في مكان واحد، تقدر تسألها وتاخد الإجابة ومعاها مرجعها.", en: "NotebookLM: you set the knowledge AI may think with, and every answer comes with a citation back to the source." },
       book: [
@@ -3372,7 +3393,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       },
     },
     {
-      id: "p10", unit: "u1", pages: [13, 14], diff: 2, min: 9, scene: "macro", related: ["p9", "y1", "w2"], pre: ["p9"],
+      id: "p10", unit: "u2", pages: [13, 14], diff: 2, min: 9, scene: "macro", related: ["p9", "y1", "w2"], pre: ["p9"],
       title: { ar: "إزاي تخلي الخطوات اللي بتكررها تحصل بضغطة؟", en: "First real automation: macros and AI-written code" },
       sum: { ar: "أي خطوات بتكررها كل يوم بنفس الترتيب، زي فتح ملف وتنسيقه ونسخ جدول منه، ممكن تتسجل مرة وتتنفذ بضغطة، بشرط تجربها على نسخة الأول.", en: "The macro recorder, then let AI write the code, two unbreakable rules, and the golden code prompt." },
       book: [
@@ -3414,7 +3435,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
         } },
     },
     {
-      id: "p11", unit: "u1", pages: [14, 15], diff: 2, min: 8, scene: "capstone", related: ["p8", "y6", "d2"], pre: ["p8"],
+      id: "p11", unit: "u6", pages: [14, 15], diff: 2, min: 8, scene: "capstone", related: ["p8", "y6", "d2"], pre: ["p8"],
       title: { ar: "إزاي تحول التحليل لكلام الإدارة تفهمه وتقرر عليه؟", en: "From the report to a pitch that convinces management" },
       sum: { ar: "الإدارة مش محتاجة كل الأرقام اللي عندك. محتاجة تعرف إيه اللي اتغير، وليه، والقرار المطلوب منها، بالترتيب ده.", en: "Three tools, three roles; mixing them is the fatal mistake; story and review prompts; the capstone and its criteria." },
       book: [
@@ -3454,7 +3475,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
         } },
     },
     {
-      id: "p12", unit: "u1", pages: [15, 16], diff: 1, min: 7, scene: "plan30", related: ["f2", "p2", "f5"], pre: ["p1"],
+      id: "p12", unit: "u6", pages: [15, 16], diff: 1, min: 7, scene: "plan30", related: ["f2", "p2", "f5"], pre: ["p1"],
       title: { ar: "إزاي تخلي اللي اتعلمته عادة شغل مش حماس يومين؟", en: "From a guide to a habit: the index, the plan and the checklist" },
       sum: { ar: "قيمة أي كورس بتتقاس بالعادة اللي بتفضل بعده. اختار مهمة واحدة متكررة، طبّق عليها كل أسبوع، وقيس الوقت والجودة قبل وبعد.", en: "Which prompt when, where to actually start, the 30-day plan, the checklist, and three mistakes that block the change." },
       book: [
@@ -3495,7 +3516,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
   const L = (k, ar, en) => ({ k, ar, en });
   A.lessons = (A.lessons || []).concat([
     {
-      id: "y1", unit: "u2", pages: [17], diff: 2, min: 8, scene: "spec", related: ["p1", "p10", "y2"], pre: ["p10"],
+      id: "y1", unit: "u5", pages: [17], diff: 2, min: 8, scene: "spec", related: ["p1", "p10", "y2"], pre: ["p10"],
       title: { ar: "قبل ما تطلب برنامج، اكتب بالضبط هو المفروض يعمل إيه", en: "Describe the process, not the code: the task spec" },
       sum: { ar: "طلب زي «عايز أداة تدمج الملفات» ناقصه أهم حاجة: أنهي ملفات؟ وإيه اللي يحصل لو فيه عمود ناقص أو صف متكرر؟ المواصفة الواضحة بتحسم ده قبل ما يتكتب سطر كود.", en: "Three ideas that govern everything after, and five elements before writing any line — tests above all." },
       book: [
@@ -3524,7 +3545,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       },
     },
     {
-      id: "y2", unit: "u2", pages: [17, 18], diff: 2, min: 7, scene: "compass", lab: "worth", related: ["y1", "y3", "p12"], pre: ["y1"],
+      id: "y2", unit: "u5", pages: [17, 18], diff: 2, min: 7, scene: "compass", lab: "worth", related: ["y1", "y3", "p12"], pre: ["y1"],
       title: { ar: "هل كل مهمة متكررة تستاهل برنامج؟", en: "Decision compass: when does a task deserve a tool?" },
       sum: { ar: "مش كل مهمة متكررة تستاهل برنامج. اضرب وقت المهمة في عدد مرات تكرارها، وقارن الناتج بوقت بناء الأداة وصيانتها، وبعدين قرر.", en: "Four questions decide whether automation is worth it, and four engineering rules protect the tool from rebuilds." },
       book: [
@@ -3563,7 +3584,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
         } },
     },
     {
-      id: "y3", unit: "u2", pages: [18, 19], diff: 2, min: 9, scene: "prefer", lab: "pipeline", related: ["y2", "y7", "s1"], pre: ["y2"],
+      id: "y3", unit: "u5", pages: [18, 19], diff: 2, min: 9, scene: "prefer", lab: "pipeline", related: ["y2", "y7", "s1"], pre: ["y2"],
       title: { ar: "إزاي تبني أتمتة تشتغل كل يوم بثبات ومن غير أعطال مفاجئة؟", en: "Level 1: run automation" },
       sum: { ar: "أتمتة بتنجح ١٠٠ مرة وتفشل في المرة ١٠١ من غير ما تقول أخطر من إنك تشتغل بإيدك. الأتمتة اللي يُعتمد عليها بتتأكد من كل خطوة، ولو حاجة فشلت بتوقف وتقول السبب.", en: "The tool map, the preference order that makes tools last for years, a typical chain, and essential run controls." },
       book: [
@@ -3596,7 +3617,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       },
     },
     {
-      id: "y4", unit: "u2", pages: [19, 20], diff: 2, min: 9, scene: "drill7", lab: "quality", related: ["p6", "f3", "d2"], pre: ["y3"],
+      id: "y4", unit: "u1", pages: [19, 20], diff: 2, min: 9, scene: "drill7", lab: "quality", related: ["p6", "f3", "d2"], pre: ["y3"],
       title: { ar: "ليه لازم نفحص البيانات قبل ما نحللها؟", en: "Level 2: the analysis engine — quality first" },
       sum: { ar: "لو البيانات فيها تكرار أو تواريخ ناقصة أو وحدات مختلفة، أي تحليل مبني عليها هيطلع غلط مهما كان شكله مقنع. فحص البيانات بييجي قبل أي حساب.", en: "DuckDB, Polars and ydata-profiling, why quality checks are mandatory, the seven questions before any chart, and breaking down “efficiency fell 7%”." },
       book: [
@@ -3637,7 +3658,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
         } },
     },
     {
-      id: "y5", unit: "u2", pages: [20, 21], diff: 3, min: 7, related: ["y4", "y6", "s1"], pre: ["y4"],
+      id: "y5", unit: "u4", pages: [20, 21], diff: 3, min: 7, related: ["y4", "y6", "s1"], pre: ["y4"],
       title: { ar: "بايثون ولا منصة كبيرة للشركة؟", en: "Python or an enterprise reporting platform?" },
       sum: { ar: "أداة صغيرة تكفي لتقرير بيشوفه ٣ أشخاص. لكن لما يبقى عندك مئات المستخدمين وصلاحيات ومراجعات، هتحتاج منصة. اللي بيحدد الاختيار حجم المسؤولية، مش شهرة الأداة.", en: "The question isn’t which is stronger but which fits your scale and governance: when Python is enough, when a platform is needed, and four signals to switch." },
       book: [
@@ -3670,7 +3691,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       },
     },
     {
-      id: "y6", unit: "u2", pages: [21, 22], diff: 2, min: 8, scene: "stations", related: ["p11", "d2", "w3"], pre: ["y4"],
+      id: "y6", unit: "u4", pages: [21, 22], diff: 2, min: 8, scene: "stations", related: ["p11", "d2", "w3"], pre: ["y4"],
       title: { ar: "إزاي تخلي المدير يفهم التقرير في دقيقة؟", en: "Level 3: from analysis to an interactive executive experience" },
       sum: { ar: "المدير عايز يعرف في دقيقة: المشكلة فين، وحجمها قد إيه، والمطلوب إيه. التقرير لازم يجاوب الأسئلة دي بالترتيب ده، والتفاصيل تيجي بعدها.", en: "One page that opens in a click and leads its reader from result to decision in minutes: seven stations, the 30-second test, six mistakes." },
       book: [
@@ -3713,7 +3734,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
         } },
     },
     {
-      id: "y7", unit: "u2", pages: [22, 23], diff: 3, min: 8, scene: "pipeline10", related: ["y3", "w5", "s2"], pre: ["y6"],
+      id: "y7", unit: "u5", pages: [22, 23], diff: 3, min: 8, scene: "pipeline10", related: ["y3", "w5", "s2"], pre: ["y6"],
       title: { ar: "من ٤ ملفات خام لتقرير يفتح بضغطة واحدة", en: "The reference project: from raw files to a one-click report" },
       sum: { ar: "ملفات بتتنزل وتتنضف وتتجمع كل أسبوع بإيد موظفين ممكن تتحول لسلسلة واحدة بتشتغل بضغطة، وفيها فحص عند كل خطوة بيوقفها لو فيه حاجة غلط.", en: "A ten-step pipeline joining the three levels, acceptance criteria, a delivery checklist, and the decision and learning map." },
       book: [
@@ -3733,7 +3754,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
         mech: [
           L("how", "الخطوات العشر هي المستويات التلاتة متصلة: **التشغيل** (مراقبة، قراءة، تنظيف) ← **التحليل** (جودة، محرك، مشاكل، مؤشرات) ← **العرض** (رسوم، صفحة، إرسال). كل خطوة وحدة مستقلة تقدر تختبرها لوحدها.", "The ten steps are the three levels connected: **run** (watch, read, clean) → **analysis** (quality, engine, problems, KPIs) → **reporting** (charts, page, send). Each step is an independent module testable on its own."),
           L("inside", "لاحظ إن قائمة التسليم بتطلب **مسار مجرب لاسترجاع النسخة اللي فاتت**: الأتمتة الناضجة بتفترض إنها هتغلط يوم، فبتجهز طريق الرجوع من بدري.", "Note the checklist asks for **a tested path to restore the previous version**: mature automation assumes it will fail one day and prepares the way back in advance."),
-          L("link", "ده «النظام» في صورته الأولى؛ الدليل الخامس هيعمّمه لطبقات خمس وشريحة عمودية ([[s1]]، [[s2]])، والدليل الرابع هيحوّله لتطبيق ويب محلي ([[w5]]).", "This is the “system” in its first form; guide 5 generalises it into five layers and a vertical slice ([[s1]], [[s2]]), and guide 4 turns it into a local web app ([[w5]])."),
+          L("link", "ده «النظام» في صورته الأولى؛ في نفس الوحدة بيتحوّل لتطبيق على جهازك ([[w5]])، والوحدة الأخيرة بتعمّمه لنظام بطبقات خمس وشريحة عمودية ([[s1]]، [[s2]]).", "This is the “system” in its first form; later in this unit it becomes an app on your machine ([[w5]]), and the last unit generalises it into five layers and a vertical slice ([[s1]], [[s2]])."),
         ],
         practice: [
           L("example", "**قسم الجودة**: كل يوم ملفات فحص من تلات خطوط بتوصل لمجلد مشترك. السلسلة بتقراهم، بتستبعد الصفوف التالفة وتسجّل السبب، بتحسب نسبة العيوب لكل خط، بتكشف أي خط عدّى الحد، وبتبني صفحة رابطها يتبعت لمدير الجودة.", "**Quality department**: inspection files from three lines land daily in a shared folder. The chain reads them, excludes corrupt rows and logs why, computes the defect rate per line, flags any line over the limit, and builds a page whose link goes to the quality manager."),
@@ -3757,7 +3778,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
   A.lessons = (A.lessons || []).concat([
     /* ---------------- UNIT 3 ---------------- */
     {
-      id: "d1", unit: "u3", pages: [24], diff: 1, min: 7, scene: "prep", related: ["p9", "y4", "d2"], pre: ["p1"],
+      id: "d1", unit: "u4", pages: [24], diff: 1, min: 7, scene: "prep", related: ["p9", "y4", "d2"], pre: ["p1"],
       title: { ar: "جهّز البيانات وحدّد الغرض", en: "Preparing data and defining the purpose" },
       sum: { ar: "خمس دقائق تجهيز بتوفرّ ساعات مراجعة، وبعدين أول 3 مراحل: الغرض والجمهور، المؤشرات، والموافقة على التصميم قبل ما تبني.", en: "Five minutes of prep save hours of review, then the first three stages: purpose and audience, KPIs, and approving the design before building." },
       book: [
@@ -3788,7 +3809,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       },
     },
     {
-      id: "d2", unit: "u3", pages: [24, 25], diff: 2, min: 9, scene: "dash8", lab: "dashboard", related: ["d1", "y6", "w3"], pre: ["d1"],
+      id: "d2", unit: "u4", pages: [24, 25], diff: 2, min: 9, scene: "dash8", lab: "dashboard", related: ["d1", "y6", "w3"], pre: ["d1"],
       title: { ar: "البناء والتفاعل والتحقق والمشاركة", en: "Build, interact, verify and share" },
       sum: { ar: "المراحل من 4 لـ 8: البناء حسب التصور، فلاتر متزامنة، الهوية البصرية، التحقق من الأرقام، الحفظ والمشاركة — وست أماكن غلط شائعة.", en: "Stages 4 to 8: build to the outline, synced filters, visual identity, number verification, saving and sharing — and the six common pitfalls." },
       book: [
@@ -3831,11 +3852,11 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     },
     /* ---------------- UNIT 4 ---------------- */
     {
-      id: "w1", unit: "u4", pages: [26], diff: 1, min: 6, scene: "vscode", related: ["w2", "w5", "g2"], pre: [],
+      id: "w1", unit: "u1", pages: [26], diff: 1, min: 6, scene: "vscode", related: ["w2", "w5", "g2"], pre: [],
       title: { ar: "بيئة الشغل: محرر VS Code", en: "Your workspace: the VS Code editor" },
       sum: { ar: "مكان واحد تشوف فيه ملفاتك وتكتب وتشغّل الأوامر: خمس مناطق، أول خمس خطوات، وتلات أخطاء شائعة.", en: "One place to see your files, write and run commands: five areas, the first five steps, and three common mistakes." },
       book: [
-        bp(26, "قبل أي كود محتاج مكان واحد تشوف فيه ملفاتك وتكتب فيه وتشغّل منه الأوامر — ده دور المحرر، وأهم برنامج هتفتحه كل يوم في الوحدة دي.", "Before any code you need one place to see your files, write and run commands — that’s the editor, the most important program you’ll open daily in this unit."),
+        bp(26, "قبل أي كود محتاج مكان واحد تشوف فيه ملفاتك وتكتب فيه وتشغّل منه الأوامر — ده دور المحرر، وأهم برنامج هتفتحه كل يوم لما تشتغل على مشروع.", "Before any code you need one place to see your files, write and run commands — that’s the editor, the most important program you’ll open daily when you work on a project."),
         bp(26, "**((vscode|VS Code))** محرر نصوص وأكواد مجاني من مايكروسوفت، شغال على ويندوز وماك ولينكس، خفيف وسريع وبقى المعيار العملي لمعظم المطورين. بيجمع في نافذة واحدة متصفح الملفات ومحرر الكود والطرفية ومعاينة النتيجة. **والأهم للمبتدئ**: ده بيت المساعد البرمجي Claude Code.", "**((vscode|VS Code))** is a free text and code editor from Microsoft for Windows, Mac and Linux — light, fast and the practical standard for most developers. One window combines the file browser, code editor, terminal and preview. **Most important for beginners**: it’s home to the Claude Code coding assistant."),
         bp(26, "الواجهة في خمس مناطق: شريط الأنشطة · مستكشف الملفات · منطقة المحرر (تبويبات زي المتصفح) · ((terminal|الطرفية)) (بتشغّل التطبيق وبتثبّت المكتبات وبتنادي المساعد) · لوحة الأوامر (توصل لكل أمر بالاسم).", "Five areas: activity bar · file explorer · editor area (tabs like a browser) · ((terminal|terminal)) (run the app, install libraries, call the assistant) · command palette (every command by name)."),
         bp(26, "أول خمس خطوات: ثبّته من الموقع الرسمي · اعمل مجلد المشروع وافتحه من المحرر · ثبّت الإضافات الأساسية (حزمة العربية، Python، Claude Code) · افتح الطرفية وتأكد إن المسار هو مجلد مشروعك (أكتر نقطة المبتدئين بيغلطوا فيها) · فعّل الحفظ التلقائي.", "First five steps: install from the official site · create the project folder and open it from the editor · install the core extensions (Arabic pack, Python, Claude Code) · open the terminal and check the path is your project folder (where beginners slip most) · turn on auto-save."),
@@ -3861,7 +3882,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       },
     },
     {
-      id: "w2", unit: "u4", pages: [27], diff: 2, min: 8, scene: "claude", related: ["w1", "p10", "g2"], pre: ["w1"],
+      id: "w2", unit: "u2", pages: [27], diff: 2, min: 8, scene: "claude", related: ["w1", "p10", "g2"], pre: ["w1"],
       title: { ar: "المساعد البرمجي Claude Code", en: "The coding assistant: Claude Code" },
       sum: { ar: "بيقرأ مشروعك ويكتب الملفات ويشغّل الأوامر ويصلح الأخطاء؛ إنت بتراجع وتوافق. ومعاه CLAUDE.md و Prompt «الخطة قبل التنفيذ» وتلات ضوابط أمان.", en: "It reads your project, writes files, runs commands and fixes errors; you review and approve. Plus CLAUDE.md, the “plan before executing” prompt and three security controls." },
       book: [
@@ -3894,7 +3915,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       },
     },
     {
-      id: "w3", unit: "u4", pages: [28], diff: 2, min: 7, scene: "building", related: ["w4", "d2", "y6"], pre: ["w1"],
+      id: "w3", unit: "u5", pages: [28], diff: 2, min: 7, scene: "building", related: ["w4", "d2", "y6"], pre: ["w1"],
       title: { ar: "الواجهة الأمامية: اللي المستخدم بيشوفه", en: "The front-end: what the user sees" },
       sum: { ar: "HTML للهيكل، CSS للشكل، JavaScript للسلوك؛ أدوات بتوفر وقت، وقرار مهم: ماتبدأش بإطار عمل.", en: "HTML for structure, CSS for look, JavaScript for behaviour; time-saving tools, and one key decision: don’t start with a framework." },
       book: [
@@ -3926,7 +3947,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       },
     },
     {
-      id: "w4", unit: "u4", pages: [29], diff: 2, min: 8, scene: "request", lab: "request", related: ["w3", "w5", "s1"], pre: ["w3"],
+      id: "w4", unit: "u5", pages: [29], diff: 2, min: 8, scene: "request", lab: "request", related: ["w3", "w5", "s1"], pre: ["w3"],
       title: { ar: "الواجهة الخلفية: اللي المستخدم مش بيشوفه", en: "The back-end: what the user doesn’t see" },
       sum: { ar: "العقل اللي بيقرأ ويحسب ويطبق القواعد: ليه محتاجين خادم، الطقم الموصى بيه، رحلة طلب واحد، ومبادئ تصميم ماتتنازلش عنها.", en: "The brain that reads, computes and applies rules: why we need a server, the recommended kit, one request’s journey, and non-negotiable design principles." },
       book: [
@@ -3958,7 +3979,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       },
     },
     {
-      id: "w5", unit: "u4", pages: [30], diff: 2, min: 8, scene: "appbuild", related: ["w4", "w6", "y7"], pre: ["w4"],
+      id: "w5", unit: "u5", pages: [30], diff: 2, min: 8, scene: "appbuild", related: ["w4", "w6", "y7"], pre: ["w4"],
       title: { ar: "بناء تطبيق ويب كامل على جهازك", en: "Building a full web app on your machine" },
       sum: { ar: "ليه تطبيق ويب محلي، بنية خمس مجلدات، والمسار في تمان مراحل — والترتيب مش اقتراح.", en: "Why a local web app, a five-folder structure, and the eight-stage path — the order isn’t a suggestion." },
       book: [
@@ -3998,7 +4019,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
         } },
     },
     {
-      id: "w6", unit: "u4", pages: [31], diff: 2, min: 7, related: ["w5", "w2", "p2"], pre: ["w5"],
+      id: "w6", unit: "u5", pages: [31], diff: 2, min: 7, related: ["w5", "w2", "p2"], pre: ["w5"],
       title: { ar: "Prompts التنفيذ وقائمة الاعتماد", en: "Execution prompts and the acceptance checklist" },
       sum: { ar: "خمس Prompts ورا بعض بتبني التطبيق، ست أسئلة قبل ما تعتمده، مسرد سريع، والدرس الأهم: الترتيب.", en: "Five sequential prompts that build the app, six questions before adopting it, a quick glossary, and the key lesson: order." },
       book: [
@@ -4112,7 +4133,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
         } },
     },
     {
-      id: "m1", unit: "u5", pages: [34], diff: 2, min: 9, scene: "moe", lab: "tokens", related: ["f1", "m2", "m3"], pre: ["f1"],
+      id: "m1", unit: "u1", pages: [34], diff: 2, min: 9, scene: "moe", lab: "tokens", related: ["f1", "m2", "m3"], pre: ["f1"],
       title: { ar: "النماذج: الأوزان والأحجام ومعنى «الذكاء»", en: "Models: weights, sizes and what “smart” means" },
       sum: { ar: "أربعة مفاهيم بيفكّوا كل الفروق (المعاملات، نافذة الـ Context، الخبراء المتفرقون، التوكنات)، وليه الأكبر مش الأفضل دايمًا، وطبقات النماذج وقاعدة الاختيار.", en: "Four concepts that explain every difference (parameters, context window, mixture of experts, tokens), why bigger isn’t always best, model tiers and the selection rule." },
       book: [
@@ -4145,7 +4166,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       },
     },
     {
-      id: "m2", unit: "u5", pages: [35], diff: 2, min: 8, related: ["m1", "m3", "t2"], pre: ["m1"],
+      id: "m2", unit: "u4", pages: [35], diff: 2, min: 8, related: ["m1", "m3", "t2"], pre: ["m1"],
       title: { ar: "خريطة الشركات والنماذج والأسعار — سبتمبر 2026", en: "Companies, models and prices — September 2026" },
       sum: { ar: "صورة السوق في لحظتها: العائلات الكبرى، ونطاقات الأسعار، وتلات فخاخ تسعيرية، والنماذج الصينية، و«مفتوح الأوزان» يعني إيه عمليًا.", en: "The market at that moment: major families, price ranges, three pricing traps, Chinese models, and what “open weights” means in practice." },
       book: [
@@ -4186,14 +4207,14 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
         } },
     },
     {
-      id: "m3", unit: "u5", pages: [36], diff: 2, min: 7, lab: "local", related: ["m1", "m2", "f5"], pre: ["m1"],
+      id: "m3", unit: "u3", pages: [36], diff: 2, min: 7, lab: "local", related: ["m1", "m2", "f5"], pre: ["m1"],
       title: { ar: "تشغيل النماذج على جهازك", en: "Running models on your own machine" },
       sum: { ar: "نموذج جوّه حاسوبك من غير إنترنت ولا اشتراك وبياناتك ما بتخرجش من الجهاز: ليه بقى ممكن، وLM Studio وOllama، وإيه اللي يناسب جهازك، وإمتى تستخدمه.", en: "A model inside your PC with no internet, no subscription and no data leaving: why it’s possible now, LM Studio and Ollama, what fits your machine, and when to use it." },
       book: [
         bp(36, "نموذج بيشتغل جوّه حاسوبك، **من غير إنترنت ولا اشتراك وبياناتك ما بتسيب الجهاز خالص**. ده بقى عملي فعلًا في 2026، مش تجربة هواة بس.", "A model running inside your PC, **with no internet, no subscription, and no data ever leaving the device**. In 2026 this became genuinely practical, not just a hobbyist experiment."),
         bp(36, "ليه بقى ممكن؟ حاجتين مع بعض: المختبرات بتنشر أوزان نماذج قوية مجانًا، وتقنية **((quantization|Quantization))** — ضغط أرقام النموذج من دقة عالية لأقل فحجمه بينكمش لحوالي الربع مع فقد بسيط جدًا في الجودة. نموذج كان محتاج 16 جيجابايت ذاكرة كرت الشاشة بقى يشتغل في 4 لـ 5.", "Why now? Two things together: labs publishing capable model weights for free, and **((quantization|quantization))** — compressing the model’s numbers to lower precision, shrinking it to about a quarter with very little quality loss. A model needing 16 GB of GPU memory now runs in 4–5."),
         bp(36, "**LM Studio** — الواجهة الرسومية: تطبيق سطح مكتب بتدور فيه على النموذج وتنزّله بضغطة ويقولك يناسب ذاكرة جهازك ولا لأ، وبعدها تحادثه — الأنسب للي بيبدأ. **Ollama** — سطر الأوامر: خفيف ويتدمج في المشاريع: ollama pull للتنزيل، ollama run للمحادثة، ollama list للمنزّل، ollama rm للحذف.", "**LM Studio** — the GUI: a desktop app where you search, download with a click, see if it fits your memory, then chat — best for beginners. **Ollama** — the command line: light and easy to embed: ollama pull to download, ollama run to chat, ollama list for what’s installed, ollama rm to delete."),
-        bp(36, "النقطة اللي بتخليهم مفيدين فعلًا: الأداتين بيوفّروا **خادم محلي متوافق مع واجهة OpenAI** — أي تطبيق مكتوب لخدمة سحابية يشتغل مع نموذجك المحلي **بتغيير العنوان بس**، فتربط تطبيق الوحدة اللي فاتت بنموذج محلي من غير ما تكتب حاجة تاني.", "What makes them really useful: both provide **a local server compatible with the OpenAI API** — any app written for a cloud service works with your local model **by changing only the address**, so you can connect the previous unit’s app to a local model without rewriting."),
+        bp(36, "النقطة اللي بتخليهم مفيدين فعلًا: الأداتين بيوفّروا **خادم محلي متوافق مع واجهة OpenAI** — أي تطبيق مكتوب لخدمة سحابية يشتغل مع نموذجك المحلي **بتغيير العنوان بس**، فتربط أي تطبيق بنيته بنموذج محلي من غير ما تكتب حاجة تاني.", "What makes them really useful: both provide **a local server compatible with the OpenAI API** — any app written for a cloud service works with your local model **by changing only the address**, so you can connect any app you built to a local model without rewriting."),
         bp(36, "دليل تقريبي: 8 جيجابايت ← 3–4 مليارات معامل (تلخيص وتصنيف وأسئلة بسيطة) · 16 ← 7–9 مليارات (استخدام يومي وأكواد قصيرة) · 24–32 ← 14–32 مليارًا (تحليل أعمق ومهام متعددة الخطوات) · 64 فأكثر ← 70 مليارًا فأعلى (أقرب ما يكون لجودة السحابة).", "Rough guide: 8 GB → 3–4B parameters (summaries, classification, simple Q&A) · 16 → 7–9B (daily use, short code) · 24–32 → 14–32B (deeper analysis, multi-step tasks) · 64+ → 70B+ (closest to cloud quality)."),
         bp(36, "تلات ملاحظات بتحسم الأداء: **الذاكرة قبل المعالج** (سرعة التوليد بتتحكّم فيها سعة الذاكرة وعرض النطاق) · **Q4_K_M هو مستوى الضغط المبدئي** وأفضل توازن — ما ترفعهوش إلا لو لاحظت ضعف في مهمتك · **أجهزة آبل الحديثة** بذاكرتها الموحدة قوية جدًا هنا مقارنة بسعرها.", "Three notes that decide performance: **memory before processor** (generation speed depends on memory size and bandwidth) · **Q4_K_M is the default compression** and best balance — only raise it if you notice weakness in your task · **recent Apple machines** with unified memory are very strong here for their price."),
         bp(36, "القاعدة الفاصلة: استخدمه لما **البيانات حساسة** ومش مسموح ترفعها، أو محتاج **شغل من غير إنترنت**، أو بتعالج **حجم هائل** يخلي السحابة غالية، أو **بتجرّب وبتتعلّم** من غير فاتورة. **وماتستخدمهوش** لما محتاج أعلى جودة ممكنة في تحليل معقّد، أو مهمة نادرة ما تبرّرش إعداد بيئة كاملة — النماذج المحلية لسه طبقة أو اتنين ورا قمة السحابة.", "The dividing rule: use it when **data is sensitive** and can’t be uploaded, you need **offline work**, you process a **huge volume** that makes cloud costly, or you **experiment and learn** with no bill. **Don’t use it** when you need the highest quality for complex analysis, or for a rare task that doesn’t justify setting up — local models stay a tier or two behind the cloud top."),
@@ -4219,7 +4240,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       },
     },
     {
-      id: "s1", unit: "u5", pages: [37], diff: 3, min: 8, scene: "layers", related: ["y7", "s2", "t1"], pre: ["y7"],
+      id: "s1", unit: "u7", pages: [37], diff: 3, min: 8, scene: "layers", related: ["y7", "s2", "t1"], pre: ["y7"],
       title: { ar: "النظام: اربط العمليات والبيانات في منظومة متكاملة", en: "The system: connect processes and data into one" },
       sum: { ar: "الفرق بين أداة ونظام، والاختبار الحاسم (عدّ النقلات اليدوية)، والطبقات الخمس، والمبادئ الأربعة، ورحلة حدث واحد.", en: "Tool vs system, the decisive test (count manual hand-offs), the five layers, the four principles, and one event’s journey." },
       book: [
@@ -4251,7 +4272,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       },
     },
     {
-      id: "s2", unit: "u5", pages: [38], diff: 3, min: 8, scene: "slice", lab: "system", related: ["s1", "p7", "t1"], pre: ["s1"],
+      id: "s2", unit: "u7", pages: [38], diff: 3, min: 8, scene: "slice", lab: "system", related: ["s1", "p7", "t1"], pre: ["s1"],
       title: { ar: "بناء النظام من غير ما ينهار: الشريحة العمودية", en: "Building the system without collapse: the vertical slice" },
       sum: { ar: "أكتر مشاريع المنظومات بتفشل لأنها بتبدأ كبيرة: ابنِ عمق مش عرض، والمراحل السبعة، وتلات أخطاء بتسقط المشروع، وتلات Prompts.", en: "Most system projects fail because they start big: build deep, not wide; seven stages; three project-killing mistakes; three prompts." },
       book: [
@@ -4291,7 +4312,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
         } },
     },
     {
-      id: "t1", unit: "u5", pages: [39], diff: 3, min: 9, scene: "team", lab: "agents", related: ["f7", "s1", "t2"], pre: ["f7", "s1"],
+      id: "t1", unit: "u7", pages: [39], diff: 3, min: 9, scene: "team", lab: "agents", related: ["f7", "s1", "t2"], pre: ["f7", "s1"],
       title: { ar: "الفريق الرقمي الذكي", en: "The smart digital team" },
       sum: { ar: "الوكيل إيه (هدف وأدوات وتكرار)، وليه فريق مش وكيل واحد، والأدوار السبعة، وابدأ بتلتة، وتلات أنماط تنسيق.", en: "What an agent is (goal, tools, repetition), why a team rather than one agent, seven roles, start with three, and three coordination patterns." },
       book: [
@@ -4332,7 +4353,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
         } },
     },
     {
-      id: "t2", unit: "u5", pages: [40], diff: 3, min: 8, scene: "card", related: ["t1", "m1", "s2"], pre: ["t1"],
+      id: "t2", unit: "u7", pages: [40], diff: 3, min: 8, scene: "card", related: ["t1", "m1", "s2"], pre: ["t1"],
       title: { ar: "تصميم الفريق الرقمي وحوكمته", en: "Designing and governing the digital team" },
       sum: { ar: "بطاقة تعريف الوكيل بخمس عناصر، وأربعة ضوابط حوكمة قبل أي تشغيل حقيقي، وأربعة Prompts للبناء والقياس، والخيط الجامع للكتاب.", en: "The five-element agent card, four governance controls before any real run, four prompts to build and measure, and the book’s unifying thread." },
       book: [
@@ -4364,6 +4385,29 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     },
   ]);
 })(window.ACADEMY = window.ACADEMY || {});
+
+/* data/course-order.js */
+/* The course plan: which lessons each unit holds, in teaching order. The plan, not the file a lesson lives in, sets
+   its unit and its number; lesson ids never change (links and saved progress depend on them). */
+(function (A) {
+  A.courseOrder = {
+    u0: ["f1", "f2", "f4", "f6", "f7", "f3", "f5", "f8"],                 // 1 foundations
+    u1: ["y4", "p9", "w1", "m1"],                                           // 2 big data · the editor · intelligence levels
+    u2: ["p10", "w2"],                                                      // 3 Office · Claude Code · tokens
+    u3: ["m3"],                                                             // 4 PDF · cloud or local · free tools
+    u4: ["d1", "d2", "y6", "y5", "m2"],                                     // 5 dashboards · Codex · companies and models
+    u5: ["y1", "y2", "y3", "y7", "w3", "w4", "w5", "w6", "g1", "g2"],       // 6 tools · shared features · studying with AI
+    u6: ["p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8", "p11", "p12"],     // 7 assistant at work · choosing tools · career
+    u7: ["s1", "s2", "t1", "t2"],                                           // 8 the big picture
+  };
+  const rank = {};
+  let k = 0;
+  for (const u of A.units) for (const id of A.courseOrder[u.id] || []) rank[id] = { k: k++, unit: u.id };
+  for (const l of A.lessons) if (rank[l.id]) l.unit = rank[l.id].unit;
+  A.lessons.sort((a, b) => (rank[a.id] ? rank[a.id].k : 1e9) - (rank[b.id] ? rank[b.id].k : 1e9));
+  // the book pages each unit draws on (units follow teaching logic, so these are a set, not a range)
+  for (const u of A.units) u.bookPages = [...new Set(A.lessons.filter((l) => l.unit === u.id).flatMap((l) => l.pages))].sort((a, b) => a - b);
+})(window.ACADEMY);
 
 /* data/plain-talk-a.js */
 /* Clear Egyptian Arabic learning track, part 1 of 2.
@@ -8384,7 +8428,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
           <div class="win-nav">${A.labs.slice(0, 8).map((lb) => `<a href="#lab-${lb.id}">${ico(lb.icon || "flask")}<span>${esc(L(lb.title))}</span></a>`).join("")}</div>
         </aside>
         <div class="win-mid" role="tabpanel">
-          <div class="win-top"><span class="pill2">${ico("route")}${ico("spark")}</span><div><b>${esc(L(u.short))}</b><small>${esc(t("pagesRange", { a: u.pages[0], b: u.pages[1] }))}</small></div></div>
+          <div class="win-top"><span class="pill2">${ico("route")}${ico("spark")}</span><div><b>${esc(L(u.short))}</b><small>${esc(t("bookPagesN", { n: u.bookPages.length }))}</small></div></div>
           <div class="win-sub"><b>${esc(t("winLessons"))}</b><span class="num">${ls.length}</span><span class="sp"></span><a href="#unit-${u.id}" class="small">${esc(t("winAll"))}</a></div>
           <ul class="steps">${ls.map((l) => `<li class="${l.id === sc.lesson ? "on" : ""}"><button type="button" class="cbx" data-done="${l.id}" aria-pressed="${!!done[l.id]}" aria-label="${esc(t("winToggle") + ": " + L(l.title))}">${ico("check")}</button>${badge(l)}<a href="#lesson-${l.id}">${esc(L(l.title))}</a></li>`).join("")}</ul>
           <p class="win-legend">${esc(t("winLegend"))}</p>
@@ -8440,7 +8484,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     const ug = A.$("#units");
     for (const u of A.units) {
       const pr = unitProgress(u.id);
-      ug.append(h("a", { class: "urow", href: "#unit-" + u.id, html: `<span class="tile sm" style="--tc:${u.color}"><b>${esc(u.badge)}</b></span><span class="ut"><b>${esc(L(u.title))}</b><small>${esc(t("pagesRange", { a: u.pages[0], b: u.pages[1] }))} · ${esc(nLessons(pr.n))}</small></span>${pr.d === pr.n ? `<span class="tick">${ico("check")}</span>` : `<span class="ring" style="--p:${pr.pct}" title="${pr.pct}%"></span>`}` }));
+      ug.append(h("a", { class: "urow", href: "#unit-" + u.id, html: `<span class="tile sm" style="--tc:${u.color}"><b>${esc(u.badge)}</b></span><span class="ut"><b>${esc(L(u.title))}</b><small>${esc(t("bookPagesN", { n: u.bookPages.length }))} · ${esc(nLessons(pr.n))}</small></span>${pr.d === pr.n ? `<span class="tick">${ico("check")}</span>` : `<span class="ring" style="--p:${pr.pct}" title="${pr.pct}%"></span>`}` }));
     }
 
     /* ---- featured labs ---- */
@@ -8466,7 +8510,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     const wrap = h("div", { class: "wrap stack" });
     wrap.innerHTML = `
       <nav class="crumbs" aria-label="${esc(t("crumbs"))}"><a href="#home">${esc(t("home"))}</a> › <span>${esc(L(u.short))}</span></nav>
-      ${head(`<span class="chip" style="background:${u.color};color:#fff;border:0">${esc(u.badge)}</span> ${esc(t("unitN", { n: u.n }))}`, L(u.title), esc(L(u.sum)), `<div class="row">${pageChips([u.pages[0]])}<span class="chip num">${esc(t("pagesRange", { a: u.pages[0], b: u.pages[1] }))}</span><span class="chip num">${ico("book")}${ls.length} ${esc(t("lessonsWord"))}</span><span class="chip ok num">${pr.pct}%</span></div>`)}
+      ${head(`<span class="chip" style="background:${u.color};color:#fff;border:0">${esc(u.badge)}</span> ${esc(t("unitN", { n: u.n }))}`, L(u.title), esc(L(u.sum)), `<div class="row">${pageChips(u.bookPages.slice(0, 1))}<span class="chip num">${esc(t("bookPagesN", { n: u.bookPages.length }))}</span><span class="chip num">${ico("book")}${ls.length} ${esc(t("lessonsWord"))}</span><span class="chip ok num">${pr.pct}%</span></div>`)}
       <div class="note bk">${ico("target")}<div><b>${esc(t("bigIdea"))}</b><div>${A.inline(L(u.big))}</div></div></div>
       <section class="sec">${secHead("route", t("unitLessons"))}<div class="stack" id="ul"></div></section>
       <section class="sec">${secHead("bolt", t("unitTools"))}<div class="grid g3">
@@ -8659,11 +8703,11 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
   });
 
   /* ================= BOOK MAP + COVERAGE ================= */
-  function unitOfPage(p) { return A.units.find((u) => p >= u.pages[0] && p <= u.pages[1]) || A.units.find((u) => (u.extraPages || []).includes(p)); }
+  function unitOfPage(p) { const l = A.lessons.find((x) => x.pages.includes(p)); return l && A.unitById[l.unit]; }   // the first unit (in course order) that teaches the page
   A.view("map", (main) => {
     const wrap = h("div", { class: "wrap-wide stack" });
     wrap.innerHTML = head(ico("map") + " " + esc(t("nav_map")), t("mapTitle"), esc(t("mapLead"))) + `
-      <div class="legend">${A.units.map((u) => `<span class="row" style="gap:6px"><span style="width:12px;height:12px;border-radius:4px;background:${u.color}"></span>${esc(L(u.short))} <span class="muted num">(${u.pages[0]}–${u.pages[1]})</span></span>`).join("")}<span class="row" style="gap:6px"><span style="width:12px;height:12px;border-radius:4px;background:repeating-linear-gradient(45deg,var(--line-2),var(--line-2) 2px,transparent 2px,transparent 4px)"></span>${esc(t("visualPage"))}</span></div>
+      <div class="legend">${A.units.map((u) => `<span class="row" style="gap:6px"><span style="width:12px;height:12px;border-radius:4px;background:${u.color}"></span>${esc(L(u.short))}</span>`).join("")}<span class="row" style="gap:6px"><span style="width:12px;height:12px;border-radius:4px;background:repeating-linear-gradient(45deg,var(--line-2),var(--line-2) 2px,transparent 2px,transparent 4px)"></span>${esc(t("visualPage"))}</span></div>
       <div class="shelf" id="shelf" role="list"></div>
       <section class="sec">${secHead("layers", t("bookParts"))}<div class="stack" id="parts"></div></section>
       <p><a class="btn" href="#coverage">${ico("check")}${esc(t("nav_coverage"))}</a></p>`;
@@ -8676,7 +8720,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     const parts = A.$("#parts");
     for (const u of A.units) {
       const ls = lessonsOf(u.id);
-      parts.append(h("div", { class: "card flat", style: "border-inline-start:5px solid " + u.color, html: `<div class="row" style="justify-content:space-between"><h3>${esc(u.badge)} · ${esc(L(u.title))}</h3><span class="chip num">${esc(t("pagesRange", { a: u.pages[0], b: u.pages[1] }))}${(u.extraPages || []).length ? " + " + u.extraPages.join(", ") : ""}</span></div><p class="muted small" style="margin-block:6px 10px">${esc(L(u.sum))}</p><div class="related">${ls.map((l) => `<a class="chip" href="#lesson-${l.id}">${esc(L(l.title))}</a>`).join("")}</div>` }));
+      parts.append(h("div", { class: "card flat", style: "border-inline-start:5px solid " + u.color, html: `<div class="row" style="justify-content:space-between"><h3>${esc(u.badge)} · ${esc(L(u.title))}</h3><span class="chip num">${esc(t("bookPagesN", { n: u.bookPages.length }))}</span></div><p class="muted small" style="margin-block:6px 10px">${esc(L(u.sum))}</p><div class="related">${ls.map((l) => `<a class="chip" href="#lesson-${l.id}">${esc(L(l.title))}</a>`).join("")}</div>` }));
     }
   });
   A.view("coverage", (main) => {
@@ -10117,7 +10161,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
         <div class="pr-stage ${notesOn ? "notes" : ""}"><div class="pr-slide" id="pr-s"></div><aside class="pr-notes" ${notesOn ? "" : "hidden"} aria-label="${esc(t("prNotes"))}">${notesFor(s)}</aside></div>
         <div class="pr-bot"><button type="button" class="btn sm" id="pr-p">${ico(rtl ? "next" : "prev")}${esc(t("prev"))}</button><div class="qprog"><i style="width:${((i + 1) / slides.length) * 100}%"></i></div><span class="num small muted">${i + 1} / ${slides.length}</span><button type="button" class="btn sm pri" id="pr-n">${esc(t("next"))}${ico(rtl ? "prev" : "next")}</button></div>`;
       const box = ov.querySelector("#pr-s");
-      if (s.kind === "title") box.innerHTML = `<span class="eyebrow">${esc(t("unitN", { n: u.n }))} · ${esc(t("pagesRange", { a: u.pages[0], b: u.pages[1] }))}</span><h1>${esc(L(u.title))}</h1><p class="lead">${esc(L(u.sum))}</p>`;
+      if (s.kind === "title") box.innerHTML = `<span class="eyebrow">${esc(t("unitN", { n: u.n }))} · ${esc(t("bookPagesN", { n: u.bookPages.length }))}</span><h1>${esc(L(u.title))}</h1><p class="lead">${esc(L(u.sum))}</p>`;
       else if (s.kind === "big") box.innerHTML = `<span class="eyebrow">${esc(t("bigIdea"))}</span><h1 style="font-size:clamp(1.6rem,1rem + 2.6vw,3rem)">${A.inline(L(u.big))}</h1>`;
       else if (s.kind === "lesson") box.innerHTML = `<span class="eyebrow">${A.pageChips(s.l.pages)}</span><h1>${esc(L(s.l.title))}</h1><p class="lead">${esc(L(s.l.sum))}</p><ul class="pr-points">${(s.l.book || []).slice(0, 5).map((b) => `<li>${A.inline(L(b))}</li>`).join("")}</ul>`;
       else if (s.kind === "scene") { box.innerHTML = `<h2>${esc(L(s.l.title))}</h2>`; sceneApi = A.mountScene(box, s.l.scene, { autoplay: false, initialStage: 0 }); }
