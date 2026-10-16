@@ -8098,17 +8098,20 @@ Start by presenting the "Context to fill in" block and your clarifying questions
     }
     return fallback();
     function fallback() {
+      const prevFocus = document.activeElement;
       const ta = A.h("textarea");
       ta.value = text;
-      ta.setAttribute("aria-hidden", "true");
+      ta.setAttribute("tabindex", "-1");
       ta.style.cssText = "position:fixed;left:-9999px;top:0;width:1px;height:1px;opacity:0";
       document.body.append(ta);
-      ta.focus();
+      ta.focus({ preventScroll: true });
       ta.select();
       let ok = false;
       try { ok = document.execCommand("copy"); } catch (_) {}
       const hasSel = ta.selectionEnd > ta.selectionStart;
       ta.remove();
+      const restore = prevFocus && typeof prevFocus.focus === "function" ? prevFocus : btn;
+      if (restore) restore.focus({ preventScroll: true });
       if (ok && hasSel) done();
       else manual();
     }
