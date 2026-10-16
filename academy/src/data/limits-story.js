@@ -51,8 +51,8 @@
         id: "misread", art: "l_misread", year: u("الحد ٢", "Limit 2"), mark: u("٠٣", "03"), era: u("فهم غلط", "Misunderstood"),
         title: u("لو الـ Context ناقص، ممكن يفهم السؤال غلط", "With missing Context, it can misread the question"),
         story: [u("الطلب كان: «قارن المورّد الحالي بالمورّد التاني». لكن عندكم مورّدين بدال، مش واحد. المقصود كان المورّد اللي جودته أعلى، والموديل اختار اللي سعره أقل، لأن ده كان مذكور أكتر في الملفات.",
-          "The request was: “Compare the current supplier with the other supplier.” But you have two alternatives, not one. You meant the one with higher quality; the model picked the cheaper one, because it appeared more in the files."),
-        u("المقارنة كلها اتبنت على اختيار غلط، ومكتوبة بشكل مقنع. وده نفس اللي شفناه في درس الـ Prompt والـ Context: أي معلومة ناقصة بيملاها بالاحتمال الأرجح عنده، مش بالحقيقة اللي في دماغك.",
+          "The request was: “Compare the current supplier with the other supplier.” But you have two alternatives, not one. The intended one was the higher-quality supplier; the model picked the cheaper one, because it appeared more in the files."),
+        u("المقارنة كلها اتبنت على اختيار غلط، ومكتوبة بشكل مقنع. وده نفس اللي شفناه في درس الـ Prompt والـ Context: أي معلومة ناقصة بيملاها بالاحتمال الأرجح عنده، مش باللي إنت قاصده فعلًا.",
           "The whole comparison was built on the wrong choice, and it reads convincingly. It's what we saw in the Prompt & Context lesson: any missing fact is filled with its likeliest guess, not with what you had in mind.")],
         answer: u("قبل الشغل الكبير، اطلب منه يكتب فهمه للمطلوب في سطرين. لأن الفهم الغلط بيبان في سطرين قبل ما يبان في تلات صفحات.", "Before big work, ask it to state its understanding of the task in two lines — a misunderstanding shows in two lines before it shows in three pages."),
         idea: u("اسأله فهم إيه، قبل ما تسأله عمل إيه.", "Ask what it understood before asking what it did.")

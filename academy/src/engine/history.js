@@ -245,7 +245,7 @@
       <g ${an("rise", 1.0)}><rect x="${L2 - 104}" y="44" width="208" height="210" rx="16" class="f-mint-soft s-mint" stroke-width="2"/>${txt(L2, 70, ar() ? "بعد التهذيب" : "after tuning", "t-mint", 12.5, 'font-weight="700"')}
         <rect x="${L2 - 90}" y="84" width="180" height="32" rx="12" class="f-acc"/>${txt(L2, 105, ar() ? "إزاي أعمل كيكة؟" : "How do I bake a cake?", "t-white", 13)}
         <rect x="${L2 - 90}" y="128" width="180" height="100" rx="12" class="f-s1"/>${(ar() ? ["محتاج ٣ بيض، كوباية دقيق،", "وكوباية سكر. ١. سخّن الفرن…"] : ["You'll need 3 eggs, a cup", "of flour… 1. Preheat the oven…"]).map((l, i) => txt(L2, 156 + i * 22, l, "t-ink", 12.5)).join("")}</g>
-      <g ${an("pop", 1.6)}>${person(L2 + (ar() ? -80 : 80), 300, 0.8, "f-ink2")}<g transform="translate(${L2 + (ar() ? -56 : 104)} 266)"><circle r="12" class="f-mint"/><text y="5" font-size="13" text-anchor="middle">👍</text></g></g>
+      <g ${an("pop", 1.6)}>${person(L2 + (ar() ? -80 : 80), 300, 0.8, "f-ink2")}<g transform="translate(${L2 + (ar() ? -56 : 56)} 266)"><circle r="12" class="f-mint"/><path d="M-5 0 l3.5 3.5 l6.5 -7" class="s-white" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g></g>
       ${txt((L1 + L2) / 2, 300, ar() ? "أمثلة محادثات + تقييم ناس" : "example chats + human ratings", "t-ink3", 12.5)}`;
     },
     m_reply: () => {
@@ -728,7 +728,7 @@
     },
     a_choose: () => {
       const C = ar() ? [["شات", ["سؤال سريع", "بيخلص في محادثة", "ذاكرة: المحادثة بس"]], ["مساعد", ["شغل متكرر", "نفس الموضوع", "ذاكرة + ملفاتك"]], ["وكيل", ["خطوات وأدوات", "بيكرر لحد ما يخلص", "صلاحيات + حدود"]]]
-        : [["chat", ["a quick question", "done in one sitting", "memory: this chat"]], ["assistant", ["recurring work", "same topic", "memory + your files"]], ["agent", ["steps and tools", "loops until done", "permissions + limits"]]];
+        : [["chat", ["a quick question", "done in one chat", "memory: this chat"]], ["assistant", ["recurring work", "same topic", "memory + your files"]], ["agent", ["steps and tools", "repeats until done", "permissions + limits"]]];
       const X = rowX(3, 140, 14);
       return `${C.map(([t, ls], i) => `<g ${an("rise", 0.1 + i * 0.25)}>${box(X(i), 148, 140, 196, "f-s1 s-line2")}${box(X(i), 72, 116, 32, ["f-s2 s-line2", "f-acc-soft s-acc", "f-acc"][i])}${txt(X(i), 78, t, i === 2 ? "t-white" : "t-ink", 13.5, 'font-weight="800"')}
         ${ls.map((s, k) => txt(X(i), 118 + k * 24, s, "t-ink2", 11.5, bold)).join("")}
@@ -882,7 +882,7 @@
     l_memo: () => {
       const m = mx(176), c = mx(396), d = dirx();
       return `${page(m, 160, 200, 250, ar() ? "مذكرة: تغيير مورّد التغليف" : "Memo: change packaging supplier", [150, 132, 160, 120, 146, 100, 154, 130, 110, 140], 0.05)}
-      <g ${an("pop", 0.7)}>${box(m, 250, 150, 30, "f-acc-soft s-acc")}${txt(m, 255, ar() ? "التوصية: نغيّر المورّد" : "Recommendation: switch", "t-acc", 11.5, bold)}</g>
+      <g ${an("pop", 0.7)}>${box(m, 250, 150, 30, "f-acc-soft s-acc")}${txt(m, 255, ar() ? "التوصية: نغيّر المورّد" : "Recommendation: change supplier", "t-acc", 11.5, bold)}</g>
       <g ${an("pop", 1.0)}><circle cx="${c}" cy="96" r="28" class="f-s1 s-ink2" stroke-width="3"/><line x1="${c}" y1="96" x2="${c}" y2="76" class="s-ink2" stroke-width="3" stroke-linecap="round"/><line x1="${c}" y1="96" x2="${c - d * 14}" y2="96" class="s-acc" stroke-width="3.5" stroke-linecap="round"/>${txt(c, 146, ar() ? "الإرسال الساعة ٥" : "due at 5:00", "t-ink2", 12, bold)}</g>
       <path ${an("draw", 1.3, "s-ink3")} pathLength="1" d="M${m + d * 104} 200 C ${m + d * 140} 200, ${c - d * 40} 210, ${c - d * 30} 214" stroke-width="2" stroke-dasharray="1" fill="none" marker-end="url(#aih-arrow)"/>
       <g ${an("rise", 1.5)}><rect x="${c - 34}" y="200" width="68" height="46" rx="5" class="f-s1 s-ink2" stroke-width="2.5"/><path d="M${c - 34} 202 l34 24 l34 -24" class="s-ink2" stroke-width="2.5" fill="none"/>${txt(c, 268, ar() ? "للمدير العام" : "to the GM", "t-ink2", 12, bold)}</g>
@@ -894,7 +894,7 @@
       ${[[ar() ? "ثقة الكلام" : "confidence of wording", 1, "f-acc", 186], [ar() ? "صحة المعلومة" : "accuracy of the fact", 0.08, "f-rose", 236]].map(([s, v, c, y], i) => `<g ${an("fade", 0.4 + i * 0.3)}>${txt(mx(84), y + 5, s, "t-ink2", 11.5, bold)}</g>
         <rect x="${ar() ? 130 : 160}" y="${y - 9}" width="190" height="18" rx="9" class="f-s3"/>${grow(160, y - 9, Math.max(14, 190 * v), 18, c, 0.6 + i * 0.3)}`).join("")}
       <g ${an("pop", 1.2)}><circle cx="${r}" cy="190" r="34" class="s-ink2" fill="none" stroke-width="4"/><line x1="${r + d * 24}" y1="214" x2="${r + d * 46}" y2="238" class="s-ink2" stroke-width="7" stroke-linecap="round"/>${txt(r, 186, ar() ? "القرار" : "decree", "t-ink3", 11, bold)}${txt(r, 202, ar() ? "مش موجود" : "not found", "t-rose", 12, 'font-weight="800"')}</g>
-      ${txt(240, 296, ar() ? "الثقة في الصياغة مش دليل على الصحة" : "confident wording is not evidence", "t-ink2", 13, bold)}`;
+      ${txt(240, 296, ar() ? "الثقة في الصياغة مش دليل على الصحة" : "confident wording is no proof of accuracy", "t-ink2", 13, bold)}`;
     },
     l_misread: () => {
       const q = mx(110), d = dirx(), B = mx(360), Y = [92, 200];
@@ -903,7 +903,7 @@
       <g ${an("rise", 0.8)}>${box(B, Y[0], 176, 56, "f-mint-soft s-mint")}${txt(B, Y[0] - 4, ar() ? "المورّد ب: جودة أعلى" : "Supplier B: higher quality", "t-mint", 12, 'font-weight="800"')}${txt(B, Y[0] + 14, ar() ? "اللي كان مقصود" : "what was meant", "t-mint", 10.5, bold)}</g>
       <g ${an("rise", 1.0)}>${box(B, Y[1], 176, 56, "f-rose-soft s-rose")}${txt(B, Y[1] - 4, ar() ? "المورّد ج: سعر أقل" : "Supplier C: lower price", "t-rose", 12, 'font-weight="800"')}${txt(B, Y[1] + 14, ar() ? "اللي الموديل اختاره" : "what the model chose", "t-rose", 10.5, bold)}</g>
       ${check(B + d * 100, Y[1] - 26, 1.3, false)}
-      <g ${an("fade", 1.5)}>${box(q, 250, 196, 34, "f-s2 s-line2")}${txt(q, 255, ar() ? "«اكتب فهمك للمطلوب في سطرين»" : "“State what you understood”", "t-ink2", 11.5, bold)}</g>
+      <g ${an("fade", 1.5)}>${box(q, 250, 196, 34, "f-s2 s-line2")}${txt(q, 255, ar() ? "«اكتب فهمك للمطلوب في سطرين»" : "“State your understanding in two lines”", "t-ink2", 11.5, bold)}</g>
       ${txt(240, 302, ar() ? "المعلومة الناقصة بتتملي بالأرجح" : "a missing fact is filled with the likeliest guess", "t-ink2", 13, bold)}`;
     },
     l_data: () => {
@@ -958,14 +958,14 @@
       return `${P.map(([x, y], i) => `<line ${an("draw", 0.4 + i * 0.1, "s-line2")} pathLength="1" x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke-width="2"/>`).join("")}
       <g ${an("pop", 0.1)}>${box(cx, cy, 150, 50, "f-acc", 0)}${txt(cx, cy - 2, ar() ? "قرار تغيير" : "decision to", "t-white", 12.5, 'font-weight="800"')}${txt(cx, cy + 15, ar() ? "المورّد" : "switch supplier", "t-white", 12.5, 'font-weight="800"')}</g>
       ${P.map(([x, y], i) => `<g ${an("rise", 0.6 + i * 0.15)}>${box(x, y, 136, 40, "f-s1 s-acc")}${person(x - dirx() * 50, y + 14, 0.5, "f-ink2")}${txt(x + dirx() * 10, y + 5, R[i], "t-ink", 12, bold)}</g>${check(x + dirx() * 66, y - 20, 1.2 + i * 0.12)}`).join("")}
-      <g ${an("rise", 1.8)}>${box(240, 286, 330, 32, "f-amber-soft s-amber")}${txt(240, 291, ar() ? "«ماكينة ٣ حساسة لسُمك الكرتون» — مشرف الخط" : "“machine 3 is sensitive to thickness” — line lead", "t-amber", 11.5, bold)}</g>`;
+      <g ${an("rise", 1.8)}>${box(240, 286, 330, 32, "f-amber-soft s-amber")}${txt(240, 291, ar() ? "«ماكينة ٣ حساسة لسُمك الكرتون» — مشرف الخط" : "“machine 3 is sensitive to thickness” — line supervisor", "t-amber", 11.5, bold)}</g>`;
     },
     l_owner: () => {
       const m = mx(190), d = dirx();
       return `<g ${an("rise", 0.05)}>${box(m, 160, 250, 236, "f-s1 s-line2")}${txt(m, 66, ar() ? "المذكرة" : "the memo", "t-ink", 13, 'font-weight="800"')}
         ${[160, 140, 170, 120].map((w, k) => `<rect x="${ar() ? m + 110 - w : m - 110}" y="${84 + k * 16}" width="${w}" height="8" rx="4" class="f-s3"/>`).join("")}</g>
       <g ${an("fade", 0.5)}>${box(m, 176, 216, 34, "f-s2 s-line2")}${txt(m, 181, ar() ? "التحضير: مساعد ذكي" : "prepared with: an AI assistant", "t-ink3", 11.5, bold)}</g>
-      <g ${an("pop", 0.9)}>${box(m, 226, 216, 44, "f-acc-soft s-acc", 2.5)}${txt(m, 222, ar() ? "المسؤول عن القرار: إنت" : "accountable: you", "t-acc", 12.5, 'font-weight="800"')}</g>
+      <g ${an("pop", 0.9)}>${box(m, 226, 216, 44, "f-acc-soft s-acc", 2.5)}${txt(m, 222, ar() ? "المسؤول عن القرار: إنت" : "accountable for the decision: you", "t-acc", 12.5, 'font-weight="800"')}</g>
       <path ${an("draw", 1.2, "s-ink")} pathLength="1" d="M${m - 46} 264 c 14 -10, 22 8, 34 -2 s 20 -8, 30 4 s 18 -6, 28 0" stroke-width="2.5" fill="none"/>
       <g ${an("rise", 1.4)}>${box(mx(404), 118, 132, 70, "f-rose-soft s-rose")}${txt(mx(404), 112, ar() ? "«الأداة قالت كده»" : "“the tool said so”", "t-rose", 11.5, 'font-weight="800"')}${txt(mx(404), 132, ar() ? "مش مبرر" : "is no excuse", "t-rose", 11.5, bold)}</g>
       ${check(mx(404) + d * 60, 88, 1.6, false)}
@@ -1038,7 +1038,7 @@
               <div class="aih-idea"><small>${esc(L(H.ideaLabel))}</small>${esc(L(s.idea))}</div>
               ${i === n - 1 ? `<button type="button" class="btn ok aih-start" data-aih-start>${esc(L(ui.start))} ↓</button>` : ""}
             </div>
-            <div class="aih-art">${drawing(s.art, L(s.title))}</div>
+            <div class="aih-art" data-aih-art="${i}"></div>
           </div>`).join("")}
         </div>
         <button type="button" class="aih-nav aih-prev" data-aih-prev aria-label="${esc(L(ui.prev))}">${A.ico(ar() ? "next" : "prev")}</button>
@@ -1076,6 +1076,17 @@
       slide.querySelectorAll("animateMotion").forEach((m) => { try { on && !quiet() ? m.beginElement() : m.endElement(); } catch (e) { /* SMIL unsupported: dots stay hidden */ } });
     }
 
+    // Drawings are built on demand: the slide on screen and its neighbours first, the rest one by one while the browser is idle.
+    // Opening a lesson then costs one or two drawings instead of twelve.
+    const arts = $$("[data-aih-art]");
+    const drawAt = (k) => { const el = arts[k]; if (el && !el.firstChild) el.innerHTML = drawing(S[k].art, L(S[k].title)); };
+    const drawAround = (k) => { drawAt(k); ric(() => { drawAt(k + 1); drawAt(k - 1); }); };   // neighbours wait for idle time, never the transition
+    const ric = window.requestIdleCallback || ((f) => setTimeout(() => f({ timeRemaining: () => 8 }), 60));
+    const cic = window.cancelIdleCallback || clearTimeout;
+    let idleId = 0;
+    const cancelIdle = () => cic(idleId);
+    const idleDraw = () => { idleId = ric((dl) => { let k = arts.findIndex((el) => !el.firstChild); while (k >= 0 && dl.timeRemaining() > 4) { drawAt(k); k = arts.findIndex((el) => !el.firstChild); } if (k >= 0) idleDraw(); }); };
+
     function go(i, why) {
       i = Math.max(0, Math.min(n - 1, i));
       if (i === cur) return;
@@ -1105,6 +1116,7 @@
         if (!quiet()) { qT.classList.remove("swap"); void qT.offsetWidth; qT.classList.add("swap"); }
         setTimeout(() => (qT.textContent = L(final ? H.finalQuestion : H.question)), quiet() ? 0 : 180);
       }
+      drawAround(i);   // the drawing must exist before its entrance animations start
       animateCount(s); startSmil(s, true);
       elapsed = 0; timerBar.style.setProperty("--p", 0);
       if (why !== "auto" && !playing) live.textContent = `${fmt(ui.slideOf, { n: num(i + 1), t: num(n) })}: ${L(S[i].year)} — ${L(S[i].title)}`;
@@ -1179,9 +1191,10 @@
       io = new IntersectionObserver((es) => es.forEach((en) => { visible = en.intersectionRatio > 0.35; host.classList.toggle("is-away", !en.isIntersecting); }), { threshold: [0, 0.35, 0.6] });
       io.observe(stage);
     }
-    A.onLeave(() => { io && io.disconnect(); playing = false; cancelAnimationFrame(raf); cancelAnimationFrame(countRaf); });
+    A.onLeave(() => { io && io.disconnect(); playing = false; cancelAnimationFrame(raf); cancelAnimationFrame(countRaf); cancelIdle(); });
 
     go(0, "init");
+    idleDraw();
   };
   A.mountHistory = (host) => A.mountDeck(host, A.aiHistory);
 })(window.ACADEMY = window.ACADEMY || {});
