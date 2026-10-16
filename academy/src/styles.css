@@ -868,3 +868,93 @@ html[data-font="naskh"]{--font-body:"R Naskh","UI Latin","UI Symbols",system-ui,
 .vp-note{margin:0;font-size:12px;color:var(--ink-3);line-height:1.6}
 @media (prefers-reduced-motion:reduce){.vpanel{animation:none}}
 svg text{font-family:var(--font-art)}   /* every drawing keeps the measured font whatever the reading font */
+
+/* ---- presenter: a full-screen player (engine/tools.js openPresenter) ---- */
+.cine{position:fixed;inset:0;z-index:150;display:grid;grid-template-rows:auto minmax(0,1fr) auto;background:var(--bg);color:var(--ink)}
+.cine-top,.cine-bot{display:flex;align-items:center;gap:8px;padding:10px 16px;transition:opacity .35s ease,transform .35s ease;z-index:3}
+.cine-top{border-bottom:1px solid var(--line)}
+.cine-bot{border-top:1px solid var(--line);gap:10px}
+.cine-badge{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:var(--uc);color:#fff;font-weight:800}
+.cine-tt{display:grid;line-height:1.3;min-width:0}.cine-tt b{font-family:var(--font-display);font-size:15px}.cine-tt small{color:var(--ink-3);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cine-sp{flex:1}
+.cine-ib{display:inline-flex;align-items:center;gap:6px;height:36px;min-width:36px;justify-content:center;padding-inline:9px;border-radius:10px;border:1px solid transparent;background:transparent;color:var(--ink-2);font:inherit;font-size:13.5px;cursor:pointer}
+.cine-ib:hover{background:var(--surface-3);color:var(--ink)}.cine-ib[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent)}
+.cine-ib svg,.cine-pb svg{width:18px;height:18px}
+.cine-pb{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line-2);background:var(--surface);color:var(--ink);cursor:pointer}
+.cine-pb.main{width:50px;height:50px;background:var(--accent);border-color:var(--accent);color:#fff}
+.cine-pb:disabled{opacity:.35;cursor:default}
+.cine-scrub{position:relative;flex:1;height:34px;display:flex;align-items:center;cursor:pointer;outline:none}
+.cine-track{position:relative;width:100%;height:6px;border-radius:99px;background:var(--surface-3);overflow:hidden}
+.cine-track i{position:absolute;inset-block:0;inset-inline-start:0;background:var(--uc);border-radius:99px;transition:width .3s ease}
+.cine-scrub:focus-visible .cine-track{box-shadow:0 0 0 3px var(--accent-soft)}
+.cine-marks{position:absolute;inset:0;pointer-events:none}
+.cine-mark{position:absolute;top:50%;transform:translate(calc(-50% * var(--dirx,1)),-50%);width:20px;height:20px;border-radius:50%;border:2px solid var(--uc);background:var(--surface);color:var(--ink-2);font:700 10px/1 var(--font-body);display:grid;place-items:center;padding:0;pointer-events:auto;cursor:pointer}
+html[dir="rtl"] .cine-mark{transform:translate(50%,-50%)}
+.cine-mark.on{background:var(--uc);color:#fff}
+.cine-tip{position:absolute;bottom:38px;width:220px;padding:6px 10px;border-radius:8px;background:var(--ink);color:var(--bg);font-size:12.5px;text-align:center;pointer-events:none}
+.cine-time,.cine-count{font-size:13px;color:var(--ink-3);white-space:nowrap}
+.cine-count{min-width:62px;text-align:end;font-weight:600;color:var(--ink-2)}
+.cine-view{position:relative;display:flex;align-items:center;justify-content:center;min-height:0;overflow:hidden}
+.cine-frame{width:1600px;height:900px;flex:none;position:relative;display:grid;align-items:center;overflow:hidden;animation:cine-in .45s var(--ease,ease) both}
+.cine-frame.back{animation-name:cine-in-b}
+@keyframes cine-in{from{opacity:0;transform:translateX(calc(24px * var(--dirx,1)))}to{opacity:1;transform:none}}
+@keyframes cine-in-b{from{opacity:0;transform:translateX(calc(-24px * var(--dirx,1)))}to{opacity:1;transform:none}}
+html[dir="rtl"] .cine{--dirx:-1}
+/* cards: title, lesson, question, review */
+.cine-card{position:relative;isolation:isolate;padding:90px 120px;display:grid;gap:22px;align-content:center;height:100%;background:radial-gradient(900px 520px at 85% 15%,color-mix(in srgb,var(--uc) 12%,transparent),transparent 70%),radial-gradient(700px 420px at 10% 95%,color-mix(in srgb,var(--uc) 8%,transparent),transparent 70%)}
+html[dir="rtl"] .cine-card{background:radial-gradient(900px 520px at 15% 15%,color-mix(in srgb,var(--uc) 12%,transparent),transparent 70%),radial-gradient(700px 420px at 90% 95%,color-mix(in srgb,var(--uc) 8%,transparent),transparent 70%)}
+.cine-card.lesson::after{content:attr(data-n);position:absolute;z-index:-1;inset-inline-end:72px;bottom:-80px;font:800 520px/1 var(--font-art);color:color-mix(in srgb,var(--uc) 9%,transparent);letter-spacing:-.04em}
+.cine-card > *{animation:cine-up .6s var(--ease,ease) both}.cine-card > :nth-child(2){animation-delay:.08s}.cine-card > :nth-child(3){animation-delay:.16s}.cine-card > :nth-child(4){animation-delay:.24s}
+@keyframes cine-up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.cine-card > *{animation:none}}
+.cine-card h1{font-size:64px;line-height:1.2;letter-spacing:-.02em;text-wrap:balance;margin:0}
+.cine-card.big h1{font-size:74px}
+.cine-card p{font-size:28px;line-height:1.75;color:var(--ink-2);margin:0;max-width:1200px}
+.cine-k{display:inline-flex;align-items:center;gap:8px;width:max-content;padding:8px 18px;border-radius:99px;background:color-mix(in srgb,var(--uc) 14%,transparent);color:var(--uc);font-weight:700;font-size:20px}
+.cine-k svg{width:16px;height:16px}
+.cine-chain{display:flex;flex-wrap:wrap;gap:12px;align-items:center;font-size:24px;font-weight:600;color:var(--ink-2)}
+.cine-chain span{padding:8px 14px;border-radius:12px;background:var(--surface-2);border:1px solid var(--line)}.cine-chain i{font-style:normal;color:var(--ink-3)}
+.cine-pts{display:grid;gap:16px;margin:0;padding-inline-start:32px;font-size:27px;line-height:1.6;color:var(--ink-2)}
+.cine-rem{font-weight:700;color:var(--uc)!important}
+.cine-card.ask h1{font-size:50px}
+.cine-opts{display:grid;gap:12px;margin:0;padding-inline-start:40px;font-size:28px;line-height:1.5}
+.cine-opts li{padding:10px 14px;border-radius:12px;transition:background .3s,opacity .3s}
+.cine-opts li.ok{background:var(--mint-soft,rgba(16,150,90,.12));color:var(--mint);font-weight:700}
+.cine-opts li.dim{opacity:.45}
+.cine-why{font-size:24px;line-height:1.7;padding:16px 20px;border-radius:14px;background:var(--surface-2);border-inline-start:5px solid var(--mint)}
+.cine-hint{font-size:16px!important;color:var(--ink-3)!important}
+/* the story deck inside the frame: no chrome of its own, larger drawing, story text optional */
+.cine-frame .aih-present{width:100%;margin:0;padding:0;height:900px}
+.cine-frame .aih-head,.cine-frame .aih-foot,.cine-frame .aih-nav,.cine-frame .aih-timer{display:none}
+.cine-frame .aih-stage{height:900px;border:0;border-radius:0;background:var(--surface-2)}
+.cine-frame .aih-slide{height:900px;padding:104px 72px 48px;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:52px;align-items:center}
+.cine-frame .aih-q{top:30px;font-size:24px;padding:12px 24px 12px 14px}
+.cine-frame .aih-q-mark{width:36px;height:36px;font-size:20px}
+.cine-frame .aih-txt{gap:12px}.cine-frame .aih-txt h3{font-size:34px}
+.cine-frame .aih-txt p{font-size:19.5px;line-height:1.72}
+.cine-frame .aih-answer b{font-size:22px;line-height:1.55}
+.cine-frame .aih-idea{font-size:19px}
+.cine-frame .aih-start{display:none}
+/* scenes inside the frame */
+.cine-frame.k-scene{align-content:center;padding:24px 56px}
+.cine-sc{min-height:0}
+/* black / white screen, spotlight, jump, menus */
+.cine-screen{position:absolute;inset:0;z-index:6}.cine-screen.black{background:#000}.cine-screen.white{background:#fff}
+.cine-spot{position:absolute;inset:0;z-index:5;pointer-events:none;background:radial-gradient(circle 150px at var(--x,50%) var(--y,50%),transparent 0 96%,rgba(0,0,0,.72) 100%)}
+.cine-jump{position:absolute;z-index:7;top:70px;inset-inline-end:24px;padding:10px 16px;border-radius:12px;background:var(--ink);color:var(--bg);font-weight:700}
+.cine-menu,.cine-help{position:absolute;z-index:7;top:60px;inset-inline-end:16px;width:min(420px,calc(100vw - 32px));max-height:calc(100vh - 140px);overflow:auto;padding:16px;border-radius:16px;background:var(--surface);border:1px solid var(--line-2);box-shadow:0 18px 48px rgba(10,14,30,.25)}
+.cine-menu ol{list-style:none;margin:10px 0;padding:0;display:grid;gap:4px}
+.cine-menu button{width:100%;display:flex;gap:10px;align-items:center;text-align:start;padding:9px 10px;border-radius:10px;border:0;background:transparent;color:var(--ink);font:inherit;font-size:14.5px;cursor:pointer}
+.cine-menu button:hover,.cine-menu button.on{background:var(--surface-2)}.cine-menu button.on{color:var(--accent);font-weight:600}
+.cine-menu .num{width:24px;height:24px;border-radius:7px;display:grid;place-items:center;background:var(--surface-3);font-size:12px;flex:none}
+.cine-opt{display:flex;gap:8px;align-items:center;font-size:14px;color:var(--ink-2);padding-top:8px;border-top:1px solid var(--line)}
+.cine-help dl{display:grid;grid-template-columns:auto 1fr;gap:8px 14px;margin:12px 0;font-size:14px;align-items:center}
+.cine-help dd{margin:0;color:var(--ink-2)}.cine-help p{font-size:13px;color:var(--ink-3);margin:0;line-height:1.7}
+/* idle in a lecture: the controls and the cursor fade away */
+.cine.idle .cine-top,.cine.idle .cine-bot{opacity:0;pointer-events:none}
+.cine.idle{cursor:none}
+.cine:fullscreen .cine-top,.cine:fullscreen .cine-bot{position:absolute;inset-inline:0;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(6px)}
+.cine:fullscreen .cine-top{top:0}.cine:fullscreen .cine-bot{bottom:0}
+.cine:fullscreen{grid-template-rows:minmax(0,1fr)}.cine:fullscreen .cine-view{grid-row:1/-1;height:100vh}
+@media (max-width:760px){.cine-ib span,.cine-time{display:none}.cine-top,.cine-bot{padding:8px 10px;gap:6px}}
+@media (prefers-reduced-motion:reduce){.cine-frame,.cine-frame.back{animation:none}.cine-track i{transition:none}}

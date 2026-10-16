@@ -245,6 +245,7 @@
       ${head(`<span class="chip" style="background:${u.color};color:#fff;border:0">${esc(u.badge)}</span> ${esc(L(u.short))}`, L(l.title), esc(L(l.sum)),
         `<div class="lesson-meta">${pageChips(l.pages)}<span class="chip num">${ico("clock")}${l.min} ${esc(t("minutes"))}</span><span class="chip">${ico("target")}${esc(diffLabel(l.diff))}</span>
          <span class="bar-spacer"></span>
+         <button type="button" class="chip" id="present-l" title="${esc(t("prThisLesson"))}">${ico("screen")}${esc(t("prThisLesson"))}</button>
          <button type="button" class="chip" id="bm" aria-pressed="${bm}">${ico("bookmark")}${esc(bm ? t("bookmarked") : t("bookmark"))}</button>
          <button type="button" class="chip ${done ? "ok" : ""}" id="donetop" aria-pressed="${done}">${ico("check")}${esc(done ? t("done") : t("markDone"))}</button></div>`)}
       ${deck ? `<section id="sec-${deck.id}"></section>` : ""}
@@ -386,6 +387,7 @@
     };
     A.$("#donebtn").onclick = toggleDone;
     A.$("#donetop").onclick = toggleDone;
+    A.$("#present-l").onclick = () => A.openPresenter(l.unit, l.id);
     A.$("#bm").onclick = () => {
       const list = S.get("bookmarks").slice(); const i = list.indexOf(l.id);
       i >= 0 ? list.splice(i, 1) : list.push(l.id);
