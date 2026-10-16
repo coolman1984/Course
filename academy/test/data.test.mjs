@@ -192,3 +192,9 @@ test("deck drawings give every SVG element one class and one style attribute (a 
   const bad = engine.split("\n").map((l, i) => [i + 1, l]).filter(([, l]) => /\$\{an\([^)]*\)\}[^<>]*\s(class|style)="/.test(l));
   assert.equal(bad.length, 0, "an() already writes class= and style=; pass extra classes as its third argument (and use grow() for bars): lines " + bad.map(([n]) => n).join(", "));
 });
+
+test("Arabic and English point to the same lessons in every explanation", () => {
+  const ids = (t) => [...String(t).matchAll(/\[\[([a-z0-9_-]+)/g)].map((m) => m[1]).sort().join(",");
+  for (const l of A.lessons) for (const k of Object.keys(l.levels)) for (const x of l.levels[k])
+    assert.equal(ids(x.en), ids(x.ar), `${l.id}.${k}.${x.k}: Arabic and English link different lessons`);
+});
