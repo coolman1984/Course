@@ -782,9 +782,14 @@
   });
 
   /* ================= START WITH AI (free chat situations) ================= */
+  function announceLive(liveEl, msg) {
+    if (!liveEl) return;
+    liveEl.textContent = "";
+    setTimeout(() => { liveEl.textContent = msg; }, 0);
+  }
   function copySituationPrompt(text, codeEl, liveEl, btn) {
     const done = () => {
-      if (liveEl) liveEl.textContent = t("startCopied");
+      announceLive(liveEl, t("startCopied"));
       if (btn) {
         btn.setAttribute("aria-label", t("startCopied"));
         btn.innerHTML = ico("check") + esc(t("startCopied"));
@@ -799,7 +804,7 @@
         s.removeAllRanges();
         s.addRange(r);
       }
-      if (liveEl) liveEl.textContent = t("startCopyManual");
+      announceLive(liveEl, t("startCopyManual"));
       A.toast(t("startCopyManual"), "info");
     };
     if (navigator.clipboard && window.isSecureContext) {
@@ -807,14 +812,18 @@
     }
     return fallback();
     function fallback() {
-      const ta = A.h("textarea", { class: "sr-only" });
+      const ta = A.h("textarea");
       ta.value = text;
+      ta.setAttribute("aria-hidden", "true");
+      ta.style.cssText = "position:fixed;left:-9999px;top:0;width:1px;height:1px;opacity:0";
       document.body.append(ta);
+      ta.focus();
       ta.select();
       let ok = false;
       try { ok = document.execCommand("copy"); } catch (_) {}
+      const hasSel = ta.selectionEnd > ta.selectionStart;
       ta.remove();
-      if (ok) done();
+      if (ok && hasSel) done();
       else manual();
     }
   }
@@ -851,7 +860,9 @@
       setTimeout(() => {
         const el = A.$("#sit-" + focusId);
         if (el) {
+          el.setAttribute("tabindex", "-1");
           el.scrollIntoView({ block: "start" });
+          el.focus({ preventScroll: true });
           el.style.borderColor = "var(--accent)";
           el.style.boxShadow = "0 0 0 4px var(--accent-soft)";
         }

@@ -562,6 +562,7 @@ details.more[open]>summary{margin-bottom:8px}
 .custom .grid{gap:10px}
 
 /* ---------- Start with AI (situations) ---------- */
+.situation-card{scroll-margin-top:calc(var(--bar-h) + 16px)}
 .start-ai .sit-title{font-size:1.15rem;margin:0}
 .start-ai .sit-intro{font-size:15px;line-height:1.9;color:var(--ink-2);margin:0}
 .sit-prompt-wrap{display:grid;gap:10px;min-width:0}
@@ -6721,7 +6722,7 @@ Start by presenting the "Context to fill in" block and your clarifying questions
     const groups = { nav: "grpNav", lesson: "grpLessons", lab: "grpLabs", prompt: "grpPrompts", situation: "grpPrompts", term: "grpTerms", page: "grpPages" };
     function draw() {
       const q = input.value;
-      items = q.trim() ? search(q) : A.routes.slice(0, 9).map((r) => ({ type: "nav", href: "#" + r.id, title: r.label, sub: r.desc, icon: r.icon }));
+      items = q.trim() ? search(q) : A.routes.slice(0, 10).map((r) => ({ type: "nav", href: "#" + r.id, title: r.label, sub: r.desc, icon: r.icon }));
       res.innerHTML = "";
       if (!items.length) { res.append(h("div", { class: "empty", html: ico("search") + "<p>" + esc(t("noResults")) + "</p>" })); return; }
       let lastType = null;
@@ -8067,9 +8068,14 @@ Start by presenting the "Context to fill in" block and your clarifying questions
   });
 
   /* ================= START WITH AI (free chat situations) ================= */
+  function announceLive(liveEl, msg) {
+    if (!liveEl) return;
+    liveEl.textContent = "";
+    setTimeout(() => { liveEl.textContent = msg; }, 0);
+  }
   function copySituationPrompt(text, codeEl, liveEl, btn) {
     const done = () => {
-      if (liveEl) liveEl.textContent = t("startCopied");
+      announceLive(liveEl, t("startCopied"));
       if (btn) {
         btn.setAttribute("aria-label", t("startCopied"));
         btn.innerHTML = ico("check") + esc(t("startCopied"));
@@ -8084,7 +8090,7 @@ Start by presenting the "Context to fill in" block and your clarifying questions
         s.removeAllRanges();
         s.addRange(r);
       }
-      if (liveEl) liveEl.textContent = t("startCopyManual");
+      announceLive(liveEl, t("startCopyManual"));
       A.toast(t("startCopyManual"), "info");
     };
     if (navigator.clipboard && window.isSecureContext) {
@@ -8092,14 +8098,18 @@ Start by presenting the "Context to fill in" block and your clarifying questions
     }
     return fallback();
     function fallback() {
-      const ta = A.h("textarea", { class: "sr-only" });
+      const ta = A.h("textarea");
       ta.value = text;
+      ta.setAttribute("aria-hidden", "true");
+      ta.style.cssText = "position:fixed;left:-9999px;top:0;width:1px;height:1px;opacity:0";
       document.body.append(ta);
+      ta.focus();
       ta.select();
       let ok = false;
       try { ok = document.execCommand("copy"); } catch (_) {}
+      const hasSel = ta.selectionEnd > ta.selectionStart;
       ta.remove();
-      if (ok) done();
+      if (ok && hasSel) done();
       else manual();
     }
   }
@@ -8136,7 +8146,9 @@ Start by presenting the "Context to fill in" block and your clarifying questions
       setTimeout(() => {
         const el = A.$("#sit-" + focusId);
         if (el) {
+          el.setAttribute("tabindex", "-1");
           el.scrollIntoView({ block: "start" });
+          el.focus({ preventScroll: true });
           el.style.borderColor = "var(--accent)";
           el.style.boxShadow = "0 0 0 4px var(--accent-soft)";
         }

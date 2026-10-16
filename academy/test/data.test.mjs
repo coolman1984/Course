@@ -3,6 +3,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
+import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import vm from "node:vm";
 import path from "node:path";
@@ -279,6 +280,7 @@ test("start route renders page head and SVG copy icon (mock DOM, no jsdom)", () 
 });
 
 test("built HTML bundles fixed start view wiring", () => {
+  execFileSync(process.execPath, [path.join(SRC, "..", "build.mjs")], { stdio: "pipe" });
   const built = readFileSync(BUILT, "utf8");
   assert.match(built, /html:\s*head\(ico\("spark"\)/, "built bundle must wire start head via html:");
   assert.match(built, /html:\s*ico\("copy"\)\s*\+\s*esc\(t\("startCopy"\)\)/, "built bundle must wire copy icon via html:");

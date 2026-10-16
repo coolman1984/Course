@@ -553,6 +553,7 @@ details.more[open]>summary{margin-bottom:8px}
 .custom .grid{gap:10px}
 
 /* ---------- Start with AI (situations) ---------- */
+.situation-card{scroll-margin-top:calc(var(--bar-h) + 16px)}
 .start-ai .sit-title{font-size:1.15rem;margin:0}
 .start-ai .sit-intro{font-size:15px;line-height:1.9;color:var(--ink-2);margin:0}
 .sit-prompt-wrap{display:grid;gap:10px;min-width:0}

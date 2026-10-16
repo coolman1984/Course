@@ -362,7 +362,7 @@
     const groups = { nav: "grpNav", lesson: "grpLessons", lab: "grpLabs", prompt: "grpPrompts", situation: "grpPrompts", term: "grpTerms", page: "grpPages" };
     function draw() {
       const q = input.value;
-      items = q.trim() ? search(q) : A.routes.slice(0, 9).map((r) => ({ type: "nav", href: "#" + r.id, title: r.label, sub: r.desc, icon: r.icon }));
+      items = q.trim() ? search(q) : A.routes.slice(0, 10).map((r) => ({ type: "nav", href: "#" + r.id, title: r.label, sub: r.desc, icon: r.icon }));
       res.innerHTML = "";
       if (!items.length) { res.append(h("div", { class: "empty", html: ico("search") + "<p>" + esc(t("noResults")) + "</p>" })); return; }
       let lastType = null;
