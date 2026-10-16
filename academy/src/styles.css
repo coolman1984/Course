@@ -539,6 +539,15 @@ details.more[open]>summary{margin-bottom:8px}
 .custom{display:grid;gap:12px;padding:16px;border-radius:var(--r-md);background:var(--spark-soft)}
 .custom .grid{gap:10px}
 
+/* ---------- Start with AI (situations) ---------- */
+.start-ai .sit-title{font-size:1.15rem;margin:0}
+.start-ai .sit-intro{font-size:15px;line-height:1.9;color:var(--ink-2);margin:0}
+.sit-prompt-wrap{display:grid;gap:10px;min-width:0}
+.sit-code{margin:0;padding:14px 16px;border-radius:var(--r-md);background:var(--surface-2);border:1px solid var(--line);overflow-x:auto;max-width:100%;direction:ltr;text-align:left}
+.sit-code code{display:block;font-family:var(--font-mono);font-size:12.5px;line-height:1.6;color:var(--ink);white-space:pre-wrap;word-break:break-word}
+html[data-theme="dark"] .sit-code{background:var(--surface-3);border-color:var(--line-2)}
+html[data-theme="dark"] .sit-code code{color:var(--ink)}
+
 /* ---------- Quiz ---------- */
 .quiz{display:grid;gap:16px}
 .qhead{display:flex;flex-wrap:wrap;align-items:center;gap:10px;justify-content:space-between}

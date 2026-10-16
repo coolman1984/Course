@@ -8,7 +8,100 @@ import vm from "node:vm";
 import path from "node:path";
 
 const SRC = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "src");
-const DATA = ["ui", "meta", "stories", "scenes", "lessons-u0", "lessons-u1", "lessons-u2", "lessons-u3u4", "lessons-u5", "plain-talk-a", "plain-talk-b", "prompts", "quiz", "glossary", "compare"];
+const BUILT = path.join(SRC, "..", "..", "AI_Academy.html");
+
+function makeMockDocument() {
+  class Node {}
+  class Element extends Node {
+    constructor(tag) {
+      super();
+      this.tagName = String(tag).toUpperCase();
+      this.childNodes = [];
+      this._attrs = {};
+      this.style = {};
+      this.onclick = null;
+    }
+    get className() { return this._attrs.class || ""; }
+    set className(v) { this._attrs.class = v; }
+    get id() { return this._attrs.id || ""; }
+    set id(v) { this._attrs.id = v; }
+    setAttribute(k, v) {
+      if (v == null || v === false) return;
+      this._attrs[k] = v === true ? "" : String(v);
+      if (k === "class") this._attrs.class = this._attrs[k];
+    }
+    getAttribute(k) { return this._attrs[k]; }
+    removeAttribute(k) { delete this._attrs[k]; }
+    append(...kids) {
+      for (const k of kids.flat(Infinity)) {
+        if (k == null || k === false) continue;
+        this.childNodes.push(k);
+        k.parentNode = this;
+      }
+    }
+    get innerHTML() {
+      if (this._html != null) return this._html;
+      return this.childNodes.map((c) => (c.nodeType === 3 ? c.data : c.innerHTML ?? "")).join("");
+    }
+    set innerHTML(html) {
+      this._html = String(html);
+      this.childNodes = [];
+    }
+    get textContent() { return this._text ?? this.innerHTML.replace(/<[^>]+>/g, ""); }
+    set textContent(v) { this._text = String(v); }
+    querySelector(sel) {
+      const parts = sel.split(".");
+      const tag = parts[0];
+      const classes = parts.slice(1);
+      const fits = (el) => {
+        if (!(el instanceof Element) || el.tagName !== tag.toUpperCase()) return false;
+        const have = el.className.split(/\s+/).filter(Boolean);
+        return !classes.length || classes.every((c) => have.includes(c));
+      };
+      const walk = (el) => {
+        if (el instanceof Element) {
+          if (fits(el)) return el;
+          if (tag === "h1" && el._html) {
+            const m = el._html.match(/<h1[^>]*>([^<]+)</i);
+            if (m) return { textContent: m[1], setAttribute() {}, focus() {} };
+          }
+          for (const c of el.childNodes) {
+            const hit = walk(c);
+            if (hit) return hit;
+          }
+        }
+        return null;
+      };
+      return walk(this);
+    }
+    querySelectorAll() { return []; }
+  }
+  const documentElement = new Element("html");
+  const body = new Element("body");
+  body.classList = { contains: () => false, toggle: () => {}, remove: () => {} };
+  const byId = new Map();
+  for (const id of ["bar", "side", "main", "scrim", "readbar"]) {
+    const el = new Element(id === "main" ? "main" : "div");
+    el.id = id;
+    byId.set(id, el);
+    if (id === "readbar") el.append(new Element("i"));
+    body.append(el);
+  }
+  documentElement.append(body);
+  const document = {
+    documentElement,
+    body,
+    createElement: (tag) => new Element(tag),
+    createTextNode: (s) => ({ nodeType: 3, data: String(s), parentNode: null }),
+    getElementById: (id) => byId.get(id) || null,
+    querySelector: (sel) => (sel.startsWith("#") ? byId.get(sel.slice(1)) : body.querySelector(sel)),
+    querySelectorAll: () => [],
+    addEventListener: () => {},
+    activeElement: body,
+  };
+  return { document, Node, main: byId.get("main") };
+}
+const DATA = ["ui", "meta", "stories", "scenes", "lessons-u0", "lessons-u1", "lessons-u2", "lessons-u3u4", "lessons-u5", "plain-talk-a", "plain-talk-b", "prompts", "situations", "quiz", "glossary", "compare"];
 const ENGINE = ["core", "scene", "render", "quiz", "labs", "tools"];
 const ctx = { window: { ACADEMY: {} } };
 vm.createContext(ctx);
@@ -132,6 +225,66 @@ test("all lessons have complete picture-first Arabic intros", () => {
     assert.ok(s.every((v) => typeof v === "string" && v.trim().length > 8), `incomplete story ${l.id}`);
   }
 });
+test("situations page data is complete and situation 1 prompt covers Excel automation stack", () => {
+  assert.ok(A.situationsPage && A.situationsPage.title && A.situationsPage.intro, "situationsPage metadata");
+  assert.ok(Array.isArray(A.situations) && A.situations.length >= 1, "need at least one situation");
+  for (const s of A.situations) {
+    assert.ok(s.id && s.title && s.intro && s.prompt, `situation ${s.id || "?"} missing fields`);
+    assert.equal(typeof s.prompt, "string");
+    assert.ok(s.intro.trim().length > 20, `${s.id}: intro too short`);
+  }
+  assert.ok(A.situationsPage.intro.includes("اقرا المقدمة كده في سرك"), "start intro should stay colloquial");
+  const p = A.situations[0].prompt.toLowerCase();
+  for (const needle of ["excel com automation", "com hygiene", "releasecomobject", "powershell", "subprocess", "csv", "sqlite3", "config.json", "main.py", "run.bat", "readme.txt", "clarifying"]) {
+    assert.ok(p.includes(needle), `situation 1 prompt missing ${needle}`);
+  }
+  const render = readFileSync(path.join(SRC, "engine", "render.js"), "utf8");
+  assert.match(render, /html:\s*head\(ico\("spark"\)/, "start page head must use html: head(...)");
+  assert.match(render, /html:\s*ico\("copy"\)\s*\+\s*esc\(t\("startCopy"\)\)/, "copy button must render icon via html");
+  assert.match(render, /A\.toast\(t\("startCopied"\)\)/, "copy success must show on-screen toast");
+  assert.match(render, /A\.toast\(t\("startCopyManual"\),\s*"info"\)/, "manual copy hint must show on-screen toast");
+  assert.ok(render.includes("execCommand"), "render.js must implement offline copy fallback");
+  assert.doesNotMatch(render, /innerHTML:\s*head\(/, "do not pass head() via innerHTML attribute");
+});
+
+test("start route renders page head and SVG copy icon (mock DOM, no jsdom)", () => {
+  const dom = makeMockDocument();
+  const ctx = {
+    window: { ACADEMY: {} },
+    document: dom.document,
+    Node: dom.Node,
+    localStorage: { getItem: () => null, setItem: () => {} },
+    matchMedia: () => ({ matches: false }),
+    location: { hash: "#start" },
+    addEventListener: () => {},
+    scrollTo: () => {},
+    requestAnimationFrame: (fn) => fn(),
+    getSelection: () => ({ removeAllRanges() {}, addRange() {} }),
+    navigator: {},
+    isSecureContext: false,
+    setTimeout: (fn, ms) => { if (!ms) fn(); return 0; },
+  };
+  vm.createContext(ctx);
+  for (const f of DATA) vm.runInContext(readFileSync(path.join(SRC, "data", f + ".js"), "utf8"), ctx, { filename: f + ".js" });
+  vm.runInContext(readFileSync(path.join(SRC, "engine", "core.js"), "utf8"), ctx, { filename: "core.js" });
+  vm.runInContext("window._routeViews = {}; window.ACADEMY.view = (n, fn) => { window._routeViews[n] = fn; };", ctx);
+  vm.runInContext(readFileSync(path.join(SRC, "engine", "render.js"), "utf8"), ctx, { filename: "render.js" });
+  vm.runInContext("window._routeViews.start(document.getElementById('main'), '')", ctx);
+  const title = ctx.window.ACADEMY.situationsPage.title;
+  const h1 = dom.main.querySelector("h1");
+  assert.ok(h1 && h1.textContent.includes(title), "start view must render #main h1");
+  const btn = dom.main.querySelector("button.btn.pri");
+  assert.ok(btn && /<svg[\s>]/i.test(btn.innerHTML), "copy button must contain parsed SVG markup");
+  assert.ok(!/\u003csvg/i.test(btn.textContent), "copy button must not show raw SVG text");
+});
+
+test("built HTML bundles fixed start view wiring", () => {
+  const built = readFileSync(BUILT, "utf8");
+  assert.match(built, /html:\s*head\(ico\("spark"\)/, "built bundle must wire start head via html:");
+  assert.match(built, /html:\s*ico\("copy"\)\s*\+\s*esc\(t\("startCopy"\)\)/, "built bundle must wire copy icon via html:");
+  assert.ok(built.includes("اقرا المقدمة كده في سرك"), "built bundle must ship colloquial start intro");
+});
+
 test("all 41 lessons lead with useful, specific Egyptian Arabic in four levels", () => {
   const fields = ["title", "what", "why", "how", "link", "example", "apply", "mistakes", "whennot"];
   assert.equal(Object.keys(A.plainTalk || {}).length, A.lessons.length, "missing clear lesson explanation");

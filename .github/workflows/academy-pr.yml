@@ -23,6 +23,7 @@ jobs:
           node --check academy/src/data/stories.js
           node --check academy/src/data/plain-talk-a.js
           node --check academy/src/data/plain-talk-b.js
+          node --check academy/src/data/situations.js
           node --check academy/src/engine/render.js
           node --check academy/src/engine/motion.js
           node --check academy/build.mjs
@@ -31,6 +32,9 @@ jobs:
         run: node --test academy/test/data.test.mjs
       - name: Build complete offline academy
         run: node academy/build.mjs
+      - name: Verify start-with-AI page in offline build
+        run: |
+          node -e 'const fs=require("node:fs"); const html=fs.readFileSync("AI_Academy.html","utf8"); for(const s of ["البداية مع الذكاء الاصطناعي","execCommand","copySituationPrompt"])if(!html.includes(s))throw Error("Missing start-ai marker: "+s); console.log("Start-with-AI page bundled");'
       - name: Verify the new visual lesson introduction exists
         run: |
           node -e 'const fs=require("node:fs"); const html=fs.readFileSync("AI_Academy.html","utf8"); for(const s of ["تخيّل الموقف ده","ابدأ بالمشكلة، مش بالمصطلح","من المشكلة للنتيجة"])if(!html.includes(s))throw Error("Missing visual introduction: "+s); console.log("All visual intro markers present");'

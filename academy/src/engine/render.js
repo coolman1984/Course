@@ -32,6 +32,7 @@
           <p class="lead">${esc(t("heroLead"))}</p>
           <div class="cta">
             <a class="btn pri lg" href="#lesson-${(last || first).id}">${ico("play")}${esc(last ? t("continueLast") : t("startHere"))}</a>
+            <a class="btn lg" href="#start">${ico("spark")}${esc(t("nav_start"))}</a>
             <a class="btn lg" href="#map">${esc(t("nav_map"))}</a>
           </div>
           <p class="cred">${esc(t("heroCredOf", { pg: A.meta.pages, l: A.lessons.length, s: A.scenes.length, b: A.labs.length, p: A.prompts.length }))}</p>
@@ -792,5 +793,83 @@
       A.$("#pjt").textContent = t("rubricScore", { n, t: pj.rubric.length });
     }
     score();
+  });
+
+  /* ================= START WITH AI (free chat situations) ================= */
+  function copySituationPrompt(text, codeEl, liveEl, btn) {
+    const done = () => {
+      if (liveEl) liveEl.textContent = t("startCopied");
+      if (btn) {
+        btn.setAttribute("aria-label", t("startCopied"));
+        btn.innerHTML = ico("check") + esc(t("startCopied"));
+      }
+      A.toast(t("startCopied"));
+    };
+    const manual = () => {
+      if (codeEl) {
+        const r = document.createRange();
+        r.selectNodeContents(codeEl);
+        const s = getSelection();
+        s.removeAllRanges();
+        s.addRange(r);
+      }
+      if (liveEl) liveEl.textContent = t("startCopyManual");
+      A.toast(t("startCopyManual"), "info");
+    };
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text).then(done).catch(() => fallback());
+    }
+    return fallback();
+    function fallback() {
+      const ta = A.h("textarea", { class: "sr-only" });
+      ta.value = text;
+      document.body.append(ta);
+      ta.select();
+      let ok = false;
+      try { ok = document.execCommand("copy"); } catch (_) {}
+      ta.remove();
+      if (ok) done();
+      else manual();
+    }
+  }
+  A.copySituationPrompt = copySituationPrompt;
+
+  A.view("start", (main, focusId) => {
+    const page = A.situationsPage || {};
+    const title = page.title || t("nav_start");
+    const intro = page.intro || "";
+    const list = A.situations || [];
+    const wrap = h("div", { class: "wrap-wide stack start-ai" });
+    wrap.append(h("div", { html: head(ico("spark") + " " + esc(title), title, esc(intro)) }));
+    const live = h("div", { class: "start-copy-live sr-only", role: "status", "aria-live": "polite" });
+    wrap.append(live);
+    for (const s of list) {
+      const card = h("article", { class: "card stack situation-card", id: "sit-" + s.id });
+      card.append(h("h2", { class: "sit-title" }, s.title));
+      card.append(h("p", { class: "sit-intro" }, s.intro));
+      const box = h("div", { class: "sit-prompt-wrap" });
+      box.append(h("div", { class: "row", style: "justify-content:space-between;align-items:center" }, h("span", { class: "small muted" }, t("startPromptLabel"))));
+      const pre = h("pre", { class: "sit-code" });
+      const code = h("code", { dir: "ltr" });
+      code.textContent = s.prompt;
+      pre.append(code);
+      box.append(pre);
+      const btn = h("button", { type: "button", class: "btn sm pri", "aria-label": t("startCopy"), html: ico("copy") + esc(t("startCopy")) });
+      btn.onclick = () => copySituationPrompt(s.prompt, code, live, btn);
+      box.append(h("div", { class: "row" }, btn));
+      card.append(box);
+      wrap.append(card);
+    }
+    main.append(wrap);
+    if (focusId) {
+      setTimeout(() => {
+        const el = A.$("#sit-" + focusId);
+        if (el) {
+          el.scrollIntoView({ block: "start" });
+          el.style.borderColor = "var(--accent)";
+          el.style.boxShadow = "0 0 0 4px var(--accent-soft)";
+        }
+      }, 40);
+    }
   });
 })(window.ACADEMY);
