@@ -8,7 +8,7 @@ import vm from "node:vm";
 import path from "node:path";
 
 const SRC = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "src");
-const DATA = ["ui", "meta", "stories", "scenes", "lessons-u0", "lessons-u1", "lessons-u2", "lessons-u3u4", "lessons-u5", "plain-talk-a", "plain-talk-b", "prompts", "quiz", "glossary", "compare", "history", "model-story", "context-story", "window-story", "agents-story", "work-story", "limits-story"];
+const DATA = ["ui", "meta", "stories", "scenes", "lessons-u0", "lessons-u1", "lessons-u2", "lessons-u3u4", "lessons-u5", "plain-talk-a", "plain-talk-b", "prompts", "quiz", "glossary", "compare", "history", "model-story", "context-story", "window-story", "agents-story", "work-story", "limits-story", "auto-story"];
 const ENGINE = ["core", "scene", "render", "quiz", "labs", "tools"];
 const ctx = { window: { ACADEMY: {} } };
 vm.createContext(ctx);
@@ -185,8 +185,9 @@ test("story decks: real lessons, one deck per lesson, every slide complete in bo
   assert.equal(A.agentsStory.lesson, "f7");
   assert.equal(A.workStory.lesson, "f3");
   assert.equal(A.limitsStory.lesson, "f5");
+  assert.equal(A.autoStory.lesson, "f8");
   const u0 = A.lessons.filter((l) => l.unit === "u0").map((l) => l.id);
-  assert.equal(u0.join(" "), "f1 f2 f4 f6 f7 f3 f5", "unit 0 order: history, inside the model, Prompt & Context, the Context's limits, chat/memory/agents, AI at work, limits");
+  assert.equal(u0.join(" "), "f1 f2 f4 f6 f7 f3 f5 f8", "unit 0 order: history, inside the model, Prompt & Context, the Context's limits, chat/memory/agents, AI at work, limits, first automation");
 });
 
 test("deck drawings give every SVG element one class and one style attribute (a second one is silently dropped)", () => {
@@ -199,4 +200,10 @@ test("Arabic and English point to the same lessons in every explanation", () => 
   const ids = (t) => [...String(t).matchAll(/\[\[([a-z0-9_-]+)/g)].map((m) => m[1]).sort().join(",");
   for (const l of A.lessons) for (const k of Object.keys(l.levels)) for (const x of l.levels[k])
     assert.equal(ids(x.en), ids(x.ar), `${l.id}.${k}.${x.k}: Arabic and English link different lessons`);
+});
+
+test("the AI guide embedded in the HTML stays current: every unit-0 lesson and every story deck is named", () => {
+  const guide = readFileSync(path.join(SRC, "ai-guide.txt"), "utf8");
+  for (const l of A.lessons.filter((x) => x.unit === "u0")) assert.ok(new RegExp("\\b" + l.id + "\\b").test(guide), `ai-guide.txt does not mention lesson ${l.id}`);
+  for (const [name, v] of Object.entries(A)) if (A.decks.includes(v)) assert.ok(guide.includes("A." + name), `ai-guide.txt does not name the deck A.${name}`);
 });

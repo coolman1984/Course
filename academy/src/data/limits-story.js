@@ -142,8 +142,8 @@
         title: u("أحسن نتيجة = إنسان بيفكّر + بيانات كويسة + ذكاء اصطناعي", "Best result = a thinking human + good data + AI"),
         story: [u("المذكرة اتبعتت يوم الأحد بدل الخميس، بعد ساعة مراجعة وتلات تصحيحات. والتوصية نفسها اتغيّرت: تغيير المورّد مع بداية السنة الجاية بدل دلوقتي، علشان الشرط الجزائي، وبعد تجربة على خط واحد.",
           "The memo went out on Sunday instead of Thursday, after an hour of review and three corrections. The recommendation itself changed: switch suppliers at the start of next year rather than now, because of the penalty clause, and after a trial on one line."),
-        u("الذكاء الاصطناعي وفّر أيام من الشغل، والمراجعة منعت قرار كان ممكن يكلّف كتير. ودي معادلة الكتاب: إنسان بيفكّر، وبيانات كويسة، وذكاء اصطناعي. لو واحد منهم غاب، النتيجة بتضعف. وبكده نكون خلّصنا أساسيات الوحدة الأولى.",
-          "AI saved days of work, and the review prevented a decision that could have cost a lot. That's the book's equation: a thinking human, good data and AI. Remove any one of them and the result weakens. And with that, we've completed the foundations of unit one.")],
+        u("الذكاء الاصطناعي وفّر أيام من الشغل، والمراجعة منعت قرار كان ممكن يكلّف كتير. ودي معادلة الكتاب: إنسان بيفكّر، وبيانات كويسة، وذكاء اصطناعي. لو واحد منهم غاب، النتيجة بتضعف. وفي الدرس الأخير هنحط كل ده في أول أداة حقيقية على ملفاتك.",
+          "AI saved days of work, and the review prevented a decision that could have cost a lot. That's the book's equation: a thinking human, good data and AI. Remove any one of them and the result weakens. In the last lesson we put all of this into your first real tool, on your own files.")],
         answer: u("استخدم الذكاء الاصطناعي في السرعة، واحتفظ لنفسك بالمراجعة والقرار. لأن ده بيجمع أحسن ما عند الاتنين.", "Use AI for speed and keep the review and the decision for yourself — that combines the best of both."),
         idea: u("هو بيسرّع… وإنت بتضمن.", "It speeds things up… you make sure.")
       }

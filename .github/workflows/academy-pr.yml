@@ -30,6 +30,7 @@ jobs:
           node --check academy/src/data/agents-story.js
           node --check academy/src/data/work-story.js
           node --check academy/src/data/limits-story.js
+          node --check academy/src/data/auto-story.js
           node --check academy/src/engine/history.js
           node --check academy/src/data/model-story.js
           test -s academy/src/history.css
@@ -39,6 +40,9 @@ jobs:
         run: node --test academy/test/data.test.mjs
       - name: Build complete offline academy
         run: node academy/build.mjs
+      - name: Verify the AI guide sits at the top of the offline build
+        run: |
+          node -e 'const fs=require("node:fs"); const html=fs.readFileSync("AI_Academy.html","utf8"); const i=html.indexOf("id=\"ai-guide\""); if(i<0||i>2000)throw Error("AI guide missing or not at the top: "+i); console.log("AI guide at char "+i);'
       - name: Verify the removed lesson situation section stays out
         run: |
           node -e 'const fs=require("node:fs"); const html=fs.readFileSync("AI_Academy.html","utf8"); for(const s of ["تخيّل الموقف ده","sec-mental"])if(html.includes(s))throw Error("Removed section is back: "+s); console.log("Lesson situation section removed");'
@@ -54,3 +58,5 @@ jobs:
           npx playwright install --with-deps chromium
       - name: Test every route, interaction, Arabic and English, mobile and offline
         run: node academy/test/e2e.mjs
+      - name: Every drawing label inside its frame, Arabic and English
+        run: node academy/test/art-check.mjs
