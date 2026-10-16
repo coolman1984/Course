@@ -200,8 +200,8 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
 .cluster{opacity:.13}
 .layer{stroke:var(--accent);stroke-width:2}
 .layer.l0{fill:var(--surface)}.layer.l1{fill:var(--accent-soft)}.layer.l2{fill:color-mix(in srgb,var(--accent) 35%,var(--surface))}.layer.l3{fill:color-mix(in srgb,var(--accent) 70%,var(--surface))}.layer.l4{fill:var(--accent)}
-.bar{transform-box:fill-box;transform-origin:bottom}
-.aih-slide.is-on .bar{animation:aih-bar .8s cubic-bezier(.16,.84,.3,1) var(--d,0s) both}
+.bar,.vbar{transform-box:fill-box;transform-origin:bottom}
+.aih-slide.is-on .bar,.aih-slide.is-on .vbar{animation:aih-bar .8s cubic-bezier(.16,.84,.3,1) var(--d,0s) both}
 .aih-slide.is-on .turn{animation:aih-turn 2.6s ease-in-out var(--d,0s) infinite}
 .aih-slide.is-on .cluster.pop{animation-name:aih-pop-soft}
 @keyframes aih-bar{from{transform:scaleY(0)}to{transform:scaleY(1)}}

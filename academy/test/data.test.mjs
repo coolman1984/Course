@@ -8,7 +8,7 @@ import vm from "node:vm";
 import path from "node:path";
 
 const SRC = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "src");
-const DATA = ["ui", "meta", "stories", "scenes", "lessons-u0", "lessons-u1", "lessons-u2", "lessons-u3u4", "lessons-u5", "plain-talk-a", "plain-talk-b", "prompts", "quiz", "glossary", "compare", "history", "model-story"];
+const DATA = ["ui", "meta", "stories", "scenes", "lessons-u0", "lessons-u1", "lessons-u2", "lessons-u3u4", "lessons-u5", "plain-talk-a", "plain-talk-b", "prompts", "quiz", "glossary", "compare", "history", "model-story", "context-story"];
 const ENGINE = ["core", "scene", "render", "quiz", "labs", "tools"];
 const ctx = { window: { ACADEMY: {} } };
 vm.createContext(ctx);
@@ -172,5 +172,6 @@ test("story decks: real lessons, one deck per lesson, every slide complete in bo
   }
   assert.equal(A.aiHistory.lesson, "f1"); assert.ok(Number.isNaN(parseInt(A.aiHistory.slides.at(-1).year.en, 10)), "history ends today");
   assert.equal(A.modelStory.lesson, "f2");
+  assert.equal(A.contextStory.lesson, "f4");
 });
 

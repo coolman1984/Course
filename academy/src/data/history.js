@@ -112,7 +112,7 @@
           "In 2017, researchers at Google published “Attention Is All You Need” and introduced a design called the Transformer."),
         u("الفكرة: النموذج يبص على كل الكلمات مرة واحدة، ويقرر كل كلمة محتاجة «تنتبه» لأنهي كلمة تانية عشان تفهم معناها.",
           "The idea: the model looks at all the words at once and decides which other words each word should “pay attention” to, to work out its meaning.")],
-        answer: u("تقدر تفهم السياق", "It can follow context"),
+        answer: u("تقدر تفهم الـ Context", "It can follow context"),
         idea: u("ده المحرّك اللي جوّا ChatGPT وClaude وGemini وكل المساعدين اللي هتقابلهم في الكورس.", "This is the engine inside ChatGPT, Claude, Gemini and every assistant you'll meet in this course.")
       },
       {

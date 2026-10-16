@@ -52,7 +52,7 @@
     function assemble() {
       const parts = [st.base.trim()];
       if (st.goal.trim()) parts.push(tx("الهدف: ", "Goal: ") + st.goal.trim());
-      if (st.ctx.trim()) parts.push(tx("السياق: ", "Context: ") + st.ctx.trim());
+      if (st.ctx.trim()) parts.push(tx("الـ Context: ", "Context: ") + st.ctx.trim());
       if (st.aud.trim()) parts.push(tx("الجمهور: ", "Audience: ") + st.aud.trim());
       if (st.fmt) parts.push(tx("شكل النتيجة: ", "Output format: ") + fmts.find((x) => x[0] === st.fmt)[1]);
       if (st.cons.trim()) parts.push(tx("القيود: ", "Constraints: ") + st.cons.trim());
@@ -63,7 +63,7 @@
       const c = [];
       let s = 0;
       const g = words(st.goal) >= 4; s += g ? 20 : 0; c.push(ck(g, tx("هدف واضح ومحدد (مش «ساعدني في…»)", "A clear, specific goal (not “help me with…”)")));
-      const cx = words(st.ctx) >= 8; s += cx ? (hasNum(st.ctx) ? 20 : 15) : 0; c.push(ck(cx, tx("سياق كافي: الأداة مش عارفة عن شغلك غير اللي إنت بتحكيلها عليه", "Enough context: the tool knows only what you tell it")));
+      const cx = words(st.ctx) >= 8; s += cx ? (hasNum(st.ctx) ? 20 : 15) : 0; c.push(ck(cx, tx("Context كافي: الأداة مش عارفة عن شغلك غير اللي إنت بتحكيلها عليه", "Enough context: the tool knows only what you tell it")));
       const au = words(st.aud) >= 1; s += au ? 15 : 0; c.push(ck(au, tx("جمهور محدد: شرح لحد لسه بيبدأ ≠ ملخص لمدير", "A named audience: a beginner’s explainer ≠ a manager’s summary")));
       const fo = !!st.fmt; s += fo ? 15 : 0; c.push(ck(fo, tx("شكل نتيجة محدد بيوفّر جولة تعديل كاملة", "A set output format saves a whole revision round")));
       const co = words(st.cons) >= 3; s += co ? 15 : 0; c.push(ck(co, tx("قيود وأمثلة بتمنع اقتراحات مانقدرش ننفّذها", "Constraints/examples prevent unusable suggestions")));
@@ -81,7 +81,7 @@
       if (st.fmt === "table") return head + tx(`| السؤال | بندوّر على إيه في بياناتك |\n|---|---|\n| المبيعات نزلت فين؟ | قارن الفروع والمنتجات شهر بشهر |\n| بدأت تنزل إمتى؟ | حدّد أول شهر الرقم نزل فيه |\n| ليه؟ | السعر × الكمية: أنهي واحد اتغيّر؟ |\nالخطوة الجاية: ${goal.slice(0, 70)}…`, `| Question | What to look for in your data |\n|---|---|\n| Where did it drop? | Compare branches and products month by month |\n| When did it start? | Find the first month the number fell |\n| Why? | Price × quantity: which one changed? |\nNext step: ${goal.slice(0, 70)}…`);
       if (st.fmt === "plan") return head + tx(`خطة من 3 خطوات:\n1) راجع جودة البيانات (فراغات وتكرار).\n2) قسّم الرقم حسب الفرع والمنتج والشهر.\n3) اقترح إجراء لكل سبب، وحدّد مين مسؤول عنه وميعاده.`, `A 3-step plan:\n1) Check data quality (blanks, duplicates).\n2) Break the number down by branch, product and month.\n3) Propose one action per cause with an owner and a date.`);
       if (st.fmt === "msg") return head + tx(`رسالة قصيرة: لاحظنا إن المبيعات نزلت. بقترح اجتماع 15 دقيقة نعرض فيه 3 أسباب محتملة والقرار المطلوب.`, `Short message: we noticed a sales drop. I propose a 15-minute meeting to review 3 likely causes and the decision needed.`);
-      return head + tx(`• هدفك: ${goal.slice(0, 80)}\n• أول حاجة هعملها: هقسّم الرقم حسب اللي قلته في السياق\n• اللي ناقصني عشان أبقى أدق: ${st.ctx.trim() ? "شكل النتيجة والقيود" : "وصف البيانات والسياق"}`, `• Your goal: ${goal.slice(0, 80)}\n• What I’ll do first: break the number down using your context\n• What I still need: ${st.ctx.trim() ? "output format and constraints" : "a data description and context"}`);
+      return head + tx(`• هدفك: ${goal.slice(0, 80)}\n• أول حاجة هعملها: هقسّم الرقم حسب اللي قلته في الـ Context\n• اللي ناقصني عشان أبقى أدق: ${st.ctx.trim() ? "شكل النتيجة والقيود" : "وصف البيانات والـ Context"}`, `• Your goal: ${goal.slice(0, 80)}\n• What I’ll do first: break the number down using your context\n• What I still need: ${st.ctx.trim() ? "output format and constraints" : "a data description and context"}`);
     }
     function drawIn() {
       f.inp.innerHTML = `<div class="tabs" role="tablist"><button role="tab" type="button" aria-selected="${st.tab === "build"}" data-tab="build">${ico("wrench")}${esc(tx("كوّن طلبك", "Build your prompt"))}</button><button role="tab" type="button" aria-selected="${st.tab === "fix"}" data-tab="fix">${ico("restart")}${esc(tx("صحّح النتيجة", "Fix the result"))}</button></div>`;
@@ -95,7 +95,7 @@
       f.inp.insertAdjacentHTML("beforeend", `${step(1, tx("اكتب طلبك وبعدين ضيف العناصر الخمسة", "Write your request, then add the five elements"))}
         <div class="field"><label for="pb-base">${esc(tx("طلبك زي ما بتكتبه عادة", "Your request as you’d normally write it"))}</label><input id="pb-base" class="input" value="${esc(st.base)}"></div>
         <div class="field"><label for="pb-goal">1 · ${esc(tx("الهدف — إنت عاوز إيه بالظبط؟", "Goal — what exactly do you want?"))}</label><input id="pb-goal" class="input" value="${esc(st.goal)}" placeholder="${esc(tx("عاوز أعرف ليه المبيعات نزلت…", "I want to know why sales fell…"))}"></div>
-        <div class="field"><label for="pb-ctx">2 · ${esc(tx("السياق — الخلفية والوضع الحالي", "Context — background and current situation"))}</label><textarea id="pb-ctx" class="input" rows="3" placeholder="${esc(tx("قول أسماء الأعمدة وأنواعها وعدد الصفوف…", "Name the columns, types, row count…"))}">${esc(st.ctx)}</textarea></div>
+        <div class="field"><label for="pb-ctx">2 · ${esc(tx("الـ Context — الخلفية والوضع الحالي", "Context — background and current situation"))}</label><textarea id="pb-ctx" class="input" rows="3" placeholder="${esc(tx("قول أسماء الأعمدة وأنواعها وعدد الصفوف…", "Name the columns, types, row count…"))}">${esc(st.ctx)}</textarea></div>
         <div class="field"><label for="pb-aud">3 · ${esc(tx("الجمهور — النتيجة دي لمين؟", "Audience — who is it for?"))}</label><input id="pb-aud" class="input" value="${esc(st.aud)}"></div>
         <div class="field"><label for="pb-fmt">4 · ${esc(tx("شكل النتيجة", "Output format"))}</label><select id="pb-fmt" class="input">${fmts.map(([v, l]) => `<option value="${v}" ${st.fmt === v ? "selected" : ""}>${esc(l)}</option>`).join("")}</select></div>
         <div class="field"><label for="pb-cons">5 · ${esc(tx("القيود والأمثلة", "Constraints and examples"))}</label><input id="pb-cons" class="input" value="${esc(st.cons)}" placeholder="${esc(tx("الميزانية، الوقت، الأسلوب…", "Budget, time, style…"))}"></div>
@@ -576,7 +576,7 @@
       const ctxPct = Math.min(100, (inTok / 1e6) * 100);
       const outShare = rows[2].tot ? (rows[2].co / rows[2].tot) * 100 : 0;
       f.out.innerHTML = `<div class="statgrid"><div class="stat"><small>${esc(tx("توكنات نص الطلب (تقديري)", "Prompt tokens (estimate)"))}</small><b class="num">${fmt(pt)}</b></div><div class="stat"><small>${esc(tx("إدخال لكل طلب", "Input per request"))}</small><b class="num">${fmt(inTok)}</b></div><div class="stat"><small>${esc(tx("طلبات/شهر", "Requests / month"))}</small><b class="num">${fmt(reqMonth)}</b></div></div>
-        <div><div class="row" style="justify-content:space-between"><b class="small">${esc(tx("امتلاء نافذة سياق بمليون توكن", "Fill of a 1M-token context window"))}</b><span class="num small">${fmt(ctxPct, 1)}%</span></div><div class="bar-meter"><i style="width:${ctxPct}%;background:var(--violet)"></i></div></div>
+        <div><div class="row" style="justify-content:space-between"><b class="small">${esc(tx("امتلاء نافذة Context بمليون توكن", "Fill of a 1M-token context window"))}</b><span class="num small">${fmt(ctxPct, 1)}%</span></div><div class="bar-meter"><i style="width:${ctxPct}%;background:var(--violet)"></i></div></div>
         ${step(3, tx("التكلفة الشهرية بأسعار الكتاب (سبتمبر 2026، نص كل نطاق)", "Monthly cost at the book’s prices (Sept 2026, mid-range)"))}
         <div class="bars">${rows.map((r) => `<div class="hbar"><span>${esc(r.name)}</span><span class="track"><i style="width:${(r.tot / max) * 100}%;background:${r.id === rec ? "var(--mint)" : "var(--accent)"}"></i></span><span class="v num">$${fmt(r.tot, r.tot < 10 ? 2 : 0)}</span></div>`).join("")}</div>
         <p class="small muted">${esc(tx(`الإخراج بيمثّل ${fmt(outShare, 0)}% من تكلفة الطبقة اليومية — عشان أغلى من الإدخال 3–6 مرات (الفخ الأول).`, `Output is ${fmt(outShare, 0)}% of the daily tier’s cost — it’s 3–6× pricier than input (pricing trap #1).`))}</p>

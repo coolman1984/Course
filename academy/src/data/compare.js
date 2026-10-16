@@ -7,11 +7,11 @@
   const D = (id, ar, en) => ({ id, name: v(ar, en) });
 
   A.compare = [
-    { id: "assist", name: v("دردشة أم مساعد أم وكيل؟", "Chat, assistant or agent?"), pages: [6, 39], common: v("كلها شغالة بنموذج لغوي، وكلها بتبدأ من سياق واضح.", "All run on a language model, and all start from clear context."),
-      dims: [D("does", "ماذا يفعل", "What it does"), D("memory", "السياق والذاكرة", "Context and memory"), D("tools", "الأدوات", "Tools"), D("risk", "الرقابة المطلوبة", "Oversight needed")],
+    { id: "assist", name: v("دردشة أم مساعد أم وكيل؟", "Chat, assistant or agent?"), pages: [6, 39], common: v("كلها شغالة بنموذج لغوي، وكلها بتبدأ من Context واضح.", "All run on a language model, and all start from clear context."),
+      dims: [D("does", "ماذا يفعل", "What it does"), D("memory", "الـ Context والذاكرة", "Context and memory"), D("tools", "الأدوات", "Tools"), D("risk", "الرقابة المطلوبة", "Oversight needed")],
       items: [
         I("chat", "f4", ["الدردشة التقليدية", "Traditional chat"], ["بتسأل وبتاخد إجابة.", "You ask and get an answer."], ["سؤال سريع لوحده.", "A quick standalone question."], { does: ["بيجيب وبيوقف", "Answers and stops"], memory: ["محدودة بالمحادثة", "Limited to the chat"], tools: ["مفيش غالبًا", "Usually none"], risk: ["راجع المعلومة", "Check the information"] }),
-        I("assistant", "f4", ["المساعد الشخصي", "Personal assistant"], ["بيفهمك وبيفتكر السياق وبيفضل يساعدك باستمرار.", "Understands you, remembers context, keeps helping."], ["شغل متواصل على مشروع أو موضوع.", "Ongoing work on a project or topic."], { does: ["بيحلل ويكتب ويقترح معاك", "Analyses, writes and suggests with you"], memory: ["بيبني «وعي» بمشروعك من السياق", "Builds “awareness” of your project from context"], tools: ["قليلة", "Few"], risk: ["راجع قبل ما تعتمد", "Review before adopting"] }),
+        I("assistant", "f4", ["المساعد الشخصي", "Personal assistant"], ["بيفهمك وبيفتكر الـ Context وبيفضل يساعدك باستمرار.", "Understands you, remembers context, keeps helping."], ["شغل متواصل على مشروع أو موضوع.", "Ongoing work on a project or topic."], { does: ["بيحلل ويكتب ويقترح معاك", "Analyses, writes and suggests with you"], memory: ["بيبني «وعي» بمشروعك من الـ Context", "Builds “awareness” of your project from context"], tools: ["قليلة", "Few"], risk: ["راجع قبل ما تعتمد", "Review before adopting"] }),
         I("agent", "t1", ["الوكيل الذكي", "Smart agent"], ["هدف وأدوات وتكرار: بيخطط وينفّذ ويتابع.", "Goal, tools, repetition: plans, executes, follows up."], ["مهمة فيها خطوات كتير ومحتاجة أدوات.", "A multi-step task needing tools."], { does: ["بينفّذ ويلاحظ ويعدّل لحد الهدف", "Acts, observes, adjusts until the goal"], memory: ["هدف محدد وبطاقة دور", "A defined goal and role card"], tools: ["قراءة ملفات، استعلام، إرسال", "Read files, query, send"], risk: ["أقل صلاحية، وموافقة بشرية للإرسال والحذف", "Least privilege; human approval to send and delete"] })
       ] },
 
