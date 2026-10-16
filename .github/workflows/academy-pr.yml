@@ -26,6 +26,10 @@ jobs:
           node --check academy/src/data/situations.js
           node --check academy/src/engine/render.js
           node --check academy/src/engine/motion.js
+          node --check academy/src/data/history.js
+          node --check academy/src/engine/history.js
+          node --check academy/src/data/model-story.js
+          test -s academy/src/history.css
           node --check academy/build.mjs
           test -s academy/src/motion.css
       - name: Verify book mapping and all 41 new stories
@@ -35,9 +39,9 @@ jobs:
       - name: Verify start-with-AI page in offline build
         run: |
           node -e 'const fs=require("node:fs"); const html=fs.readFileSync("AI_Academy.html","utf8"); for(const s of ["البداية مع الذكاء الاصطناعي","execCommand","copySituationPrompt"])if(!html.includes(s))throw Error("Missing start-ai marker: "+s); console.log("Start-with-AI page bundled");'
-      - name: Verify the new visual lesson introduction exists
+      - name: Verify the removed lesson situation section stays out
         run: |
-          node -e 'const fs=require("node:fs"); const html=fs.readFileSync("AI_Academy.html","utf8"); for(const s of ["تخيّل الموقف ده","ابدأ بالمشكلة، مش بالمصطلح","من المشكلة للنتيجة"])if(!html.includes(s))throw Error("Missing visual introduction: "+s); console.log("All visual intro markers present");'
+          node -e 'const fs=require("node:fs"); const html=fs.readFileSync("AI_Academy.html","utf8"); for(const s of ["تخيّل الموقف ده","sec-mental"])if(html.includes(s))throw Error("Removed section is back: "+s); console.log("Lesson situation section removed");'
       - name: Check all 41 lessons use the plain Arabic teaching layer
         run: |
           node -e 'const fs=require("node:fs");const html=fs.readFileSync("AI_Academy.html","utf8");for(const key of ["plain-talk-a.js","plain-talk-b.js","plain-copy","orig-layer"])if(!html.includes(key))throw Error("Missing teaching layer: "+key);console.log("All 41 lessons use the plain-language layer");'

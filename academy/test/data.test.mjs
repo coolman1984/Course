@@ -101,7 +101,7 @@ function makeMockDocument() {
   };
   return { document, Node, main: byId.get("main") };
 }
-const DATA = ["ui", "meta", "stories", "scenes", "lessons-u0", "lessons-u1", "lessons-u2", "lessons-u3u4", "lessons-u5", "plain-talk-a", "plain-talk-b", "prompts", "situations", "quiz", "glossary", "compare"];
+const DATA = ["ui", "meta", "stories", "scenes", "lessons-u0", "lessons-u1", "lessons-u2", "lessons-u3u4", "lessons-u5", "plain-talk-a", "plain-talk-b", "prompts", "situations", "quiz", "glossary", "compare", "history", "model-story", "context-story"];
 const ENGINE = ["core", "scene", "render", "quiz", "labs", "tools"];
 const ctx = { window: { ACADEMY: {} } };
 vm.createContext(ctx);
@@ -214,7 +214,7 @@ test("every literal t(\"key\") used by the engine exists in both languages", () 
   for (const type of ["mcq", "spot", "predict", "compare", "order"]) keys.add("qt_" + type);
   for (const k of keys) assert.ok(A.ui[k] && A.ui[k].ar && A.ui[k].en, `ui key "${k}" missing`);
 });
-// Picture-first examples must exist for every lesson and must be concrete enough to show a full causal chain.
+// The per-lesson stories still feed the home-page motion theatre (engine/motion.js), so every lesson keeps one.
 test("all lessons have complete picture-first Arabic intros", () => {
   const stories = A.lessonStories;
   assert.ok(stories, "missing stories module");
@@ -299,3 +299,32 @@ test("all 41 lessons lead with useful, specific Egyptian Arabic in four levels",
     assert.ok(l.bookTitleAr && l.book.length >= 2, `${l.id}: original book reference lost`);
   }
 });
+
+test("story decks: real lessons, one deck per lesson, every slide complete in both languages, a drawing for every slide", () => {
+  assert.ok(Array.isArray(A.decks) && A.decks.length >= 2, "decks registry missing");
+  const engine = readFileSync(path.join(SRC, "engine", "history.js"), "utf8");
+  const seenLessons = new Set(), seenIds = new Set();
+  for (const H of A.decks) {
+    assert.ok(H.id && !seenIds.has(H.id), "deck id missing or duplicated: " + H.id); seenIds.add(H.id);
+    assert.ok(lessonIds.has(H.lesson), `${H.id}: unknown lesson ${H.lesson}`);
+    assert.ok(!seenLessons.has(H.lesson), `${H.id}: lesson ${H.lesson} already has a deck`); seenLessons.add(H.lesson);
+    for (const k of ["kicker", "title", "lead", "answerLabel", "ideaLabel", "question", "finalQuestion", "note"]) both(H[k], H.id + "." + k);
+    for (const k of Object.keys(H.ui)) both(H.ui[k], H.id + ".ui." + k);
+    assert.ok(H.slides.length >= 8, H.id + ": too few slides");
+    const ids = new Set();
+    let lastYear = 0;
+    for (const s of H.slides) {
+      assert.ok(!ids.has(s.id), `${H.id}: duplicate slide ${s.id}`); ids.add(s.id);
+      for (const k of ["year", "era", "title", "answer", "idea"]) both(s[k], `${H.id}.${s.id}.${k}`);
+      if (s.mark) both(s.mark, `${H.id}.${s.id}.mark`);
+      assert.ok(s.story.length >= 1, `${H.id}.${s.id}: no story`); s.story.forEach((p, i) => both(p, `${H.id}.${s.id}.story${i}`));
+      assert.ok(new RegExp("\\b" + s.art + ":\\s*\\(").test(engine), `${H.id}.${s.id}: no drawing for art ${s.art}`);
+      const y = parseInt(s.year.en, 10);
+      if (!Number.isNaN(y)) { assert.ok(y >= lastYear, `${H.id}.${s.id}: years out of order`); lastYear = y; }
+    }
+  }
+  assert.equal(A.aiHistory.lesson, "f1"); assert.ok(Number.isNaN(parseInt(A.aiHistory.slides.at(-1).year.en, 10)), "history ends today");
+  assert.equal(A.modelStory.lesson, "f2");
+  assert.equal(A.contextStory.lesson, "f4");
+});
+

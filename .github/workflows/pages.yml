@@ -8,6 +8,7 @@ on:
     paths:
       - "academy/**"
       - "AI_Essentials_Course_For_Modern_Workspace.pdf"
+      - "AI_Academy_tour.mp4"
       - ".github/workflows/pages.yml"
   workflow_dispatch:
 
@@ -47,6 +48,7 @@ jobs:
           mkdir -p _site
           cp AI_Academy.html _site/index.html
           cp AI_Essentials_Course_For_Modern_Workspace.pdf _site/
+          cp AI_Academy_tour.mp4 _site/
           touch _site/.nojekyll
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

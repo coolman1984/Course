@@ -237,36 +237,21 @@
     const bm = S.get("bookmarks").includes(l.id);
     const prompts = A.prompts.filter((p) => p.lesson === l.id);
     const qs = A.quiz.filter((q) => q.lesson === l.id);
-    const story = A.lang() === "ar" ? A.lessonStories?.[l.id] : null;
-    const pictureFirst = story ? `<section class="mental sec" id="sec-mental">
-      <div class="mental-kicker">ابدأ بالمشكلة، مش بالمصطلح</div>
-      <h2>تخيّل الموقف ده 👇</h2>
-      <p class="mental-situation">${esc(story[0])}</p>
-      <p class="mental-note">مثال تعليمي للتوضيح. مش بيانات حقيقية عن أي شركة.</p>
-      <div class="mental-flow" role="list" aria-label="من المشكلة للنتيجة">
-        <div class="mental-step" role="listitem"><span>١ • إيه اللي معاك؟</span><strong>${esc(story[1])}</strong></div>
-        <span class="mental-arrow" aria-hidden="true">←</span>
-        <div class="mental-step" role="listitem"><span>٢ • هيحصل إيه؟</span><strong>${esc(story[2])}</strong></div>
-        <span class="mental-arrow" aria-hidden="true">←</span>
-        <div class="mental-step result" role="listitem"><span>٣ • هتستفيد بإيه؟</span><strong>${esc(story[3])}</strong></div>
-      </div>
-      <div class="mental-danger"><b>خد بالك:</b> ${esc(story[4])}</div>
-      <details class="mental-question"><summary><span aria-hidden="true">🧠</span> جرّب تفكر: ${esc(story[5])}</summary><p>${esc(story[6])}</p></details>
-      <p class="mental-hint">دلوقتي شوف الشرح والرسوم اللي تحت. هتعرف اسم الفكرة وليه بنستخدمها.</p>
-    </section>` : "";
+    const ar = A.lang() === "ar";
+    const deck = (A.decks || []).find((d) => d.lesson === l.id);   // a story deck opens this lesson (engine/history.js)
     const wrap = h("article", { class: "wrap" });
     const compass = A.meta.compass.map((c) => `<button type="button" class="chip" data-jump="${c.to}">${esc(L(c.q))}</button>`).join("");
     wrap.innerHTML = `
       <nav class="crumbs" aria-label="${esc(t("crumbs"))}"><a href="#home">${esc(t("home"))}</a> › <a href="#unit-${u.id}">${esc(L(u.short))}</a> › <span class="num">${esc(t("lessonOf", { n: idx + 1, t: ls.length }))}</span></nav>
-      ${head(`<span class="chip" style="background:${u.color};color:#fff;border:0">${esc(u.badge)}</span> ${esc(L(u.short))}`, L(l.title), esc(story ? story[0] : L(l.sum)),
+      ${head(`<span class="chip" style="background:${u.color};color:#fff;border:0">${esc(u.badge)}</span> ${esc(L(u.short))}`, L(l.title), esc(L(l.sum)),
         `<div class="lesson-meta">${pageChips(l.pages)}<span class="chip num">${ico("clock")}${l.min} ${esc(t("minutes"))}</span><span class="chip">${ico("target")}${esc(diffLabel(l.diff))}</span>
          <span class="bar-spacer"></span>
          <button type="button" class="chip" id="bm" aria-pressed="${bm}">${ico("bookmark")}${esc(bm ? t("bookmarked") : t("bookmark"))}</button>
          <button type="button" class="chip ${done ? "ok" : ""}" id="donetop" aria-pressed="${done}">${ico("check")}${esc(done ? t("done") : t("markDone"))}</button></div>`)}
-      ${pictureFirst}
+      ${deck ? `<section id="sec-${deck.id}"></section>` : ""}
       <div class="compass" aria-label="${esc(t("compassAria"))}"><b>${esc(t("compassTitle"))}</b>${compass}</div>
       <div id="sec-scene"></div>
-      <section class="sec" id="sec-book">${story ? '<details class="book-original"><summary>📖 افتح كلام الكتاب الأصلي وربطه بصفحاته</summary>' : secHead("book", t("bookSays"), t("bookSaysSub"))}<div class="bookpts">${(l.book || []).map((b) => `<div class="bookpt"><div>${A.inline(L(b))}</div>${pageChips([b.p])}</div>`).join("")}</div>${story ? "</details>" : ""}</section>
+      <section class="sec" id="sec-book">${ar ? '<details class="book-original"><summary>📖 افتح كلام الكتاب الأصلي وربطه بصفحاته</summary>' : secHead("book", t("bookSays"), t("bookSaysSub"))}<div class="bookpts">${(l.book || []).map((b) => `<div class="bookpt"><div>${A.inline(L(b))}</div>${pageChips([b.p])}</div>`).join("")}</div>${ar ? "</details>" : ""}</section>
       <section class="sec levels" id="sec-levels">${secHead("layers", t("levelsTitle"), t("levelsSub"), "sp")}<div id="lv"></div></section>
       <div id="sec-lab"></div>
       <div id="sec-case"></div>
@@ -280,6 +265,7 @@
         ${next ? `<a class="nx" href="#lesson-${next.id}"><small>${esc(t("nextLesson"))}${ico(A.lang() === "ar" ? "prev" : "next")}</small><b>${esc(L(next.title))}</b></a>` : `<a class="nx" href="#project"><small>${esc(t("finalStep"))}</small><b>${esc(t("nav_project"))}</b></a>`}
       </nav>`;
     main.append(wrap);
+    if (deck && A.mountDeck) A.mountDeck(A.$("#sec-" + deck.id), deck);
     // compass jumps
     A.$$("[data-jump]", wrap).forEach((b) => (b.onclick = () => {
       const to = b.dataset.jump;
