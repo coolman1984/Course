@@ -75,6 +75,19 @@
       o("المعلومة دي مستحيل تبقى غلط أو قديمة", "That information can never be wrong or stale", "الذاكرة ممكن تبقى قديمة؛ راجعها وامسح اللي اتغيّر.", "Memory can go stale; review it and delete what has changed.")
     ], 0, ["الذاكرة نص متخزّن برّه الموديل (تعليمات، أو ذاكرة تلقائية، أو ملفات مشروع)، والتطبيق بيحطه في مساحة الـ Context. علشان كده ممكن تراجعه وتمسحه، وممكن يبقى قديم.", "Memory is text stored outside the model (instructions, automatic memory or project files) that the app places in the workspace — so you can review and delete it, and it can go stale."]),
 
+    Q("f8a", "f8", "compare", ["عندك فولدر فيه ٥٢ ملف أسبوعي بنفس الأعمدة، وعايز تحطهم تحت بعض كل شهر من غير ما تكتب كود. تختار إيه الأول؟", "You have a folder of 52 weekly files with the same columns and want to stack them every month without writing code. What do you try first?"], [
+      o("Power Query من تبويب البيانات: «من فولدر» وتحت بعض، وبعدين «تحديث» كل شهر", "Power Query on the Data tab: “From folder”, stack them, then “Refresh” every month"),
+      o("نسخ ولصق بالإيد بس بتركيز أكتر", "Copy and paste by hand, just more carefully", "ده نفس الشغل اليدوي اللي بياخد ساعات وبيجيب غلط النسخ.", "That’s the same manual work that takes hours and breeds copying mistakes."),
+      o("معادلة بحث وربط في كل ملف", "A lookup formula in every file", "البحث والربط بيجيب قيم من جدول تاني، مش بيحط ملفات تحت بعض.", "A lookup fetches values from another table; it doesn’t stack files."),
+      o("تطلب من الشات يحسب الإجماليات من دماغه", "Ask the chat to estimate the totals", "الموديل مش آلة حاسبة، ومش شايف ملفاتك أصلًا.", "The model isn’t a calculator and can’t even see your files.")
+    ], 0, ["لمهمة «جمّع ملفات بنفس الشكل» جوّه إكسل، Power Query أسهل أتمتة ومن غير كود: الخطوات بتتسجّل مرة وبتتعاد بزرار. ولو الملفات كتير جدًا أو الخطوات معقدة، تطلع للأداة اللي من برّه إكسل.", "For “combine files of the same shape” inside Excel, Power Query is the easiest code-free automation: steps are recorded once and rerun with a button. With very many files or complex steps, step up to a tool outside Excel."]),
+    Q("f8b", "f8", "mcq", ["أنهي من دول مش من قواعد الأمان في أي أداة أتمتة بتبنيها بالذكاء الاصطناعي؟", "Which of these is NOT one of the safety rules for any automation tool you build with AI?"], [
+      o("تعدّل على الملف الأصلي مباشرة علشان توفّر وقت", "Edit the original file directly to save time"),
+      o("تشتغل على نسخة من الملفات", "Work on a copy of the files"),
+      o("تكتب سجل تشغيل فيه عدد الصفوف", "Write a run log with row counts"),
+      o("توقف برسالة واضحة لو الأعمدة مش زي المتوقع", "Stop with a clear message if columns aren’t as expected")
+    ], 0, ["قواعد الأمان: على نسخة، وسجل تشغيل، وتوقف واضح، وقفل إكسل كويس حتى لو حصل خطأ. التعديل على الأصل عكسها بالظبط، لأن اللي الأداة بتعمله ما بيتلغيش بـ «تراجع».", "The safety rules: a copy, a run log, a clear stop, and closing Excel properly even after an error. Editing the original is the exact opposite, because what a tool does can’t be undone with “Undo”."]),
+
     Q("f5a", "f5", "mcq", ["إيه المعادلة اللي الكتاب بيختم بيها لأحسن نتيجة؟", "Which equation does the book end with for the best result?"], [
       o("إنسان بيفكّر + بيانات كويسة + ذكاء اصطناعي", "A thinking human + good data + AI"),
       o("أقوى نموذج + أطول Prompt", "The strongest model + the longest prompt", "الكتاب مش بيربط الجودة بالطول ولا بالحجم لوحده.", "The book ties quality neither to length nor to size alone."),

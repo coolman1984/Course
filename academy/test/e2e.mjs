@@ -320,7 +320,15 @@ await session({ label: "model-deck-ar", viewport: { width: 1360, height: 900 } }
   const ln = await page.$$eval("#sec-limits .aih-slide", (s) => s.length);
   const lart = await page.$$eval("#sec-limits .aih-svg", (s) => s.every((v) => v.querySelectorAll("rect,circle,path,text,ellipse,line").length > 6));
   const lcrumb = await page.$eval(".crumbs .num", (e) => e.textContent);
-  ln >= 10 && lart && !(await page.$("#sec-work")) && /7 من 7/.test(lcrumb) ? ok(`limits deck: ${ln} slides with drawings open lesson f5, the unit's last lesson`) : fail(`limits deck: incomplete (${ln} slides, crumb «${lcrumb}»)`);
+  ln >= 10 && lart && !(await page.$("#sec-work")) && /7 من 8/.test(lcrumb) ? ok(`limits deck: ${ln} slides with drawings open lesson f5, the unit's last lesson`) : fail(`limits deck: incomplete (${ln} slides, crumb «${lcrumb}»)`);
+  await page.evaluate(() => (location.hash = "lesson-f8")); await page.waitForSelector("#sec-auto .aih-stage");
+  const xn = await page.$$eval("#sec-auto .aih-slide", (s) => s.length);
+  const xcrumb = await page.$eval(".crumbs .num", (e) => e.textContent);
+  const xprompts = await page.$$eval("#sec-prompts .prompt, #sec-prompts article, #sec-prompts [data-prompt]", (s) => s.length);
+  await page.click('#sec-auto [data-aih-go="11"]'); await page.waitForTimeout(700);
+  const xfinal = await page.$eval("#sec-auto [data-aih-q]", (e) => e.dataset.final === "true" && /إكسل/.test(e.textContent));
+  xn >= 10 && /8 من 8/.test(xcrumb) && xfinal ? ok(`automation deck: ${xn} slides close unit 0 (lesson 8 of 8) on the cliffhanger question`) : fail(`automation deck: incomplete (${xn} slides, crumb «${xcrumb}», final ${xfinal})`);
+  xprompts >= 3 ? ok(`automation lesson: ${xprompts} copy-ready automation prompts`) : fail("automation lesson: prompts missing (" + xprompts + ")");
   const leftBuilt = await page.evaluate(async () => {   // leaving the page stops on-demand drawing: no SVGs are built in the detached deck afterwards
     location.hash = "lesson-f6"; await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
     const deck = document.querySelector("#sec-window"); const before = deck.querySelectorAll(".aih-svg").length;
