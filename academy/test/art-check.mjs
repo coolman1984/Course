@@ -26,6 +26,10 @@ for (const lang of ["ar", "en"]) {
   for (const id of want) {
     await page.evaluate((l) => { location.hash = "lesson-" + l; location.reload(); }, DECKS[id]);
     await page.waitForSelector(`#sec-${id} .aih-stage`);
+    // the embedded fonts load lazily (font-display: swap); measuring before they arrive reads the wider fallback font,
+    // which differs between machines — load every face first so the boxes are the ones readers see
+    const fonts = await page.evaluate(async () => { await Promise.all([...document.fonts].map((f) => f.load())); await document.fonts.ready; return [...document.fonts].filter((f) => f.status !== "loaded").length; });
+    if (fonts) { problems++; console.log(`${lang} ${id}: ${fonts} font face(s) failed to load`); }
     const n = await page.$$eval(`#sec-${id} .aih-slide`, (s) => s.length);
     for (let i = 0; i < n; i++) {
       await page.click(`#sec-${id} [data-aih-go="${i}"]`);
