@@ -201,3 +201,9 @@ test("Arabic and English point to the same lessons in every explanation", () => 
   for (const l of A.lessons) for (const k of Object.keys(l.levels)) for (const x of l.levels[k])
     assert.equal(ids(x.en), ids(x.ar), `${l.id}.${k}.${x.k}: Arabic and English link different lessons`);
 });
+
+test("the AI guide embedded in the HTML stays current: every unit-0 lesson and every story deck is named", () => {
+  const guide = readFileSync(path.join(SRC, "ai-guide.txt"), "utf8");
+  for (const l of A.lessons.filter((x) => x.unit === "u0")) assert.ok(new RegExp("\\b" + l.id + "\\b").test(guide), `ai-guide.txt does not mention lesson ${l.id}`);
+  for (const [name, v] of Object.entries(A)) if (A.decks.includes(v)) assert.ok(guide.includes("A." + name), `ai-guide.txt does not name the deck A.${name}`);
+});

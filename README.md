@@ -66,10 +66,11 @@
 
 فيه كمان: خريطة الكتاب (كل صفحة وصورتها الأصلية)، تقرير تغطية الصفحات 1–41، خريطة معرفية، مسار تعلّم، مراجعة سريعة، وضع العرض للمدرب، دفتر ملاحظات، وحفظ التقدم على الجهاز مع تصدير واستيراد.
 
-**التطوير:** المصدر في `academy/src` (البيانات في `data/`، المحرك في `engine/`).
+**التطوير:** المصدر في `academy/src` (البيانات في `data/`، المحرك في `engine/`). قبل أي تعديل اقرا `CLAUDE.md` (قواعد البناء واللغة والرسومات والاختبارات)، والتاريخ في `docs/HISTORY.md`، والدروس المستفادة في `docs/LESSONS-LEARNED.md`. وأول الملف `AI_Academy.html` فيه دليل قصير لأي مساعد ذكي يقراه (`academy/src/ai-guide.txt`).
 - البناء: `node academy/build.mjs` (يكتب `AI_Academy.html`)
 - فحص سلامة البيانات: `node --test academy/test/data.test.mjs`
 - اختبار المتصفح الكامل: `node academy/test/e2e.mjs` (يحتاج Playwright)
+- فحص الرسومات: `node academy/test/art-check.mjs` (كل كلمة جوّه رسمتها، بالعربي والإنجليزي)
 
 الخطوط (Inter وIBM Plex Sans Arabic وJetBrains Mono) مرخصة بـSIL OFL، ونص الرخصة في `academy/src/fonts`.
 

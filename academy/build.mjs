@@ -27,10 +27,14 @@ const dataJs = DATA.map((f) => `/* ${f} */\n${read(f)}`).join("\n");
 const engineJs = ENGINE.map((f) => `/* ${f} */\n${read(f)}`).join("\n");
 const boot = `window.addEventListener("DOMContentLoaded",function(){try{window.ACADEMY.boot()}catch(e){console.error(e);var m=document.getElementById("main");if(m)m.innerHTML='<div style="padding:24px;font-family:sans-serif">تعذّر تشغيل الأكاديمية. جرّب متصفحًا حديثًا (Chrome أو Edge أو Firefox أو Safari). — The academy could not start. Try a modern browser.</div>'}});`;
 
+// A short guide for any AI assistant that reads this file (e.g. a trainee pastes it into a free chat). It sits at the very
+// top of <head>, before the large inline styles, because free chats often read only the beginning of a big file.
+const aiGuide = `<script type="text/plain" id="ai-guide">\n${guard(read("ai-guide.txt"))}</script>`;
 const licence = "Fonts: Inter, IBM Plex Sans Arabic and JetBrains Mono, SIL Open Font License 1.1 (see academy/src/fonts). Book content © Mohamed Fawzy.";
 const head = `<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>أكاديمية أساسيات الذكاء الاصطناعي</title>
+${aiGuide}
 <meta name="description" content="Interactive academy built from the book AI Essentials for the Modern Workspace — lessons, animated scenes, labs, prompts, quizzes. Works offline.">
 <meta name="color-scheme" content="light dark">
 <!-- ${licence} -->
