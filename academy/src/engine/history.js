@@ -871,6 +871,133 @@
       ar() ? "من يوم شغل كامل… لساعة واحدة" : "from a full day of work… to one hour")
   });
 
+  /* ---------- drawings for "the limits of AI" (data/limits-story.js) ---------- */
+  const page = (cx, cy, w, h, title, lines, d, cls = "f-s1 s-line2") =>   // a page: title bar and text lines
+    `<g ${an("rise", d)}>${box(cx, cy, w, h, cls)}${title ? txt(cx, cy - h / 2 + 22, title, "t-ink", 12, 'font-weight="800"') : ""}
+      ${lines.map((lw, k) => `<rect x="${ar() ? cx + w / 2 - 14 - lw : cx - w / 2 + 14}" y="${cy - h / 2 + 38 + k * 16}" width="${lw}" height="8" rx="4" class="f-s3"/>`).join("")}</g>`;
+  const check = (x, y, d, ok = true) => `<g ${an("pop", d)}><circle cx="${x}" cy="${y}" r="11" class="${ok ? "f-mint" : "f-rose"}"/>${ok
+    ? `<path d="M${x - 5} ${y} l3.5 3.5 l6.5 -7" class="s-white" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`
+    : `<path d="M${x - 4} ${y - 4} l8 8 M${x + 4} ${y - 4} l-8 8" class="s-white" stroke-width="2.4" stroke-linecap="round"/>`}</g>`;
+  Object.assign(ART, {
+    l_memo: () => {
+      const m = mx(176), c = mx(396), d = dirx();
+      return `${page(m, 160, 200, 250, ar() ? "مذكرة: تغيير مورّد التغليف" : "Memo: change packaging supplier", [150, 132, 160, 120, 146, 100, 154, 130, 110, 140], 0.05)}
+      <g ${an("pop", 0.7)}>${box(m, 250, 150, 30, "f-acc-soft s-acc")}${txt(m, 255, ar() ? "التوصية: نغيّر المورّد" : "Recommendation: switch", "t-acc", 11.5, bold)}</g>
+      <g ${an("pop", 1.0)}><circle cx="${c}" cy="96" r="28" class="f-s1 s-ink2" stroke-width="3"/><line x1="${c}" y1="96" x2="${c}" y2="76" class="s-ink2" stroke-width="3" stroke-linecap="round"/><line x1="${c}" y1="96" x2="${c - d * 14}" y2="96" class="s-acc" stroke-width="3.5" stroke-linecap="round"/>${txt(c, 146, ar() ? "الإرسال الساعة ٥" : "due at 5:00", "t-ink2", 12, bold)}</g>
+      <path ${an("draw", 1.3, "s-ink3")} pathLength="1" d="M${m + d * 104} 200 C ${m + d * 140} 200, ${c - d * 40} 210, ${c - d * 30} 214" stroke-width="2" stroke-dasharray="1" fill="none" marker-end="url(#aih-arrow)"/>
+      <g ${an("rise", 1.5)}><rect x="${c - 34}" y="200" width="68" height="46" rx="5" class="f-s1 s-ink2" stroke-width="2.5"/><path d="M${c - 34} 202 l34 24 l34 -24" class="s-ink2" stroke-width="2.5" fill="none"/>${txt(c, 268, ar() ? "للمدير العام" : "to the GM", "t-ink2", 12, bold)}</g>
+      <g ${an("pop", 1.8)}><circle cx="${c}" cy="300" r="13" class="f-amber"/>${txt(c, 305, ar() ? "؟" : "?", "t-white", 15, 'font-weight="800"')}</g>`;
+    },
+    l_confident: () => {
+      const b = mx(196), r = mx(410), d = dirx();
+      return `<g ${an("rise", 0.05)}>${box(b, 104, 300, 92, "f-s1 s-acc", 2.5)}${txt(b, 88, ar() ? "«حسب القرار الوزاري رقم ١٢٧" : "“Under ministerial decree", "t-ink", 12.5, bold)}${txt(b, 108, ar() ? "لسنة ٢٠٢٤، لازم يتغيّر المورّد" : "no. 127 of 2024, the supplier", "t-ink", 12.5, bold)}${txt(b, 128, ar() ? "لو العيوب عدّت ٢٪»" : "must change above 2% defects”", "t-ink", 12.5, bold)}</g>
+      ${[[ar() ? "ثقة الكلام" : "confidence of wording", 1, "f-acc", 186], [ar() ? "صحة المعلومة" : "accuracy of the fact", 0.08, "f-rose", 236]].map(([s, v, c, y], i) => `<g ${an("fade", 0.4 + i * 0.3)}>${txt(mx(84), y + 5, s, "t-ink2", 11.5, bold)}</g>
+        <rect x="${ar() ? 130 : 160}" y="${y - 9}" width="190" height="18" rx="9" class="f-s3"/>${grow(160, y - 9, Math.max(14, 190 * v), 18, c, 0.6 + i * 0.3)}`).join("")}
+      <g ${an("pop", 1.2)}><circle cx="${r}" cy="190" r="34" class="s-ink2" fill="none" stroke-width="4"/><line x1="${r + d * 24}" y1="214" x2="${r + d * 46}" y2="238" class="s-ink2" stroke-width="7" stroke-linecap="round"/>${txt(r, 186, ar() ? "القرار" : "decree", "t-ink3", 11, bold)}${txt(r, 202, ar() ? "مش موجود" : "not found", "t-rose", 12, 'font-weight="800"')}</g>
+      ${txt(240, 296, ar() ? "الثقة في الصياغة مش دليل على الصحة" : "confident wording is not evidence", "t-ink2", 13, bold)}`;
+    },
+    l_misread: () => {
+      const q = mx(110), d = dirx(), B = mx(360), Y = [92, 200];
+      return `<g ${an("pop", 0.05)}>${box(q, 146, 176, 60, "f-acc-soft s-acc")}${txt(q, 140, ar() ? "«قارن بالمورّد" : "“Compare with the", "t-ink", 12, bold)}${txt(q, 158, ar() ? "التاني»" : "other supplier”", "t-ink", 12, bold)}</g>
+      ${Y.map((y, i) => `<path ${an("draw", 0.5 + i * 0.2, i ? "s-rose" : "s-mint")} pathLength="1" d="M${q + d * 90} 146 C ${q + d * 140} 146, ${B - d * 130} ${y}, ${B - d * 92} ${y}" stroke-width="2.5" fill="none"${i ? "" : ' stroke-dasharray="1"'} marker-end="url(#aih-arrow)"/>`).join("")}
+      <g ${an("rise", 0.8)}>${box(B, Y[0], 176, 56, "f-mint-soft s-mint")}${txt(B, Y[0] - 4, ar() ? "المورّد ب: جودة أعلى" : "Supplier B: higher quality", "t-mint", 12, 'font-weight="800"')}${txt(B, Y[0] + 14, ar() ? "اللي كان مقصود" : "what was meant", "t-mint", 10.5, bold)}</g>
+      <g ${an("rise", 1.0)}>${box(B, Y[1], 176, 56, "f-rose-soft s-rose")}${txt(B, Y[1] - 4, ar() ? "المورّد ج: سعر أقل" : "Supplier C: lower price", "t-rose", 12, 'font-weight="800"')}${txt(B, Y[1] + 14, ar() ? "اللي الموديل اختاره" : "what the model chose", "t-rose", 10.5, bold)}</g>
+      ${check(B + d * 100, Y[1] - 26, 1.3, false)}
+      <g ${an("fade", 1.5)}>${box(q, 250, 196, 34, "f-s2 s-line2")}${txt(q, 255, ar() ? "«اكتب فهمك للمطلوب في سطرين»" : "“State what you understood”", "t-ink2", 11.5, bold)}</g>
+      ${txt(240, 302, ar() ? "المعلومة الناقصة بتتملي بالأرجح" : "a missing fact is filled with the likeliest guess", "t-ink2", 13, bold)}`;
+    },
+    l_data: () => {
+      const M = Array.from({ length: 12 }, (_, i) => digits(i + 1));
+      const X = rowX(12, 26, 6);
+      return `<g ${an("fade", 0.05)}>${txt(240, 50, ar() ? "بيانات المورّد الجديد، شهر بشهر" : "new supplier data, month by month", "t-ink3", 12, bold)}</g>
+      ${M.map((m, i) => `<g ${an("pop", 0.1 + i * 0.05)}><rect x="${X(i) - 13}" y="64" width="26" height="76" rx="5" class="${i < 2 ? "f-acc" : "f-s1 s-line2"}" stroke-width="1.6"${i < 2 ? "" : ' stroke-dasharray="4 3"'}/>${txt(X(i), 158, m, i < 2 ? "t-acc" : "t-ink3", 10, bold)}</g>`).join("")}
+      <g ${an("fade", 0.9)}>${txt((X(2) + X(11)) / 2, 106, ar() ? "مش مرفوعة" : "not uploaded", "t-ink3", 12, bold)}</g>
+      <path ${an("draw", 1.0, "s-ink2")} pathLength="1" d="M${X(0)} 170 C ${X(0)} 196, 240 186, 240 204" stroke-width="2.5" fill="none" marker-end="url(#aih-arrow)"/>
+      <g ${an("pop", 1.2)}>${box(240, 228, 220, 40, "f-mint-soft s-mint")}${txt(240, 234, ar() ? "نسبة العيوب: ٠٫٥٪ ✓" : "defect rate: 0.5% ✓", "t-mint", 14, 'font-weight="800"')}</g>
+      <g transform="rotate(${ar() ? 8 : -8} 240 268)"><g ${an("pop", 1.6)}>${box(240, 272, 210, 30, "f-rose-soft s-rose", 2.5)}${txt(240, 277, ar() ? "من شهرين بس من ١٢" : "from 2 months out of 12", "t-rose", 12, 'font-weight="800"')}</g></g>
+      ${txt(240, 312, ar() ? "حساب سليم على بيانات ناقصة" : "sound arithmetic on partial data", "t-ink2", 12.5, bold)}`;
+    },
+    l_company: () => {
+      const a = mx(118), b = mx(362), m = 240, d = dirx();
+      return `${page(a, 120, 178, 120, ar() ? "المعتاد في العقود" : "usual in contracts", [120, 96], 0.05)}
+      <g ${an("pop", 0.4)}>${box(a, 150, 120, 30, "f-s2 s-ink3")}${txt(a, 155, ar() ? "إخطار ٣٠ يوم" : "30 days' notice", "t-ink2", 12, bold)}</g>
+      ${page(b, 120, 178, 120, ar() ? "عقدكم مع المورّد" : "your supplier contract", [120, 96], 0.3, "f-s1 s-amber")}
+      <g ${an("pop", 0.6)}>${box(b, 150, 140, 30, "f-amber-soft s-amber")}${txt(b, 155, ar() ? "٩٠ يوم + شرط جزائي" : "90 days + penalty", "t-amber", 12, 'font-weight="800"')}</g>
+      <g ${an("pop", 0.9)}><circle cx="${m}" cy="236" r="26" class="f-acc"/>${txt(m, 241, ar() ? "موديل" : "model", "t-white", 11.5, bold)}</g>
+      <path ${an("draw", 1.1, "s-ink3")} pathLength="1" d="M${a} 168 C ${a} 220, ${m - d * 60} 236, ${m - d * 30} 236" stroke-width="2.5" fill="none" marker-end="url(#aih-arrow)"/>
+      <path ${an("draw", 1.2, "s-rose")} pathLength="1" d="M${b} 168 C ${b} 220, ${m + d * 60} 236, ${m + d * 30} 236" stroke-width="2" stroke-dasharray="1" fill="none"/>
+      <g ${an("fade", 1.4)}>${txt(b, 222, ar() ? "ما شافوش" : "never saw it", "t-rose", 11.5, 'font-weight="800"')}</g>
+      <g ${an("pop", 1.7)}>${box(m, 292, 220, 32, "f-rose", 0)}${txt(m, 297, ar() ? "كتب: «إخطار ٣٠ يوم»" : "wrote: “30 days' notice”", "t-white", 12, bold)}</g>`;
+    },
+    l_dated: () => {
+      const L = 50, R = 430, cut = mx(270), d = dirx();
+      const xs = (f) => (ar() ? R - (R - L) * f : L + (R - L) * f);
+      return `<line x1="${L}" y1="160" x2="${R}" y2="160" class="s-line2" stroke-width="3"/>
+      <path ${an("draw", 0.2, "s-acc")} pathLength="1" d="M${xs(0)} 160 H ${cut}" stroke-width="6" fill="none" stroke-linecap="round"/>
+      ${[[0.12, ar() ? "أسعار ٢٠٢٣" : "2023 prices"], [0.32, ar() ? "قوانين قديمة" : "older rules"]].map(([f, s], i) => `<g ${an("pop", 0.4 + i * 0.15)}><circle cx="${xs(f)}" cy="160" r="8" class="f-acc"/>${txt(xs(f), 140, s, "t-acc", 11.5, bold)}</g>`).join("")}
+      <g ${an("pop", 0.8)}><line x1="${cut}" y1="96" x2="${cut}" y2="222" class="s-rose" stroke-width="3" stroke-dasharray="6 5"/>${box(cut, 82, 150, 30, "f-rose", 0)}${txt(cut, 87, ar() ? "تاريخ توقف التدريب" : "training cutoff", "t-white", 11.5, bold)}</g>
+      ${[[0.7, ar() ? "سعر جديد" : "new price"], [0.86, ar() ? "سعر أحدث" : "newer price"]].map(([f, s], i) => `<g ${an("pop", 1.0 + i * 0.15)}><circle cx="${xs(f)}" cy="160" r="8" class="f-s3"/>${txt(xs(f), i ? 140 : 190, s, "t-ink3", 11.5, bold)}</g>`).join("")}
+      <g ${an("fade", 1.2)}>${txt((xs(0) + cut) / 2, 214, ar() ? "اللي يعرفه" : "what it knows", "t-acc", 12.5, 'font-weight="800"')}${txt((cut + xs(1)) / 2, 236, ar() ? "مش في معرفته" : "outside its knowledge", "t-ink3", 12.5, 'font-weight="800"')}</g>
+      <g ${an("rise", 1.5)}>${box(240, 286, 300, 32, "f-mint-soft s-mint")}${txt(240, 291, ar() ? "كل معلومة بتتغيّر محتاجة تاريخ ومصدر" : "anything that changes needs a date and source", "t-mint", 12, bold)}</g>`;
+    },
+    l_sensitive: () => {
+      const s0 = mx(100), p = mx(370), d = dirx();
+      const items = ar() ? ["أسعار العقد السرية", "أسماء الموظفين"] : ["confidential prices", "staff names"];
+      const lock = (x, y, open, cls) => `<g transform="translate(${x} ${y})"><rect x="-10" y="-2" width="20" height="15" rx="3" class="${cls}"/><path d="M-6 -2 v-5 a6 6 0 0 1 12 0 ${open ? "v-2" : "v5"}" class="${cls.replace("f-", "s-")}" stroke-width="2.5" fill="none"/></g>`;
+      return `${items.map((s, i) => `<g ${an("rise", 0.1 + i * 0.15)}>${box(s0, 120 + i * 50, 168, 36, "f-amber-soft s-amber")}${txt(s0, 125 + i * 50, s, "t-amber", 12, 'font-weight="800"')}</g>`).join("")}
+      <path ${an("draw", 0.6, "s-rose")} pathLength="1" d="M${s0 + d * 86} 130 C ${s0 + d * 140} 130, ${p - d * 120} 90, ${p - d * 96} 90" stroke-width="2.5" stroke-dasharray="1" fill="none" marker-end="url(#aih-arrow)"/>
+      <path ${an("draw", 0.8, "s-mint")} pathLength="1" d="M${s0 + d * 86} 160 C ${s0 + d * 140} 160, ${p - d * 120} 220, ${p - d * 96} 220" stroke-width="2.5" fill="none" marker-end="url(#aih-arrow)"/>
+      <g ${an("pop", 1.0)}>${box(p, 90, 184, 50, "f-rose-soft s-rose")}${lock(p - d * 70, 86, true, "f-rose")}${txt(p + d * 12, 86, ar() ? "حساب شخصي مجاني" : "personal free account", "t-rose", 11.5, 'font-weight="800"')}${txt(p + d * 12, 104, ar() ? "برّه أنظمة الشركة" : "outside company systems", "t-rose", 10.5, bold)}</g>
+      <g ${an("pop", 1.2)}>${box(p, 220, 184, 50, "f-mint-soft s-mint")}${lock(p - d * 70, 216, false, "f-mint")}${txt(p + d * 12, 216, ar() ? "أداة الشركة المعتمدة" : "company-approved tool", "t-mint", 11.5, 'font-weight="800"')}${txt(p + d * 12, 234, ar() ? "أو «المورّد أ» بدل الاسم" : "or “supplier A” for names", "t-mint", 10.5, bold)}</g>
+      ${check(p + d * 104, 66, 1.4, false)}${check(p + d * 104, 196, 1.5, true)}
+      ${txt(240, 296, ar() ? "البيانات اللي خرجت ما بترجعش" : "data that has left doesn't come back", "t-ink2", 13, bold)}`;
+    },
+    l_review: () => {
+      const cx = 240, cy = 150, R = ar() ? ["خطوط الإنتاج", "المشتريات", "الشؤون القانونية", "المالية"] : ["production", "purchasing", "legal", "finance"];
+      const P = [[-1, -1], [1, -1], [-1, 1], [1, 1]].map(([a, b]) => [cx + dirx() * a * 150, cy + b * 74]);
+      return `${P.map(([x, y], i) => `<line ${an("draw", 0.4 + i * 0.1, "s-line2")} pathLength="1" x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke-width="2"/>`).join("")}
+      <g ${an("pop", 0.1)}>${box(cx, cy, 150, 50, "f-acc", 0)}${txt(cx, cy - 2, ar() ? "قرار تغيير" : "decision to", "t-white", 12.5, 'font-weight="800"')}${txt(cx, cy + 15, ar() ? "المورّد" : "switch supplier", "t-white", 12.5, 'font-weight="800"')}</g>
+      ${P.map(([x, y], i) => `<g ${an("rise", 0.6 + i * 0.15)}>${box(x, y, 136, 40, "f-s1 s-acc")}${person(x - dirx() * 50, y + 14, 0.5, "f-ink2")}${txt(x + dirx() * 10, y + 5, R[i], "t-ink", 12, bold)}</g>${check(x + dirx() * 66, y - 20, 1.2 + i * 0.12)}`).join("")}
+      <g ${an("rise", 1.8)}>${box(240, 286, 330, 32, "f-amber-soft s-amber")}${txt(240, 291, ar() ? "«ماكينة ٣ حساسة لسُمك الكرتون» — مشرف الخط" : "“machine 3 is sensitive to thickness” — line lead", "t-amber", 11.5, bold)}</g>`;
+    },
+    l_owner: () => {
+      const m = mx(190), d = dirx();
+      return `<g ${an("rise", 0.05)}>${box(m, 160, 250, 236, "f-s1 s-line2")}${txt(m, 66, ar() ? "المذكرة" : "the memo", "t-ink", 13, 'font-weight="800"')}
+        ${[160, 140, 170, 120].map((w, k) => `<rect x="${ar() ? m + 110 - w : m - 110}" y="${84 + k * 16}" width="${w}" height="8" rx="4" class="f-s3"/>`).join("")}</g>
+      <g ${an("fade", 0.5)}>${box(m, 176, 216, 34, "f-s2 s-line2")}${txt(m, 181, ar() ? "التحضير: مساعد ذكي" : "prepared with: an AI assistant", "t-ink3", 11.5, bold)}</g>
+      <g ${an("pop", 0.9)}>${box(m, 226, 216, 44, "f-acc-soft s-acc", 2.5)}${txt(m, 222, ar() ? "المسؤول عن القرار: إنت" : "accountable: you", "t-acc", 12.5, 'font-weight="800"')}</g>
+      <path ${an("draw", 1.2, "s-ink")} pathLength="1" d="M${m - 46} 264 c 14 -10, 22 8, 34 -2 s 20 -8, 30 4 s 18 -6, 28 0" stroke-width="2.5" fill="none"/>
+      <g ${an("rise", 1.4)}>${box(mx(404), 118, 132, 70, "f-rose-soft s-rose")}${txt(mx(404), 112, ar() ? "«الأداة قالت كده»" : "“the tool said so”", "t-rose", 11.5, 'font-weight="800"')}${txt(mx(404), 132, ar() ? "مش مبرر" : "is no excuse", "t-rose", 11.5, bold)}</g>
+      ${check(mx(404) + d * 60, 88, 1.6, false)}
+      ${txt(240, 304, ar() ? "التوقيع بيقول إنك راجعت" : "a signature says you reviewed it", "t-ink2", 13, bold)}`;
+    },
+    l_chain: () => {
+      const st = ar() ? ["حدّد الهدف", "ادّيه الـ Context", "راجع النتيجة", "اتأكد من المصادر", "خد القرار"] : ["set the goal", "give Context", "review result", "verify sources", "decide"];
+      const X = rowX(5, 84, 8), fix = ar() ? ["الفهم الغلط", "الشركة والبيانات", "الثقة الزايفة", "القديم والوهمي", "المسؤولية"] : ["misreading", "company & data", "false confidence", "stale & invented", "responsibility"];
+      return `${st.map((s, i) => `<g ${an("pop", 0.15 + i * 0.2)}><circle cx="${X(i)}" cy="92" r="16" class="${i === 4 ? "f-mint" : "f-acc"}"/>${txt(X(i), 97, digits(i + 1), "t-white", 13, 'font-weight="800"')}${box(X(i), 146, 84, 54, i === 4 ? "f-mint-soft s-mint" : "f-s1 s-acc")}${txt(X(i), 151, s, "t-ink", 11, bold)}</g>`).join("")}
+      ${st.slice(1).map((_, i) => `<path ${an("draw", 0.3 + i * 0.2, "s-acc")} pathLength="1" d="M${X(i) + dirx() * 18} 92 H ${X(i + 1) - dirx() * 20}" stroke-width="2.5" fill="none"/>`).join("")}
+      ${fix.map((s, i) => `<g ${an("fade", 1.2 + i * 0.12)}><path d="M${X(i)} 176 V 204" class="s-line2" stroke-width="2"/>${box(X(i), 222, 84, 34, "f-s2 s-line2")}${txt(X(i), 227, s, "t-ink3", 10, bold)}</g>`).join("")}
+      ${txt(240, 280, ar() ? "كل خطوة بتقفل حد من الحدود" : "each step closes off a limit", "t-ink2", 13, bold)}`;
+    },
+    l_checks: () => {
+      const C = ar() ? ["افصل المؤكد عن المستنتج", "اذكر افتراضاتك", "اتأكد من أهم ٣ معلومات بنفسك", "«إيه اللي يخلّي التوصية غلط؟»", "زميل يقرا بعين جديدة"]
+        : ["separate facts from inferences", "list your assumptions", "verify the top 3 facts yourself", "“what would make this wrong?”", "a colleague reads it fresh"];
+      const bx = mx(250), nx = mx(70), d = dirx();
+      return `${C.map((s, i) => { const y = 58 + i * 46; return `<g ${an("rise", 0.1 + i * 0.18)}>${box(bx, y, 320, 36, "f-s1 s-line2")}<circle cx="${nx}" cy="${y}" r="15" class="f-acc"/>${txt(nx, y + 5, digits(i + 1), "t-white", 13, 'font-weight="800"')}${txt(bx, y + 5, s, "t-ink", 12, bold)}</g>`; }).join("")}
+      <g ${an("pop", 1.2)}>${box(mx(250), 290, 320, 32, "f-mint-soft s-mint")}${txt(mx(250), 295, ar() ? "ساعة مراجعة كشفت ٣ أخطاء" : "one hour of checks caught 3 mistakes", "t-mint", 12.5, 'font-weight="800"')}</g>`;
+    },
+    l_recap: () => {
+      const X = rowX(3, 112, 34), T = ar() ? ["إنسان بيفكّر", "بيانات كويسة", "ذكاء اصطناعي"] : ["a thinking human", "good data", "AI"], C = ["f-acc", "f-amber", "f-mint"];
+      const icon = [(x) => person(x, 116, 0.8, "f-white"), (x) => `<rect x="${x - 15}" y="86" width="30" height="26" rx="3" class="f-white"/><path d="M${x - 15} 95 h30 M${x - 5} 86 v26" class="s-amber" stroke-width="2"/>`,
+        (x) => `<circle cx="${x}" cy="98" r="12" class="f-white"/><path d="M${x - 5} 98 h10 M${x} 93 v10" class="s-mint" stroke-width="2.5"/>`];
+      return `${T.map((s, i) => `<g ${an("pop", 0.15 + i * 0.3)}><circle cx="${X(i)}" cy="100" r="38" class="${C[i]}"/>${icon[i](X(i))}${txt(X(i), 164, s, "t-ink", 12.5, 'font-weight="800"')}</g>`).join("")}
+      ${[0, 1].map((i) => `<g ${an("fade", 0.4 + i * 0.3)}>${txt((X(i) + X(i + 1)) / 2, 108, "+", "t-ink2", 26, 'font-weight="800"')}</g>`).join("")}
+      <path ${an("draw", 1.1, "s-ink2")} pathLength="1" d="M240 184 V 212" stroke-width="2.5" fill="none" marker-end="url(#aih-arrow)"/>
+      <g ${an("pop", 1.3)}>${box(240, 240, 220, 42, "f-ink2", 0)}${txt(240, 246, ar() ? "أحسن نتيجة" : "the best result", "t-bg", 15, 'font-weight="800"')}</g>
+      ${txt(240, 296, ar() ? "هو بيسرّع… وإنت بتضمن" : "it speeds things up… you make sure", "t-ink2", 13, bold)}`;
+    }
+  });
+
   const defs = `<svg class="aih-defs" width="0" height="0" aria-hidden="true" focusable="false"><defs><marker id="aih-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" class="f-ink2"/></marker></defs></svg>`;
   const drawing = (key, label) => `<svg class="aih-svg" viewBox="0 0 480 320" role="img" aria-label="${esc(label)}">${ART[key] ? ART[key]() : ""}</svg>`;
 
