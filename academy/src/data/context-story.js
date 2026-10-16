@@ -1,4 +1,4 @@
-/* The Prompt and the Context — the story deck that opens lesson f4 (the book's Context & Prompt pages).
+/* The Prompt and the Context — the story deck that opens lesson f4 (the book's Context & Prompt pages; shown third in unit 0, right after the "inside the model" deck).
    One hero runs through every slide: the request «اكتبلي تقرير عن التوقفات», and the question «الموديل شايف إيه وإنت بتكلّمه؟».
    Each slide gives one rule with its reason («القاعدة، وليه؟») and builds on the "inside the model" deck (f2): the meaning map,
    attention and next-word prediction explain why word choice and Context decide what the model understands.

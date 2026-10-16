@@ -2776,7 +2776,39 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       },
     },
     {
-      id: "f3", unit: "u0", pages: [5], diff: 1, min: 6, scene: "datadecision", related: ["f1", "f4", "y4"], pre: ["f1"],
+      id: "f4", unit: "u0", pages: [6], diff: 1, min: 7, scene: "chatagent", related: ["f1", "p1", "t1"], pre: ["f1"],
+      title: { ar: "من السؤال لمساعدك الاستراتيجي", en: "From a question to your strategic assistant" },
+      sum: { ar: "الـ Context والـ Prompt وليه الـ Context مهم، وأدواتك، والانتقال من الشات التقليدي للمساعد الشخصي للوكيل الذكي.", en: "Context, prompt and why context matters; your tools; and the move from traditional chat to personal assistant to smart agent." },
+      book: [
+        bp(6, "قوة الذكاء الاصطناعي مش في الإجابة بس، لكن في قدرته على **فهم الـ Context، وتحليل المشكلة، وتقديم حلول عملية تناسب هدفك**.", "AI’s power isn’t only in answering but in its ability to **understand context, analyse the problem and offer practical solutions that fit your goal**."),
+        bp(6, "**الـ Context**: كل المعلومات اللي بتديها للذكاء الاصطناعي عشان يفهم صورتك وهدفك والمشكلة كاملة.", "**Context**: all the information you give AI so it fully understands your situation, goal and problem."),
+        bp(6, "**الـ Prompt**: جزء من الـ Context، وبيوضّح المهمة المطلوبة والطريقة اللي عاوز الإجابة بيها.", "**Prompt**: part of the context; it sets the task and how you want the answer."),
+        bp(6, "**ليه الـ Context مهم**: كل ما الـ Context يبقى أوضح وأغنى، فهم النموذج يبقى أدق والنتيجة أحسن.", "**Why context matters**: the clearer and richer the context, the more precise the model’s understanding and the better the result."),
+        bp(6, "أدواتك: **Claude** متميز في التحليل العميق والبرمجة وفهم الملفات الطويلة والمعقّدة، و**ChatGPT** مناسب للمحادثة والتحليل والكتابة والمشاريع المتنوعة.", "Your tools: **Claude** excels at deep analysis, coding and long complex files; **ChatGPT** suits conversation, analysis, writing and varied projects."),
+        bp(6, "**الشات التقليدي**: بتسأل وبتاخد إجابة. **المساعد الشخصي**: بيفهمك وبيحفظ الـ Context وبيساعدك على طول. **الوكيل الذكي**: بيخطط وبيستخدم أدوات وبينفّذ مهام وبيتابع النتائج. **كل حاجة بتبدأ من Context واضح و Prompt ذكي.**", "**Traditional chat**: ask and get an answer. **Personal assistant**: understands you, remembers context, keeps helping. **Smart agent**: plans, uses tools, carries out tasks, follows up. **Everything starts with clear context and a smart prompt.**"),
+      ],
+      levels: {
+        simple: [
+          L("what", "**الـ Context** هو كل اللي بتقوله للأداة عن وضعك. و**الـ Prompt** هو الجزء اللي بيقوللها «اعمل ده بالطريقة دي». تشبيه: لما تكلف زميل جديد بمهمة، بتشرحله الخلفية (Context) وبعدين المطلوب (Prompt).", "**Context** is everything you tell the tool about your situation. The **prompt** is the part that says “do this, this way”. Like briefing a new colleague: you explain the background (context) and then the task (prompt)."),
+          L("why", "لأن نفس السؤال في اتنين Context مختلفين بيدي إجابتين مختلفتين تمامًا. والانتقال من «شات» لـ«مساعد» لـ«وكيل» هو في جوهره زيادة في الـ Context والقدرة على الفعل.", "Because the same question with two different contexts gives two completely different answers. And moving from “chat” to “assistant” to “agent” is really an increase in context and ability to act."),
+        ],
+        mech: [
+          L("how", "- **الشات**: سؤال ← إجابة، من غير ذاكرة طويلة.\n- **المساعد**: بيحفظ الـ Context بتاعك (مشروعك، أسلوبك، ملفاتك) وبيبني عليه كل مرة.\n- **الوكيل**: بيتاخد هدف وأدوات (قراءة ملف، إرسال رسالة…) ويكرر: يخطط ← ينفّذ ← يشوف النتيجة ← يصحّح.", "- **Chat**: question → answer, no long memory.\n- **Assistant**: keeps your context (project, style, files) and builds on it each time.\n- **Agent**: given a goal and tools (read a file, send a message…), it loops: plan → act → observe → correct."),
+          L("inside", "لما الكتاب بيقول إن النموذج «بيبني الوعي» حوالين مشروعك، المقصود إن كل اللي في نافذة الـ Context — تعليماتك وملفاتك والمحادثة اللي فاتت — بيأثر على كل كلمة بيولّدها ([[f1]]).", "When the book says the model “builds awareness” of your project, it means everything in the context window — your instructions, files and prior conversation — shapes every word it generates ([[f1]])."),
+          L("link", "الدرس ده هو الجسر لـ[[p1]] (إزاي تكتب Prompt قوي) ولـ[[t1]] (الوكلاء والفريق الرقمي).", "This lesson bridges to [[p1]] (writing a strong prompt) and [[t1]] (agents and the digital team)."),
+        ],
+        practice: [
+          L("example", "في التسويق: «اكتب منشور» (شات) بيدي منشور عام. مساعد عارف هوية العلامة والجمهور والحملة اللي فاتت بيكتب منشور مناسب. ووكيل مكلف بهدف «جهّز خطة منشورات الأسبوع» بيقرا التقويم والنتائج اللي فاتت وبيقترح خمسة منشورات وبيبعتهم للمراجعة.", "In marketing: “Write a post” (chat) gives a generic post. An assistant that knows the brand, audience and last campaign writes a fitting one. An agent tasked with “prepare this week’s posting plan” reads the calendar and past results, proposes five posts and sends them for review."),
+          L("apply", "اكتب «ورقة Context» من خمسة أسطر عن شغلك (القسم، الجمهور، البيانات المعتادة، الأسلوب، الممنوعات) واحفظها. الصقها في بداية أي محادثة مهمة — ده أول تحويل من الشات لمساعد.", "Write a five-line “context sheet” about your work (department, audience, usual data, style, don’ts) and keep it. Paste it at the start of any important chat — your first step from chat to assistant."),
+        ],
+        adv: [
+          L("mistakes", "- تفتكر إن الـ Prompt لوحده يكفي: Prompt من غير Context زي تكليف من غير خلفية.\n- تختار الأداة بالاسم مش بالمهمة: قارن على مهمتك إنت ([[m2]]).", "- Thinking the prompt alone is enough: a prompt without context is a task without a briefing.\n- Picking the tool by brand, not task: compare on your own task ([[m2]])."),
+          L("whennot", "الوكيل مش الحل الأحسن دايمًا: لو المهمة سؤال واحد، الشات أسرع وأرخص وأوضح. استخدم الوكيل لما يكون في خطوات كتير وأدوات وحدود واضحة للتوقف.", "An agent isn’t always best: for a single question, chat is faster, cheaper and clearer. Use an agent when there are several steps, tools and clear stop limits."),
+        ],
+      },
+    },
+    {
+      id: "f3", unit: "u0", pages: [5], diff: 1, min: 6, scene: "datadecision", related: ["f1", "f4", "y4"], pre: ["f4"],
       title: { ar: "الذكاء الاصطناعي بيساعدك في الشغل إزاي؟", en: "How AI helps you at work" },
       sum: { ar: "ست قدرات عملية، وسلسلة من البيانات للقرار: يجمع، يحلل، يختصر، يقارن، يقترح.", en: "Six practical capabilities and a chain from data to decision: collect, analyse, summarise, compare, suggest." },
       book: [
@@ -2814,38 +2846,6 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
           result: { ar: "مسودة جاهزة في حوالي ساعة بدل يوم (رقم افتراضي)، المشرف بيراجع أرقامها وبعدين يبعتها.", en: "A ready draft in about an hour instead of a day (hypothetical), whose numbers the supervisor checks before sending." },
           risks: { ar: "لو ملفات الفروع بأسماء أعمدة مختلفة الدمج ممكن يغلط؛ ولازم المشرف يطابق الإجماليات بنفسه قبل الإرسال.", en: "If branch files use different column names the merge can go wrong; the supervisor must match totals personally before sending." },
         } },
-    },
-    {
-      id: "f4", unit: "u0", pages: [6], diff: 1, min: 7, scene: "chatagent", related: ["f1", "p1", "t1"], pre: ["f1"],
-      title: { ar: "من السؤال لمساعدك الاستراتيجي", en: "From a question to your strategic assistant" },
-      sum: { ar: "الـ Context والـ Prompt وليه الـ Context مهم، وأدواتك، والانتقال من الشات التقليدي للمساعد الشخصي للوكيل الذكي.", en: "Context, prompt and why context matters; your tools; and the move from traditional chat to personal assistant to smart agent." },
-      book: [
-        bp(6, "قوة الذكاء الاصطناعي مش في الإجابة بس، لكن في قدرته على **فهم الـ Context، وتحليل المشكلة، وتقديم حلول عملية تناسب هدفك**.", "AI’s power isn’t only in answering but in its ability to **understand context, analyse the problem and offer practical solutions that fit your goal**."),
-        bp(6, "**الـ Context**: كل المعلومات اللي بتديها للذكاء الاصطناعي عشان يفهم صورتك وهدفك والمشكلة كاملة.", "**Context**: all the information you give AI so it fully understands your situation, goal and problem."),
-        bp(6, "**الـ Prompt**: جزء من الـ Context، وبيوضّح المهمة المطلوبة والطريقة اللي عاوز الإجابة بيها.", "**Prompt**: part of the context; it sets the task and how you want the answer."),
-        bp(6, "**ليه الـ Context مهم**: كل ما الـ Context يبقى أوضح وأغنى، فهم النموذج يبقى أدق والنتيجة أحسن.", "**Why context matters**: the clearer and richer the context, the more precise the model’s understanding and the better the result."),
-        bp(6, "أدواتك: **Claude** متميز في التحليل العميق والبرمجة وفهم الملفات الطويلة والمعقّدة، و**ChatGPT** مناسب للمحادثة والتحليل والكتابة والمشاريع المتنوعة.", "Your tools: **Claude** excels at deep analysis, coding and long complex files; **ChatGPT** suits conversation, analysis, writing and varied projects."),
-        bp(6, "**الشات التقليدي**: بتسأل وبتاخد إجابة. **المساعد الشخصي**: بيفهمك وبيحفظ الـ Context وبيساعدك على طول. **الوكيل الذكي**: بيخطط وبيستخدم أدوات وبينفّذ مهام وبيتابع النتائج. **كل حاجة بتبدأ من Context واضح و Prompt ذكي.**", "**Traditional chat**: ask and get an answer. **Personal assistant**: understands you, remembers context, keeps helping. **Smart agent**: plans, uses tools, carries out tasks, follows up. **Everything starts with clear context and a smart prompt.**"),
-      ],
-      levels: {
-        simple: [
-          L("what", "**الـ Context** هو كل اللي بتقوله للأداة عن وضعك. و**الـ Prompt** هو الجزء اللي بيقوللها «اعمل ده بالطريقة دي». تشبيه: لما تكلف زميل جديد بمهمة، بتشرحله الخلفية (Context) وبعدين المطلوب (Prompt).", "**Context** is everything you tell the tool about your situation. The **prompt** is the part that says “do this, this way”. Like briefing a new colleague: you explain the background (context) and then the task (prompt)."),
-          L("why", "لأن نفس السؤال في اتنين Context مختلفين بيدي إجابتين مختلفتين تمامًا. والانتقال من «شات» لـ«مساعد» لـ«وكيل» هو في جوهره زيادة في الـ Context والقدرة على الفعل.", "Because the same question with two different contexts gives two completely different answers. And moving from “chat” to “assistant” to “agent” is really an increase in context and ability to act."),
-        ],
-        mech: [
-          L("how", "- **الشات**: سؤال ← إجابة، من غير ذاكرة طويلة.\n- **المساعد**: بيحفظ الـ Context بتاعك (مشروعك، أسلوبك، ملفاتك) وبيبني عليه كل مرة.\n- **الوكيل**: بيتاخد هدف وأدوات (قراءة ملف، إرسال رسالة…) ويكرر: يخطط ← ينفّذ ← يشوف النتيجة ← يصحّح.", "- **Chat**: question → answer, no long memory.\n- **Assistant**: keeps your context (project, style, files) and builds on it each time.\n- **Agent**: given a goal and tools (read a file, send a message…), it loops: plan → act → observe → correct."),
-          L("inside", "لما الكتاب بيقول إن النموذج «بيبني الوعي» حوالين مشروعك، المقصود إن كل اللي في نافذة الـ Context — تعليماتك وملفاتك والمحادثة اللي فاتت — بيأثر على كل كلمة بيولّدها ([[f1]]).", "When the book says the model “builds awareness” of your project, it means everything in the context window — your instructions, files and prior conversation — shapes every word it generates ([[f1]])."),
-          L("link", "الدرس ده هو الجسر لـ[[p1]] (إزاي تكتب Prompt قوي) ولـ[[t1]] (الوكلاء والفريق الرقمي).", "This lesson bridges to [[p1]] (writing a strong prompt) and [[t1]] (agents and the digital team)."),
-        ],
-        practice: [
-          L("example", "في التسويق: «اكتب منشور» (شات) بيدي منشور عام. مساعد عارف هوية العلامة والجمهور والحملة اللي فاتت بيكتب منشور مناسب. ووكيل مكلف بهدف «جهّز خطة منشورات الأسبوع» بيقرا التقويم والنتائج اللي فاتت وبيقترح خمسة منشورات وبيبعتهم للمراجعة.", "In marketing: “Write a post” (chat) gives a generic post. An assistant that knows the brand, audience and last campaign writes a fitting one. An agent tasked with “prepare this week’s posting plan” reads the calendar and past results, proposes five posts and sends them for review."),
-          L("apply", "اكتب «ورقة Context» من خمسة أسطر عن شغلك (القسم، الجمهور، البيانات المعتادة، الأسلوب، الممنوعات) واحفظها. الصقها في بداية أي محادثة مهمة — ده أول تحويل من الشات لمساعد.", "Write a five-line “context sheet” about your work (department, audience, usual data, style, don’ts) and keep it. Paste it at the start of any important chat — your first step from chat to assistant."),
-        ],
-        adv: [
-          L("mistakes", "- تفتكر إن الـ Prompt لوحده يكفي: Prompt من غير Context زي تكليف من غير خلفية.\n- تختار الأداة بالاسم مش بالمهمة: قارن على مهمتك إنت ([[m2]]).", "- Thinking the prompt alone is enough: a prompt without context is a task without a briefing.\n- Picking the tool by brand, not task: compare on your own task ([[m2]])."),
-          L("whennot", "الوكيل مش الحل الأحسن دايمًا: لو المهمة سؤال واحد، الشات أسرع وأرخص وأوضح. استخدم الوكيل لما يكون في خطوات كتير وأدوات وحدود واضحة للتوقف.", "An agent isn’t always best: for a single question, chat is faster, cheaper and clearer. Use an agent when there are several steps, tools and clear stop limits."),
-        ],
-      },
     },
     {
       id: "f5", unit: "u0", pages: [41], diff: 1, min: 6, scene: "limits", related: ["f1", "p3", "p12"], pre: [],
@@ -6128,7 +6128,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
 })(window.ACADEMY = window.ACADEMY || {});
 
 /* data/context-story.js */
-/* The Prompt and the Context — the story deck that opens lesson f4 (the book's Context & Prompt pages).
+/* The Prompt and the Context — the story deck that opens lesson f4 (the book's Context & Prompt pages; shown third in unit 0, right after the "inside the model" deck).
    One hero runs through every slide: the request «اكتبلي تقرير عن التوقفات», and the question «الموديل شايف إيه وإنت بتكلّمه؟».
    Each slide gives one rule with its reason («القاعدة، وليه؟») and builds on the "inside the model" deck (f2): the meaning map,
    attention and next-word prediction explain why word choice and Context decide what the model understands.
