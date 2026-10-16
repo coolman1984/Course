@@ -8102,10 +8102,12 @@ Start by presenting the "Context to fill in" block and your clarifying questions
       const ta = A.h("textarea");
       ta.value = text;
       ta.setAttribute("tabindex", "-1");
-      ta.style.cssText = "position:fixed;left:-9999px;top:0;width:1px;height:1px;opacity:0";
+      ta.setAttribute("readonly", "");
+      ta.style.cssText = "position:fixed;top:0;left:0;width:1px;height:1px;padding:0;border:0;opacity:0;font-size:16px;pointer-events:none";
       document.body.append(ta);
       ta.focus({ preventScroll: true });
       ta.select();
+      ta.setSelectionRange(0, ta.value.length);
       let ok = false;
       try { ok = document.execCommand("copy"); } catch (_) {}
       const hasSel = ta.selectionEnd > ta.selectionStart;
