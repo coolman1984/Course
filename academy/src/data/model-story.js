@@ -76,7 +76,7 @@
           "“Dog bites man” is ordinary. “Man bites dog” makes the papers! Exactly the same words — the order flipped the meaning."),
         u("و«الانتباه» اللي جاي في الشريحة الجاية بيوصّل الكلمات ببعض مباشرة، من غير ما يعرف لوحده مين جه قبل مين. عشان كده بيضيفوا لكل توكن «ختم» صغير بمكانه في الجملة.",
           "And “attention”, on the next slide, links words to each other directly without knowing by itself who came first. That's why each token gets a small “stamp” with its position in the sentence.")],
-        answer: u("نضيف معلومة المكان لكل كلمة. لأن من غيرها الجملة بتبقى كومة كلمات من غير ترتيب.", "Add position information to every word — without it, a sentence is just a jumbled bag of words."),
+        answer: u("نضيف معلومة المكان لكل كلمة. لأن من غيرها الجملة بتبقى مجموعة كلمات من غير ترتيب.", "Add position information to every word — without it, a sentence is just a jumbled bag of words."),
         idea: u("المعنى = الكلمات + ترتيبها. والموديل محتاج الاتنين.", "Meaning = the words + their order. The model needs both.")
       },
       {

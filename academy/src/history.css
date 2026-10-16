@@ -211,3 +211,4 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
 @keyframes aih-bar{from{transform:scaleY(0)}to{transform:scaleY(1)}}
 @keyframes aih-turn{0%,100%{transform:rotate(-40deg)}50%{transform:rotate(55deg)}}
 @keyframes aih-pop-soft{from{opacity:0;transform:scale(.4)}to{opacity:.13;transform:none}}
+.f-amber-soft{fill:color-mix(in srgb,var(--sig-amber) 22%,var(--surface))}

@@ -128,7 +128,7 @@
         u("ونفس الشيء لو المحادثة اتملت بمحاولات فاشلة وتصحيحات متناقضة: كلها لسه موجودة في الـ Context، وبتأثر على الرد الجاي.",
           "The same happens when a conversation fills up with failed attempts and contradictory corrections: all of it is still in the Context, shaping the next reply.")],
         answer: u("حط بس اللي ليه علاقة بالمهمة، وشيل المتناقض والقديم. لأن كل كلمة في الـ Context بتنافس على انتباه الموديل.", "Include only what is relevant to the task and remove anything outdated or contradictory — every word in the Context competes for the model's attention."),
-        idea: u("الـ Context النضيف بيوجّه التفكير؛ والـ Context المشوّش بيشتّته.", "A clean Context focuses the reasoning; a noisy one scatters it.")
+        idea: u("الـ Context الواضح بيوجّه التفكير، والـ Context المتلخبط بيشتّته.", "A clean Context focuses the reasoning; a noisy one scatters it.")
       },
       {
         id: "steer", art: "c_steer", year: u("التوجيه", "Steering"), mark: u("١١", "11"), era: u("وجّه طريقة تفكيره", "Guide how it reasons"),
@@ -148,7 +148,7 @@
         u("وارجع لطلب «اكتبلي تقرير عن التوقفات» من أول الحكاية: نفس الموديل، بس بـ Prompt دقيق وContext كامل، هيطلّع تقرير عن مصنعك إنت، بأرقامك، للقرار اللي محتاجه.",
           "Go back to “write me a report on the stoppages” from the start of the story: the same model, given a precise Prompt and a complete Context, produces a report about your factory, with your numbers, for the decision you need.")],
         answer: u("قبل ما تبعت أي طلب، اسأل نفسك: لو حد شاطر جدًا بس ما يعرفش أي حاجة عن شغلي قرا الكلام ده، هيفهم المطلوب؟ لأن ده بالظبط وضع الموديل.", "Before sending any request, ask yourself: if a very capable person who knows nothing about my work read this, would they understand what I need? That is exactly the model's position."),
-        idea: u("Prompt دقيق + Context كامل ونضيف = موديل بيفهم صح وبيفكّر في الاتجاه الصح.", "A precise Prompt + a complete, clean Context = a model that understands correctly and reasons in the right direction.")
+        idea: u("Prompt دقيق + Context كامل وواضح = موديل بيفهم صح وبيفكّر في الاتجاه الصح.", "A precise Prompt + a complete, clean Context = a model that understands correctly and reasons in the right direction.")
       }
     ]
   };

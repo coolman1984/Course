@@ -311,6 +311,11 @@ await session({ label: "model-deck-ar", viewport: { width: 1360, height: 900 } }
   loopDot === "1" ? ok("agents deck: the agent loop's travelling dot shows on its slide") : fail("agents deck: loop dot hidden (" + loopDot + ")");
   await page.evaluate(() => (location.hash = "lesson-f4")); await page.waitForSelector("#sec-context .aih-stage");
   (await page.$("#sec-scene *")) ? fail("lesson f4 still carries the chat→agent scene that moved to f7") : ok("lesson f4 is about the Prompt and the Context only");
+  await page.evaluate(() => (location.hash = "lesson-f3")); await page.waitForSelector("#sec-work .aih-stage");
+  const kn = await page.$$eval("#sec-work .aih-slide", (s) => s.length);
+  const kart = await page.$$eval("#sec-work .aih-svg", (s) => s.every((v) => v.querySelectorAll("rect,circle,path,text,ellipse,line").length > 6));
+  const kcrumb = await page.$eval(".crumbs .num", (e) => e.textContent);
+  kn >= 10 && kart && !(await page.$("#sec-agents")) && /6 من/.test(kcrumb) ? ok(`work deck: ${kn} slides with drawings open lesson f3, the unit's sixth lesson`) : fail(`work deck: incomplete (${kn} slides, crumb «${kcrumb}»)`);
 });
 await session({ label: "history-deck-mobile-en", viewport: { width: 375, height: 812 }, isMobile: true, hasTouch: true, colorScheme: "dark" }, async (page) => {
   await page.evaluate(() => { localStorage.setItem("aiAcademy.v1", JSON.stringify({ lang: "en" })); location.hash = "lesson-f1"; location.reload(); });
