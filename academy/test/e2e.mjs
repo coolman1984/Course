@@ -316,6 +316,17 @@ await session({ label: "model-deck-ar", viewport: { width: 1360, height: 900 } }
   const kart = await page.$$eval("#sec-work .aih-svg", (s) => s.every((v) => v.querySelectorAll("rect,circle,path,text,ellipse,line").length > 6));
   const kcrumb = await page.$eval(".crumbs .num", (e) => e.textContent);
   kn >= 10 && kart && !(await page.$("#sec-agents")) && /6 من/.test(kcrumb) ? ok(`work deck: ${kn} slides with drawings open lesson f3, the unit's sixth lesson`) : fail(`work deck: incomplete (${kn} slides, crumb «${kcrumb}»)`);
+  await page.evaluate(() => (location.hash = "lesson-f5")); await page.waitForSelector("#sec-limits .aih-stage");
+  const ln = await page.$$eval("#sec-limits .aih-slide", (s) => s.length);
+  const lart = await page.$$eval("#sec-limits .aih-svg", (s) => s.every((v) => v.querySelectorAll("rect,circle,path,text,ellipse,line").length > 6));
+  const lcrumb = await page.$eval(".crumbs .num", (e) => e.textContent);
+  ln >= 10 && lart && !(await page.$("#sec-work")) && /7 من 7/.test(lcrumb) ? ok(`limits deck: ${ln} slides with drawings open lesson f5, the unit's last lesson`) : fail(`limits deck: incomplete (${ln} slides, crumb «${lcrumb}»)`);
+  const leftBuilt = await page.evaluate(async () => {   // leaving the page stops on-demand drawing: no SVGs are built in the detached deck afterwards
+    location.hash = "lesson-f6"; await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    const deck = document.querySelector("#sec-window"); const before = deck.querySelectorAll(".aih-svg").length;
+    location.hash = "lesson-p1"; await new Promise((r) => setTimeout(r, 1500));
+    return [before, deck.querySelectorAll(".aih-svg").length]; });
+  leftBuilt[1] === leftBuilt[0] && leftBuilt[0] < 12 ? ok(`decks: drawings are built on demand (${leftBuilt[0]} of 12 at open) and stop when the reader leaves`) : fail("decks: drawings kept building after leaving: " + leftBuilt.join(" → "));
 });
 await session({ label: "history-deck-mobile-en", viewport: { width: 375, height: 812 }, isMobile: true, hasTouch: true, colorScheme: "dark" }, async (page) => {
   await page.evaluate(() => { localStorage.setItem("aiAcademy.v1", JSON.stringify({ lang: "en" })); location.hash = "lesson-f1"; location.reload(); });

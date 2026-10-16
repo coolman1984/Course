@@ -44,7 +44,7 @@
           "With chat: you open a conversation, paste the data, write your request, get the summary and copy it into the email yourself. That works well. But next Sunday, when you open a new chat, the model knows nothing about last Sunday."),
         u("فاكر ليه؟ الموديل نفسه ما بيتغيّرش وإنت بتكلّمه. جوّه نفس المحادثة بيبان إنه فاكر لأن التطبيق بيبعتله المحادثة كلها تاني مع كل رسالة. لكن المحادثة الجديدة مساحة جديدة فاضية، فهتشرح شكل التقرير وأسماء الخطوط من الأول.",
           "Remember why? The model itself doesn't change as you talk to it. Within one chat it seems to remember because the app resends the whole conversation with each message. A new chat is a new, empty workspace — so you explain the report format and the line names all over again.")],
-        answer: u("استخدم الشات للسؤال اللي بيخلص في محادثة واحدة. لأن كل محادثة جديدة بتبدأ من الصفر.", "Use chat for a question that ends in one sitting — every new chat starts from zero."),
+        answer: u("استخدم الشات للسؤال اللي بيخلص في محادثة واحدة. لأن كل محادثة جديدة بتبدأ من الصفر.", "Use chat for a question that ends in one conversation — every new chat starts from zero."),
         idea: u("الشات بيجاوب كويس… وبينسى كل أسبوع.", "Chat answers well… and forgets every week.")
       },
       {
@@ -83,19 +83,19 @@
         story: [u("دلوقتي نعمل المهمة بمساعد: مشروع فيه تعليمات ثابتة بشكل التقرير، وتقارير الأسابيع اللي فاتت، ودليل أسماء الخطوط. الأحد ده بتكتب «تقرير الأسبوع» وترفع الملف، فيطلع التقرير بالشكل المعتاد من أول مرة، ويقارن بالأسبوع اللي فات لوحده.",
           "Now let's do the task with an assistant: a project with fixed instructions for the report format, past weeks' reports and a guide to line names. This Sunday you write “this week's report” and upload the file, and the report comes out in the usual format first time, comparing with last week on its own."),
         u("وفّرت وقت كتير، بس لاحظ: إنت لسه اللي بتسحب الملف من السيستم، وإنت اللي بتبعت الإيميل. المساعد بيفكّر ويكتب، لكنه ما بيعملش حاجة برّه المحادثة. التنفيذ لسه عليك.",
-          "You saved a lot of time, but notice: you still pull the file from the system, and you still send the email. The assistant thinks and writes, but it does nothing outside the conversation. You are its hands.")],
+          "You saved a lot of time, but notice: you still pull the file from the system, and you still send the email. The assistant thinks and writes, but it does nothing outside the conversation. Carrying it out is still on you.")],
         answer: u("استخدم المساعد للشغل المتكرر على نفس الموضوع. لأنه بيبني على اللي فات بدل ما تعيد الشرح كل مرة.", "Use an assistant for recurring work on the same topic — it builds on what came before instead of you re-explaining each time."),
-        idea: u("المساعد فاكر شغلك… والتنفيذ لسه عليك.", "The assistant remembers your work… and you're still its hands.")
+        idea: u("المساعد فاكر شغلك… والتنفيذ لسه عليك.", "The assistant remembers your work… and carrying it out is still on you.")
       },
       {
         id: "loop", art: "a_loop", year: u("الوكيل", "Agent"), mark: u("٠٧", "07"), era: u("الطريقة التالتة", "Way three"),
-        title: u("الوكيل: هدف، وأدوات، وخطوات متكررة لحد ما يخلص", "The agent: a goal, tools, and loops until done"),
+        title: u("الوكيل: هدف، وأدوات، وخطوات متكررة لحد ما يخلص", "The agent: a goal, tools, and repeated steps until done"),
         story: [u("الوكيل بتديله هدف مش سؤال: «جهّز تقرير التوقفات الأسبوعي وحضّر الإيميل للمدير». وتديله أدوات: يقرا ملفات، ويحسب، ويكتب مسودة إيميل. وبعدين بيكرر نفس الدورة: يخطط الخطوة الجاية، وينفّذها بأداة، ويشوف النتيجة، ويصحّح، ويكرر.",
           "You give an agent a goal, not a question: “prepare the weekly stoppage report and draft the email to the manager”. And you give it tools: read files, calculate, write an email draft. Then it loops: plan the next step, carry it out with a tool, look at the result, correct, repeat."),
         u("لو قرا الملف ولقى عمود ناقص، بيدوّر عليه في ملف تاني. ولو الحساب طلع غريب، بيراجعه. وبيقف لما الهدف يتحقق، أو لما يوصل لحد إنت محدده من الأول، زي عدد خطوات معيّن، أو «استنى موافقتي قبل ما تبعت».",
           "If it reads the file and finds a missing column, it looks in another file. If a calculation looks odd, it rechecks. It stops when the goal is met, or when it hits a limit you set in advance — a number of steps, or “wait for my approval before sending”.")],
         answer: u("ادّي الوكيل هدف واضح وحدود واضحة للتوقف. لأنه هيفضل يكرر الدورة لحد ما واحد منهم يتحقق.", "Give an agent a clear goal and clear stop limits — it keeps looping until one of them is met."),
-        idea: u("الشات بيجاوب. الوكيل بيكرر الخطوات لحد ما يخلص.", "Chat answers. An agent loops until it's done.")
+        idea: u("الشات بيجاوب. الوكيل بيكرر الخطوات لحد ما يخلص.", "Chat answers. An agent repeats its steps until it's done.")
       },
       {
         id: "tools", art: "a_tools", year: u("الأدوات", "Tools"), mark: u("٠٨", "08"), era: u("إزاي بيعمل حاجة؟", "How does it act?"),
@@ -131,7 +131,7 @@
         id: "choose", art: "a_choose", year: u("تختار إزاي؟", "Choosing"), mark: u("١١", "11"), era: u("على قد المهمة", "Fit the task"),
         title: u("كل واحد ليه شغله… وكل ما القوة تزيد، الرقابة تزيد", "Each has its job… and more power needs more oversight"),
         story: [u("الشات للسؤال السريع اللي بيخلص في محادثة واحدة. والمساعد بذاكرته وملفاته للشغل المتكرر على نفس الموضوع، زي تقريرك الأسبوعي لو إنت اللي بتسحب الملف وتبعته. والوكيل للمهمة اللي فيها خطوات وأدوات، وتستاهل إنك تعرّفها وتراجعها كويس.",
-          "Chat for the quick question that ends in one sitting. An assistant with memory and files for recurring work on the same topic — like your weekly report, if you pull the file and send it yourself. An agent for a task with steps and tools that is worth defining and reviewing properly."),
+          "Chat for the quick question that ends in one conversation. An assistant with memory and files for recurring work on the same topic — like your weekly report, if you pull the file and send it yourself. An agent for a task with steps and tools that is worth defining and reviewing properly."),
         u("وكل ما الأداة تقدر تعمل أكتر، الغلطة بتبقى أكبر. الشات أقصى غلطاته إجابة غلط إنت شايفها. لكن الوكيل ممكن يبعت إيميل غلط لمديرك. علشان كده الوكيل محتاج صلاحيات محدودة، وحد للتوقف، وموافقتك قبل أي أثر برّه.",
           "And the more a tool can do, the bigger its mistakes. Chat's worst mistake is a wrong answer you can see. An agent could send a wrong email to your manager. That's why an agent needs limited permissions, a stop limit, and your approval before any outside effect.")],
         answer: u("ابدأ بأبسط أداة تكفي المهمة، واطلع خطوة لما تحتاج. لأن الأداة الأقوى أغلى وأبطأ ومحتاجة رقابة أكتر.", "Start with the simplest tool that does the job and step up only when needed — a stronger tool costs more, runs slower and needs more oversight."),
@@ -141,7 +141,7 @@
         id: "recap", art: "a_recap", year: u("الخلاصة", "Summary"), mark: u("١٢", "12"), era: u("الحكاية في سطر", "The story in one line"),
         title: u("الخلاصة: نفس الموديل، والفرق في مساحة العمل والأدوات", "In short: the same model; the difference is the workspace and the tools"),
         story: [u("نرجع لتقرير الأحد. الشات بيكتبه ويستناك تشرحله كل أسبوع. والمساعد فاكر شكله من ذاكرته وملفاته، بس التنفيذ عليك. والوكيل بيسحب ويحسب ويحضّر الإيميل لوحده، وبيستنى موافقتك قبل ما يبعت.",
-          "Back to the Sunday report. Chat writes it and waits for you to explain every week. The assistant remembers its format from memory and files, but you're its hands. The agent pulls, calculates and drafts the email by itself, then waits for your approval before sending."),
+          "Back to the Sunday report. Chat writes it and waits for you to explain every week. The assistant remembers its format from memory and files, but carrying it out is on you. The agent pulls, calculates and drafts the email by itself, then waits for your approval before sending."),
         u("وفي التلاتة الموديل ما اتغيّرش: الذاكرة ملاحظات بتتحط في مساحة العمل، والأدوات طلبات البرنامج بينفّذها، والمساحة محدودة فبتتضغط. ولما تفهم ده، هتعرف تختار، وتعرف ليه حصل الغلط لما يحصل. وفي الدرس الجاي هنشوف الذكاء الاصطناعي يقدر يعمل إيه في شغلك.",
           "In all three the model didn't change: memory is notes placed in the workspace, tools are requests the program carries out, and the workspace is limited so it gets compacted. Understand this and you'll know how to choose — and why a mistake happened when it does. In the next lesson we'll see what AI can do in your work.")],
         answer: u("قبل أي مهمة اسأل تلات أسئلة: محتاج يفتكر إيه؟ محتاج يعمل إيه؟ وأراجعه فين؟ لأن الإجابات دي بتختارلك الأداة.", "Before any task ask three questions: what must it remember, what must it do, and where do I check it? The answers choose the tool for you."),

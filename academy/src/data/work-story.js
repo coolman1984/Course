@@ -1,7 +1,7 @@
 /* What AI does at work — the story deck that opens lesson f3 (sixth in unit 0, right after "chat, memory and agents").
    One hero runs through every slide: a sales supervisor who spends a full day each month turning three branch files into a
    report (the lesson's own case), and the question «إزاي الملفات دي تتحول لقرار؟». Each slide shows one of the book's six
-   capabilities on that same pile, with the way to ask for it, and the chain collect → analyse → summarise → compare → suggest.
+   capabilities on those same files, with the way to ask for it, and the chain collect → analyse → summarise → compare → suggest.
    Each slide gives one rule with its reason («القاعدة، وليه؟»). Figures are illustrative. Same slide schema as
    data/model-story.js; drawings are the k_* entries in engine/history.js. */
 "use strict";
@@ -12,7 +12,7 @@
     kicker: u("الذكاء الاصطناعي في شغلك · الحكاية كاملة في ٧ دقايق", "AI at work · the whole story in 7 minutes"),
     title: u("من الملفات للقرار: ست قدرات وسلسلة واحدة", "From files to a decision: six capabilities, one chain"),
     lead: u("عرفنا الموديل بيفكّر إزاي، ونكلّمه إزاي، وحدوده فين، ونختار له أنهي أداة. فاضل السؤال العملي: يعملّي إيه في شغلي؟ في الحكاية دي هنمشي مع مشرف مبيعات من ملفات الفروع لحد القرار، ونشوف الست قدرات اللي في الكتاب واحدة واحدة، وإزاي تطلب كل واحدة صح.",
-      "We know how the model thinks, how to talk to it, where its limits are and which tool to pick. One practical question is left: what can it do in my work? In this story we follow a sales supervisor from a pile of files to a decision, take the book's six capabilities one by one, and see how to ask for each one properly."),
+      "We know how the model thinks, how to talk to it, where its limits are and which tool to pick. One practical question is left: what can it do in my work? In this story we follow a sales supervisor from the branch files all the way to a decision, take the book's six capabilities one by one, and see how to ask for each one properly."),
     answerLabel: u("القاعدة، وليه؟", "The rule, and why"),
     ideaLabel: u("الفكرة في جملة", "The idea in one line"),
     question: u("إزاي الملفات دي تتحول لقرار؟", "How do these files become a decision?"),
@@ -43,7 +43,7 @@
         story: [u("الكتاب بيجمع اللي الذكاء الاصطناعي بيعمله في الشغل في ست قدرات: يحلل البيانات والملفات، ويلخّص ويستخرج القرارات والأرقام، ويدوّر جوّه معرفة الشركة، ويكتب ويعيد الصياغة، ويقارن ويراجع ويكشف التناقضات، ويدعم القرار بسيناريوهات وبدائل ومخاطر.",
           "The book groups what AI does at work into six capabilities: analyse data and files; summarise and extract decisions and figures; search the company's knowledge; write and rewrite; compare, review and spot contradictions; and support decisions with scenarios, options and risks."),
         u("القدرات دي مش أدوات منفصلة، دي طرق مختلفة تكلّم بيها نفس الموديل. والفرق بينها في الطلب نفسه: «حلّل» غير «لخّص» غير «قارن». وكل شريحة جاية هتوريك قدرة منهم على نفس الملفات.",
-          "These aren't separate tools; they are different ways of asking the same model. The difference is in the request itself: “analyse” is not “summarise” is not “compare”. Each coming slide shows one of them on the same pile of files.")],
+          "These aren't separate tools; they are different ways of asking the same model. The difference is in the request itself: “analyse” is not “summarise” is not “compare”. Each coming slide shows one of them on the same files.")],
         answer: u("سمّي القدرة اللي عايزها في أول الطلب: حلّل، لخّص، قارن. لأن الفعل الدقيق بيحدد نوع الشغل اللي الموديل هيعمله.", "Name the capability you want at the start of the request — analyse, summarise, compare — the precise verb sets the kind of work the model does."),
         idea: u("نفس الموديل، ست طرق تطلب بيها.", "One model, six ways to ask.")
       },
