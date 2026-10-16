@@ -6,7 +6,7 @@
 
 A bilingual (Arabic/English) course site, **«أساسيات الذكاء الاصطناعي في بيئة العمل الحديثة»**, for learners with no
 programming background. The deliverable is **`AI_Academy.html`**: the whole course as one offline HTML file, built from
-`academy/src`. Other folders hold the reference book PDF, session scripts, exams and training files.
+`academy/src`, next to the reference book PDF.
 
 ## Repository layout
 
