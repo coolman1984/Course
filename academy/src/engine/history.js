@@ -1079,13 +1079,14 @@
     // Drawings are built on demand: the slide on screen and its neighbours first, the rest one by one while the browser is idle.
     // Opening a lesson then costs one or two drawings instead of twelve.
     const arts = $$("[data-aih-art]");
-    const drawAt = (k) => { const el = arts[k]; if (el && !el.firstChild) el.innerHTML = drawing(S[k].art, L(S[k].title)); };
+    let alive = true;   // false once the reader leaves the page: queued idle work must not build drawings in a detached deck
+    const drawAt = (k) => { const el = arts[k]; if (alive && el && !el.firstChild) el.innerHTML = drawing(S[k].art, L(S[k].title)); };
     const drawAround = (k) => { drawAt(k); ric(() => { drawAt(k + 1); drawAt(k - 1); }); };   // neighbours wait for idle time, never the transition
     const ric = window.requestIdleCallback || ((f) => setTimeout(() => f({ timeRemaining: () => 8 }), 60));
     const cic = window.cancelIdleCallback || clearTimeout;
     let idleId = 0;
     const cancelIdle = () => cic(idleId);
-    const idleDraw = () => { idleId = ric((dl) => { let k = arts.findIndex((el) => !el.firstChild); while (k >= 0 && dl.timeRemaining() > 4) { drawAt(k); k = arts.findIndex((el) => !el.firstChild); } if (k >= 0) idleDraw(); }); };
+    const idleDraw = () => { if (!alive) return; idleId = ric((dl) => { let k = arts.findIndex((el) => !el.firstChild); while (alive && k >= 0 && dl.timeRemaining() > 4) { drawAt(k); k = arts.findIndex((el) => !el.firstChild); } if (k >= 0) idleDraw(); }); };
 
     function go(i, why) {
       i = Math.max(0, Math.min(n - 1, i));
@@ -1191,7 +1192,7 @@
       io = new IntersectionObserver((es) => es.forEach((en) => { visible = en.intersectionRatio > 0.35; host.classList.toggle("is-away", !en.isIntersecting); }), { threshold: [0, 0.35, 0.6] });
       io.observe(stage);
     }
-    A.onLeave(() => { io && io.disconnect(); playing = false; cancelAnimationFrame(raf); cancelAnimationFrame(countRaf); cancelIdle(); });
+    A.onLeave(() => { io && io.disconnect(); playing = false; cancelAnimationFrame(raf); cancelAnimationFrame(countRaf); alive = false; cancelIdle(); });
 
     go(0, "init");
     idleDraw();
