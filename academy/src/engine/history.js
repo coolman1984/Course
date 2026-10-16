@@ -233,7 +233,11 @@
       return `${bars.map(([s, c], i) => `<rect class="an vbar ${c}" style="--d:${0.2 + i * 0.15}s" x="${X(i) - 31}" y="${96 + i * 8}" width="62" height="${170 - i * 8}" rx="8"/>${txt(X(i), 290, s, "t-ink2", 13, 'font-weight="700"')}`).join("")}
       <g ${an("fade", 0.9)}><path d="M${ar() ? 40 : 268} 80 V 266 H ${ar() ? 212 : 440}" class="s-ink3" stroke-width="2" fill="none"/>${txt(ar() ? 126 : 354, 290, ar() ? "الجودة بتطلع" : "quality rises", "t-ink2", 13, 'font-weight="700"')}</g>
       <path ${an("draw", 1.1, `s-acc`)} pathLength="1" d="${ar() ? "M48 250 C 90 214, 130 150, 204 96" : "M276 250 C 318 214, 358 150, 432 96"}" stroke-width="4" fill="none" stroke-linecap="round"/>
-      ${["✍️", "🌍", "💻"].map((e, i) => `<g ${an("pop", 1.6 + i * 0.2)}><text x="${(ar() ? 90 : 318) + i * 48}" y="${(ar() ? 180 : 180) - i * 34}" font-size="20" text-anchor="middle">${e}</text></g>`).join("")}
+      ${[   // abilities that appear with scale — writing, languages, code — drawn, not emoji (glyphs differ between machines)
+        (x, y) => `<path d="M${x - 8} ${y + 9} L${x + 6} ${y - 5} L${x + 9} ${y - 2} L${x - 5} ${y + 12} Z M${x - 8} ${y + 9} L${x - 10} ${y + 14} L${x - 5} ${y + 12}" class="s-ink2" stroke-width="2" fill="none" stroke-linejoin="round"/>`,
+        (x, y) => `<circle cx="${x}" cy="${y}" r="10" class="s-ink2" stroke-width="2" fill="none"/><ellipse cx="${x}" cy="${y}" rx="4.5" ry="10" class="s-ink2" stroke-width="1.6" fill="none"/><path d="M${x - 10} ${y} H${x + 10}" class="s-ink2" stroke-width="1.6"/>`,
+        (x, y) => `<rect x="${x - 10}" y="${y - 9}" width="20" height="13" rx="2" class="s-ink2" stroke-width="2" fill="none"/><path d="M${x - 13} ${y + 8} H${x + 13}" class="s-ink2" stroke-width="2.4" stroke-linecap="round"/>`,
+      ].map((ic, i) => `<g ${an("pop", 1.6 + i * 0.2)}>${ic((ar() ? 90 : 318) + i * 48, 173 - i * 34)}</g>`).join("")}
       ${txt(240, 50, ar() ? "قدرات جديدة بتظهر مع الحجم" : "new abilities appear with scale", "t-ink3", 13)}`;
     },
     m_tuning: () => {
@@ -719,7 +723,7 @@
       <g ${an("pop", 0.8)}>${box(sm, 146, 92, 56, "f-mint-soft s-mint")}${txt(sm, 151, ar() ? "ملخص" : "summary", "t-mint", 12.5, 'font-weight="800"')}</g>
       <g ${an("rise", 1.0)}>${box(tb, 260, 176, 30, "f-rose-soft s-rose")}${txt(tb, 265, ar() ? "ممكن يضيع: «من غير طنطا»" : "may drop: “excl. Tanta”", "t-rose", 11.5, bold)}</g>
       <g ${an("rise", 1.3)}>${box(nt, 82, 150, 92, "f-s1 s-mint", 2.5)}${txt(nt, 56, ar() ? "ملف ملاحظات (برّه)" : "notes file (outside)", "t-mint", 11.5, 'font-weight="800"')}
-        ${(ar() ? ["✓ من غير طنطا", "✓ بالجنيه", "☐ مسودة الإيميل"] : ["✓ excl. Tanta", "✓ in EGP", "☐ email draft"]).map((s, i) => txt(nt, 80 + i * 20, s, "t-ink2", 11.5, bold)).join("")}</g>
+        ${(ar() ? ["✓ من غير طنطا", "✓ بالجنيه", "□ مسودة الإيميل"] : ["✓ excl. Tanta", "✓ in EGP", "□ email draft"]).map((s, i) => txt(nt, 80 + i * 20, s, "t-ink2", 11.5, bold)).join("")}</g>
       <path ${an("draw", 1.6, "s-mint")} pathLength="1" d="M${sm + d * 30} 116 C ${sm + d * 40} 86, ${nt - d * 100} 70, ${nt - d * 78} 76" stroke-width="2.5" fill="none" marker-end="url(#aih-arrow)"/>
       <g ${an("fade", 1.8)}>${txt(nt, 146, ar() ? "بيرجع يقراه بعد كل ضغط" : "re-read after compacting", "t-mint", 11, bold)}</g>
       ${[mx(340), mx(436)].map((x, i) => `<g ${an("pop", 2.0 + i * 0.15)}>${box(x, 248, 84, 40, "f-s1 s-acc")}${txt(x, 246, ar() ? "مساعد " + digits(i + 1) : "helper " + (i + 1), "t-ink", 11.5, bold)}${txt(x, 261, ar() ? "مساحة جديدة" : "fresh workspace", "t-ink3", 9.5, bold)}</g>

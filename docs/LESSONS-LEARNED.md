@@ -33,6 +33,10 @@
   mirrors) ended up misaligned in RTL. Either mirror both or neither; check screenshots in both languages.
 - Automatic checks catch what eyes miss: `art-check.mjs` measures every label's box (inside 480×320, no overlaps) in
   both languages. Things it caught: labels past the edge, overlapping captions, an emoji whose glyph box spilled out.
+- **Check which font actually draws the text.** The inlined Inter shared a family name with the Arabic faces but had a
+  different weight range, so Chromium never used it: Latin text fell back to whatever the machine had (Inter locally,
+  DejaVu Sans on CI, Segoe UI on Windows), and labels fitted locally but overflowed on CI. Inter now has its own family
+  («UI Latin»), symbols come from a tiny inlined subset («UI Symbols»), and `art-check.mjs` fails on any system font.
 - Text-only checks don't catch text overflowing its own box; look at a screenshot grid of all slides as well.
 
 ## Performance

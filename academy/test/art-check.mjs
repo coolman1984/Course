@@ -21,6 +21,7 @@ let problems = 0;
 for (const lang of ["ar", "en"]) {
   // reduced motion: every drawing is shown in its final state at once, so boxes are measured where they end up
   const page = await browser.newPage({ viewport: { width: 1360, height: 900 }, reducedMotion: "reduce" });
+  const cdp = await page.context().newCDPSession(page);
   await page.goto(file);
   await page.evaluate((lang) => localStorage.setItem("aiAcademy.v1", JSON.stringify({ lang })), lang);
   for (const id of want) {
@@ -54,6 +55,13 @@ for (const lang of ["ar", "en"]) {
         }
         return [...out, ...ov];
       });
+      // every glyph must come from the fonts inlined in the file; a system font means readers on other machines see
+      // different widths (this once hid behind a locally installed Inter while CI fell back to DejaVu Sans)
+      await cdp.send("DOM.enable"); await cdp.send("CSS.enable");
+      const { root } = await cdp.send("DOM.getDocument", { depth: 0 });
+      const { nodeIds } = await cdp.send("DOM.querySelectorAll", { nodeId: root.nodeId, selector: `#sec-${id} .aih-slide[data-i="${i}"] svg text` });
+      for (const nid of nodeIds) for (const f of (await cdp.send("CSS.getPlatformFontsForNode", { nodeId: nid })).fonts)
+        if (!f.isCustomFont) found.push(["SYSTEM FONT", f.familyName, (await cdp.send("DOM.getOuterHTML", { nodeId: nid })).outerHTML.replace(/<[^>]*>/g, "")]);
       const real = found.filter(([k, a, b]) => !(k === "OVERLAP" && ALLOW.some(([d, s, x, y]) => d === id && s === i && [a, b].sort().join() === [x, y].sort().join())));
       for (const f of real) { problems++; console.log(`${lang} ${id} slide ${i + 1}: ${f[0]} ${f.slice(1).map((s) => `«${s}»`).join(" / ")}`); }
       if (shots) await (await page.$(`#sec-${id} .aih-slide[data-i="${i}"] .aih-art`)).screenshot({ path: `${shots}/${id}-${lang}-${String(i + 1).padStart(2, "0")}.png` });
