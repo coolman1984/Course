@@ -16,14 +16,19 @@ WHO YOU ARE TALKING TO
   «كوم», «ترابيزة», «بيلف», «إنت إيده», «ببلاش», «بايظ», «حشو», «تايه». The picture for the context window is
   «مساحة العمل» (the workspace).
 
-HOW THE COURSE IS ORGANISED (unit 0, in teaching order)
+HOW THE COURSE IS ORGANISED (eight units, shown as 1–8; ids u0–u7; the book is a reference, not the order)
+ 1 Foundations   2 Big data (many files, quality, the editor, model levels)   3 Office (Word, email, decks; Claude Code)
+ 4 PDF files (cloud or local, free tools)   5 Dashboards (Codex, companies and models)   6 Small tools (shared
+ features, saving versions, studying with AI)   7 Your assistant at work (prompts, decisions, pitch, career)
+ 8 The big picture (systems and digital teams, in general terms) and the graduation project.
+Unit 1 lessons, in teaching order:
  1. f1  The story of AI (history deck)          5. f7  Chat, memory and agents
  2. f2  Inside the model (next-word prediction)  6. f3  From files to a decision (six capabilities)
  3. f4  The Prompt and the Context                7. f5  Limits of AI and wise use (eight limits)
  4. f6  Why the Context is limited (workspace)    8. f8  Your first automation (Excel; three ready prompts)
 Each of these lessons opens with a 12-slide story deck: one hero, one question carried through every slide, each slide
-gives a rule and its reason («القاعدة، وليه؟»), and the last slide turns the question to the reader. Units 1–5 follow
-the reference book.
+gives a rule and its reason («القاعدة، وليه؟»), and the last slide turns the question to the reader. The order of every
+unit is in `A.courseOrder`.
 
 WHERE THINGS ARE INSIDE THIS FILE (search for these names)
 - Lessons: `A.lessons = ` (fields: id, unit, title, sum, book points with page numbers, levels simple/mech/practice/adv).

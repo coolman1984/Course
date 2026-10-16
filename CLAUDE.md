@@ -14,7 +14,7 @@ programming background. The deliverable is **`AI_Academy.html`**: the whole cour
 AI_Academy.html            generated — never hand-edit; rebuild instead
 academy/build.mjs          bundles everything into AI_Academy.html (DATA and ENGINE lists name every source file)
 academy/src/ai-guide.txt   short guide for an AI reading the HTML; injected at the very top of <head>
-academy/src/data/*.js      all content (lessons, decks, prompts, quiz, glossary, plain-language layer, stories, ui)
+academy/src/data/*.js      all content (course-order plan, lessons, decks, prompts, quiz, glossary, plain-language layer, stories, ui)
 academy/src/engine/*.js    behaviour (core router/search, render, decks in history.js, labs, motion, quiz, tools)
 academy/src/*.css          styles (styles.css, motion.css, history.css for decks)
 academy/src/fonts/         inlined fonts (SIL OFL): Inter («UI Latin»), IBM Plex Sans Arabic («UI Sans»),
@@ -40,8 +40,9 @@ Commit the rebuilt `AI_Academy.html` together with source changes. CI runs the s
 - Every user-facing string is bilingual: `u(ar, en)` / `{ ar, en }`. **Arabic and English must say the same thing,
   with the same figures and the same lesson links** (a data test enforces equal `[[lesson]]` links per explanation).
 - A lesson (`A.lessons`): `id, unit, pages, diff, min, scene?, lab?, related, pre, title, sum, book[], levels{simple,
-  mech, practice, adv}`. Its **order in the array is its number** in the unit; ids never change (links and saved progress
-  depend on them). Every lesson also needs: an entry in `plain-talk-a/b.js` (9 strings; it replaces the displayed Arabic
+  mech, practice, adv}`. **`data/course-order.js` places every lesson**: its unit and its number (units are shown
+  as 1–8, ids `u0`–`u7`; the book is a reference, not the order). Ids never change (links and saved progress depend on
+  them); a lesson's `unit` field must match the plan (a data test checks it). Every lesson also needs: an entry in `plain-talk-a/b.js` (9 strings; it replaces the displayed Arabic
   title and summary), a 7-string intro in `stories.js`, at least one prompt and one quiz question, and its book pages in
   `meta.js` coverage. Rich text: `**bold**`, `[[lessonId]]`, `((glossaryId|label))`.
 - Unit 0 order today: `f1 f2 f4 f6 f7 f3 f5 f8` (history → inside the model → Prompt & Context → Context limits →

@@ -122,7 +122,7 @@
           <div class="win-nav">${A.labs.slice(0, 8).map((lb) => `<a href="#lab-${lb.id}">${ico(lb.icon || "flask")}<span>${esc(L(lb.title))}</span></a>`).join("")}</div>
         </aside>
         <div class="win-mid" role="tabpanel">
-          <div class="win-top"><span class="pill2">${ico("route")}${ico("spark")}</span><div><b>${esc(L(u.short))}</b><small>${esc(t("pagesRange", { a: u.pages[0], b: u.pages[1] }))}</small></div></div>
+          <div class="win-top"><span class="pill2">${ico("route")}${ico("spark")}</span><div><b>${esc(L(u.short))}</b><small>${esc(t("bookPagesN", { n: u.bookPages.length }))}</small></div></div>
           <div class="win-sub"><b>${esc(t("winLessons"))}</b><span class="num">${ls.length}</span><span class="sp"></span><a href="#unit-${u.id}" class="small">${esc(t("winAll"))}</a></div>
           <ul class="steps">${ls.map((l) => `<li class="${l.id === sc.lesson ? "on" : ""}"><button type="button" class="cbx" data-done="${l.id}" aria-pressed="${!!done[l.id]}" aria-label="${esc(t("winToggle") + ": " + L(l.title))}">${ico("check")}</button>${badge(l)}<a href="#lesson-${l.id}">${esc(L(l.title))}</a></li>`).join("")}</ul>
           <p class="win-legend">${esc(t("winLegend"))}</p>
@@ -178,7 +178,7 @@
     const ug = A.$("#units");
     for (const u of A.units) {
       const pr = unitProgress(u.id);
-      ug.append(h("a", { class: "urow", href: "#unit-" + u.id, html: `<span class="tile sm" style="--tc:${u.color}"><b>${esc(u.badge)}</b></span><span class="ut"><b>${esc(L(u.title))}</b><small>${esc(t("pagesRange", { a: u.pages[0], b: u.pages[1] }))} · ${esc(nLessons(pr.n))}</small></span>${pr.d === pr.n ? `<span class="tick">${ico("check")}</span>` : `<span class="ring" style="--p:${pr.pct}" title="${pr.pct}%"></span>`}` }));
+      ug.append(h("a", { class: "urow", href: "#unit-" + u.id, html: `<span class="tile sm" style="--tc:${u.color}"><b>${esc(u.badge)}</b></span><span class="ut"><b>${esc(L(u.title))}</b><small>${esc(t("bookPagesN", { n: u.bookPages.length }))} · ${esc(nLessons(pr.n))}</small></span>${pr.d === pr.n ? `<span class="tick">${ico("check")}</span>` : `<span class="ring" style="--p:${pr.pct}" title="${pr.pct}%"></span>`}` }));
     }
 
     /* ---- featured labs ---- */
@@ -204,7 +204,7 @@
     const wrap = h("div", { class: "wrap stack" });
     wrap.innerHTML = `
       <nav class="crumbs" aria-label="${esc(t("crumbs"))}"><a href="#home">${esc(t("home"))}</a> › <span>${esc(L(u.short))}</span></nav>
-      ${head(`<span class="chip" style="background:${u.color};color:#fff;border:0">${esc(u.badge)}</span> ${esc(t("unitN", { n: u.n }))}`, L(u.title), esc(L(u.sum)), `<div class="row">${pageChips([u.pages[0]])}<span class="chip num">${esc(t("pagesRange", { a: u.pages[0], b: u.pages[1] }))}</span><span class="chip num">${ico("book")}${ls.length} ${esc(t("lessonsWord"))}</span><span class="chip ok num">${pr.pct}%</span></div>`)}
+      ${head(`<span class="chip" style="background:${u.color};color:#fff;border:0">${esc(u.badge)}</span> ${esc(t("unitN", { n: u.n }))}`, L(u.title), esc(L(u.sum)), `<div class="row">${pageChips(u.bookPages.slice(0, 1))}<span class="chip num">${esc(t("bookPagesN", { n: u.bookPages.length }))}</span><span class="chip num">${ico("book")}${ls.length} ${esc(t("lessonsWord"))}</span><span class="chip ok num">${pr.pct}%</span></div>`)}
       <div class="note bk">${ico("target")}<div><b>${esc(t("bigIdea"))}</b><div>${A.inline(L(u.big))}</div></div></div>
       <section class="sec">${secHead("route", t("unitLessons"))}<div class="stack" id="ul"></div></section>
       <section class="sec">${secHead("bolt", t("unitTools"))}<div class="grid g3">
@@ -397,11 +397,11 @@
   });
 
   /* ================= BOOK MAP + COVERAGE ================= */
-  function unitOfPage(p) { return A.units.find((u) => p >= u.pages[0] && p <= u.pages[1]) || A.units.find((u) => (u.extraPages || []).includes(p)); }
+  function unitOfPage(p) { const l = A.lessons.find((x) => x.pages.includes(p)); return l && A.unitById[l.unit]; }   // the first unit (in course order) that teaches the page
   A.view("map", (main) => {
     const wrap = h("div", { class: "wrap-wide stack" });
     wrap.innerHTML = head(ico("map") + " " + esc(t("nav_map")), t("mapTitle"), esc(t("mapLead"))) + `
-      <div class="legend">${A.units.map((u) => `<span class="row" style="gap:6px"><span style="width:12px;height:12px;border-radius:4px;background:${u.color}"></span>${esc(L(u.short))} <span class="muted num">(${u.pages[0]}–${u.pages[1]})</span></span>`).join("")}<span class="row" style="gap:6px"><span style="width:12px;height:12px;border-radius:4px;background:repeating-linear-gradient(45deg,var(--line-2),var(--line-2) 2px,transparent 2px,transparent 4px)"></span>${esc(t("visualPage"))}</span></div>
+      <div class="legend">${A.units.map((u) => `<span class="row" style="gap:6px"><span style="width:12px;height:12px;border-radius:4px;background:${u.color}"></span>${esc(L(u.short))}</span>`).join("")}<span class="row" style="gap:6px"><span style="width:12px;height:12px;border-radius:4px;background:repeating-linear-gradient(45deg,var(--line-2),var(--line-2) 2px,transparent 2px,transparent 4px)"></span>${esc(t("visualPage"))}</span></div>
       <div class="shelf" id="shelf" role="list"></div>
       <section class="sec">${secHead("layers", t("bookParts"))}<div class="stack" id="parts"></div></section>
       <p><a class="btn" href="#coverage">${ico("check")}${esc(t("nav_coverage"))}</a></p>`;
@@ -414,7 +414,7 @@
     const parts = A.$("#parts");
     for (const u of A.units) {
       const ls = lessonsOf(u.id);
-      parts.append(h("div", { class: "card flat", style: "border-inline-start:5px solid " + u.color, html: `<div class="row" style="justify-content:space-between"><h3>${esc(u.badge)} · ${esc(L(u.title))}</h3><span class="chip num">${esc(t("pagesRange", { a: u.pages[0], b: u.pages[1] }))}${(u.extraPages || []).length ? " + " + u.extraPages.join(", ") : ""}</span></div><p class="muted small" style="margin-block:6px 10px">${esc(L(u.sum))}</p><div class="related">${ls.map((l) => `<a class="chip" href="#lesson-${l.id}">${esc(L(l.title))}</a>`).join("")}</div>` }));
+      parts.append(h("div", { class: "card flat", style: "border-inline-start:5px solid " + u.color, html: `<div class="row" style="justify-content:space-between"><h3>${esc(u.badge)} · ${esc(L(u.title))}</h3><span class="chip num">${esc(t("bookPagesN", { n: u.bookPages.length }))}</span></div><p class="muted small" style="margin-block:6px 10px">${esc(L(u.sum))}</p><div class="related">${ls.map((l) => `<a class="chip" href="#lesson-${l.id}">${esc(L(l.title))}</a>`).join("")}</div>` }));
     }
   });
   A.view("coverage", (main) => {

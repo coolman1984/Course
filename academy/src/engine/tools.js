@@ -184,7 +184,7 @@
         <div class="pr-stage ${notesOn ? "notes" : ""}"><div class="pr-slide" id="pr-s"></div><aside class="pr-notes" ${notesOn ? "" : "hidden"} aria-label="${esc(t("prNotes"))}">${notesFor(s)}</aside></div>
         <div class="pr-bot"><button type="button" class="btn sm" id="pr-p">${ico(rtl ? "next" : "prev")}${esc(t("prev"))}</button><div class="qprog"><i style="width:${((i + 1) / slides.length) * 100}%"></i></div><span class="num small muted">${i + 1} / ${slides.length}</span><button type="button" class="btn sm pri" id="pr-n">${esc(t("next"))}${ico(rtl ? "prev" : "next")}</button></div>`;
       const box = ov.querySelector("#pr-s");
-      if (s.kind === "title") box.innerHTML = `<span class="eyebrow">${esc(t("unitN", { n: u.n }))} · ${esc(t("pagesRange", { a: u.pages[0], b: u.pages[1] }))}</span><h1>${esc(L(u.title))}</h1><p class="lead">${esc(L(u.sum))}</p>`;
+      if (s.kind === "title") box.innerHTML = `<span class="eyebrow">${esc(t("unitN", { n: u.n }))} · ${esc(t("bookPagesN", { n: u.bookPages.length }))}</span><h1>${esc(L(u.title))}</h1><p class="lead">${esc(L(u.sum))}</p>`;
       else if (s.kind === "big") box.innerHTML = `<span class="eyebrow">${esc(t("bigIdea"))}</span><h1 style="font-size:clamp(1.6rem,1rem + 2.6vw,3rem)">${A.inline(L(u.big))}</h1>`;
       else if (s.kind === "lesson") box.innerHTML = `<span class="eyebrow">${A.pageChips(s.l.pages)}</span><h1>${esc(L(s.l.title))}</h1><p class="lead">${esc(L(s.l.sum))}</p><ul class="pr-points">${(s.l.book || []).slice(0, 5).map((b) => `<li>${A.inline(L(b))}</li>`).join("")}</ul>`;
       else if (s.kind === "scene") { box.innerHTML = `<h2>${esc(L(s.l.title))}</h2>`; sceneApi = A.mountScene(box, s.l.scene, { autoplay: false, initialStage: 0 }); }

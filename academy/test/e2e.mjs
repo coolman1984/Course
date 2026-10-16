@@ -356,6 +356,23 @@ await session({ label: "history-deck-quiet", viewport: { width: 1280, height: 86
   still === 9 ? ok("history: nothing advances by itself") : fail("history: deck advanced without the reader");
 });
 
+await session({ label: "plan-2-migration", viewport: { width: 1280, height: 860 } }, async (page) => {
+  // a learner from the six-unit course: old best scores for u1–u5 belong to other questions now and must not show
+  await page.evaluate(() => { localStorage.setItem("aiAcademy.v1", JSON.stringify({ lang: "en", scores: { u0: { best: 80, last: 80 }, u1: { best: 90, last: 90 }, all: { best: 70, last: 70 } } })); location.hash = "quiz"; location.reload(); });
+  await page.waitForSelector("#main .unit-card"); await page.waitForTimeout(400);
+  const kept = await page.evaluate(() => { const s = JSON.parse(localStorage.getItem("aiAcademy.v1") || "{}"); return { u0: !!(s.scores || {}).u0, u1: !!(s.scores || {}).u1, all: !!(s.scores || {}).all, plan: s.plan }; });
+  kept.u0 && !kept.u1 && kept.all ? ok("upgrade: old unit scores cleared, unit 1 and overall scores kept") : fail("upgrade: scores " + JSON.stringify(kept));
+  await page.evaluate(() => { location.hash = "home"; }); await page.waitForTimeout(200);
+  await page.click("#view-btn"); await page.waitForSelector(".vpanel");
+  await page.click('.vpanel [data-vk="font"][data-vv="cairo"]'); await page.click('.vpanel [data-vk="width"][data-vv="lg"]'); await page.click('.vpanel [data-vk="size"][data-vv="xl"]');
+  const v = await page.evaluate(() => ({ d: { ...document.documentElement.dataset }, ff: getComputedStyle(document.body).fontFamily, art: getComputedStyle(document.documentElement).getPropertyValue("--font-art") }));
+  v.d.font === "cairo" && v.d.width === "lg" && v.d.fsize === "xl" && /R Cairo/.test(v.ff) && /UI Latin/.test(v.art) ? ok("reading settings: font, width and size apply; drawings keep their font") : fail("reading settings: " + JSON.stringify(v));
+  await page.keyboard.press("Escape"); await page.waitForTimeout(50);
+  (await page.$(".vpanel")) ? fail("reading settings: panel stays open after Escape") : ok("reading settings: Escape closes the panel");
+  await page.reload(); await page.waitForTimeout(300);
+  (await page.evaluate(() => document.documentElement.dataset.font)) === "cairo" ? ok("reading settings: remembered after reload") : fail("reading settings: lost after reload");
+});
+
 await browser.close();
 console.log(results.join("\n"));
 process.exitCode = results.some((r) => r.startsWith("FAIL")) ? 1 : 0;

@@ -104,7 +104,7 @@
 @keyframes aih-txt{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 
 /* drawing palette (themeable) */
-.aih-svg text{font-family:var(--font-body)}
+.aih-svg text{font-family:var(--font-art)}
 .f-s1{fill:var(--surface)}.f-s2{fill:var(--surface-3)}.f-s3{fill:var(--line-2)}
 .s-line{stroke:var(--line)}.s-line2{stroke:var(--line-2)}
 .f-ink{fill:var(--ink)}.f-ink2{fill:var(--ink-2)}.f-ink3{fill:var(--ink-3)}

@@ -27,26 +27,39 @@
 
   /* ---------- state (localStorage with safe fallback) ---------- */
   const KEY = "aiAcademy.v1";
-  const blank = () => ({ lang: "ar", theme: "auto", level: "simple", done: {}, visited: {}, last: null, quiz: {}, notes: {}, bookmarks: [], saved: [], project: {}, scroll: {} });
+  const blank = () => ({ lang: "ar", theme: "auto", level: "simple", done: {}, visited: {}, last: null, quiz: {}, notes: {}, bookmarks: [], saved: [], project: {}, scroll: {}, view: {}, plan: 2 });
   let memory = blank();
   let storageOk = true;
+  let seen = null;   // the stored text as this tab last read or wrote it
   function load() {
     try {
       const raw = localStorage.getItem(KEY);
-      if (raw) memory = Object.assign(blank(), JSON.parse(raw));
+      seen = raw;
+      if (raw) {
+        const saved = JSON.parse(raw);
+        memory = Object.assign(blank(), saved);
+        // course plan 2 (eight units) gave units u1–u5 new meanings: their old best scores belong to other questions
+        if ((saved.plan || 1) < 2 && memory.scores) { for (const k of ["u1", "u2", "u3", "u4", "u5"]) delete memory.scores[k]; persist(); }
+      }
     } catch (e) { storageOk = false; }
   }
-  const persist = debounce(() => {
-    try { localStorage.setItem(KEY, JSON.stringify(memory)); storageOk = true; }
+  let pending = false;   // a change waits in the 250 ms debounce
+  const write = () => {
+    pending = false;
+    try { const json = JSON.stringify(memory); localStorage.setItem(KEY, json); seen = json; storageOk = true; }
     catch (e) { if (storageOk) toast(t("storageFail")); storageOk = false; }
-  }, 250);
+  };
+  const later = debounce(write, 250);
+  const persist = () => { pending = true; later(); };
+  // a reload right after a change keeps it; if another tab saved meanwhile, its newer state wins
+  addEventListener("pagehide", () => { try { if (pending && localStorage.getItem(KEY) === seen) write(); } catch (e) { /* storage unavailable */ } });
   const S = {
     get: (k) => memory[k],
     set(k, v) { memory[k] = v; persist(); A.emit("state", k); },
     patch(k, sub, v) { memory[k] = Object.assign({}, memory[k], { [sub]: v }); if (v === undefined) delete memory[k][sub]; persist(); A.emit("state", k); },
     all: () => JSON.parse(JSON.stringify(memory)),
     replace(obj) { memory = Object.assign(blank(), obj); persist(); },
-    reset() { const keep = { lang: memory.lang, theme: memory.theme }; memory = Object.assign(blank(), keep); persist(); },
+    reset() { const keep = { lang: memory.lang, theme: memory.theme, view: memory.view }; memory = Object.assign(blank(), keep); persist(); },
     ok: () => storageOk,
   };
 
@@ -74,6 +87,17 @@
     const th = memory.theme;
     if (th === "light" || th === "dark") doc.documentElement.setAttribute("data-theme", th);
     else doc.documentElement.removeAttribute("data-theme");
+  }
+  // reading preferences: content width, text size and reading font (the drawings keep their own font, see --font-art)
+  const VIEW = {
+    width: [["sm", "viewNarrow"], ["md", "viewMedium"], ["lg", "viewWide"]],
+    size: [["sm", "sizeSm"], ["md", "sizeMd"], ["lg", "sizeLg"], ["xl", "sizeXl"]],
+    font: [["plex", "fontPlex"], ["cairo", "fontCairo"], ["tajawal", "fontTajawal"], ["almarai", "fontAlmarai"], ["naskh", "fontNaskh"]],
+  };
+  const viewOf = (k) => { const v = (memory.view || {})[k]; return VIEW[k].some(([id]) => id === v) ? v : VIEW[k][k === "font" ? 0 : 1][0]; };
+  function applyView() {
+    const de = doc.documentElement;
+    de.dataset.width = viewOf("width"); de.dataset.fsize = viewOf("size"); de.dataset.font = viewOf("font");
   }
 
   /* ---------- icons (one stroke family, 24px grid, original geometry) ---------- */
@@ -428,6 +452,35 @@
     const done = A.lessons.filter((l) => memory.done[l.id]).length;
     return { done, total, pct: total ? Math.round((done / total) * 100) : 0 };
   }
+  function openViewPanel(btn) {
+    const old = $(".vpanel");
+    if (old) { old.remove(); btn.setAttribute("aria-expanded", "false"); return; }
+    const pan = h("div", { class: "vpanel", role: "dialog", "aria-label": t("viewBtn") });
+    const draw = () => {
+      pan.innerHTML = `<div class="vp-h"><b>${esc(t("viewBtn"))}</b><button type="button" class="ibtn" data-vp-reset>${ico("restart")}<span class="lbl">${esc(t("viewReset"))}</span></button></div>` +
+        ["width", "size", "font"].map((k) => `<div class="vp-g"><span class="vp-l">${esc(t("view_" + k))}</span><div class="vseg ${k}" role="group" aria-label="${esc(t("view_" + k))}">${VIEW[k].map(([id, key]) =>
+          `<button type="button" data-vk="${k}" data-vv="${id}" aria-pressed="${viewOf(k) === id}"${k === "font" ? ` data-font-preview="${id}"` : ""}>${k === "size" ? `<span class="vp-a vp-${id}" aria-hidden="true">${lang() === "ar" ? "أ" : "A"}</span>` : ""}<span>${esc(t(key))}</span></button>`).join("")}</div></div>`).join("") +
+        `<p class="vp-note">${esc(t("viewNote"))}</p>`;
+      $$("[data-vk]", pan).forEach((b) => (b.onclick = () => { S.set("view", Object.assign({}, memory.view, { [b.dataset.vk]: b.dataset.vv })); applyView(); draw(); }));
+      $("[data-vp-reset]", pan).onclick = () => { S.set("view", {}); applyView(); draw(); };
+    };
+    draw();
+    doc.body.append(pan);
+    const r = btn.getBoundingClientRect(), rtl = lang() === "ar";
+    pan.style.top = r.bottom + 8 + "px";
+    if (rtl) pan.style.left = Math.max(8, r.left) + "px"; else pan.style.right = Math.max(8, innerWidth - r.right) + "px";
+    btn.setAttribute("aria-expanded", "true");
+    (pan.querySelector("[aria-pressed=true]") || pan.querySelector("button")).focus();
+    const close = (e) => {
+      if (e && e.type === "keydown" && e.key !== "Escape") return;
+      if (e && e.type === "pointerdown" && (pan.contains(e.target) || btn.contains(e.target))) return;
+      pan.remove(); btn.setAttribute("aria-expanded", "false");
+      removeEventListener("pointerdown", close, true); removeEventListener("keydown", close, true);
+      if (e && e.type === "keydown") btn.focus();
+    };
+    addEventListener("pointerdown", close, true); addEventListener("keydown", close, true);
+    A.onLeave(() => close());
+  }
   function needsReview(id) {
     return A.quiz.some((q) => q.lesson === id && memory.quiz[q.id] && memory.quiz[q.id].ok === false);
   }
@@ -452,6 +505,7 @@
       <a class="prog" href="#path" title="${esc(t("progressTitle", { d: p.done, t: p.total }))}" aria-label="${esc(t("progressTitle", { d: p.done, t: p.total }))}"><span class="ring" style="--p:${p.pct}"></span><b class="num">${p.pct}%</b></a>
       <a class="ibtn hide-sm" href="#knowledge" aria-label="${esc(t("nav_knowledge"))}" title="${esc(t("nav_knowledge"))}">${ico("graph")}</a>
       <a class="ibtn" href="#notebook" aria-label="${esc(t("nav_notebook"))}" title="${esc(t("nav_notebook"))}">${ico("note")}</a>
+      <button class="ibtn" id="view-btn" aria-haspopup="dialog" aria-expanded="false" aria-label="${esc(t("viewBtn"))}" title="${esc(t("viewBtn"))}">${ico("abc")}</button>
       <button class="ibtn" id="lang-btn" aria-label="${esc(t("switchLang"))}" title="${esc(t("switchLang"))}">${ico("lang")}<span class="lbl">${lang() === "ar" ? "EN" : "ع"}</span></button>
       <button class="ibtn" id="theme-btn" aria-label="${esc(t("themeBtn") + ": " + themeLbl)}" title="${esc(t("themeBtn") + ": " + themeLbl)}">${ico(themeIcon)}</button>`;
     $("#menu-btn").onclick = () => { doc.body.classList.toggle("nav-open"); $("#menu-btn").setAttribute("aria-expanded", doc.body.classList.contains("nav-open")); };
@@ -459,6 +513,7 @@
     $("#watch-btn").onclick = openTour;
     $$("[data-level]", bar).forEach((b) => (b.onclick = () => { S.set("level", b.dataset.level); renderBar(); A.emit("level", b.dataset.level); }));
     $("#lang-btn").onclick = () => { S.set("lang", lang() === "ar" ? "en" : "ar"); index = null; applyLang(); renderAll(); };
+    $("#view-btn").onclick = (e) => { e.stopPropagation(); openViewPanel($("#view-btn")); };
     $("#theme-btn").onclick = () => { const order = ["auto", "light", "dark"]; S.set("theme", order[(order.indexOf(memory.theme) + 1) % 3]); applyTheme(); renderBar(); toast(t("themeBtn") + ": " + t("theme_" + memory.theme), memory.theme === "dark" ? "moon" : memory.theme === "light" ? "sun" : "auto"); };
   }
   // the 15 s tour video lives next to the HTML file and loads only when asked for (nothing is fetched at start-up);
@@ -564,7 +619,7 @@
         const obj = JSON.parse(r.result);
         const d = obj && obj.data ? obj.data : obj;
         if (!d || typeof d !== "object" || !("done" in d)) throw new Error("bad");
-        S.replace(d); applyLang(); applyTheme(); renderAll(); toast(t("imported"));
+        S.replace(d); applyLang(); applyTheme(); applyView(); renderAll(); toast(t("imported"));
       } catch (e) { toast(t("importFail"), "info"); }
     };
     r.readAsText(file);
@@ -584,7 +639,7 @@
     if (cur.name === "lesson" && A.byId[cur.arg]) A._openUnits.add(A.byId[cur.arg].unit);
     else if (cur.name === "unit") A._openUnits.add(cur.arg);
     else A._openUnits.add(A.units[0].id);
-    applyLang(); applyTheme();
+    applyLang(); applyTheme(); applyView();
     renderBar(); renderSide();
     addEventListener("hashchange", () => {
       const c = parse();
