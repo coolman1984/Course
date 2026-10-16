@@ -88,7 +88,7 @@
           "Why only the words before? Because it's trained to guess the next word — looking ahead would be peeking at the answer!"),
         u("النماذج القديمة كانت بتقرا كلمة ورا كلمة وتشيل الملخص في ذاكرة صغيرة، فتنسى أول الجملة الطويلة وكانت بطيئة. الانتباه بيخلّي كل كلمة توصل مباشرة لأي كلمة قبلها مهما كانت بعيدة، وفي التدريب بيتحسب ده لكل المواضع في نفس الوقت، فكروت الشاشة تشتغل بالتوازي.",
           "Older models read one word at a time, squeezing what they'd read into a small memory, so they forgot the start of long sentences and were slow. Attention lets each word reach any earlier word directly, however far back, and in training this is computed for every position at once, so graphics chips work in parallel.")],
-        answer: u("كل كلمة توصل مباشرة لكل الكلمات اللي قبلها، ومش اللي بعدها. لأنه كده بيفهم السياق كويس من غير ما يغش في لعبة «الكلمة الجاية»، ويتدرّب بسرعة بالتوازي.", "Every word reaches straight back to all the words before it, never ahead — it follows context well without cheating at the next-word game, and trains fast in parallel."),
+        answer: u("كل كلمة توصل مباشرة لكل الكلمات اللي قبلها، ومش اللي بعدها. لأنه كده بيفهم الـ Context كويس من غير ما يغش في لعبة «الكلمة الجاية»، ويتدرّب بسرعة بالتوازي.", "Every word reaches straight back to all the words before it, never ahead — it follows context well without cheating at the next-word game, and trains fast in parallel."),
         idea: u("ده قلب تصميم «المحوّل» (Transformer) اللي شفناه في حكاية التاريخ سنة ٢٠١٧.", "This is the heart of the Transformer design we met in the history story, in 2017.")
       },
       {
@@ -148,7 +148,7 @@
           "Inside the model: text cut into tokens, placed on a map of meaning, passed through many layers of attention, producing the most likely next word. Out of that simple game came remarkable abilities."),
         u("بس خد بالك: هو ما بيشوفش ملفاتك غير لو إديتهاله، وما يعرفش اللي حصل بعد آخر تدريب ليه، وبيبني ردّه على الكلام اللي قدامه. عشان كده جودة كلامك إنت هي نص النتيجة.",
           "But note: it can't see your files unless you give them, doesn't know what happened after its last training, and builds its reply on the text in front of it. That's why the quality of your input is half the result.")],
-        answer: u("اديله سياق واضح وراجع اللي بيطلّعه. لأن تخمينه بيبقى أدق كل ما الكلام اللي قدامه أوضح.", "Give it clear context and check what it produces — its guesses get better the clearer the text in front of it."),
+        answer: u("اديله Context واضح وراجع اللي بيطلّعه. لأن تخمينه بيبقى أدق كل ما الكلام اللي قدامه أوضح.", "Give it clear context and check what it produces — its guesses get better the clearer the text in front of it."),
         idea: u("الموديل مش سحر ولا إنسان؛ هو آلة توقّع جبّارة. وده بالظبط اللي هتتعلم تشغّله صح في الكورس.", "A model is neither magic nor a person; it's a powerful prediction machine — and this course teaches you to drive it well.")
       }
     ]

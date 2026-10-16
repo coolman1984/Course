@@ -14,8 +14,8 @@
 
   /* ---------- drawing helpers (viewBox 480 × 320) ---------- */
   const an = (kind, d, extra = "") => `class="an ${kind}${extra ? " " + extra : ""}" style="--d:${d}s"`;  // pass the element's own classes as `extra`: one class attribute per element
-  const txt = (x, y, s, cls, size = 14, more = "") =>
-    `<text x="${x}" y="${y}" class="${cls}" font-size="${size}" text-anchor="middle" ${more}>${esc(s)}</text>`;
+  const txt = (x, y, s, cls, size = 14, more = "") =>   // Arabic labels get an explicit rtl base direction so mixed Arabic/English words keep their order
+    `<text x="${x}" y="${y}" class="${cls}" font-size="${size}" text-anchor="middle"${ar() && !/direction=/.test(more) ? ' direction="rtl"' : ""} ${more}>${esc(s)}</text>`;
   const person = (x, y, s = 1, cls = "f-ink2") =>
     `<g transform="translate(${x} ${y}) scale(${s})"><circle cx="0" cy="-34" r="11" class="${cls}"/><path d="M-17 0q0-20 17-20t17 20z" class="${cls}"/></g>`;
 
@@ -209,7 +209,7 @@
       ${txt(240, 302, ar() ? "كل كلمة بتبص على اللي قبلها بس، مش على الإجابة" : "each word looks only at the words before it, never ahead", "t-ink3", 13)}`;
     },
     m_layers: () => {
-      const labels = ar() ? ["شكل الكلام", "القواعد", "المعنى", "السياق", "المقصود"] : ["word forms", "grammar", "meaning", "context", "intent"];
+      const labels = ar() ? ["شكل الكلام", "القواعد", "المعنى", "الـ Context", "المقصود"] : ["word forms", "grammar", "meaning", "context", "intent"];
       return `${labels.map((s, i) => { const y = 252 - i * 46; return `<g ${an("rise", 0.1 + i * 0.12)}><rect x="${ar() ? 150 : 90}" y="${y - 17}" width="240" height="34" rx="10" class="layer l${i}"/>${txt(ar() ? 270 : 210, y + 5, s, i > 2 ? "t-white" : "t-ink", 14, 'font-weight="700"')}</g>`; }).join("")}
       <circle ${an("travel", 0.9, `f-amber`)} r="9"><animateMotion dur="2.8s" begin="indefinite" repeatCount="indefinite" path="M${ar() ? 120 : 360} 270 L${ar() ? 120 : 360} 50"/></circle>
       <path ${an("draw", 0.8, `s-amber`)} pathLength="1" d="M${ar() ? 120 : 360} 272 V 46" stroke-width="2.5" stroke-dasharray="1" fill="none" marker-end="url(#aih-arrow)"/>
@@ -230,7 +230,7 @@
     m_scale: () => {
       const bars = ar() ? [["البيانات", "f-acc"], ["المفاتيح", "f-amber"], ["الحساب", "f-mint"]] : [["data", "f-acc"], ["knobs", "f-amber"], ["compute", "f-mint"]];
       const X = rowX(3, 62, 26, ar() ? 330 : 150);
-      return `${bars.map(([s, c], i) => `<rect class="an bar ${c}" style="--d:${0.2 + i * 0.15}s" x="${X(i) - 31}" y="${96 + i * 8}" width="62" height="${170 - i * 8}" rx="8"/>${txt(X(i), 290, s, "t-ink2", 13, 'font-weight="700"')}`).join("")}
+      return `${bars.map(([s, c], i) => `<rect class="an vbar ${c}" style="--d:${0.2 + i * 0.15}s" x="${X(i) - 31}" y="${96 + i * 8}" width="62" height="${170 - i * 8}" rx="8"/>${txt(X(i), 290, s, "t-ink2", 13, 'font-weight="700"')}`).join("")}
       <g ${an("fade", 0.9)}><path d="M${ar() ? 40 : 268} 80 V 266 H ${ar() ? 212 : 440}" class="s-ink3" stroke-width="2" fill="none"/>${txt(ar() ? 126 : 354, 290, ar() ? "الجودة بتطلع" : "quality rises", "t-ink2", 13, 'font-weight="700"')}</g>
       <path ${an("draw", 1.1, `s-acc`)} pathLength="1" d="${ar() ? "M48 250 C 90 214, 130 150, 204 96" : "M276 250 C 318 214, 358 150, 432 96"}" stroke-width="4" fill="none" stroke-linecap="round"/>
       ${["✍️", "🌍", "💻"].map((e, i) => `<g ${an("pop", 1.6 + i * 0.2)}><text x="${(ar() ? 90 : 318) + i * 48}" y="${(ar() ? 180 : 180) - i * 34}" font-size="20" text-anchor="middle">${e}</text></g>`).join("")}
@@ -264,7 +264,150 @@
       const at = ([c, r]) => [ar() ? 380 - c * 140 : 100 + c * 140, 92 + r * 104];
       return `${pos.slice(1).map((p, i) => { const [x1, y1] = at(pos[i]), [x2, y2] = at(p); return `<path ${an("draw", 0.3 + i * 0.3, `s-acc`)} pathLength="1" d="M${x1 + (y1 === y2 ? (x2 > x1 ? 58 : -58) : 0)} ${y1 + (y1 === y2 ? 0 : 26)} L${x2 + (y1 === y2 ? (x2 > x1 ? -58 : 58) : 0)} ${y2 - (y1 === y2 ? 0 : 26)}" stroke-width="2.5" fill="none" marker-end="url(#aih-arrow)"/>`; }).join("")}
       ${pos.map((p, i) => { const [x, y] = at(p); return `<g ${an("pop", 0.15 + i * 0.3)}><rect x="${x - 58}" y="${y - 24}" width="116" height="48" rx="13" class="${i === 5 ? "f-acc" : i === 0 ? "f-s2" : "f-s1 s-acc"}" stroke-width="2"/>${txt(x, y + 5, steps[i], i === 5 ? "t-white" : "t-ink", 13, 'font-weight="700"')}</g>`; }).join("")}
-      <g ${an("rise", 2.0)}>${person(ar() ? 380 : 100, 300, 0.75, "f-ink2")}${txt(ar() ? 260 : 220, 292, ar() ? "إنت: سياق واضح + مراجعة" : "you: clear context + review", "t-mint", 13, 'font-weight="700"')}</g>`;
+      <g ${an("rise", 2.0)}>${person(ar() ? 380 : 100, 300, 0.75, "f-ink2")}${txt(ar() ? 260 : 220, 292, ar() ? "إنت: Context واضح + مراجعة" : "you: clear context + review", "t-mint", 13, 'font-weight="700"')}</g>`;
+    }
+  });
+
+  /* ---------- drawings for "the Prompt and the Context" (data/context-story.js) ---------- */
+  const mx = (x) => (ar() ? 480 - x : x);   // mirror a horizontal position for right-to-left
+  const box = (cx, cy, w, h, cls, sw = 2, more = "") => `<rect x="${cx - w / 2}" y="${cy - h / 2}" width="${w}" height="${h}" rx="12" class="${cls}" stroke-width="${sw}" ${more}/>`;
+  const bold = 'font-weight="700"';
+  Object.assign(ART, {
+    c_sees: () => {
+      const out = ar() ? [["ملفاتك", 70, 92], ["مصنعك", 70, 206], ["خبرتك", 410, 92], ["اجتماع امبارح", 410, 206]]
+        : [["your files", 70, 92], ["your factory", 70, 206], ["your experience", 410, 92], ["last meeting", 410, 206]];
+      return `<g ${an("rise", 0.05)}><rect x="150" y="46" width="180" height="214" rx="16" class="f-acc-soft s-acc" stroke-width="2.5"/>${txt(240, 76, "Context", "t-acc", 16, 'font-weight="800"')}
+        ${[144, 118, 132].map((w, i) => `<rect x="${ar() ? 312 - w : 168}" y="${94 + i * 28}" width="${w}" height="15" rx="6" class="f-s1"/>`).join("")}</g>
+      <g ${an("pop", 0.6)}>${box(240, 218, 160, 48, "f-acc", 0)}${txt(240, 214, ar() ? "اكتبلي تقرير" : "Write me a report", "t-white", 13, bold)}${txt(240, 232, ar() ? "عن التوقفات" : "on the stoppages", "t-white", 13, bold)}</g>
+      ${out.map(([s, x, y], i) => `<g ${an("fade", 0.9 + i * 0.15)}>${box(x, y, 116, 44, "f-s2 s-line2", 2, 'stroke-dasharray="5 5"')}${txt(x, y + 5, s, "t-ink3", 12.5, 'font-weight="600"')}</g>`).join("")}
+      <g ${an("fade", 1.6)}>${txt(70, 150, ar() ? "مش شايفها" : "invisible", "t-rose", 12, bold)}${txt(410, 150, ar() ? "مش شايفها" : "invisible", "t-rose", 12, bold)}</g>
+      ${txt(240, 298, ar() ? "اللي جوه الإطار بس هو اللي الموديل شايفه" : "only what's inside the frame exists for the model", "t-ink2", 13, bold)}`;
+    },
+    c_defs: () => {
+      const rows = ar() ? ["تعليمات التطبيق الثابتة", "ملفات رفعتها", "الرسايل اللي فاتت", "الـ Prompt: طلبك إنت"]
+        : ["fixed app instructions", "files you uploaded", "earlier messages", "the Prompt: your request"];
+      const cx = mx(270);
+      return `<g ${an("rise", 0.05)}>${box(cx, 156, 320, 236, "f-s2 s-acc", 2.5)}${txt(cx, 66, "Context", "t-acc", 16, 'font-weight="800"')}</g>
+      ${rows.map((s, i) => `<g ${an(i === 3 ? "pop" : "rise", 0.35 + i * 0.22)}>${box(cx, 102 + i * 46, 272, 36, i === 3 ? "f-acc" : "f-s1 s-line2")}${txt(cx, 107 + i * 46, s, i === 3 ? "t-white" : "t-ink2", 13.5, bold)}</g>`).join("")}
+      <g ${an("rise", 1.4)}>${person(mx(56), 270, 0.9, "f-ink2")}</g>
+      <path ${an("draw", 1.6, "s-ink2")} pathLength="1" d="M${mx(56)} 222 C ${mx(56)} 210, ${mx(100)} 240, ${mx(128)} 240" stroke-width="2.5" fill="none" marker-end="url(#aih-arrow)"/>
+      ${txt(240, 306, ar() ? "الـ Prompt جزء من الـ Context" : "the Prompt is part of the Context", "t-ink2", 13, bold)}`;
+    },
+    c_map: () => {
+      const C = [
+        { c: "f-acc", t: "t-acc", pts: ar() ? [[96, 92, "هالك"], [150, 70, "عيوب"], [140, 124, "خط تعبئة"]] : [[96, 92, "scrap"], [150, 70, "defects"], [140, 124, "filling line"]] },
+        { c: "f-mint", t: "t-mint", pts: ar() ? [[338, 70, "عملاء"], [396, 96, "شكاوى"], [340, 120, "رضا"]] : [[338, 70, "customers"], [396, 96, "complaints"], [340, 120, "satisfaction"]] },
+        { c: "f-amber", t: "t-amber", pts: ar() ? [[338, 214, "صحة"], [392, 238, "راحة"], [350, 262, "رفاهية"]] : [[338, 214, "health"], [392, 238, "comfort"], [350, 262, "wellbeing"]] }
+      ];
+      const ctr = C.map((g) => [g.pts.reduce((a, p) => a + p[0], 0) / 3, g.pts.reduce((a, p) => a + p[1], 0) / 3]);
+      return `<g ${an("fade", 0)}>${[0, 1, 2, 3, 4].map((i) => `<line x1="${60 + i * 90}" y1="40" x2="${60 + i * 90}" y2="290" class="s-line" stroke-width="1"/><line x1="40" y1="${50 + i * 60}" x2="440" y2="${50 + i * 60}" class="s-line" stroke-width="1"/>`).join("")}</g>
+      ${C.map((g, k) => `<ellipse ${an("pop", 0.2 + k * 0.25, g.c + " cluster")} cx="${ctr[k][0]}" cy="${ctr[k][1]}" rx="70" ry="48"/>`
+        + g.pts.map((p, i) => `<g ${an("pop", 0.3 + k * 0.25 + i * 0.07)}><circle cx="${p[0]}" cy="${p[1]}" r="6" class="${g.c}"/>${txt(p[0], p[1] - 11, p[2], g.t, 12.5, bold)}</g>`).join("")).join("")}
+      ${ctr.map(([x, y], k) => `<path ${an("draw", 1.2 + k * 0.1, "s-ink3")} pathLength="1" d="M236 180 L${x} ${y}" stroke-width="1.6" stroke-dasharray="1" fill="none"/>`).join("")}
+      <g ${an("pop", 1.0)}>${box(236, 180, 96, 34, "f-s2 s-line2")}${txt(236, 185, ar() ? "«الجودة»" : "“quality”", "t-ink2", 13, bold)}</g>
+      <path ${an("draw", 1.9, "s-acc")} pathLength="1" d="M120 238 C 116 214, 120 186, ${ctr[0][0] - 4} ${ctr[0][1] + 52}" stroke-width="4.5" fill="none" stroke-linecap="round" marker-end="url(#aih-arrow)"/>
+      <g ${an("pop", 1.7)}>${box(126, 258, 214, 36, "f-acc", 0)}${txt(126, 263, ar() ? "«نسبة الهالك في خط التعبئة»" : "“scrap rate on the filling line”", "t-white", 12.5, bold)}</g>
+      <ellipse class="an ring s-acc" style="--d:2.5s" cx="${ctr[0][0]}" cy="${ctr[0][1]}" rx="76" ry="54" fill="none" stroke-width="3"/>
+      <g ${an("fade", 2.2)}>${txt(236, 220, ar() ? "عامة = منطقة واسعة" : "general = wide region", "t-ink3", 12)}</g>
+      ${txt(240, 312, ar() ? "دقيقة = المنطقة الصح بالظبط" : "precise = exactly the right region", "t-ink2", 13, bold)}`;
+    },
+    c_terms: () => {
+      const pc = mx(112), oc = mx(352);
+      const X = rowX(5, 24, 8, oc), H = [84, 54, 30, 16, 8], cum = [44, 72, 87, 95, 100];
+      return `<g ${an("rise", 0.05)}>${box(pc, 92, 190, 40, "f-s1 s-line2")}${txt(pc, 97, ar() ? "«شوف ليه الخط بيقف»" : "“why does it stop?”", "t-ink2", 12.5, bold)}</g>
+      <path ${an("draw", 0.4, "s-ink3")} pathLength="1" d="M${mx(214)} 92 H ${mx(262)}" stroke-width="2.5" fill="none" marker-end="url(#aih-arrow)"/>
+      <g ${an("fade", 0.6)}>${[150, 120, 136].map((w, i) => `<rect x="${oc - w / 2}" y="${66 + i * 20}" width="${w}" height="11" rx="5" class="f-s3"/>`).join("")}${txt(oc, 140, ar() ? "إجابة عامة" : "a generic answer", "t-ink3", 12.5, bold)}</g>
+      <g ${an("rise", 1.0)}>${box(pc, 222, 190, 40, "f-acc", 0)}${txt(pc, 227, ar() ? "«تحليل باريتو للتوقفات»" : "“Pareto analysis”", "t-white", 12.5, bold)}</g>
+      <path ${an("draw", 1.3, "s-acc")} pathLength="1" d="M${mx(214)} 222 H ${mx(262)}" stroke-width="3" fill="none" marker-end="url(#aih-arrow)"/>
+      ${H.map((h, i) => `<rect class="an vbar ${i < 2 ? "f-acc" : "f-s3"}" style="--d:${1.5 + i * 0.1}s" x="${X(i) - 12}" y="${270 - h}" width="24" height="${h}" rx="4"/>`).join("")}
+      <path ${an("draw", 2.2, "s-amber")} pathLength="1" d="M${H.map((_, i) => `${X(i)} ${270 - cum[i] * 1.0}`).join(" L")}" stroke-width="3" fill="none"/>
+      ${H.map((_, i) => `<circle ${an("pop", 2.4 + i * 0.06, "f-amber")} cx="${X(i)}" cy="${270 - cum[i]}" r="4"/>`).join("")}
+      <g ${an("fade", 2.6)}>${txt(oc, 296, ar() ? "طريقة تحليل كاملة" : "a complete method", "t-mint", 12.5, bold)}</g>
+      ${txt(pc, 286, ar() ? "مصطلح واحد غيّر النتيجة" : "one term changed the result", "t-ink3", 12.5)}`;
+    },
+    c_links: () => {
+      const ctx = ar() ? ["خط التعبئة", "سبتمبر", "٣ ورديات", "الوردية التالتة"] : ["filling line", "September", "3 shifts", "third shift"];
+      const rep = ar() ? ["أغلب", "التوقف", "في", "الوردية", "التالتة"] : ["Most", "stops", "on", "the third", "shift"];
+      const CX = rowX(4, 100, 10), RX = rowX(5, 80, 8), focus = 3, link = 3;
+      return `<g ${an("fade", 0)}>${txt(mx(30), 44, "Context", "t-acc", 13, 'font-weight="800"')}</g>
+      ${ctx.map((s, i) => `<g ${an("rise", 0.1 + i * 0.1)}>${chip(CX(i), 82, 100, s, i === link ? "f-acc-soft s-acc" : "f-s1 s-line2", "t-ink", 13)}</g>`).join("")}
+      ${ctx.map((_, i) => `<path ${an("draw", 1.2 + i * 0.12, i === link ? "s-acc" : "s-line2")} pathLength="1" d="M${RX(focus)} 196 C ${RX(focus)} 150, ${CX(i)} 150, ${CX(i)} 104" stroke-width="${i === link ? 5 : 1.6}" fill="none" stroke-linecap="round"/>`).join("")}
+      ${rep.map((s, i) => `<g ${an("pop", 0.6 + i * 0.12)}>${chip(RX(i), 218, 80, s, i === focus ? "f-acc" : "f-s1 s-acc", i === focus ? "t-white" : "t-ink", 13)}</g>`).join("")}
+      <g ${an("fade", 0.5)}>${txt(mx(30), 262, ar() ? "الرد" : "reply", "t-ink3", 12.5, bold)}</g>
+      ${txt(240, 300, ar() ? "كل كلمة في الرد بتدوّر في الـ Context على اللي يخصها" : "each word of the reply searches the Context for what concerns it", "t-ink3", 12.5)}`;
+    },
+    c_gaps: () => {
+      const a = mx(130), b = mx(352);
+      const f = ar() ? ["الخطوط: ؟", "الورديات: ؟", "الطلبيات: ؟"] : ["lines: ?", "shifts: ?", "orders: ?"];
+      return `<g ${an("rise", 0.05)}>${box(a, 158, 200, 200, "f-s1 s-line2")}${box(a, 82, 176, 32, "f-acc", 0)}${txt(a, 87, ar() ? "خطة إنتاج للأسبوع الجاي" : "next week's production plan", "t-white", 12, bold)}
+        ${f.map((s, i) => `${txt(a + (ar() ? 34 : -34), 135 + i * 40, s, "t-ink2", 13, bold)}`).join("")}</g>
+      ${f.map((_, i) => `<g ${an("pop", 0.7 + i * 0.25)}>${box(a + (ar() ? -54 : 54), 130 + i * 40, 66, 26, "f-rose-soft s-rose")}${txt(a + (ar() ? -54 : 54), 135 + i * 40, ar() ? "تخمين" : "guess", "t-rose", 12, bold)}</g>`).join("")}
+      <path ${an("draw", 1.5, "s-ink2")} pathLength="1" d="M${mx(236)} 158 H ${mx(246)}" stroke-width="3" fill="none" marker-end="url(#aih-arrow)"/>
+      <g ${an("rise", 1.7)}>${box(b, 158, 200, 200, "f-s2 s-line2")}${txt(b, 84, ar() ? "الرد" : "the reply", "t-ink3", 12.5, bold)}
+        ${[150, 128, 160, 118].map((w, i) => `<rect x="${b - w / 2}" y="${104 + i * 24}" width="${w}" height="11" rx="5" class="f-s3"/>`).join("")}</g>
+      <g ${an("pop", 2.2)}>${box(b, 226, 150, 30, "f-rose")}${txt(b, 231, ar() ? "خطة لمصنع مش مصنعك" : "not your plant", "t-white", 11.5, bold)}</g>
+      ${txt(240, 296, ar() ? "كل معلومة ناقصة = فراغ بيتملي بتخمين" : "every missing fact = a gap filled by a guess", "t-ink2", 13, bold)}`;
+    },
+    c_anatomy: () => {
+      const L = ar() ? [["الهدف", "ليه؟"], ["الظروف", "فين وإزاي؟"], ["المهمة", "اعمل إيه؟"], ["الشكل", "تطلع إزاي؟"], ["الجمهور", "لمين؟"], ["القيود", "إيه الممنوع؟"]]
+        : [["goal", "why?"], ["circumstances", "where and how?"], ["task", "do what?"], ["shape", "look like?"], ["audience", "for whom?"], ["limits", "what's off-limits?"]];
+      const cx = mx(200), hx = mx(392);
+      return `${L.map(([s, h], i) => { const y = 270 - i * 40; return `<g ${an("rise", 0.15 + i * 0.18)}><rect x="${cx - 115}" y="${y - 16}" width="230" height="32" rx="10" class="layer l${Math.min(i, 4)}"/>${txt(cx, y + 5, s, i > 2 ? "t-white" : "t-ink", 14, bold)}</g>
+        <g ${an("fade", 0.35 + i * 0.18)}>${txt(hx, y + 5, h, "t-ink3", 12.5, 'font-weight="600"')}</g>`; }).join("")}
+      <path ${an("draw", 1.5, "s-acc")} pathLength="1" d="M${mx(72)} 286 V 54" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <g ${an("pop", 1.7)}>${box(mx(72), 36, 86, 30, "f-acc", 0)}${txt(mx(72), 41, "Prompt", "t-white", 13, 'font-weight="800"')}</g>
+      ${txt(cx, 306, ar() ? "كل مكوّن بيقفل باب تخمين" : "each part closes a door to guessing", "t-ink2", 13, bold)}`;
+    },
+    c_examples: () => {
+      const a = mx(126), b = mx(354);
+      const ex = ar() ? "ماكينة ٣ | ٤٥ دقيقة | سير مقطوع" : "Machine 3 | 45 min | broken belt";
+      const rows = ar() ? ["ماكينة ٥ | ٢٠ دقيقة | حساس", "ماكينة ١ | ٦٠ دقيقة | موتور", "ماكينة ٢ | ١٥ دقيقة | ضغط هوا"] : ["Machine 5 | 20 min | sensor", "Machine 1 | 60 min | motor", "Machine 2 | 15 min | air pressure"];
+      return `<g ${an("rise", 0.05)}>${box(a, 150, 212, 150, "f-s1 s-line2")}${txt(a, 98, ar() ? "مثال واحد منك" : "one example from you", "t-ink3", 12.5, bold)}
+        ${box(a, 150, 196, 40, "f-acc-soft s-acc")}${txt(a, 155, ex, "t-ink", 11.5, bold)}</g>
+      <path ${an("draw", 0.7, "s-ink2")} pathLength="1" d="M${mx(236)} 150 H ${mx(244)}" stroke-width="3" fill="none" marker-end="url(#aih-arrow)"/>
+      <g ${an("rise", 0.9)}>${box(b, 150, 212, 190, "f-s2 s-line2")}${txt(b, 76, ar() ? "الموديل بيكمّل" : "the model continues", "t-ink3", 12.5, bold)}</g>
+      ${rows.map((s, i) => `<g ${an("pop", 1.3 + i * 0.35)}>${box(b, 110 + i * 48, 196, 38, "f-s1 s-acc")}${txt(b, 115 + i * 48, s, "t-ink", 11.5, bold)}</g>`).join("")}
+      ${txt(240, 290, ar() ? "نفس النمط بالظبط، من غير شرح" : "exactly the same pattern, no explanation needed", "t-ink2", 13, bold)}`;
+    },
+    c_window: () => {
+      const n = 24, tx = (i) => (ar() ? 446 - i * 17 - 14 : 34 + i * 17), first = 5;
+      const x0 = Math.min(tx(first), tx(n - 1)), x1 = Math.max(tx(first), tx(n - 1)) + 14;
+      const xs = tx(first) + 7, xe = tx(n - 1) + 7, xm = (xs + xe) / 2;
+      return `${Array.from({ length: n }, (_, i) => `<rect ${an("pop", 0.05 + i * 0.03, i < first ? "f-s3" : "f-acc-soft s-acc")} x="${tx(i)}" y="196" width="14" height="22" rx="3" stroke-width="1.5"${i < first ? ' opacity=".45"' : ""}/>`).join("")}
+      <g ${an("rise", 0.9)}><rect x="${x0 - 6}" y="188" width="${x1 - x0 + 12}" height="38" rx="9" class="s-acc" fill="none" stroke-width="2.5"/>${txt((x0 + x1) / 2, 246, ar() ? "حد الـ Context (بالتوكنز)" : "the Context limit (in tokens)", "t-acc", 12.5, bold)}</g>
+      <g ${an("fade", 1.1)}>${txt((tx(0) + tx(first - 1)) / 2 + 7, 178, ar() ? "اتلخّصت" : "summarised", "t-ink3", 11.5, bold)}</g>
+      <path ${an("draw", 1.4, "s-acc")} pathLength="1" d="M${xs} 92 Q ${xm} 236 ${xe} 92" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <g ${an("fade", 1.9)}>${txt(xs, 80, ar() ? "أول الكلام" : "start", "t-ink2", 12, bold)}${txt(xe, 80, ar() ? "آخره" : "end", "t-ink2", 12, bold)}${txt(xm, 176, ar() ? "اهتمام أقل في النص" : "less attention in the middle", "t-rose", 12.5, bold)}</g>
+      ${txt(240, 40, ar() ? "قوة الانتباه على أجزاء الـ Context" : "attention across the Context", "t-ink3", 12.5)}
+      ${txt(240, 290, ar() ? "السعة محدودة، والانتباه مش متساوي" : "capacity is limited, and attention is uneven", "t-ink2", 13, bold)}`;
+    },
+    c_noise: () => {
+      const panel = (cx, clean, d) => `
+        <g ${an("rise", d)}>${box(cx, 160, 210, 250, clean ? "f-mint-soft s-mint" : "f-s1 s-line2")}${txt(cx, 54, clean ? (ar() ? "Context نضيف" : "clean Context") : (ar() ? "Context مشوّش" : "noisy Context"), clean ? "t-mint" : "t-ink3", 13, 'font-weight="800"')}</g>
+        ${(clean ? [[cx, false]] : [[cx + (ar() ? 46 : -46), true], [cx + (ar() ? -46 : 46), false]]).map(([x, old], i) => `<g ${an("pop", d + 0.3 + i * 0.2)}>${box(x, 96, 82, 38, old ? "f-rose-soft s-rose" : "f-s1 s-mint")}${txt(x, 101, ar() ? (old ? "سياسة ٢٠٢٣" : "سياسة ٢٠٢٦") : (old ? "2023 policy" : "2026 policy"), old ? "t-rose" : "t-mint", 12, bold)}</g>
+          <path ${an("draw", d + 0.6, old ? "s-rose" : "s-mint")} pathLength="1" d="M${x} 116 L${cx} 152" stroke-width="2.5" fill="none" ${old ? 'stroke-dasharray="1"' : ""}/>`).join("")}
+        <g ${an("pop", d + 0.8)}><circle cx="${cx}" cy="172" r="22" class="f-acc"/>${txt(cx, 177, ar() ? "موديل" : "model", "t-white", 11.5, bold)}</g>
+        <g ${an("pop", d + 1.1)}>${box(cx, 238, 160, 36, clean ? "f-mint" : "f-rose")}${txt(cx, 243, clean ? (ar() ? "٢١ يوم، حسب سياسة ٢٠٢٦" : "21 days, per 2026 policy") : (ar() ? "١٥ يوم؟ ولا ٢١؟" : "15 days? or 21?"), "t-white", 12, bold)}</g>`;
+      return `${panel(mx(124), false, 0.05)}${panel(mx(356), true, 0.9)}`;
+    },
+    c_steer: () => {
+      const steps = ar() ? ["طلبك", "اسأل لو ناقصك حاجة", "فكّر خطوة بخطوة", "افصل المؤكد عن التخمين", "اذكر المصدر", "إجابة تقدر تراجعها"]
+        : ["your request", "ask if missing", "step by step", "fact vs guess", "cite sources", "a checkable answer"];
+      const pos = [[0, 0], [1, 0], [2, 0], [2, 1], [1, 1], [0, 1]];
+      const at = ([c, r]) => [ar() ? 390 - c * 150 : 90 + c * 150, 100 + r * 118];
+      return `${pos.slice(1).map((p, i) => { const [x1, y1] = at(pos[i]), [x2, y2] = at(p); const h = y1 === y2; return `<path ${an("draw", 0.3 + i * 0.3, "s-acc")} pathLength="1" d="M${x1 + (h ? (x2 > x1 ? 64 : -64) : 0)} ${y1 + (h ? 0 : 28)} L${x2 + (h ? (x2 > x1 ? -64 : 64) : 0)} ${y2 - (h ? 0 : 28)}" stroke-width="2.5" fill="none" marker-end="url(#aih-arrow)"/>`; }).join("")}
+      ${pos.map((p, i) => { const [x, y] = at(p); return `<g ${an("pop", 0.15 + i * 0.3)}>${box(x, y, 128, 52, i === 5 ? "f-mint" : i === 0 ? "f-s2 s-line2" : "f-s1 s-acc")}${txt(x, y + 5, steps[i], i === 5 ? "t-white" : "t-ink", 11.5, bold)}</g>`; }).join("")}
+      ${txt(240, 300, ar() ? "كل خطوة بيكتبها بتنضم للـ Context اللي بيبني عليه" : "every step it writes joins the Context it builds on", "t-ink3", 12.5)}`;
+    },
+    c_recap: () => {
+      const s = ar() ? [["كلماتك الدقيقة", "Prompt"], ["المنطقة الصح", "خريطة المعاني"], ["ربط بمعلوماتك", "الانتباه + Context"], ["رد يناسب شغلك", "النتيجة"]]
+        : [["precise words", "Prompt"], ["right region", "meaning map"], ["links to facts", "attention + Context"], ["fits your work", "the result"]];
+      const X = rowX(4, 104, 14);
+      return `${s.slice(1).map((_, i) => `<path ${an("draw", 0.4 + i * 0.35, "s-acc")} pathLength="1" d="M${X(i) + (ar() ? -54 : 54)} 120 L${X(i + 1) + (ar() ? 56 : -56)} 120" stroke-width="2.5" fill="none" marker-end="url(#aih-arrow)"/>`).join("")}
+      ${s.map(([a, b], i) => `<g ${an("pop", 0.15 + i * 0.35)}>${box(X(i), 120, 104, 58, i === 3 ? "f-acc" : "f-s1 s-acc")}${txt(X(i), 125, a, i === 3 ? "t-white" : "t-ink", 12, bold)}</g>
+        <g ${an("fade", 0.4 + i * 0.35)}>${txt(X(i), 172, b, "t-ink3", 12, 'font-weight="600"')}</g>`).join("")}
+      <g ${an("rise", 1.8)}>${person(240, 262, 0.85, "f-ink2")}</g>
+      <g ${an("pop", 2.1)}>${box(240, 292, 300, 32, "f-mint-soft s-mint")}${txt(240, 297, ar() ? "إنت اللي بتوجّه: Prompt دقيق + Context نضيف" : "you steer: a precise Prompt + a clean Context", "t-mint", 12.5, bold)}</g>`;
     }
   });
 

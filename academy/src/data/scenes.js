@@ -17,19 +17,19 @@
       stages: [
         S("سؤالك", "Your question", "بتكتب سؤال بلغتك. النموذج مش بيشوف «كلمات» زي ما إحنا بنشوفها.", "You type a question in your language. The model doesn’t see “words” the way we do.", 3.5),
         S("تقطيع إلى توكنات", "Split into tokens", "النص بيتقسّم لقطع صغيرة اسمها **توكنات** — والعربي بياخد توكنات أكتر من الإنجليزي لنفس المعنى.", "The text is cut into small pieces called **tokens** — Arabic uses more tokens than English for the same meaning.", 4),
-        S("النموذج ونافذة السياق", "The model and its context window", "جوّا النموذج مليارات من الأرقام (**معاملات**) اتعلّمت أنماط اللغة من بيانات ضخمة. **نافذة السياق** هي اللي يقدر يقراها ويفتكرها في الطلب الواحد.", "The model is billions of internal numbers (**parameters**) that learned language patterns from huge data. The **context window** is what it can read and remember in one request.", 5, [250, 10, 520, 330]),
+        S("النموذج ونافذة الـ Context", "The model and its context window", "جوّا النموذج مليارات من الأرقام (**معاملات**) اتعلّمت أنماط اللغة من بيانات ضخمة. **نافذة الـ Context** هي اللي يقدر يقراها ويفتكرها في الطلب الواحد.", "The model is billions of internal numbers (**parameters**) that learned language patterns from huge data. The **context window** is what it can read and remember in one request.", 5, [250, 10, 520, 330]),
         S("توقّع الكلمة التالية", "Predict the next piece", "النموذج بيتوقع أنسب قطعة جاية، ويضيفها وبيتوقع اللي بعدها… وكده لحد ما الإجابة تكمل.", "The model predicts the most fitting next piece, adds it, predicts the next… until the answer is complete.", 5),
-        S("الإجابة", "The answer", "الإجابة بتتبني قطعة ورا قطعة من الأنماط اللي اتعلّمها ومن السياق اللي اديتهوله.", "The answer is built piece by piece from learned patterns and the context you gave.", 3.5),
-        S("لماذا يخطئ أحيانًا؟", "Why is it sometimes wrong?", "لو السياق ناقص، بيكمّل بالأرجح مش بالأصح — فيديك معلومة غلط بثقة. عشان كده السياق الكويس والمراجعة البشرية أساس.", "When context is missing it completes with the most likely, not the most correct — confidently wrong. Hence good context and human review.", 5),
+        S("الإجابة", "The answer", "الإجابة بتتبني قطعة ورا قطعة من الأنماط اللي اتعلّمها ومن الـ Context اللي اديتهوله.", "The answer is built piece by piece from learned patterns and the context you gave.", 3.5),
+        S("لماذا يخطئ أحيانًا؟", "Why is it sometimes wrong?", "لو الـ Context ناقص، بيكمّل بالأرجح مش بالأصح — فيديك معلومة غلط بثقة. عشان كده الـ Context الكويس والمراجعة البشرية أساس.", "When context is missing it completes with the most likely, not the most correct — confidently wrong. Hence good context and human review.", 5),
       ],
       els: [
         B("q", 30, 190, 140, 70, "سؤالك", "Your question", { tone: "ink", ico: "msg", ...inf("نص باللغة اللي بتتكلمها عادي.", "Text in your natural language.") }),
         B("tok", 210, 190, 130, 70, "توكنات", "Tokens", { in: 1, tone: "violet", ...s2("قطع صغيرة من النص", "small text pieces"), ...inf("الوحدة المحاسبية للنموذج؛ التسعير بالمليون توكن (صفحة 34).", "The model’s billing unit; pricing is per million tokens (page 34).") }),
-        B("ctx", 380, 40, 200, 64, "نافذة السياق", "Context window", { in: 2, tone: "amber", ...s2("اللي بيشوفه في الطلب الواحد", "what it sees per request"), hi: [5], ...inf("مليون توكن ≈ كتاب ضخم (صفحة 34).", "One million tokens ≈ a huge book (page 34).") }),
+        B("ctx", 380, 40, 200, 64, "نافذة الـ Context", "Context window", { in: 2, tone: "amber", ...s2("اللي بيشوفه في الطلب الواحد", "what it sees per request"), hi: [5], ...inf("مليون توكن ≈ كتاب ضخم (صفحة 34).", "One million tokens ≈ a huge book (page 34).") }),
         B("model", 380, 150, 200, 130, "النموذج", "The model", { in: 2, tone: "blue", ico: "cpu", ...s2("معاملات اتعلّمت أنماط", "parameters that learned patterns"), hi: [2], ...inf("المعاملات (الأوزان) مخزن معرفة النموذج، وتتقاس بالمليار (B).", "Parameters (weights) store the model’s knowledge, measured in billions (B).") }),
         B("next", 620, 120, 150, 70, "القطعة التالية", "Next piece", { in: 3, tone: "violet", ...s2("الأنسب", "the most fitting"), hi: [3] }),
         B("ans", 620, 290, 150, 70, "الإجابة", "The answer", { in: 4, tone: "mint", ico: "check" }),
-        B("warn", 210, 330, 220, 70, "تخمين واثق", "Confident guess", { in: 5, tone: "rose", ...s2("لما السياق ينقص", "when context is missing"), ...inf("ممكن يديك معلومة غلط بثقة (صفحة 41).", "It can give wrong information confidently (page 41).") }),
+        B("warn", 210, 330, 220, 70, "تخمين واثق", "Confident guess", { in: 5, tone: "rose", ...s2("لما الـ Context ينقص", "when context is missing"), ...inf("ممكن يديك معلومة غلط بثقة (صفحة 41).", "It can give wrong information confidently (page 41).") }),
         R("q", "tok", 1, { flow: true, until: 3 }),
         R("tok", "model", 2, { flow: true }),
         R("ctx", "model", 2),
@@ -62,7 +62,7 @@
         S("يختصر", "Summarise", "بيحوّل المستندات الطويلة لملخص تنفيذي وبيطلع القرارات والأرقام.", "It turns long documents into an executive summary and pulls out decisions and numbers.", 3),
         S("يقارن", "Compare", "بيقارن الخطط والمستندات وبيكتشف التناقضات والنواقص.", "It compares plans and documents and spots contradictions and gaps.", 3),
         S("يقترح", "Suggest", "بيبني سيناريوهات وبيقيّم البدائل والمخاطر والفرص — والقرار ليك.", "It builds scenarios and weighs options, risks and opportunities — the decision stays yours.", 3.5),
-        S("السر: جودة البيانات والسياق", "The secret: data and context quality", "كل ما البيانات والسياق يبقوا أحسن، قيمة النتيجة بتزيد.", "The better the data and context, the more valuable the result.", 4.5),
+        S("السر: جودة البيانات والـ Context", "The secret: data and context quality", "كل ما البيانات والـ Context يبقوا أحسن، قيمة النتيجة بتزيد.", "The better the data and context, the more valuable the result.", 4.5),
       ],
       els: [
         ...[["يجمع", "Collect", "db"], ["يحلل", "Analyse", "chart"], ["يختصر", "Summarise", "note"], ["يقارن", "Compare", "compare"], ["يقترح", "Suggest", "spark"]].map((n, i) => B("d" + i, 20 + i * 155, 150, 130, 80, n[0], n[1], { in: i, tone: i === 4 ? "mint" : "blue", ico: n[2], hi: [i] })),
@@ -75,9 +75,9 @@
     { id: "chatagent", title: u("من شات لوكيل ذكي", "From chat to smart agent"),
       stages: [
         S("الشات التقليدي", "Traditional chat", "بتسأل سؤال وبتاخد إجابة، والتفاعل بيقف عند كده.", "You ask, you get an answer, and that’s it.", 3.5),
-        S("المساعد الشخصي", "Personal assistant", "بيفهمك، وبيفتكر السياق، وبيساعدك باستمرار.", "It understands you, remembers context and keeps helping.", 4),
+        S("المساعد الشخصي", "Personal assistant", "بيفهمك، وبيفتكر الـ Context، وبيساعدك باستمرار.", "It understands you, remembers context and keeps helping.", 4),
         S("الوكيل الذكي", "Smart agent", "بيخطط، وبيستخدم أدوات، وبينفّذ مهام، وبيتابع النتائج.", "It plans, uses tools, carries out tasks and follows up on results.", 5),
-        S("المشترك بينها", "What they share", "كل حاجة بتبدأ من **سياق واضح وبرومبت ذكي** — البرومبت جزء من السياق.", "Everything starts with **clear context and a smart prompt** — the prompt is part of the context.", 4.5),
+        S("المشترك بينها", "What they share", "كل حاجة بتبدأ من **Context واضح و Prompt ذكي** — الـ Prompt جزء من الـ Context.", "Everything starts with **clear context and a smart prompt** — the prompt is part of the context.", 4.5),
       ],
       els: [
         X("h1", 20, 20, 220, 40, "الشات التقليدي", "Traditional chat", { size: 16 }),
@@ -87,7 +87,7 @@
         X("h2", 285, 20, 220, 40, "مساعد شخصي", "Personal assistant", { in: 1, size: 16 }),
         B("you", 300, 90, 180, 60, "إنت", "You", { in: 1, tone: "ink", ico: "users" }),
         B("as", 300, 250, 180, 60, "المساعد", "The assistant", { in: 1, tone: "blue" }),
-        B("mem", 300, 360, 180, 56, "سياق محفوظ", "Saved context", { in: 1, tone: "amber", hi: [3] }),
+        B("mem", 300, 360, 180, 56, "Context محفوظ", "Saved context", { in: 1, tone: "amber", hi: [3] }),
         R("you", "as", 1, { bend: 30, flow: true }), R("as", "you", 1, { bend: 30 }), R("mem", "as", 1),
         X("h3", 560, 20, 220, 40, "وكيل ذكي", "Smart agent", { in: 2, size: 16 }),
         B("goal", 580, 75, 180, 52, "هدف", "Goal", { in: 2, tone: "solid", ico: "target", hi: [3] }),
@@ -100,8 +100,8 @@
 
     { id: "limits", title: u("استخدمه بذكاء… وماتعتمدش عليه لوحده", "Use it wisely… don’t rely on it alone"),
       stages: [
-        S("قوي لكنه ليس معصومًا", "Powerful, not infallible", "ممكن يديك معلومة غلط بثقة، وممكن يفهم السؤال غلط لو السياق ناقص.", "It can be confidently wrong and can misread a question when context is missing.", 4),
-        S("حدّد الهدف وأعطه السياق", "Define the goal, give context", "جودة النتيجة بتعتمد على جودة البيانات والتعليمات، ومش هيعرف بيانات شركتك إلا لو وفرتها له.", "Result quality depends on data and instructions; it knows your company’s data only if you provide it.", 4),
+        S("قوي لكنه ليس معصومًا", "Powerful, not infallible", "ممكن يديك معلومة غلط بثقة، وممكن يفهم السؤال غلط لو الـ Context ناقص.", "It can be confidently wrong and can misread a question when context is missing.", 4),
+        S("حدّد الهدف وأعطه الـ Context", "Define the goal, give context", "جودة النتيجة بتعتمد على جودة البيانات والتعليمات، ومش هيعرف بيانات شركتك إلا لو وفرتها له.", "Result quality depends on data and instructions; it knows your company’s data only if you provide it.", 4),
         S("راجع وتأكد من المصادر", "Review and verify sources", "بعض المعلومات ممكن تكون قديمة أو ناقصة؛ القرارات الحساسة محتاجة مراجعة بشرية.", "Some information may be outdated or incomplete; sensitive decisions need human review.", 4),
         S("أنت تتخذ القرار", "You make the decision", "هو بيدعم القرار، بس مش هو اللي بيتحمّل مسؤوليته. وماتدخلش بيانات حساسة من غير ضوابط واضحة.", "It supports the decision but doesn’t own it. And never enter sensitive data without clear controls.", 4),
         S("أفضل نتيجة", "The best result", "**إنسان يفكّر + بيانات كويسة + ذكاء اصطناعي.**", "**A thinking human + good data + AI.**", 4.5),
@@ -110,7 +110,7 @@
         B("ai", 320, 30, 160, 64, "ذكاء اصطناعي", "AI", { tone: "blue", ico: "cpu" }),
         B("err", 540, 30, 200, 64, "ممكن يغلّط بثقة", "Can be confidently wrong", { tone: "rose", out: 4 }),
         R("ai", "err", 0, { out: 4 }),
-        ...[["حدّد الهدف", "Define the goal", "target"], ["اديله السياق", "Give context", "note"], ["راجع النتيجة", "Review the result", "eye"], ["اتأكد من المصادر", "Verify sources", "book"], ["خد القرار", "Decide", "check"]].map((n, i) => B("w" + i, 20 + i * 156, 170, 136, 70, n[0], n[1], { in: [1, 1, 2, 2, 3][i], tone: i === 4 ? "solid" : "mint", ico: n[2], hi: [[1, 1, 2, 2, 3][i]], out: 4 })),
+        ...[["حدّد الهدف", "Define the goal", "target"], ["اديله الـ Context", "Give context", "note"], ["راجع النتيجة", "Review the result", "eye"], ["اتأكد من المصادر", "Verify sources", "book"], ["خد القرار", "Decide", "check"]].map((n, i) => B("w" + i, 20 + i * 156, 170, 136, 70, n[0], n[1], { in: [1, 1, 2, 2, 3][i], tone: i === 4 ? "solid" : "mint", ico: n[2], hi: [[1, 1, 2, 2, 3][i]], out: 4 })),
         ...[0, 1, 2, 3].map((i) => R("w" + i, "w" + (i + 1), [1, 2, 2, 3][i], { flow: true, out: 4 })),
         B("hum", 60, 300, 170, 70, "إنسان يفكّر", "A thinking human", { in: 4, tone: "amber", ico: "users" }),
         X("p1", 240, 310, 40, 50, "+", "+", { in: 4, size: 28 }),
@@ -121,11 +121,11 @@
       ] },
 
     /* ---------- U1 ---------- */
-    { id: "equation", title: u("المعادلة اللي بتحكم كل برومبت ناجح", "The governing equation of every good prompt"),
+    { id: "equation", title: u("المعادلة اللي بتحكم كل Prompt ناجح", "The governing equation of every good prompt"),
       stages: [
         S("طلب عادي", "An ordinary request", "«ساعدني في التقرير» — الأداة مش عارفة إنت عاوز إيه وليه وعشان مين، فبتديك نتيجة عامة.", "“Help me with the report” — the tool doesn’t know what, why or for whom, so the result is generic.", 4),
         S("1 · هدف واضح", "1 · A clear goal", "مش «ساعدني في التقرير»، لكن «عايز أعرف ليه المبيعات نزلت».", "Not “help me with the report” but “I want to know why sales fell”.", 3.5),
-        S("2 · سياق كافٍ", "2 · Enough context", "الخلفية والوضع الحالي: الأداة مش عارفة عن شغلك حاجة إلا اللي إنت بتقولهولها.", "Background and situation: the tool knows nothing about your work except what you tell it.", 3.5),
+        S("2 · Context كافٍ", "2 · Enough context", "الخلفية والوضع الحالي: الأداة مش عارفة عن شغلك حاجة إلا اللي إنت بتقولهولها.", "Background and situation: the tool knows nothing about your work except what you tell it.", 3.5),
         S("3 · طلب محدد", "3 · A specific request", "المهمة نفسها بالظبط: حلّل، قارن، اقترح… بمعايير واضحة.", "The task itself, precisely: analyse, compare, suggest… with clear criteria.", 3.5),
         S("4 · شكل النتيجة", "4 · Output format", "نقاط؟ جدول؟ خطة؟ رسالة؟ لما تحدّد الشكل بتوفر جولة تعديل كاملة.", "Bullets, table, plan or message? Setting the format saves a whole revision round.", 3.5),
         S("= نتيجة قابلة للتنفيذ", "= An actionable result", "الأربع عناصر مع بعض بيدّوك خطة أو قرار أو أداة — مش مجرد إجابة.", "All four together give a plan, a decision or a tool — not just an answer.", 4.5),
@@ -133,7 +133,7 @@
       els: [
         B("weak", 250, 40, 300, 64, "«ساعدني في التقرير»", "“Help me with the report”", { tone: "ink", ico: "msg", out: 1 }),
         B("g", 330, -80, 150, 80, "هدف واضح", "Clear goal", { in: 1, tone: "blue", ico: "target", mv: { 1: [20, 150] }, hi: [1], ...inf("إنت عاوز إيه بالظبط؟", "What exactly do you want?") }),
-        B("c", 330, -80, 150, 80, "سياق كافٍ", "Enough context", { in: 2, tone: "blue", ico: "note", mv: { 2: [215, 150] }, hi: [2], ...inf("الخلفية والوضع الحالي.", "Background and current situation.") }),
+        B("c", 330, -80, 150, 80, "Context كافٍ", "Enough context", { in: 2, tone: "blue", ico: "note", mv: { 2: [215, 150] }, hi: [2], ...inf("الخلفية والوضع الحالي.", "Background and current situation.") }),
         B("r", 330, -80, 150, 80, "طلب محدد", "Specific request", { in: 3, tone: "blue", ico: "pen", mv: { 3: [410, 150] }, hi: [3], ...inf("المهمة بالظبط ومعاييرها.", "The exact task and its criteria.") }),
         B("f", 330, -80, 150, 80, "شكل النتيجة", "Output format", { in: 4, tone: "blue", ico: "layers", mv: { 4: [605, 150] }, hi: [4], ...inf("نقاط، جدول، خطة، رسالة…", "Bullets, table, plan, message…") }),
         X("p1", 170, 165, 45, 50, "+", "+", { in: 2, size: 28 }), X("p2", 365, 165, 45, 50, "+", "+", { in: 3, size: 28 }), X("p3", 560, 165, 45, 50, "+", "+", { in: 4, size: 28 }),
@@ -170,7 +170,7 @@
         S("1 · اطلب", "1 · Ask", "ابدأ بطلب مبني على الخمس عناصر.", "Start with a request built on the five elements.", 3),
         S("2 · اقرأ بعين ناقدة", "2 · Read critically", "ما تقبلش أول نتيجة على طول. اقرأها بعين المراجع.", "Don’t take the first result and run. Read like a reviewer.", 3),
         S("3 · حدّد الخلل بدقة", "3 · Pinpoint the flaw", "طويلة ومشتتة؟ صح بس مش مناسبة ليك؟ فيها معلومات مش موثوقة؟", "Long and scattered? Right but unfit? Looks made up?", 3.5),
-        S("4 · صحّح في المحادثة نفسها", "4 · Fix in the same chat", "المبتدئ بيفتح محادثة جديدة؛ المحترف بيصحّح هنا عشان السياق موجود.", "Beginners start a new chat; skilled users correct course here because the context is here.", 4),
+        S("4 · صحّح في المحادثة نفسها", "4 · Fix in the same chat", "المبتدئ بيفتح محادثة جديدة؛ المحترف بيصحّح هنا عشان الـ Context موجود.", "Beginners start a new chat; skilled users correct course here because the context is here.", 4),
         S("5 · اعتمد أو كرّر", "5 · Adopt or repeat", "لو النتيجة مناسبة، اعتمدها؛ وإلا كرّر الدورة.", "If it’s good, adopt it; otherwise repeat the loop.", 3.5),
       ],
       els: [
@@ -183,7 +183,7 @@
 
     { id: "daily", title: u("دورة الشغل اليومي", "The daily work cycle"),
       stages: [
-        S("افهم", "Understand", "حدّد الهدف والسياق قبل أي حاجة.", "Set the goal and context first.", 3),
+        S("افهم", "Understand", "حدّد الهدف والـ Context قبل أي حاجة.", "Set the goal and context first.", 3),
         S("نظّم", "Organise", "رتّب المعلومات: المهام والوقت والطاقة الذهنية.", "Arrange the information: tasks, time and mental energy.", 3),
         S("قرّر", "Decide", "قارن واختار — وإيه اللي ممكن يتأجل بأمان.", "Compare and choose — and what can safely wait.", 3),
         S("نفّذ", "Execute", "حوّل الاختيار لخطوات بمسؤول وموعد.", "Turn the choice into steps with an owner and a date.", 3),
@@ -196,10 +196,10 @@
         X("t", 150, 330, 500, 60, "اطلب نتيجة قابلة للتنفيذ، مش مجرد إجابة", "Ask for an actionable result, not just an answer", { in: 4, size: 18, color: "--accent" }),
       ] },
 
-    { id: "strategic", title: u("ليه البرومبت الاستراتيجي بينفع؟", "Why the strategic prompt works"),
+    { id: "strategic", title: u("ليه الـ Prompt الاستراتيجي بينفع؟", "Why the strategic prompt works"),
       stages: [
         S("القفز إلى الحل", "Jumping to the solution", "أغلب القرارات السيئة بتيجي من إنك تبدأ بالحل قبل ما تفهم المشكلة.", "Most bad decisions come from starting with the solution before understanding the problem.", 4),
-        S("الفهم ثم التحليل ثم التشخيص", "Understand, analyse, diagnose", "البرومبت بيفرض ترتيب ماتقدرش تقفز عليه.", "The prompt enforces an order that can’t be skipped.", 4),
+        S("الفهم ثم التحليل ثم التشخيص", "Understand, analyse, diagnose", "الـ Prompt بيفرض ترتيب ماتقدرش تقفز عليه.", "The prompt enforces an order that can’t be skipped.", 4),
         S("المخاطر والبدائل", "Risks and options", "اكشف المخاطر والفرص، وبعدين اعرض البدائل.", "Reveal risks and opportunities, then lay out options.", 3.5),
         S("القرار والخطوات", "Decision and steps", "انصح بأحسن قرار، توقّع النتائج، وبعدين حوّله لخطوات تنفيذ.", "Recommend the best decision, forecast outcomes, then turn it into steps.", 4),
         S("افصل الحقائق عن الافتراضات", "Separate facts from assumptions", "واذكر المعلومات الناقصة قبل ما تبدأ.", "And state missing information before starting.", 4),
@@ -295,9 +295,9 @@
     { id: "plan30", title: u("خطة التلاتين يوم", "The 30-day plan"),
       stages: [
         S("الأسبوع 1 — الصياغة", "Week 1 — wording", "اكتب من جديد كل طلب مهم بالخمس عناصر وابدأه بـ«اسألني عن أي معلومة ناقصة».", "Rewrite every important request with the five elements and start it with “ask me about anything missing”.", 3.5),
-        S("الأسبوع 2 — الإنتاجية", "Week 2 — productivity", "طبّق برومبتات تنظيم اليوم والاجتماعات كل يوم. الهدف: توفّر ساعة في الأسبوع على الأقل.", "Use the day and meeting prompts daily. Goal: save at least an hour a week.", 3.5),
-        S("الأسبوع 3 — القرار والمعرفة", "Week 3 — decisions & knowledge", "طبّق البرومبت الاستراتيجي على قرار حقيقي، واعمل دفتر واحد لمشروع واحد.", "Apply the strategic prompt to a real decision and create one notebook for one project.", 3.5),
-        S("الأسبوع 4 — الأتمتة", "Week 4 — automation", "سجّل ماكرو لأصغر مهمة بتكررها، وبعدين البرومبت الذهبي للكود.", "Record a macro for your smallest recurring task, then use the golden code prompt.", 3.5),
+        S("الأسبوع 2 — الإنتاجية", "Week 2 — productivity", "طبّق Prompts تنظيم اليوم والاجتماعات كل يوم. الهدف: توفّر ساعة في الأسبوع على الأقل.", "Use the day and meeting prompts daily. Goal: save at least an hour a week.", 3.5),
+        S("الأسبوع 3 — القرار والمعرفة", "Week 3 — decisions & knowledge", "طبّق الـ Prompt الاستراتيجي على قرار حقيقي، واعمل دفتر واحد لمشروع واحد.", "Apply the strategic prompt to a real decision and create one notebook for one project.", 3.5),
+        S("الأسبوع 4 — الأتمتة", "Week 4 — automation", "سجّل ماكرو لأصغر مهمة بتكررها، وبعدين الـ Prompt الذهبي للكود.", "Record a macro for your smallest recurring task, then use the golden code prompt.", 3.5),
         S("قاعدة الخطة", "The plan’s rule", "ماتنتقلش لأسبوع جديد قبل ما اللي قبله يبقى عادة. أسبوع متقن أحسن من أربعة مقروءة على عجل.", "Don’t move on until the previous week is a habit. One mastered week beats four rushed ones.", 4.5),
       ],
       els: [

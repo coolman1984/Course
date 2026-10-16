@@ -13,7 +13,7 @@
       o("أرقام جوّا النموذج بيتعلّمها في التدريب وبيخزّن فيها معرفته", "Internal numbers learned in training that store its knowledge"),
       o("عدد الأسئلة اللي تقدر تسألها في اليوم", "How many questions you can ask per day", "ده حدّ استخدام في الخدمة، مش جزء من النموذج نفسه.", "That’s a service usage limit, not part of the model."),
       o("قاعدة بيانات فيها إجابات جاهزة", "A database of ready answers", "النموذج مش بيحفظ إجابات جاهزة؛ بيولّد الإجابة على حسب اللي اتعلّمه في أوزانه.", "The model doesn’t store ready answers; it generates them from what its weights learned."),
-      o("ملفات شركتك اللي رفعتها", "Your company files you uploaded", "ملفاتك جزء من السياق اللي بتدّيه له، مش من أوزانه.", "Your files are context you give it, not its weights.")
+      o("ملفات شركتك اللي رفعتها", "Your company files you uploaded", "ملفاتك جزء من الـ Context اللي بتدّيه له، مش من أوزانه.", "Your files are context you give it, not its weights.")
     ], 0, ["الكتاب (ص 34): المعاملات أرقام جوّا النموذج بيتعلّمها في التدريب وبتخزّن معرفته، وبيتقاسوا بالمليارات (B) أو التريليونات (T).", "The book (p. 34): parameters are internal numbers learned in training that store the model’s knowledge, measured in billions (B) or trillions (T)."]),
     Q("f1b", "f1", "spot", ["زميلك بيقول: «النموذج ردّ بثقة عالية جدًا، يبقى الإجابة صح». فين الغلط؟", "A colleague says: “The model answered very confidently, so it must be right.” Where’s the flaw?"], [
       o("الثقة في الكلام مش دليل على الصحة؛ النموذج ممكن يغلط وهو واثق", "Confident wording isn’t proof; the model can be wrong confidently"),
@@ -25,7 +25,7 @@
     Q("f2a", "f2", "mcq", ["إيه الجملة اللي الكورس عاوزك تقولها في الآخر؟", "Which sentence does the course want you to say at the end?"], [
       o("«عندي مشكلة، وعارف أحوّلها لنظام ذكي»", "“I have a problem, and I know how to turn it into a smart system”"),
       o("«عارف أستخدم الذكاء الاصطناعي»", "“I know how to use AI”", "دي نقطة البداية اللي الكتاب بيذكرها، مش الوصول.", "That’s the starting point the book mentions, not the destination."),
-      o("«حفظت كل البرومبتات»", "“I memorised all the prompts”", "الكتاب بيقول صراحة: ماتحفظش البرومبتات، افهم غرضها.", "The book says plainly: don’t memorise prompts, understand their purpose."),
+      o("«حفظت كل الـ Prompts»", "“I memorised all the prompts”", "الكتاب بيقول صراحة: ماتحفظش الـ Prompts، افهم غرضها.", "The book says plainly: don’t memorise prompts, understand their purpose."),
       o("«جرّبت كل الأدوات الجديدة»", "“I tried every new tool”", "جمع الأدوات من الأخطاء اللي بتعطّل التغيير (ص 16).", "Collecting tools is one of the mistakes that block change (p. 16).")
     ], 0, ["الهدف مش استخدام الأدوات بس، لكن تشوف الشغل كنظام متكامل (ص 3–4).", "The goal isn’t just using tools but seeing work as an integrated system (pp. 3–4)."]),
     O("f2b", "f2", ["رتّب أول خمس درجات في سلّم التدرّج زي ما في الكتاب:", "Order the first five steps of the learning ladder as in the book:"], [
@@ -33,11 +33,11 @@
     ], ["السلّم الكامل: مساعد شخصي ← عقل ثانٍ ← موظف رقمي ← أتمتة ← أداة ← تطبيق ← نظام ← فريق رقمي ذكي (ص 4).", "The full ladder: personal assistant → second brain → digital employee → automation → tool → application → system → smart digital team (p. 4)."]),
 
     Q("f3a", "f3", "mcq", ["حسب الكتاب، إيه اللي بيرفع قيمة النتيجة في رحلة «من البيانات للقرار»؟", "Per the book, what raises the value of the result in the “data to decision” journey?"], [
-      o("جودة البيانات والسياق", "The quality of data and context"),
+      o("جودة البيانات والـ Context", "The quality of data and context"),
       o("طول الإجابة", "The length of the answer", "الإجابة الطويلة مش أحسن؛ الكتاب ساعات بيطلب تقصّرها للنص.", "A long answer isn’t better; the book sometimes asks to cut it in half."),
       o("عدد الأدوات المستخدمة", "The number of tools used", "كترة الأدوات مش بتعوّض ضعف البيانات.", "More tools don’t make up for weak data."),
       o("سرعة النت", "Internet speed", "ملهاش علاقة بجودة التحليل.", "Unrelated to analysis quality.")
-    ], 0, ["«كل ما البيانات والسياق أحسن، النتيجة بتبقى أغلى قيمة» (ص 5).", "“The better the data and context, the more valuable the result” (p. 5)."]),
+    ], 0, ["«كل ما البيانات والـ Context أحسن، النتيجة بتبقى أغلى قيمة» (ص 5).", "“The better the data and context, the more valuable the result” (p. 5)."]),
     O("f3b", "f3", ["رتّب خطوات رحلة «من البيانات للقرار»:", "Order the “data to decision” journey:"], [
       ["جمع", "Collect"], ["تحليل", "Analyse"], ["تلخيص", "Summarise"], ["مقارنة", "Compare"], ["اقتراح", "Suggest"]
     ], ["جمع ← تحليل ← تلخيص ← مقارنة ← اقتراح (ص 5).", "Collect → analyse → summarise → compare → suggest (p. 5)."]),
@@ -45,37 +45,37 @@
     Q("f4a", "f4", "compare", ["إنت محتاج حد يخطط ويستخدم أدوات وينفّذ المهمة ويتابعها. هتختار إيه؟", "You need something that plans, uses tools, carries out the task and follows up. Which do you pick?"], [
       o("وكيل ذكي", "A smart agent"),
       o("دردشة عادية", "Traditional chat", "الدردشة: بتسأل وتاخد إجابة وبعدين بتقف.", "Chat: you ask, get an answer, and it stops."),
-      o("مساعد شخصي", "A personal assistant", "المساعد بيفهمك وبيذكّر السياق، بس التخطيط والتنفيذ بالأدوات صفة الوكيل.", "An assistant understands and remembers context, but planning and executing with tools is the agent’s trait."),
+      o("مساعد شخصي", "A personal assistant", "المساعد بيفهمك وبيذكّر الـ Context، بس التخطيط والتنفيذ بالأدوات صفة الوكيل.", "An assistant understands and remembers context, but planning and executing with tools is the agent’s trait."),
       o("محرك بحث", "A search engine", "محرك البحث بيرجع روابط بس.", "A search engine only returns links.")
     ], 0, ["الكتاب (ص 6): الدردشة بتجيب، المساعد بيفهم وبيذكّر، والوكيل بيخطط ويستخدم الأدوات وينفّذ ويتابع.", "The book (p. 6): chat answers, an assistant understands and remembers, an agent plans, uses tools, executes and follows up."]),
-    Q("f4b", "f4", "mcq", ["إيه العلاقة بين «البرومبت» و«السياق»؟", "How do the “prompt” and the “context” relate?"], [
-      o("البرومبت جزء من السياق: بيحدد المهمة وشكل الإجابة", "The prompt is part of the context: it sets the task and the answer’s shape"),
-      o("هما نفس الحاجة", "They’re the same thing", "السياق أوسع: كل المعلومات عن وضعك وهدفك ومشكلتك.", "Context is wider: all the information about your situation, goal and problem."),
-      o("السياق جزء من البرومبت", "The context is part of the prompt", "العكس هو الصح حسب الكتاب.", "It’s the other way round, per the book."),
-      o("مفيش علاقة بينهم", "They’re unrelated", "البرومبت بيشتغل جوّا السياق.", "The prompt works inside the context.")
-    ], 0, ["السياق كل اللي بتدّيه للذكاء الاصطناعي عشان يفهم وضعك؛ والبرومبت جزء منه بيحدد المهمة وإزاي عاوز الإجابة (ص 6).", "Context is everything you give AI to understand your situation; the prompt is part of it and sets the task and the answer’s form (p. 6)."]),
+    Q("f4b", "f4", "mcq", ["إيه العلاقة بين «الـ Prompt» و«الـ Context»؟", "How do the “prompt” and the “context” relate?"], [
+      o("الـ Prompt جزء من الـ Context: بيحدد المهمة وشكل الإجابة", "The prompt is part of the context: it sets the task and the answer’s shape"),
+      o("هما نفس الحاجة", "They’re the same thing", "الـ Context أوسع: كل المعلومات عن وضعك وهدفك ومشكلتك.", "Context is wider: all the information about your situation, goal and problem."),
+      o("الـ Context جزء من الـ Prompt", "The context is part of the prompt", "العكس هو الصح حسب الكتاب.", "It’s the other way round, per the book."),
+      o("مفيش علاقة بينهم", "They’re unrelated", "الـ Prompt بيشتغل جوّا الـ Context.", "The prompt works inside the context.")
+    ], 0, ["الـ Context كل اللي بتدّيه للذكاء الاصطناعي عشان يفهم وضعك؛ والـ Prompt جزء منه بيحدد المهمة وإزاي عاوز الإجابة (ص 6).", "Context is everything you give AI to understand your situation; the prompt is part of it and sets the task and the answer’s form (p. 6)."]),
 
     Q("f5a", "f5", "mcq", ["إيه المعادلة اللي الكتاب بيختم بيها لأحسن نتيجة؟", "Which equation does the book end with for the best result?"], [
       o("إنسان بيفكّر + بيانات كويسة + ذكاء اصطناعي", "A thinking human + good data + AI"),
-      o("أقوى نموذج + أطول برومبت", "The strongest model + the longest prompt", "الكتاب مش بيربط الجودة بالطول ولا بالحجم لوحده.", "The book ties quality neither to length nor to size alone."),
+      o("أقوى نموذج + أطول Prompt", "The strongest model + the longest prompt", "الكتاب مش بيربط الجودة بالطول ولا بالحجم لوحده.", "The book ties quality neither to length nor to size alone."),
       o("ذكاء اصطناعي بدل الإنسان", "AI instead of the human", "الكتاب: «بيشتغل أحسن معاك، مش بدالك».", "The book: “it works best with you, not instead of you.”"),
       o("بيانات كتير من غير مراجعة", "Lots of data without review", "القرارات الحساسة محتاجة مراجعة بشرية.", "Sensitive decisions need human review.")
     ], 0, ["أحسن نتيجة = إنسان بيفكّر + بيانات كويسة + ذكاء اصطناعي (ص 41).", "Best result = a thinking human + good data + AI (p. 41)."]),
     O("f5b", "f5", ["رتّب خطوات الاستخدام الواعي:", "Order the steps of wise use:"], [
-      ["حدّد الهدف", "Define the goal"], ["ادّي السياق", "Give context"], ["راجع النتيجة", "Review the result"], ["اتأكد من المصادر", "Verify sources"], ["خُد القرار", "Decide"]
-    ], ["حدّد الهدف ← ادّي السياق ← راجع النتيجة ← اتأكد من المصادر ← خُد القرار (ص 41). القرار دايمًا عندك.", "Define the goal → give context → review → verify sources → decide (p. 41). The decision is always yours."]),
+      ["حدّد الهدف", "Define the goal"], ["ادّي الـ Context", "Give context"], ["راجع النتيجة", "Review the result"], ["اتأكد من المصادر", "Verify sources"], ["خُد القرار", "Decide"]
+    ], ["حدّد الهدف ← ادّي الـ Context ← راجع النتيجة ← اتأكد من المصادر ← خُد القرار (ص 41). القرار دايمًا عندك.", "Define the goal → give context → review → verify sources → decide (p. 41). The decision is always yours."]),
 
     /* ---------- Unit 1: personal assistant & second brain ---------- */
-    Q("p1a", "p1", "mcq", ["إيه المعادلة الحاكمة لأي برومبت كويس؟", "What is the governing equation of any good prompt?"], [
-      o("هدف واضح + سياق كافي + طلب محدد + شكل مخرج = نتيجة تنفع تنفّذها", "Clear goal + enough context + specific request + output format = an actionable result"),
+    Q("p1a", "p1", "mcq", ["إيه المعادلة الحاكمة لأي Prompt كويس؟", "What is the governing equation of any good prompt?"], [
+      o("هدف واضح + Context كافي + طلب محدد + شكل مخرج = نتيجة تنفع تنفّذها", "Clear goal + enough context + specific request + output format = an actionable result"),
       o("سؤال قصير + نموذج قوي = إجابة صح", "Short question + strong model = right answer", "ده «الاستخدام الأضعف» اللي الكتاب بيحذّر منه.", "That’s the “weakest use” the book warns about."),
       o("أمثلة كتير + إنجليزي = نتيجة أحسن", "Many examples + English = better result", "الأمثلة عنصر مفيد، بس مش المعادلة كلها، واللغة مش شرط.", "Examples help but aren’t the whole equation, and language isn’t a requirement."),
-      o("كلمات مفتاحية + تكرار = دقة", "Keywords + repetition = precision", "ده أسلوب محركات البحث مش أسلوب البرومبت.", "That’s search-engine style, not prompting.")
+      o("كلمات مفتاحية + تكرار = دقة", "Keywords + repetition = precision", "ده أسلوب محركات البحث مش أسلوب الـ Prompt.", "That’s search-engine style, not prompting.")
     ], 0, ["المعادلة في ص 7 بتحوّل السؤال العابر لنتيجة تنفع تنفّذها: خطة أو قرار أو أداة.", "The equation on p. 7 turns a passing question into an actionable result: a plan, a decision or a tool."]),
-    Q("p1b", "p1", "spot", ["برومبت: «ساعدني في التقرير». إيه العنصر اللي واضح إنه ناقص؟", "Prompt: “Help me with the report.” Which element is most clearly missing?"], [
+    Q("p1b", "p1", "spot", ["Prompt: «ساعدني في التقرير». إيه العنصر اللي واضح إنه ناقص؟", "Prompt: “Help me with the report.” Which element is most clearly missing?"], [
       o("الهدف: إنت عاوز تعرف إيه أو تقرر إيه بالظبط", "The goal: what exactly you want to know or decide"),
       o("مفيش حاجة؛ النموذج هيفهم لوحده", "Nothing; the model will figure it out", "الأداة مش عارفة عن شغلك غير اللي إنت بتقوله.", "The tool knows nothing about your work except what you tell it."),
-      o("علامات الترقيم", "Punctuation", "مش دي المشكلة؛ المشكلة غياب الهدف والسياق.", "Not the issue; the issue is missing goal and context."),
+      o("علامات الترقيم", "Punctuation", "مش دي المشكلة؛ المشكلة غياب الهدف والـ Context.", "Not the issue; the issue is missing goal and context."),
       o("اسم النموذج", "The model’s name", "اسم الأداة مش بيغيّر حاجة هنا.", "The tool’s name changes nothing here.")
     ], 0, ["الكتاب بيضرب المثال ده: مش «ساعدني في التقرير» لكن «عاوز أعرف ليه المبيعات نزلت» (ص 7).", "The book uses this example: not “help me with the report” but “I want to know why sales fell” (p. 7)."]),
 
@@ -107,7 +107,7 @@
 
     Q("p4a", "p4", "predict", ["النتيجة «صح بشكل عام بس مش مناسبة لوضعك». المستخدم الماهر بيعمل إيه؟", "The result is “generally right but doesn’t fit your situation.” What does a skilled user do?"], [
       o("بيصحّح في نفس المحادثة: «وضعي مختلف في [الفرق]، أعد الحل على أساس القيد ده»", "Corrects in the same chat: “My situation differs in [the difference]; redo it with that constraint”"),
-      o("بيبدأ محادثة جديدة من الصفر", "Starts a new chat from scratch", "ده اللي المبتدئ بيعمله؛ وبيضيّع السياق اللي بنيته.", "That’s what a beginner does, and it loses the context you built."),
+      o("بيبدأ محادثة جديدة من الصفر", "Starts a new chat from scratch", "ده اللي المبتدئ بيعمله؛ وبيضيّع الـ Context اللي بنيته.", "That’s what a beginner does, and it loses the context you built."),
       o("بيقبل النتيجة زي ما هي", "Accepts it as is", "النتيجة مش مناسبة لوضعك؛ قبولها يعني قرار غلط.", "It doesn’t fit your case; accepting it means a wrong decision."),
       o("بيغيّر الأداة على طول", "Switches tools immediately", "المشكلة في القيد الناقص مش في الأداة.", "The problem is the missing constraint, not the tool.")
     ], 0, ["المبتدئ بيبدأ محادثة جديدة، والماهر بيعدّل المسار في نفس المحادثة (ص 8).", "The beginner starts a new chat; the skilled user corrects course in the same chat (p. 8)."]),
@@ -115,7 +115,7 @@
       ["اطلب", "Ask"], ["اقرأ بعين ناقدة", "Read critically"], ["حدّد الغلط", "Pinpoint the flaw"], ["صحّح في نفس المحادثة", "Correct in the same chat"], ["اعتمد أو كرّر", "Adopt or repeat"]
     ], ["الحلقة زي ما في ص 8.", "The loop as on p. 8."]),
 
-    Q("p5a", "p5", "mcq", ["في برومبت «الفرز السريع»، إيه المجموعات الأربعة؟", "In the “quick triage” prompt, what are the four groups?"], [
+    Q("p5a", "p5", "mcq", ["في Prompt «الفرز السريع»، إيه المجموعات الأربعة؟", "In the “quick triage” prompt, what are the four groups?"], [
       o("رد اليوم، فوّض، أجّل بأمان، تجاهل", "Reply today, delegate, safely postpone, ignore"),
       o("مهم، عاجل، سهل، صعب", "Important, urgent, easy, hard", "قريب من مصفوفات تانية، بس مش تقسيم الكتاب.", "Close to other matrices, but not the book’s split."),
       o("صباح، ظهر، مساء، ليل", "Morning, noon, evening, night", "ده تقسيم وقت مش فرز.", "That’s a time split, not triage."),
@@ -123,7 +123,7 @@
     ], 0, ["الفرز السريع: أربع مجموعات مع رد جاهز لكل بند عاجل (ص 10).", "Quick triage: four groups with a ready reply for each urgent item (p. 10)."]),
     O("p5b", "p5", ["رتّب الدورة اليومية للإنتاجية:", "Order the daily productivity cycle:"], [
       ["افهم", "Understand"], ["نظّم", "Organise"], ["قرّر", "Decide"], ["نفّذ", "Execute"], ["راجع", "Review"]
-    ], ["افهم (الهدف والسياق) ← نظّم ← قرّر ← نفّذ ← راجع (ص 10).", "Understand (goal and context) → organise → decide → execute → review (p. 10)."]),
+    ], ["افهم (الهدف والـ Context) ← نظّم ← قرّر ← نفّذ ← راجع (ص 10).", "Understand (goal and context) → organise → decide → execute → review (p. 10)."]),
 
     Q("p6a", "p6", "mcq", ["إيه العنصر اللي بتضيفه مقارنة الخيارين في الكتاب، وناس كتير بتغفل عنه؟", "What does the book’s option comparison add that many people miss?"], [
       o("مدى إمكانية التراجع عن القرار", "How reversible the decision is"),
@@ -131,16 +131,16 @@
       o("رأي أغلب الزملاء", "What most colleagues think", "الكتاب بيعتمد معايير مش تصويت.", "The book uses criteria, not a vote."),
       o("أيهما أحدث", "Which is newer", "الحداثة مش معيار في الكتاب.", "Newness isn’t a criterion in the book.")
     ], 0, ["المقارنة بالتكلفة والوقت والمخاطرة والعائد والسهولة ومدى إمكانية التراجع، في جدول مع توصية وسببها (ص 10).", "Compare by cost, time, risk, return, ease and reversibility, in a table with a recommendation and its reason (p. 10)."]),
-    Q("p6b", "p6", "compare", ["إيه الفرق بين برومبتات الإنتاجية والبرومبتات الاستراتيجية؟", "The difference between productivity and strategic prompts?"], [
+    Q("p6b", "p6", "compare", ["إيه الفرق بين Prompts الإنتاجية والـ Prompts الاستراتيجية؟", "The difference between productivity and strategic prompts?"], [
       o("الأولى بتساعدك تنجز الشغل، والتانية بتساعدك تعرف أي شغل يستاهل تتعمل أصلًا", "The first help you get work done; the second help you know which work is worth doing at all"),
       o("التانية أطول بس", "The second are just longer", "الفرق في الغرض مش في الطول.", "The difference is purpose, not length."),
       o("الأولى للمديرين والتانية للموظفين", "The first for managers, the second for staff", "الاتنين للكل.", "Both are for everyone."),
       o("مفيش فرق", "No difference", "الكتاب بيسمّيه «فرق جوهري».", "The book calls it a “fundamental difference”.")
     ], 0, ["ص 10: القسم اللي فات بيساعدك على الإنجاز، والقسم ده بيساعدك تختار إيه يستاهل.", "p. 10: the previous section helps you get things done; this one helps you choose what’s worth doing."]),
 
-    Q("p7a", "p7", "mcq", ["ليه «البرومبت الاستراتيجي الشامل» بينجح؟", "Why does the “all-in-one strategic prompt” work?"], [
+    Q("p7a", "p7", "mcq", ["ليه «الـ Prompt الاستراتيجي الشامل» بينجح؟", "Why does the “all-in-one strategic prompt” work?"], [
       o("عشان بيفرض ترتيب مفيش قفز فوقه: فهم ← تحليل ← تشخيص ← مخاطر ← خيارات ← قرار ← خطوات", "It enforces an order you can’t skip: understand → analyse → diagnose → risks → options → decision → steps"),
-      o("عشان أطول برومبت في الدليل", "It’s the longest prompt in the guide", "الطول مش السبب.", "Length isn’t the reason."),
+      o("عشان أطول Prompt في الدليل", "It’s the longest prompt in the guide", "الطول مش السبب.", "Length isn’t the reason."),
       o("عشان بيديك الحل الأول", "It gives the solution first", "العكس: أغلب القرارات السيئة بتبدأ بالحل قبل ما تفهم المشكلة.", "The opposite: most bad decisions start with the solution before understanding the problem."),
       o("عشان بيشتغل مع أداة واحدة بس", "It only works with one tool", "بيشتغل مع أي مساعد.", "It works with any assistant.")
     ], 0, ["«أغلب القرارات السيئة بتيجي من البدء بالحل قبل ما تفهم المشكلة» (ص 11).", "“Most bad decisions come from starting with the solution before understanding the problem” (p. 11)."]),
@@ -149,7 +149,7 @@
       o("مديح للفكرة", "Praise for the idea", "ده بالظبط اللي الجملة بتمنعه.", "That’s exactly what the sentence prevents."),
       o("خطة تنفيذ على طول", "An immediate execution plan", "التنفيذ بيجي بعد النقد والتحسين.", "Execution comes after critique and improvement."),
       o("رفض كامل للفكرة", "A total rejection", "المطلوب نقد بنّاء وبعدين تحسين، مش رفض.", "The ask is constructive critique then improvement, not rejection.")
-    ], 0, ["برومبت اختبار الفكرة بيطلب النقد الأول، وبعده بس إزاي تتحسن (ص 11).", "The idea-test prompt asks for critique first, and only then how to improve (p. 11)."]),
+    ], 0, ["Prompt اختبار الفكرة بيطلب النقد الأول، وبعده بس إزاي تتحسن (ص 11).", "The idea-test prompt asks for critique first, and only then how to improve (p. 11)."]),
 
     Q("p8a", "p8", "compare", ["إيه اللي بيميّز NotebookLM عن المساعد العادي؟", "What sets NotebookLM apart from an ordinary assistant?"], [
       o("بيجيب بس من المصادر اللي اخترتها في الدفتر", "It answers only from the sources you chose in the notebook"),
@@ -389,11 +389,11 @@
       o("‎/output", "/output", "المخرجات بتتكتب في مكان منفصل عن الأصل.", "Outputs are written separately from originals.")
     ], 0, ["خمس مجلدات بس، و‎/data‎ للأصل زي ما هو (ص 30).", "Just five folders, and /data holds the originals as they are (p. 30)."]),
 
-    Q("w6a", "w6", "mcq", ["إيه القاعدة في تشغيل برومبتات التنفيذ الخمسة؟", "What’s the rule for running the five execution prompts?"], [
+    Q("w6a", "w6", "mcq", ["إيه القاعدة في تشغيل Prompts التنفيذ الخمسة؟", "What’s the rule for running the five execution prompts?"], [
       o("بالترتيب، وماتتقدّمش لحد ما اللي قبله يشتغل فعلًا", "In order, and don’t move on until the previous one actually works"),
       o("كلهم في رسالة واحدة", "All in one message", "حشو كل المتطلبات في طلب واحد بيقلّل الدقة.", "Cramming everything into one request reduces precision."),
       o("بأي ترتيب", "In any order", "الترتيب هو الدرس الأساسي.", "Order is the key lesson."),
-      o("ابدأ بالواجهة", "Start with the UI", "الواجهة البرومبت الرابع.", "The UI is prompt four.")
+      o("ابدأ بالواجهة", "Start with the UI", "الواجهة الـ Prompt الرابع.", "The UI is prompt four.")
     ], 0, ["البيانات الأول، وبعدين أرقام صح، وبعدين عرض، وبعدين تلميع (ص 31).", "Data first, then correct numbers, then display, then polish (p. 31)."]),
     Q("w6b", "w6", "mcq", ["إيه معنى localhost؟", "What does localhost mean?"], [
       o("خادم على جهازك بس محدش غيرك شايفه", "A server only on your machine that nobody else sees"),
@@ -450,7 +450,7 @@
       o("مفيش فخاخ", "No traps", "الاتنين من فخاخ التسعير في الكتاب.", "Both are pricing traps from the book."),
       o("فخ واحد بس", "Only one trap", "فيه اتنين واضحين.", "There are two clear ones."),
       o("المشكلة في اسم النموذج", "The problem is the model’s name", "الأسماء بتتغيّر؛ الفخاخ في التسعير.", "Names change; the traps are in pricing.")
-    ], 0, ["الفخاخ التلاتة: المخرجات 3–6 أضعاف، ومضاعفة السعر بعد طول سياق معين، والأسعار الترويجية المؤقتة (ص 35).", "The three traps: output 3–6×, price doubling past a context length, and temporary introductory prices (p. 35)."]),
+    ], 0, ["الفخاخ التلاتة: المخرجات 3–6 أضعاف، ومضاعفة السعر بعد طول Context معين، والأسعار الترويجية المؤقتة (ص 35).", "The three traps: output 3–6×, price doubling past a context length, and temporary introductory prices (p. 35)."]),
 
     Q("m3a", "m3", "compare", ["مبتدئ عاوز يدور على نموذج وينزّله بضغطة ويعرف يناسب ذاكرته ولا لأ. أي أداة؟", "A beginner wants to search, download a model with a click, and see if it fits their memory. Which tool?"], [
       o("LM Studio", "LM Studio"),
