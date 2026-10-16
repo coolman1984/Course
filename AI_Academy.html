@@ -9808,10 +9808,10 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     c_terms: () => {
       const pc = mx(112), oc = mx(352);
       const X = rowX(5, 24, 8, oc), H = [84, 54, 30, 16, 8], cum = [44, 72, 87, 95, 100];
-      return `<g ${an("rise", 0.05)}>${box(pc, 92, 190, 40, "f-s1 s-line2")}${txt(pc, 97, ar() ? "«شوف ليه الخط بيقف»" : "“see why the line stops”", "t-ink2", 12.5, bold)}</g>
+      return `<g ${an("rise", 0.05)}>${box(pc, 92, 190, 40, "f-s1 s-line2")}${txt(pc, 97, ar() ? "«شوف ليه الخط بيقف»" : "“why does it stop?”", "t-ink2", 12.5, bold)}</g>
       <path ${an("draw", 0.4, "s-ink3")} pathLength="1" d="M${mx(214)} 92 H ${mx(262)}" stroke-width="2.5" fill="none" marker-end="url(#aih-arrow)"/>
       <g ${an("fade", 0.6)}>${[150, 120, 136].map((w, i) => `<rect x="${oc - w / 2}" y="${66 + i * 20}" width="${w}" height="11" rx="5" class="f-s3"/>`).join("")}${txt(oc, 140, ar() ? "إجابة عامة" : "a generic answer", "t-ink3", 12.5, bold)}</g>
-      <g ${an("rise", 1.0)}>${box(pc, 222, 190, 40, "f-acc", 0)}${txt(pc, 227, ar() ? "«تحليل باريتو للتوقفات»" : "“Pareto analysis of stoppages”", "t-white", 12.5, bold)}</g>
+      <g ${an("rise", 1.0)}>${box(pc, 222, 190, 40, "f-acc", 0)}${txt(pc, 227, ar() ? "«تحليل باريتو للتوقفات»" : "“Pareto analysis”", "t-white", 12.5, bold)}</g>
       <path ${an("draw", 1.3, "s-acc")} pathLength="1" d="M${mx(214)} 222 H ${mx(262)}" stroke-width="3" fill="none" marker-end="url(#aih-arrow)"/>
       ${H.map((h, i) => `<rect class="an vbar ${i < 2 ? "f-acc" : "f-s3"}" style="--d:${1.5 + i * 0.1}s" x="${X(i) - 12}" y="${270 - h}" width="24" height="${h}" rx="4"/>`).join("")}
       <path ${an("draw", 2.2, "s-amber")} pathLength="1" d="M${H.map((_, i) => `${X(i)} ${270 - cum[i] * 1.0}`).join(" L")}" stroke-width="3" fill="none"/>
@@ -9839,7 +9839,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       <path ${an("draw", 1.5, "s-ink2")} pathLength="1" d="M${mx(236)} 158 H ${mx(246)}" stroke-width="3" fill="none" marker-end="url(#aih-arrow)"/>
       <g ${an("rise", 1.7)}>${box(b, 158, 200, 200, "f-s2 s-line2")}${txt(b, 84, ar() ? "الرد" : "the reply", "t-ink3", 12.5, bold)}
         ${[150, 128, 160, 118].map((w, i) => `<rect x="${b - w / 2}" y="${104 + i * 24}" width="${w}" height="11" rx="5" class="f-s3"/>`).join("")}</g>
-      <g ${an("pop", 2.2)}>${box(b, 226, 150, 30, "f-rose")}${txt(b, 231, ar() ? "خطة لمصنع مش مصنعك" : "a plan for someone else's plant", "t-white", 11.5, bold)}</g>
+      <g ${an("pop", 2.2)}>${box(b, 226, 150, 30, "f-rose")}${txt(b, 231, ar() ? "خطة لمصنع مش مصنعك" : "not your plant", "t-white", 11.5, bold)}</g>
       ${txt(240, 296, ar() ? "كل معلومة ناقصة = فراغ بيتملي بتخمين" : "every missing fact = a gap filled by a guess", "t-ink2", 13, bold)}`;
     },
     c_anatomy: () => {
@@ -9886,7 +9886,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     },
     c_steer: () => {
       const steps = ar() ? ["طلبك", "اسأل لو ناقصك حاجة", "فكّر خطوة بخطوة", "افصل المؤكد عن التخمين", "اذكر المصدر", "إجابة تقدر تراجعها"]
-        : ["your request", "ask if anything's missing", "think step by step", "separate fact from guess", "cite the source", "an answer you can check"];
+        : ["your request", "ask if missing", "step by step", "fact vs guess", "cite sources", "a checkable answer"];
       const pos = [[0, 0], [1, 0], [2, 0], [2, 1], [1, 1], [0, 1]];
       const at = ([c, r]) => [ar() ? 390 - c * 150 : 90 + c * 150, 100 + r * 118];
       return `${pos.slice(1).map((p, i) => { const [x1, y1] = at(pos[i]), [x2, y2] = at(p); const h = y1 === y2; return `<path ${an("draw", 0.3 + i * 0.3, "s-acc")} pathLength="1" d="M${x1 + (h ? (x2 > x1 ? 64 : -64) : 0)} ${y1 + (h ? 0 : 28)} L${x2 + (h ? (x2 > x1 ? -64 : 64) : 0)} ${y2 - (h ? 0 : 28)}" stroke-width="2.5" fill="none" marker-end="url(#aih-arrow)"/>`; }).join("")}
@@ -9895,7 +9895,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     },
     c_recap: () => {
       const s = ar() ? [["كلماتك الدقيقة", "Prompt"], ["المنطقة الصح", "خريطة المعاني"], ["ربط بمعلوماتك", "الانتباه + Context"], ["رد يناسب شغلك", "النتيجة"]]
-        : [["your precise words", "Prompt"], ["the right region", "meaning map"], ["links to your facts", "attention + Context"], ["a reply for your work", "the result"]];
+        : [["precise words", "Prompt"], ["right region", "meaning map"], ["links to facts", "attention + Context"], ["fits your work", "the result"]];
       const X = rowX(4, 104, 14);
       return `${s.slice(1).map((_, i) => `<path ${an("draw", 0.4 + i * 0.35, "s-acc")} pathLength="1" d="M${X(i) + (ar() ? -54 : 54)} 120 L${X(i + 1) + (ar() ? 56 : -56)} 120" stroke-width="2.5" fill="none" marker-end="url(#aih-arrow)"/>`).join("")}
       ${s.map(([a, b], i) => `<g ${an("pop", 0.15 + i * 0.35)}>${box(X(i), 120, 104, 58, i === 3 ? "f-acc" : "f-s1 s-acc")}${txt(X(i), 125, a, i === 3 ? "t-white" : "t-ink", 12, bold)}</g>

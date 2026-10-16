@@ -286,6 +286,11 @@ await session({ label: "model-deck-ar", viewport: { width: 1360, height: 900 } }
   const fin = await page.$eval("#sec-model [data-aih-q]", (e) => e.dataset.final === "true");
   fin && (await page.isVisible("#sec-model [data-aih-start]")) ? ok("model deck: the question turns to the reader on the last slide") : fail("model deck: final slide incomplete");
   (await page.$("#sec-history")) ? fail("model deck: the history deck leaked into lesson 2") : ok("model deck: lesson 2 has only its own story");
+  await page.evaluate(() => (location.hash = "lesson-f4")); await page.waitForSelector("#sec-context .aih-stage");
+  const cn = await page.$$eval("#sec-context .aih-slide", (s) => s.length);
+  const cart = await page.$$eval("#sec-context .aih-svg", (s) => s.every((v) => v.querySelectorAll("rect,circle,path,text,ellipse,line").length > 6));
+  const crule = await page.$eval("#sec-context .aih-slide.is-on .aih-answer small", (e) => e.textContent);
+  cn >= 10 && cart && /وليه/.test(crule) && !(await page.$("#sec-model")) ? ok(`context deck: ${cn} slides with drawings in lesson f4, each with its rule and why`) : fail("context deck: incomplete");
 });
 await session({ label: "history-deck-mobile-en", viewport: { width: 375, height: 812 }, isMobile: true, hasTouch: true, colorScheme: "dark" }, async (page) => {
   await page.evaluate(() => { localStorage.setItem("aiAcademy.v1", JSON.stringify({ lang: "en" })); location.hash = "lesson-f1"; location.reload(); });
