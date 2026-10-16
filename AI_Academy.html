@@ -1114,10 +1114,11 @@ html[data-motion="off"] .t-success-check svg path {stroke-dashoffset:0!important
 .aih-slide.enter-f{animation:aih-in .62s cubic-bezier(.16,.84,.3,1) both;--from:1}
 .aih-slide.enter-b{animation:aih-in .62s cubic-bezier(.16,.84,.3,1) both;--from:-1}
 .aih-slide.enter-0{animation:aih-fade .5s ease-out both}
-.aih-slide.leave-f{animation:aih-out .42s cubic-bezier(.4,0,.7,.2) both;--to:-1}
-.aih-slide.leave-b{animation:aih-out .42s cubic-bezier(.4,0,.7,.2) both;--to:1}
-@keyframes aih-in{from{opacity:0;transform:translateX(calc(var(--from) * var(--dirx) * 56px)) scale(.985)}to{opacity:1;transform:none}}
-@keyframes aih-out{from{opacity:1;transform:none}to{opacity:0;transform:translateX(calc(var(--to) * var(--dirx) * 40px)) scale(.985)}}
+.aih-slide.leave-f{animation:aih-out .3s cubic-bezier(.4,0,.7,.2) both;--to:-1}
+.aih-slide.leave-b{animation:aih-out .3s cubic-bezier(.4,0,.7,.2) both;--to:1}
+/* translate + fade only (no scale): two full-slide layers overlap during a change, so the outgoing one is kept short */
+@keyframes aih-in{from{opacity:0;transform:translateX(calc(var(--from) * var(--dirx) * 56px))}to{opacity:1;transform:none}}
+@keyframes aih-out{from{opacity:1;transform:none}to{opacity:0;transform:translateX(calc(var(--to) * var(--dirx) * 40px))}}
 @keyframes aih-fade{from{opacity:0}to{opacity:1}}
 .aih-slide.enter-f .aih-year,.aih-slide.enter-b .aih-year{animation:aih-year .9s cubic-bezier(.16,.84,.3,1) both}
 @keyframes aih-year{from{transform:translateX(calc(var(--from) * var(--dirx) * 160px));opacity:0}to{transform:none;opacity:1}}
@@ -1194,6 +1195,9 @@ html[data-motion="off"] .t-success-check svg path {stroke-dashoffset:0!important
 @keyframes aih-snow{0%{transform:translateY(-10px);opacity:0}12%{opacity:1}85%{opacity:.8}100%{transform:translateY(270px);opacity:0}}
 @keyframes aih-blink{0%,100%{opacity:1}50%{opacity:.35}}
 @keyframes aih-ring{0%{transform:scale(.8);opacity:1}100%{transform:scale(1.6);opacity:0}}
+
+/* smoothness: a deck scrolled off screen pauses its looping drawings instead of repainting them unseen */
+.aih.is-away .aih-slide *{animation-play-state:paused!important}
 
 /* quiet: the academy's own switch or the system setting — every drawing in its final state, no slide motion */
 html[data-motion="off"] .aih *,html[data-motion="off"] .aih *::before{animation:none!important;transition:none!important}
@@ -1611,7 +1615,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     { p: 31, kind: "mixed", title: u("بناء تطبيق ويب محلي (2): الـ Prompts", "Building a local web app (2): prompts"), sum: u("خمس Prompts متتابعة، قائمة تحقق قبل الاعتماد، مسرد سريع، الخلاصة والخطوة اللي جاية.", "Five sequential prompts, an acceptance checklist, a quick glossary, conclusion and next step."), lessons: ["w6"] },
     { p: 32, kind: "mixed", title: u("الدليل 5: GitHub — ذاكرة مشروعك", "Guide 5: GitHub — your project’s memory"), sum: u("المشكلة اللي بيحلها، Git وGitHub، ست فوائد، سبع مفاهيم بتشبيهات، تلات استخدامات بره البرمجة.", "The problem it solves, Git and GitHub, six benefits, seven concepts with analogies, three uses outside programming."), lessons: ["g1"] },
     { p: 33, kind: "mixed", title: u("GitHub عمليًا: الأوامر ودورة الشغل", "GitHub in practice: commands and workflow"), sum: u("الإعداد لمرة واحدة، دورة الشغل اليومية بخمس أوامر، أوامر الفروع والتراجع، الدورة الكاملة، أخطاء شائعة، Prompt يغنيك عن حفظ الأوامر.", "One-time setup, the daily 5-command cycle, branch and undo commands, the full cycle, common mistakes, a prompt that saves memorising commands."), lessons: ["g2"] },
-    { p: 34, kind: "mixed", title: u("النماذج: الأوزان والأحجام ومعنى «الذكاء»", "Models: weights, sizes and what “smart” means"), sum: u("أربع مفاهيم (المعاملات، نافذة الـ Context، الخبراء المتفرقون، التوكنات)، ملاحظة العربية، ليه الأكبر مش الأحسن، طبقات النماذج، قاعدة الاختيار، Prompt اختيار النموذج.", "Four concepts (parameters, context window, mixture of experts, tokens), the Arabic note, why bigger isn’t best, model tiers, the selection rule, the model-choice prompt."), lessons: ["m1"] },
+    { p: 34, kind: "mixed", title: u("النماذج: الأوزان والأحجام ومعنى «الذكاء»", "Models: weights, sizes and what “smart” means"), sum: u("أربع مفاهيم (المعاملات، نافذة الـ Context، الخبراء المتفرقون، التوكنات)، ملاحظة العربية، ليه الأكبر مش الأحسن، طبقات النماذج، قاعدة الاختيار، Prompt اختيار النموذج.", "Four concepts (parameters, context window, mixture of experts, tokens), the Arabic note, why bigger isn’t best, model tiers, the selection rule, the model-choice prompt."), lessons: ["m1", "f6"] },
     { p: 35, kind: "mixed", title: u("خريطة الشركات والنماذج — سبتمبر 2026", "Companies and models map — September 2026"), sum: u("الشركات الكبرى وعائلاتها، ترتيب الأسعار، تلات فخاخ تسعيرية، النماذج الصينية والمفتوح سلاحًا، مفتوح الأوزان يعني إيه عمليًا.", "Major companies and families, price tiers, three pricing traps, Chinese models and open weights as strategy, what open weights mean in practice."), lessons: ["m2"] },
     { p: 36, kind: "mixed", title: u("تشغيل النماذج على جهازك", "Running models on your machine"), sum: u("ليه بقى ممكن (Quantization)، LM Studio وOllama، الخادم المحلي المتوافق، دليل تقريبي للأجهزة، تلات ملاحظات للأداء، إمتى المحلي وإمتى لأ، Prompt التشغيل المحلي.", "Why it’s possible now (quantization), LM Studio and Ollama, the compatible local server, a rough hardware guide, three performance notes, when local and when not, the local-run prompt."), lessons: ["m3"] },
     { p: 37, kind: "mixed", title: u("النظام: اربط العمليات والبيانات", "Systems: connect processes and data"), sum: u("الفرق بين أداة ونظام، الاختبار الحاسم (عدّ النقلات اليدوية)، الطبقات الخمس، المبادئ الأربعة، رحلة حدث واحد.", "Tool vs system, the decisive test (count manual hand-offs), the five layers, the four principles, one event’s journey."), lessons: ["s1"] },
@@ -1687,6 +1691,15 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     "المساعد مش قارئ أفكار؛ اللي ما قلتوش ممكن يخمنه.",
     "إيه أهم معلومة ناقصة في طلب «حسن الجودة»؟",
     "تقوله الجودة الحالية، نوع العيب، الهدف، والموارد المتاحة."
+  ],
+  "f6": [
+    "محادثة من الصبح لحد الضهر لتقرير المبيعات، وفي الآخر الإجمالي طلع بالدولار مع إنك قلت «بالجنيه» في أول رسالة.",
+    "شرط مهم في أول المحادثة",
+    "المحادثة تطول والملفات تكتر لحد ما الترابيزة تتملي",
+    "أقدم رسالة بتقع أو بتتلخّص، والشرط بيروح معاها",
+    "الموديل ما بيقولكش إنه نسي؛ بيكمّل بالأرجح من خبرته العامة.",
+    "إيه أسرع طريقة تعرف بيها إن شرط مهم وقع من المحادثة؟",
+    "تسأله قبل الطلب المهم: «إيه الشروط اللي إنت شغال بيها دلوقتي؟»"
   ],
   "f5": [
     "وصل لك تقرير أنيق من الذكاء الاصطناعي فيه رقم غير موجود في ملفاتك.",
@@ -2804,6 +2817,36 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
         adv: [
           L("mistakes", "- تفتكر إن الـ Prompt لوحده يكفي: Prompt من غير Context زي تكليف من غير خلفية.\n- تختار الأداة بالاسم مش بالمهمة: قارن على مهمتك إنت ([[m2]]).", "- Thinking the prompt alone is enough: a prompt without context is a task without a briefing.\n- Picking the tool by brand, not task: compare on your own task ([[m2]])."),
           L("whennot", "الوكيل مش الحل الأحسن دايمًا: لو المهمة سؤال واحد، الشات أسرع وأرخص وأوضح. استخدم الوكيل لما يكون في خطوات كتير وأدوات وحدود واضحة للتوقف.", "An agent isn’t always best: for a single question, chat is faster, cheaper and clearer. Use an agent when there are several steps, tools and clear stop limits."),
+        ],
+      },
+    },
+    {
+      id: "f6", unit: "u0", pages: [34, 6, 41], diff: 1, min: 8, related: ["f4", "m1", "f5"], pre: ["f4"],
+      title: { ar: "ليه الـ Context محدود؟", en: "Why is the Context limited?" },
+      sum: { ar: "نافذة الـ Context ليها حد بالتوكنز: كبرت من صفحة ونص لمليون توكن، بس لسه محدودة بسبب الحساب والذاكرة والتكلفة والانتباه، ولما تتملي الأقدم بيقع أو بيتلخّص.", en: "The context window has a limit in tokens: it grew from a page and a half to a million tokens, yet stays limited by computation, memory, cost and attention; when it fills, the oldest falls off or gets summarised." },
+      book: [
+        bp(34, "**((context_window|نافذة الـ Context))**: قد إيه نص النموذج يقدر يقرأه ويتذكّره في الطلب الواحد، بالتوكنات. بتهمّك لما تحلّل مستندات طويلة أو مشروع كامل. مليون توكن ≈ كتاب ضخم.", "**((context_window|Context window))**: how much text a model can read and remember in one request, in tokens. It matters when you analyse long documents or a whole project. A million tokens ≈ a huge book."),
+        bp(34, "**((token|التوكنات))**: وحدة الحساب — قطعة نص صغيرة (كلمة أو جزء منها). والعربي بيستهلك توكنات أكتر من الإنجليزي لنفس المعنى — أحيانًا الضعف.", "**((token|Tokens))**: the unit of account — a small piece of text (a word or part of one). Arabic uses more tokens than English for the same meaning — sometimes double."),
+        bp(6, "**ليه الـ Context مهم**: كل ما الـ Context يبقى أوضح وأغنى، فهم النموذج يبقى أدق والنتيجة أحسن.", "**Why context matters**: the clearer and richer the context, the more precise the model’s understanding and the better the result."),
+        bp(41, "ممكن يفهم السؤال غلط لو الـ Context ناقص، وجودة النتيجة معتمدة على جودة البيانات والتعليمات.", "It can misunderstand the question if the context is incomplete, and result quality depends on the quality of the data and instructions."),
+      ],
+      levels: {
+        simple: [
+          L("what", "**نافذة الـ Context** هي المساحة اللي الموديل بيشوف فيها كل حاجة في المحادثة: التعليمات، وملفاتك، ورسايلك، وردوده. صورتها في الدرس ده **ترابيزة شغل مقاسها ثابت**: اللي عليها بيشوفه، واللي وقع منها ما بقاش موجود بالنسبة له.", "The **context window** is the space where the model sees everything in the conversation: instructions, your files, your messages and its replies. In this lesson we picture it as **a work table of fixed size**: what is on it, it sees; what fell off no longer exists for it."),
+          L("why", "لأن معظم «نسيان» الموديل مش عيب في ذكائه، لكن نتيجة إن المعلومة ما بقتش قدامه. لما تفهم ده، هتعرف ليه المحادثات الطويلة بتتلخبط، وإزاي تحمي الشروط المهمة.", "Because most of a model’s “forgetting” isn’t a flaw in its intelligence but the result of the information no longer being in front of it. Once you see this, you’ll know why long chats get muddled and how to protect key rules."),
+        ],
+        mech: [
+          L("how", "- الحجم بيتقاس بالـ((token|توكنز))، وكل حاجة بتاخد منه: ملفاتك ورسايلك وردود الموديل.\n- كبر من حوالي ألف توكن سنة ٢٠١٩ لمليون توكن في ٢٠٢٤، بفضل شرايح بذاكرة أكبر، وطرق حساب أذكى، وتدريب على نصوص أطول.\n- لسه محدود لأن **الانتباه** بيخلّي كل كلمة تبص على كل اللي قبلها: ضعف الكلام ≈ ٤ أضعاف الشغل، ومعاه ذاكرة ووقت وتكلفة أكتر.\n- ولما يتملي، التطبيق **يا يشيل الأقدم يا يلخّصه** (ضغط الـ Context).", "- Size is measured in ((token|tokens)), and everything takes from it: your files, your messages and the model’s replies.\n- It grew from about a thousand tokens in 2019 to a million in 2024, thanks to chips with more memory, smarter computation and training on longer texts.\n- It is still limited because **attention** makes every word look at everything before it: double the text ≈ 4× the work, plus more memory, time and cost.\n- When it fills, the app **either drops the oldest or summarises it** (Context compaction)."),
+          L("inside", "اللي بيحصل جوّه: علشان يرد بسرعة، الموديل بيحتفظ في ذاكرة الشريحة بملاحظة عن كل توكن على الترابيزة، والذاكرة دي بتكبر مع طول المحادثة ولكل مستخدم لوحده. وحتى لو الكلام كله دخل، الموديلات بتستفيد من أول الكلام وآخره أكتر من نصه (دراسة «تايه في النص»، ٢٠٢٣).", "Under the hood: to reply quickly, the model keeps a note about every token on the table in the chip’s memory, and that memory grows with the length of the chat, separately for every user. And even when everything fits, models make better use of the start and end of the text than its middle (the “Lost in the Middle” study, 2023)."),
+          L("link", "ده تكملة لـ[[f4]]: الـ Context هو عالم الموديل، والدرس ده بيقول إن العالم ده ليه حدود. والأرقام دي بتساعدك تختار الموديل في [[m1]]، وبتفسّر حدود كتير في [[f5]].", "This continues [[f4]]: the Context is the model’s world, and this lesson shows that world has borders. These figures help you choose a model in [[m1]] and explain many of the limits in [[f5]]."),
+        ],
+        practice: [
+          L("example", "**المالية**: محادثة طويلة لتجهيز الموازنة، وفي الأول قلت «الأرقام بالألف جنيه». بعد عشرين رسالة الجدول طلع بالجنيه. الحل: تكتب الشرط ده في الطلب الأخير نفسه، أو تبدأ محادثة جديدة بملخص قصير فيه كل الشروط.\n**الموارد البشرية**: رفعت لايحة ٢٠٠ صفحة وسألت عن الإجازات، فاتجاوب من باب تاني. الحل: تديله باب الإجازات بس، أو تقوله «الإجابة في الباب الخامس».", "**Finance**: a long budget chat where you said “figures in thousands of pounds” at the start; twenty messages later the table came out in plain pounds. Fix: state that rule in the final request itself, or start a new chat with a short summary of all the rules.\n**HR**: you uploaded a 200-page policy and asked about leave, and got an answer from another chapter. Fix: give it only the leave chapter, or tell it “the answer is in chapter five”."),
+          L("apply", "في محادثتك الطويلة الجاية، قبل الطلب المهم، اكتب: «قبل ما تكمّل: إيه الشروط والقيود اللي إنت شغال بيها دلوقتي؟». لو حاجة ناقصة، صحّحها، وبعدين اكتب طلبك.", "In your next long chat, before the important request, write: “Before you continue: which rules and constraints are you working with right now?” If something is missing, correct it, then make your request."),
+        ],
+        adv: [
+          L("mistakes", "- تفتكر إن الموديل «بيفتكر» كل المحادثة لمجرد إنها لسه ظاهرة على الشاشة.\n- ترفع الملف كله وإنت محتاج صفحتين منه.\n- تكمّل مهمة جديدة في نفس المحادثة القديمة فتشيل كل اللي فات معاك.\n- تعتمد على ملخص تلقائي في أرقام دقيقة من غير ما تراجعها.", "- Assuming the model “remembers” the whole chat just because it is still visible on screen.\n- Uploading the whole file when you need two pages of it.\n- Starting a new task in the same old chat, dragging everything before it along.\n- Relying on an automatic summary for exact figures without checking them."),
+          L("whennot", "مش كل حاجة محتاجة محادثة جديدة: لو بتعدّل على نفس المستند خطوة بخطوة، الاستمرار مفيد لأن اللي فات Context مهم. افصل لما الموضوع يتغيّر، أو لما تلاحظ إن الإجابات بقت تتجاهل شروط قلتها.", "Not everything needs a new chat: when you refine the same document step by step, continuing helps because what came before is useful Context. Split when the topic changes, or when answers start ignoring rules you gave."),
         ],
       },
     },
@@ -4246,6 +4289,17 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     "الغلطة: إنك تفتكر إن الأداة عارفة ملفاتك أو سياسة شركتك من غير ما تديها إياها.",
     "ما تشاركش بيانات شغل سرية إلا في أدوات الشركة مسموح لك تستخدمها."
   ],
+  "f6": [
+    "ليه الموديل بينسى في المحادثة الطويلة؟",
+    "الموديل بيشوف مساحة محدودة اسمها نافذة الـ Context، زي ترابيزة شغل مقاسها ثابت. لما المحادثة تطول والترابيزة تتملي، الأقدم بيقع أو بيتلخّص، فبيبان كإنه نسي.",
+    "لما تفهم إن المساحة محدودة، هتعرف تحمي الشروط المهمة، وتختار إمتى تفتح محادثة جديدة، وتديله الجزء اللي يخصه من الملف بدل الملف كله.",
+    "١. اعرف إن كل حاجة بتاخد مكان: ملفاتك ورسايلك وردوده. ٢. قول الشروط المهمة في الأول وكرّرها في الطلب المهم. ٣. افتح محادثة جديدة لكل مهمة بملخص قصير منك. ٤. اسأله عن الشروط اللي معاه قبل الخطوة الكبيرة.",
+    "الدرس اللي فات قال إن الـ Context هو عالم الموديل، والدرس ده بيقول إن العالم ده ليه حدود، وبيشرح ليه، وإيه اللي بيحصل لما يتملي.",
+    "محادثة موازنة طويلة قلت في أولها «الأرقام بالألف جنيه»، وبعد عشرين رسالة الجدول طلع بالجنيه. الشرط وقع من الترابيزة، والحل إنك تكرّره في الطلب الأخير.",
+    "قبل طلبك المهم الجاي في محادثة طويلة، اسأل: «إيه الشروط اللي إنت شغال بيها دلوقتي؟» وصحّح الناقص قبل ما تكمّل.",
+    "الغلطة: إنك تفتكر إن الموديل فاكر كل المحادثة علشان لسه ظاهرة قدامك على الشاشة، أو ترفع ملف كامل وإنت محتاج صفحتين منه.",
+    "لو بتعدّل نفس المستند خطوة بخطوة، كمّل في نفس المحادثة لأن اللي فات مفيد. افصل لما الموضوع يتغيّر أو الإجابات تبدأ تتجاهل شروطك."
+  ],
   "f5": [
     "إمتى تستخدم الذكاء الاصطناعي وإمتى توقفه؟",
     "تقرير منسّق فيه رقم مالوش مصدر بيفضل تقرير غلط. استخدم سرعة المساعد في التحضير، وخلّي المراجعة والتوقيع والقرار عندك.",
@@ -4708,6 +4762,14 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       v("دي بيانات [صف البيانات وأعمدتها]. امشي معايا على خمس خطوات بالترتيب: اجمع اللي يخص سؤالي بس وهو [السؤال]، وبعدين حلّل الأنماط والمشكلات، وبعدين اختصر النتيجة في خمس أسطر، وبعدين قارن بالفترة اللي فاتت أو بالهدف، وبعدين اقترح تلات إجراءات. افصل الحقائق عن الترجيحات.",
         "This is data on [describe the data and its columns]. Walk with me through five steps in order: collect only what relates to my question, which is [the question], then analyse patterns and problems, then summarise in five lines, then compare with the previous period or target, then suggest three actions. Separate facts from guesses."),
       [v("صف البيانات وأعمدتها", "describe the data and its columns"), v("السؤال", "the question")], v("«الخلاصة: الإسكندرية −12% عن الشهر الماضي… الإجراءات: 1) … 2) … 3) …»", "“Summary: Alexandria −12% vs last month… Actions: 1) … 2) … 3) …”"), v("كل ما كانت جودة البيانات والـ Context أعلى، كانت النتيجة أدق وأنفع.", "The better the data and context, the more valuable the result.")),
+    P("f6a", "f6", "work", null, v("افحص الشروط قبل الخطوة المهمة", "Check the rules before the key step"), v("تكتشف لو شرط مهم وقع من المحادثة", "Find out whether a key rule fell out of the chat"),
+      v("قبل ما تكمّل في [المهمة]: اكتبلي في نقاط كل الشروط والقيود اللي إنت شغال بيها دلوقتي في المحادثة دي: العملة، والوحدات، والجمهور، والاستثناءات، والأرقام المهمة. لو فيه حاجة مش متأكد منها أو مش لاقيها، قول كده صراحة وما تخمّنش. وما تبدأش المهمة لحد ما أأكّدلك.",
+        "Before you continue with [the task]: list, in bullet points, every rule and constraint you are working with right now in this chat: currency, units, audience, exceptions and key figures. If anything is unclear or missing, say so plainly and don’t guess. Don’t start the task until I confirm."),
+      [v("المهمة", "the task")], v("«الشروط: الأرقام بالجنيه، التقرير للمدير العام، استثناء فرع طنطا. مش لاقي: شكل التاريخ المطلوب».", "“Rules: figures in EGP, report for the general manager, Tanta branch excluded. Not found: the required date format.”"), v("استخدمه في أي محادثة طويلة قبل الطلب اللي نتيجته هتتسلّم.", "Use it in any long chat before the request whose result you will hand in.")),
+    P("f6b", "f6", "work", null, v("ملخص تسليم لمحادثة جديدة", "A hand-over summary for a new chat"), v("تنقل الشغل لمحادثة جديدة من غير ما تضيع التفاصيل", "Move the work to a new chat without losing details"),
+      v("المحادثة دي طولت، وعايز أكمّل [الموضوع] في محادثة جديدة. اكتبلي ملخص تسليم أقدر ألصقه هناك، فيه: الهدف، والشروط والقيود، والقرارات اللي اتاخدت، والأرقام المهمة بالظبط زي ما هي، والاستثناءات، واللي لسه ناقص. ما تحذفش أي رقم أو استثناء، ولو مش متأكد من حاجة علّم عليها.",
+        "This chat has grown long and I want to continue [the topic] in a new one. Write a hand-over summary I can paste there with: the goal, rules and constraints, decisions made, key figures exactly as they are, exceptions, and what is still missing. Don’t drop any figure or exception, and flag anything you are unsure of."),
+      [v("الموضوع", "the topic")], v("«الهدف: تقرير مبيعات الربع للمدير العام. الشروط: بالجنيه، من غير فرع طنطا. الأرقام: نمو ٣٫٧٪… الناقص: مراجعة فرع أسيوط».", "“Goal: quarterly sales report for the GM. Rules: EGP, Tanta excluded. Figures: 3.7% growth… Missing: Assiut branch review.”"), v("راجع الملخص بنفسك قبل ما تلصقه: ده بقى الـ Context الجديد بتاعك.", "Check the summary yourself before pasting it: it becomes your new Context.")),
     P("f5a", "f5", "work", null, v("مراجعة قبل الاعتماد", "Review before relying on it"), v("تطبّق سلسلة الاستخدام الواعي", "Apply the wise-use chain"),
       v("قبل ما أعتمد على إجابتك اللي فاتت: 1) إيه الافتراضات اللي بنيت عليها؟ 2) أي رقم أو معلومة ممكن تكون قديمة أو ناقصة؟ 3) إيه المصادر اللي لازم أتحقق منها بنفسي؟ 4) إيه اللي محتاج مراجعة بشرية قبل [القرار المطلوب]؟",
         "Before I rely on your previous answer: 1) what assumptions did you make? 2) which number or fact might be outdated or incomplete? 3) which sources should I verify myself? 4) what needs human review before [the decision needed]?"),
@@ -5136,6 +5198,19 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       o("الـ Context جزء من الـ Prompt", "The context is part of the prompt", "العكس هو الصح حسب الكتاب.", "It’s the other way round, per the book."),
       o("مفيش علاقة بينهم", "They’re unrelated", "الـ Prompt بيشتغل جوّا الـ Context.", "The prompt works inside the context.")
     ], 0, ["الـ Context كل اللي بتدّيه للذكاء الاصطناعي عشان يفهم وضعك؛ والـ Prompt جزء منه بيحدد المهمة وإزاي عاوز الإجابة (ص 6).", "Context is everything you give AI to understand your situation; the prompt is part of it and sets the task and the answer’s form (p. 6)."]),
+
+    Q("f6a", "f6", "predict", ["محادثة طويلة قلت في أولها «كل الأرقام بالجنيه»، وبعد ساعتين ورفع ملفات كتير طلبت الملخص. إيه الأرجح يحصل؟", "In a long chat you said at the start “every figure in pounds”; two hours and many uploads later you ask for the summary. What is most likely?"], [
+      o("ممكن يكتب بعملة تانية، لأن الشرط وقع من الـ Context أو اتلخّص", "It may use another currency, because the rule fell out of the Context or was summarised"),
+      o("هيلتزم بالشرط أكيد، لأن المحادثة كلها لسه ظاهرة على الشاشة", "It will surely keep the rule, because the whole chat is still on screen", "اللي ظاهر قدامك مش بالضرورة لسه قدام الموديل؛ لما الترابيزة تتملي الأقدم بيقع.", "What you see isn’t necessarily still in front of the model; when the table fills, the oldest falls off."),
+      o("هيرفض يكمّل لحد ما تعيد الشرط", "It will refuse to continue until you restate the rule", "الموديل ما بيعرفش إن حاجة وقعت؛ بيكمّل بالأرجح من خبرته العامة.", "The model doesn’t know something fell off; it carries on with the most likely option."),
+      o("هيسألك عن العملة دايمًا قبل ما يكتب", "It will always ask you about the currency first", "ممكن يسأل لو طلبت منه كده، لكن من غير طلب غالبًا هيختار الأرجح.", "It may ask if you told it to; otherwise it usually picks the likeliest option.")
+    ], 0, ["نافذة الـ Context محدودة (ص 34): لما تتملي، التطبيق بيشيل الأقدم أو يلخّصه، والشرط اللي اتقال في الأول هو أول حاجة ممكن تضيع. كرّر الشروط المهمة في الطلب المهم.", "The context window is limited (p. 34): when it fills, the app drops or summarises the oldest part, and a rule given at the start is the first thing that can be lost. Repeat key rules in the important request."]),
+    Q("f6b", "f6", "mcq", ["ليه نافذة الـ Context ما بتكبرش من غير حد؟", "Why can’t the context window grow without limit?"], [
+      o("لأن كل كلمة بتبص على اللي قبلها، فالشغل والذاكرة والتكلفة بيكبروا أسرع من طول الكلام", "Because every word looks at those before it, so work, memory and cost grow faster than the text"),
+      o("لأن الشركات مش عايزة تديك مساحة أكبر", "Because companies don’t want to give you more room", "الخطط والأسعار بتأثر، بس السبب الأساسي هندسي: الحساب بيكبر أسرع من الكلام.", "Plans and prices play a part, but the root cause is engineering: computation grows faster than text."),
+      o("لأن الموديل بيحفظ المحادثات القديمة في أوزانه", "Because the model stores old chats in its weights", "الأوزان ما بتتغيّرش وإنت بتكلّمه؛ المحادثة كلها بتتقري تاني في الـ Context مع كل رسالة.", "The weights don’t change while you talk; the whole chat is re-read in the Context with every message."),
+      o("لأن العربي ما ينفعش في النصوص الطويلة", "Because Arabic doesn’t work for long texts", "العربي بياخد توكنز أكتر، لكنه مش سبب الحد.", "Arabic takes more tokens, but it isn’t the cause of the limit.")
+    ], 0, ["الانتباه بيخلّي كل كلمة تبص على كل اللي قبلها: ضعف الكلام ≈ ٤ أضعاف الشغل، ومعاه ذاكرة ووقت وتكلفة أكتر. وحتى لو الكلام دخل كله، النص بياخد انتباه أقل.", "Attention makes every word look at everything before it: double the text ≈ 4× the work, plus more memory, time and cost. And even when everything fits, the middle gets less attention."]),
 
     Q("f5a", "f5", "mcq", ["إيه المعادلة اللي الكتاب بيختم بيها لأحسن نتيجة؟", "Which equation does the book end with for the best result?"], [
       o("إنسان بيفكّر + بيانات كويسة + ذكاء اصطناعي", "A thinking human + good data + AI"),
@@ -5614,6 +5689,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     G("model", "النموذج اللغوي", "Language model", "Language Model", 34, "برنامج اتعلّم من كمية هائلة من النصوص إزاي يفهم اللغة ويولّد إجابات. معرفته متخزنة في «أوزانه»، وبيشتغل على الـ Context اللي إنت بتدّيهوله.", "A program that learned from huge amounts of text to understand language and generate answers. Its knowledge is stored in its “weights”, and it works with the context you give it.", "Claude وChatGPT وGemini أمثلة على خدمات شغالة بنماذج لغوية.", "Claude, ChatGPT and Gemini are services running on language models."),
     G("parameters", "المعاملات (الأوزان)", "Parameters (weights)", "Parameters / Weights", 34, "أرقام جوا النموذج بيتعلمها في التدريب وبتخزّن معرفته، وبتتعد بالمليارات (B) أو التريليونات (T). وكل ما زاد عددها زادت القدرة، وزادت معاها التكلفة والبطء.", "Internal numbers the model learns in training that store its knowledge, counted in billions (B) or trillions (T). More of them raises ability but also cost and slowness.", "نموذج 7B يعني 7 مليارات معامل.", "A 7B model has 7 billion parameters."),
     G("token", "التوكن", "Token", "Token", 34, "قطعة صغيرة من النص (كلمة أو جزء منها)، ودي وحدة القراءة والمحاسبة. التسعير بالمليون توكن، والعربي بيستهلك توكنز أكتر من الإنجليزي لنفس المعنى.", "A small piece of text (a word or part of one) — the unit of reading and billing. Pricing is per million tokens, and Arabic text uses more tokens than English for the same meaning.", "المليون توكن يعادل تقريبًا كتاب ضخم.", "A million tokens is roughly a huge book."),
+    G("compaction", "ضغط الـ Context", "Context compaction", "Context Compaction", null, "لما نافذة الـ Context تقرب تتملي، التطبيق بيلخّص الجزء القديم من المحادثة ويحط الملخص مكانه علشان يكمّل. بيحفظ الفكرة العامة، لكن ممكن يضيّع تفاصيل زي الأرقام والاستثناءات.", "When the context window nears its limit, the app summarises the older part of the chat and puts the summary in its place so it can continue. It keeps the gist but may drop details such as figures and exceptions.", "محادثة طويلة اتلخّصت لـ«تقرير مبيعات للمدير»، وضاع منها «بالجنيه» و«ما عدا فرع طنطا».", "A long chat was compacted to “sales report for the manager”, losing “in EGP” and “except the Tanta branch”.", ["f6"]),
     G("context_window", "نافذة الـ Context", "Context window", "Context Window", 34, "أقصى كمية نص النموذج يقدر يقراها ويفتكرها في طلب واحد، وبتتقاس بالتوكنز. ده مهم مع المستندات الطويلة أو المشاريع الكاملة.", "The most text a model can read and remember in one request, measured in tokens. It matters for long documents or whole projects."),
     G("moe", "خليط الخبراء", "Mixture of Experts", "Mixture of Experts (MoE)", 34, "تصميم حديث للنماذج: ضخم إجمالًا بس بيشغّل جزء صغير منه لكل سؤال، فبيدي ذكاء نموذج كبير بتكلفة قريبة من الصغير.", "A modern model design: huge overall but activating only a small part per question, giving big-model intelligence at near small-model cost.", "«770B إجمالي، 40B نشط».", "“770B total, 40B active”."),
     G("open_weights", "الأوزان المفتوحة", "Open weights", "Open Weights", 35, "نموذج تقدر تنزّل أوزانه وتشغّله جوا جهازك أو شبكة شركتك عشان البيانات ما تخرجش. مش بالضرورة ترخيص مجاني بالكامل لكل استخدام.", "A model whose weights you can download and run on your machine or company network so data stays in. It doesn’t necessarily mean a fully free licence for every use."),
@@ -6283,6 +6359,162 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     ]
   };
   A.decks = (A.decks || []).concat([A.contextStory]);
+})(window.ACADEMY = window.ACADEMY || {});
+
+/* data/window-story.js */
+/* Why the Context is limited — the story deck that opens lesson f6 (fourth in unit 0, right after the Prompt & Context deck).
+   One hero runs through every slide: a long chat where the model «forgot» the first rule («الأرقام بالجنيه»), and the question
+   «ليه نسي اللي قلتهوله في الأول؟». The picture that carries the deck is the Context as a work table of fixed size: what is on it
+   the model sees, what falls off does not exist for it. Each slide gives one rule with its reason («القاعدة، وليه؟»).
+   Model names carry a word joiner after the hyphen (GPT-\u20604) so a line never breaks inside them.
+   Sizes are rounded public figures; page counts assume ~500 English words a page and ~¾ of a word per token.
+   Same slide schema as data/model-story.js; drawings are the w_* entries in engine/history.js. */
+"use strict";
+(function (A) {
+  const u = (ar, en) => ({ ar, en });
+  A.windowStory = {
+    id: "window", lesson: "f6",
+    kicker: u("ذاكرة الموديل القصيرة · الحكاية كاملة في ٧ دقايق", "The model's short memory · the whole story in 7 minutes"),
+    title: u("ليه الـ Context محدود؟ وإزاي الموديل بينسى؟", "Why is the Context limited, and how does a model forget?"),
+    lead: u("في الدرس اللي فات عرفنا إن الموديل ما بيشوفش غير الـ Context. في الحكاية دي هنعرف إن المساحة دي ليها حد: كانت صغيرة وكبرت، وليه ما بتكبرش على طول، وإيه اللي بيحصل لما تتملي، وإزاي تختار إنت إيه اللي يفضل قدامه.",
+      "In the last lesson we saw that a model sees nothing but the Context. In this story we'll see that this space has a limit: how it was small and grew, why it can't simply keep growing, what happens when it fills up, and how you decide what stays in front of it."),
+    answerLabel: u("القاعدة، وليه؟", "The rule, and why"),
+    ideaLabel: u("الفكرة في جملة", "The idea in one line"),
+    question: u("ليه نسي اللي قلتهوله في الأول؟", "Why did it forget what I told it at the start?"),
+    finalQuestion: u("إيه اللي يستاهل مكان على الترابيزة؟", "What deserves a place on the table?"),
+    note: u("الأحجام والتواريخ أرقام عامة مقرّبة، وتحويلها لصفحات تقريبي للنص الإنجليزي. «الترابيزة» تشبيه مبسّط لعملية أعقد.", "Sizes and dates are rounded public figures; page counts are rough, for English text. The “table” is a simplified picture of a more complex process."),
+    ui: {
+      prev: u("اللي فات", "Previous"), next: u("اللي بعده", "Next"),
+      play: u("شغّل الحكاية", "Play the story"), pause: u("وقّف", "Pause"), replay: u("من الأول", "From the start"),
+      skip: u("تخطّى للدرس", "Skip to the lesson"), start: u("نكمّل الدرس", "Continue the lesson"),
+      slideOf: u("{n} من {t}", "{n} of {t}"), timeline: u("خطوات الحكاية", "Story steps"),
+      deck: u("ليه الـ Context محدود وإزاي الموديل بينسى، في شرائح", "Why the Context is limited and how a model forgets, in slides"), slide: u("شريحة", "slide"),
+      keys: u("استخدم الأسهم أو اسحب على الشاشة", "Use the arrow keys or swipe")
+    },
+    slides: [
+      {
+        id: "forgot", art: "w_forgot", year: u("الموقف", "Scene"), mark: u("٠١", "01"), era: u("محادثة طويلة", "A long chat"),
+        title: u("قلتله «الأرقام بالجنيه»… وبعد ساعتين كتب بالدولار", "You said “figures in pounds”… two hours later it wrote dollars"),
+        story: [u("الساعة تسعة الصبح فتحت محادثة جديدة، وأول رسالة كتبت فيها: «التقرير للمدير العام، وكل الأرقام بالجنيه المصري». وبعدها اشتغلتوا مع بعض: رفعت ملفات المبيعات، وسألت، وعدّلت، وطلبت جداول.",
+          "At nine in the morning you opened a new chat and wrote, in the first message: “The report is for the general manager, and every figure is in Egyptian pounds.” Then you worked together: you uploaded the sales files, asked, edited and asked for tables."),
+        u("الساعة حداشر طلبت الملخص النهائي، فطلع شكله مظبوط ومرتب… بس الإجمالي مكتوب بالدولار. الموديل ما اتغيّرش، وإنت ما غيّرتش طلبك. طب إيه اللي حصل؟",
+          "At eleven you asked for the final summary. It came out neat and well organised… but the total was in dollars. The model didn't change and neither did your request. So what happened?")],
+        answer: u("لما الموديل يتجاهل شرط قلته بدري، ما تفترضش إنه «عنيد». الأرجح إن الشرط ده ما بقاش قدامه.", "When a model ignores a rule you gave early on, don't assume it is “stubborn” — most likely the rule is no longer in front of it."),
+        idea: u("الموديل ما بينساش زينا. هو بيشتغل على اللي قدامه بس.", "A model doesn't forget the way we do. It only works with what is in front of it.")
+      },
+      {
+        id: "table", art: "w_table", year: u("الترابيزة", "Table"), mark: u("٠٢", "02"), era: u("صورة نمشي بيها", "A picture to keep"),
+        title: u("الـ Context ترابيزة شغل مقاسها ثابت", "The Context is a work table of fixed size"),
+        story: [u("تخيّل الـ Context ترابيزة قدام الموديل. كل حاجة لازم تتحط عليها علشان يشوفها: تعليمات التطبيق، والملفات اللي رفعتها، ورسايلك، وكمان ردوده هو. وكل رسالة جديدة، التطبيق بيبعتله الترابيزة كلها تاني من الأول.",
+          "Picture the Context as a table in front of the model. Everything has to be placed on it for the model to see it: the app's instructions, the files you uploaded, your messages — and its own replies too. With every new message, the app sends it the whole table again from the start."),
+        u("والترابيزة مقاسها ثابت لكل موديل. طول ما المحادثة قصيرة، كل حاجة عليها. لكن لما تتملي، لازم حاجة تتشال علشان الجديد ياخد مكان. واللي بيتشال ما بيروحش «ركن في الذاكرة»، ده بيختفي بالنسبة للموديل تمامًا.",
+          "And the table's size is fixed for each model. While the chat is short, everything fits. Once it is full, something has to go to make room for the new. What goes doesn't move to “a corner of its memory” — for the model it simply ceases to exist.")],
+        answer: u("اعتبر كل محادثة ترابيزة ليها مساحة محدودة، وفكّر قبل ما تحط عليها. لأن الموديل ما يقدرش يبص على حاجة برّاها.", "Treat every chat as a table with limited room and think before you put things on it — the model cannot look at anything off it."),
+        idea: u("اللي على الترابيزة موجود، واللي وقع منها مش موجود.", "What's on the table exists; what fell off doesn't.")
+      },
+      {
+        id: "tokens", art: "w_tokens", year: u("المقياس", "Measure"), mark: u("٠٣", "03"), era: u("بنقيس بإيه؟", "Measured in what?"),
+        title: u("الترابيزة بتتقاس بالتوكنز، مش بالصفحات", "The table is measured in tokens, not pages"),
+        story: [u("فاكر التوكنز من «جوّا الموديل»؟ الموديل بيقطّع النص لحتت صغيرة، والحتت دي هي اللي بتشغل مكان على الترابيزة. كلمة إنجليزي قصيرة ممكن تبقى توكن واحد، وكلمة طويلة ممكن تبقى تلاتة.",
+          "Remember tokens from “Inside the model”? The model cuts text into small pieces, and those pieces are what take up room on the table. A short English word may be one token; a long word may be three."),
+        u("ومعلومة مهمة لينا: العربي بيستهلك توكنز أكتر من الإنجليزي لنفس المعنى، وساعات الضعف. يعني نفس التقرير بالعربي بياخد مساحة أكبر. وملف PDF طويل ممكن ياخد نص الترابيزة لوحده، وردود الموديل الطويلة بتاكل من نفس المساحة.",
+          "And something that matters to us: Arabic uses more tokens than English for the same meaning — sometimes twice as many. So the same report in Arabic takes more room. A long PDF can take half the table by itself, and the model's long replies eat into the same space.")],
+        answer: u("احسب المساحة بالمحتوى مش بعدد الرسايل. لأن ملف واحد كبير أو رد واحد طويل ممكن يملا الترابيزة أسرع من عشرين سؤال.", "Count room by content, not by number of messages — one big file or one long reply can fill the table faster than twenty questions."),
+        idea: u("كل حرف على الترابيزة ليه تمن في المساحة.", "Every character on the table costs space.")
+      },
+      {
+        id: "grew", art: "w_grew", year: u("٢٠١٩–٢٠٢٤", "2019–2024"), mark: u("٠٤", "04"), era: u("كانت صغيرة… وكبرت", "Small… then big"),
+        title: u("الترابيزة كانت صفحة ونص… وبقت مكتبة صغيرة", "The table was a page and a half… now it's a small library"),
+        story: [u("سنة ٢٠١٩ الموديل المشهور وقتها (GPT-\u20602) كان بيشوف حوالي ألف توكن، يعني صفحة ونص تقريبًا. وفي ٢٠٢٠ بقوا ألفين (GPT-\u20603). ولما ChatGPT نزل في آخر ٢٠٢٢ كان حوالي ٤ آلاف، يعني ست صفحات. علشان كده المحادثات الطويلة وقتها كانت بتتلخبط بسرعة.",
+          "In 2019 the well-known model of the day (GPT-\u20602) saw about a thousand tokens — roughly a page and a half. In 2020 it was two thousand (GPT-\u20603). When ChatGPT launched at the end of 2022 it was about 4,000 — six pages. That's why long chats back then got muddled so quickly."),
+        u("وبعدين الحجم قفز: في ٢٠٢٣ وصل ٣٢ ألف (GPT-\u20604) وبعدها ١٠٠ ألف (Claude)، يعني كتاب متوسط. وفي ٢٠٢٤ وصل مليون توكن (Gemini 1.5)، يعني حوالي ١٥٠٠ صفحة. النهارده موديلات كتير بتشتغل بمئات الآلاف، وفيه موديلات بمليون وأكتر.",
+          "Then size leapt: in 2023 it reached 32,000 (GPT-\u20604) and then 100,000 (Claude) — a mid-sized book. In 2024 it reached a million tokens (Gemini 1.5), around 1,500 pages. Today many models work with hundreds of thousands, and some with a million or more.")],
+        answer: u("اعرف حجم الترابيزة في الأداة اللي بتستخدمها، ولاحظ إن النسخ المجانية ساعات بتديك مساحة أقل. لأن الحجم بيختلف من موديل لموديل ومن خطة لخطة.", "Know the table size of the tool you use, and note that free tiers sometimes give you less — size differs by model and by plan."),
+        idea: u("في خمس سنين الترابيزة كبرت حوالي ألف مرة.", "In five years the table grew about a thousand times.")
+      },
+      {
+        id: "grewwhy", art: "w_grewwhy", year: u("ليه كبرت؟", "Why it grew"), mark: u("٠٥", "05"), era: u("تلات أسباب", "Three reasons"),
+        title: u("ليه قدروا يكبّروها؟", "How did they manage to make it bigger?"),
+        story: [u("أول سبب: الأجهزة. الموديل بيشتغل على شرايح حسابات فيها ذاكرة سريعة، والذاكرة دي زادت جدًا مع كل جيل. وتاني سبب: الحساب بقى أذكى. المهندسين لقوا طرق ترتيب للحساب نفسه بتخلّي الجهاز يعمل نفس الشغل بذاكرة ووقت أقل.",
+          "First: hardware. Models run on compute chips with fast memory, and that memory grew a lot with each generation. Second: smarter computation. Engineers found ways to arrange the same calculation so the chip does the same work with less memory and time."),
+        u("وتالت سبب: التدريب. الموديل لازم يتدرّب على نصوص طويلة علشان يعرف يربط أولها بآخرها. فبقوا يكمّلوا تدريبه على نصوص أطول وأطول بالتدريج. ومع ده الطلب زاد: الناس عايزة ترفع عقود كاملة وتقارير سنوية ومشاريع برمجة.",
+          "Third: training. A model has to be trained on long texts to learn to connect their beginning to their end, so it was trained further on longer and longer texts, step by step. And demand grew alongside: people want to upload whole contracts, annual reports and software projects.")],
+        answer: u("ما تتعاملش مع الحجم الكبير كإنه ببلاش. لأن كل زيادة جت بمجهود هندسي، وليها تمن لسه موجود: في الوقت، والتكلفة، والجودة.", "Don't treat a big size as free — each increase came from engineering effort and still carries a price in time, cost and quality."),
+        idea: u("الترابيزة كبرت بالهندسة، مش لأن الحد اختفى.", "The table grew through engineering — not because the limit went away.")
+      },
+      {
+        id: "square", art: "w_square", year: u("الحد الأول", "Limit 1"), mark: u("٠٦", "06"), era: u("ضعف الكلام = ٤ أضعاف الشغل", "Double the text, 4× the work"),
+        title: u("كل كلمة بتبص على كل اللي قبلها", "Every word looks at everything before it"),
+        story: [u("في «جوّا الموديل» شفنا الانتباه: كل كلمة بتبص على الكلمات اللي قبلها علشان تفهم معناها. ده سر قوة الموديل، وهو كمان سبب الحد. ٤ كلمات محتاجين ١٠ نظرات. ٨ كلمات محتاجين ٣٦، يعني الكلام اتضاعف والشغل بقى حوالي ٤ أضعاف.",
+          "In “Inside the model” we saw attention: every word looks at the words before it to understand its meaning. That is the model's strength — and also the source of the limit. Four words need 10 looks. Eight words need 36: the text doubled and the work became about four times as much."),
+        u("ومع مليون توكن، الرقم بيوصل حوالي ٥٠٠ مليار نظرة، وده في كل طبقة من طبقات الموديل. علشان كده تكبير الترابيزة مش زي تطويل حبل. كل متر زيادة بيكلّف أكتر من اللي قبله.",
+          "With a million tokens the count reaches about 500 billion looks — in every layer of the model. That's why enlarging the table isn't like lengthening a rope: every extra metre costs more than the one before.")],
+        answer: u("خلّي الـ Context على قد المهمة. لأن الشغل بيكبر أسرع بكتير من طول الكلام.", "Keep the Context sized to the task — the work grows much faster than the length of the text."),
+        idea: u("الطول بيزيد خطوة، والشغل بيزيد خطوات.", "Length grows by a step; the work grows by many.")
+      },
+      {
+        id: "cost", art: "w_cost", year: u("الحد التاني", "Limit 2"), mark: u("٠٧", "07"), era: u("ذاكرة ووقت وفلوس", "Memory, time, money"),
+        title: u("كل حاجة على الترابيزة بتاخد ذاكرة ووقت وفلوس", "Everything on the table costs memory, time and money"),
+        story: [u("علشان الموديل يرد بسرعة، بيحتفظ بملاحظة صغيرة عن كل توكن على الترابيزة في ذاكرة الشريحة نفسها. ترابيزة أكبر يعني ذاكرة أكتر لكل مستخدم في نفس اللحظة. والذاكرة دي أغلى حاجة في الجهاز.",
+          "To reply quickly, the model keeps a small note about every token on the table in the chip's own memory. A bigger table means more memory for each user at the same moment — and that memory is the most expensive part of the machine."),
+        u("وكمان، كل رسالة جديدة بتتقري معاها الترابيزة كلها. فالمحادثة الطويلة بتبقى أبطأ في الرد، وأغلى في الحساب لأن الخدمة بتحاسب على كل التوكنز اللي بتتقري، وده سبب إن الخطط المجانية ساعات بتقفل المحادثة أو تقصّرها.",
+          "And every new message is read together with the whole table. So a long chat replies more slowly and costs more, because the service bills for every token it reads — one reason free plans sometimes cap or shorten a conversation.")],
+        answer: u("افتح محادثة جديدة لما الموضوع يتغيّر. لأن المحادثة الطويلة بتدفع تمن كل اللي فات في كل رسالة.", "Open a new chat when the topic changes — a long chat pays for everything before it in every message."),
+        idea: u("الترابيزة المليانة أبطأ وأغلى.", "A full table is slower and dearer.")
+      },
+      {
+        id: "middle", art: "w_middle", year: u("الحد التالت", "Limit 3"), mark: u("٠٨", "08"), era: u("الكبير مش دايمًا أحسن", "Bigger isn't always better"),
+        title: u("حتى لو الملف دخل كله… النص بيتوه", "Even when the whole file fits… the middle gets lost"),
+        story: [u("طب ليه ما نحطش كل حاجة وخلاص؟ لأن الدخول على الترابيزة مش معناه الانتباه. دراسة مشهورة سنة ٢٠٢٣ اسمها «تايه في النص» لقت إن الموديلات بتستخدم المعلومة اللي في أول الكلام وآخره أحسن بكتير من اللي في نصه.",
+          "So why not just put everything in? Because being on the table doesn't mean getting attention. A well-known 2023 study, “Lost in the Middle”, found that models use information at the start and end of the text far better than information in its middle."),
+        u("يعني لو رفعت عقد ٣٠٠ صفحة والشرط المهم في صفحة ١٥٠، ممكن يعدّي عليه. وكل ما الترابيزة تتملي بكلام ملوش لازمة، الانتباه بيتوزّع أكتر، والإجابة بتضعف حتى لو الحد لسه ما اتملاش.",
+          "So if you upload a 300-page contract and the key clause is on page 150, it may pass right over it. And the more the table fills with irrelevant text, the thinner the attention is spread and the weaker the answer — even before the limit is reached.")],
+        answer: u("ادّيه الجزء اللي يخص سؤالك، وقوله المعلومة المهمة فين. لأن الحشو بيسحب الانتباه من المهم.", "Give it the part that concerns your question and tell it where the key fact is — padding pulls attention away from what matters."),
+        idea: u("مساحة أكبر مش معناها فهم أكتر.", "More room doesn't mean more understanding.")
+      },
+      {
+        id: "falloff", art: "w_falloff", year: u("النسيان ١", "Forgetting 1"), mark: u("٠٩", "09"), era: u("أول اللي دخل… أول اللي يطلع", "First in, first out"),
+        title: u("لما الترابيزة تتملي، الأقدم بيقع الأول", "When the table is full, the oldest falls first"),
+        story: [u("نرجع لموقفنا. المحادثة طولت والملفات كترت، والترابيزة اتملت. ساعتها التطبيق بيعمل حاجة من اتنين: يا يقولك «المحادثة طويلة، افتح واحدة جديدة»، يا يشيل أقدم الرسايل بهدوء علشان يفضل يرد، وغالبًا من غير ما ينبّهك.",
+          "Back to our scene. The chat grew long, the files piled up and the table filled. At that point the app does one of two things: it tells you “this chat is too long, start a new one”, or it quietly drops the oldest messages so it can keep replying — usually without telling you."),
+        u("وأقدم رسالة كانت إيه؟ «كل الأرقام بالجنيه». أهم شرط اتقال في أول دقيقة، فكان أول حاجة وقعت. والموديل لما كتب الملخص ما شافش أي حاجة عن العملة، فاختار الأرجح من خبرته العامة: الدولار.",
+          "And what was the oldest message? “Every figure in pounds.” The most important rule, given in the first minute, was the first thing to fall off. When the model wrote the summary it saw nothing about currency, so it chose the most likely option from general experience: dollars.")],
+        answer: u("كرّر الشروط المهمة في الطلب المهم نفسه. لأن الشرط اللي اتقال في الأول هو أول حاجة ممكن تقع.", "Repeat key rules inside the important request itself — a rule given at the start is the first thing that can fall off."),
+        idea: u("أقدم رسالة هي أول رسالة بتتنسي.", "The oldest message is the first to be forgotten.")
+      },
+      {
+        id: "compact", art: "w_compact", year: u("النسيان ٢", "Forgetting 2"), mark: u("١٠", "10"), era: u("التلخيص بيضيّع تفاصيل", "Summaries drop details"),
+        title: u("وساعات بدل ما يشيل… بيلخّص", "Sometimes instead of dropping… it summarises"),
+        story: [u("فيه تطبيقات أذكى: بدل ما ترمي الرسايل القديمة، بتلخّصها في كام سطر وتحط الملخص مكانها. ده اسمه ضغط الـ Context. الملخص بيحافظ على الفكرة العامة: «بنجهّز تقرير مبيعات الربع للمدير».",
+          "Some apps are smarter: instead of throwing old messages away, they summarise them in a few lines and put the summary in their place. This is called Context compaction. The summary keeps the general idea: “we're preparing the quarterly sales report for the manager.”"),
+        u("بس الملخص بطبيعته بيضيّع تفاصيل: العملة، والاستثناء اللي قلته «ما عدا فرع طنطا»، والرقم الدقيق ٣٫٧٪. والتفاصيل دي بالظبط هي اللي بتفرق بين تقرير مظبوط وتقرير شكله مظبوط. وهنشوف في الدرس الجاي إن الوكلاء بيعملوا الضغط ده كتير جدًا.",
+          "But a summary drops details by nature: the currency, the exception you gave (“except the Tanta branch”), the exact 3.7%. Those details are exactly what separate a correct report from one that only looks correct. In the next lesson we'll see that agents compact like this very often.")],
+        answer: u("اكتب التفاصيل الحرجة في مكان ثابت برّه المحادثة، والصقها تاني لما تحتاجها. لأن أي ملخص تلقائي ممكن يشيلها.", "Keep critical details somewhere fixed outside the chat and paste them back when needed — any automatic summary may drop them."),
+        idea: u("الملخص بيفتكر الحكاية، وبينسى الأرقام.", "A summary remembers the story and forgets the numbers.")
+      },
+      {
+        id: "habits", art: "w_habits", year: u("إنت بتعمل إيه؟", "What you do"), mark: u("١١", "11"), era: u("خمس عادات", "Five habits"),
+        title: u("خمس عادات تخلّي الترابيزة في صفّك", "Five habits that keep the table on your side"),
+        story: [u("الحل مش إنك تخاف من المحادثات الطويلة. الحل إنك تبقى إنت اللي بتقرر إيه اللي يتحط على الترابيزة: الشروط المهمة تتقال في الأول وتتكرر في الطلب المهم، وكل مهمة جديدة في محادثة جديدة ومعاها ملخص قصير إنت كاتبه.",
+          "The answer isn't to fear long chats. It's to be the one who decides what goes on the table: key rules stated at the start and repeated in the important request, and each new task in a new chat, with a short summary you wrote yourself."),
+        u("وادّيه من الملف الجزء اللي يخص سؤالك، مش الملف كله. وقبل الخطوة الكبيرة اطلب منه يكتب الشروط اللي فاكرها، فلو حاجة وقعت هتبان قبل ما تبان في التقرير. وخلّي عندك «ورقة Context» محفوظة برّه تلصقها لما تحتاجها.",
+          "Give it the part of the file that concerns your question, not the whole file. Before a big step, ask it to list the rules it remembers — if something fell off, you'll see it before it shows up in the report. And keep a “Context sheet” saved outside the chat to paste in when needed.")],
+        answer: u("قبل أي خطوة مهمة، اسأله: «إيه الشروط اللي إنت شغال بيها دلوقتي؟». لأن ده بيكشف اللي وقع في ثانية.", "Before any important step, ask: “What rules are you working with right now?” — it reveals what fell off in seconds."),
+        idea: u("إنت مدير الترابيزة، مش الموديل.", "You manage the table, not the model.")
+      },
+      {
+        id: "recap", art: "w_recap", year: u("الخلاصة", "Summary"), mark: u("١٢", "12"), era: u("الحكاية في سطر", "The story in one line"),
+        title: u("الخلاصة: ترابيزة محدودة، وإنت اللي بتختار اللي عليها", "In short: a limited table, and you choose what's on it"),
+        story: [u("نرجع لسؤالنا: ليه نسي «بالجنيه»؟ لأن الـ Context ترابيزة محدودة. الحسبة بتكبر أسرع من الكلام، والمساحة بتاخد ذاكرة ووقت وفلوس، والنص الطويل بيتوه. ولما الترابيزة تتملي، الأقدم بيقع أو بيتلخّص.",
+          "Back to our question: why did it forget “in pounds”? Because the Context is a limited table: the computation grows faster than the text, space costs memory, time and money, and a long middle gets lost. When the table is full, the oldest falls off or gets summarised."),
+        u("والجملة اللي تمشي بيها: اللي على الترابيزة بس هو اللي موجود. وفي الدرس الجاي هنشوف إزاي الذاكرة والمساعد والوكيل بيتعاملوا مع الترابيزة دي، وليه الوكيل كل شوية بيضغط الـ Context.",
+          "The sentence to leave with: only what is on the table exists. In the next lesson we'll see how memory, assistants and agents deal with this table — and why an agent keeps compacting its Context.")],
+        answer: u("اختار اللي يتحط قدامه بنفس الاهتمام اللي بتختار بيه كلام الـ Prompt. لأن المساحة محدودة، والموديل بيفهم على قد اللي قدامه.", "Choose what goes in front of it with the same care you give the words of your Prompt — space is limited, and the model understands only as much as is in front of it."),
+        idea: u("مش مهم الترابيزة قد إيه، المهم إيه اللي عليها.", "What matters isn't the size of the table but what's on it.")
+      }
+    ]
+  };
+  A.decks = (A.decks || []).concat([A.windowStory]);
 })(window.ACADEMY = window.ACADEMY || {});
 </script>
 <script>/* engine/core.js */
@@ -9905,6 +10137,170 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     }
   });
 
+  /* ---------- drawings for "why the Context is limited" (data/window-story.js) ---------- */
+  const digits = (s) => (ar() ? String(s).replace(/\d/g, (c) => "٠١٢٣٤٥٦٧٨٩"[c]) : String(s));
+  const grow = (x, y, w, h, cls, d) =>   // a bar that grows from the reading start
+    `<rect class="an grow ${cls}" style="--d:${d}s;transform-origin:${ar() ? "right" : "left"} center" x="${ar() ? 480 - x - w : x}" y="${y}" width="${w}" height="${h}" rx="${Math.min(6, h / 2)}"/>`;
+  Object.assign(ART, {
+    w_forgot: () => {
+      const me = mx(258), it = mx(146), clk = mx(424);
+      const clock = (y, a, label, d) => `<g ${an("pop", d)}><circle cx="${clk}" cy="${y}" r="24" class="f-s1 s-ink2" stroke-width="2.5"/>
+        <line x1="${clk}" y1="${y}" x2="${clk}" y2="${y - 16}" class="s-ink2" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="${clk}" y1="${y}" x2="${(clk + 11 * Math.cos(a)).toFixed(1)}" y2="${(y + 11 * Math.sin(a)).toFixed(1)}" class="s-acc" stroke-width="3.5" stroke-linecap="round"/>
+        ${txt(clk, y + 44, label, "t-ink2", 13, bold)}</g>`;
+      const bars = (y, ws, d) => `<g ${an("fade", d)}>${ws.map((w, i) => `<rect x="${it - 70}" y="${y + i * 16}" width="${w}" height="9" rx="4.5" class="f-s3"${ar() ? ` transform="translate(${140 - w} 0)"` : ""}/>`).join("")}</g>`;
+      return `<g ${an("rise", 0.05)}>${box(mx(206), 166, 292, 278, "f-s1 s-line2")}</g>
+      <g ${an("pop", 0.3)}>${box(me, 58, 176, 34, "f-acc", 0)}${txt(me, 63, ar() ? "«كل الأرقام بالجنيه»" : "“every figure in EGP”", "t-white", 12.5, bold)}</g>
+      ${bars(94, [140, 104], 0.55)}
+      <g ${an("rise", 0.75)}>${box(me, 142, 150, 30, "f-acc-soft s-acc")}${txt(me, 147, ar() ? "ملفات المبيعات" : "sales files", "t-ink", 12, bold)}</g>
+      ${bars(172, [128, 140, 90], 0.95)}
+      <g ${an("rise", 1.15)}>${box(me, 230, 150, 30, "f-acc-soft s-acc")}${txt(me, 235, ar() ? "الملخص النهائي؟" : "final summary?", "t-ink", 12, bold)}</g>
+      <g ${an("pop", 1.5)}>${box(it, 274, 160, 36, "f-s2 s-ink2")}${txt(it, 279, ar() ? "الإجمالي: ١٢٬٤٠٠ $" : "Total: $12,400", "t-ink", 13, bold)}</g>
+      <path ${an("draw", 1.9, "s-rose")} pathLength="1" d="M${mx(76)} 262 C ${mx(30)} 190, ${mx(70)} 90, ${mx(168)} 64" stroke-width="2.5" stroke-dasharray="1" fill="none"/>
+      <g ${an("pop", 2.3)}><circle cx="${mx(50)}" cy="170" r="15" class="f-rose"/>${txt(mx(50), 176, ar() ? "؟" : "?", "t-white", 16, bold)}</g>
+      ${clock(70, Math.PI, ar() ? "٩:٠٠" : "9:00", 0.2)}
+      <path ${an("draw", 0.9, "s-line2")} pathLength="1" d="M${clk} 136 V 190" stroke-width="2.5" stroke-dasharray="1" fill="none"/>
+      ${clock(232, -2 * Math.PI / 3, ar() ? "١١:٠٠" : "11:00", 1.3)}`;
+    },
+    w_table: () => {
+      const X = rowX(4, 78, 10);
+      const items = ar() ? ["التعليمات", "ملفاتك", "رسايلك", "ردوده"] : ["rules", "files", "messages", "replies"];
+      const fx = mx(440);
+      return `<g ${an("fade", 0)}>${txt(240, 72, ar() ? "الـ Context = ترابيزة الشغل" : "the Context = the work table", "t-acc", 15, 'font-weight="800"')}</g>
+      <g ${an("rise", 0.05)}><rect x="96" y="250" width="14" height="40" rx="4" class="f-ink3"/><rect x="370" y="250" width="14" height="40" rx="4" class="f-ink3"/>${box(240, 176, 372, 150, "f-s2 s-line2", 2.5)}</g>
+      ${items.map((s, i) => `<g ${an("pop", 0.35 + i * 0.15)}>${chip(X(i), 146, 78, s, i === 0 ? "f-s1 s-ink3" : i === 3 ? "f-mint-soft s-mint" : "f-acc-soft s-acc", "t-ink", 12.5)}</g>`).join("")}
+      <g ${an("fade", 1.0)}>${[[150, 118], [240, 150], [330, 96]].map(([x, w]) => `<rect x="${x - w / 2}" y="${200}" width="${w}" height="12" rx="6" class="f-s3"/>`).join("")}${[[196, 132], [300, 110]].map(([x, w]) => `<rect x="${x - w / 2}" y="${222}" width="${w}" height="12" rx="6" class="f-s3"/>`).join("")}</g>
+      <path ${an("draw", 1.35, "s-rose")} pathLength="1" d="M${mx(414)} 236 Q ${mx(436)} 246 ${fx} 270" stroke-width="2.5" fill="none" marker-end="url(#aih-arrow)"/>
+      <g transform="rotate(${ar() ? -16 : 16} ${fx} 292)"><g ${an("rise", 1.55)}>${box(fx, 292, 76, 28, "f-rose-soft s-rose", 2, 'stroke-dasharray="4 4"')}${txt(fx, 297, ar() ? "أقدم رسالة" : "oldest msg", "t-rose", 11.5, bold)}</g></g>
+      ${txt(220, 310, ar() ? "اللي على الترابيزة بس هو اللي بيشوفه" : "it sees only what is on the table", "t-ink2", 13, bold)}`;
+    },
+    w_tokens: () => {
+      const seg = ar() ? [["تعليمات", 56, "f-ink3"], ["ملف PDF طويل", 150, "f-acc"], ["المحادثة", 92, "f-acc-soft"], ["ردوده", 72, "f-mint"]]
+        : [["rules", 56, "f-ink3"], ["a long PDF", 150, "f-acc"], ["the chat", 92, "f-acc-soft"], ["its replies", 72, "f-mint"]];
+      let x = 40;
+      const parts = seg.map(([s, w, c], i) => { const at = x; x += w; const cx = ar() ? 480 - at - w / 2 : at + w / 2;
+        return `${grow(at, 74, w, 34, c, 0.2 + i * 0.25)}<g ${an("fade", 0.4 + i * 0.25)}>${txt(cx, 132, s, "t-ink2", 11.5, bold)}</g>`; }).join("");
+      const ex = ar() ? 480 - x - 30 / 2 : x + 15;
+      const row = (y, n, cls, label, d) => `<g ${an("fade", d)}>${txt(mx(96), y + 17, label, "t-ink2", 13, bold)}</g>
+        ${Array.from({ length: n }, (_, k) => `<rect ${an("pop", d + 0.1 + k * 0.08, cls)} x="${ar() ? 480 - 150 - 24 - k * 30 : 150 + k * 30}" y="${y}" width="24" height="24" rx="5" stroke-width="2"/>`).join("")}
+        <g ${an("fade", d + 0.2 + n * 0.08)}>${txt(ar() ? 480 - 150 - n * 30 - 18 : 150 + n * 30 + 18, y + 18, digits(n), "t-ink", 15, 'font-weight="800"')}</g>`;
+      return `${txt(240, 56, ar() ? "مساحة الترابيزة (بالتوكنز)" : "table space (in tokens)", "t-ink3", 12.5, bold)}
+      ${parts}${grow(x, 74, 30, 34, "f-s3", 1.2)}<g ${an("fade", 1.3)}>${txt(ex, 132, ar() ? "فاضي" : "free", "t-ink3", 11.5, bold)}</g>
+      <rect x="40" y="74" width="400" height="34" rx="6" class="s-ink3" fill="none" stroke-width="1.5"/>
+      ${row(176, 4, "f-acc-soft s-acc", ar() ? "إنجليزي" : "English", 1.4)}
+      ${row(222, 8, "f-mint-soft s-mint", ar() ? "عربي" : "Arabic", 1.8)}
+      ${txt(240, 290, ar() ? "نفس الجملة… توكنز أكتر بالعربي (ساعات الضعف)" : "same sentence… more tokens in Arabic (sometimes double)", "t-ink2", 12.5, bold)}`;
+    },
+    w_grew: () => {
+      const D = [["2019", "GPT-2", 1024], ["2020", "GPT-3", 2048], ["2022", "ChatGPT", 4096], ["2023", "GPT-4", 32768], ["2023", "Claude", 100000], ["2024", "Gemini 1.5", 1000000]];
+      const pg = ar() ? ["صفحة ونص", "٣ صفحات", "٦ صفحات", "٥٠ صفحة", "١٥٠ صفحة", "١٥٠٠ صفحة"] : ["1.5 pages", "3 pages", "6 pages", "50 pages", "150 pages", "1,500 pages"];
+      const X = rowX(6, 50, 22), base = 240, hOf = (t) => (Math.log10(t) - 2.5) * 56;
+      return `<line x1="26" y1="${base}" x2="454" y2="${base}" class="s-line2" stroke-width="2"/>
+      ${D.map(([y, m, t], i) => { const h = hOf(t); return `<rect class="an vbar ${i < 3 ? "f-acc-soft s-acc" : "f-acc"}" style="--d:${0.15 + i * 0.22}s" x="${X(i) - 25}" y="${(base - h).toFixed(1)}" width="50" height="${h.toFixed(1)}" rx="6" stroke-width="2"/>
+        <g ${an("fade", 0.45 + i * 0.22)}>${txt(X(i), base - h - 9, pg[i], i < 3 ? "t-ink2" : "t-acc", 11.5, bold)}</g>
+        <g ${an("fade", 0.3 + i * 0.22)}>${txt(X(i), base + 20, digits(y), "t-ink", 12.5, bold)}${txt(X(i), base + 36, m, "t-ink3", 10.5, 'font-weight="600" direction="ltr"')}</g>`; }).join("")}
+      ${txt(240, 306, ar() ? "الارتفاع مضغوط علشان الفرق ضخم: حوالي ألف مرة" : "heights are compressed: the gap is about a thousandfold", "t-ink3", 12.5, bold)}`;
+    },
+    w_grewwhy: () => {
+      const R = ar() ? ["شرايح بذاكرة أكبر", "حساب أذكى", "تدريب على نصوص أطول"] : ["chips with more memory", "smarter computation", "training on longer texts"];
+      const cx = mx(124), tx = mx(360), dir = ar() ? -1 : 1, ix = cx - dir * 74;
+      const icon = [
+        (y) => `<rect x="${ix - 9}" y="${y - 9}" width="18" height="18" rx="3" class="f-white"/>${[-5, 0, 5].map((o) => `<path d="M${ix + o} ${y - 13} v4 M${ix + o} ${y + 9} v4 M${ix - 13} ${y + o} h4 M${ix + 9} ${y + o} h4" class="s-white" stroke-width="2"/>`).join("")}`,
+        (y) => `<path d="M${ix + 3} ${y - 11} l-9 13 h7 l-4 10 l11 -14 h-7z" class="f-white"/>`,
+        (y) => `<rect x="${ix - 6}" y="${y - 11}" width="13" height="17" rx="2" class="f-white" opacity=".6"/><rect x="${ix - 9}" y="${y - 7}" width="13" height="17" rx="2" class="f-white"/>`
+      ];
+      const ys = [90, 160, 230];
+      return `${ys.map((y, i) => `<g ${an("rise", 0.1 + i * 0.25)}>${box(cx, y, 204, 52, "f-s1 s-line2")}<circle cx="${ix}" cy="${y}" r="17" class="f-acc"/>${icon[i](y)}${txt(cx + dir * 20, y + 5, R[i], "t-ink", 12.5, bold)}</g>
+        <path ${an("draw", 0.6 + i * 0.25, "s-acc")} pathLength="1" d="M${cx + dir * 104} ${y} C ${cx + dir * 140} ${y}, ${tx - dir * 110} 160, ${tx - dir * 70} 160" stroke-width="2.5" fill="none" marker-end="url(#aih-arrow)"/>`).join("")}
+      ${[[120, 1.7, "f-acc-soft s-acc", "٢٠٢٤", "2024"], [80, 1.4, "f-s1 s-acc", "٢٠٢٣", "2023"], [40, 1.1, "f-acc", "", ""]].map(([s, d, c, a, e]) => `<g ${an("pop", d)}><rect x="${tx - s / 2}" y="${160 - s / 2}" width="${s}" height="${s}" rx="${s / 8}" class="${c}" stroke-width="2.5"/>${a ? txt(tx, 160 - s / 2 + 15, ar() ? a : e, "t-acc", 11.5, bold) : ""}</g>`).join("")}
+      <g ${an("pop", 1.2)}>${txt(tx, 165, digits(2020), "t-white", 11, bold)}</g>
+      ${txt(240, 300, ar() ? "كبرت… بس كل زيادة ليها تمن" : "it grew… but every step has a price", "t-ink2", 13, bold)}`;
+    },
+    w_square: () => {
+      const cs = 13;
+      const tri = (n, cx, oy, d) => { const ox = cx - (n * cs) / 2; let s = "";
+        for (let r = 0; r < n; r++) { let row = ""; for (let c = 0; c <= r; c++) row += `<rect x="${ar() ? ox + (n - 1 - c) * cs : ox + c * cs}" y="${oy + r * cs}" width="${cs - 2}" height="${cs - 2}" rx="2" class="${c === r ? "f-acc" : "f-acc-soft"}"/>`;
+          s += `<g ${an("fade", d + r * 0.07)}>${row}</g>`; }
+        return s; };
+      const a = mx(96), b = mx(268), c = mx(414);
+      return `${tri(4, a, 100, 0.1)}${tri(8, b, 74, 0.6)}
+      <g ${an("fade", 0.4)}>${txt(a, 194, ar() ? "٤ كلمات" : "4 words", "t-ink2", 12.5, bold)}${txt(a, 214, ar() ? "١٠ نظرات" : "10 looks", "t-acc", 14, 'font-weight="800"')}</g>
+      <path ${an("draw", 0.5, "s-ink3")} pathLength="1" d="M${mx(136)} 126 L ${mx(196)} 126" stroke-width="2.5" fill="none" marker-end="url(#aih-arrow)"/>
+      <g ${an("fade", 1.3)}>${txt(b, 202, ar() ? "٨ كلمات" : "8 words", "t-ink2", 12.5, bold)}${txt(b, 222, ar() ? "٣٦ نظرة" : "36 looks", "t-acc", 14, 'font-weight="800"')}</g>
+      <g ${an("rise", 1.7)}>${txt(c, 104, ar() ? "مليون توكن" : "a million tokens", "t-ink2", 12.5, bold)}</g>
+      <path ${an("draw", 1.9, "s-rose")} pathLength="1" d="M${c} 116 V 140" stroke-width="2.5" fill="none" marker-end="url(#aih-arrow)"/>
+      <g ${an("pop", 2.1)}>${txt(c, 166, ar() ? "≈ ٥٠٠ مليار" : "≈ 500 billion", "t-rose", 16, 'font-weight="800"')}${txt(c, 186, ar() ? "نظرة، في كل طبقة" : "looks, in every layer", "t-ink3", 11.5, bold)}</g>
+      <g ${an("pop", 2.4)}>${box(mx(182), 266, 236, 34, "f-acc-soft s-acc")}${txt(mx(182), 271, ar() ? "ضعف الكلام ≈ ٤ أضعاف الشغل" : "double the text ≈ 4× the work", "t-acc", 13, bold)}</g>`;
+    },
+    w_cost: () => {
+      const R = ar() ? ["ذاكرة الشريحة", "وقت الرد", "التكلفة"] : ["chip memory", "reply time", "cost"];
+      const long = [234, 196, 252], short = [52, 60, 44];
+      return `<g ${an("fade", 0.05)}><circle cx="${mx(176)}" cy="46" r="7" class="f-mint"/>${txt(mx(232), 51, ar() ? "محادثة قصيرة" : "short chat", "t-ink2", 12.5, bold)}
+        <circle cx="${mx(308)}" cy="46" r="7" class="f-rose"/>${txt(mx(364), 51, ar() ? "محادثة طويلة" : "long chat", "t-ink2", 12.5, bold)}</g>
+      ${R.map((s, i) => { const y = 102 + i * 64; return `<g ${an("fade", 0.15 + i * 0.2)}>${txt(mx(82), y + 5, s, "t-ink", 12.5, bold)}</g>
+        ${grow(150, y - 17, short[i], 14, "f-mint", 0.3 + i * 0.2)}${grow(150, y + 5, long[i], 14, "f-rose", 0.6 + i * 0.2)}`; }).join("")}
+      <line x1="${mx(146)}" y1="74" x2="${mx(146)}" y2="250" class="s-line2" stroke-width="2"/>
+      <g ${an("rise", 1.5)}>${box(240, 290, 330, 34, "f-s2 s-line2")}${txt(240, 295, ar() ? "كل رسالة بتتقري معاها الترابيزة كلها" : "every message is read with the whole table", "t-ink2", 12.5, bold)}</g>`;
+    },
+    w_middle: () => {
+      const X = rowX(15, 22, 6), lit = (i) => i < 3 || i > 11, key = 7;
+      const beam = (i, d) => `<path ${an("fade", d, "f-acc")} d="M${X(i)} 50 L${Math.min(X(i - 1), X(i + 1)) - 14} 132 L${Math.max(X(i - 1), X(i + 1)) + 14} 132 Z" fill-opacity=".16"/><circle ${an("pop", d, "f-amber")} cx="${X(i)}" cy="48" r="8"/>`;
+      return `${beam(1, 0.9)}${beam(13, 1.0)}
+      ${Array.from({ length: 15 }, (_, i) => `<g ${an("rise", 0.05 + i * 0.04)}><rect x="${X(i) - 11}" y="${136}" width="22" height="30" rx="3" class="${i === key ? "f-rose-soft s-rose" : lit(i) ? "f-acc-soft s-acc" : "f-s1 s-line2"}" stroke-width="1.6"${!lit(i) && i !== key ? ' opacity=".6"' : ""}/><rect x="${X(i) - 6}" y="146" width="12" height="3" rx="1.5" class="f-s3"/><rect x="${X(i) - 6}" y="153" width="9" height="3" rx="1.5" class="f-s3"/></g>`).join("")}
+      <g ${an("pop", 1.4)}>${box(X(key), 96, 120, 30, "f-rose", 0)}${txt(X(key), 101, ar() ? "الشرط المهم" : "the key clause", "t-white", 12, bold)}</g>
+      <path ${an("draw", 1.6, "s-rose")} pathLength="1" d="M${X(key)} 112 V 132" stroke-width="2.5" fill="none" marker-end="url(#aih-arrow)"/>
+      <g ${an("fade", 1.2)}>${txt(X(1), 190, ar() ? "أول الكلام" : "start", "t-acc", 12, bold)}${txt(X(13), 190, ar() ? "آخره" : "end", "t-acc", 12, bold)}${txt(X(key), 190, ar() ? "انتباه أقل" : "less attention", "t-rose", 12, bold)}</g>
+      ${txt(240, 252, ar() ? "عقد ٣٠٠ صفحة دخل كله… والشرط في صفحة ١٥٠ عدّى" : "a 300-page contract fits… and the clause on p. 150 slips by", "t-ink2", 12.5, bold)}
+      ${txt(240, 284, ar() ? "دخول الترابيزة ≠ الانتباه" : "on the table ≠ paid attention to", "t-ink3", 12.5, bold)}`;
+    },
+    w_falloff: () => {
+      const rows = ar() ? [["ملف المبيعات", 1], ["رده: جدول", 0], ["طلب تعديل", 1], ["رده: التعديل", 0]] : [["sales file", 1], ["reply: table", 0], ["edit request", 1], ["reply: edit", 0]];
+      const side = mx(424);
+      return `<g ${an("rise", 0.05)}>${box(240, 170, 232, 196, "f-s2 s-acc", 2.5)}</g>
+      ${rows.map(([s, me], i) => `<g ${an("fade", 0.2 + i * 0.12)}>${box(240 + (me ? 1 : -1) * (ar() ? -16 : 16), 98 + i * 38, 176, 28, me ? "f-acc-soft s-acc" : "f-s1 s-line2")}${txt(240 + (me ? 1 : -1) * (ar() ? -16 : 16), 103 + i * 38, s, "t-ink", 12, bold)}</g>`).join("")}
+      <g ${an("pop", 0.9)}>${box(240, 250, 176, 28, "f-mint", 0)}${txt(240, 255, ar() ? "اكتب الملخص" : "write the summary", "t-white", 12, bold)}</g>
+      <g ${an("rise", 1.3)}>${box(240, 34, 200, 30, "f-rose-soft s-rose", 2, 'stroke-dasharray="5 4"')}${txt(240, 39, ar() ? "«كل الأرقام بالجنيه»" : "“every figure in EGP”", "t-rose", 12, bold)}</g>
+      <path ${an("draw", 1.1, "s-rose")} pathLength="1" d="M240 70 V 54" stroke-width="2.5" fill="none" marker-end="url(#aih-arrow)"/>
+      <g ${an("fade", 1.4)}>${txt(side, 39, ar() ? "بيقع" : "falls off", "t-rose", 12.5, bold)}${txt(side, 255, ar() ? "بيدخل" : "comes in", "t-mint", 12.5, bold)}</g>
+      ${txt(240, 300, ar() ? "أقدم رسالة = أول رسالة تقع" : "the oldest message falls first", "t-ink2", 13, bold)}`;
+    },
+    w_compact: () => {
+      const a = mx(110), b = mx(380);
+      const keep = ar() ? ["بالجنيه", "ما عدا طنطا", "٣٫٧٪"] : ["in EGP", "except Tanta", "3.7%"];
+      const lines = [0, 1, 0, 2, 0, 3];
+      return `<g ${an("rise", 0.05)}>${box(a, 162, 176, 216, "f-s1 s-line2")}${txt(a, 76, ar() ? "المحادثة القديمة" : "the old chat", "t-ink3", 12, bold)}</g>
+      ${lines.map((k, i) => { const y = 102 + i * 28; return `<g ${an("fade", 0.2 + i * 0.08)}>${k ? `${box(a, y, 116, 22, "f-acc-soft s-acc", 1.6)}${txt(a, y + 4, keep[k - 1], "t-ink", 11.5, bold)}` : `<rect x="${a - 62}" y="${y - 5}" width="124" height="10" rx="5" class="f-s3"/>`}</g>`; }).join("")}
+      <path ${an("pop", 0.9, "f-acc-soft s-acc")} d="M${mx(206)} 104 L${mx(262)} 144 L${mx(262)} 176 L${mx(206)} 216 Z" stroke-width="2"/>
+      <path ${an("draw", 1.2, "s-ink2")} pathLength="1" d="M${mx(266)} 160 H ${mx(292)}" stroke-width="2.5" fill="none" marker-end="url(#aih-arrow)"/>
+      <g ${an("pop", 1.4)}>${box(b, 126, 164, 78, "f-mint-soft s-mint")}${txt(b, 110, ar() ? "الملخص" : "the summary", "t-mint", 12.5, 'font-weight="800"')}${txt(b, 134, ar() ? "تقرير مبيعات الربع" : "quarterly sales report", "t-ink2", 11.5, bold)}${txt(b, 152, ar() ? "للمدير" : "for the manager", "t-ink2", 11.5, bold)}</g>
+      <g ${an("fade", 1.8)}>${txt(b, 190, ar() ? "ضاع في التلخيص" : "lost in the summary", "t-rose", 12, bold)}</g>
+      ${keep.map((s, i) => { const y = 214 + i * 28; return `<g ${an("rise", 1.9 + i * 0.15)}>${box(b, y, 110, 22, "f-rose-soft s-rose", 1.6, 'stroke-dasharray="4 3"')}${txt(b, y + 4, s, "t-rose", 11.5, bold)}</g>
+        <path ${an("draw", 2.2 + i * 0.15, "s-rose")} pathLength="1" d="M${b - 46} ${y} H ${b + 46}" stroke-width="2" fill="none"/>`; }).join("")}
+      ${txt(240, 306, ar() ? "الملخص بيحفظ الفكرة… ويضيّع التفاصيل" : "a summary keeps the gist… and drops the details", "t-ink2", 13, bold)}`;
+    },
+    w_habits: () => {
+      const H = ar() ? ["الشروط المهمة في الأول، وكرّرها في الطلب المهم", "مهمة جديدة = محادثة جديدة + ملخص منك", "ادّيله الجزء اللي يخصه من الملف", "قبل الخطوة الكبيرة: «إيه الشروط اللي معاك؟»", "ورقة Context محفوظة برّه المحادثة"]
+        : ["state key rules first, repeat them later", "new task = new chat + your summary", "give only the part of the file it needs", "before a big step: “which rules do you hold?”", "a Context sheet saved outside the chat"];
+      const bx = mx(262), nx = mx(68), ck = mx(414);
+      return `${H.map((s, i) => { const y = 58 + i * 50; return `<g ${an("rise", 0.1 + i * 0.2)}>${box(bx, y, 336, 38, i === 4 ? "f-acc-soft s-acc" : "f-s1 s-line2")}<circle cx="${nx}" cy="${y}" r="17" class="f-acc"/>${txt(nx, y + 6, digits(i + 1), "t-white", 15, 'font-weight="800"')}${txt(bx - (ar() ? -10 : 10), y + 5, s, "t-ink", 12.5, bold)}</g>
+        <g ${an("pop", 0.5 + i * 0.2)}><circle cx="${ck}" cy="${y}" r="10" class="f-mint"/><path d="M${ck - 5} ${y} l3.5 3.5 l6.5 -7" class="s-white" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>`; }).join("")}
+      <g ${an("pop", 1.4)}>${box(240, 304, 200, 28, "f-acc", 0)}${txt(240, 309, ar() ? "إنت مدير الترابيزة" : "you manage the table", "t-white", 13, bold)}</g>`;
+    },
+    w_recap: () => {
+      const s = ar() ? ["ترابيزة محدودة", "اللي يقع بيتنسى", "الزحمة: أبطأ وأغلى وأقل تركيز", "إنت بتختار اللي عليها"]
+        : ["a limited table", "what falls off is forgotten", "crowded = slower, dearer, blurrier", "you choose what's on it"];
+      const pos = [[0, 0], [1, 0], [1, 1], [0, 1]];
+      const at = ([c, r]) => [ar() ? 360 - c * 240 : 120 + c * 240, 82 + r * 128];
+      const arrow = (p, q, d) => { const [x1, y1] = at(p), [x2, y2] = at(q);
+        return y1 === y2 ? `<path ${an("draw", d, "s-acc")} pathLength="1" d="M${x1 + (x2 > x1 ? 107 : -107)} ${y1} L${x2 + (x2 > x1 ? -109 : 109)} ${y2}" stroke-width="2.5" fill="none" marker-end="url(#aih-arrow)"/>`
+          : `<path ${an("draw", d, "s-acc")} pathLength="1" d="M${x1} ${y1 + 32} L${x2} ${y2 - 34}" stroke-width="2.5" fill="none" marker-end="url(#aih-arrow)"/>`; };
+      return `${pos.slice(1).map((q, i) => arrow(pos[i], q, 0.4 + i * 0.4)).join("")}
+      ${pos.map((p, i) => { const [x, y] = at(p); return `<g ${an("pop", 0.15 + i * 0.4)}>${box(x, y, 210, 58, i === 3 ? "f-mint" : i === 0 ? "f-acc-soft s-acc" : "f-s1 s-acc")}${txt(x, y + 5, s[i], i === 3 ? "t-white" : "t-ink", 12, bold)}</g>`; }).join("")}
+      <g ${an("rise", 1.0)}><rect x="${at([0, 0])[0] - 30}" y="146" width="60" height="9" rx="3" class="f-ink3"/><rect x="${at([0, 0])[0] - 24}" y="155" width="6" height="16" class="f-ink3"/><rect x="${at([0, 0])[0] + 18}" y="155" width="6" height="16" class="f-ink3"/></g>
+      <g ${an("pop", 2.0)}>${box(240, 296, 330, 32, "f-mint-soft s-mint")}${txt(240, 301, ar() ? "اللي على الترابيزة بس هو اللي موجود" : "only what is on the table exists", "t-mint", 12.5, bold)}</g>`;
+    }
+  });
+
   const defs = `<svg class="aih-defs" width="0" height="0" aria-hidden="true" focusable="false"><defs><marker id="aih-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" class="f-ink2"/></marker></defs></svg>`;
   const drawing = (key, label) => `<svg class="aih-svg" viewBox="0 0 480 320" role="img" aria-label="${esc(label)}">${ART[key] ? ART[key]() : ""}</svg>`;
 
@@ -9991,10 +10387,11 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
         prevSlide.classList.remove("is-on", "enter-f", "enter-b");
         prevSlide.setAttribute("aria-hidden", "true"); prevSlide.inert = true;
         startSmil(prevSlide, false);
-        if (!quiet()) { prevSlide.classList.add(fwd ? "leave-f" : "leave-b"); setTimeout(() => prevSlide.classList.remove("leave-f", "leave-b"), 520); }
+        clearTimeout(prevSlide.leaveT);   // a slide can leave again before its last exit timer fires (fast clicking)
+        if (!quiet()) { prevSlide.classList.add(fwd ? "leave-f" : "leave-b"); prevSlide.leaveT = setTimeout(() => prevSlide.classList.remove("leave-f", "leave-b"), 380); }
       }
       const s = slides[i];
-      s.classList.remove("leave-f", "leave-b");
+      clearTimeout(s.leaveT); s.classList.remove("leave-f", "leave-b");
       void s.offsetWidth;                 // restart the entrance animations
       s.classList.add("is-on", cur < 0 ? "enter-0" : fwd ? "enter-f" : "enter-b");
       s.removeAttribute("aria-hidden"); s.inert = false;
@@ -10082,7 +10479,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     // pause the clock while the deck is off screen or the tab is hidden; it resumes where it was
     let io = null;
     if ("IntersectionObserver" in window) {
-      io = new IntersectionObserver((es) => es.forEach((en) => (visible = en.intersectionRatio > 0.35)), { threshold: [0, 0.35, 0.6] });
+      io = new IntersectionObserver((es) => es.forEach((en) => { visible = en.intersectionRatio > 0.35; host.classList.toggle("is-away", !en.isIntersecting); }), { threshold: [0, 0.35, 0.6] });
       io.observe(stage);
     }
     A.onLeave(() => { io && io.disconnect(); playing = false; cancelAnimationFrame(raf); cancelAnimationFrame(countRaf); });

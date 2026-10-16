@@ -86,10 +86,11 @@
 .aih-slide.enter-f{animation:aih-in .62s cubic-bezier(.16,.84,.3,1) both;--from:1}
 .aih-slide.enter-b{animation:aih-in .62s cubic-bezier(.16,.84,.3,1) both;--from:-1}
 .aih-slide.enter-0{animation:aih-fade .5s ease-out both}
-.aih-slide.leave-f{animation:aih-out .42s cubic-bezier(.4,0,.7,.2) both;--to:-1}
-.aih-slide.leave-b{animation:aih-out .42s cubic-bezier(.4,0,.7,.2) both;--to:1}
-@keyframes aih-in{from{opacity:0;transform:translateX(calc(var(--from) * var(--dirx) * 56px)) scale(.985)}to{opacity:1;transform:none}}
-@keyframes aih-out{from{opacity:1;transform:none}to{opacity:0;transform:translateX(calc(var(--to) * var(--dirx) * 40px)) scale(.985)}}
+.aih-slide.leave-f{animation:aih-out .3s cubic-bezier(.4,0,.7,.2) both;--to:-1}
+.aih-slide.leave-b{animation:aih-out .3s cubic-bezier(.4,0,.7,.2) both;--to:1}
+/* translate + fade only (no scale): two full-slide layers overlap during a change, so the outgoing one is kept short */
+@keyframes aih-in{from{opacity:0;transform:translateX(calc(var(--from) * var(--dirx) * 56px))}to{opacity:1;transform:none}}
+@keyframes aih-out{from{opacity:1;transform:none}to{opacity:0;transform:translateX(calc(var(--to) * var(--dirx) * 40px))}}
 @keyframes aih-fade{from{opacity:0}to{opacity:1}}
 .aih-slide.enter-f .aih-year,.aih-slide.enter-b .aih-year{animation:aih-year .9s cubic-bezier(.16,.84,.3,1) both}
 @keyframes aih-year{from{transform:translateX(calc(var(--from) * var(--dirx) * 160px));opacity:0}to{transform:none;opacity:1}}
@@ -166,6 +167,9 @@
 @keyframes aih-snow{0%{transform:translateY(-10px);opacity:0}12%{opacity:1}85%{opacity:.8}100%{transform:translateY(270px);opacity:0}}
 @keyframes aih-blink{0%,100%{opacity:1}50%{opacity:.35}}
 @keyframes aih-ring{0%{transform:scale(.8);opacity:1}100%{transform:scale(1.6);opacity:0}}
+
+/* smoothness: a deck scrolled off screen pauses its looping drawings instead of repainting them unseen */
+.aih.is-away .aih-slide *{animation-play-state:paused!important}
 
 /* quiet: the academy's own switch or the system setting — every drawing in its final state, no slide motion */
 html[data-motion="off"] .aih *,html[data-motion="off"] .aih *::before{animation:none!important;transition:none!important}
