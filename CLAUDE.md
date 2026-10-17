@@ -1,6 +1,7 @@
 # CLAUDE.md — working on this repository
 
 > ملخّص بالعربي: ده دليل فني لأي حد بيطوّر الموقع: بيتبني إزاي، وقواعد الكتابة والرسومات، والاختبارات المطلوبة قبل أي دمج.
+> التفاصيل في `docs/`: المعمارية، ودليل الكتابة، والتاريخ، والدروس المستفادة.
 
 ## What this is
 
@@ -18,11 +19,13 @@ academy/src/data/*.js      all content (course-order plan, lessons, decks, promp
 academy/src/engine/*.js    behaviour (core router/search, render, decks in history.js, labs, motion, quiz, tools)
 academy/src/*.css          styles (styles.css, motion.css, history.css for decks)
 academy/src/fonts/         inlined fonts (SIL OFL): Inter («UI Latin»), IBM Plex Sans Arabic («UI Sans»),
-                           an Inter symbol subset («UI Symbols»), JetBrains Mono («UI Mono»)
+                           an Inter symbol subset («UI Symbols»), JetBrains Mono («UI Mono»),
+                           reading fonts Cairo, Tajawal, Almarai, Noto Naskh Arabic («R …»)
 academy/test/data.test.mjs node --test: data integrity
 academy/test/e2e.mjs       Playwright journey over every route, both languages, phone and desktop, offline
 academy/test/art-check.mjs every drawing label inside its frame, clear of others, in an inlined font, both languages
 .github/workflows/         academy-pr.yml (checks on PRs), pages.yml (publishes on merge to main)
+docs/                      ARCHITECTURE, AUTHORING, HISTORY, LESSONS-LEARNED
 ```
 
 ## Build and test (run all before every push)
@@ -50,7 +53,7 @@ Commit the rebuilt `AI_Academy.html` together with source changes. CI runs the s
 
 ## Story decks
 
-Each unit-0 lesson opens with a 12-slide deck: `academy/src/data/<name>-story.js` registers `A.<name>Story` in `A.decks`
+Each unit-0 lesson, and the first lesson of each later unit (unit 2: `b1`), opens with a 12-slide deck: `academy/src/data/<name>-story.js` registers `A.<name>Story` in `A.decks`
 with `lesson: "<id>"`; the player is `A.mountDeck` in `engine/history.js` (one player for all decks).
 
 Writing rules:
@@ -84,6 +87,13 @@ Drawing rules (`ART.<prefix>_<slide>` in `engine/history.js`, viewBox 480 × 320
   leaves (`alive` flag). Off-screen decks pause looping animations (`.aih.is-away`).
 - Measure before claiming: Playwright + CDP CPU throttling (4×) and rAF frame sampling; compare A/B builds with
   repeated runs — a machine without a GPU makes desktop compositing numbers pessimistic.
+
+## Presenter and reading settings
+
+- The presenter (`engine/tools.js`) plays a unit as chapters: card → deck → scene stages → optional question. Its frame is
+  laid out at 1600 × 900 and scaled; deck slides show their **whole** text, so keep new story text within the measured
+  limit (see docs/ARCHITECTURE.md). Remote keys, blank screens, resume by (lesson, part, sub-step) are covered by e2e.
+- Reading settings set `data-width`, `data-fsize`, `data-font` on `<html>`. Drawings always use `--font-art`.
 
 ## Pull requests
 

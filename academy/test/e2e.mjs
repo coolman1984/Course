@@ -144,10 +144,49 @@ await session({ label: "interactions-ar", viewport: { width: 1280, height: 860 }
   dir === "en/ltr" ? ok("language switches to English LTR") : fail(`language switch gave ${dir}`);
   await page.click("#lang-btn"); await page.waitForTimeout(100);
 
-  // presenter
-  await page.evaluate(() => (location.hash = "present-u1")); await page.waitForSelector(".present", { timeout: 3000 }).catch(() => {});
-  if (await page.$(".present")) { await page.keyboard.press("ArrowLeft"); await page.keyboard.press("ArrowRight"); await shot(page, "presenter-ar"); await page.keyboard.press("Escape"); await page.waitForTimeout(100); (await page.$(".present")) ? fail("presenter: Esc did not close") : ok("presenter opens, navigates, closes with Esc"); }
-  else fail("presenter did not open");
+  // presenter: a full-screen player per unit; remote keys, black screen, resume, a lesson's own button
+  await page.evaluate(() => (location.hash = "present-u0")); await page.waitForSelector(".cine", { timeout: 3000 }).catch(() => {});
+  if (await page.$(".cine")) {
+    const cnt = () => page.$eval("[data-c-count]", (e) => Number(e.textContent.split("/")[0]));
+    const a = await cnt();
+    await page.keyboard.press("PageDown"); await page.keyboard.press("PageDown"); await page.keyboard.press("PageDown"); await page.waitForTimeout(200);
+    const b = await cnt();
+    const deckOn = await page.$(".cine-frame .aih-present .aih-slide.is-on");
+    b === a + 3 && deckOn ? ok("presenter: remote PageDown steps into the lesson's story deck") : fail(`presenter: PageDown ${a} → ${b}, deck ${!!deckOn}`);
+    await page.keyboard.press("PageUp"); await page.waitForTimeout(150);
+    (await cnt()) === b - 1 ? ok("presenter: PageUp goes back") : fail("presenter: PageUp did not go back");
+    await page.keyboard.press("b"); const black = await page.$eval("[data-c-screen]", (e) => !e.hidden && e.classList.contains("black"));
+    await page.keyboard.press("PageDown"); const back = await page.$eval("[data-c-screen]", (e) => e.hidden);
+    black && back && (await cnt()) === b - 1 ? ok("presenter: B blanks the screen, the next key only brings the picture back") : fail("presenter: black screen");
+    await page.keyboard.press("b"); await page.keyboard.press("l"); await page.waitForTimeout(60);
+    const nb = await page.evaluate(() => ({ screen: document.querySelector("[data-c-screen]").hidden, spot: document.querySelector("[data-c-spotlight]").hidden }));
+    nb.screen && nb.spot ? ok("presenter: on a blank screen any key (even L) only brings the picture back") : fail("presenter: shortcut acted behind the blank screen " + JSON.stringify(nb));
+    await page.keyboard.press("3"); await page.keyboard.press("0"); await page.keyboard.press("Enter"); await page.waitForTimeout(150);
+    (await cnt()) === 30 ? ok("presenter: typing a number + Enter jumps to that slide") : fail("presenter: jump went to " + (await cnt()));
+    // the whole story is on screen (no notes panel): both paragraphs of the current deck slide are visible inside the frame
+    const fits = await page.evaluate(() => { const sl = document.querySelector(".cine-frame .aih-slide.is-on"); if (!sl) return "no deck slide"; const f = document.querySelector(".cine-frame").getBoundingClientRect(); const ps = [...sl.querySelectorAll(".aih-txt p, .aih-answer, .aih-idea")]; return ps.length >= 4 && ps.every((p) => { const r = p.getBoundingClientRect(); return r.height > 0 && r.top >= f.top - 1 && r.bottom <= f.bottom + 1; }) ? "ok" : "cut"; });
+    fits === "ok" ? ok("presenter: the full story text shows inside the frame") : fail("presenter: story text " + fits);
+    await shot(page, "presenter-ar");
+    await page.keyboard.press("Escape"); await page.waitForTimeout(100);
+    (await page.$(".cine")) ? fail("presenter: Escape did not close it") : ok("presenter: Escape closes it");
+    await page.evaluate(() => window.ACADEMY.openPresenter("u0")); await page.waitForSelector(".cine");
+    (await cnt()) === 30 ? ok("presenter: reopens where it stopped") : fail("presenter: did not resume (" + (await cnt()) + ")");
+    // the saved place survives turning the questions off (the plan gets shorter): it is kept by lesson and part, not index
+    const place = () => page.evaluate(() => document.querySelector("[data-c-chapter]").textContent + " · slide " + (document.querySelector(".cine-frame .aih-slide.is-on") || {}).dataset?.i);
+    const before = await place();
+    await page.keyboard.press("c"); await page.waitForSelector("[data-c-qs]"); await page.click("[data-c-qs]"); await page.keyboard.press("Escape");
+    await page.keyboard.press("Escape"); await page.waitForTimeout(80);
+    await page.evaluate(() => window.ACADEMY.openPresenter("u0")); await page.waitForSelector(".cine");
+    const after = await place();
+    after === before ? ok("presenter: resumes on the same slide after the questions setting changes") : fail(`presenter: resumed at «${after}», expected «${before}»`);
+    await page.keyboard.press("c"); await page.waitForSelector("[data-c-qs]"); await page.click("[data-c-qs]"); await page.keyboard.press("Escape");
+    await page.keyboard.press("Escape");
+    await page.evaluate(() => (location.hash = "lesson-f6")); await page.waitForSelector("#present-l");
+    await page.click("#present-l"); await page.waitForSelector(".cine");
+    const ch = await page.$eval("[data-c-chapter]", (e) => e.textContent);
+    /4/.test(ch) ? ok("presenter: a lesson's button opens the show at that lesson") : fail("presenter: lesson button opened at " + ch);
+    await page.keyboard.press("Escape");
+  } else fail("presenter did not open");
 });
 
 /* Mobile 390px, dark theme, English: every route without horizontal overflow */
@@ -329,6 +368,14 @@ await session({ label: "model-deck-ar", viewport: { width: 1360, height: 900 } }
   const xfinal = await page.$eval("#sec-auto [data-aih-q]", (e) => e.dataset.final === "true" && /إكسل/.test(e.textContent));
   xn >= 10 && /8 من 8/.test(xcrumb) && xfinal ? ok(`automation deck: ${xn} slides close unit 0 (lesson 8 of 8) on the cliffhanger question`) : fail(`automation deck: incomplete (${xn} slides, crumb «${xcrumb}», final ${xfinal})`);
   xprompts >= 3 ? ok(`automation lesson: ${xprompts} copy-ready automation prompts`) : fail("automation lesson: prompts missing (" + xprompts + ")");
+  // unit 2 opens with its own story: lesson b1, first of its unit, ending on the question that opens unit 3
+  await page.evaluate(() => (location.hash = "lesson-b1")); await page.waitForSelector("#sec-big .aih-stage");
+  const bn = await page.$$eval("#sec-big .aih-slide", (s) => s.length);
+  const bcrumb = await page.$eval(".crumbs .num", (e) => e.textContent);
+  await page.click('#sec-big [data-aih-go="11"]'); await page.waitForTimeout(700);
+  const bfinal = await page.$eval("#sec-big [data-aih-q]", (e) => e.dataset.final === "true" && /فرع/.test(e.textContent));
+  const bart = await page.$eval('#sec-big .aih-slide[data-i="11"] .aih-svg', (v) => v.querySelectorAll("rect,circle,path,text").length > 8);
+  bn === 12 && /(^|\s)1 من 5/.test(bcrumb) && bfinal && bart ? ok("unit 2 deck: 12 slides open the unit (lesson 1) and end on the question that opens unit 3") : fail(`unit 2 deck: ${bn} slides, crumb «${bcrumb}», final ${bfinal}, art ${bart}`);
   const leftBuilt = await page.evaluate(async () => {   // leaving the page stops on-demand drawing: no SVGs are built in the detached deck afterwards
     location.hash = "lesson-f6"; await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
     const deck = document.querySelector("#sec-window"); const before = deck.querySelectorAll(".aih-svg").length;

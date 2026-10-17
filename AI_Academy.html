@@ -24,7 +24,7 @@ WHO YOU ARE TALKING TO
   «مساحة العمل» (the workspace).
 
 HOW THE COURSE IS ORGANISED (eight units, shown as 1–8; ids u0–u7; the book is a reference, not the order)
- 1 Foundations   2 Big data (many files, quality, the editor, model levels)   3 Office (Word, email, decks; Claude Code)
+ 1 Foundations   2 Big data (b1 opens it: many files, quality, the editor, model levels)   3 Office (Word, email, decks; Claude Code)
  4 PDF files (cloud or local, free tools)   5 Dashboards (Codex, companies and models)   6 Small tools (shared
  features, saving versions, studying with AI)   7 Your assistant at work (prompts, decisions, pitch, career)
  8 The big picture (systems and digital teams, in general terms) and the graduation project.
@@ -41,7 +41,7 @@ WHERE THINGS ARE INSIDE THIS FILE (search for these names)
 - Lessons: `A.lessons = ` (fields: id, unit, title, sum, book points with page numbers, levels simple/mech/practice/adv).
 - Plain-language Arabic layer: `A.plainTalk`. Intro stories: `A.lessonStories`.
 - Story decks: `A.aiHistory`, `A.modelStory`, `A.contextStory`, `A.windowStory`, `A.agentsStory`, `A.workStory`,
-  `A.limitsStory`, `A.autoStory` — each has slides with title, story, answer (the rule) and idea (one line).
+  `A.limitsStory`, `A.autoStory`, and `A.bigStory` (unit 2's opening story, lesson b1) — each has slides with title, story, answer (the rule) and idea (one line).
 - Prompt library: `A.prompts = ` (ready prompts with [variables]); quiz: `A.quiz = `; glossary: `A.glossary = `.
 - Lesson 8 automation prompts: ids f8a (stack many files + pivot), f8b (enrich a raw table from small master sheets,
   with an "unmatched" sheet), f8c (report from two workbooks with a totals check). They target a work laptop where
@@ -935,6 +935,96 @@ html[data-font="naskh"]{--font-body:"R Naskh","UI Latin","UI Symbols",system-ui,
 @media (prefers-reduced-motion:reduce){.vpanel{animation:none}}
 svg text{font-family:var(--font-art)}   /* every drawing keeps the measured font whatever the reading font */
 
+/* ---- presenter: a full-screen player (engine/tools.js openPresenter) ---- */
+.cine{position:fixed;inset:0;z-index:150;display:grid;grid-template-rows:auto minmax(0,1fr) auto;background:var(--bg);color:var(--ink)}
+.cine-top,.cine-bot{display:flex;align-items:center;gap:8px;padding:10px 16px;transition:opacity .35s ease,transform .35s ease;z-index:3}
+.cine-top{border-bottom:1px solid var(--line)}
+.cine-bot{border-top:1px solid var(--line);gap:10px}
+.cine-badge{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:var(--uc);color:#fff;font-weight:800}
+.cine-tt{display:grid;line-height:1.3;min-width:0}.cine-tt b{font-family:var(--font-display);font-size:15px}.cine-tt small{color:var(--ink-3);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cine-sp{flex:1}
+.cine-ib{display:inline-flex;align-items:center;gap:6px;height:36px;min-width:36px;justify-content:center;padding-inline:9px;border-radius:10px;border:1px solid transparent;background:transparent;color:var(--ink-2);font:inherit;font-size:13.5px;cursor:pointer}
+.cine-ib:hover{background:var(--surface-3);color:var(--ink)}.cine-ib[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent)}
+.cine-ib svg,.cine-pb svg{width:18px;height:18px}
+.cine-pb{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line-2);background:var(--surface);color:var(--ink);cursor:pointer}
+.cine-pb.main{width:50px;height:50px;background:var(--accent);border-color:var(--accent);color:#fff}
+.cine-pb:disabled{opacity:.35;cursor:default}
+.cine-scrub{position:relative;flex:1;height:34px;display:flex;align-items:center;cursor:pointer;outline:none}
+.cine-track{position:relative;width:100%;height:6px;border-radius:99px;background:var(--surface-3);overflow:hidden}
+.cine-track i{position:absolute;inset-block:0;inset-inline-start:0;background:var(--uc);border-radius:99px;transition:width .3s ease}
+.cine-scrub:focus-visible .cine-track{box-shadow:0 0 0 3px var(--accent-soft)}
+.cine-marks{position:absolute;inset:0;pointer-events:none}
+.cine-mark{position:absolute;top:50%;transform:translate(calc(-50% * var(--dirx,1)),-50%);width:20px;height:20px;border-radius:50%;border:2px solid var(--uc);background:var(--surface);color:var(--ink-2);font:700 10px/1 var(--font-body);display:grid;place-items:center;padding:0;pointer-events:auto;cursor:pointer}
+html[dir="rtl"] .cine-mark{transform:translate(50%,-50%)}
+.cine-mark.on{background:var(--uc);color:#fff}
+.cine-tip{position:absolute;bottom:38px;width:220px;padding:6px 10px;border-radius:8px;background:var(--ink);color:var(--bg);font-size:12.5px;text-align:center;pointer-events:none}
+.cine-time,.cine-count{font-size:13px;color:var(--ink-3);white-space:nowrap}
+.cine-count{min-width:62px;text-align:end;font-weight:600;color:var(--ink-2)}
+.cine-view{position:relative;display:flex;align-items:center;justify-content:center;min-height:0;overflow:hidden}
+.cine-frame{width:1600px;height:900px;flex:none;position:relative;display:grid;align-items:center;overflow:hidden;animation:cine-in .45s var(--ease,ease) both}
+.cine-frame.back{animation-name:cine-in-b}
+@keyframes cine-in{from{opacity:0;transform:translateX(calc(24px * var(--dirx,1)))}to{opacity:1;transform:none}}
+@keyframes cine-in-b{from{opacity:0;transform:translateX(calc(-24px * var(--dirx,1)))}to{opacity:1;transform:none}}
+html[dir="rtl"] .cine{--dirx:-1}
+/* cards: title, lesson, question, review */
+.cine-card{position:relative;isolation:isolate;padding:90px 120px;display:grid;gap:22px;align-content:center;height:100%;background:radial-gradient(900px 520px at 85% 15%,color-mix(in srgb,var(--uc) 12%,transparent),transparent 70%),radial-gradient(700px 420px at 10% 95%,color-mix(in srgb,var(--uc) 8%,transparent),transparent 70%)}
+html[dir="rtl"] .cine-card{background:radial-gradient(900px 520px at 15% 15%,color-mix(in srgb,var(--uc) 12%,transparent),transparent 70%),radial-gradient(700px 420px at 90% 95%,color-mix(in srgb,var(--uc) 8%,transparent),transparent 70%)}
+.cine-card.lesson::after{content:attr(data-n);position:absolute;z-index:-1;inset-inline-end:72px;bottom:-80px;font:800 520px/1 var(--font-art);color:color-mix(in srgb,var(--uc) 9%,transparent);letter-spacing:-.04em}
+.cine-card > *{animation:cine-up .6s var(--ease,ease) both}.cine-card > :nth-child(2){animation-delay:.08s}.cine-card > :nth-child(3){animation-delay:.16s}.cine-card > :nth-child(4){animation-delay:.24s}
+@keyframes cine-up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.cine-card > *{animation:none}}
+.cine-card h1{font-size:64px;line-height:1.2;letter-spacing:-.02em;text-wrap:balance;margin:0}
+.cine-card.big h1{font-size:74px}
+.cine-card p{font-size:28px;line-height:1.75;color:var(--ink-2);margin:0;max-width:1200px}
+.cine-k{display:inline-flex;align-items:center;gap:8px;width:max-content;padding:8px 18px;border-radius:99px;background:color-mix(in srgb,var(--uc) 14%,transparent);color:var(--uc);font-weight:700;font-size:20px}
+.cine-k svg{width:16px;height:16px}
+.cine-chain{display:flex;flex-wrap:wrap;gap:12px;align-items:center;font-size:24px;font-weight:600;color:var(--ink-2)}
+.cine-chain span{padding:8px 14px;border-radius:12px;background:var(--surface-2);border:1px solid var(--line)}.cine-chain i{font-style:normal;color:var(--ink-3)}
+.cine-pts{display:grid;gap:16px;margin:0;padding-inline-start:32px;font-size:27px;line-height:1.6;color:var(--ink-2)}
+.cine-rem{font-weight:700;color:var(--uc)!important}
+.cine-card.ask h1{font-size:50px}
+.cine-opts{display:grid;gap:12px;margin:0;padding-inline-start:40px;font-size:28px;line-height:1.5}
+.cine-opts li{padding:10px 14px;border-radius:12px;transition:background .3s,opacity .3s}
+.cine-opts li.ok{background:var(--mint-soft,rgba(16,150,90,.12));color:var(--mint);font-weight:700}
+.cine-opts li.dim{opacity:.45}
+.cine-why{font-size:24px;line-height:1.7;padding:16px 20px;border-radius:14px;background:var(--surface-2);border-inline-start:5px solid var(--mint)}
+.cine-hint{font-size:16px!important;color:var(--ink-3)!important}
+/* the story deck inside the frame: no chrome of its own, larger drawing, story text optional */
+.cine-frame .aih-present{width:100%;margin:0;padding:0;height:900px}
+.cine-frame .aih-head,.cine-frame .aih-foot,.cine-frame .aih-nav,.cine-frame .aih-timer{display:none}
+.cine-frame .aih-stage{height:900px;border:0;border-radius:0;background:var(--surface-2)}
+.cine-frame .aih-slide{height:900px;padding:104px 72px 48px;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:52px;align-items:center}
+.cine-frame .aih-q{top:30px;font-size:24px;padding:12px 24px 12px 14px}
+.cine-frame .aih-q-mark{width:36px;height:36px;font-size:20px}
+.cine-frame .aih-txt{gap:12px}.cine-frame .aih-txt h3{font-size:34px}
+.cine-frame .aih-txt p{font-size:19.5px;line-height:1.72}
+.cine-frame .aih-answer b{font-size:22px;line-height:1.55}
+.cine-frame .aih-idea{font-size:19px}
+.cine-frame .aih-start{display:none}
+/* scenes inside the frame */
+.cine-frame.k-scene{align-content:center;padding:24px 56px}
+.cine-sc{min-height:0}
+/* black / white screen, spotlight, jump, menus */
+.cine-screen{position:absolute;inset:0;z-index:6}.cine-screen.black{background:#000}.cine-screen.white{background:#fff}
+.cine-spot{position:absolute;inset:0;z-index:5;pointer-events:none;background:radial-gradient(circle 150px at var(--x,50%) var(--y,50%),transparent 0 96%,rgba(0,0,0,.72) 100%)}
+.cine-jump{position:absolute;z-index:7;top:70px;inset-inline-end:24px;padding:10px 16px;border-radius:12px;background:var(--ink);color:var(--bg);font-weight:700}
+.cine-menu,.cine-help{position:absolute;z-index:7;top:60px;inset-inline-end:16px;width:min(420px,calc(100vw - 32px));max-height:calc(100vh - 140px);overflow:auto;padding:16px;border-radius:16px;background:var(--surface);border:1px solid var(--line-2);box-shadow:0 18px 48px rgba(10,14,30,.25)}
+.cine-menu ol{list-style:none;margin:10px 0;padding:0;display:grid;gap:4px}
+.cine-menu button{width:100%;display:flex;gap:10px;align-items:center;text-align:start;padding:9px 10px;border-radius:10px;border:0;background:transparent;color:var(--ink);font:inherit;font-size:14.5px;cursor:pointer}
+.cine-menu button:hover,.cine-menu button.on{background:var(--surface-2)}.cine-menu button.on{color:var(--accent);font-weight:600}
+.cine-menu .num{width:24px;height:24px;border-radius:7px;display:grid;place-items:center;background:var(--surface-3);font-size:12px;flex:none}
+.cine-opt{display:flex;gap:8px;align-items:center;font-size:14px;color:var(--ink-2);padding-top:8px;border-top:1px solid var(--line)}
+.cine-help dl{display:grid;grid-template-columns:auto 1fr;gap:8px 14px;margin:12px 0;font-size:14px;align-items:center}
+.cine-help dd{margin:0;color:var(--ink-2)}.cine-help p{font-size:13px;color:var(--ink-3);margin:0;line-height:1.7}
+/* idle in a lecture: the controls and the cursor fade away */
+.cine.idle .cine-top,.cine.idle .cine-bot{opacity:0;pointer-events:none}
+.cine.idle{cursor:none}
+.cine:fullscreen .cine-top,.cine:fullscreen .cine-bot{position:absolute;inset-inline:0;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(6px)}
+.cine:fullscreen .cine-top{top:0}.cine:fullscreen .cine-bot{bottom:0}
+.cine:fullscreen{grid-template-rows:minmax(0,1fr)}.cine:fullscreen .cine-view{grid-row:1/-1;height:100vh}
+@media (max-width:760px){.cine-ib span,.cine-time{display:none}.cine-top,.cine-bot{padding:8px 10px;gap:6px}}
+@media (prefers-reduced-motion:reduce){.cine-frame,.cine-frame.back{animation:none}.cine-track i{transition:none}}
+
 /*
  Learning Motion Theatre: adapted selected free transition patterns from
  Jakub Antalik / transitions.dev (© 2026), https://transitions.dev/
@@ -1373,7 +1463,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     brand: u("أكاديمية أساسيات الذكاء الاصطناعي", "AI Essentials Academy"),
     brandSub: u("كتاب بيئة العمل الحديثة — تفاعلي", "Modern Workspace book — interactive"),
     home: u("الرئيسية", "Home"), menu: u("القائمة", "Menu"), close: u("إغلاق", "Close"), cancel: u("إلغاء", "Cancel"), confirm: u("تأكيد", "Confirm"),
-    search: u("بحث", "Search"), searchShort: u("دور في الكتاب", "Search the book"), tourBtn: u("شاهد", "Watch"), tourTitle: u("جولة في الأكاديمية · ١٥ ثانية", "Academy tour · 15 seconds"), tourMissing: u("الفيديو مش بيشتغل هنا. اتأكد إن ملف AI_Academy_tour.mp4 في نفس مجلد الأكاديمية، أو افتحها من GitHub Pages.", "The tour video can't play here. Make sure AI_Academy_tour.mp4 is in the same folder as this file, or open the academy on GitHub Pages."), searchPh: u("دور على درس، مصطلح، Prompt أو صفحة…", "Search a lesson, term, prompt or page…"),
+    search: u("بحث", "Search"), searchShort: u("دور في الكتاب", "Search the book"), tourBtn: u("شاهد", "Watch"), tourTitle: u("جولة في الأكاديمية في ١٥ ثانية", "A 15-second academy tour"), tourMissing: u("الفيديو مش بيشتغل هنا. اتأكد إن ملف AI_Academy_tour.mp4 في نفس مجلد الأكاديمية، أو افتحها من GitHub Pages.", "The tour video can't play here. Make sure AI_Academy_tour.mp4 is in the same folder as this file, or open the academy on GitHub Pages."), searchPh: u("دور على درس، مصطلح، Prompt أو صفحة…", "Search a lesson, term, prompt or page…"),
     palMove: u("للتنقل", "to move"), palOpen: u("للفتح", "to open"), noResults: u("مفيش نتائج. جرّب كلمة أبسط.", "No results. Try a simpler word."),
     grpNav: u("الأقسام", "Sections"), grpLessons: u("الدروس", "Lessons"), grpLabs: u("المختبرات", "Labs"), grpPrompts: u("الـ Prompts", "Prompts"), grpTerms: u("المصطلحات", "Terms"), grpPages: u("صفحات الكتاب", "Book pages"),
     errTitle: u("حصل خطأ أثناء عرض الصفحة", "This page could not be shown"), errBody: u("بياناتك محفوظة. ارجع للرئيسية وجرّب تاني.", "Your data is safe. Go back home and try again."),
@@ -1512,6 +1602,12 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     kgSearch: u("دور على مفهوم…", "Find a concept…"), zoomIn: u("تكبير", "Zoom in"), zoomOut: u("تصغير", "Zoom out"), zoomReset: u("الصورة الكاملة", "Fit all"),
     kgHint: u("اسحب للتحريك، واضغط مرتين للتكبير (أو Ctrl مع عجلة الماوس). مرّر على عقدة عشان تشوف روابطها، واضغط عشان تفتحها.", "Drag to pan, double-click to zoom (or Ctrl + wheel). Hover a node to see its links, click to open it."),
     kgList: u("عرض الروابط كقائمة", "Show links as a list"), kgLinks: u("مرتبط بـ", "Linked to"), kgLinksN: u("{n} روابط", "{n} links"),
+    lessonN: u("الدرس {n}", "Lesson {n}"), prThisLesson: u("اعرض في القاعة", "Present in the hall"), cnChapters: u("الدروس", "Lessons"), cnSpot: u("كشّاف", "Spotlight"),
+    cnBlack: u("شاشة سودا", "Black screen"), cnHelp: u("الاختصارات", "Shortcuts"), cnPlay: u("تشغيل تلقائي", "Auto-play"), cnPause: u("إيقاف مؤقت", "Pause"),
+    cnProgress: u("مكانك في العرض", "Your place in the show"), cnRevealHint: u("التالي يكشف الإجابة", "Next reveals the answer"), cnQuestions: u("أسئلة للقاعة بعد كل درس", "A question for the room after each lesson"),
+    cnGoTo: u("انتقل للشريحة {n} — اضغط Enter", "Go to slide {n} — press Enter"),
+    cnKeys: u("→ ← أو PageDown PageUp=التالي والسابق|Space أو Enter=التالي|B أو .=شاشة سودا (أي زرار يرجّعها)|W أو ,=شاشة بيضا|رقم + Enter=انتقل لشريحة|Home End=أول وآخر العرض|P=تشغيل تلقائي أو إيقاف|F أو F5=ملء الشاشة|C=قائمة الدروس|L=كشّاف بالماوس|Esc=اقفل القايمة، ثم اخرج", "→ ← or PageDown PageUp=Next and previous|Space or Enter=Next|B or .=Black screen (any key brings it back)|W or ,=White screen|Number + Enter=Go to a slide|Home End=Start and end|P=Auto-play or pause|F or F5=Full screen|C=Lessons menu|L=Mouse spotlight|Esc=Close a menu, then exit"),
+    cnRemote: u("ريموت العرض اللي بيتوصل بالـ USB بيشتغل على طول: زرارين التقليب، وزرار الشاشة السودا، وزرار بدء العرض. والعرض بيفتكر وقفت فين، والشاشة مش بتطفي وهو شغال.", "A USB presenter remote works out of the box: the two page buttons, the blank-screen button and the start-show button. The show remembers where you stopped, and the screen stays awake while it runs."),
     prTitle: u("وضع المحاضر", "Presenter mode"), prLead: u("اعرض أي وحدة على شاشة كبيرة: شرائح متتابعة، مشاهد بالأسهم، أسئلة للجمهور، وملاحظات تعليمية.", "Present any unit on a big screen: sequential slides, scenes driven by arrows, audience questions and teaching notes."),
     prKeys: u("الأسهم أو المسافة للتنقل · N للملاحظات · R لكشف الإجابة · F لملء الشاشة · Esc للخروج.", "Arrows or Space to move · N notes · R reveal answer · F fullscreen · Esc exit."),
     prSlidesN: u("{n} شريحة", "{n} slides"), prNoteTeach: u("تقول إيه", "What to say"), prNoteScene: u("تعرض المشهد إزاي", "How to present the scene"), prNoteSceneBody: u("اضغط السهم مرحلة بمرحلة، واسأل الجمهور: إيه اللي متوقعينه في المرحلة اللي جاية؟", "Advance stage by stage and ask: what do you expect next?"),
@@ -1725,10 +1821,10 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     { p: 14, kind: "mixed", title: u("الكود والـ Prompt الذهبي والعرض الإداري", "Code, the golden prompt, the management pitch"), sum: u("مثال تطبيقي كامل، خطوات وضع الكود، قاعدتين ماتكسرش، الـ Prompt الذهبي للكود وليه، تلات أدوات للعرض وتقسيم الأدوار، Prompt قصة العرض ومراجعته، المشروع الختامي.", "A full worked example, steps to place code, two unbreakable rules, the golden code prompt and why, three presentation tools and roles, story and review prompts, the capstone."), lessons: ["p10", "p11"] },
     { p: 15, kind: "mixed", title: u("معايير التقييم والمسرد والفهرس", "Criteria, glossary, index"), sum: u("أربع معايير لتقييم المشروع، مسرد مبسط، الفهرس السريع «أي Prompt إمتى»، خارطة التطبيق، بداية خطة التلاتين يوم.", "Four project criteria, a simple glossary, the quick index “which prompt when”, the application map, the start of the 30-day plan."), lessons: ["p11", "p12"] },
     { p: 16, kind: "text", title: u("خطة التلاتين يوم والتحول", "The 30-day plan and the transformation"), sum: u("أربع أسابيع، قاعدة الخطة، قائمة تحقق قبل ما تعتمد أي مخرج، تلات أخطاء بتمنع التحول، التحول المطلوب والخطوة اللي جاية.", "Four weeks, the plan’s rule, a checklist before trusting any output, three mistakes that block change, the desired transformation and next step."), lessons: ["p12"] },
-    { p: 17, kind: "mixed", title: u("الدليل 2: بناء أدوات ببايثون على ويندوز", "Guide 2: building tools with Python on Windows"), sum: u("الملخص التنفيذي، تلات أفكار حاكمة، مواصفة المهمة بخمس عناصر، بوصلة القرار: إمتى المهمة تستاهل أداة، وقاعدتين هندسيتين.", "Executive summary, three governing ideas, the 5-element task spec, the decision compass, and two engineering rules."), lessons: ["y1", "y2", "f8"] },
+    { p: 17, kind: "mixed", title: u("الدليل 2: بناء أدوات ببايثون على ويندوز", "Guide 2: building tools with Python on Windows"), sum: u("الملخص التنفيذي، تلات أفكار حاكمة، مواصفة المهمة بخمس عناصر، بوصلة القرار: إمتى المهمة تستاهل أداة، وقاعدتين هندسيتين.", "Executive summary, three governing ideas, the 5-element task spec, the decision compass, and two engineering rules."), lessons: ["y1", "y2", "f8", "b1"] },
     { p: 18, kind: "mixed", title: u("المستوى الأول: أتمتة التشغيل", "Level 1: run automation"), sum: u("وحدات صغيرة والفشل الواضح، المسار الكامل، خريطة الأدوات (Playwright، xlwings، PyAutoGUI، pywinauto، watchdog، الجدولة وPyInstaller)، ترتيب الأفضلية، سلسلة نموذجية، ضوابط التشغيل.", "Small modules and explicit failure, the full path, the tool map (Playwright, xlwings, PyAutoGUI, pywinauto, watchdog, scheduler and PyInstaller), the preference order, a typical chain, run controls."), lessons: ["y2", "y3"] },
     { p: 19, kind: "mixed", title: u("المستوى التاني: محرك التحليل", "Level 2: the analysis engine"), sum: u("Prompt الأتمتة والمتابعة، DuckDB وPolars وydata-profiling، الجودة الأول، الأسئلة السبعة، تطبيق «الكفاءة انخفضت 7%»، Prompt التحليل المنضبط.", "Automation and follow-up prompts, DuckDB, Polars and ydata-profiling, quality first, the seven questions, the “efficiency fell 7%” example, the disciplined-analysis prompt."), lessons: ["y3", "y4"] },
-    { p: 20, kind: "mixed", title: u("فحص الجودة، وبايثون ولا منصة مؤسسية؟", "Quality check; Python or an enterprise platform?"), sum: u("Prompt فحص الجودة بلغة بسيطة، إمتى بايثون يكفي وإمتى المنصة لازمة، مقارنة على أربع محاور، الخلاصة المهنية، أربع إشارات للانتقال.", "Plain-language quality prompt, when Python suffices and when a platform is needed, a 4-axis comparison, the professional conclusion, four signals to switch."), lessons: ["y4", "y5"] },
+    { p: 20, kind: "mixed", title: u("فحص الجودة، وبايثون ولا منصة مؤسسية؟", "Quality check; Python or an enterprise platform?"), sum: u("Prompt فحص الجودة بلغة بسيطة، إمتى بايثون يكفي وإمتى المنصة لازمة، مقارنة على أربع محاور، الخلاصة المهنية، أربع إشارات للانتقال.", "Plain-language quality prompt, when Python suffices and when a platform is needed, a 4-axis comparison, the professional conclusion, four signals to switch."), lessons: ["y4", "y5", "b1"] },
     { p: 21, kind: "mixed", title: u("المستوى التالت: تجربة إدارية تفاعلية", "Level 3: an interactive executive experience"), sum: u("Prompt خطة الترقية، طريقتا البناء (Plotly، Streamlit، Dash)، المسار الموصى بيه، المحطات السبعة، معيار التلاتين ثانية، طبقة التحسين (Jinja، GSAP، Reveal.js)، قاعدة الحركة، ست أخطاء.", "Upgrade-plan prompt, two ways to build (Plotly, Streamlit, Dash), the recommended path, seven stations, the 30-second test, the enhancement layer (Jinja, GSAP, Reveal.js), the motion rule, six mistakes."), lessons: ["y5", "y6"] },
     { p: 22, kind: "mixed", title: u("المشروع المرجعي", "The reference project"), sum: u("Prompt الصفحة التنفيذية والمحطات السبعة كتابة، خط الأنابيب بعشر خطوات، معايير القبول، قائمة تحقق قبل التسليم، مسرد للمبتدئين.", "Executive-page and seven-stations prompts, the 10-step pipeline, acceptance criteria, pre-delivery checklist, beginner glossary."), lessons: ["y6", "y7"] },
     { p: 23, kind: "mixed", title: u("خارطة القرار والخلاصة", "Decision map and conclusion"), sum: u("باقي المسرد، الجدول المرجعي: أي مستوى يناسب حالتك، خارطة تعلم من خمس خطوات، الخلاصة والخطوة اللي جاية.", "The rest of the glossary, the reference table of levels, a 5-step learning map, conclusion and next step."), lessons: ["y7"] },
@@ -1842,6 +1938,15 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     "الذاكرة القديمة بتشدّ للغلط، والوكيل من غير حدود ممكن يبعت حاجة غلط.",
     "الذاكرة متخزّنة فين: جوّه الموديل ولا برّه؟",
     "برّه: ملاحظات التطبيق بيحطها في مساحة الـ Context في أول كل محادثة، وأوزان الموديل ما بتتغيّرش."
+  ],
+  "b1": [
+    "عندك ٣٧ ملف من تلات فروع، وكل فرع بيسجّل بطريقته، والمدير عايز رقم واحد للسنة كلها.",
+    "ملفات كتير بأشكال مختلفة",
+    "تتفق على قالب، وتجمّع بعمود «المصدر»، وتفحص وتنضّف بقواعد مكتوبة",
+    "جدول واحد نضيف، وتقرير جودة، وإجمالي مطابق للمصدر",
+    "ما تحللش قبل ما تفحص، وما تمسحش اللي ما اتربطش.",
+    "إيه الملفات اللي بتجمّعها كل شهر بإيدك؟",
+    "ملفات الفروع أو الأسابيع اللي بنفس المعنى، وكل واحد بشكل مختلف شوية."
   ],
   "f8": [
     "كل شهر بتقضي ست ساعات في نفس التلات مهام على إكسل: تحط ملفات تحت بعض، وتعمل بحث وربط، وتطلّع تقرير.",
@@ -3823,6 +3928,34 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
         ],
       },
     },
+    {
+      id: "b1", unit: "u1", pages: [17, 20], diff: 1, min: 10, related: ["y4", "p9", "w1", "m1"], pre: ["f8"],
+      title: { ar: "من ملفات كتير لجدول واحد تثق فيه", en: "From many files to one table you can trust" },
+      sum: { ar: "تجميع ملفات بأشكال مختلفة في جدول واحد، وفحصه وتنضيفه بقواعد مكتوبة، وربطه بالشيتات الصغيرة، ولما الملف يكبر على إكسل.", en: "Combining differently shaped files into one table, checking and cleaning it by written rules, linking it to small sheets, and what to do when a file outgrows Excel." },
+      book: [
+        bp(17, "المهارة المطلوبة مش كتابة الكود، المهارة **وصف العملية بدقة**: الملفات اللي داخلة، والقواعد، وشكل النتيجة، والاختبارات. والأداة تشتغل على نسخة، وتكتب سجل، وتوقف برسالة واضحة.", "The skill isn't writing code but **describing the process precisely**: the input files, the rules, the result's shape and the tests. The tool works on a copy, writes a log and stops with a clear message."),
+        bp(20, "**الجودة الأول**: قبل أي تحليل، افحص البيانات: القيم الناقصة، والتكرار، والوحدات، والأرقام الغريبة. التحليل على بيانات فيها أخطاء بيطلّع نتيجة شكلها مقنع وهي غلط.", "**Quality first**: before any analysis, check the data: missing values, duplicates, units and odd figures. Analysis on flawed data gives a convincing result that is wrong."),
+      ],
+      levels: {
+        simple: [
+          L("what", "تجميع البيانات يعني إنك تحط ملفات كتير بنفس المعنى في **جدول واحد**: بعد ما تتفق على شكل واحد للأعمدة، وتحط الملفات تحت بعض بعمود «المصدر»، وتفحصها وتنضّفها بقواعد مكتوبة، وتربطها بالشيتات الصغيرة.", "Combining data means putting many files that mean the same thing into **one table**: after agreeing on one column shape, you stack the files with a “Source” column, check and clean them by written rules, and link them to the small sheets."),
+          L("why", "لأن السؤال المهم بييجي دايمًا على كل البيانات مع بعض: كل الفروع، وكل الشهور. ولو التجميع حصل بالإيد أو من غير فحص، الإجمالي بيطلع غلط وما حدش بيعرف ليه.", "Because the important question always spans all the data: every branch, every month. If combining happens by hand or without checks, the total comes out wrong and nobody knows why."),
+        ],
+        mech: [
+          L("how", "- **القالب**: الأعمدة المطلوبة بأسمائها وأنواعها.\n- **التجميع**: كل ملف يتطابق مع القالب ويتحط تحت اللي قبله، ومعاه عمود «المصدر».\n- **الفحص**: الناقص، والمتكرر، والأرقام الشاذة، والتواريخ اللي برّه الفترة.\n- **التنضيف**: قواعد مكتوبة على نسخة، وكل تعديل في السجل.\n- **الربط**: بالكود مع الشيتات الصغيرة، وشيت لوحده للي ما اتربطش.\n- **المطابقة**: عدد الصفوف وإجمالي القيمة في الجدول النهائي = مجموعهم في المصادر، وأي فرق متفسّر.", "- **Template**: the required columns with names and types.\n- **Stack**: each file is matched to the template and placed under the previous one, with a “Source” column.\n- **Check**: missing, duplicated, outliers, out-of-range dates.\n- **Clean**: written rules applied to a copy, every change logged.\n- **Link**: by code to the small sheets, with a separate sheet for what didn't link.\n- **Reconcile**: the final row count and total value = their sums across the sources, with every gap explained."),
+          L("inside", "إكسل بيقف عند حوالي مليون صف في الشيت، وبيتقل قبلها بكتير. علشان كده الشغل التقيل بيحصل في برنامج صغير برّه إكسل يكتبهولك الذكاء الاصطناعي: يقرا الملفات صف ورا صف، ويطلّع النتيجة الصغيرة بس، وهي اللي بتفتح في إكسل.", "Excel stops at about a million rows per sheet and slows down long before that. So the heavy work happens in a small program outside Excel that AI writes for you: it reads the files row by row and outputs only the small result, which is what opens in Excel."),
+          L("link", "ده امتداد مباشر للأدوات اللي بنيناها في [[f8]]، بس على ملفات أشكالها مختلفة وأكبر. والدرس اللي بعده [[y4]] بيدخل في فحص الجودة بالتفصيل.", "This extends the tools we built in [[f8]] directly, but to files that are larger and shaped differently. The next lesson, [[y4]], goes into quality checking in detail."),
+        ],
+        practice: [
+          L("example", "مشرف مبيعات عنده ٣٦ ملف شهري من تلات فروع، وملف ربع فيه ٣٠٠ ألف صف لمبيعات الجملة. بعد القالب والتجميع والفحص والتنضيف، طلع جدول واحد فيه ٤١٢ ألف صف وتقرير جودة. والصفوف والمبيعات مطابقين للمصدر، والفرق الوحيد ٣٤٠ صف متكرر قيمتهم ١٨٬٦٠٠ جنيه، ومتسجّلين في السجل.", "A sales supervisor has 36 monthly files from three branches and a 300,000-row quarter file of wholesale sales. After the template, stacking, checking and cleaning, he gets one 412,000-row table and a quality report. Rows and sales match the source; the only gap is 340 duplicate rows worth 18,600 pounds, recorded in the log."),
+          L("apply", "اختار تلات ملفات حقيقية من شغلك بنفس المعنى. اكتب القالب الأول، وبعدين استخدم الـ Prompt الجاهز تحت علشان تجمعهم بعمود «المصدر» وتطلب تقرير جودة قبل أي تحليل.", "Pick three real files from your work that mean the same thing. Write the template first, then use the ready Prompt below to combine them with a “Source” column and ask for a quality report before any analysis."),
+        ],
+        adv: [
+          L("mistakes", "- تجمّع الملفات زي ما هي من غير قالب، فالأعمدة تتلخبط في صمت.\n- تنسى عمود «المصدر»، فما تعرفش ترجع للأصل.\n- تحلل قبل ما تفحص.\n- تمسح الصفوف اللي ما اتربطتش بدل ما تراجعها.\n- ما تطابقش عدد الصفوف والإجمالي بالمصدر.", "- Stacking files as they are without a template, so columns scramble silently.\n- Forgetting the “Source” column, so you can't trace back.\n- Analysing before checking.\n- Deleting rows that didn't link instead of reviewing them.\n- Not reconciling the row count and the total with the source."),
+          L("whennot", "لو الملفات قليلة وبتتجمع مرة واحدة في السنة، معادلة أو Power Query كفاية من غير أداة. ولو البيانات حساسة، ما ترفعهاش لأداة على النت إلا لو سياسة شركتك بتسمح.", "If the files are few and combined once a year, a formula or Power Query is enough without a tool. And if the data is sensitive, don't upload it to an online tool unless your company's policy allows it."),
+        ],
+      },
+    },
   ]);
 })(window.ACADEMY = window.ACADEMY || {});
 
@@ -4449,7 +4582,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
 (function (A) {
   A.courseOrder = {
     u0: ["f1", "f2", "f4", "f6", "f7", "f3", "f5", "f8"],                 // 1 foundations
-    u1: ["y4", "p9", "w1", "m1"],                                           // 2 big data · the editor · intelligence levels
+    u1: ["b1", "y4", "p9", "w1", "m1"],                                                 // 2 big data · the editor · intelligence levels
     u2: ["p10", "w2"],                                                      // 3 Office · Claude Code · tokens
     u3: ["m3"],                                                             // 4 PDF · cloud or local · free tools
     u4: ["d1", "d2", "y6", "y5", "m2"],                                     // 5 dashboards · Codex · companies and models
@@ -4751,6 +4884,17 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     "الغلطة: إنك تختار أغلى نظام لأنه شكله مؤسسي، أو أرخص حل رغم إنه مش آمن.",
     "ما تعتمدش أداة شخصية لإدارة بيانات جماعية حساسة من غير ضوابط."
   ],
+  "b1": [
+    "من ملفات كتير لجدول واحد تثق فيه",
+    "تجميع البيانات إنك تحط ملفات كتير بنفس المعنى في جدول واحد: تتفق على شكل الأعمدة، وتحطها تحت بعض بعمود «المصدر»، وتفحصها وتنضّفها بقواعد مكتوبة، وتربطها بالشيتات الصغيرة.",
+    "لأن السؤال المهم بييجي على كل الفروع وكل الشهور مع بعض، ولو التجميع حصل بالإيد أو من غير فحص، الإجمالي بيطلع غلط وما حدش بيعرف ليه.",
+    "١. اكتب القالب. ٢. جمّع الملفات تحت بعض بعمود «المصدر». ٣. افحص الجودة. ٤. نضّف بقواعد مكتوبة على نسخة. ٥. اربط بالشيتات الصغيرة وراجع اللي ما اتربطش. ٦. طابق عدد الصفوف والإجمالي بالمصدر.",
+    "ده امتداد للأدوات اللي بنيناها في درس أول أتمتة، بس على ملفات أكبر وأشكالها مختلفة، والدرس اللي بعده بيدخل في فحص الجودة بالتفصيل.",
+    "مشرف مبيعات حوّل ٣٧ ملف لجدول واحد فيه ٤١٢ ألف صف ومعاه تقرير جودة، والصفوف والمبيعات مطابقين للمصدر، والفرق الوحيد ٣٤٠ صف متكرر متسجّلين في السجل.",
+    "اختار تلات ملفات حقيقية من شغلك بنفس المعنى، واكتب القالب، وجمّعهم بالـ Prompt الجاهز، واطلب تقرير جودة قبل أي تحليل.",
+    "الغلطة: إنك تجمّع الملفات زي ما هي من غير قالب، أو تحلل قبل ما تفحص، أو تمسح الصفوف اللي ما اتربطتش من غير مراجعة.",
+    "لو الملفات قليلة وبتتجمع مرة في السنة، معادلة أو Power Query كفاية. والبيانات الحساسة ما تترفعش لأداة على النت إلا لو مسموح."
+  ],
   "y6": [
     "إزاي تخلي المدير يفهم التقرير في دقيقة؟",
     "المدير عايز يعرف في دقيقة: المشكلة فين، وحجمها قد إيه، والمطلوب إيه. التقرير لازم يجاوب الأسئلة دي بالترتيب ده، والتفاصيل تيجي بعدها.",
@@ -5031,6 +5175,10 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       v("قبل ما تبدأ [المهمة]: اكتبلي خطتك في خطوات، والأدوات اللي هتستخدمها في كل خطوة، والملفات اللي هتقراها. ما تبعتش ولا تمسحش ولا تعدّلش أي حاجة برّه من غير ما توقف وتاخد موافقتي. اكتب الشروط دي في ملف ملاحظات وارجعله بعد كل خطوة كبيرة: [الشروط]. واقف بعد [عدد] خطوات لو الهدف ما اتحققش، وقولّي وصلت لفين.",
         "Before you start [the task]: write your plan as steps, the tools you’ll use at each step, and the files you’ll read. Don’t send, delete or change anything outside without stopping for my approval. Write these rules in a notes file and return to it after each big step: [the rules]. Stop after [number] steps if the goal isn’t met, and tell me where you got to."),
       [v("المهمة", "the task"), v("الشروط", "the rules"), v("عدد", "number")], v("«الخطة: ١. أقرا ملف التوقفات. ٢. أقارن بالأسبوع اللي فات… الأدوات: قراءة ملفات، وحساب، ومسودة إيميل فقط».", "“Plan: 1. Read the stoppage file. 2. Compare with last week… Tools: read files, calculate, email draft only.”"), v("وافق على الخطة الأول، وبعدين خلّيه يبدأ.", "Approve the plan first, then let it start.")),
+    P("b1a", "b1", "automate", null, v("جمّع ملفات بأشكال مختلفة في جدول واحد تثق فيه", "Combine differently shaped files into one table you can trust"), v("قالب، وتجميع بعمود المصدر، وتقرير جودة، ومطابقة الإجمالي", "A template, stacking with a source column, a quality report and a reconciled total"),
+      v("عايز أجمّع ملفات كتير في جدول واحد. عندي فولدر [الفولدر] فيه ملفات إكسل لـ [الفروع أو الفترات]، نفس البيانات بس الأعمدة مكتوبة بأسماء مختلفة شوية والتواريخ بصيغ مختلفة. القالب اللي عايزه: [الأعمدة المطلوبة]. عايز الأداة تطابق أعمدة كل ملف مع القالب وتحطهم تحت بعض في ملف جديد، وتضيف عمود «المصدر» فيه اسم الملف. وبعدين تطلّع تقرير جودة: كام صف ناقص فيه [العمود المهم]، وكام صف متكرر بالظبط، والأرقام الشاذة، والتواريخ اللي برّه الفترة. ما تصلّحش أي حاجة غير بقاعدة أوافق عليها، وسجّل كل تعديل وعدد الصفوف اللي اتأثرت. وفي الآخر طابق عدد الصفوف وإجمالي [عمود القيمة] في الجدول الجديد بمجموعهم في الملفات، واشرح أي فرق. قواعد ثابتة: اشتغل على نسخة، والأصل ما يتلمسش، وسجل تشغيل، وتوقف برسالة واضحة لو ملف شكله غريب. قبل ما تكتب أي حاجة، اسألني عن أي معلومة ناقصة.",
+        "I want to combine many files into one table. I have a folder [folder] of Excel files for [branches or periods] — the same data, but the columns are named slightly differently and dates use different formats. The template I want: [required columns]. I want the tool to match each file's columns to the template, stack them in a new workbook, and add a “Source” column with the file name. Then produce a quality report: how many rows are missing [key column], how many are exact duplicates, the outliers, and dates outside the period. Don't fix anything except by a rule I approve, and log every change and how many rows it affected. Finally, reconcile the row count and the total of [value column] in the new table with their sums across the files, and explain any gap. Fixed rules: work on a copy, never touch the originals, keep a run log, and stop with a clear message if a file looks unusual. Before you write anything, ask me about anything you're missing."),
+      [v("الفولدر", "folder"), v("الفروع أو الفترات", "branches or periods"), v("الأعمدة المطلوبة", "required columns"), v("العمود المهم", "key column"), v("عمود القيمة", "value column")], v("«قبل ما أبدأ: كام ملف تقريبًا؟ أنهي الأسماء المختلفة لنفس العمود؟ والتواريخ مكتوبة إزاي في كل فرع؟»", "“Before I start: roughly how many files? Which different names are used for the same column? And how is the date written in each branch?”"), v("جرّبه الأول على تلات ملفات بس، وراجع تقرير الجودة والمطابقة قبل ما تشغّله على الكل.", "Try it on just three files first, and review the quality report and the reconciliation before running it on everything.")),
     P("f8a", "f8", "automate", null, v("أداة تحط ملفات كتير تحت بعض", "A tool that stacks many files"), v("تجمع ملفات الأسابيع أو الشهور في جدول واحد وجدول محوري", "Combine weekly or monthly files into one table and a pivot table"),
       v("عايزك تبنيلي أداة صغيرة. عندي فولدر [الفولدر] فيه ملفات إكسل كتير لأسابيع أو شهور مختلفة، كلها فيها شيت اسمه [اسم الشيت] بنفس الأعمدة تقريبًا: [الأعمدة]. عايز الأداة تحطهم كلهم تحت بعض في جدول واحد في ملف جديد، وتضيف عمود فيه اسم الملف اللي جه منه كل صف، وبعدين تعمل شيت تاني فيه جدول محوري بـ [حقول الجدول المحوري]. لو ملف ناقصه عمود أو فيه عمود زيادة، سجّله في السجل ووضّح هتتعامل معاه إزاي. القيود: لابتوب شركة، مسموح فيه إكسل وPowerShell وبايثون الرسمي من غير مكتبات إضافية، وممنوع تنزيل أي حاجة. استخدم PowerShell يشغّل إكسل بطريقة COM. قواعد إجبارية: اشتغل على نسخة من الملفات في فولدر عمل وما تلمسش الأصل، وافتح الملفات للقراءة بس؛ وقفّل رسائل إكسل؛ واقفل إكسل وحرّره من الذاكرة في الآخر حتى لو حصل خطأ؛ واكتب سجل تشغيل فيه الملفات اللي اتقرت وعدد الصفوف من كل ملف وأي حاجة اتستبعدت وليه؛ ولو الأعمدة مش زي المتوقع وقّف برسالة واضحة فيها اسم الملف والعمود بدل ما تكمّل. المطلوب منك: السكريبت كامل من غير أي جزء ناقص، وملف تشغيل بدبل كليك، وشرح قصير بالعربي لخطوات التشغيل وللمشاكل المتوقعة وحلها، وتلات اختبارات أقدر أتأكد بيها إن النتيجة صح. قبل ما تكتب أي كود: اسألني عن كل اللي ناقصك (أسماء الملفات والشيتات بالظبط، والأعمدة، وشكل التواريخ، ونسخة إكسل)، واستنى إجاباتي.",
         "I want you to build me a small tool. I have a folder [folder] with many Excel files for different weeks or months; each has a sheet named [sheet name] with roughly the same columns: [columns]. I want the tool to stack them all into one table in a new workbook, add a column with the file each row came from, and then create a second sheet with a pivot table by [pivot fields]. If a file is missing a column or has an extra one, record it in the log and explain how you'll handle it. Constraints: a company laptop with Excel, PowerShell and the official Python without extra libraries; nothing may be installed. Use PowerShell to drive Excel through COM. Mandatory rules: work on a copy of the files in a working folder and never touch the originals, opening files read-only; turn off Excel's alerts; close Excel and release it from memory at the end even after an error; write a run log listing the files read, the row count from each, and anything excluded and why; and if columns aren't as expected, stop with a clear message naming the file and column instead of continuing. Deliver: the complete script with nothing left out, a double-click launcher, a short guide to running it and to likely problems and their fixes, and three tests I can use to confirm the result is right. Before writing any code: ask me about everything you're missing (exact file and sheet names, columns, date formats, Excel version) and wait for my answers."),
@@ -5492,6 +5640,18 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       o("المعلومة دي مستحيل تبقى غلط أو قديمة", "That information can never be wrong or stale", "الذاكرة ممكن تبقى قديمة؛ راجعها وامسح اللي اتغيّر.", "Memory can go stale; review it and delete what has changed.")
     ], 0, ["الذاكرة نص متخزّن برّه الموديل (تعليمات، أو ذاكرة تلقائية، أو ملفات مشروع)، والتطبيق بيحطه في مساحة الـ Context. علشان كده ممكن تراجعه وتمسحه، وممكن يبقى قديم.", "Memory is text stored outside the model (instructions, automatic memory or project files) that the app places in the workspace — so you can review and delete it, and it can go stale."]),
 
+    Q("b1a", "b1", "mcq", ["عندك ملفات من تلات فروع: واحد كاتب العمود «الفرع» والتاني «اسم الفرع»، والتواريخ بصيغ مختلفة. أول خطوة قبل التجميع إيه؟", "You have files from three branches: one titles the column “Branch”, another “Branch name”, and dates use different formats. What is the first step before combining?"], [
+      o("تكتب قالب واحد للأعمدة بأسمائها وأنواعها، وكل ملف يتطابق معاه", "Write one column template with names and types, and match every file to it"),
+      o("تحطهم تحت بعض زي ما هم وتصلّح بعدين", "Stack them as they are and fix it later", "إكسل هيحط الأعمدة المختلفة جنب بعض والتواريخ هتتلخبط من غير أي رسالة.", "Excel will put the different columns side by side and dates will scramble without any warning."),
+      o("تعمل الجدول المحوري الأول وتشوف", "Build the pivot table first and see", "التحليل قبل التجميع الصح والفحص بيطلّع أرقام شكلها صح وهي غلط.", "Analysing before correct combining and checking gives numbers that look right and are wrong."),
+      o("تبعت الملفات للشات وتسأله الإجمالي", "Send the files to the chat and ask for the total", "الموديل مش آلة حاسبة، والإجمالي لازم يتحسب بأداة ويتطابق بالمصدر.", "The model isn't a calculator; the total must be computed by a tool and reconciled with the source.")
+    ], 0, ["القالب بيوحّد الشكل قبل التجميع، فكل ملف يتطابق معاه والأعمدة ما تتلخبطش في صمت.", "The template unifies the shape before combining, so every file is matched to it and columns never scramble silently."]),
+    Q("b1b", "b1", "spot", ["الجدول الجديد فيه ٤١٢٬٠٠٠ صف، ومجموع صفوف الملفات ٤١٢٬٣٤٠. إيه التصرف الصح؟", "The new table has 412,000 rows and the files hold 412,340 in total. What is the right move?"], [
+      o("ترجع للسجل وتشوف الفرق جه منين، وتفسّره قبل ما تبعت", "Check the log to see where the gap came from, and explain it before sending"),
+      o("تتجاهله لأنه أقل من ١٪", "Ignore it because it's under 1%", "الفرق الصغير ممكن يكون صفوف ضاعت أو اتكررت، ولازم يتفسّر.", "A small gap may be lost or duplicated rows, and it must be explained."),
+      o("تعدّل الرقم بإيدك علشان يتساوى", "Edit the number by hand so they match", "كده بتخبّي المشكلة بدل ما تعرف سببها.", "That hides the problem instead of finding its cause."),
+      o("تعيد التجميع من الأول لحد ما يتساووا", "Redo the combining until they match", "الإعادة من غير ما تعرف السبب ممكن تكرر نفس الغلطة.", "Redoing it without knowing the cause may repeat the same mistake.")
+    ], 0, ["المطابقة بتكشف الفرق، والسجل بيفسّره: هنا الـ ٣٤٠ هم الصفوف المتكررة اللي اتشالت، وفرق المبيعات لازم يساوي قيمتهم بالظبط. الرقم اللي تقدر تثبته هو اللي تقدر تثق فيه.", "Reconciliation reveals the gap and the log explains it: here the 340 are the duplicate rows that were removed, and the sales gap must equal their value exactly. A number you can prove is a number you can trust."]),
     Q("f8a", "f8", "compare", ["عندك فولدر فيه ٥٢ ملف أسبوعي بنفس الأعمدة، وعايز تحطهم تحت بعض كل شهر من غير ما تكتب كود. تختار إيه الأول؟", "You have a folder of 52 weekly files with the same columns and want to stack them every month without writing code. What do you try first?"], [
       o("Power Query من تبويب البيانات: «من فولدر» وتحت بعض، وبعدين «تحديث» كل شهر", "Power Query on the Data tab: “From folder”, stack them, then “Refresh” every month"),
       o("نسخ ولصق بالإيد بس بتركيز أكتر", "Copy and paste by hand, just more carefully", "ده نفس الشغل اليدوي اللي بياخد ساعات وبيجيب غلط النسخ.", "That’s the same manual work that takes hours and breeds copying mistakes."),
@@ -7434,6 +7594,162 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
   };
   A.decks = (A.decks || []).concat([A.autoStory]);
 })(window.ACADEMY = window.ACADEMY || {});
+
+/* data/big-story.js */
+/* Big data — the story deck that opens unit 2 (lesson b1).
+   The same sales supervisor as in unit 1, right after the quarter's file froze Excel, carries every slide with one
+   question: «إزاي ٣٧ ملف يبقوا جدول واحد أقدر أثق فيه؟». The deck goes from many differently shaped files to one clean,
+   checked table: agree on one shape, stack with a source column, check before analysing, clean by written rules, link to
+   master sheets with an "unmatched" sheet, take the heavy work outside Excel, organise a project folder, work from the
+   editor, choose the model's level for the task, reconcile the totals — and ends on the question that opens unit 3.
+   Each slide gives one rule with its reason. Figures are illustrative. Drawings are the b_* entries in engine/history.js. */
+"use strict";
+(function (A) {
+  const u = (ar, en) => ({ ar, en });
+  A.bigStory = {
+    id: "big", lesson: "b1",
+    kicker: u("البيانات الكبيرة · الحكاية كاملة في ٨ دقايق", "Big data · the whole story in 8 minutes"),
+    title: u("من ملفات كتير لجدول واحد تثق فيه", "From many files to one table you can trust"),
+    lead: u("فاكر ملف الربع اللي وقّف إكسل في آخر الوحدة الأولى؟ الحكاية دي بتكمّل من عنده. هنمشي مع نفس مشرف المبيعات وهو بيحوّل ملفات كتير، كل واحد شكله مختلف، لجدول واحد نضيف ومراجَع، ونتعرّف في السكة على فولدر المشروع والمحرر ومستويات ذكاء النماذج.",
+      "Remember the quarter's file that froze Excel at the end of unit 1? This story picks up from there. We follow the same sales supervisor as he turns many files, each shaped differently, into one clean, checked table, and along the way we meet the project folder, the editor and the levels of model intelligence."),
+    answerLabel: u("القاعدة، وليه؟", "The rule, and why"),
+    ideaLabel: u("الفكرة في جملة", "The idea in one line"),
+    question: u("إزاي ٣٧ ملف يبقوا جدول واحد أقدر أثق فيه؟", "How do 37 files become one table I can trust?"),
+    finalQuestion: u("الأرقام جاهزة… طب التقرير يتكتب ويتبعت لكل فرع لوحده إزاي؟", "The numbers are ready… so how does each branch get its own written report?"),
+    note: u("الأرقام والأسماء توضيحية. جرّب أي أداة على نسخة من ملفاتك الأول، وراجع سياسة شركتك قبل ما ترفع أي بيانات لأداة على النت.", "Figures and names are illustrative. Try any tool on a copy of your files first, and check your company's policy before uploading any data to an online tool."),
+    ui: {
+      prev: u("اللي فات", "Previous"), next: u("اللي بعده", "Next"),
+      play: u("شغّل الحكاية", "Play the story"), pause: u("وقّف", "Pause"), replay: u("من الأول", "From the start"),
+      skip: u("تخطّى للدرس", "Skip to the lesson"), start: u("نكمّل الدرس", "Continue the lesson"),
+      slideOf: u("{n} من {t}", "{n} of {t}"), timeline: u("خطوات الحكاية", "Story steps"),
+      deck: u("من ملفات كتير لجدول واحد، في شرائح", "From many files to one table, in slides"), slide: u("شريحة", "slide"),
+      keys: u("استخدم الأسهم أو اسحب على الشاشة", "Use the arrow keys or swipe")
+    },
+    slides: [
+      {
+        id: "files", art: "b_files", year: u("الموقف", "Scene"), mark: u("٠١", "01"), era: u("٣٧ ملف على المكتب", "37 files on the desk"),
+        title: u("٣٧ ملف، وسؤال واحد من المدير", "37 files, and one question from the manager"),
+        story: [u("فاكر ملف الربع اللي وقّف إكسل؟ المدير رجع بسؤال أكبر: «عايز أعرف مبيعات كل صنف في التلات فروع على مدار السنة». يعني ٣٦ ملف شهري، ١٢ لكل فرع، وفوقهم ملف الربع الكبير اللي فيه مبيعات الجملة من الإدارة، ودي مش موجودة في ملفات الفروع.",
+          "Remember the quarter's file that froze Excel? The manager came back with a bigger question: “I want each product's sales across the three branches over the whole year.” That means 36 monthly files, 12 per branch, plus the big quarter file holding wholesale sales from head office, which aren't in the branch files."),
+        u("المشرف فتح أول ملفين جنب بعض، واكتشف إن المشكلة مش في العدد بس. كل فرع بيسجّل بطريقته، وكل شهر فيه حاجة اتغيّرت. والسؤال اللي ماشي معانا في الحكاية: إزاي الملفات دي كلها تبقى جدول واحد أقدر أثق في أرقامه؟",
+          "The supervisor opened the first two files side by side and found the problem isn't only the number. Each branch records in its own way, and something changed every month. The question we carry through the story: how do all these files become one table whose numbers I can trust?")],
+        answer: u("قبل ما تجمّع أي حاجة، اعرف إيه اللي قدامك: كام ملف، وجايين منين، وشكلهم إيه. لأن المفاجآت اللي ما شفتهاش في الأول بتظهر في الآخر أرقام غلط.", "Before combining anything, know what's in front of you: how many files, where from, what shape — surprises you don't see at the start show up at the end as wrong numbers."),
+        idea: u("الجدول اللي تثق فيه بيبدأ إنك تعرف ملفاتك كويس.", "A table you can trust starts with knowing your files.")
+      },
+      {
+        id: "shapes", art: "b_shapes", year: u("الشكل", "Shape"), mark: u("٠٢", "02"), era: u("كل ملف بشكل", "Every file, its own shape"),
+        title: u("نفس البيانات… بتلات أشكال", "The same data… in three shapes"),
+        story: [u("فرع القاهرة كاتب العمود «الفرع»، وفرع طنطا كاتبه «اسم الفرع». واحد كاتب التاريخ يوم/شهر، والتاني شهر/يوم، والتالت كاتبه نص زي «٣ مارس». وفي شهر يونيو حد زوّد عمود «ملاحظات» في النص.",
+          "The Cairo branch titles the column “Branch”, Tanta titles it “Branch name”. One writes dates day/month, another month/day, and the third as text like “3 March”. And in June someone inserted a “Notes” column in the middle."),
+        u("لو حطّينا الملفات دي تحت بعض زي ما هي، إكسل مش هيعترض. هيحط «الفرع» في عمود و«اسم الفرع» في عمود تاني، والتواريخ هتتلخبط من غير أي رسالة. فالمشرف كتب الأول «القالب»: الأعمدة المطلوبة بأسمائها وأنواعها وترتيبها.",
+          "If we stack these files as they are, Excel won't complain. It will put “Branch” in one column and “Branch name” in another, and the dates will scramble without a single warning. So the supervisor first wrote “the template”: the required columns, with their names, types and order.")],
+        answer: u("اتفق على شكل واحد للأعمدة قبل التجميع، واكتب أسماءها وأنواعها. لأن الملفات المختلفة لما تتجمع زي ما هي بتعمل لخبطة صامتة ما حدش بيلاحظها.", "Agree on one column shape before combining, and write down names and types — differently shaped files stacked as they are make a silent mess nobody notices."),
+        idea: u("الأول نتفق على الشكل… وبعدين نجمّع.", "First agree on the shape… then combine.")
+      },
+      {
+        id: "stack", art: "b_stack", year: u("التجميع", "Stack"), mark: u("٠٣", "03"), era: u("تحت بعض", "One under another"),
+        title: u("تحت بعض… وكل صف عارف جه منين", "Stacked… and every row knows where it came from"),
+        story: [u("دلوقتي كل ملف بيتقري، وأعمدته بتتطابق مع القالب، وبعدين بيتحط تحت اللي قبله. ودي نفس فكرة الأداة اللي بنيناها في الدرس التامن، بس على ملفات أشكالها مختلفة. والإضافة المهمة: عمود جديد اسمه «المصدر» فيه اسم الملف اللي جه منه كل صف.",
+          "Now each file is read, its columns are matched to the template, and it goes under the one before. It's the same idea as the tool we built in lesson eight, but on files of different shapes. The important addition: a new “Source” column holding the name of the file each row came from."),
+        u("بعد أسبوع، المدير سأل: «ليه مبيعات طنطا في مارس عالية كده؟». المشرف عمل فلتر على عمود المصدر، وفي دقيقة لقى الملف والصف. لولا العمود ده، كان هيدوّر في ٣٧ ملف.",
+          "A week later the manager asked: “Why are Tanta's March sales so high?” The supervisor filtered the Source column and found the file and the row in a minute. Without that column, he would have searched through 37 files.")],
+        answer: u("كل صف في الجدول المجمّع لازم يعرف جه من أنهي ملف. لأن أول ما رقم يبان غريب، هتحتاج ترجع لأصله في دقيقة مش في ساعة.", "Every row in the combined table must know which file it came from — the moment a number looks odd, you need to trace it in a minute, not an hour."),
+        idea: u("عمود «المصدر» هو خريطة الرجوع للأصل.", "The “Source” column is the map back to the original.")
+      },
+      {
+        id: "check", art: "b_check", year: u("الفحص", "Check"), mark: u("٠٤", "04"), era: u("قبل أي تحليل", "Before any analysis"),
+        title: u("قبل ما تحلل… افحص", "Before you analyse… check"),
+        story: [u("الجدول بقى ٤١٢ ألف صف. المشرف كان عايز يعمل الجدول المحوري على طول، بس افتكر قاعدة من الوحدة الأولى: البيانات الغلط بتطلّع نتيجة شكلها مقنع. فطلب تقرير جودة الأول.",
+          "The table is now 412,000 rows. The supervisor wanted the pivot table straight away, but remembered a rule from unit 1: wrong data gives a convincing-looking result. So he asked for a quality report first."),
+        u("التقرير لقى ١٬٢٠٠ صف من غير كود صنف، و٣٤٠ صف متكرر بالظبط، وكميات بالسالب، وسعر واحد مكتوب أكبر من الطبيعي ١٠ مرات، وتواريخ في سنة ٢٠٢٥ جوّه ملفات ٢٠٢٦. ولا حاجة من دول كانت هتبان في الجدول المحوري.",
+          "The report found 1,200 rows without a product code, 340 exact duplicates, negative quantities, one price ten times too high, and 2025 dates inside 2026 files. None of this would have shown in the pivot table.")],
+        answer: u("افحص البيانات قبل التحليل: الناقص، والمتكرر، والأرقام الشاذة، والتواريخ اللي برّه الفترة. لأن التحليل على بيانات فيها أخطاء بيطلّع أرقام شكلها صح وهي غلط.", "Check data before analysing: missing, duplicated, outliers and out-of-range dates — analysis on flawed data produces numbers that look right and are wrong."),
+        idea: u("تقرير الجودة بيقولك تقدر تثق في الأرقام ولا لأ.", "The quality report tells you whether you can trust the numbers.")
+      },
+      {
+        id: "clean", art: "b_clean", year: u("التنضيف", "Clean"), mark: u("٠٥", "05"), era: u("بقواعد مكتوبة", "By written rules"),
+        title: u("التنضيف بقواعد مكتوبة… والأصل ما يتلمسش", "Cleaning by written rules… the original stays untouched"),
+        story: [u("بدل ما يصلّح الأخطاء بإيده واحد واحد، المشرف كتب قواعد: «طنطا» و«فرع طنطا» و«Tanta» يبقوا «طنطا». والتواريخ المكتوبة نص تتحوّل لتاريخ. والمتكرر بالظبط يتشال وتفضل نسخة واحدة. والكمية السالبة ما تتصلّحش، تتعلّم وتتراجع.",
+          "Instead of fixing errors by hand one by one, the supervisor wrote rules: “طنطا”, “Tanta branch” and “Tanta” all become “Tanta”. Dates written as text become dates. Exact duplicates are removed, keeping one copy. Negative quantities aren't fixed; they're flagged for review."),
+        u("القواعد دي اتكتبت في ملف لوحده، والأداة بتطبّقها على نسخة. الملفات الأصلية ما اتلمستش، وكل تعديل اتسجّل: أنهي قاعدة، وكام صف اتأثر. ولما فرع رابع ينضم الشهر الجاي، نفس القواعد هتشتغل عليه.",
+          "These rules live in their own file, and the tool applies them to a copy. The original files were never touched, and every change was logged: which rule, and how many rows it affected. When a fourth branch joins next month, the same rules will run on it.")],
+        answer: u("كل تعديل يبقى بقاعدة مكتوبة، ويتطبّق على نسخة، ويتسجّل. لأن التصليح بالإيد ما بيتكررش بنفس الطريقة، والقاعدة المكتوبة بتتراجع وبتتعاد.", "Every change follows a written rule, runs on a copy and is logged — manual fixes are never repeated the same way, while a written rule can be reviewed and rerun."),
+        idea: u("القاعدة المكتوبة بتتراجع… والتصليح بالإيد بيتنسي.", "A written rule can be reviewed… a hand fix gets forgotten.")
+      },
+      {
+        id: "link", art: "b_link", year: u("الربط", "Link"), mark: u("٠٦", "06"), era: u("مع الشيتات الصغيرة", "With the small sheets"),
+        title: u("الربط بالشيتات الصغيرة… واللي ما اتربطش ليه شيت", "Linking to the small sheets… and a sheet for what didn't link"),
+        story: [u("الجدول الكبير فيه كود الصنف بس. أما اسمه ومجموعته وسعره الرسمي فموجودين في شيت صغير اسمه «الأصناف». فالأداة بتربط بكود الصنف وتضيف الأعمدة دي، زي البحث والربط اللي عملناه في الدرس التامن.",
+          "The big table holds only the product code. The product's name, group and list price live in a small sheet called “Products”. So the tool links on the product code and adds those columns, like the lookups we did in lesson eight."),
+        u("٩٨٪ من الصفوف اتربطت. والـ ٢٪ الباقيين ما اتحذفوش، اتحطّوا في شيت لوحده اسمه «ما اتربطش»: أكواد صنف جديد لسه مش في القايمة، وأكواد فيها مسافة زيادة. الشيت ده هو اللي فهّم المشرف إن قايمة الأصناف نفسها محتاجة تتحدّث.",
+          "98% of the rows linked. The other 2% weren't deleted; they went to their own sheet called “Unmatched”: codes for a new product not yet on the list, and codes with a stray space. That sheet is what showed the supervisor that the product list itself needed updating.")],
+        answer: u("الصف اللي ما اتربطش ما يتشالش في صمت، يتحط في شيت لوحده ويتراجع. لأن اللي بيختفي من غير ما تاخد بالك بيخلّي الإجمالي أقل وانت مش عارف ليه.", "A row that didn't link is never dropped silently; it goes to its own sheet for review — what disappears unnoticed makes the total smaller without you knowing why."),
+        idea: u("اللي ما اتربطش بيقولك حاجة… اسمعه.", "What didn't link is telling you something… listen.")
+      },
+      {
+        id: "big", art: "b_big", year: u("الحجم", "Size"), mark: u("٠٧", "07"), era: u("لما الملف يكبر على إكسل", "When a file outgrows Excel"),
+        title: u("لما الملف يكبر على إكسل… الشغل التقيل يطلع برّه", "When a file outgrows Excel… the heavy work moves outside"),
+        story: [u("إكسل ليه حد: حوالي مليون صف في الشيت الواحد، وقبلها بكتير بيبقى تقيل. وملف الربع لوحده ٣٠٠ ألف صف، وكل شهر بيزيد. الحل مش جهاز أقوى. الحل إن الشغل التقيل ما يحصلش جوّه إكسل خالص.",
+          "Excel has a limit: about a million rows in one sheet, and it gets heavy long before that. The quarter file alone is 300,000 rows, and it grows every month. The answer isn't a stronger computer. The answer is that the heavy work doesn't happen inside Excel at all."),
+        u("الذكاء الاصطناعي كتب للمشرف برنامج صغير بيقرا الملفات من برّه إكسل، صف ورا صف، ويعمل التجميع والفحص والربط، ويطلّع النتيجة الصغيرة بس: جدول ملخّص فيه ٢٬٤٠٠ صف. النتيجة دي هي اللي بتفتح في إكسل، ويتعمل عليها الجدول المحوري بسرعة.",
+          "AI wrote the supervisor a small program that reads the files from outside Excel, row by row, does the stacking, checking and linking, and outputs only the small result: a summary table of 2,400 rows. That result is what opens in Excel, where the pivot table runs quickly.")],
+        answer: u("البيانات الكبيرة تتعالج برّه إكسل، والنتيجة الصغيرة ترجع له. لأن إكسل اتعمل علشان تشوف الأرقام وتعرضها، مش علشان يشيل مئات الآلاف من الصفوف.", "Big data is processed outside Excel, and the small result comes back to it — Excel was built for looking at and presenting numbers, not for carrying hundreds of thousands of rows."),
+        idea: u("التقيل برّه… والخلاصة جوّه إكسل.", "The heavy part outside… the summary inside Excel.")
+      },
+      {
+        id: "folder", art: "b_folder", year: u("الفولدر", "Folder"), mark: u("٠٨", "08"), era: u("مكان واحد منظّم", "One organised place"),
+        title: u("فولدر المشروع: كل حاجة في مكانها", "The project folder: everything in its place"),
+        story: [u("الملفات كانت متفرقة بين سطح المكتب والإيميل وفلاشة. فالمشرف عمل فولدر واحد للمشروع، وجوّاه أربع فولدرات: «الداخل» فيه نسخ الملفات الأصلية، و«الخارج» فيه النتايج، و«السجل» فيه تقرير كل تشغيل، وملف «القواعد» اللي كتبه للتنضيف.",
+          "The files were scattered across the desktop, e-mail and a USB stick. So the supervisor made one project folder with four parts inside: “Input” holds copies of the original files, “Output” holds the results, “Log” holds each run's report, and there is the “Rules” file he wrote for cleaning."),
+        u("الفرق ظهر على طول: الشهر الجاي بيحط الملفات الجديدة في «الداخل» ويشغّل الأداة، والنتيجة بتظهر في «الخارج». ولما طلب مساعدة من الذكاء الاصطناعي، بقى يقدر يوريه الفولدر كله بدل ما ينسخ ويلصق ملف ملف.",
+          "The difference showed at once: next month he drops the new files into “Input”, runs the tool, and the result appears in “Output”. And when he asked AI for help, he could show it the whole folder instead of copying and pasting file by file.")],
+        answer: u("حط شغل كل مشروع في فولدر واحد منظّم: داخل، وخارج، وسجل، وقواعد. لأن التنظيم ده بيخلّي التشغيل الجاي بضغطة، وبيخلّي المساعد يشوف الصورة كاملة.", "Keep each project in one organised folder: input, output, log, rules — it makes the next run one click and lets the assistant see the whole picture."),
+        idea: u("فولدر منظّم = شغل بيتعاد من غير مجهود.", "An organised folder = work that reruns effortlessly.")
+      },
+      {
+        id: "editor", art: "b_editor", year: u("المحرر", "Editor"), mark: u("٠٩", "09"), era: u("مكان الشغل لما الملفات تكتر", "Where work happens when files multiply"),
+        title: u("المحرر: تشوف الفولدر كله من شاشة واحدة", "The editor: the whole folder on one screen"),
+        story: [u("في الشات، كل ملف لازم يتنسخ ويتلصق، والموديل مش شايف غير اللي بعته. أما «المحرر» زي في إس كود، فبرنامج بيفتح الفولدر كله: على جنب الملفات، وفي النص الملف اللي بتراجعه، وتحت مكان بتشغّل منه الأداة وتشوف رسايلها.",
+          "In a chat, every file must be copied and pasted, and the model sees only what you sent. An “editor” such as VS Code is a program that opens the whole folder: the files on one side, the file you're reviewing in the middle, and below it a place to run the tool and read its messages."),
+        u("والأهم: المساعد الذكي جوّه المحرر بيشوف ملفات الفولدر كلها، فيقدر يقرا القالب والقواعد والسجل مع بعض، ويقترح التعديل في مكانه، وإنت بتوافق أو ترفض. وده اللي هنتعرّف عليه أكتر في الوحدات الجاية.",
+          "Most importantly, the smart assistant inside the editor can see every file in the folder, so it can read the template, the rules and the log together and propose a change in place, which you approve or reject. We'll get to know this better in the coming units.")],
+        answer: u("لما الملفات تكتر، اشتغل من المحرر مش من الشات. لأن المحرر بيوري المساعد الفولدر كله، فبيفهم المشروع بدل ما يخمّن من ملف واحد.", "When files multiply, work from the editor, not the chat — the editor shows the assistant the whole folder, so it understands the project instead of guessing from one file."),
+        idea: u("الشات لسؤال… والمحرر لمشروع.", "The chat for a question… the editor for a project.")
+      },
+      {
+        id: "levels", art: "b_levels", year: u("الذكاء", "Intelligence"), mark: u("١٠", "10"), era: u("مستوى لكل مهمة", "A level for each task"),
+        title: u("مش كل مهمة محتاجة أذكى نموذج", "Not every task needs the smartest model"),
+        story: [u("النماذج ليها مستويات: نموذج سريع ورخيص بيرد في ثانية، ونموذج «بيفكر» أعمق بياخد وقت أكتر وتكلفة أكتر. المشرف كان بيستخدم الأعمق في كل حاجة، حتى في إنه يغيّر أسماء أعمدة، فكان بيستنى كتير على حاجات بسيطة.",
+          "Models come in levels: a fast, cheap model that answers in a second, and a deeper “thinking” model that takes more time and costs more. The supervisor used the deeper one for everything, even renaming columns, so he waited a long time on simple things."),
+        u("بعدين قسّم: السريع لتوحيد الأسماء وكتابة رسايل السجل والأسئلة الصغيرة. والعميق لتصميم قواعد الفحص والتنضيف، ولما نتيجة تطلع غريبة ومحتاج يفهم السبب. الشغل بقى أسرع، والنتايج المهمة بقت أدق.",
+          "Then he split the work: the fast one for unifying names, writing log messages and small questions; the deep one for designing the checking and cleaning rules, and for when a result looks odd and he needs to understand why. Work got faster, and the important results got more accurate.")],
+        answer: u("اختار مستوى النموذج على قد المهمة: السريع للبسيط، والعميق للتخطيط والتحليل. لأن العميق في كل حاجة بطيء ومكلّف، والسريع في التخطيط بيفوّت تفاصيل مهمة.", "Match the model's level to the task: fast for simple work, deep for planning and analysis — deep for everything is slow and costly, and fast for planning misses important details."),
+        idea: u("النموذج المناسب للمهمة… مش الأقوى دايمًا.", "The right model for the task… not always the strongest.")
+      },
+      {
+        id: "result", art: "b_result", year: u("النتيجة", "Result"), mark: u("١١", "11"), era: u("جدول واحد مراجَع", "One checked table"),
+        title: u("جدول واحد… والإجمالي مطابق للمصدر", "One table… and the total matches the source"),
+        story: [u("النتيجة: جدول واحد نضيف من ٣٧ ملف، ومعاه تقرير جودة، وسجل بكل خطوة، وشيت «ما اتربطش». وقبل ما يبعته للمدير، عمل آخر اختبار: عدد الصفوف وإجمالي المبيعات في الجدول الجديد لازم يطابقوا مجموعهم في الملفات الأصلية.",
+          "The result: one clean table from 37 files, with a quality report, a log of every step, and an “Unmatched” sheet. Before sending it to the manager, he ran one last test: the row count and total sales in the new table must match their sums across the original files."),
+        u("الصفوف نقصت ٣٤٠ صف بالظبط، وهي الصفوف المتكررة اللي اتشالت. والمبيعات نقصت ١٨٬٦٠٠ جنيه، وده بالظبط مجموع قيمة الصفوف دي، ومكتوب في السجل. فبقى عارف كل جنيه راح فين. ولما المدير سأل «الرقم ده مضبوط؟»، المشرف ما قالش «أظن». فتح السجل ووراه.",
+          "The rows fell by exactly 340, the duplicates that were removed. Sales fell by 18,600 pounds, exactly the summed value of those rows, as recorded in the log. So he knew where every pound went. When the manager asked “Is this number right?”, the supervisor didn't say “I think so”. He opened the log and showed him.")],
+        answer: u("طابق عدد الصفوف وإجمالي القيمة في الجدول النهائي بمجموعهم في المصادر، واشرح أي فرق من السجل. لأن المطابقة دي هي الدليل إن الأرقام ما ضاعتش ولا اتكررت في السكة.", "Reconcile the final table's row count and total value with their sums across the sources, and explain any gap from the log — that reconciliation is the proof that no numbers were lost or doubled on the way."),
+        idea: u("الرقم اللي تقدر تثبته… هو الرقم اللي تقدر تثق فيه.", "A number you can prove… is a number you can trust.")
+      },
+      {
+        id: "cliff", art: "b_cliff", year: u("الوحدة الجاية", "Next unit"), mark: u("١٢", "12"), era: u("الأرقام جاهزة", "The numbers are ready"),
+        title: u("الأرقام جاهزة… والمدير طلب تقرير لكل فرع", "The numbers are ready… and the manager wants a report for each branch"),
+        story: [u("الجدول بقى بيتحدّث كل شهر في دقايق، والمدير مبسوط. بس طلب حاجة جديدة: «عايز لكل فرع تقرير في وورد، فيه أرقامه وتعليق عليها، ويتبعت لمديره في إيميل». يعني ٣ تقارير كل شهر، ولو الفروع زادت هيبقوا أكتر.",
+          "The table now refreshes every month in minutes, and the manager is pleased. But he asked for something new: “I want a Word report for each branch, with its figures and a comment on them, e-mailed to its manager.” That's three reports a month, and more if branches are added."),
+        u("المشرف بص للجدول وفكّر: الأرقام كلها هنا، مراجَعة ومظبوطة. هيرجع ينسخ ويلصق في وورد تاني؟ والسؤال اللي هنبدأ بيه الوحدة الجاية: الأرقام جاهزة… طب التقرير يتكتب ويتبعت لكل فرع لوحده إزاي؟",
+          "The supervisor looked at the table and thought: all the numbers are here, checked and correct. Will he go back to copying and pasting into Word? And the question we'll open the next unit with: the numbers are ready… so how does each branch get its own written report?")],
+        answer: u("واجب الأسبوع: هات تلات ملفات حقيقية من شغلك، وجمّعهم في جدول واحد فيه عمود «المصدر»، واطلب تقرير جودة قبل أي تحليل. لأن الملفات دي هتبقى البيانات اللي هنطلّع منها التقارير في الوحدة الجاية.", "This week's assignment: take three real files from your work, combine them into one table with a “Source” column, and ask for a quality report before any analysis — those files will be the data we build reports from in the next unit."),
+        idea: u("البيانات النضيفة هي أول خطوة لأي تقرير بيطلع لوحده.", "Clean data is the first step of any report that builds itself.")
+      }
+    ]
+  };
+  A.decks = (A.decks || []).concat([A.bigStory]);
+})(window.ACADEMY = window.ACADEMY || {});
 </script>
 <script>/* engine/core.js */
 /* Core engine: state, i18n, icons, text formatting, router, shell, overlays, search.
@@ -8350,10 +8666,18 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     }
     function frame(now) {
       const dt = Math.min(0.1, (now - last) / 1000); last = now;
-      tNow = Math.min(total, tNow + dt * Number(speed.value));
+      const end = stopAt == null ? total : stopAt;
+      tNow = Math.min(end, tNow + dt * Number(speed.value));
       render(tNow);
-      if (tNow >= total) { pause(); return; }
+      if (tNow >= end) { stopAt = null; pause(); return; }
       raf = requestAnimationFrame(frame);
+    }
+    let stopAt = null;   // presenter mode plays one stage and stops at its end
+    function playStage(i) {
+      i = Math.max(0, Math.min(stages.length - 1, i));
+      if (rm) return goto(i, false);
+      if (playing) { playing = false; cancelAnimationFrame(raf); }
+      full = false; tNow = T[i]; stopAt = T[i] + (stages[i].d || 4) * 0.999; render(tNow); play();
     }
     function play() {
       if (playing) return;
@@ -8364,6 +8688,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       raf = requestAnimationFrame(frame);
     }
     function pause() {
+      if (!playing) stopAt = null;
       playing = false; cancelAnimationFrame(raf);
       bPlay.innerHTML = ico("play"); bPlay.setAttribute("aria-label", tr("sPlay")); bPlay.title = tr("sPlay");
       render(tNow);
@@ -8408,7 +8733,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       }, { threshold: [0, 0.45, 0.8] });
       io.observe(wrap);
     }
-    const api = { root, play, pause, goto: (i) => goto(i, false), next: () => bNext.click(), prev: () => bPrev.click(), get stage() { return curStage; }, get count() { return stages.length; }, destroy() { pause(); io && io.disconnect(); root.remove(); } };
+    const api = { root, play, pause, playStage, goto: (i) => goto(i, false), next: () => bNext.click(), prev: () => bPrev.click(), get stage() { return curStage; }, get count() { return stages.length; }, destroy() { pause(); io && io.disconnect(); root.remove(); } };
     A.onLeave && A.onLeave(() => { pause(); io && io.disconnect(); });
     return api;
   }
@@ -8663,6 +8988,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       ${head(`<span class="chip" style="background:${u.color};color:#fff;border:0">${esc(u.badge)}</span> ${esc(L(u.short))}`, L(l.title), esc(L(l.sum)),
         `<div class="lesson-meta">${pageChips(l.pages)}<span class="chip num">${ico("clock")}${l.min} ${esc(t("minutes"))}</span><span class="chip">${ico("target")}${esc(diffLabel(l.diff))}</span>
          <span class="bar-spacer"></span>
+         <button type="button" class="chip" id="present-l" title="${esc(t("prThisLesson"))}">${ico("screen")}${esc(t("prThisLesson"))}</button>
          <button type="button" class="chip" id="bm" aria-pressed="${bm}">${ico("bookmark")}${esc(bm ? t("bookmarked") : t("bookmark"))}</button>
          <button type="button" class="chip ${done ? "ok" : ""}" id="donetop" aria-pressed="${done}">${ico("check")}${esc(done ? t("done") : t("markDone"))}</button></div>`)}
       ${deck ? `<section id="sec-${deck.id}"></section>` : ""}
@@ -8804,6 +9130,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     };
     A.$("#donebtn").onclick = toggleDone;
     A.$("#donetop").onclick = toggleDone;
+    A.$("#present-l").onclick = () => A.openPresenter(l.unit, l.id);
     A.$("#bm").onclick = () => {
       const list = S.get("bookmarks").slice(); const i = list.indexOf(l.id);
       i >= 0 ? list.splice(i, 1) : list.push(l.id);
@@ -10226,100 +10553,281 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     main.append(wrap);
     const prl = A.$("#prl");
     for (const u of A.units) {
-      const b = h("button", { type: "button", class: "unit-card", style: "--uc:" + u.color + ";text-align:start;font:inherit;cursor:pointer", html: `<span class="ub">${esc(u.badge)}</span><h3>${esc(L(u.title))}</h3><p>${esc(t("prSlidesN", { n: buildSlides(u).length }))}</p>` });
+      const b = h("button", { type: "button", class: "unit-card", style: "--uc:" + u.color + ";text-align:start;font:inherit;cursor:pointer", html: `<span class="ub">${esc(u.badge)}</span><h3>${esc(L(u.title))}</h3><p>${esc(t("prSlidesN", { n: buildSlides(u, S.get("presenter") || {}).steps.length }))}</p>` });
       b.onclick = () => openPresenter(u.id);
       prl.append(b);
     }
     if (uid && A.unitById[uid]) setTimeout(() => openPresenter(uid), 0);
   });
 
-  function buildSlides(u) {
-    const slides = [{ kind: "title", u }];
-    slides.push({ kind: "big", u });
-    for (const l of A.lessons.filter((x) => x.unit === u.id)) {
-      slides.push({ kind: "lesson", l });
-      if (l.scene && A.sceneById[l.scene]) slides.push({ kind: "scene", l });
-      const q = A.quiz.find((x) => x.lesson === l.id && x.type !== "order");
-      if (q) slides.push({ kind: "ask", l, q });
-    }
-    slides.push({ kind: "review", u });
-    return slides;
+  /* The presenter: a full-screen player for one unit. Each lesson plays as a chapter: a title card, its story deck
+     (the same animated slides as the lesson page), then its animated scene stage by stage, then a question for the room.
+     Built for a lecture hall: works with a USB presenter remote (PageUp/PageDown, arrows, B/. for a black screen,
+     F5/Esc), hides its controls and the cursor when idle, keeps the screen awake, and resumes where it stopped. */
+  function buildSlides(u, opts = {}) {
+    const blocks = [{ kind: "title", n: 1 }];
+    const lessons = A.lessons.filter((x) => x.unit === u.id);
+    lessons.forEach((l, li) => {
+      const ch = li;
+      blocks.push({ kind: "lesson", l, ch, n: 1 });
+      const deck = (A.decks || []).find((d) => d.lesson === l.id);
+      if (deck) blocks.push({ kind: "deck", l, ch, deck, n: deck.slides.length });
+      const sc = l.scene && A.sceneById[l.scene];
+      if (sc) blocks.push({ kind: "scene", l, ch, sc, n: sc.stages.length });
+      const q = opts.questions === false ? null : A.quiz.find((x) => x.lesson === l.id && x.type !== "order");
+      if (q) blocks.push({ kind: "ask", l, ch, q, n: 2 });
+    });
+    blocks.push({ kind: "review", n: 1 });
+    const steps = [];
+    blocks.forEach((b, bi) => { for (let k = 0; k < b.n; k++) steps.push({ b: bi, k }); });
+    return { blocks, steps, lessons };
   }
-  function openPresenter(uid) {
+
+  function openPresenter(uid, lessonId) {
     const u = A.unitById[uid];
-    const slides = buildSlides(u);
-    let i = 0, reveal = false, notesOn = innerWidth > 1024, sceneApi = null;
+    if (!u || document.querySelector(".cine")) return;
+    const pref = Object.assign({ questions: true }, S.get("presenter") || {});
+    let plan = buildSlides(u, pref);
+    // start at the lesson asked for, else where the last show of this unit stopped
+    const atLesson = lessonId ? plan.steps.findIndex((s) => (plan.blocks[s.b].l || {}).id === lessonId) : -1;
+    // the place is saved as (lesson, part, sub-step), not a raw index: the plan's length changes with the questions setting
+    const saved = (S.get("presentPos") || {})[uid];
+    const findPlace = (p) => {
+      if (!p || typeof p !== "object") return -1;
+      const i = plan.steps.findIndex((s) => { const b = plan.blocks[s.b]; return b.kind === p.kind && ((b.l || {}).id || null) === (p.l || null) && s.k === p.k; });
+      return i >= 0 ? i : p.l ? plan.steps.findIndex((s) => (plan.blocks[s.b].l || {}).id === p.l) : -1;
+    };
+    let pos = atLesson >= 0 ? atLesson : Math.max(0, findPlace(saved));
+    let cur = { b: -1 }, api = null, playing = false, playT = 0, screen = "", spot = false, jump = "", jumpT = 0, idleT = 0, clockT = 0, lock = null;
+    const t0 = Date.now();
+    const rtl = A.lang() === "ar";
     const prevFocus = document.activeElement;
-    const ov = h("div", { class: "present", role: "dialog", "aria-modal": "true", "aria-label": t("nav_present") + ": " + L(u.title) });
+    const ov = h("div", { class: "cine", role: "dialog", "aria-modal": "true", "aria-label": t("nav_present") + ": " + L(u.title), style: "--uc:" + u.color });
+    ov.innerHTML = `
+      <div class="cine-top">
+        <span class="cine-badge">${esc(u.badge)}</span>
+        <div class="cine-tt"><b>${esc(L(u.title))}</b><small data-c-chapter></small></div>
+        <span class="cine-sp"></span>
+        <button type="button" class="cine-ib" data-c="chapters" aria-haspopup="true" title="${esc(t("cnChapters"))} (C)">${ico("layers")}<span>${esc(t("cnChapters"))}</span></button>
+        <button type="button" class="cine-ib" data-c="spot" title="${esc(t("cnSpot"))} (L)">${ico("target")}</button>
+        <button type="button" class="cine-ib" data-c="black" title="${esc(t("cnBlack"))} (B)">${ico("moon")}</button>
+        <button type="button" class="cine-ib" data-c="help" title="${esc(t("cnHelp"))} (?)">${ico("info")}</button>
+        <button type="button" class="cine-ib" data-c="fs" title="${esc(t("prFull"))} (F)">${ico("full")}</button>
+        <button type="button" class="cine-ib" data-c="close" title="${esc(t("prExit"))} (Esc)">${ico("x")}</button>
+      </div>
+      <div class="cine-view"><div class="cine-frame" data-c-frame></div></div>
+      <div class="cine-bot">
+        <button type="button" class="cine-pb" data-c="prev" aria-label="${esc(t("prev"))}">${ico(rtl ? "next" : "prev")}</button>
+        <button type="button" class="cine-pb main" data-c="play" aria-label="${esc(t("cnPlay"))}">${ico("play")}</button>
+        <button type="button" class="cine-pb" data-c="next" aria-label="${esc(t("next"))}">${ico(rtl ? "prev" : "next")}</button>
+        <div class="cine-scrub" data-c-scrub role="slider" tabindex="0" aria-label="${esc(t("cnProgress"))}"><div class="cine-track"><i data-c-fill></i></div><div class="cine-marks" data-c-marks></div><div class="cine-tip" data-c-tip hidden></div></div>
+        <span class="cine-time num" dir="ltr" data-c-time></span>
+        <span class="cine-count num" dir="ltr" data-c-count></span>
+      </div>
+      <div class="cine-screen" data-c-screen hidden></div>
+      <div class="cine-spot" data-c-spotlight hidden></div>
+      <div class="cine-jump num" data-c-jump hidden></div>
+      <div class="cine-menu" data-c-menu hidden></div>
+      <div class="cine-help" data-c-help hidden></div>`;
     document.body.append(ov);
     document.body.style.overflow = "hidden";
-    function notesFor(s) {
-      const pick = (l, keys) => keys.flatMap((k) => (l.levels && l.levels[k]) || []).slice(0, 3).map((x) => A.rich(L(x))).join("");
-      if (s.kind === "lesson") return `<b>${esc(t("prNoteTeach"))}</b><div class="rt" style="font-size:14.5px">${pick(s.l, ["simple", "practice"])}</div>`;
-      if (s.kind === "scene") return `<b>${esc(t("prNoteScene"))}</b><p>${esc(t("prNoteSceneBody"))}</p>`;
-      if (s.kind === "ask") return `<b>${esc(t("prNoteAsk"))}</b><p>${A.inline(L(s.q.explain))}</p>`;
-      if (s.kind === "big" || s.kind === "title") return `<b>${esc(t("prNoteOpen"))}</b><p>${A.inline(L(s.u.sum))}</p>`;
-      return `<b>${esc(t("prNoteClose"))}</b><p>${A.inline(L(s.u.review.remember || s.u.big))}</p>`;
+    const q = (s) => ov.querySelector(s);
+    const frame = q("[data-c-frame]");
+
+    // the frame is laid out at 1600 × 900 and scaled to the screen, so a slide looks the same on a laptop and a projector
+    function fit() {
+      const v = q(".cine-view").getBoundingClientRect();
+      const z = Math.max(0.25, Math.min(v.width / 1600, v.height / 900));
+      frame.style.zoom = z;
     }
-    function draw() {
-      sceneApi && sceneApi.destroy(); sceneApi = null;
-      const s = slides[i];
-      const rtl = A.lang() === "ar";
-      ov.innerHTML = `
-        <div class="pr-top"><span class="chip" style="background:${u.color};color:#fff;border:0">${esc(u.badge)}</span><b>${esc(L(u.title))}</b><span class="bar-spacer" style="flex:1"></span>
-          <button type="button" class="ibtn" id="pr-notes" aria-pressed="${notesOn}">${ico("note")}<span class="lbl">${esc(t("prNotes"))}</span></button>
-          <button type="button" class="ibtn" id="pr-fs" aria-label="${esc(t("prFull"))}">${ico("full")}</button>
-          <button type="button" class="ibtn" id="pr-x" aria-label="${esc(t("prExit"))}">${ico("x")}<span class="lbl">${esc(t("prExit"))}</span></button></div>
-        <div class="pr-stage ${notesOn ? "notes" : ""}"><div class="pr-slide" id="pr-s"></div><aside class="pr-notes" ${notesOn ? "" : "hidden"} aria-label="${esc(t("prNotes"))}">${notesFor(s)}</aside></div>
-        <div class="pr-bot"><button type="button" class="btn sm" id="pr-p">${ico(rtl ? "next" : "prev")}${esc(t("prev"))}</button><div class="qprog"><i style="width:${((i + 1) / slides.length) * 100}%"></i></div><span class="num small muted">${i + 1} / ${slides.length}</span><button type="button" class="btn sm pri" id="pr-n">${esc(t("next"))}${ico(rtl ? "prev" : "next")}</button></div>`;
-      const box = ov.querySelector("#pr-s");
-      if (s.kind === "title") box.innerHTML = `<span class="eyebrow">${esc(t("unitN", { n: u.n }))} · ${esc(t("bookPagesN", { n: u.bookPages.length }))}</span><h1>${esc(L(u.title))}</h1><p class="lead">${esc(L(u.sum))}</p>`;
-      else if (s.kind === "big") box.innerHTML = `<span class="eyebrow">${esc(t("bigIdea"))}</span><h1 style="font-size:clamp(1.6rem,1rem + 2.6vw,3rem)">${A.inline(L(u.big))}</h1>`;
-      else if (s.kind === "lesson") box.innerHTML = `<span class="eyebrow">${A.pageChips(s.l.pages)}</span><h1>${esc(L(s.l.title))}</h1><p class="lead">${esc(L(s.l.sum))}</p><ul class="pr-points">${(s.l.book || []).slice(0, 5).map((b) => `<li>${A.inline(L(b))}</li>`).join("")}</ul>`;
-      else if (s.kind === "scene") { box.innerHTML = `<h2>${esc(L(s.l.title))}</h2>`; sceneApi = A.mountScene(box, s.l.scene, { autoplay: false, initialStage: 0 }); }
-      else if (s.kind === "ask") {
-        const q = s.q;
-        box.innerHTML = `<span class="eyebrow">${ico("users")} ${esc(t("prAsk"))}</span><h1 style="font-size:clamp(1.4rem,1rem + 2vw,2.4rem)">${A.inline(L(q.q))}</h1>
-          <ol class="pr-points" type="A">${q.opts.map((o, k) => `<li style="${reveal && k === q.ans ? "color:var(--mint);font-weight:700" : ""}">${A.inline(L(o))}</li>`).join("")}</ol>
-          ${reveal ? `<div class="note ok">${ico("check")}<div>${A.inline(L(q.explain))}</div></div>` : `<button type="button" class="btn" id="pr-r">${ico("eye")}${esc(t("prReveal"))} <kbd>R</kbd></button>`}`;
-        const rb = box.querySelector("#pr-r"); if (rb) rb.onclick = () => { reveal = true; draw(); };
-      } else box.innerHTML = `<span class="eyebrow">${esc(t("nav_review"))}</span><h1>${esc(L(u.title))}</h1><div class="journey">${u.review.chain.map((x, k) => (k ? `<span class="ar" style="border:0;background:none">${rtl ? "←" : "→"}</span>` : "") + `<span style="font-size:1.1rem">${esc(L(x))}</span>`).join("")}</div>${u.review.remember ? `<div class="note sp">${ico("star")}<div>${A.inline(L(u.review.remember))}</div></div>` : ""}`;
-      ov.querySelector("#pr-p").disabled = i === 0;
-      ov.querySelector("#pr-n").disabled = i === slides.length - 1;
-      ov.querySelector("#pr-p").onclick = prev;
-      ov.querySelector("#pr-n").onclick = next;
-      ov.querySelector("#pr-x").onclick = close;
-      ov.querySelector("#pr-notes").onclick = () => { notesOn = !notesOn; draw(); };
-      ov.querySelector("#pr-fs").onclick = () => { try { document.fullscreenElement ? document.exitFullscreen() : ov.requestFullscreen(); } catch (e) {} };
-      ov.querySelector("#pr-n").focus({ preventScroll: true });
+    const ro = "ResizeObserver" in window ? new ResizeObserver(fit) : null;
+    ro ? ro.observe(q(".cine-view")) : addEventListener("resize", fit);
+
+    // chapter marks on the scrubber: one segment per lesson
+    function marks() {
+      const total = plan.steps.length;
+      const firsts = plan.lessons.map((l) => plan.steps.findIndex((s) => plan.blocks[s.b].l === l));
+      q("[data-c-marks]").innerHTML = firsts.map((f, i) => `<button type="button" class="cine-mark" data-go="${f}" style="inset-inline-start:${(f / total) * 100}%" aria-label="${esc(t("lessonN", { n: i + 1 }) + ": " + L(plan.lessons[i].title))}"><span>${i + 1}</span></button>`).join("");
     }
-    function next() {
-      if (sceneApi && sceneApi.stage < sceneApi.count - 1) { sceneApi.next(); return; }
-      if (i < slides.length - 1) { i++; reveal = false; draw(); }
+
+    function lessonCard(l, ch) {
+      return `<div class="cine-card lesson" data-n="${ch + 1}"><span class="cine-k">${esc(t("lessonN", { n: ch + 1 }))} · ${esc(L(u.short))}</span><h1>${esc(L(l.title))}</h1><p>${esc(L(l.sum))}</p></div>`;
     }
-    function prev() {
-      if (sceneApi && sceneApi.stage > 0) { sceneApi.prev(); return; }
-      if (i > 0) { i--; reveal = false; draw(); }
+    function render(step, dir) {
+      const s = plan.steps[step], b = plan.blocks[s.b];
+      const same = cur.b === s.b && api;
+      if (!same) {
+        api && api.destroy && api.destroy(); api = null;
+        frame.className = "cine-frame k-" + b.kind + (dir < 0 ? " back" : "");
+        frame.innerHTML = "";
+        if (b.kind === "title") frame.innerHTML = `<div class="cine-card big"><span class="cine-k">${esc(t("unitN", { n: u.n }))}</span><h1>${esc(L(u.title))}</h1><p>${A.inline(L(u.big))}</p><div class="cine-chain">${u.review.chain.map((x) => `<span>${esc(L(x))}</span>`).join(`<i>${rtl ? "←" : "→"}</i>`)}</div></div>`;
+        else if (b.kind === "lesson") frame.innerHTML = lessonCard(b.l, b.ch);
+        else if (b.kind === "deck") { const host = h("section", {}); frame.append(host); api = A.mountDeck(host, b.deck, { present: true, start: s.k }); }
+        else if (b.kind === "scene") {
+          const box = h("div", { class: "cine-sc" }); frame.append(box);
+          api = A.mountScene(box, b.sc.id, { autoplay: false, initialStage: s.k });
+          if (dir > 0 && s.k === 0 && api.playStage) api.playStage(0);
+        } else if (b.kind === "ask") frame.innerHTML = askHtml(b.q, s.k === 1);
+        else frame.innerHTML = `<div class="cine-card big"><span class="cine-k">${esc(t("nav_review"))}</span><h1>${esc(L(u.title))}</h1><ul class="cine-pts">${u.review.points.slice(0, 5).map((x) => `<li>${A.inline(L(x))}</li>`).join("")}</ul>${u.review.remember ? `<p class="cine-rem">${A.inline(L(u.review.remember))}</p>` : ""}</div>`;
+        fit();
+      } else if (b.kind === "deck") api.go(s.k);
+      else if (b.kind === "scene") { dir > 0 && api.playStage ? api.playStage(s.k) : api.goto(s.k); }
+      if (b.kind === "ask" && same) frame.innerHTML = askHtml(b.q, s.k === 1);
+      cur = { b: s.b, k: s.k };
+      pos = step;
+      S.patch("presentPos", uid, { l: b.l ? b.l.id : null, kind: b.kind, k: s.k });
+      // chrome: chapter, counter, progress
+      q("[data-c-chapter]").textContent = b.l ? t("lessonN", { n: b.ch + 1 }) + " · " + L(b.l.title) : "";
+      q("[data-c-count]").textContent = `${step + 1} / ${plan.steps.length}`;
+      q("[data-c-fill]").style.width = ((step + 1) / plan.steps.length) * 100 + "%";
+      q("[data-c-scrub]").setAttribute("aria-valuenow", step + 1); q("[data-c-scrub]").setAttribute("aria-valuemax", plan.steps.length);
+      ov.querySelectorAll(".cine-mark").forEach((m) => m.classList.toggle("on", Number(m.dataset.go) <= step));
+      q('[data-c="prev"]').disabled = step === 0; q('[data-c="next"]').disabled = step === plan.steps.length - 1;
+      if (playing) schedule();
     }
+    function askHtml(qq, shown) {
+      return `<div class="cine-card ask"><span class="cine-k">${ico("users")} ${esc(t("prAsk"))}</span><h1>${A.inline(L(qq.q))}</h1>
+        <ol class="cine-opts" type="A">${qq.opts.map((o, k) => `<li class="${shown && k === qq.ans ? "ok" : shown ? "dim" : ""}">${A.inline(L(o))}</li>`).join("")}</ol>
+        ${shown ? `<div class="cine-why">${A.inline(L(qq.explain))}</div>` : `<p class="cine-hint">${esc(t("cnRevealHint"))}</p>`}</div>`;
+    }
+    // auto-advance ("play"): each step waits as long as it needs to be read or animated
+    function dwell() {
+      const s = plan.steps[pos], b = plan.blocks[s.b];
+      if (b.kind === "deck") { const x = b.deck.slides[s.k]; return Math.min(16, Math.max(8, (L(x.title) + L(x.answer) + L(x.idea)).length / 9)) * 1000; }
+      if (b.kind === "scene") return ((b.sc.stages[s.k].d || 4) + 2.5) * 1000;
+      if (b.kind === "ask") return s.k === 0 ? 12000 : 9000;
+      return 6000;
+    }
+    function schedule() { clearTimeout(playT); playT = setTimeout(() => { if (pos < plan.steps.length - 1) go(pos + 1); else setPlay(false); }, dwell()); }
+    function setPlay(on) {
+      playing = on; clearTimeout(playT);
+      const b = q('[data-c="play"]'); b.innerHTML = ico(on ? "pause" : "play"); b.setAttribute("aria-label", t(on ? "cnPause" : "cnPlay"));
+      ov.classList.toggle("is-playing", on);
+      if (on) schedule();
+    }
+
+    function go(step) {
+      step = Math.max(0, Math.min(plan.steps.length - 1, step));
+      if (step === pos && cur.b >= 0) return;
+      const dir = step > pos ? 1 : -1;
+      setScreen("");
+      render(step, dir);
+    }
+    const next = () => go(pos + 1), prev = () => go(pos - 1);
+
+    function setScreen(kind) { screen = screen === kind ? "" : kind; const el = q("[data-c-screen]"); el.hidden = !screen; el.className = "cine-screen " + screen; if (screen) setPlay(false); }
+    function toggleSpot() { spot = !spot; q("[data-c-spotlight]").hidden = !spot; q('[data-c="spot"]').setAttribute("aria-pressed", spot); }
+    function savePref() { S.set("presenter", pref); }
+    function fullscreen(on) {
+      try {
+        const is = !!document.fullscreenElement;
+        if (on === undefined) on = !is;
+        if (on && !is) ov.requestFullscreen({ navigationUI: "hide" }).catch(() => {});
+        else if (!on && is) document.exitFullscreen().catch(() => {});
+      } catch (e) { /* fullscreen unavailable */ }
+    }
+    function menu(open) {
+      const m = q("[data-c-menu]");
+      if (open === undefined) open = m.hidden;
+      m.hidden = !open;
+      if (!open) return;
+      m.innerHTML = `<b>${esc(t("cnChapters"))}</b><ol>${plan.lessons.map((l, i) => { const f = plan.steps.findIndex((s) => plan.blocks[s.b].l === l); const on = plan.blocks[plan.steps[pos].b].l === l; return `<li><button type="button" data-go="${f}" class="${on ? "on" : ""}"><span class="num">${i + 1}</span>${esc(L(l.title))}</button></li>`; }).join("")}</ol>
+        <label class="cine-opt"><input type="checkbox" data-c-qs ${pref.questions ? "checked" : ""}> ${esc(t("cnQuestions"))}</label>`;
+      m.querySelectorAll("[data-go]").forEach((x) => (x.onclick = () => { menu(false); go(Number(x.dataset.go)); }));
+      q("[data-c-qs]").onchange = (e) => {   // rebuild the plan and stay on the same slide (or its lesson, if a question was removed)
+        const s0 = plan.steps[pos], b0 = plan.blocks[s0.b], here = { l: b0.l ? b0.l.id : null, kind: b0.kind, k: s0.k };
+        pref.questions = e.target.checked; savePref(); plan = buildSlides(u, pref); marks();
+        cur = { b: -1 }; pos = -1; render(Math.max(0, findPlace(here)), 1);
+      };
+      (m.querySelector("button.on") || m.querySelector("button")).focus();
+    }
+    function help(open) {
+      const hp = q("[data-c-help]");
+      if (open === undefined) open = hp.hidden;
+      hp.hidden = !open;
+      if (open) hp.innerHTML = `<b>${esc(t("cnHelp"))}</b><dl>${A.ui.cnKeys ? L(A.ui.cnKeys).split("|").map((r) => { const [k, d] = r.split("="); return `<dt>${k.split("+").map((x) => `<kbd>${esc(x.trim())}</kbd>`).join(" ")}</dt><dd>${esc(d)}</dd>`; }).join("") : ""}</dl><p>${esc(t("cnRemote"))}</p>`;
+    }
+
+    // controls
+    ov.addEventListener("click", (e) => {
+      const b = e.target.closest("[data-c],[data-go]");
+      if (!b) return;
+      if (b.dataset.go != null && !b.closest("[data-c-menu]")) return go(Number(b.dataset.go));
+      const c = b.dataset.c;
+      if (c === "prev") prev(); else if (c === "next") next(); else if (c === "play") setPlay(!playing);
+      else if (c === "fs") fullscreen(); else if (c === "close") close();
+      else if (c === "spot") toggleSpot(); else if (c === "black") setScreen("black"); else if (c === "help") help(); else if (c === "chapters") menu();
+    });
+    const scrub = q("[data-c-scrub]"), tip = q("[data-c-tip]");
+    const stepAt = (x) => { const r = scrub.getBoundingClientRect(); let f = (x - r.left) / r.width; if (rtl) f = 1 - f; return Math.max(0, Math.min(plan.steps.length - 1, Math.floor(f * plan.steps.length))); };
+    scrub.addEventListener("pointerdown", (e) => { if (e.target.closest(".cine-mark")) return; go(stepAt(e.clientX)); });
+    scrub.addEventListener("pointermove", (e) => { const s = plan.steps[stepAt(e.clientX)], b = plan.blocks[s.b]; tip.hidden = false; tip.textContent = b.l ? `${t("lessonN", { n: b.ch + 1 })} · ${L(b.l.title)}` : L(u.short); const r = scrub.getBoundingClientRect(); tip.style.left = Math.max(0, Math.min(r.width - 220, e.clientX - r.left - 110)) + "px"; });
+    scrub.addEventListener("pointerleave", () => (tip.hidden = true));
+    scrub.addEventListener("keydown", (e) => { if (e.key === "Home") { e.preventDefault(); go(0); } else if (e.key === "End") { e.preventDefault(); go(plan.steps.length - 1); } });
+    ov.addEventListener("pointermove", (e) => {
+      wake();
+      if (spot) { const sp = q("[data-c-spotlight]"); sp.style.setProperty("--x", e.clientX + "px"); sp.style.setProperty("--y", e.clientY + "px"); }
+    });
+    // swipe on touch screens
+    let sx = 0, sy = 0, sdown = false;
+    q(".cine-view").addEventListener("pointerdown", (e) => { if (e.pointerType === "mouse") return; sdown = true; sx = e.clientX; sy = e.clientY; });
+    q(".cine-view").addEventListener("pointerup", (e) => { if (!sdown) return; sdown = false; const dx = e.clientX - sx, dy = e.clientY - sy; if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.3) (rtl ? dx > 0 : dx < 0) ? next() : prev(); });
+
+    // idle: hide the controls and the cursor after a few quiet seconds
+    function wake() { ov.classList.remove("idle"); clearTimeout(idleT); idleT = setTimeout(() => { if (q("[data-c-menu]").hidden && q("[data-c-help]").hidden) ov.classList.add("idle"); }, 2600); }
+    // the session clock (since opening) and the time of day
+    function clock() { const s = Math.floor((Date.now() - t0) / 1000), mm = String(Math.floor(s / 60)).padStart(2, "0"), ss = String(s % 60).padStart(2, "0"); const now = new Date(); q("[data-c-time]").textContent = `${mm}:${ss} · ${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`; }
+    clockT = setInterval(clock, 1000); clock();
+    async function keepAwake() { try { if ("wakeLock" in navigator && !document.hidden) lock = await navigator.wakeLock.request("screen"); } catch (e) { lock = null; } }
+    const vis = () => { if (!document.hidden) keepAwake(); };
+    document.addEventListener("visibilitychange", vis); keepAwake();
+
+    // keys: arrows follow the reading direction; presenter remotes send PageUp/PageDown, B or "." (black), F5/Esc
     function key(e) {
-      const rtl = A.lang() === "ar";
-      if (e.key === "Escape") { e.preventDefault(); close(); }
-      else if (e.key === (rtl ? "ArrowLeft" : "ArrowRight") || e.key === "PageDown" || (e.key === " " && e.target.tagName !== "BUTTON")) { e.preventDefault(); next(); }
-      else if (e.key === (rtl ? "ArrowRight" : "ArrowLeft") || e.key === "PageUp") { e.preventDefault(); prev(); }
-      else if (e.key.toLowerCase() === "n") { notesOn = !notesOn; draw(); }
-      else if (e.key.toLowerCase() === "r" && slides[i].kind === "ask") { reveal = true; draw(); }
-      else if (e.key.toLowerCase() === "f") { try { document.fullscreenElement ? document.exitFullscreen() : ov.requestFullscreen(); } catch (er) {} }
+      if (e.altKey || e.ctrlKey || e.metaKey) return;
+      const k = e.key, low = k.length === 1 ? k.toLowerCase() : k;
+      const fwd = rtl ? "ArrowLeft" : "ArrowRight", back = rtl ? "ArrowRight" : "ArrowLeft";
+      const inMenu = e.target.closest && e.target.closest("[data-c-menu]");
+      let done = true;
+      wake();
+      if (screen && !["Shift", "Control", "Alt", "Meta", "CapsLock"].includes(k)) { setScreen(screen); e.preventDefault(); e.stopPropagation(); return; }   // a blank screen: any key only brings the picture back
+      if (/^[0-9]$/.test(k)) { jump += k; clearTimeout(jumpT); const j = q("[data-c-jump]"); j.hidden = false; j.textContent = t("cnGoTo", { n: jump }); jumpT = setTimeout(() => { jump = ""; j.hidden = true; }, 2200); }
+      else if (k === "Enter" && jump) { const n = Number(jump); jump = ""; q("[data-c-jump]").hidden = true; go(n - 1); }
+      else if (k === "Escape") { if (!q("[data-c-menu]").hidden) menu(false); else if (!q("[data-c-help]").hidden) help(false); else if (screen) setScreen(screen); else if (spot) toggleSpot(); else if (!document.fullscreenElement) close(); }
+      else if (inMenu && (k === "Enter" || k === " " || k === "ArrowUp" || k === "ArrowDown" || k === "Tab")) done = false;
+      else if (k === "PageDown" || k === fwd || k === "ArrowDown" || (k === " " && !(e.target.closest && e.target.closest("button"))) || k === "Enter") next();
+      else if (k === "PageUp" || k === back || k === "ArrowUp" || k === "Backspace") prev();
+      else if (k === "Home") go(0); else if (k === "End") go(plan.steps.length - 1);
+      else if (low === "b" || k === ".") setScreen("black");
+      else if (low === "w" || k === ",") setScreen("white");
+      else if (k === "F5") fullscreen(true);
+      else if (low === "f") fullscreen();
+      else if (low === "p" || low === "k") setPlay(!playing);
+      else if (low === "l") toggleSpot();
+      else if (low === "c") menu(); else if (k === "?" || low === "h") help();
+      else done = false;
+      if (done) { e.preventDefault(); e.stopPropagation(); }
     }
+
     function close() {
-      sceneApi && sceneApi.destroy();
+      setPlay(false); clearInterval(clockT); clearTimeout(idleT);
+      api && api.destroy && api.destroy();
+      ro && ro.disconnect(); removeEventListener("resize", fit);
       removeEventListener("keydown", key, true);
-      try { if (document.fullscreenElement) document.exitFullscreen(); } catch (e) {}
+      document.removeEventListener("visibilitychange", vis);
+      try { lock && lock.release(); } catch (e) { /* already released */ }
+      try { if (document.fullscreenElement) document.exitFullscreen(); } catch (e) { /* not fullscreen */ }
       ov.remove(); document.body.style.overflow = "";
       prevFocus && prevFocus.focus && prevFocus.focus();
     }
     addEventListener("keydown", key, true);
     A.onLeave(() => { if (document.body.contains(ov)) close(); });
-    draw();
+    q('[data-c="spot"]').setAttribute("aria-pressed", false);
+    marks();
+    render(pos, 1);
+    wake();
+    q('[data-c="next"]').focus({ preventScroll: true });
+    return { go, next, prev, close, get pos() { return pos; }, get total() { return plan.steps.length; } };
   }
   A.openPresenter = openPresenter;
 })(window.ACADEMY);
@@ -11828,19 +12336,149 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     }
   });
 
+  /* ---------- unit 2 deck: from many files to one table (b_*) ---------- */
+  const fileIcon = (x, y, cls = "s-acc", d = 0) =>   // a small file: folded corner, two lines
+    `<g ${an("pop", d)}><path d="M${x - 14} ${y - 18} h20 l8 8 v28 h-28z" class="f-s1 ${cls}" stroke-width="1.8"/><rect x="${x - 8}" y="${y - 6}" width="16" height="3.5" rx="1.5" class="f-acc-soft"/><rect x="${x - 8}" y="${y + 2}" width="12" height="3.5" rx="1.5" class="f-s3"/></g>`;
+  const folder = (x, y, w, h, cls = "f-amber-soft s-amber") =>
+    `<path d="M${x - w / 2} ${y - h / 2 + 8} q0 -8 8 -8 h${w * 0.28} l8 8 h${w * 0.72 - 24} q8 0 8 8 v${h - 16} q0 8 -8 8 h-${w - 16} q-8 0 -8 -8z" class="${cls}" stroke-width="2"/>`;
+  Object.assign(ART, {
+    b_files: () => {
+      const X = rowX(6, 30, 10, mx(150)), d = dirx();
+      let files = ""; for (let r = 0; r < 6; r++) for (let c = 0; c < 6; c++) files += fileIcon(X(c), 74 + r * 34, ["s-acc", "s-mint", "s-amber"][Math.floor(r / 2)], 0.05 + (r * 6 + c) * 0.02);
+      const q = mx(380);
+      return `${files}
+      <g ${an("fade", 0.9)}>${txt(mx(150), 290, ar() ? "٣ فروع × ١٢ شهر" : "3 branches × 12 months", "t-ink2", 12.5, 'font-weight="800"')}</g>
+      <g ${an("rise", 1.1)}><rect x="${q - 50}" y="74" width="100" height="128" rx="8" class="f-s1 s-rose" stroke-width="2.5"/>${[0, 1, 2, 3, 4].map((k) => `<rect x="${q - 36}" y="${94 + k * 18}" width="${[72, 60, 66, 50, 70][k]}" height="6" rx="3" class="f-s3"/>`).join("")}
+        ${txt(q, 228, ar() ? "ملف الربع" : "quarter file", "t-rose", 12.5, 'font-weight="800"')}${txt(q, 246, ar() ? "٣٠٠ ألف صف" : "300,000 rows", "t-ink3", 11.5, bold)}</g>
+      <g ${an("pop", 1.5)}>${box(q, 40, 150, 34, "f-acc", 0)}${txt(q, 45, ar() ? "= ٣٧ ملف" : "= 37 files", "t-white", 13, 'font-weight="800"')}</g>`;
+    },
+    b_shapes: () => {
+      const H = ar() ? [["الفرع", "التاريخ", "الكمية"], ["اسم الفرع", "شهر/يوم", "الكمية"], ["الفرع", "ملاحظات", "التاريخ"]] : [["Branch", "Date", "Qty"], ["Branch name", "mm/dd", "Qty"], ["Branch", "Notes", "Date"]];
+      const Y = [62, 132, 202], W = 84, cx = mx(206), d = dirx();
+      const bad = [[], [0, 1], [1, 2]];
+      return `${H.map((row, r) => `<g ${an("rise", 0.1 + r * 0.25)}>${row.map((h, c) => { const x = cx + d * (c - 1) * (W + 4); return `${box(x, Y[r], W, 32, bad[r].includes(c) ? "f-rose-soft s-rose" : "f-s1 s-line2")}${txt(x, Y[r] + 5, h, bad[r].includes(c) ? "t-rose" : "t-ink", 11, bold)}`; }).join("")}</g>`).join("")}
+      <g ${an("fade", 0.9)}>${[0, 1, 2].map((r) => txt(cx - d * 164, Y[r] + 5, ar() ? ["القاهرة", "طنطا", "يونيو"][r] : ["Cairo", "Tanta", "June"][r], "t-ink3", 11, bold)).join("")}</g>
+      <path ${an("draw", 1.1, "s-acc")} pathLength="1" d="M${cx + d * 134} 132 H ${mx(416) - d * 52}" stroke-width="2.5" fill="none" marker-end="url(#aih-arrow)"/>
+      <g ${an("pop", 1.3)}>${box(mx(416), 132, 96, 132, "f-mint-soft s-mint")}${txt(mx(416), 92, ar() ? "القالب" : "template", "t-mint", 12.5, 'font-weight="800"')}${(ar() ? ["الفرع", "التاريخ", "الكمية"] : ["Branch", "Date", "Qty"]).map((s, i) => `${box(mx(416), 116 + i * 28, 78, 22, "f-s1 s-mint", 1.5)}${txt(mx(416), 120 + i * 28, s, "t-ink", 10.5, bold)}`).join("")}</g>
+      ${txt(240, 296, ar() ? "نفس الأعمدة · بنفس الأسماء · بنفس الترتيب" : "same columns · same names · same order", "t-ink2", 12.5, bold)}`;
+    },
+    b_stack: () => {
+      const X = rowX(3, 34, 8, mx(90)), t = mx(320), d = dirx();
+      let files = ""; for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) files += fileIcon(X(c), 82 + r * 50, ["s-acc", "s-mint", "s-amber"][r], 0.05 + (r * 3 + c) * 0.05);
+      const rows = ar() ? ["قاهرة-يناير", "قاهرة-فبراير", "طنطا-مارس", "طنطا-مارس", "إسكندرية-أبريل"] : ["Cairo-Jan", "Cairo-Feb", "Tanta-Mar", "Tanta-Mar", "Alex-Apr"];
+      const src = t - d * 70;
+      return `${files}
+      <path ${an("draw", 0.6, "s-acc")} pathLength="1" d="M${mx(160)} 132 H ${t - d * 128}" stroke-width="3" fill="none" marker-end="url(#aih-arrow)"/>
+      ${grid(t + d * 30, 132, 3, 6, 54, 22, "f-s1", -1, 0.8)}
+      <g ${an("rise", 1.0)}><rect x="${src - 52}" y="66" width="104" height="132" rx="6" class="f-mint-soft s-mint" stroke-width="2"/>${txt(src, 82, ar() ? "المصدر" : "Source", "t-mint", 11.5, 'font-weight="800"')}
+        ${rows.map((s, i) => txt(src, 105 + i * 22, s, i === 2 ? "t-acc" : "t-ink2", 9.5, i === 2 ? 'font-weight="800"' : bold)).join("")}</g>
+      <g ${an("pop", 1.5)}><circle cx="${src}" cy="149" r="15" class="s-acc" fill="none" stroke-width="2.5"/></g>
+      <g ${an("rise", 1.7)}>${box(240, 262, 330, 44, "f-acc-soft s-acc")}${txt(240, 258, ar() ? "«ليه طنطا في مارس عالية؟»" : "“Why is Tanta high in March?”", "t-acc", 12, 'font-weight="800"')}${txt(240, 276, ar() ? "فلتر على المصدر… والصف في دقيقة" : "filter by Source… the row in a minute", "t-ink2", 11, bold)}</g>`;
+    },
+    b_check: () => {
+      const L = ar() ? [["من غير كود صنف", "١٬٢٠٠"], ["متكرر بالظبط", "٣٤٠"], ["كمية بالسالب", "٢٨"], ["سعر ×١٠", "١"], ["تاريخ برّه الفترة", "٦٤"]] : [["no product code", "1,200"], ["exact duplicates", "340"], ["negative quantity", "28"], ["price ×10", "1"], ["date out of range", "64"]];
+      const p = mx(200), m = mx(410), d = dirx();
+      return `<g ${an("rise", 0.05)}>${box(p, 152, 270, 236, "f-s1 s-line2")}<rect x="${p - 135}" y="34" width="270" height="34" rx="12" class="f-acc-soft"/>${txt(p, 56, ar() ? "تقرير الجودة · ٤١٢ ألف صف" : "quality report · 412,000 rows", "t-acc", 12, 'font-weight="800"')}</g>
+      ${L.map(([s, n], i) => { const y = 92 + i * 38; return `<g ${an("fade", 0.3 + i * 0.15)}>${check(p - d * 112, y, 0.35 + i * 0.15, false)}${txt(p - d * 10, y + 4, s, "t-ink", 11.5, bold)}${txt(p + d * 104, y + 4, n, "t-rose", 12, 'font-weight="800"')}</g>`; }).join("")}
+      <g ${an("pop", 1.3)}><circle cx="${m}" cy="132" r="36" class="f-s1 s-amber" stroke-width="3.5"/><circle cx="${m - 6}" cy="126" r="14" class="s-amber" fill="none" stroke-width="3.5"/><line x1="${m + 4}" y1="136" x2="${m + 18}" y2="150" class="s-amber" stroke-width="4" stroke-linecap="round"/></g>
+      <g ${an("fade", 1.5)}>${txt(m, 190, ar() ? "قبل الجدول" : "before the", "t-amber", 12, 'font-weight="800"')}${txt(m, 208, ar() ? "المحوري" : "pivot table", "t-amber", 12, 'font-weight="800"')}</g>`;
+    },
+    b_clean: () => {
+      const r = mx(130), c = mx(350), d = dirx();
+      const rules = ar() ? ["«فرع طنطا» ← «طنطا»", "تاريخ كنص ← تاريخ", "المتكرر: نسخة واحدة", "الكمية السالبة: للمراجعة"] : ["“Tanta branch” → “Tanta”", "text date → date", "duplicates: keep one", "negative qty: review"];
+      return `<g ${an("rise", 0.05)}>${box(r, 140, 220, 196, "f-s1 s-line2")}${txt(r, 64, ar() ? "ملف القواعد" : "rules file", "t-ink", 12.5, 'font-weight="800"')}</g>
+      ${rules.map((s, i) => `<g ${an("fade", 0.3 + i * 0.15)}>${box(r, 96 + i * 38, 196, 30, i === 3 ? "f-amber-soft s-amber" : "f-acc-soft s-acc", 1.5)}${txt(r, 100 + i * 38, s, "t-ink", 10.5, bold)}</g>`).join("")}
+      <path ${an("draw", 1.0, "s-acc")} pathLength="1" d="M${r + d * 114} 140 H ${c - d * 76}" stroke-width="2.5" fill="none" marker-end="url(#aih-arrow)"/>
+      <g ${an("rise", 1.1)}>${fileIcon(c - d * 38, 102, "s-ink3", 1.1)}${txt(c - d * 38, 136, ar() ? "الأصل" : "original", "t-ink3", 11, bold)}${fileIcon(c + d * 38, 102, "s-mint", 1.3)}${txt(c + d * 38, 136, ar() ? "النسخة" : "the copy", "t-mint", 11, 'font-weight="800"')}</g>
+      <g ${an("pop", 1.4)}>${box(c - d * 38, 160, 86, 22, "f-s2 s-line2", 1.5)}${txt(c - d * 38, 164, ar() ? "ما اتلمسش" : "untouched", "t-ink2", 10, bold)}</g>
+      <g ${an("rise", 1.6)}>${box(c, 222, 180, 58, "f-s2 s-line2")}${txt(c, 214, ar() ? "السجل" : "log", "t-ink", 11.5, 'font-weight="800"')}${txt(c, 234, ar() ? "قاعدة ٣ · ٣٤٠ صف" : "rule 3 · 340 rows", "t-acc", 11, bold)}</g>`;
+    },
+    b_link: () => {
+      const big = mx(170), p = mx(400), d = dirx();
+      return `${grid(big, 124, 4, 9, 44, 17, "f-s1", [2, 3], 0.05)}
+      <g ${an("fade", 0.3)}>${txt(big, 34, ar() ? "الجدول الكبير + اسم ومجموعة" : "big table + name and group", "t-ink2", 11.5, 'font-weight="800"')}</g>
+      ${grid(p, 96, 3, 5, 30, 16, "f-s1", -1, 0.4)}<g ${an("fade", 0.5)}>${txt(p, 46, ar() ? "الأصناف" : "Products", "t-ink3", 11.5, bold)}</g>
+      <path ${an("draw", 0.8, "s-mint")} pathLength="1" d="M${p - d * 50} 100 C ${p - d * 90} 100, ${big + d * 140} 112, ${big + d * 92} 112" stroke-width="2.4" fill="none" marker-end="url(#aih-arrow)"/>
+      <g ${an("pop", 1.1)}>${box(p, 168, 104, 28, "f-mint", 0)}${txt(p, 173, ar() ? "٩٨٪ اتربطت" : "98% linked", "t-white", 12, 'font-weight="800"')}</g>
+      <g ${an("rise", 1.4)}>${box(big, 262, 236, 46, "f-rose-soft s-rose")}${txt(big, 257, ar() ? "شيت «ما اتربطش»: ٢٪" : "“Unmatched” sheet: 2%", "t-rose", 12, 'font-weight="800"')}${txt(big, 274, ar() ? "صنف جديد · مسافة زيادة" : "a new product · a stray space", "t-rose", 10.5, bold)}</g>
+      <path ${an("draw", 1.6, "s-rose")} pathLength="1" d="M${big + d * 124} 262 C ${big + d * 170} 262, ${p - d * 20} 240, ${p} 196" stroke-width="2" stroke-dasharray="4 4" fill="none"/>
+      <g ${an("fade", 1.8)}>${txt(p, 226, ar() ? "حدّث القايمة" : "update the list", "t-rose", 11, 'font-weight="800"')}</g>`;
+    },
+    b_big: () => {
+      const e = mx(90), pr = mx(250), s = mx(410), d = dirx();
+      return `<g ${an("rise", 0.05)}>${[0, 1, 2, 3].map((k) => `<rect x="${e - 46 + k * 4 * d}" y="${70 - k * 6}" width="92" height="140" rx="6" class="f-s1 s-line2" stroke-width="2"/>`).join("")}${txt(e, 140, ar() ? "٤١٢ ألف صف" : "412,000 rows", "t-ink", 12, 'font-weight="800"')}${txt(e, 236, ar() ? "٣٧ ملف" : "37 files", "t-ink3", 11.5, bold)}</g>
+      <path ${an("draw", 0.5, "s-acc")} pathLength="1" d="M${e + d * 56} 140 H ${pr - d * 62}" stroke-width="3" fill="none" marker-end="url(#aih-arrow)"/>
+      <g ${an("pop", 0.7)}><rect x="${pr - 58}" y="96" width="116" height="88" rx="12" class="f-ink2"/><g class="an turn" style="--d:1.2s;transform-box:fill-box;transform-origin:center">${[0, 60, 120].map((a) => `<rect x="${pr - 4}" y="${140 - 26}" width="8" height="52" rx="3" class="f-white" transform="rotate(${a} ${pr} 140)"/>`).join("")}</g><circle cx="${pr}" cy="140" r="12" class="f-ink2"/>
+        ${txt(pr, 206, ar() ? "برنامج صغير" : "small program", "t-ink", 12, 'font-weight="800"')}${txt(pr, 224, ar() ? "برّه إكسل" : "outside Excel", "t-ink3", 11, bold)}</g>
+      <path ${an("draw", 1.1, "s-mint")} pathLength="1" d="M${pr + d * 62} 140 H ${s - d * 42}" stroke-width="3" fill="none" marker-end="url(#aih-arrow)"/>
+      <g ${an("pop", 1.3)}>${xl(s, 124, 1.2)}${txt(s, 168, ar() ? "ملخّص" : "summary", "t-mint", 12, 'font-weight="800"')}${txt(s, 186, ar() ? "٢٬٤٠٠ صف" : "2,400 rows", "t-ink3", 11, bold)}</g>
+      <g ${an("rise", 1.6)}>${box(240, 276, 360, 36, "f-amber-soft s-amber")}${txt(240, 281, ar() ? "حدّ إكسل: حوالي مليون صف في الشيت" : "Excel's limit: about a million rows per sheet", "t-amber", 11.5, 'font-weight="800"')}</g>`;
+    },
+    b_folder: () => {
+      const F = ar() ? [["الداخل", "نسخ الأصل"], ["الخارج", "النتايج"], ["السجل", "كل تشغيل"], ["القواعد", "التنضيف"]] : [["Input", "copies"], ["Output", "results"], ["Log", "each run"], ["Rules", "cleaning"]];
+      const X = rowX(4, 96, 14);
+      return `<g ${an("rise", 0.05)}>${folder(240, 66, 200, 64, "f-amber s-amber")}${txt(240, 76, ar() ? "مشروع المبيعات" : "sales project", "t-white", 13, 'font-weight="800"')}</g>
+      ${F.map(([n, s], i) => `<path ${an("draw", 0.4 + i * 0.1, "s-ink3")} pathLength="1" d="M240 100 V 122 H ${X(i)} V 146" stroke-width="2" fill="none"/>
+        <g ${an("pop", 0.6 + i * 0.15)}>${folder(X(i), 176, 92, 54)}${txt(X(i), 182, n, "t-ink", 12, 'font-weight="800"')}${txt(X(i), 222, s, "t-ink3", 11, bold)}</g>`).join("")}
+      <g ${an("rise", 1.4)}>${box(240, 274, 340, 40, "f-mint-soft s-mint")}${txt(240, 279, ar() ? "الشهر الجاي: ملفات جديدة في «الداخل» وتشغيل" : "next month: new files in “Input”, then run", "t-mint", 11.5, 'font-weight="800"')}</g>`;
+    },
+    b_editor: () => {
+      const L = mx(96), M = mx(296), d = dirx();
+      const files = ar() ? ["الداخل", "الخارج", "السجل", "القواعد"] : ["Input", "Output", "Log", "Rules"];
+      return `<g ${an("rise", 0.05)}><rect x="34" y="40" width="412" height="230" rx="12" class="f-s1 s-line2" stroke-width="2"/><rect x="34" y="40" width="412" height="26" rx="12" class="f-s2"/>${[0, 1, 2].map((k) => `<circle cx="${mx(52 + k * 14)}" cy="53" r="4.5" class="${["f-rose", "f-amber", "f-mint"][k]}"/>`).join("")}${txt(240, 58, "VS Code", "t-ink2", 11, 'font-weight="800" direction="ltr"')}</g>
+      <g ${an("fade", 0.3)}><rect x="${ar() ? 446 - 120 : 34}" y="66" width="120" height="204" class="f-s2"/>${files.map((s, i) => `<g>${folder(L - d * 30, 92 + i * 34, 22, 16)}${txt(L + d * 12, 96 + i * 34, s, "t-ink2", 11, bold)}</g>`).join("")}</g>
+      <g ${an("fade", 0.6)}>${[0, 1, 2, 3, 4].map((k) => `<rect x="${ar() ? M + 110 - [180, 140, 160, 120, 150][k] : M - 110}" y="${84 + k * 18}" width="${[180, 140, 160, 120, 150][k]}" height="7" rx="3" class="f-s3"/>`).join("")}</g>
+      <g ${an("rise", 0.9)}><rect x="${M - 124}" y="192" width="248" height="66" rx="6" class="f-ink2"/>${["> run", "37 files · 412,000 rows", "log saved"].map((s, i) => `<text x="${M - 112}" y="${212 + i * 18}" class="t-crt" font-size="10.5" font-family="var(--font-mono)" direction="ltr">${esc(s)}</text>`).join("")}</g>
+      <g ${an("pop", 1.3)}>${box(M + d * 74, 112, 112, 52, "f-acc", 0)}${txt(M + d * 74, 108, ar() ? "المساعد" : "assistant", "t-white", 11.5, 'font-weight="800"')}${txt(M + d * 74, 126, ar() ? "شايف الفولدر" : "sees the folder", "t-white", 10.5, bold)}</g>
+      ${txt(240, 300, ar() ? "الملفات · الملف اللي بتراجعه · مكان التشغيل" : "files · the file you review · where you run", "t-ink2", 12, bold)}`;
+    },
+    b_levels: () => {
+      const a = mx(130), b = mx(350), d = dirx();
+      const fast = ar() ? ["توحيد الأسماء", "رسايل السجل", "أسئلة صغيرة"] : ["unify names", "log messages", "small questions"];
+      const deep = ar() ? ["تصميم قواعد الفحص", "قواعد التنضيف", "نتيجة غريبة؟"] : ["design the checks", "cleaning rules", "an odd result?"];
+      const col = (x, title, sub, items, cls, tcls, d0) => `<g ${an("rise", d0)}>${box(x, 150, 200, 220, cls)}${txt(x, 66, title, tcls, 14, 'font-weight="800"')}${txt(x, 86, sub, "t-ink3", 11, bold)}</g>
+        ${items.map((s, i) => `<g ${an("pop", d0 + 0.3 + i * 0.15)}>${box(x, 124 + i * 44, 168, 34, "f-s1 s-line2", 1.5)}${txt(x, 129 + i * 44, s, "t-ink", 11.5, bold)}</g>`).join("")}`;
+      return `${col(a, ar() ? "سريع" : "Fast", ar() ? "ثانية · تكلفة أقل" : "a second · lower cost", fast, "f-mint-soft s-mint", "t-mint", 0.05)}
+      ${col(b, ar() ? "عميق" : "Deep", ar() ? "وقت أكتر · تكلفة أكتر" : "more time · more cost", deep, "f-acc-soft s-acc", "t-acc", 0.4)}
+      <g ${an("pop", 1.5)}><circle cx="240" cy="150" r="22" class="f-s1 s-ink3" stroke-width="2"/>${txt(240, 155, ar() ? "أو" : "or", "t-ink2", 13, 'font-weight="800"')}</g>
+      ${txt(240, 300, ar() ? "المستوى على قد المهمة" : "the level fits the task", "t-ink2", 13, bold)}`;
+    },
+    b_result: () => {
+      const t = mx(140), r = mx(360), d = dirx();
+      return `${grid(t, 120, 4, 8, 44, 18, "f-s1", -1, 0.05)}
+      <g ${an("fade", 0.3)}>${txt(t, 34, ar() ? "جدول واحد نضيف" : "one clean table", "t-ink2", 12, 'font-weight="800"')}</g>
+      ${(ar() ? ["تقرير الجودة", "السجل", "«ما اتربطش»"] : ["quality report", "log", "“Unmatched”"]).map((s, i) => { const x = t + d * (i - 1) * 74; return `<g ${an("pop", 0.5 + i * 0.15)}>${box(x, 226, 68, 30, "f-s2 s-line2", 1.5)}${txt(x, 230, s, "t-ink2", 9.5, bold)}</g>`; }).join("")}
+      <g ${an("rise", 0.9)}>${box(r, 70, 196, 40, "f-s1 s-line2")}${txt(r, 75, ar() ? "صفوف الملفات: ٤١٢٬٣٤٠" : "rows in files: 412,340", "t-ink", 11.5, bold)}</g>
+      <g ${an("rise", 1.1)}>${box(r, 122, 196, 40, "f-s1 s-line2")}${txt(r, 127, ar() ? "صفوف الجدول: ٤١٢٬٠٠٠" : "rows in table: 412,000", "t-ink", 11.5, bold)}</g>
+      <g ${an("pop", 1.4)}>${box(r, 182, 196, 48, "f-mint-soft s-mint")}${txt(r, 177, ar() ? "٣٤٠ صف متكرر" : "340 duplicate rows", "t-mint", 12, 'font-weight="800"')}${txt(r, 195, ar() ? "قيمتهم ١٨٬٦٠٠ ج = فرق المبيعات" : "worth 18,600 = the sales gap", "t-ink3", 10.5, bold)}</g>
+      ${check(r + d * 112, 182, 1.6, true)}
+      ${txt(240, 296, ar() ? "كل جنيه معروف راح فين" : "every pound accounted for", "t-ink2", 13, bold)}`;
+    },
+    b_cliff: () => {
+      const t = mx(110), q = mx(372), d = dirx();
+      const br = ar() ? ["القاهرة", "طنطا", "إسكندرية"] : ["Cairo", "Tanta", "Alexandria"];
+      return `${grid(t, 120, 3, 7, 40, 18, "f-s1", -1, 0.05)}<g ${an("fade", 0.3)}>${txt(t, 40, ar() ? "الأرقام جاهزة" : "numbers ready", "t-mint", 12, 'font-weight="800"')}</g>
+      ${br.map((s, i) => { const y = 74 + i * 66; return `<path ${an("draw", 0.6 + i * 0.15, "s-ink3")} pathLength="1" d="M${t + d * 66} 120 C ${t + d * 120} 120, ${q - d * 110} ${y}, ${q - d * 64} ${y}" stroke-width="2" stroke-dasharray="1" fill="none" marker-end="url(#aih-arrow)"/>
+        <g ${an("pop", 0.9 + i * 0.2)}>${page(q - d * 30, y, 52, 56, "", [28, 22, 26], 0.9 + i * 0.2)}<rect x="${q - d * 30 - 26}" y="${y - 28}" width="52" height="12" rx="4" class="f-acc"/>${txt(q + d * 40, y + 5, s, "t-ink", 11.5, bold)}</g>`; }).join("")}
+      <g ${an("pop", 1.7)}><circle cx="${q - d * 30}" cy="270" r="20" class="f-acc"/>${txt(q - d * 30, 278, ar() ? "؟" : "?", "t-white", 22, 'font-weight="800"')}</g>
+      <g ${an("fade", 1.9)}>${txt(t, 262, ar() ? "الوحدة الجاية" : "next unit", "t-acc", 13, 'font-weight="800"')}${txt(t, 282, ar() ? "تقارير بتطلع لوحدها" : "reports that build themselves", "t-ink2", 11.5, bold)}</g>`;
+    }
+  });
+
   const defs = `<svg class="aih-defs" width="0" height="0" aria-hidden="true" focusable="false"><defs><marker id="aih-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" class="f-ink2"/></marker></defs></svg>`;
   const drawing = (key, label) => `<svg class="aih-svg" viewBox="0 0 480 320" role="img" aria-label="${esc(label)}">${ART[key] ? ART[key]() : ""}</svg>`;
 
   /* ---------- the deck ---------- */
   // One player for every story deck (A.decks): the AI history in f1, how a model works in f2, …
-  A.mountDeck = function (host, H) {
+  A.mountDeck = function (host, H, opts = {}) {   // opts.present: the presenter's full-screen player drives it (no own chrome)
     if (!H || !host) return;
+    const present = !!opts.present;
     const S = H.slides, n = S.length, ui = H.ui;
     const fmt = (s, o) => L(s).replace(/\{(\w+)\}/g, (_, k) => o[k]);
     const num = (v) => (ar() ? Number(v).toLocaleString("ar-EG") : String(v));
     const readSecs = (s) => Math.min(18, Math.max(9, (L(s.title) + s.story.map(L).join(" ") + L(s.idea)).length / 17));
 
-    host.className = "sec aih";
+    host.className = present ? "aih aih-present" : "sec aih";
     host.setAttribute("aria-roledescription", ar() ? "عرض شرائح" : "carousel");
     host.setAttribute("aria-label", L(ui.deck));
     host.innerHTML = `
@@ -12022,10 +12660,12 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       io = new IntersectionObserver((es) => es.forEach((en) => { visible = en.intersectionRatio > 0.35; host.classList.toggle("is-away", !en.isIntersecting); }), { threshold: [0, 0.35, 0.6] });
       io.observe(stage);
     }
-    A.onLeave(() => { io && io.disconnect(); playing = false; cancelAnimationFrame(raf); cancelAnimationFrame(countRaf); alive = false; cancelIdle(); });
+    const stop = () => { io && io.disconnect(); playing = false; cancelAnimationFrame(raf); cancelAnimationFrame(countRaf); alive = false; cancelIdle(); };
+    A.onLeave(stop);
 
-    go(0, "init");
+    go(Math.max(0, Math.min(n - 1, opts.start || 0)), "init");
     idleDraw();
+    return { n, get cur() { return cur; }, go: (i) => go(i, "user"), destroy: stop };
   };
   A.mountHistory = (host) => A.mountDeck(host, A.aiHistory);
 })(window.ACADEMY = window.ACADEMY || {});

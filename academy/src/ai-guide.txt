@@ -17,7 +17,7 @@ WHO YOU ARE TALKING TO
   «مساحة العمل» (the workspace).
 
 HOW THE COURSE IS ORGANISED (eight units, shown as 1–8; ids u0–u7; the book is a reference, not the order)
- 1 Foundations   2 Big data (many files, quality, the editor, model levels)   3 Office (Word, email, decks; Claude Code)
+ 1 Foundations   2 Big data (b1 opens it: many files, quality, the editor, model levels)   3 Office (Word, email, decks; Claude Code)
  4 PDF files (cloud or local, free tools)   5 Dashboards (Codex, companies and models)   6 Small tools (shared
  features, saving versions, studying with AI)   7 Your assistant at work (prompts, decisions, pitch, career)
  8 The big picture (systems and digital teams, in general terms) and the graduation project.
@@ -34,7 +34,7 @@ WHERE THINGS ARE INSIDE THIS FILE (search for these names)
 - Lessons: `A.lessons = ` (fields: id, unit, title, sum, book points with page numbers, levels simple/mech/practice/adv).
 - Plain-language Arabic layer: `A.plainTalk`. Intro stories: `A.lessonStories`.
 - Story decks: `A.aiHistory`, `A.modelStory`, `A.contextStory`, `A.windowStory`, `A.agentsStory`, `A.workStory`,
-  `A.limitsStory`, `A.autoStory` — each has slides with title, story, answer (the rule) and idea (one line).
+  `A.limitsStory`, `A.autoStory`, and `A.bigStory` (unit 2's opening story, lesson b1) — each has slides with title, story, answer (the rule) and idea (one line).
 - Prompt library: `A.prompts = ` (ready prompts with [variables]); quiz: `A.quiz = `; glossary: `A.glossary = `.
 - Lesson 8 automation prompts: ids f8a (stack many files + pivot), f8b (enrich a raw table from small master sheets,
   with an "unmatched" sheet), f8c (report from two workbooks with a totals check). They target a work laptop where
