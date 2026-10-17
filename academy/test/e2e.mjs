@@ -368,6 +368,14 @@ await session({ label: "model-deck-ar", viewport: { width: 1360, height: 900 } }
   const xfinal = await page.$eval("#sec-auto [data-aih-q]", (e) => e.dataset.final === "true" && /إكسل/.test(e.textContent));
   xn >= 10 && /8 من 8/.test(xcrumb) && xfinal ? ok(`automation deck: ${xn} slides close unit 0 (lesson 8 of 8) on the cliffhanger question`) : fail(`automation deck: incomplete (${xn} slides, crumb «${xcrumb}», final ${xfinal})`);
   xprompts >= 3 ? ok(`automation lesson: ${xprompts} copy-ready automation prompts`) : fail("automation lesson: prompts missing (" + xprompts + ")");
+  // unit 2 opens with its own story: lesson b1, first of its unit, ending on the question that opens unit 3
+  await page.evaluate(() => (location.hash = "lesson-b1")); await page.waitForSelector("#sec-big .aih-stage");
+  const bn = await page.$$eval("#sec-big .aih-slide", (s) => s.length);
+  const bcrumb = await page.$eval(".crumbs .num", (e) => e.textContent);
+  await page.click('#sec-big [data-aih-go="11"]'); await page.waitForTimeout(700);
+  const bfinal = await page.$eval("#sec-big [data-aih-q]", (e) => e.dataset.final === "true" && /فرع/.test(e.textContent));
+  const bart = await page.$eval('#sec-big .aih-slide[data-i="11"] .aih-svg', (v) => v.querySelectorAll("rect,circle,path,text").length > 8);
+  bn === 12 && /(^|\s)1 من 5/.test(bcrumb) && bfinal && bart ? ok("unit 2 deck: 12 slides open the unit (lesson 1) and end on the question that opens unit 3") : fail(`unit 2 deck: ${bn} slides, crumb «${bcrumb}», final ${bfinal}, art ${bart}`);
   const leftBuilt = await page.evaluate(async () => {   // leaving the page stops on-demand drawing: no SVGs are built in the detached deck afterwards
     location.hash = "lesson-f6"; await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
     const deck = document.querySelector("#sec-window"); const before = deck.querySelectorAll(".aih-svg").length;

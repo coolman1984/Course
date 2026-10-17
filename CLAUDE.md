@@ -53,7 +53,7 @@ Commit the rebuilt `AI_Academy.html` together with source changes. CI runs the s
 
 ## Story decks
 
-Each unit-0 lesson opens with a 12-slide deck: `academy/src/data/<name>-story.js` registers `A.<name>Story` in `A.decks`
+Each unit-0 lesson, and the first lesson of each later unit (unit 2: `b1`), opens with a 12-slide deck: `academy/src/data/<name>-story.js` registers `A.<name>Story` in `A.decks`
 with `lesson: "<id>"`; the player is `A.mountDeck` in `engine/history.js` (one player for all decks).
 
 Writing rules:

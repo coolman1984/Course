@@ -3,7 +3,7 @@
 (function (A) {
   A.courseOrder = {
     u0: ["f1", "f2", "f4", "f6", "f7", "f3", "f5", "f8"],                 // 1 foundations
-    u1: ["y4", "p9", "w1", "m1"],                                           // 2 big data · the editor · intelligence levels
+    u1: ["b1", "y4", "p9", "w1", "m1"],                                                 // 2 big data · the editor · intelligence levels
     u2: ["p10", "w2"],                                                      // 3 Office · Claude Code · tokens
     u3: ["m3"],                                                             // 4 PDF · cloud or local · free tools
     u4: ["d1", "d2", "y6", "y5", "m2"],                                     // 5 dashboards · Codex · companies and models
