@@ -255,5 +255,33 @@
         ],
       },
     },
+    {
+      id: "b1", unit: "u1", pages: [17, 20], diff: 1, min: 10, related: ["y4", "p9", "w1", "m1"], pre: ["f8"],
+      title: { ar: "من ملفات كتير لجدول واحد تثق فيه", en: "From many files to one table you can trust" },
+      sum: { ar: "تجميع ملفات بأشكال مختلفة في جدول واحد، وفحصه وتنضيفه بقواعد مكتوبة، وربطه بالشيتات الصغيرة، ولما الملف يكبر على إكسل.", en: "Combining differently shaped files into one table, checking and cleaning it by written rules, linking it to small sheets, and what to do when a file outgrows Excel." },
+      book: [
+        bp(17, "المهارة المطلوبة مش كتابة الكود، المهارة **وصف العملية بدقة**: الملفات اللي داخلة، والقواعد، وشكل النتيجة، والاختبارات. والأداة تشتغل على نسخة، وتكتب سجل، وتوقف برسالة واضحة.", "The skill isn't writing code but **describing the process precisely**: the input files, the rules, the result's shape and the tests. The tool works on a copy, writes a log and stops with a clear message."),
+        bp(20, "**الجودة الأول**: قبل أي تحليل، افحص البيانات: القيم الناقصة، والتكرار، والوحدات، والأرقام الغريبة. التحليل على بيانات فيها أخطاء بيطلّع نتيجة شكلها مقنع وهي غلط.", "**Quality first**: before any analysis, check the data: missing values, duplicates, units and odd figures. Analysis on flawed data gives a convincing result that is wrong."),
+      ],
+      levels: {
+        simple: [
+          L("what", "تجميع البيانات يعني إنك تحط ملفات كتير بنفس المعنى في **جدول واحد**: بعد ما تتفق على شكل واحد للأعمدة، وتحط الملفات تحت بعض بعمود «المصدر»، وتفحصها وتنضّفها بقواعد مكتوبة، وتربطها بالشيتات الصغيرة.", "Combining data means putting many files that mean the same thing into **one table**: after agreeing on one column shape, you stack the files with a “Source” column, check and clean them by written rules, and link them to the small sheets."),
+          L("why", "لأن السؤال المهم بييجي دايمًا على كل البيانات مع بعض: كل الفروع، وكل الشهور. ولو التجميع حصل بالإيد أو من غير فحص، الإجمالي بيطلع غلط وما حدش بيعرف ليه.", "Because the important question always spans all the data: every branch, every month. If combining happens by hand or without checks, the total comes out wrong and nobody knows why."),
+        ],
+        mech: [
+          L("how", "- **القالب**: الأعمدة المطلوبة بأسمائها وأنواعها.\n- **التجميع**: كل ملف يتطابق مع القالب ويتحط تحت اللي قبله، ومعاه عمود «المصدر».\n- **الفحص**: الناقص، والمتكرر، والأرقام الشاذة، والتواريخ اللي برّه الفترة.\n- **التنضيف**: قواعد مكتوبة على نسخة، وكل تعديل في السجل.\n- **الربط**: بالكود مع الشيتات الصغيرة، وشيت لوحده للي ما اتربطش.\n- **المطابقة**: الإجمالي النهائي = مجموع المصادر، وأي فرق متفسّر.", "- **Template**: the required columns with names and types.\n- **Stack**: each file is matched to the template and placed under the previous one, with a “Source” column.\n- **Check**: missing, duplicated, outliers, out-of-range dates.\n- **Clean**: written rules applied to a copy, every change logged.\n- **Link**: by code to the small sheets, with a separate sheet for what didn't link.\n- **Reconcile**: final total = sum of the sources, with every gap explained."),
+          L("inside", "إكسل بيقف عند حوالي مليون صف في الشيت، وبيتقل قبلها بكتير. علشان كده الشغل التقيل بيحصل في برنامج صغير برّه إكسل يكتبهولك الذكاء الاصطناعي: يقرا الملفات صف ورا صف، ويطلّع النتيجة الصغيرة بس، وهي اللي بتفتح في إكسل.", "Excel stops at about a million rows per sheet and slows down long before that. So the heavy work happens in a small program outside Excel that AI writes for you: it reads the files row by row and outputs only the small result, which is what opens in Excel."),
+          L("link", "ده امتداد مباشر للأدوات اللي بنيناها في [[f8]]، بس على ملفات أشكالها مختلفة وأكبر. والدرس اللي بعده [[y4]] بيدخل في فحص الجودة بالتفصيل.", "This extends the tools we built in [[f8]] directly, but to files that are larger and shaped differently. The next lesson, [[y4]], goes into quality checking in detail."),
+        ],
+        practice: [
+          L("example", "مشرف مبيعات عنده ٣٦ ملف شهري من تلات فروع، وملف ربع فيه ٣٠٠ ألف صف. بعد القالب والتجميع والفحص والتنضيف، طلع جدول واحد فيه ٤١٢ ألف صف، وتقرير جودة، والإجمالي مطابق للمصدر بفرق ٣٤٠ صف متكرر متسجّلين في السجل.", "A sales supervisor has 36 monthly files from three branches and a 300,000-row quarter file. After the template, stacking, checking and cleaning, he gets one 412,000-row table, a quality report, and a total that matches the source except for 340 duplicate rows recorded in the log."),
+          L("apply", "اختار تلات ملفات حقيقية من شغلك بنفس المعنى. اكتب القالب الأول، وبعدين استخدم الـ Prompt الجاهز تحت علشان تجمعهم بعمود «المصدر» وتطلب تقرير جودة قبل أي تحليل.", "Pick three real files from your work that mean the same thing. Write the template first, then use the ready Prompt below to combine them with a “Source” column and ask for a quality report before any analysis."),
+        ],
+        adv: [
+          L("mistakes", "- تجمّع الملفات زي ما هي من غير قالب، فالأعمدة تتلخبط في صمت.\n- تنسى عمود «المصدر»، فما تعرفش ترجع للأصل.\n- تحلل قبل ما تفحص.\n- تمسح الصفوف اللي ما اتربطتش بدل ما تراجعها.\n- ما تطابقش الإجمالي بالمصدر.", "- Stacking files as they are without a template, so columns scramble silently.\n- Forgetting the “Source” column, so you can't trace back.\n- Analysing before checking.\n- Deleting rows that didn't link instead of reviewing them.\n- Not reconciling the total with the source."),
+          L("whennot", "لو الملفات قليلة وبتتجمع مرة واحدة في السنة، معادلة أو Power Query كفاية من غير أداة. ولو البيانات حساسة، ما ترفعهاش لأداة على النت إلا لو سياسة شركتك بتسمح.", "If the files are few and combined once a year, a formula or Power Query is enough without a tool. And if the data is sensitive, don't upload it to an online tool unless your company's policy allows it."),
+        ],
+      },
+    },
   ]);
 })(window.ACADEMY = window.ACADEMY || {});

@@ -1129,6 +1129,135 @@
     }
   });
 
+  /* ---------- unit 2 deck: from many files to one table (b_*) ---------- */
+  const fileIcon = (x, y, cls = "s-acc", d = 0) =>   // a small file: folded corner, two lines
+    `<g ${an("pop", d)}><path d="M${x - 14} ${y - 18} h20 l8 8 v28 h-28z" class="f-s1 ${cls}" stroke-width="1.8"/><rect x="${x - 8}" y="${y - 6}" width="16" height="3.5" rx="1.5" class="f-acc-soft"/><rect x="${x - 8}" y="${y + 2}" width="12" height="3.5" rx="1.5" class="f-s3"/></g>`;
+  const folder = (x, y, w, h, cls = "f-amber-soft s-amber") =>
+    `<path d="M${x - w / 2} ${y - h / 2 + 8} q0 -8 8 -8 h${w * 0.28} l8 8 h${w * 0.72 - 24} q8 0 8 8 v${h - 16} q0 8 -8 8 h-${w - 16} q-8 0 -8 -8z" class="${cls}" stroke-width="2"/>`;
+  Object.assign(ART, {
+    b_files: () => {
+      const X = rowX(6, 30, 10, mx(150)), d = dirx();
+      let files = ""; for (let r = 0; r < 6; r++) for (let c = 0; c < 6; c++) files += fileIcon(X(c), 74 + r * 34, ["s-acc", "s-mint", "s-amber"][Math.floor(r / 2)], 0.05 + (r * 6 + c) * 0.02);
+      const q = mx(380);
+      return `${files}
+      <g ${an("fade", 0.9)}>${txt(mx(150), 290, ar() ? "٣ فروع × ١٢ شهر" : "3 branches × 12 months", "t-ink2", 12.5, 'font-weight="800"')}</g>
+      <g ${an("rise", 1.1)}><rect x="${q - 50}" y="74" width="100" height="128" rx="8" class="f-s1 s-rose" stroke-width="2.5"/>${[0, 1, 2, 3, 4].map((k) => `<rect x="${q - 36}" y="${94 + k * 18}" width="${[72, 60, 66, 50, 70][k]}" height="6" rx="3" class="f-s3"/>`).join("")}
+        ${txt(q, 228, ar() ? "ملف الربع" : "quarter file", "t-rose", 12.5, 'font-weight="800"')}${txt(q, 246, ar() ? "٣٠٠ ألف صف" : "300,000 rows", "t-ink3", 11.5, bold)}</g>
+      <g ${an("pop", 1.5)}>${box(q, 40, 150, 34, "f-acc", 0)}${txt(q, 45, ar() ? "= ٣٧ ملف" : "= 37 files", "t-white", 13, 'font-weight="800"')}</g>`;
+    },
+    b_shapes: () => {
+      const H = ar() ? [["الفرع", "التاريخ", "الكمية"], ["اسم الفرع", "شهر/يوم", "الكمية"], ["الفرع", "ملاحظات", "التاريخ"]] : [["Branch", "Date", "Qty"], ["Branch name", "mm/dd", "Qty"], ["Branch", "Notes", "Date"]];
+      const Y = [62, 132, 202], W = 84, cx = mx(206), d = dirx();
+      const bad = [[], [0, 1], [1, 2]];
+      return `${H.map((row, r) => `<g ${an("rise", 0.1 + r * 0.25)}>${row.map((h, c) => { const x = cx + d * (c - 1) * (W + 4); return `${box(x, Y[r], W, 32, bad[r].includes(c) ? "f-rose-soft s-rose" : "f-s1 s-line2")}${txt(x, Y[r] + 5, h, bad[r].includes(c) ? "t-rose" : "t-ink", 11, bold)}`; }).join("")}</g>`).join("")}
+      <g ${an("fade", 0.9)}>${[0, 1, 2].map((r) => txt(cx - d * 164, Y[r] + 5, ar() ? ["القاهرة", "طنطا", "يونيو"][r] : ["Cairo", "Tanta", "June"][r], "t-ink3", 11, bold)).join("")}</g>
+      <path ${an("draw", 1.1, "s-acc")} pathLength="1" d="M${cx + d * 134} 132 H ${mx(416) - d * 52}" stroke-width="2.5" fill="none" marker-end="url(#aih-arrow)"/>
+      <g ${an("pop", 1.3)}>${box(mx(416), 132, 96, 132, "f-mint-soft s-mint")}${txt(mx(416), 92, ar() ? "القالب" : "template", "t-mint", 12.5, 'font-weight="800"')}${(ar() ? ["الفرع", "التاريخ", "الكمية"] : ["Branch", "Date", "Qty"]).map((s, i) => `${box(mx(416), 116 + i * 28, 78, 22, "f-s1 s-mint", 1.5)}${txt(mx(416), 120 + i * 28, s, "t-ink", 10.5, bold)}`).join("")}</g>
+      ${txt(240, 296, ar() ? "نفس الأعمدة · بنفس الأسماء · بنفس الترتيب" : "same columns · same names · same order", "t-ink2", 12.5, bold)}`;
+    },
+    b_stack: () => {
+      const X = rowX(3, 34, 8, mx(90)), t = mx(320), d = dirx();
+      let files = ""; for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) files += fileIcon(X(c), 82 + r * 50, ["s-acc", "s-mint", "s-amber"][r], 0.05 + (r * 3 + c) * 0.05);
+      const rows = ar() ? ["قاهرة-يناير", "قاهرة-فبراير", "طنطا-مارس", "طنطا-مارس", "إسكندرية-أبريل"] : ["Cairo-Jan", "Cairo-Feb", "Tanta-Mar", "Tanta-Mar", "Alex-Apr"];
+      const src = t - d * 70;
+      return `${files}
+      <path ${an("draw", 0.6, "s-acc")} pathLength="1" d="M${mx(160)} 132 H ${t - d * 128}" stroke-width="3" fill="none" marker-end="url(#aih-arrow)"/>
+      ${grid(t + d * 30, 132, 3, 6, 54, 22, "f-s1", -1, 0.8)}
+      <g ${an("rise", 1.0)}><rect x="${src - 52}" y="66" width="104" height="132" rx="6" class="f-mint-soft s-mint" stroke-width="2"/>${txt(src, 82, ar() ? "المصدر" : "Source", "t-mint", 11.5, 'font-weight="800"')}
+        ${rows.map((s, i) => txt(src, 105 + i * 22, s, i === 2 ? "t-acc" : "t-ink2", 9.5, i === 2 ? 'font-weight="800"' : bold)).join("")}</g>
+      <g ${an("pop", 1.5)}><circle cx="${src}" cy="149" r="15" class="s-acc" fill="none" stroke-width="2.5"/></g>
+      <g ${an("rise", 1.7)}>${box(240, 262, 330, 44, "f-acc-soft s-acc")}${txt(240, 258, ar() ? "«ليه طنطا في مارس عالية؟»" : "“Why is Tanta high in March?”", "t-acc", 12, 'font-weight="800"')}${txt(240, 276, ar() ? "فلتر على المصدر… والصف في دقيقة" : "filter by Source… the row in a minute", "t-ink2", 11, bold)}</g>`;
+    },
+    b_check: () => {
+      const L = ar() ? [["من غير كود صنف", "١٬٢٠٠"], ["متكرر بالظبط", "٣٤٠"], ["كمية بالسالب", "٢٨"], ["سعر ×١٠", "١"], ["تاريخ برّه الفترة", "٦٤"]] : [["no product code", "1,200"], ["exact duplicates", "340"], ["negative quantity", "28"], ["price ×10", "1"], ["date out of range", "64"]];
+      const p = mx(200), m = mx(410), d = dirx();
+      return `<g ${an("rise", 0.05)}>${box(p, 152, 270, 236, "f-s1 s-line2")}<rect x="${p - 135}" y="34" width="270" height="34" rx="12" class="f-acc-soft"/>${txt(p, 56, ar() ? "تقرير الجودة · ٤١٢ ألف صف" : "quality report · 412,000 rows", "t-acc", 12, 'font-weight="800"')}</g>
+      ${L.map(([s, n], i) => { const y = 92 + i * 38; return `<g ${an("fade", 0.3 + i * 0.15)}>${check(p - d * 112, y, 0.35 + i * 0.15, false)}${txt(p - d * 10, y + 4, s, "t-ink", 11.5, bold)}${txt(p + d * 104, y + 4, n, "t-rose", 12, 'font-weight="800"')}</g>`; }).join("")}
+      <g ${an("pop", 1.3)}><circle cx="${m}" cy="132" r="36" class="f-s1 s-amber" stroke-width="3.5"/><circle cx="${m - 6}" cy="126" r="14" class="s-amber" fill="none" stroke-width="3.5"/><line x1="${m + 4}" y1="136" x2="${m + 18}" y2="150" class="s-amber" stroke-width="4" stroke-linecap="round"/></g>
+      <g ${an("fade", 1.5)}>${txt(m, 190, ar() ? "قبل الجدول" : "before the", "t-amber", 12, 'font-weight="800"')}${txt(m, 208, ar() ? "المحوري" : "pivot table", "t-amber", 12, 'font-weight="800"')}</g>`;
+    },
+    b_clean: () => {
+      const r = mx(130), c = mx(350), d = dirx();
+      const rules = ar() ? ["«فرع طنطا» ← «طنطا»", "تاريخ كنص ← تاريخ", "المتكرر: نسخة واحدة", "الكمية السالبة: للمراجعة"] : ["“Tanta branch” → “Tanta”", "text date → date", "duplicates: keep one", "negative qty: review"];
+      return `<g ${an("rise", 0.05)}>${box(r, 140, 220, 196, "f-s1 s-line2")}${txt(r, 64, ar() ? "ملف القواعد" : "rules file", "t-ink", 12.5, 'font-weight="800"')}</g>
+      ${rules.map((s, i) => `<g ${an("fade", 0.3 + i * 0.15)}>${box(r, 96 + i * 38, 196, 30, i === 3 ? "f-amber-soft s-amber" : "f-acc-soft s-acc", 1.5)}${txt(r, 100 + i * 38, s, "t-ink", 10.5, bold)}</g>`).join("")}
+      <path ${an("draw", 1.0, "s-acc")} pathLength="1" d="M${r + d * 114} 140 H ${c - d * 76}" stroke-width="2.5" fill="none" marker-end="url(#aih-arrow)"/>
+      <g ${an("rise", 1.1)}>${fileIcon(c - d * 38, 102, "s-ink3", 1.1)}${txt(c - d * 38, 136, ar() ? "الأصل" : "original", "t-ink3", 11, bold)}${fileIcon(c + d * 38, 102, "s-mint", 1.3)}${txt(c + d * 38, 136, ar() ? "النسخة" : "the copy", "t-mint", 11, 'font-weight="800"')}</g>
+      <g ${an("pop", 1.4)}>${box(c - d * 38, 160, 86, 22, "f-s2 s-line2", 1.5)}${txt(c - d * 38, 164, ar() ? "ما اتلمسش" : "untouched", "t-ink2", 10, bold)}</g>
+      <g ${an("rise", 1.6)}>${box(c, 222, 180, 58, "f-s2 s-line2")}${txt(c, 214, ar() ? "السجل" : "log", "t-ink", 11.5, 'font-weight="800"')}${txt(c, 234, ar() ? "قاعدة ٣ · ٣٤٠ صف" : "rule 3 · 340 rows", "t-acc", 11, bold)}</g>`;
+    },
+    b_link: () => {
+      const big = mx(170), p = mx(400), d = dirx();
+      return `${grid(big, 124, 4, 9, 44, 17, "f-s1", [2, 3], 0.05)}
+      <g ${an("fade", 0.3)}>${txt(big, 34, ar() ? "الجدول الكبير + اسم ومجموعة" : "big table + name and group", "t-ink2", 11.5, 'font-weight="800"')}</g>
+      ${grid(p, 96, 3, 5, 30, 16, "f-s1", -1, 0.4)}<g ${an("fade", 0.5)}>${txt(p, 46, ar() ? "الأصناف" : "Products", "t-ink3", 11.5, bold)}</g>
+      <path ${an("draw", 0.8, "s-mint")} pathLength="1" d="M${p - d * 50} 100 C ${p - d * 90} 100, ${big + d * 140} 112, ${big + d * 92} 112" stroke-width="2.4" fill="none" marker-end="url(#aih-arrow)"/>
+      <g ${an("pop", 1.1)}>${box(p, 168, 104, 28, "f-mint", 0)}${txt(p, 173, ar() ? "٩٨٪ اتربطت" : "98% linked", "t-white", 12, 'font-weight="800"')}</g>
+      <g ${an("rise", 1.4)}>${box(big, 262, 236, 46, "f-rose-soft s-rose")}${txt(big, 257, ar() ? "شيت «ما اتربطش»: ٢٪" : "“Unmatched” sheet: 2%", "t-rose", 12, 'font-weight="800"')}${txt(big, 274, ar() ? "صنف جديد · مسافة زيادة" : "a new product · a stray space", "t-rose", 10.5, bold)}</g>
+      <path ${an("draw", 1.6, "s-rose")} pathLength="1" d="M${big + d * 124} 262 C ${big + d * 170} 262, ${p - d * 20} 240, ${p} 196" stroke-width="2" stroke-dasharray="4 4" fill="none"/>
+      <g ${an("fade", 1.8)}>${txt(p, 226, ar() ? "حدّث القايمة" : "update the list", "t-rose", 11, 'font-weight="800"')}</g>`;
+    },
+    b_big: () => {
+      const e = mx(90), pr = mx(250), s = mx(410), d = dirx();
+      return `<g ${an("rise", 0.05)}>${[0, 1, 2, 3].map((k) => `<rect x="${e - 46 + k * 4 * d}" y="${70 - k * 6}" width="92" height="140" rx="6" class="f-s1 s-line2" stroke-width="2"/>`).join("")}${txt(e, 140, ar() ? "٤١٢ ألف صف" : "412,000 rows", "t-ink", 12, 'font-weight="800"')}${txt(e, 236, ar() ? "٣٧ ملف" : "37 files", "t-ink3", 11.5, bold)}</g>
+      <path ${an("draw", 0.5, "s-acc")} pathLength="1" d="M${e + d * 56} 140 H ${pr - d * 62}" stroke-width="3" fill="none" marker-end="url(#aih-arrow)"/>
+      <g ${an("pop", 0.7)}><rect x="${pr - 58}" y="96" width="116" height="88" rx="12" class="f-ink2"/><g class="an turn" style="--d:1.2s;transform-box:fill-box;transform-origin:center">${[0, 60, 120].map((a) => `<rect x="${pr - 4}" y="${140 - 26}" width="8" height="52" rx="3" class="f-white" transform="rotate(${a} ${pr} 140)"/>`).join("")}</g><circle cx="${pr}" cy="140" r="12" class="f-ink2"/>
+        ${txt(pr, 206, ar() ? "برنامج صغير" : "small program", "t-ink", 12, 'font-weight="800"')}${txt(pr, 224, ar() ? "برّه إكسل" : "outside Excel", "t-ink3", 11, bold)}</g>
+      <path ${an("draw", 1.1, "s-mint")} pathLength="1" d="M${pr + d * 62} 140 H ${s - d * 42}" stroke-width="3" fill="none" marker-end="url(#aih-arrow)"/>
+      <g ${an("pop", 1.3)}>${xl(s, 124, 1.2)}${txt(s, 168, ar() ? "ملخّص" : "summary", "t-mint", 12, 'font-weight="800"')}${txt(s, 186, ar() ? "٢٬٤٠٠ صف" : "2,400 rows", "t-ink3", 11, bold)}</g>
+      <g ${an("rise", 1.6)}>${box(240, 276, 360, 36, "f-amber-soft s-amber")}${txt(240, 281, ar() ? "حدّ إكسل: حوالي مليون صف في الشيت" : "Excel's limit: about a million rows per sheet", "t-amber", 11.5, 'font-weight="800"')}</g>`;
+    },
+    b_folder: () => {
+      const F = ar() ? [["الداخل", "نسخ الأصل"], ["الخارج", "النتايج"], ["السجل", "كل تشغيل"], ["القواعد", "التنضيف"]] : [["Input", "copies"], ["Output", "results"], ["Log", "each run"], ["Rules", "cleaning"]];
+      const X = rowX(4, 96, 14);
+      return `<g ${an("rise", 0.05)}>${folder(240, 66, 200, 64, "f-amber s-amber")}${txt(240, 76, ar() ? "مشروع المبيعات" : "sales project", "t-white", 13, 'font-weight="800"')}</g>
+      ${F.map(([n, s], i) => `<path ${an("draw", 0.4 + i * 0.1, "s-ink3")} pathLength="1" d="M240 100 V 122 H ${X(i)} V 146" stroke-width="2" fill="none"/>
+        <g ${an("pop", 0.6 + i * 0.15)}>${folder(X(i), 176, 92, 54)}${txt(X(i), 182, n, "t-ink", 12, 'font-weight="800"')}${txt(X(i), 222, s, "t-ink3", 11, bold)}</g>`).join("")}
+      <g ${an("rise", 1.4)}>${box(240, 274, 340, 40, "f-mint-soft s-mint")}${txt(240, 279, ar() ? "الشهر الجاي: ملفات جديدة في «الداخل» وتشغيل" : "next month: new files in “Input”, then run", "t-mint", 11.5, 'font-weight="800"')}</g>`;
+    },
+    b_editor: () => {
+      const L = mx(96), M = mx(296), d = dirx();
+      const files = ar() ? ["الداخل", "الخارج", "السجل", "القواعد"] : ["Input", "Output", "Log", "Rules"];
+      return `<g ${an("rise", 0.05)}><rect x="34" y="40" width="412" height="230" rx="12" class="f-s1 s-line2" stroke-width="2"/><rect x="34" y="40" width="412" height="26" rx="12" class="f-s2"/>${[0, 1, 2].map((k) => `<circle cx="${mx(52 + k * 14)}" cy="53" r="4.5" class="${["f-rose", "f-amber", "f-mint"][k]}"/>`).join("")}${txt(240, 58, "VS Code", "t-ink2", 11, 'font-weight="800" direction="ltr"')}</g>
+      <g ${an("fade", 0.3)}><rect x="${ar() ? 446 - 120 : 34}" y="66" width="120" height="204" class="f-s2"/>${files.map((s, i) => `<g>${folder(L - d * 30, 92 + i * 34, 22, 16)}${txt(L + d * 12, 96 + i * 34, s, "t-ink2", 11, bold)}</g>`).join("")}</g>
+      <g ${an("fade", 0.6)}>${[0, 1, 2, 3, 4].map((k) => `<rect x="${ar() ? M + 110 - [180, 140, 160, 120, 150][k] : M - 110}" y="${84 + k * 18}" width="${[180, 140, 160, 120, 150][k]}" height="7" rx="3" class="f-s3"/>`).join("")}</g>
+      <g ${an("rise", 0.9)}><rect x="${M - 124}" y="192" width="248" height="66" rx="6" class="f-ink2"/>${["> run", "37 files · 412,000 rows", "log saved"].map((s, i) => `<text x="${M - 112}" y="${212 + i * 18}" class="t-crt" font-size="10.5" font-family="var(--font-mono)" direction="ltr">${esc(s)}</text>`).join("")}</g>
+      <g ${an("pop", 1.3)}>${box(M + d * 74, 112, 112, 52, "f-acc", 0)}${txt(M + d * 74, 108, ar() ? "المساعد" : "assistant", "t-white", 11.5, 'font-weight="800"')}${txt(M + d * 74, 126, ar() ? "شايف الفولدر" : "sees the folder", "t-white", 10.5, bold)}</g>
+      ${txt(240, 300, ar() ? "الملفات · الملف اللي بتراجعه · مكان التشغيل" : "files · the file you review · where you run", "t-ink2", 12, bold)}`;
+    },
+    b_levels: () => {
+      const a = mx(130), b = mx(350), d = dirx();
+      const fast = ar() ? ["توحيد الأسماء", "رسايل السجل", "أسئلة صغيرة"] : ["unify names", "log messages", "small questions"];
+      const deep = ar() ? ["تصميم قواعد الفحص", "قواعد التنضيف", "نتيجة غريبة؟"] : ["design the checks", "cleaning rules", "an odd result?"];
+      const col = (x, title, sub, items, cls, tcls, d0) => `<g ${an("rise", d0)}>${box(x, 150, 200, 220, cls)}${txt(x, 66, title, tcls, 14, 'font-weight="800"')}${txt(x, 86, sub, "t-ink3", 11, bold)}</g>
+        ${items.map((s, i) => `<g ${an("pop", d0 + 0.3 + i * 0.15)}>${box(x, 124 + i * 44, 168, 34, "f-s1 s-line2", 1.5)}${txt(x, 129 + i * 44, s, "t-ink", 11.5, bold)}</g>`).join("")}`;
+      return `${col(a, ar() ? "سريع" : "Fast", ar() ? "ثانية · تكلفة أقل" : "a second · lower cost", fast, "f-mint-soft s-mint", "t-mint", 0.05)}
+      ${col(b, ar() ? "عميق" : "Deep", ar() ? "وقت أكتر · تكلفة أكتر" : "more time · more cost", deep, "f-acc-soft s-acc", "t-acc", 0.4)}
+      <g ${an("pop", 1.5)}><circle cx="240" cy="150" r="22" class="f-s1 s-ink3" stroke-width="2"/>${txt(240, 155, ar() ? "أو" : "or", "t-ink2", 13, 'font-weight="800"')}</g>
+      ${txt(240, 300, ar() ? "المستوى على قد المهمة" : "the level fits the task", "t-ink2", 13, bold)}`;
+    },
+    b_result: () => {
+      const t = mx(140), r = mx(360), d = dirx();
+      return `${grid(t, 120, 4, 8, 44, 18, "f-s1", -1, 0.05)}
+      <g ${an("fade", 0.3)}>${txt(t, 34, ar() ? "جدول واحد نضيف" : "one clean table", "t-ink2", 12, 'font-weight="800"')}</g>
+      ${(ar() ? ["تقرير الجودة", "السجل", "«ما اتربطش»"] : ["quality report", "log", "“Unmatched”"]).map((s, i) => { const x = t + d * (i - 1) * 74; return `<g ${an("pop", 0.5 + i * 0.15)}>${box(x, 226, 68, 30, "f-s2 s-line2", 1.5)}${txt(x, 230, s, "t-ink2", 9.5, bold)}</g>`; }).join("")}
+      <g ${an("rise", 0.9)}>${box(r, 70, 196, 40, "f-s1 s-line2")}${txt(r, 75, ar() ? "مجموع الملفات: ٤١٢٬٣٤٠" : "sum of files: 412,340", "t-ink", 11.5, bold)}</g>
+      <g ${an("rise", 1.1)}>${box(r, 122, 196, 40, "f-s1 s-line2")}${txt(r, 127, ar() ? "الجدول الجديد: ٤١٢٬٠٠٠" : "new table: 412,000", "t-ink", 11.5, bold)}</g>
+      <g ${an("pop", 1.4)}>${box(r, 182, 196, 48, "f-mint-soft s-mint")}${txt(r, 177, ar() ? "الفرق ٣٤٠ = المتكرر" : "gap 340 = duplicates", "t-mint", 12, 'font-weight="800"')}${txt(r, 195, ar() ? "مكتوب في السجل" : "recorded in the log", "t-ink3", 10.5, bold)}</g>
+      ${check(r + d * 112, 182, 1.6, true)}
+      ${txt(240, 296, ar() ? "كل جنيه معروف راح فين" : "every pound accounted for", "t-ink2", 13, bold)}`;
+    },
+    b_cliff: () => {
+      const t = mx(110), q = mx(372), d = dirx();
+      const br = ar() ? ["القاهرة", "طنطا", "إسكندرية"] : ["Cairo", "Tanta", "Alexandria"];
+      return `${grid(t, 120, 3, 7, 40, 18, "f-s1", -1, 0.05)}<g ${an("fade", 0.3)}>${txt(t, 40, ar() ? "الأرقام جاهزة" : "numbers ready", "t-mint", 12, 'font-weight="800"')}</g>
+      ${br.map((s, i) => { const y = 74 + i * 66; return `<path ${an("draw", 0.6 + i * 0.15, "s-ink3")} pathLength="1" d="M${t + d * 66} 120 C ${t + d * 120} 120, ${q - d * 110} ${y}, ${q - d * 64} ${y}" stroke-width="2" stroke-dasharray="1" fill="none" marker-end="url(#aih-arrow)"/>
+        <g ${an("pop", 0.9 + i * 0.2)}>${page(q - d * 30, y, 52, 56, "", [28, 22, 26], 0.9 + i * 0.2)}<rect x="${q - d * 30 - 26}" y="${y - 28}" width="52" height="12" rx="4" class="f-acc"/>${txt(q + d * 40, y + 5, s, "t-ink", 11.5, bold)}</g>`; }).join("")}
+      <g ${an("pop", 1.7)}><circle cx="${q - d * 30}" cy="270" r="20" class="f-acc"/>${txt(q - d * 30, 278, ar() ? "؟" : "?", "t-white", 22, 'font-weight="800"')}</g>
+      <g ${an("fade", 1.9)}>${txt(t, 262, ar() ? "الوحدة الجاية" : "next unit", "t-acc", 13, 'font-weight="800"')}${txt(t, 282, ar() ? "تقارير بتطلع لوحدها" : "reports that build themselves", "t-ink2", 11.5, bold)}</g>`;
+    }
+  });
+
   const defs = `<svg class="aih-defs" width="0" height="0" aria-hidden="true" focusable="false"><defs><marker id="aih-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" class="f-ink2"/></marker></defs></svg>`;
   const drawing = (key, label) => `<svg class="aih-svg" viewBox="0 0 480 320" role="img" aria-label="${esc(label)}">${ART[key] ? ART[key]() : ""}</svg>`;
 

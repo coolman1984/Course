@@ -12,7 +12,7 @@ const file = "file://" + resolve(new URL("../../AI_Academy.html", import.meta.ur
 const args = process.argv.slice(2), si = args.indexOf("--shots"), shots = si >= 0 ? args.splice(si, 2)[1] : null;
 if (shots) mkdirSync(shots, { recursive: true });
 // deck id → lesson that opens with it
-const DECKS = { history: "f1", model: "f2", context: "f4", window: "f6", agents: "f7", work: "f3", limits: "f5", auto: "f8" };
+const DECKS = { history: "f1", model: "f2", context: "f4", window: "f6", agents: "f7", work: "f3", limits: "f5", auto: "f8", big: "b1" };
 // intentional overlaps: the history deck's stacked rule cards
 const ALLOW = [["history", 4, "IF", "THEN"]];
 const want = args.length ? args : Object.keys(DECKS);

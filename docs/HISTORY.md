@@ -64,16 +64,22 @@ Dates are 2026. Pull-request numbers are in brackets.
   - a USB presenter remote works out of the box (black and white screens, jump to slide)
   - controls hide when idle, the screen stays awake, and the show resumes where it stopped
 
+## 6. Unit 2's opening story (17 October)
+- Lesson b1 and its 12-slide deck (`big-story.js`, drawings `b_*`) follow the unit-1 hero from the file that froze Excel
+  to one checked table. The deck covers the template, stacking with a source column, quality checks, cleaning by written
+  rules, linking with an "unmatched" sheet, moving heavy work outside Excel, the project folder, the editor, model
+  levels and reconciliation. It ends on the question that opens unit 3. A ready prompt and two questions come with it.
+
 ## The site today
 | | |
 |---|---|
 | Units | 8 |
-| Lessons | 44, each at four levels |
-| Story decks | 8 (12 slides each, unit 1) |
+| Lessons | 45, each at four levels |
+| Story decks | 9 (12 slides each): all of unit 1, and unit 2's opening story |
 | Animated scenes | 35 |
 | Labs | 13 (7 real calculations, 6 simulations) |
-| Prompts | 104 |
-| Questions | 88 |
+| Prompts | 105 |
+| Questions | 90 |
 | Glossary terms | 73 |
 | File size | about 5.7 MB, zero network requests |
 
@@ -90,4 +96,5 @@ Unit 1 in teaching order:
 | 7 | f5 Limits and wise use | «المذكرة دي جاهزة تتبعت؟» |
 | 8 | f8 Your first automation | «إمتى الشغل ده يشتغل لوحده؟» |
 
-Units 2–8 hold the earlier lessons in their new places. Each gets its own opening story and new lessons next.
+Unit 2 opens with lesson b1 «من ملفات كتير لجدول واحد تثق فيه» and its story, under the question «إزاي ٣٧ ملف يبقوا
+جدول واحد أقدر أثق فيه؟». Units 3–8 hold the earlier lessons in their new places, and each gets its own opening story next.
