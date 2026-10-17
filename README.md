@@ -18,7 +18,7 @@
 
 ## التطوير
 
-المصدر في `academy/src` (المحتوى في `data/`، والتشغيل في `engine/`). القواعد الفنية في `CLAUDE.md`.
+المصدر في `academy/src` (المحتوى في `data/`، والتشغيل في `engine/`). القواعد الفنية في `CLAUDE.md`، والتوثيق الكامل في `docs/` (المعمارية، ودليل الكتابة، والتاريخ، والدروس المستفادة).
 - البناء: `node academy/build.mjs`
 - فحص البيانات: `node --test academy/test/data.test.mjs`
 - اختبار المتصفح: `node academy/test/e2e.mjs`
