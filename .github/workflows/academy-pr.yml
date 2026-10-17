@@ -53,7 +53,7 @@ jobs:
           node -e 'const fs=require("node:fs");const html=fs.readFileSync("AI_Academy.html","utf8");for(const key of ["plain-talk-a.js","plain-talk-b.js","plain-copy","orig-layer"])if(!html.includes(key))throw Error("Missing teaching layer: "+key);console.log("All 41 lessons use the plain-language layer");'
       - name: Ensure educational motion is bundled and independent of networks
         run: |
-          node -e 'const f=require("node:fs");const h=f.readFileSync("AI_Academy.html","utf8");for(const word of ["motion-theatre","data-motion-stage","t-page-slide","prefers-reduced-motion","transitions.dev"]) if(!h.includes(word))throw Error("Missing motion pattern: "+word); if(h.includes("__FONT:"))throw Error("Uninlined local font asset"); console.log("Offline educational motion and fonts bundled")'
+          node -e 'const f=require("node:fs");const h=f.readFileSync("AI_Academy.html","utf8");for(const word of ["prefers-reduced-motion","transitions.dev"]) if(!h.includes(word))throw Error("Missing motion pattern: "+word); for(const word of ["motion-theatre","data-motion-stage","t-page-slide"]) if(h.includes(word))throw Error("Removed home theatre is back: "+word); if(h.includes("__FONT:"))throw Error("Uninlined local font asset"); console.log("Offline educational motion and fonts bundled")'
       - name: Install browser for full academy tests
         run: |
           npm install --no-save playwright@1.56.1

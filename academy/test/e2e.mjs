@@ -252,6 +252,19 @@ await session({ label: "phone-header-ar", viewport: { width: 375, height: 812 },
   await page.keyboard.press("Escape");
   const closed = await page.evaluate(() => getComputedStyle(document.querySelector("#bar-x")).display === "none");
   closed ? ok("header: Escape closes the panel") : fail("header: Escape left the panel open");
+  // reading settings opened from «المزيد»: the panel stays on screen, and Escape closes it alone, focus on a visible button
+  const inView = async () => page.evaluate(() => { const r = document.querySelector(".vpanel").getBoundingClientRect(); return r.left >= 0 && r.right <= innerWidth; });
+  await page.click("#more-btn"); await page.click("#view-btn"); await page.waitForSelector(".vpanel");
+  (await inView()) ? ok("header: reading settings panel fits the phone screen (Arabic)") : fail("header: reading settings panel runs off the screen (Arabic)");
+  await page.keyboard.press("Escape");
+  const step = await page.evaluate(() => { const f = document.activeElement; return !document.querySelector(".vpanel") && getComputedStyle(document.querySelector("#bar-x")).display !== "none" && f.id === "view-btn" && f.getBoundingClientRect().width > 0; });
+  step ? ok("header: Escape closes reading settings first, «المزيد» stays open") : fail("header: Escape from reading settings left focus on a hidden button");
+  await page.keyboard.press("Escape");
+  await page.click("#more-btn"); await page.click("#lang-btn"); await page.waitForTimeout(150); await page.keyboard.press("Escape");
+  await page.setViewportSize({ width: 320, height: 640 });
+  await page.click("#more-btn"); await page.click("#view-btn"); await page.waitForSelector(".vpanel");
+  (await inView()) ? ok("header: reading settings panel fits a 320px screen (English)") : fail("header: reading settings panel runs off the screen (English)");
+  await page.keyboard.press("Escape"); await page.keyboard.press("Escape");
   await shot(page, "phone-header-ar");
 });
 

@@ -469,11 +469,14 @@
     doc.body.append(pan);
     const r = btn.getBoundingClientRect(), rtl = lang() === "ar";
     pan.style.top = r.bottom + 8 + "px";
-    if (rtl) pan.style.left = Math.max(8, r.left) + "px"; else pan.style.right = Math.max(8, innerWidth - r.right) + "px";
+    // keep the whole panel on screen: on phones the button sits inside «المزيد», far from the edge
+    const room = Math.max(8, innerWidth - pan.offsetWidth - 8), fit = (x) => Math.min(Math.max(8, x), room) + "px";
+    if (rtl) pan.style.left = fit(r.left); else pan.style.right = fit(innerWidth - r.right);
     btn.setAttribute("aria-expanded", "true");
     (pan.querySelector("[aria-pressed=true]") || pan.querySelector("button")).focus();
     const close = (e) => {
       if (e && e.type === "keydown" && e.key !== "Escape") return;
+      if (e && e.type === "keydown") e.preventDefault();   // this Escape closes the panel only, not «المزيد» behind it
       if (e && e.type === "pointerdown" && (pan.contains(e.target) || btn.contains(e.target))) return;
       pan.remove(); btn.setAttribute("aria-expanded", "false");
       removeEventListener("pointerdown", close, true); removeEventListener("keydown", close, true);
@@ -518,7 +521,7 @@
     const setMore = (open) => { bar.classList.toggle("more-open", open); $("#more-btn").setAttribute("aria-expanded", open); };
     $("#more-btn").onclick = (e) => { e.stopPropagation(); setMore(!bar.classList.contains("more-open")); };
     $$("#bar-x a", bar).forEach((a) => a.addEventListener("click", () => setMore(false)));
-    if (!bar.dataset.moreWired) { bar.dataset.moreWired = "1"; doc.addEventListener("click", (e) => { if (!e.target.closest("#bar-x, #more-btn, .vp-panel, [role=dialog]")) { bar.classList.remove("more-open"); $("#more-btn")?.setAttribute("aria-expanded", "false"); } }); doc.addEventListener("keydown", (e) => { if (e.key === "Escape" && bar.classList.contains("more-open")) { bar.classList.remove("more-open"); $("#more-btn")?.setAttribute("aria-expanded", "false"); $("#more-btn")?.focus(); } }); }
+    if (!bar.dataset.moreWired) { bar.dataset.moreWired = "1"; doc.addEventListener("click", (e) => { if (!e.target.closest("#bar-x, #more-btn, .vp-panel, [role=dialog]")) { bar.classList.remove("more-open"); $("#more-btn")?.setAttribute("aria-expanded", "false"); } }); doc.addEventListener("keydown", (e) => { if (e.key === "Escape" && !e.defaultPrevented && bar.classList.contains("more-open")) { bar.classList.remove("more-open"); $("#more-btn")?.setAttribute("aria-expanded", "false"); $("#more-btn")?.focus(); } }); }
     $("#watch-btn").onclick = openTour;
     $$("[data-level]", bar).forEach((b) => (b.onclick = () => { S.set("level", b.dataset.level); renderBar(); A.emit("level", b.dataset.level); }));
     $("#lang-btn").onclick = () => { S.set("lang", lang() === "ar" ? "en" : "ar"); index = null; applyLang(); renderAll(); };
