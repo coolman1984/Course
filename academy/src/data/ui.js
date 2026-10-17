@@ -37,7 +37,7 @@
     ladderSecTitle: u("من سؤال عابر لفريق رقمي.", "From a passing question to a digital team."),
     labsSecTitle: u("جرّب الفكرة بإيدك، مش تقرأ عنها بس.", "Try the idea with your hands, don’t just read it."),
     footLine: u("مبني من كتاب «أساسيات الذكاء الاصطناعي في بيئة العمل الحديثة» — محمد فوزي. بيشتغل من غير نت.", "Built from the book “AI Essentials for the Modern Workspace” — Mohamed Fawzy. Works offline."),
-    viewBtn: u("إعدادات القراءة", "Reading settings"), viewReset: u("الافتراضي", "Default"),
+    viewBtn: u("إعدادات القراءة", "Reading settings"), moreBtn: u("المزيد", "More"), viewReset: u("الافتراضي", "Default"),
     view_width: u("عرض المحتوى", "Content width"), view_size: u("حجم الخط", "Text size"), view_font: u("نوع الخط", "Font"),
     viewNarrow: u("ضيق", "Narrow"), viewMedium: u("متوسط", "Medium"), viewWide: u("عرض الشاشة", "Full width"),
     sizeSm: u("صغير", "Small"), sizeMd: u("عادي", "Normal"), sizeLg: u("كبير", "Large"), sizeXl: u("أكبر", "Larger"),
