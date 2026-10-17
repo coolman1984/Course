@@ -1,14 +1,14 @@
 /* Inside the model — the story deck that opens the second lesson (f2).
    One hero runs through every slide: the game «إيه الكلمة الجاية؟». Every design decision is told as a consequence of it,
-   each with its reason («القرار، وليه؟»): why learn from examples, why next-word prediction, why tokens, why a meaning map,
-   why positions, why attention, why layers, how training nudges the weights, why scale, why a tuning stage, how a reply is
+   each with its reason («القرار، وليه؟»): why learn from examples, why next-word prediction, how a guess becomes learning (error and
+   small adjustments), why tokens, how the meaning map is learned, why positions, how attention scores the context, why layers, why scale, why a tuning stage, how a reply is
    generated, and what that means for the reader. Analogies and numbers are simplified; the steps are what really happens.
    Same slide schema as data/history.js; `year` is the short timeline label, `mark` the big watermark. */
 "use strict";
 (function (A) {
   const u = (ar, en) => ({ ar, en });
   A.modelStory = {
-    id: "model", lesson: "f2",
+    id: "model", lesson: "f2", pace: "slow",
     kicker: u("جوّا الموديل · الحكاية كاملة في ٧ دقايق", "Inside the model · the whole story in 7 minutes"),
     title: u("جوّا الموديل: لعبة واحدة… بقت عقل بيكتب", "Inside the model: one simple game… that became a mind that writes"),
     lead: u("مش محتاج تبقى مبرمج. هنمشي ورا سؤال واحد بس: «إيه الكلمة الجاية؟»، ونشوف إزاي كل قرار في تصميم الموديل طلع منطقي من اللعبة دي، من التوكنز لحد ما يرد عليك.",
@@ -29,127 +29,123 @@
     slides: [
       {
         id: "idea", art: "m_idea", year: u("الفكرة", "Idea"), mark: u("٠١", "01"), era: u("قبل أي حاجة", "First things first"),
-        title: u("يعني إيه «موديل» أصلًا؟", "What is a “model”, really?"),
-        story: [u("البرنامج العادي زي وصفة مكتوبة: مبرمج بيكتب كل قاعدة بإيده، «لو حصل كذا، اعمل كذا». بس جرّب تكتب قواعد لكل جمل اللغة العربية… مستحيل.",
-          "Ordinary software is like a written recipe: a programmer writes every rule by hand — “if this happens, do that”. Now try writing rules for every sentence in a language… impossible."),
-        u("فالعلماء عكسوا الفكرة: بدل ما نكتب القواعد، نبني آلة فيها مليارات «المفاتيح» الصغيرة اللي بتتظبط، ونوريها أمثلة كتير لحد ما المفاتيح تقف في الوضع الصح. الآلة دي بعد ما تتظبط هي اللي بنسميها «موديل».",
-          "So scientists flipped the idea: instead of writing the rules, build a machine with billions of small adjustable “knobs” and show it lots of examples until the knobs settle in the right place. Once tuned, that machine is what we call a “model”.")],
-        answer: u("ما نكتبش القواعد؛ نسيب الآلة تتعلّمها من الأمثلة. لأن اللغة أكبر وأعقد من إن حد يكتب قواعدها.", "Don't write the rules; let the machine learn them from examples — language is far too big and messy for anyone to write its rules."),
-        idea: u("الموديل = ملف ضخم من الأرقام (المفاتيح) + طريقة حساب بتحوّل كلامك لرد.", "A model = a huge file of numbers (the knobs) + a recipe of calculations that turns your words into a reply.")
+        title: u("يعني إيه «موديل» أصلًا؟", "What is a “model”, anyway?"),
+        story: [u("البرنامج العادي بيمشي على قواعد كتبها مبرمج بإيده: «لو حصل كذا، اعمل كذا». الطريقة دي بتنجح في الحسابات، لكنها بتفشل مع اللغة، لأن مفيش حد يقدر يكتب قواعد لكل جملة ممكن تتقال.",
+          "An ordinary program follows rules a programmer wrote by hand: “if this happens, do that.” This works well for calculations but fails with language, because nobody can write rules for every sentence that could ever be said."),
+        u("فالعلماء عكسوا الفكرة: بدل ما نكتب القواعد، نبني آلة فيها مليارات الأرقام القابلة للضبط، هنسميها «المفاتيح»، ونوريها أمثلة كتير لحد ما المفاتيح دي تتظبط. الآلة بعد ما تتظبط هي اللي بنسميها «موديل».",
+          "So scientists turned the idea around: instead of writing the rules, we build a machine with billions of adjustable numbers — we'll call them “knobs” — and show it many examples until those knobs are set. Once set, that machine is what we call a “model”.")],
+        answer: u("ما نكتبش القواعد؛ نخلّي الآلة تتعلّمها من الأمثلة. لأن اللغة أوسع وأعقد من إن حد يحصر قواعدها.", "We don't write the rules; we let the machine learn them from examples — because language is too vast and complex for anyone to list its rules."),
+        idea: u("الموديل آلة مفاتيحها اتظبطت من أمثلة كتير.", "A model is a machine whose knobs were set by many examples.")
       },
       {
         id: "game", art: "m_game", year: u("اللعبة", "Game"), mark: u("٠٢", "02"), era: u("طريقة التعليم", "How it learns"),
-        title: u("اتعلّم بلعبة واحدة: خمّن الكلمة الجاية", "It learns with one game: guess the next word"),
-        story: [u("عشان نظبط المفاتيح دي محتاجين أسئلة وإجاباتها. لو هنستنى ناس تكتب ملايين الأسئلة بإيدها، هناخد قرون.",
-          "To tune those knobs we need questions with answers. If we waited for people to write millions of questions by hand, it would take centuries."),
-        u("الحل كان عبقري وبسيط: أي جملة مكتوبة في الدنيا هي نفسها سؤال وإجابة. خبّي آخر كلمة في «فنجان قهوة من غير …» وخلّي الموديل يخمّن. الإجابة الصح مكتوبة أصلًا في النص.",
-          "The fix was brilliant and simple: any sentence ever written is already a question and its answer. Hide the last word of “a cup of coffee without …” and let the model guess. The right answer is already in the text.")],
-        answer: u("نعلّمه بلعبة «الكلمة الجاية». لأنها بتحوّل كل كتاب وموقع ومقال لتمرين جاهز من غير تكلفة، فنقدر ندرّبه على كمية كلام مهولة.", "Teach it with the next-word game — it turns every book, site and article into a free exercise, so it can train on an enormous amount of text."),
-        idea: u("عشان يكسب اللعبة دي كويس، لازم يفهم اللغة والمعنى وحاجات كتير عن الدنيا. الفهم بييجي كنتيجة جانبية للتخمين الشاطر.", "To win this game well, it has to pick up grammar, meaning and a lot about the world. Understanding arrives as a side effect of guessing well.")
+        title: u("التمرين الوحيد: خمّن الكلمة الجاية", "One exercise: guess the next word"),
+        story: [u("علشان المفاتيح تتظبط، محتاجين أسئلة وإجاباتها الصحيحة، وبكميات ضخمة. ولو استنينا ناس تكتبها بإيدها، هناخد قرون.",
+          "For the knobs to be set, we need questions with their correct answers, in enormous numbers. If we waited for people to write them by hand, it would take centuries."),
+        u("والحل كان بسيط وعبقري: أي جملة مكتوبة هي نفسها سؤال وإجابة. نخبّي آخر كلمة في «فنجان قهوة من غير …»، ونطلب من الموديل يخمّنها، والإجابة الصحيحة موجودة أصلًا في النص.",
+          "The solution was simple and brilliant: any written sentence is itself a question and an answer. Hide the last word of “a cup of coffee without …”, ask the model to guess it, and the correct answer is already in the text.")],
+        answer: u("نعلّمه بلعبة «الكلمة الجاية». لأنها بتحوّل أي نص مكتوب لتمرين جاهز بإجابته، فنقدر ندرّبه على كمية كلام ضخمة.", "We teach it with the “next word” game — it turns any written text into a ready exercise with its answer, so we can train it on a vast amount of text."),
+        idea: u("كل جملة مكتوبة في الدنيا بقت تمرين جاهز.", "Every sentence ever written became a ready-made exercise.")
       },
       {
-        id: "tokens", art: "m_tokens", year: u("التوكنز", "Tokens"), mark: u("٠٣", "03"), era: u("تقطيع الكلام", "Cutting up text"),
-        title: u("ليه بيقطّع الكلام لـ«توكنز»؟", "Why does it cut text into “tokens”?"),
-        story: [u("الكمبيوتر ما بيفهمش غير أرقام، فلازم نقطّع الكلام لقطع ونديلها أرقام. طب نقطّع إزاي؟",
-          "Computers only understand numbers, so text has to be cut into pieces that get numbers. But cut how?"),
-        u("لو حرف حرف: الجملة هتبقى طويلة جدًا، والحرف لوحده ملوش معنى. لو كلمة كلمة: القاموس هيبقى بالملايين، وأي كلمة جديدة أو غلطة إملائية أو «هيكتبولهم» هتبقى لغز.",
-          "Letter by letter: sentences become very long, and a single letter means nothing. Word by word: the dictionary runs into millions, and any new word, typo or long compound word becomes a mystery."),
-        u("فاختاروا الحل اللي في النص: «توكنز»، قطع متوسطة. الكلمات المشهورة تبقى قطعة واحدة، والنادرة تتكسر لقطع معروفة، زي مكعبات الليجو.",
-          "So they chose the middle: “tokens”, medium-sized pieces. Common words stay whole; rare ones break into familiar pieces, like Lego bricks.")],
-        answer: u("نقطّع لقطع متوسطة. لأنها بتوازن بين قاموس حجمه معقول وجمل مش طويلة زيادة، ومفيش كلمة تبقى غريبة عليه تمامًا.", "Cut into medium pieces — a balance between a manageable dictionary and sentences that aren't too long, and no word is ever completely unknown."),
-        idea: u("عشان كده الأسعار وحدود الطول بتتحسب بالتوكن مش بالكلمة. والكلمة العربية غالبًا بتاخد توكنز أكتر من الإنجليزي.", "That's why prices and length limits are counted in tokens, not words. An Arabic word often takes more tokens than an English one.")
+        id: "training", art: "m_training", year: u("التدريب", "Training"), mark: u("٠٣", "03"), era: u("إزاي بيتعلّم", "How it learns"),
+        title: u("التخمين بيتحوّل لتعلّم: خمّن، وقارن، وعدّل", "Guessing becomes learning: guess, compare, adjust"),
+        story: [u("في الأول المفاتيح عشوائية، فالتخمين بيطلع عشوائي. الموديل يخمّن الكلمة الجاية، ونقارن تخمينه بالكلمة الصحيحة اللي في النص، ونحسب هو بعيد عنها قد إيه. الرقم ده اسمه «الخطأ».",
+          "At first the knobs are random, so the guesses are random. The model guesses the next word, we compare its guess with the correct word in the text, and we measure how far off it was. That number is called the “error”."),
+        u("بعدها الحساب بيحدد كل مفتاح ساهم في الخطأ قد إيه، ويحرّكه حركة صغيرة جدًا في الاتجاه اللي يقلّله، ونكرر ده مليارات المرات. واللي اتعلمه الموديل في الآخر بيبقى متوزّع على المفاتيح كلها، مش محفوظ كمعلومات في جدول.",
+          "Then the calculation works out how much each knob contributed to the error and moves it a tiny step in the direction that reduces it — repeated billions of times. What the model learns ends up spread across all its knobs, not stored as facts in a table.")],
+        answer: u("نقيس الخطأ في كل تخمين، ونعدّل المفاتيح خطوة صغيرة تقلّله. لأن مفيش حد يقدر يظبط مليارات المفاتيح بإيده، لكن الحساب يقدر يعرف كل مفتاح يتحرك فين.", "We measure the error of every guess and adjust the knobs a small step to reduce it — nobody could set billions of knobs by hand, but the calculation can tell where each one should move."),
+        idea: u("كل تخمين غلط بيعلّم الموديل حاجة صغيرة، ومليارات منها بتبني قدرة حقيقية.", "Every wrong guess teaches the model something small; billions of them build real ability.")
       },
       {
-        id: "map", art: "m_map", year: u("الخريطة", "Map"), mark: u("٠٤", "04"), era: u("المعنى بالأرقام", "Meaning as numbers"),
+        id: "tokens", art: "m_tokens", year: u("التوكنز", "Tokens"), mark: u("٠٤", "04"), era: u("تقطيع الكلام", "Cutting up text"),
+        title: u("ليه بيقطّع الكلام لـ«توكنز»؟", "Why cut text into “tokens”?"),
+        story: [u("الآلة ما بتتعامل إلا مع أرقام، فلازم الكلام يتقطّع لقطع، وكل قطعة تاخد رقم. لو قطّعنا حرف حرف، الجملة هتبقى طويلة جدًا والحرف لوحده ملوش معنى. ولو قطّعنا كلمة كلمة، القاموس هيبقى بالملايين، وأي كلمة جديدة هتبقى غريبة عليه.",
+          "The machine only works with numbers, so text must be cut into pieces, each with a number. Cut letter by letter and a sentence becomes very long, and a letter alone has no meaning. Cut word by word and the dictionary runs into millions, and any new word is unknown to it."),
+        u("فالحل في النص: قطع متوسطة اسمها «توكنز». الكلمات المشهورة بتبقى قطعة واحدة، والنادرة بتتكسر لقطع معروفة، زي مكعبات بتتركب في بعض. وكل موديل ليه طريقته في التقطيع، علشان كده نفس الجملة ممكن يبقى عدد توكنزها مختلف من موديل للتاني.",
+          "So the answer lies in between: medium-sized pieces called “tokens”. Common words stay one piece, and rare ones split into familiar pieces, like building blocks that fit together. Each model has its own way of cutting, which is why the same sentence can have a different token count from one model to another.")],
+        answer: u("نقطّع لقطع متوسطة. لأنها بتوازن بين قاموس حجمه معقول وجمل مش طويلة زيادة، ومفيش كلمة تبقى غريبة عليه تمامًا.", "We cut into medium-sized pieces — they balance a dictionary of reasonable size against sentences that aren't too long, and no word is ever completely unknown."),
+        idea: u("التوكن قطعة كلام، مش لازم تكون كلمة كاملة.", "A token is a piece of text, not necessarily a whole word.")
+      },
+      {
+        id: "map", art: "m_map", year: u("الخريطة", "Map"), mark: u("٠٥", "05"), era: u("المعنى بالأرقام", "Meaning as numbers"),
         title: u("كل توكن بقى نقطة على خريطة معاني", "Every token becomes a point on a map of meaning"),
-        story: [u("لو أدينا كل توكن رقم مسلسل (قهوة = ٥٠٣، شاي = ٩٨١٢)، الرقم مش هيقول أي حاجة عن المعنى.",
-          "If each token just got a serial number (coffee = 503, tea = 9812), the number would say nothing about meaning."),
-        u("فبدل رقم واحد، كل توكن بياخد قائمة أرقام كأنها إحداثيات على خريطة كبيرة جدًا. والمفاجأة إن التدريب نفسه بيحرّك الكلمات اللي معناها قريب لحد ما تقرّب من بعض: «قهوة» جنب «شاي»، و«القاهرة» جنب «باريس».",
-          "So instead of one number, each token gets a list of numbers — coordinates on a huge map. The surprise: training itself pulls words with similar meanings close together: “coffee” near “tea”, “Cairo” near “Paris”.")],
-        answer: u("نحوّل كل كلمة لمكان على خريطة. لأن اللي يتعلمه عن «قهوة» يفيده في «شاي» على طول، من غير ما يحتاج أمثلة لكل كلمة لوحدها.", "Turn every word into a place on a map — what it learns about “coffee” immediately helps with “tea”, without needing examples for every word separately."),
-        idea: u("قريب في المعنى = قريب في المكان. ودي أول خطوة عشان الموديل يفهم، مش يحفظ.", "Close in meaning = close on the map. It's the first step from memorising to understanding.")
+        story: [u("لو أدينا كل توكن رقم مسلسل، زي قهوة = ٥٠٣ وشاي = ٩٨١٢، الرقم مش هيقول أي حاجة عن المعنى. فبدل رقم واحد، كل توكن بياخد مجموعة أرقام، كأنها إحداثيات مكانه على خريطة كبيرة جدًا.",
+          "If we gave each token a serial number, like coffee = 503 and tea = 9812, the number would say nothing about meaning. So instead of one number, each token gets a set of numbers, like the coordinates of its place on a very large map."),
+        u("والأماكن دي مش حد بيحددها بإيده. نفس دورة «خمّن، وقارن، وعدّل» اللي في الشريحة التالتة بتحرّكها شوية شوية، لحد ما الكلمات اللي بتيجي في مواقف شبه بعض تقرّب من بعض: «قهوة» جنب «شاي»، و«القاهرة» جنب «باريس».",
+          "Nobody places them by hand. The same “guess, compare, adjust” cycle from slide three moves them little by little, until words used in similar situations end up close together: “coffee” next to “tea”, “Cairo” next to “Paris”.")],
+        answer: u("نحوّل كل توكن لمكان على خريطة، والتدريب هو اللي بيرتّب الأماكن. لأن اللي يتعلمه عن «قهوة» يفيده في «شاي» على طول، من غير أمثلة لكل كلمة لوحدها.", "We turn each token into a place on a map, and training arranges the places — what it learns about “coffee” helps with “tea” at once, without examples for every word."),
+        idea: u("قريب في المعنى = قريب على الخريطة، والتدريب هو اللي قرّبهم.", "Close in meaning = close on the map, and training brought them together.")
       },
       {
-        id: "order", art: "m_order", year: u("الترتيب", "Order"), mark: u("٠٥", "05"), era: u("مين قبل مين", "Who comes first"),
+        id: "order", art: "m_order", year: u("الترتيب", "Order"), mark: u("٠٦", "06"), era: u("مين قبل مين", "Who comes first"),
         title: u("نفس الكلمات… معنى تاني خالص", "Same words… a completely different meaning"),
-        story: [u("«الكلب عض الراجل» خبر عادي. «الراجل عض الكلب» خبر في الجرنال! نفس الكلمات بالظبط، بس الترتيب قلب المعنى.",
-          "“Dog bites man” is ordinary. “Man bites dog” makes the papers! Exactly the same words — the order flipped the meaning."),
-        u("و«الانتباه» اللي جاي في الشريحة الجاية بيوصّل الكلمات ببعض مباشرة، من غير ما يعرف لوحده مين جه قبل مين. عشان كده بيضيفوا لكل توكن «ختم» صغير بمكانه في الجملة.",
-          "And “attention”, on the next slide, links words to each other directly without knowing by itself who came first. That's why each token gets a small “stamp” with its position in the sentence.")],
-        answer: u("نضيف معلومة المكان لكل كلمة. لأن من غيرها الجملة بتبقى مجموعة كلمات من غير ترتيب.", "Add position information to every word — without it, a sentence is just a jumbled bag of words."),
-        idea: u("المعنى = الكلمات + ترتيبها. والموديل محتاج الاتنين.", "Meaning = the words + their order. The model needs both.")
+        story: [u("«الكلب عض الراجل» خبر عادي، و«الراجل عض الكلب» خبر غريب يستاهل النشر. نفس الكلمات بالظبط، والترتيب هو اللي غيّر المعنى.",
+          "“Dog bites man” is ordinary news; “man bites dog” is strange enough to publish. Exactly the same words — the order alone changed the meaning."),
+        u("والخطوة اللي جاية، «الانتباه»، بتوصّل الكلمات ببعض كلها مرة واحدة، فمن غير مساعدة مش هتعرف مين جه قبل مين. علشان كده كل توكن بياخد علامة صغيرة بموقعه في الجملة، زي رقم الكرسي في القاعة.",
+          "The next step, “attention”, connects all the words at once, so without help it wouldn't know which came first. That's why every token gets a small mark of its position in the sentence, like a seat number in a hall.")],
+        answer: u("نضيف لكل توكن معلومة بمكانه. لأن من غيرها الجملة بتبقى مجموعة كلمات من غير ترتيب، والمعنى بيضيع.", "We add each token's position to it — without that, a sentence becomes an unordered set of words, and the meaning is lost."),
+        idea: u("المعنى = الكلمات + ترتيبها.", "Meaning = the words + their order.")
       },
       {
-        id: "attention", art: "m_attention", year: u("الانتباه", "Attention"), mark: u("٠٦", "06"), era: u("قلب التصميم", "The heart of the design"),
-        title: u("الانتباه: كل كلمة بتسأل الباقيين", "Attention: every word asks all the others"),
-        story: [u("«سلّمت الملف للمدير عشان هو مستعجل». مين المستعجل؟ إنت عرفت على طول إنه المدير. الموديل بيعمل كده بـ«الانتباه»: كل كلمة بتبص على الكلمات اللي قبلها وتقرر مين يهمها أكتر، و«هو» بتركّز بقوة على «المدير».",
-          "“The file reached the manager, so he signed.” Who signed? The manager, of course. The model does this with “attention”: every word looks back at the words before it and decides which matter most — and “he” pulls hard on “manager”."),
-        u("ليه اللي قبلها بس؟ لأنه بيتدرّب يخمّن الكلمة الجاية، فلو بص على اللي بعدها يبقى بيغش وشاف الإجابة!",
-          "Why only the words before? Because it's trained to guess the next word — looking ahead would be peeking at the answer!"),
-        u("النماذج القديمة كانت بتقرا كلمة ورا كلمة وتشيل الملخص في ذاكرة صغيرة، فتنسى أول الجملة الطويلة وكانت بطيئة. الانتباه بيخلّي كل كلمة توصل مباشرة لأي كلمة قبلها مهما كانت بعيدة، وفي التدريب بيتحسب ده لكل المواضع في نفس الوقت، فكروت الشاشة تشتغل بالتوازي.",
-          "Older models read one word at a time, squeezing what they'd read into a small memory, so they forgot the start of long sentences and were slow. Attention lets each word reach any earlier word directly, however far back, and in training this is computed for every position at once, so graphics chips work in parallel.")],
-        answer: u("كل كلمة توصل مباشرة لكل الكلمات اللي قبلها، ومش اللي بعدها. لأنه كده بيفهم الـ Context كويس من غير ما يغش في لعبة «الكلمة الجاية»، ويتدرّب بسرعة بالتوازي.", "Every word reaches straight back to all the words before it, never ahead — it follows context well without cheating at the next-word game, and trains fast in parallel."),
+        id: "attention", art: "m_attention", year: u("الانتباه", "Attention"), mark: u("٠٧", "07"), era: u("قلب التصميم", "The heart of the design"),
+        title: u("الانتباه: كل كلمة بتدوّر على اللي يهمها", "Attention: every word looks for what matters to it"),
+        story: [u("«سلّمت الملف للمدير عشان هو مستعجل». مين المستعجل؟ إنت عرفت على طول إنه المدير. الموديل بيوصل لده بحساب اسمه «الانتباه»: كلمة «هو» بتطرح سؤال، وكل كلمة قبلها عندها وصف، والحساب بيدّي كل كلمة درجة على قد ما وصفها بيجاوب السؤال.",
+          "“I handed the file to the manager because he was in a hurry.” Who was in a hurry? You knew at once: the manager. The model gets there with a calculation called “attention”: the word “he” poses a question, every word before it carries a description, and each earlier word gets a score for how well its description answers the question."),
+        u("«المدير» بتاخد أعلى درجة، فمعناها بيدخل في فهم «هو» أكتر من غيرها. وده حساب درجات، مش فهم زي فهم الإنسان. والكلمة بتبص على اللي قبلها بس، لأنه بيتدرّب يخمّن اللي بعدها، فلو شافها يبقى شاف الإجابة.",
+          "“The manager” gets the highest score, so its meaning shapes “he” more than any other word. It's a calculation of scores, not understanding as a person understands. And each word looks only at the words before it, because the model trains to guess what comes next; seeing it would mean seeing the answer.")],
+        answer: u("كل كلمة بتدّي درجة لكل الكلمات اللي قبلها، وبتاخد من معناها على قد درجتها. لأنه كده بيربط أجزاء الكلام البعيدة ببعض، من غير ما يشوف الإجابة قبل ما يخمّنها.", "Each word scores every word before it and takes in their meaning according to those scores — that's how distant parts of a text get linked, without seeing the answer before guessing it."),
         idea: u("ده قلب تصميم «المحوّل» (Transformer) اللي شفناه في حكاية التاريخ سنة ٢٠١٧.", "This is the heart of the Transformer design we met in the history story, in 2017.")
       },
       {
-        id: "layers", art: "m_layers", year: u("الطبقات", "Layers"), mark: u("٠٧", "07"), era: u("الفهم بيتعمّق", "Understanding deepens"),
-        title: u("طبقة فوق طبقة: من كلام لمقصود", "Layer upon layer: from words to intent"),
-        story: [u("خطوة انتباه واحدة مش كفاية. فبيكرروا نفس الوحدة (انتباه + خطوة حساب) عشرات المرات، طبقة فوق طبقة.",
-          "One round of attention isn't enough. So the same unit (attention + a bit of calculation) is repeated dozens of times, layer upon layer."),
-        u("تخيلها زي خط إنتاج في مصنع: كل محطة بتضيف حاجة. الطبقات الأولى بتمسك حاجات بسيطة زي شكل الكلام وقواعده، واللي فوقها بتمسك المعنى، والأعلى بتفهم المقصود من الكلام كله. (ده تبسيط، بس هو الاتجاه العام.)",
-          "Picture a factory line: each station adds something. Early layers catch simple things like word forms and grammar, higher ones catch meaning, and the top ones grasp the intent of the whole text. (A simplification, but the general direction.)")],
-        answer: u("نكرر وحدة بسيطة كتير بدل ما نصمم حاجة معقدة. لأن الوحدة البسيطة سهل تكبيرها، وكل طبقة بتبني على فهم اللي تحتها.", "Repeat one simple unit many times instead of designing something complicated — a simple unit is easy to scale, and each layer builds on the one below."),
-        idea: u("العمق هو اللي بيحوّل «كلمات جنب بعض» لـ«فهم» للجملة كلها.", "Depth is what turns “words side by side” into an understanding of the whole sentence.")
-      },
-      {
-        id: "training", art: "m_training", year: u("التدريب", "Training"), mark: u("٠٨", "08"), era: u("إزاي اتظبط", "How it gets tuned"),
-        title: u("التدريب: مليارات الغلطات الصغيرة… وتصحيحها", "Training: billions of small mistakes… each one corrected"),
-        story: [u("في الأول المفاتيح كلها عشوائية، فالتخمينات بتكون عشوائية من غير معنى. الموديل يخمّن الكلمة الجاية، نقارن بالكلمة الصح، ونقيس هو غلط قد إيه.",
-          "At first all the knobs are random, so the guesses are nonsense. The model guesses the next word, we compare it with the right word, and measure how wrong it was."),
-        u("بعدها بنحرّك كل المفاتيح حركة صغيرة جدًا في الاتجاه اللي يقلل الغلط ده، زي رامي سهام كل مرة يعدّل إيده شعرة. ونكرر ده على تريليونات التوكنز، شهور على آلاف كروت الشاشة.",
-          "Then every knob is nudged a tiny bit in the direction that reduces that error — like an archer adjusting their aim a hair each shot. Repeat over trillions of tokens, for months, on thousands of graphics chips.")],
-        answer: u("نصلّح غلطة صغيرة كل مرة، مليارات المرات. لأن مفيش حد يقدر يظبط مليارات المفاتيح بإيده، بس الحساب يقدر يعرف كل مفتاح يتحرك فين.", "Fix one small mistake at a time, billions of times — no one could tune billions of knobs by hand, but the math can tell each knob which way to move."),
-        idea: u("المعرفة مش متخزّنة كجمل محفوظة؛ هي متوزعة في قيم المفاتيح (الأوزان) اللي اتظبطت بالشكل ده.", "Knowledge isn't stored as memorised sentences; it's spread across the knob values (the weights) tuned this way.")
+        id: "layers", art: "m_layers", year: u("الطبقات", "Layers"), mark: u("٠٨", "08"), era: u("الصورة بتوضح", "The picture sharpens"),
+        title: u("طبقة فوق طبقة: من كلمات لمقصود", "Layer upon layer: from words to intent"),
+        story: [u("خطوة انتباه واحدة مش كفاية. فالموديل بيكرر نفس الوحدة، انتباه وبعده خطوة حساب، عشرات المرات، طبقة فوق طبقة. ومع كل طبقة، الأرقام اللي بتمثّل كل كلمة بتتحدّث بمعلومات جديدة من باقي الجملة.",
+          "One step of attention isn't enough. So the model repeats the same unit — attention followed by a calculation step — dozens of times, layer upon layer. With each layer, the numbers that represent each word are updated with new information from the rest of the sentence."),
+        u("زي خط إنتاج في مصنع: كل محطة بتضيف حاجة للمنتج. الطبقات الأولى بتلقط حاجات بسيطة زي شكل الكلام وقواعده، واللي بعدها المعنى، والأعلى المقصود من الكلام كله. ده تبسيط، لكنه الاتجاه العام.",
+          "Like a production line in a factory, where every station adds something to the product. The early layers pick up simple things like word forms and grammar, the next ones meaning, and the top ones the intent of the whole text. It's a simplification, but it's the general direction.")],
+        answer: u("نكرر وحدة بسيطة طبقات كتير بدل ما نصمم حاجة معقدة. لأن الوحدة البسيطة سهل نكبّرها، وكل طبقة بتبني على اللي قبلها.", "We repeat one simple unit across many layers instead of designing something complex — a simple unit is easy to scale, and each layer builds on the one before."),
+        idea: u("كل طبقة بتوضّح الصورة أكتر للطبقة اللي بعدها.", "Each layer sharpens the picture for the next.")
       },
       {
         id: "scale", art: "m_scale", year: u("الحجم", "Scale"), mark: u("٠٩", "09"), era: u("ليه كبير كده", "Why so big"),
         title: u("ليه بيكبّروه كده؟", "Why make it so big?"),
-        story: [u("حوالي سنة ٢٠٢٠، الباحثين لاحظوا قاعدة غريبة: كل ما تكبّر التلاتة سوا، عدد المفاتيح، وكمية الكلام، وقوة الحساب، الموديل يتحسن بشكل ثابت وتقدر تتوقعه.",
-          "Around 2020, researchers noticed a striking pattern: grow three things together — the number of knobs, the amount of text and the computing power — and the model improves steadily and predictably."),
-        u("ومع الحجم ظهرت قدرات محدش علّمها له مباشرة: يترجم، يلخّص، يكتب كود، يحل مسائل… كلها طالعة من لعبة «الكلمة الجاية».",
-          "And with size came abilities nobody taught directly: translating, summarising, writing code, solving problems… all growing out of the next-word game.")],
-        answer: u("نكبّر التلاتة مع بعض. لأن التجربة أثبتت إن الحجم الأكبر بيدّي تخمين أدق وقدرات أوسع.", "Grow all three together — experience showed that bigger means more accurate guesses and broader abilities."),
-        idea: u("عشان كده بنسمع «٧٠ مليار» و«تريليون» معامل: ده حجم مخزن المعرفة جوه الموديل.", "That's why we hear “70 billion” or “a trillion” parameters: it's the size of the model's knowledge store.")
+        story: [u("الحجم هنا ليه تلات معاني مختلفة: عدد المفاتيح جوّه الموديل، وكمية النصوص اللي اتدرّب عليها، وقوة الحساب اللي اتصرفت في التدريب. وحوالي سنة ٢٠٢٠ لاحظ الباحثين قاعدة ثابتة: لما التلاتة يكبروا مع بعض، التخمين بيتحسّن بشكل تقدر تتوقعه.",
+          "Size here has three different meanings: the number of knobs inside the model, the amount of text it was trained on, and the computing power spent on training. Around 2020, researchers noticed a steady rule: when all three grow together, the guesses improve in a predictable way."),
+        u("ومع الحجم ظهرت قدرات محدش علّمهاله بشكل مباشر: يترجم، ويلخّص، ويكتب كود، ويحل مسائل. كلها طالعة من نفس اللعبة: «إيه الكلمة الجاية؟».",
+          "And with size came abilities nobody taught it directly: translating, summarising, writing code, solving problems — all emerging from the same game: “what's the next word?”")],
+        answer: u("نكبّر التلاتة مع بعض. لأن التجربة أثبتت إن الحجم الأكبر بيدّي تخمين أدق وقدرات أوسع.", "We grow all three together — experience showed that greater size brings more accurate guesses and wider abilities."),
+        idea: u("مفاتيح أكتر + نصوص أكتر + حساب أكتر = موديل أقدر.", "More knobs + more text + more computing = a more capable model.")
       },
       {
-        id: "tuning", art: "m_tuning", year: u("التهذيب", "Tuning"), mark: u("١٠", "10"), era: u("من حافظ لمساعد", "From parrot to assistant"),
-        title: u("من آلة بتكمّل كلام… لمساعد بيفهم طلبك", "From a text-continuing machine… to an assistant that gets your request"),
-        story: [u("بعد التدريب الأول، الموديل بيكمّل أي نص وخلاص. تسأله «إزاي أعمل كيكة؟» ممكن يكمّل بـ«إزاي أعمل بسكوت؟ إزاي أعمل…» كأنه صفحة أسئلة على النت.",
-          "After the first training, the model simply continues any text. Ask “How do I bake a cake?” and it may carry on with “How do I bake cookies? How do I…” like a page of questions online."),
-        u("فبيعملوا مرحلة تانية: يدرّبوه على أمثلة محادثات مكتوبة كويس، وبعدين ناس بتقارن بين ردوده وتختار الأحسن والأأمن، والموديل يتعلّم يميل للنوع ده.",
-          "So there's a second stage: train it on well-written example conversations, then people compare its replies and pick the more helpful and safer ones, and the model learns to lean that way.")],
-        answer: u("مرحلة تهذيب بعد التدريب الكبير. لأن «يعرف كتير» حاجة، و«يساعدك صح وبأمان» حاجة تانية محتاجة تعليم مخصوص.", "Add a tuning stage after the big training — “knowing a lot” and “helping you well and safely” are different skills that need their own teaching."),
-        idea: u("التدريب الكبير بيدّيه المعرفة؛ التهذيب بيدّيه الأسلوب والأدب والحدود.", "The big training gives it knowledge; tuning gives it manners, style and limits.")
+        id: "tuning", art: "m_tuning", year: u("التهذيب", "Tuning"), mark: u("١٠", "10"), era: u("من مكمّل لمساعد", "From completer to assistant"),
+        title: u("من آلة بتكمّل الكلام… لمساعد بيتبع طلبك", "From a machine that completes text… to an assistant that follows your request"),
+        story: [u("بعد التدريب الكبير، الموديل بيعرف يكمّل أي نص وبس. تسأله «إزاي أعمل كيكة؟» ممكن يكمّل بأسئلة شبهها، كأنه بيكمّل صفحة أسئلة.",
+          "After the big training, the model can only continue text. Ask it “How do I bake a cake?” and it may continue with similar questions, as if completing a page of questions."),
+        u("فبيدخل مرحلة تانية: يتدرّب على أمثلة محادثات مكتوبة كويس، وبعدين ناس بتقارن بين ردوده وتختار الأنفع والأأمن، والموديل يتعلّم يميل للنوع ده. والمرحلة دي بتحسّن طريقة ردّه، لكنها مش ضمان إن كل إجابة صحيحة.",
+          "So it goes through a second stage: it trains on well-written example conversations, then people compare its replies and choose the most helpful and safest, and the model learns to lean toward that kind. This stage improves how it replies, but it doesn't guarantee every answer is correct.")],
+        answer: u("نضيف مرحلة تهذيب بعد التدريب الكبير. لأن معرفته الواسعة حاجة، ومساعدته ليك بشكل صحيح وآمن حاجة تانية محتاجة تعليم مخصوص.", "We add a tuning stage after the big training — broad knowledge is one thing; helping you correctly and safely is another, and it needs its own teaching."),
+        idea: u("التدريب الكبير بيدّيه المعرفة، والتهذيب بيعلّمه يستخدمها في خدمتك.", "The big training gives it knowledge; tuning teaches it to use that knowledge for you.")
       },
       {
         id: "reply", art: "m_reply", year: u("الرد", "Reply"), mark: u("١١", "11"), era: u("لما بتكلّمه", "When you talk to it"),
-        title: u("إزاي بيكتب ردّه عليك؟", "How does it write its reply?"),
-        story: [u("كلامك بيتقطّع توكنز، ويعدّي على كل الطبقات، وفي الآخر الموديل يطلّع قائمة احتمالات للتوكن الجاي: «صباح» ٤٥٪، «أهلًا» ٣٠٪، …",
-          "Your words are cut into tokens and pass through every layer, and at the end the model produces a list of chances for the next token: “Good” 45%, “Hello” 30%, …"),
-        u("يختار واحد، يضيفه للكلام، ويعيد اللفة كلها عشان التوكن اللي بعده، توكن ورا توكن لحد ما الرد يخلص. وفيه إعداد اسمه «درجة الحرارة»: لو قليلة يختار الأرجح، ولو عالية يجرّب اختيارات أجرأ.",
-          "It picks one, adds it to the text and runs the whole loop again for the next token — token after token until the reply is done. A setting called “temperature” decides how bold it is: low picks the most likely, high tries more daring choices.")],
-        answer: u("يولّد توكن ورا توكن، وكل توكن مبني على اللي قبله. لأن دي نفس اللعبة اللي اتدرّب عليها بالظبط.", "Generate one token after another, each built on the ones before — it's exactly the game it was trained on."),
-        idea: u("عشان كده ممكن يكتب حاجة شكلها مقنع وهي غلط: هو بيختار الأرجح، مش بيراجع الحقيقة. ودي نفس فكرة الدرس اللي فات.", "That's why it can write something convincing that is wrong: it picks the most likely, it doesn't check the facts — the point of the previous lesson.")
+        title: u("إزاي بيكتب ردّه عليك؟", "How does it write its reply to you?"),
+        story: [u("لما تكتبله، المفاتيح بتبقى ثابتة: التعلّم خلص في التدريب، والموديل وهو بيرد عليك ما بيتعلّمش من كلامك. كلامك بيتقطّع توكنز، ويعدّي على كل الطبقات، وفي الآخر بيطلع قائمة احتمالات للتوكن الجاي: «صباح» ٤٥٪، و«أهلًا» ٣٠٪.",
+          "When you write to it, the knobs stay fixed: learning ended in training, and the model doesn't learn from your words while it replies. Your text is cut into tokens, passes through every layer, and comes out as a list of chances for the next token: “Good” 45%, “Hello” 30%."),
+        u("يختار واحد منهم، ويضيفه للكلام، ويعيد نفس الخطوات علشان التوكن اللي بعده، توكن ورا توكن لحد ما الرد يخلص. وفيه إعداد اسمه «درجة الحرارة»: لو قليلة بيختار الأرجح، ولو عالية بيجرّب اختيارات أجرأ.",
+          "It picks one, adds it to the text, and repeats the same steps for the next token — token after token until the reply is done. A setting called “temperature” decides how: low picks the most likely, high tries bolder choices.")],
+        answer: u("بيكتب الرد توكن ورا توكن بمفاتيح ثابتة، وكل توكن مبني على اللي قبله. لأن دي نفس اللعبة اللي اتدرّب عليها، بس من غير تصحيح.", "It writes the reply token by token with fixed knobs, each token built on the ones before — the same game it trained on, only without correction."),
+        idea: u("التدريب حصل مرة قبل كده، والرد بيستخدم اللي اتعلّمه بس.", "Training happened once, before; a reply only uses what was learned.")
       },
       {
         id: "recap", art: "m_recap", year: u("الخلاصة", "Recap"), mark: u("١٢", "12"), era: u("يبقى بيفكّر؟", "So does it think?"),
         title: u("يبقى الموديل بيفكّر؟", "So does the model think?"),
-        story: [u("اللي جوه الموديل: كلام اتقطّع توكنز، واتحط على خريطة معاني، وعدّى على طبقات انتباه كتير، وطلّع أرجح كلمة جاية. ومن اللعبة البسيطة دي طلعت قدرات مبهرة.",
-          "Inside the model: text cut into tokens, placed on a map of meaning, passed through many layers of attention, producing the most likely next word. Out of that simple game came remarkable abilities."),
-        u("بس خد بالك: هو ما بيشوفش ملفاتك غير لو إديتهاله، وما يعرفش اللي حصل بعد آخر تدريب ليه، وبيبني ردّه على الكلام اللي قدامه. عشان كده جودة كلامك إنت هي نص النتيجة.",
-          "But note: it can't see your files unless you give them, doesn't know what happened after its last training, and builds its reply on the text in front of it. That's why the quality of your input is half the result.")],
-        answer: u("اديله Context واضح وراجع اللي بيطلّعه. لأن تخمينه بيبقى أدق كل ما الكلام اللي قدامه أوضح.", "Give it clear context and check what it produces — its guesses get better the clearer the text in front of it."),
-        idea: u("الموديل مش سحر ولا إنسان؛ هو آلة توقّع جبّارة. وده بالظبط اللي هتتعلم تشغّله صح في الكورس.", "A model is neither magic nor a person; it's a powerful prediction machine — and this course teaches you to drive it well.")
+        story: [u("القصة كلها مرحلتين. التدريب حصل قبل كده ومرة واحدة: تخمين، وقياس الخطأ، وتعديل المفاتيح، مليارات المرات. والرد بيحصل دلوقتي في كل مرة: كلامك يتقطّع توكنز، ويتحط على خريطة المعاني، ويعدّي على طبقات الانتباه، ويطلع أرجح توكن جاي.",
+          "The whole story has two stages. Training happened before, once: guessing, measuring the error and adjusting the knobs, billions of times. A reply happens now, every time: your words are cut into tokens, placed on the map of meaning, passed through the attention layers, and the most likely next token comes out."),
+        u("ومن اللعبة البسيطة دي طلعت قدرات مبهرة. بس خد بالك: الموديل ما بيشوفش ملفاتك غير لو إديتهاله، وما يعرفش اللي حصل بعد آخر تدريب ليه، وبيبني ردّه على الكلام اللي قدامه. علشان كده جودة كلامك إنت هي نص النتيجة.",
+          "Impressive abilities grew out of this simple game. But note: the model can't see your files unless you give them, doesn't know what happened after its last training, and builds its reply on the text in front of it. That's why the quality of your input is half the result.")],
+        answer: u("اديله Context واضح، وراجع اللي بيطلّعه. لأن توقّعه بيبقى أدق كل ما الكلام اللي قدامه أوضح.", "Give it clear context and check what it produces — its predictions get better the clearer the text in front of it."),
+        idea: u("الموديل مش سحر ولا إنسان؛ هو آلة توقّع قوية، وده بالظبط اللي هتتعلم تشغّله صح في الكورس.", "A model is neither magic nor a person; it's a powerful prediction machine — and this course teaches you to drive it well.")
       }
     ]
   };
