@@ -31,8 +31,8 @@
       {
         id: "files", art: "b_files", year: u("الموقف", "Scene"), mark: u("٠١", "01"), era: u("٣٧ ملف على المكتب", "37 files on the desk"),
         title: u("٣٧ ملف، وسؤال واحد من المدير", "37 files, and one question from the manager"),
-        story: [u("فاكر ملف الربع اللي وقّف إكسل؟ المدير رجع بسؤال أكبر: «عايز أعرف مبيعات كل صنف في التلات فروع على مدار السنة». يعني ٣٦ ملف شهري، ١٢ لكل فرع، وفوقهم ملف الربع الكبير.",
-          "Remember the quarter's file that froze Excel? The manager came back with a bigger question: “I want each product's sales across the three branches over the whole year.” That means 36 monthly files, 12 per branch, plus the big quarter file on top."),
+        story: [u("فاكر ملف الربع اللي وقّف إكسل؟ المدير رجع بسؤال أكبر: «عايز أعرف مبيعات كل صنف في التلات فروع على مدار السنة». يعني ٣٦ ملف شهري، ١٢ لكل فرع، وفوقهم ملف الربع الكبير اللي فيه مبيعات الجملة من الإدارة، ودي مش موجودة في ملفات الفروع.",
+          "Remember the quarter's file that froze Excel? The manager came back with a bigger question: “I want each product's sales across the three branches over the whole year.” That means 36 monthly files, 12 per branch, plus the big quarter file holding wholesale sales from head office, which aren't in the branch files."),
         u("المشرف فتح أول ملفين جنب بعض، واكتشف إن المشكلة مش في العدد بس. كل فرع بيسجّل بطريقته، وكل شهر فيه حاجة اتغيّرت. والسؤال اللي ماشي معانا في الحكاية: إزاي الملفات دي كلها تبقى جدول واحد أقدر أثق في أرقامه؟",
           "The supervisor opened the first two files side by side and found the problem isn't only the number. Each branch records in its own way, and something changed every month. The question we carry through the story: how do all these files become one table whose numbers I can trust?")],
         answer: u("قبل ما تجمّع أي حاجة، اعرف إيه اللي قدامك: كام ملف، وجايين منين، وشكلهم إيه. لأن المفاجآت اللي ما شفتهاش في الأول بتظهر في الآخر أرقام غلط.", "Before combining anything, know what's in front of you: how many files, where from, what shape — surprises you don't see at the start show up at the end as wrong numbers."),
@@ -131,11 +131,11 @@
       {
         id: "result", art: "b_result", year: u("النتيجة", "Result"), mark: u("١١", "11"), era: u("جدول واحد مراجَع", "One checked table"),
         title: u("جدول واحد… والإجمالي مطابق للمصدر", "One table… and the total matches the source"),
-        story: [u("النتيجة: جدول واحد نضيف من ٣٧ ملف، ومعاه تقرير جودة، وسجل بكل خطوة، وشيت «ما اتربطش». وقبل ما يبعته للمدير، عمل آخر اختبار: إجمالي المبيعات في الجدول الجديد لازم يساوي مجموع إجماليات الملفات الأصلية.",
-          "The result: one clean table from 37 files, with a quality report, a log of every step, and an “Unmatched” sheet. Before sending it to the manager, he ran one last test: total sales in the new table must equal the sum of the original files' totals."),
-        u("الفرق طلع ٣٤٠ صف بالظبط: الصفوف المتكررة اللي اتشالت، ومكتوبة في السجل. فبقى عارف كل جنيه راح فين. ولما المدير سأل «الرقم ده مضبوط؟»، المشرف ما قالش «أظن». فتح السجل ووراه.",
-          "The difference was exactly 340 rows: the duplicates that were removed, recorded in the log. So he knew where every pound went. When the manager asked “Is this number right?”, the supervisor didn't say “I think so”. He opened the log and showed him.")],
-        answer: u("طابق إجمالي الجدول النهائي بمجموع المصادر، واشرح أي فرق من السجل. لأن المطابقة دي هي الدليل إن الأرقام ما ضاعتش ولا اتكررت في السكة.", "Reconcile the final table's total with the sum of the sources, and explain any gap from the log — that reconciliation is the proof that no numbers were lost or doubled on the way."),
+        story: [u("النتيجة: جدول واحد نضيف من ٣٧ ملف، ومعاه تقرير جودة، وسجل بكل خطوة، وشيت «ما اتربطش». وقبل ما يبعته للمدير، عمل آخر اختبار: عدد الصفوف وإجمالي المبيعات في الجدول الجديد لازم يطابقوا مجموعهم في الملفات الأصلية.",
+          "The result: one clean table from 37 files, with a quality report, a log of every step, and an “Unmatched” sheet. Before sending it to the manager, he ran one last test: the row count and total sales in the new table must match their sums across the original files."),
+        u("الصفوف نقصت ٣٤٠ صف بالظبط، وهي الصفوف المتكررة اللي اتشالت. والمبيعات نقصت ١٨٬٦٠٠ جنيه، وده بالظبط مجموع قيمة الصفوف دي، ومكتوب في السجل. فبقى عارف كل جنيه راح فين. ولما المدير سأل «الرقم ده مضبوط؟»، المشرف ما قالش «أظن». فتح السجل ووراه.",
+          "The rows fell by exactly 340, the duplicates that were removed. Sales fell by 18,600 pounds, exactly the summed value of those rows, as recorded in the log. So he knew where every pound went. When the manager asked “Is this number right?”, the supervisor didn't say “I think so”. He opened the log and showed him.")],
+        answer: u("طابق عدد الصفوف وإجمالي القيمة في الجدول النهائي بمجموعهم في المصادر، واشرح أي فرق من السجل. لأن المطابقة دي هي الدليل إن الأرقام ما ضاعتش ولا اتكررت في السكة.", "Reconcile the final table's row count and total value with their sums across the sources, and explain any gap from the log — that reconciliation is the proof that no numbers were lost or doubled on the way."),
         idea: u("الرقم اللي تقدر تثبته… هو الرقم اللي تقدر تثق فيه.", "A number you can prove… is a number you can trust.")
       },
       {

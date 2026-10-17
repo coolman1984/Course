@@ -1241,9 +1241,9 @@
       return `${grid(t, 120, 4, 8, 44, 18, "f-s1", -1, 0.05)}
       <g ${an("fade", 0.3)}>${txt(t, 34, ar() ? "جدول واحد نضيف" : "one clean table", "t-ink2", 12, 'font-weight="800"')}</g>
       ${(ar() ? ["تقرير الجودة", "السجل", "«ما اتربطش»"] : ["quality report", "log", "“Unmatched”"]).map((s, i) => { const x = t + d * (i - 1) * 74; return `<g ${an("pop", 0.5 + i * 0.15)}>${box(x, 226, 68, 30, "f-s2 s-line2", 1.5)}${txt(x, 230, s, "t-ink2", 9.5, bold)}</g>`; }).join("")}
-      <g ${an("rise", 0.9)}>${box(r, 70, 196, 40, "f-s1 s-line2")}${txt(r, 75, ar() ? "مجموع الملفات: ٤١٢٬٣٤٠" : "sum of files: 412,340", "t-ink", 11.5, bold)}</g>
-      <g ${an("rise", 1.1)}>${box(r, 122, 196, 40, "f-s1 s-line2")}${txt(r, 127, ar() ? "الجدول الجديد: ٤١٢٬٠٠٠" : "new table: 412,000", "t-ink", 11.5, bold)}</g>
-      <g ${an("pop", 1.4)}>${box(r, 182, 196, 48, "f-mint-soft s-mint")}${txt(r, 177, ar() ? "الفرق ٣٤٠ = المتكرر" : "gap 340 = duplicates", "t-mint", 12, 'font-weight="800"')}${txt(r, 195, ar() ? "مكتوب في السجل" : "recorded in the log", "t-ink3", 10.5, bold)}</g>
+      <g ${an("rise", 0.9)}>${box(r, 70, 196, 40, "f-s1 s-line2")}${txt(r, 75, ar() ? "صفوف الملفات: ٤١٢٬٣٤٠" : "rows in files: 412,340", "t-ink", 11.5, bold)}</g>
+      <g ${an("rise", 1.1)}>${box(r, 122, 196, 40, "f-s1 s-line2")}${txt(r, 127, ar() ? "صفوف الجدول: ٤١٢٬٠٠٠" : "rows in table: 412,000", "t-ink", 11.5, bold)}</g>
+      <g ${an("pop", 1.4)}>${box(r, 182, 196, 48, "f-mint-soft s-mint")}${txt(r, 177, ar() ? "٣٤٠ صف متكرر" : "340 duplicate rows", "t-mint", 12, 'font-weight="800"')}${txt(r, 195, ar() ? "قيمتهم ١٨٬٦٠٠ ج = فرق المبيعات" : "worth 18,600 = the sales gap", "t-ink3", 10.5, bold)}</g>
       ${check(r + d * 112, 182, 1.6, true)}
       ${txt(240, 296, ar() ? "كل جنيه معروف راح فين" : "every pound accounted for", "t-ink2", 13, bold)}`;
     },
