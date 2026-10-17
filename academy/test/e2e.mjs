@@ -324,6 +324,8 @@ await session({ label: "model-deck-ar", viewport: { width: 1360, height: 900 } }
   await page.keyboard.press("End"); await page.waitForTimeout(80);
   const fin = await page.$eval("#sec-model [data-aih-q]", (e) => e.dataset.final === "true");
   fin && (await page.isVisible("#sec-model [data-aih-start]")) ? ok("model deck: the question turns to the reader on the last slide") : fail("model deck: final slide incomplete");
+  const pace = await page.$eval("#sec-model", (host) => { const el = host.querySelector(".aih-slide.is-on .an.pop"); const cs = el && getComputedStyle(el); return { slow: host.classList.contains("slow"), dur: cs && cs.animationDuration, d: el && parseFloat(el.style.getPropertyValue("--d")), delay: cs && parseFloat(cs.animationDelay) }; });
+  pace.slow && pace.dur === "1s" && Math.abs(pace.delay - pace.d * 1.7) < 0.01 ? ok("model deck: slow pace stretches each entrance (1 s, delays × 1.7)") : fail("model deck: pace " + JSON.stringify(pace));
   (await page.$("#sec-history")) ? fail("model deck: the history deck leaked into lesson 2") : ok("model deck: lesson 2 has only its own story");
   await page.evaluate(() => (location.hash = "lesson-f4")); await page.waitForSelector("#sec-context .aih-stage");
   const cn = await page.$$eval("#sec-context .aih-slide", (s) => s.length);

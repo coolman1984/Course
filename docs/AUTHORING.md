@@ -41,6 +41,9 @@
 - The whole text appears on the presenter screen, so keep paragraphs as tight as the lesson allows. The presenter frame
   holds about 748 px of text column. `docs/ARCHITECTURE.md` explains how to measure it.
 
+A deck may set `pace: "slow"`. Every entrance then lasts longer and starts 1.7× later (`.aih.slow` in history.css),
+so each step of a drawing reads on its own. "Inside the model" uses it.
+
 ## Draw a slide
 - `ART.<prefix>_<slide>` in `engine/history.js`, viewBox 480 × 320.
 - Use `an(kind, delay, extraClasses)` for animated elements. Never add a second `class=` or `style=`.

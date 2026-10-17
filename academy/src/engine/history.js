@@ -187,6 +187,9 @@
         + g.pts.map((p, i) => `<g ${an("pop", 0.45 + k * 0.4 + i * 0.08)}><circle cx="${p[0]}" cy="${p[1]}" r="7" class="${g.c}"/>${txt(p[0], p[1] - 13, p[2], g.t, 13, 'font-weight="700"')}</g>`).join("")).join("")}
       <path ${an("draw", 1.8, `s-ink3`)} pathLength="1" d="M150 128 Q 210 210 318 214" stroke-width="2" stroke-dasharray="1" fill="none"/>
       <g ${an("fade", 2.2)}>${txt(170, 214, ar() ? "بعيد في المعنى = بعيد" : "far in meaning = far apart", "t-ink3", 12.5)}</g>
+      <path ${an("draw", 2.6, "s-acc")} pathLength="1" d="M92 262 C 80 200, 96 150, 116 118" stroke-width="2" stroke-dasharray="1" fill="none"/>
+      <g ${an("pop", 2.4)}><circle cx="92" cy="262" r="6" class="s-acc" fill="none" stroke-width="2"/></g>
+      <g ${an("fade", 2.9)}>${txt(126, 276, ar() ? "التدريب بيقرّبها" : "training moves it closer", "t-acc", 12, 'font-weight="800"')}</g>
       ${txt(240, 312, ar() ? "قريب في المعنى = قريب في المكان" : "close in meaning = close on the map", "t-ink2", 13, 'font-weight="700"')}`;
     },
     m_order: () => {
@@ -202,11 +205,14 @@
     m_attention: () => {
       const words = ar() ? ["سلّمت", "الملف", "للمدير", "عشان", "هو", "مستعجل"] : ["The", "file", "reached", "the", "manager", "so", "he", "signed"];
       const focus = ar() ? 4 : 6, link = ar() ? 2 : 4, w = ar() ? 66 : 50;
+      const score = ar() ? [6, 14, 68, 12] : [3, 9, 6, 4, 70, 8];
       const X = rowX(words.length, w, 8);
-      const arcs = words.map((_, i) => i >= focus ? "" : `<path ${an("draw", 0.8 + i * 0.1, i === link ? "s-acc" : "s-line2")} pathLength="1" d="M${X(focus)} 176 Q${(X(focus) + X(i)) / 2} ${i === link ? 40 : 110} ${X(i)} 176" stroke-width="${i === link ? 5.5 : 1.8}" fill="none" stroke-linecap="round"/>`).join("");
-      return `${arcs}${words.map((s, i) => `<g ${an("rise", 0.1 + i * 0.07)}>${chip(X(i), 198, w, s, i === focus ? "f-acc" : i === link ? "f-acc-soft s-acc" : "f-s1 s-line2", i === focus ? "t-white" : "t-ink", 13.5)}</g>`).join("")}
-      <g ${an("pop", 2.0)}><rect x="${X(focus) - 72}" y="240" width="144" height="34" rx="17" class="f-mint"/>${txt(X(focus), 262, ar() ? "«هو» = المدير" : "“he” = the manager", "t-white", 13, 'font-weight="700"')}</g>
-      ${txt(240, 302, ar() ? "كل كلمة بتبص على اللي قبلها بس، مش على الإجابة" : "each word looks only at the words before it, never ahead", "t-ink3", 13)}`;
+      const arcs = words.map((_, i) => i >= focus ? "" : `<path ${an("draw", 0.9 + i * 0.15, i === link ? "s-acc" : "s-line2")} pathLength="1" d="M${X(focus)} 196 Q${(X(focus) + X(i)) / 2} ${i === link ? 92 : 140} ${X(i)} 196" stroke-width="${i === link ? 5 : 1.8}" fill="none" stroke-linecap="round"/>`).join("");
+      const bars = words.map((_, i) => i >= focus ? "" : `<rect class="an vbar ${i === link ? "f-acc" : "f-s3"}" style="--d:${1.7 + i * 0.12}s" x="${X(i) - 9}" y="${84 - score[i] * 0.6}" width="18" height="${score[i] * 0.6 + 2}" rx="4"/><g ${an("fade", 2.0 + i * 0.12)}>${txt(X(i), 100, digits(score[i]) + (ar() ? "٪" : "%"), i === link ? "t-acc" : "t-ink3", 10.5, 'font-weight="800"')}</g>`).join("");
+      return `<g ${an("fade", 0.3)}>${txt(X(focus), 38, ar() ? "«هو» بتسأل: مين أقصد؟" : "“he” asks: who do I mean?", "t-ink2", 12.5, 'font-weight="800"')}</g>
+      ${bars}${arcs}${words.map((s, i) => `<g ${an("rise", 0.1 + i * 0.07)}>${chip(X(i), 218, w, s, i === focus ? "f-acc" : i === link ? "f-acc-soft s-acc" : "f-s1 s-line2", i === focus ? "t-white" : "t-ink", 13.5)}</g>`).join("")}
+      <g ${an("pop", 2.7)}><rect x="${X(focus) - 72}" y="254" width="144" height="32" rx="16" class="f-mint"/>${txt(X(focus), 275, ar() ? "«هو» = المدير" : "“he” = the manager", "t-white", 13, 'font-weight="700"')}</g>
+      ${txt(240, 308, ar() ? "درجات بتتحسب، مش فهم زي الإنسان" : "scores are calculated, not understood as a person would", "t-ink3", 12.5)}`;
     },
     m_layers: () => {
       const labels = ar() ? ["شكل الكلام", "القواعد", "المعنى", "الـ Context", "المقصود"] : ["word forms", "grammar", "meaning", "context", "intent"];
@@ -217,15 +223,17 @@
       ${txt(240, 300, ar() ? "كل طبقة بتبني على اللي تحتها" : "each layer builds on the one below", "t-ink3", 13)}`;
     },
     m_training: () => {
-      const tx = ar() ? 352 : 128;
-      const hits = [[-52, -38], [34, -40], [-20, 22], [6, -6]];
-      return `<g ${an("rise", 0.05)}>${[58, 42, 26, 10].map((r, i) => `<circle cx="${tx}" cy="140" r="${r}" class="${i % 2 ? "f-s1" : "f-rose-soft"} s-rose" stroke-width="2"/>`).join("")}</g>
-      ${hits.map(([dx, dy], i) => `<g ${an("pop", 0.5 + i * 0.35)}><line x1="${tx + dx}" y1="${140 + dy}" x2="${tx + dx + (ar() ? 22 : -22)}" y2="${140 + dy - 16}" class="s-ink2" stroke-width="3" stroke-linecap="round"/><circle cx="${tx + dx}" cy="${140 + dy}" r="5" class="${i === 3 ? "f-mint" : "f-ink2"}"/></g>`).join("")}
-      ${txt(tx, 230, ar() ? "كل محاولة أقرب شوية" : "each try a little closer", "t-ink3", 13)}
-      <g ${an("fade", 0.3)}><path d="M${ar() ? 60 : 250} 70 V 210 H ${ar() ? 240 : 430}" class="s-ink3" stroke-width="2" fill="none"/>
-      ${txt(ar() ? 150 : 340, 230, ar() ? "المحاولات ←" : "attempts →", "t-ink3", 12)}${txt(ar() ? 30 : 236, 64, ar() ? "الغلط" : "error", "t-ink3", 12, `text-anchor="${ar() ? "start" : "end"}"`)}</g>
-      <path ${an("draw", 0.8, `s-acc`)} pathLength="1" d="${ar() ? "M64 78 C 90 160, 140 186, 236 198" : "M254 78 C 280 160, 330 186, 426 198"}" stroke-width="4" fill="none" stroke-linecap="round"/>
-      <g ${an("pop", 2.0)}><rect x="110" y="258" width="260" height="38" rx="19" class="f-ink"/>${txt(240, 282, ar() ? "خمّن ← قارن ← صحّح شعرة ← كرّر" : "guess → compare → nudge → repeat", "t-bg", 13, 'font-weight="700"')}</g>`;
+      const c = mx(132), d = dirx();
+      const N = ar() ? [["خمّن", "f-acc", "t-white"], ["قارن", "f-amber", "t-white"], ["عدّل", "f-mint", "t-white"]] : [["guess", "f-acc", "t-white"], ["compare", "f-amber", "t-white"], ["adjust", "f-mint", "t-white"]];
+      const P = [[c, 70], [c + d * 78, 196], [c - d * 78, 196]];
+      const ring = `<circle cx="${c}" cy="152" r="86" class="s-line2" stroke-width="2" fill="none"/><circle ${an("draw", 0.9, "s-acc march")} pathLength="19" cx="${c}" cy="152" r="86" stroke-width="3" stroke-dasharray="4 15" fill="none"/>`;
+      return `<g ${an("fade", 0.05)}>${ring}</g>
+      ${N.map(([t, f, tc], i) => `<g ${an("pop", 0.3 + i * 0.45)}><circle cx="${P[i][0]}" cy="${P[i][1]}" r="30" class="${f}"/>${txt(P[i][0], P[i][1] + 5, t, tc, 13, 'font-weight="800"')}</g>`).join("")}
+      <g ${an("fade", 1.6)}>${txt(c, 158, ar() ? "مليارات" : "billions", "t-ink2", 12.5, 'font-weight="800"')}${txt(c, 176, ar() ? "المرات" : "of times", "t-ink3", 11.5, bold)}</g>
+      <g ${an("fade", 0.4)}><path d="M${mx(270)} 62 V 222 H ${mx(452)}" class="s-ink3" stroke-width="2" fill="none"/>${txt(mx(270) + d * 2, 50, ar() ? "الخطأ" : "error", "t-ink3", 12, bold)}${txt(mx(372), 244, ar() ? "مع التدريب" : "as training goes on", "t-ink3", 12, bold)}</g>
+      <path ${an("draw", 1.2, "s-rose")} pathLength="1" d="M${mx(278)} 74 C ${mx(310)} 160, ${mx(350)} 196, ${mx(446)} 208" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <g ${an("pop", 2.2)}><circle cx="${mx(446)}" cy="208" r="7" class="f-mint"/></g>
+      <g ${an("rise", 2.6)}>${box(240, 286, 380, 38, "f-acc-soft s-acc")}${txt(240, 291, ar() ? "اللي اتعلمه متوزّع على كل المفاتيح، مش جدول معلومات" : "what it learns is spread over all the knobs, not a table of facts", "t-acc", 11.5, 'font-weight="800"')}</g>`;
     },
     m_scale: () => {
       const bars = ar() ? [["البيانات", "f-acc"], ["المفاتيح", "f-amber"], ["الحساب", "f-mint"]] : [["data", "f-acc"], ["knobs", "f-amber"], ["compute", "f-mint"]];
@@ -260,15 +268,21 @@
       ${probs.map(([w, p], i) => { const x0 = ar() ? 300 : 180, len = p * 2.6; return `<g ${an("fade", 0.4 + i * 0.12)}>${txt(ar() ? 360 : 120, 112 + i * 26, w, i ? "t-ink3" : "t-ink", 13, 'font-weight="700"')}</g><rect class="an grow ${i ? "f-s3" : "f-acc"}" style="--d:${0.5 + i * 0.12}s;transform-origin:${ar() ? "right" : "left"} center" x="${ar() ? x0 - len : x0}" y="${100 + i * 26}" width="${len}" height="16" rx="5"/>${txt(ar() ? x0 - len - 18 : x0 + len + 18, 113 + i * 26, p + "%", "t-ink3", 11.5, 'direction="ltr"')}`; }).join("")}
       ${toks.map((w, i) => `<g ${an("pop", 1.3 + i * 0.45)}>${chip(X(i), 222, 78, w, i === 0 ? "f-acc" : "f-s1 s-acc", i === 0 ? "t-white" : "t-ink")}</g>`).join("")}
       <rect ${an("fade", 3.1, `blink f-acc`)} x="${ar() ? X(3) - 52 : X(3) + 46}" y="206" width="4" height="32"/>
-      <g ${an("fade", 1.0)}>${txt(240, 286, ar() ? "درجة الحرارة: قليلة = الأرجح، عالية = أجرأ" : "temperature: low = most likely, high = bolder", "t-ink3", 12.5)}</g>`;
+      <g ${an("fade", 1.0)}>${txt(240, 286, ar() ? "درجة الحرارة: قليلة = الأرجح، عالية = أجرأ" : "temperature: low = most likely, high = bolder", "t-ink3", 12.5)}</g>
+      <g ${an("pop", 0.3)}>${box(mx(400), 54, 112, 50, "f-s2 s-line2")}<rect x="${mx(400) - 44}" y="50" width="16" height="14" rx="3" class="f-ink2"/><path d="M${mx(400) - 41} 50 v-5 a5 5 0 0 1 10 0 v5" class="s-ink2" stroke-width="2" fill="none"/>${txt(mx(400) + 10, 50, ar() ? "المفاتيح" : "knobs", "t-ink", 11, 'font-weight="800"')}${txt(mx(400) + 10, 66, ar() ? "ثابتة" : "fixed", "t-ink3", 10.5, bold)}</g>`;
     },
     m_recap: () => {
-      const steps = ar() ? ["كلامك", "توكنز", "خريطة", "انتباه × طبقات", "احتمالات", "الكلمة الجاية"] : ["your words", "tokens", "meaning map", "attention × layers", "chances", "next word"];
-      const pos = [[0, 0], [1, 0], [2, 0], [2, 1], [1, 1], [0, 1]];
-      const at = ([c, r]) => [ar() ? 380 - c * 140 : 100 + c * 140, 92 + r * 104];
-      return `${pos.slice(1).map((p, i) => { const [x1, y1] = at(pos[i]), [x2, y2] = at(p); return `<path ${an("draw", 0.3 + i * 0.3, `s-acc`)} pathLength="1" d="M${x1 + (y1 === y2 ? (x2 > x1 ? 58 : -58) : 0)} ${y1 + (y1 === y2 ? 0 : 26)} L${x2 + (y1 === y2 ? (x2 > x1 ? -58 : 58) : 0)} ${y2 - (y1 === y2 ? 0 : 26)}" stroke-width="2.5" fill="none" marker-end="url(#aih-arrow)"/>`; }).join("")}
-      ${pos.map((p, i) => { const [x, y] = at(p); return `<g ${an("pop", 0.15 + i * 0.3)}><rect x="${x - 58}" y="${y - 24}" width="116" height="48" rx="13" class="${i === 5 ? "f-acc" : i === 0 ? "f-s2" : "f-s1 s-acc"}" stroke-width="2"/>${txt(x, y + 5, steps[i], i === 5 ? "t-white" : "t-ink", 13, 'font-weight="700"')}</g>`; }).join("")}
-      <g ${an("rise", 2.0)}>${person(ar() ? 380 : 100, 300, 0.75, "f-ink2")}${txt(ar() ? 260 : 220, 292, ar() ? "إنت: Context واضح + مراجعة" : "you: clear context + review", "t-mint", 13, 'font-weight="700"')}</g>`;
+      const T = ar() ? ["أمثلة كتير", "خمّن وقارن", "عدّل المفاتيح"] : ["many examples", "guess & compare", "adjust the knobs"];
+      const R = ar() ? ["كلامك", "توكنز + خريطة", "انتباه × طبقات", "الكلمة الجاية"] : ["your words", "tokens + map", "attention × layers", "next word"];
+      const XT = rowX(3, 120, 30, 240), XR = rowX(4, 104, 12, 240);
+      const row = (items, X, y, w, d0, last) => items.map((t, i) => `<g ${an("pop", d0 + i * 0.3)}>${box(X(i), y, w, 40, i === items.length - 1 ? last : "f-s1 s-acc")}${txt(X(i), y + 5, t, i === items.length - 1 ? "t-white" : "t-ink", 11.5, 'font-weight="800"')}</g>`).join("")
+        + items.slice(1).map((_, i) => `<path ${an("draw", d0 + 0.15 + i * 0.3, "s-acc")} pathLength="1" d="M${X(i) + dirx() * (w / 2 + 2)} ${y} L${X(i + 1) - dirx() * (w / 2 + 4)} ${y}" stroke-width="2.2" fill="none" marker-end="url(#aih-arrow)"/>`).join("");
+      return `<g ${an("fade", 0.05)}>${txt(240, 50, ar() ? "التدريب: قبل كده، ومرة واحدة" : "training: before, and once", "t-ink2", 12.5, 'font-weight="800"')}</g>
+      ${row(T, XT, 86, 120, 0.2, "f-mint")}
+      <path ${an("draw", 1.3, "s-mint")} pathLength="1" d="M${XT(2)} 108 C ${XT(2)} 140, ${XR(2)} 150, ${XR(2)} 194" stroke-width="2.5" stroke-dasharray="1" fill="none" marker-end="url(#aih-arrow)"/>
+      <g ${an("fade", 1.5)}>${txt(mx(150), 180, ar() ? "الرد: دلوقتي، وفي كل مرة" : "a reply: now, and every time", "t-ink2", 12.5, 'font-weight="800"')}</g>
+      ${row(R, XR, 218, 104, 1.6, "f-acc")}
+      <g ${an("rise", 3.0)}>${person(mx(70), 300, 0.7, "f-ink2")}${txt(260, 292, ar() ? "إنت: Context واضح + مراجعة" : "you: clear context + review", "t-mint", 13, 'font-weight="700"')}</g>`;
     }
   });
 
@@ -1271,7 +1285,7 @@
     const num = (v) => (ar() ? Number(v).toLocaleString("ar-EG") : String(v));
     const readSecs = (s) => Math.min(18, Math.max(9, (L(s.title) + s.story.map(L).join(" ") + L(s.idea)).length / 17));
 
-    host.className = present ? "aih aih-present" : "sec aih";
+    host.className = (present ? "aih aih-present" : "sec aih") + (H.pace === "slow" ? " slow" : "");   // a slow deck stretches every entrance (history.css)
     host.setAttribute("aria-roledescription", ar() ? "عرض شرائح" : "carousel");
     host.setAttribute("aria-label", L(ui.deck));
     host.innerHTML = `
