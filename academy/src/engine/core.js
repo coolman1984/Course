@@ -121,6 +121,7 @@
     moon: "M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z",
     auto: "M12 21a9 9 0 1 0 0-18v18zM12 3a9 9 0 0 1 0 18",
     menu: "M4 7h16M4 12h16M4 17h16",
+    more: "M4.5 12h1M11.5 12h1M18.5 12h1",
     x: "M6 6l12 12M18 6 6 18",
     play: "M7 4 20 12 7 20V4Z",
     pause: "M6 4h4v16H6zM14 4h4v16h-4z",
@@ -468,11 +469,14 @@
     doc.body.append(pan);
     const r = btn.getBoundingClientRect(), rtl = lang() === "ar";
     pan.style.top = r.bottom + 8 + "px";
-    if (rtl) pan.style.left = Math.max(8, r.left) + "px"; else pan.style.right = Math.max(8, innerWidth - r.right) + "px";
+    // keep the whole panel on screen: on phones the button sits inside «المزيد», far from the edge
+    const room = Math.max(8, innerWidth - pan.offsetWidth - 8), fit = (x) => Math.min(Math.max(8, x), room) + "px";
+    if (rtl) pan.style.left = fit(r.left); else pan.style.right = fit(innerWidth - r.right);
     btn.setAttribute("aria-expanded", "true");
     (pan.querySelector("[aria-pressed=true]") || pan.querySelector("button")).focus();
     const close = (e) => {
       if (e && e.type === "keydown" && e.key !== "Escape") return;
+      if (e && e.type === "keydown") e.preventDefault();   // this Escape closes the panel only, not «المزيد» behind it
       if (e && e.type === "pointerdown" && (pan.contains(e.target) || btn.contains(e.target))) return;
       pan.remove(); btn.setAttribute("aria-expanded", "false");
       removeEventListener("pointerdown", close, true); removeEventListener("keydown", close, true);
@@ -502,14 +506,22 @@
       <div class="levelseg hide-sm" role="group" aria-label="${esc(t("levelPick"))}">
         ${A.levels.map((x) => `<button type="button" data-level="${x.id}" aria-pressed="${lv === x.id}" title="${esc(L(x.desc))}"><span class="e" aria-hidden="true">${x.e}</span><span class="t">${esc(L(x.name))}</span></button>`).join("")}
       </div>
+      <button class="ibtn more-btn" id="more-btn" aria-label="${esc(t("moreBtn"))}" title="${esc(t("moreBtn"))}" aria-controls="bar-x" aria-expanded="${bar.classList.contains("more-open")}">${ico("more")}</button>
+      <div class="bar-x" id="bar-x">
       <a class="prog" href="#path" title="${esc(t("progressTitle", { d: p.done, t: p.total }))}" aria-label="${esc(t("progressTitle", { d: p.done, t: p.total }))}"><span class="ring" style="--p:${p.pct}"></span><b class="num">${p.pct}%</b></a>
       <a class="ibtn hide-sm" href="#knowledge" aria-label="${esc(t("nav_knowledge"))}" title="${esc(t("nav_knowledge"))}">${ico("graph")}</a>
       <a class="ibtn" href="#notebook" aria-label="${esc(t("nav_notebook"))}" title="${esc(t("nav_notebook"))}">${ico("note")}</a>
       <button class="ibtn" id="view-btn" aria-haspopup="dialog" aria-expanded="false" aria-label="${esc(t("viewBtn"))}" title="${esc(t("viewBtn"))}">${ico("abc")}</button>
       <button class="ibtn" id="lang-btn" aria-label="${esc(t("switchLang"))}" title="${esc(t("switchLang"))}">${ico("lang")}<span class="lbl">${lang() === "ar" ? "EN" : "ع"}</span></button>
-      <button class="ibtn" id="theme-btn" aria-label="${esc(t("themeBtn") + ": " + themeLbl)}" title="${esc(t("themeBtn") + ": " + themeLbl)}">${ico(themeIcon)}</button>`;
+      <button class="ibtn" id="theme-btn" aria-label="${esc(t("themeBtn") + ": " + themeLbl)}" title="${esc(t("themeBtn") + ": " + themeLbl)}">${ico(themeIcon)}</button>
+      </div>`;
     $("#menu-btn").onclick = () => { doc.body.classList.toggle("nav-open"); $("#menu-btn").setAttribute("aria-expanded", doc.body.classList.contains("nav-open")); };
     $("#search-btn").onclick = () => openPalette();
+    // phones: the secondary actions sit behind «المزيد» so the main ones get full-size tap targets (desktop shows them inline)
+    const setMore = (open) => { bar.classList.toggle("more-open", open); $("#more-btn").setAttribute("aria-expanded", open); };
+    $("#more-btn").onclick = (e) => { e.stopPropagation(); setMore(!bar.classList.contains("more-open")); };
+    $$("#bar-x a", bar).forEach((a) => a.addEventListener("click", () => setMore(false)));
+    if (!bar.dataset.moreWired) { bar.dataset.moreWired = "1"; doc.addEventListener("click", (e) => { if (!e.target.closest("#bar-x, #more-btn, .vp-panel, [role=dialog]")) { bar.classList.remove("more-open"); $("#more-btn")?.setAttribute("aria-expanded", "false"); } }); doc.addEventListener("keydown", (e) => { if (e.key === "Escape" && !e.defaultPrevented && bar.classList.contains("more-open")) { bar.classList.remove("more-open"); $("#more-btn")?.setAttribute("aria-expanded", "false"); $("#more-btn")?.focus(); } }); }
     $("#watch-btn").onclick = openTour;
     $$("[data-level]", bar).forEach((b) => (b.onclick = () => { S.set("level", b.dataset.level); renderBar(); A.emit("level", b.dataset.level); }));
     $("#lang-btn").onclick = () => { S.set("lang", lang() === "ar" ? "en" : "ar"); index = null; applyLang(); renderAll(); };
@@ -553,7 +565,7 @@
       ${grp("tools", t("grpTools"), navItems(["present", "notebook"]))}
       <button type="button" class="side-motion" id="motion-btn" aria-pressed="${doc.documentElement.dataset.motion === "off"}">${ico("eye")}<span>${esc(t(doc.documentElement.dataset.motion === "off" ? "motionOn" : "motionOff"))}</span></button>
       <div class="side-foot">${esc(t("sideFoot"))}</div>`;
-    // the academy-wide reduce-motion switch lives in the sidebar so it is reachable from every page (home's theatre has its own copy)
+    // the academy-wide reduce-motion switch lives in the sidebar so it is reachable from every page
     $("#motion-btn", side).onclick = () => { if (A.motion) { A.motion.setQuiet(doc.documentElement.dataset.motion !== "off"); toast(t(doc.documentElement.dataset.motion === "off" ? "motionOff" : "motionOn") + " ✓", "eye"); } };
     $$("[data-grp]", side).forEach((b) => (b.onclick = () => {
       const id = b.dataset.grp; const body = $(`[data-grp-body="${id}"]`, side);

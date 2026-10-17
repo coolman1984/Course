@@ -191,7 +191,7 @@ await session({ label: "interactions-ar", viewport: { width: 1280, height: 860 }
 
 /* Mobile 390px, dark theme, English: every route without horizontal overflow */
 await session({ label: "mobile-en-dark", viewport: { width: 390, height: 844 }, colorScheme: "dark", isMobile: true, hasTouch: true }, async (page) => {
-  await page.click("#lang-btn"); await page.waitForTimeout(150);
+  await page.click("#more-btn"); await page.click("#lang-btn"); await page.waitForTimeout(150);   // on a phone the language switch sits behind «المزيد»
   const hashes = await page.evaluate(() => ["home", "map", "path", "labs", "prompts", "compare", "quiz", "project", "glossary", "knowledge", "review", "coverage", "present", "notebook", ...window.ACADEMY.lessons.map((l) => "lesson-" + l.id), ...window.ACADEMY.labs.map((l) => "lab-" + l.id), "quiz-u1"]);
   let bad = 0;
   for (const hsh of hashes) {
@@ -205,36 +205,13 @@ await session({ label: "mobile-en-dark", viewport: { width: 390, height: 844 }, 
 });
 
 
-/* Motion Theatre: real learning interactions, not decoration. */
-await session({ label: "motion-theatre-ar", viewport: { width: 1360, height: 900 } }, async (page) => {
-  await page.waitForSelector(".motion-home .motion-machine");
-  const options = await page.evaluate(() => Array.from(document.querySelectorAll(".motion-cases [data-motion-case]")).map(el => el.dataset.motionCase));
-  options.join(",") === "p1,y4,s1" ? ok("motion: three workplace journeys") : fail("motion: missing scenarios");
-  const one = await page.$eval(".motion-home .motion-pages .t-page[aria-hidden=false] p", el => el.textContent);
-  await page.click('.motion-home [data-motion-stage="2"]');
-  const state = await page.$eval(".motion-home .motion-machine", el => el.dataset.stage);
-  const two = await page.$eval(".motion-home .motion-pages .t-page[aria-hidden=false] p", el => el.textContent);
-  state === "2" && one !== two ? ok("motion: stage transitions show different educational content") : fail("motion: stage content did not change");
-  await page.click('.motion-home [data-motion-case="y4"]');
-  const switched = await page.$eval(".motion-home", el => el.dataset.motionLesson);
-  const lessonUrl = await page.$eval(".motion-home .motion-open", el => el.getAttribute("href"));
-  switched === "y4" && lessonUrl === "#lesson-y4" ? ok("motion: changing scenario updates lesson link") : fail("motion: scenario switch broken");
-  await page.click(".motion-home [data-motion-next]");
-  const nextState = await page.$eval(".motion-home .motion-machine", el => el.dataset.stage);
-  nextState === "1" ? ok("motion: next step works") : fail("motion: next step missing");
-  await page.click(".motion-home [data-motion-quiet]");
-  const motion = await page.evaluate(() => document.documentElement.dataset.motion);
-  motion === "off" ? ok("motion: accessible quiet toggle persists") : fail("motion: quiet toggle failed");
-  await page.click('.motion-home [data-motion-stage="4"]');
-  const stageQuiet = await page.$eval(".motion-home .motion-machine", el => el.dataset.stage);
-  stageQuiet === "4" ? ok("motion: accessible without animation") : fail("motion: reduced animation blocks content");
-  await page.click(".motion-home [data-motion-quiet]");
-  await page.click(".motion-home [data-motion-replay]");
-  await page.click(".motion-home [data-motion-play]");
-  const running = await page.$eval(".motion-home [data-motion-play]", el => el.getAttribute("aria-pressed"));
-  running === "true" ? ok("motion: playback can be started on demand") : fail("motion: playback did not start");
-  await page.click(".motion-home [data-motion-play]");
-  await shot(page, "motion-theatre-home-ar");
+/* The home page has no motion theatre (removed 2026-10-17); lessons keep their animated level tabs. */
+await session({ label: "motion-lesson-ar", viewport: { width: 1360, height: 900 } }, async (page) => {
+  await page.waitForSelector("#main .home");
+  const gone = await page.evaluate(() => !document.querySelector(".motion-theatre, .motion-home, [data-motion-case]"));
+  gone ? ok("home: the motion theatre section is gone") : fail("home: motion theatre still rendered");
+  const desk = await page.evaluate(() => getComputedStyle(document.querySelector("#more-btn")).display === "none" && document.querySelector("#theme-btn").getBoundingClientRect().width > 0);
+  desk ? ok("header: desktop keeps every action inline, no «المزيد»") : fail("header: desktop header changed");
   await page.evaluate(() => location.hash = "lesson-p1");
   await page.waitForSelector("#lv .tabs");
   const check = await page.evaluate(() => ({
@@ -258,16 +235,37 @@ await session({ label: "motion-theatre-ar", viewport: { width: 1360, height: 900
   await shot(page, "motion-theatre-lesson-ar");
 });
 
-/* The motor must also work in an offline, narrow phone viewport. */
-await session({ label: "motion-mobile-ar", viewport: { width: 375, height: 812 }, isMobile: true, hasTouch: true }, async (page) => {
-  await page.waitForSelector(".motion-home");
+/* Phone header: four main actions at full tap size; the rest behind «المزيد». */
+await session({ label: "phone-header-ar", viewport: { width: 375, height: 812 }, isMobile: true, hasTouch: true }, async (page) => {
+  await page.waitForSelector("#main .home");
   const width = await overflow(page);
-  width <= 1 ? ok("motion: no horizontal overflow at 375px") : fail("motion: mobile overflow " + width);
-  await page.click('.motion-home [data-motion-case="s1"]');
-  await page.click('.motion-home [data-motion-stage="3"]');
-  const text = await page.$eval(".motion-home .motion-pages .t-page[aria-hidden=false] p", el => el.textContent);
-  text && text.length > 12 ? ok("motion: touch navigation works") : fail("motion: touch navigation lost content");
-  await shot(page, "motion-theatre-mobile-ar");
+  width <= 1 ? ok("home: no horizontal overflow at 375px") : fail("home: mobile overflow " + width);
+  const sizes = await page.evaluate(() => ["#menu-btn", "#watch-btn", "#search-btn", "#more-btn"].map((s) => { const r = document.querySelector(s).getBoundingClientRect(); return [s, Math.round(r.width), Math.round(r.height)]; }));
+  sizes.every(([, w, h]) => w >= 44 && h >= 44) ? ok("header: main phone buttons are at least 44px") : fail("header sizes " + JSON.stringify(sizes));
+  const hidden = await page.evaluate(() => getComputedStyle(document.querySelector("#bar-x")).display === "none" && document.querySelector("#more-btn").getAttribute("aria-expanded") === "false");
+  hidden ? ok("header: secondary actions start folded") : fail("header: secondary actions visible on phone");
+  const brand = await page.evaluate(() => { const a = document.querySelector(".brand-mark").getBoundingClientRect(), b = document.querySelector("#watch-btn").getBoundingClientRect(); return Math.min(a.right, b.right) - Math.max(a.left, b.left); });
+  brand <= 0 ? ok("header: watch button no longer covers the logo") : fail("header: watch overlaps logo by " + brand + "px");
+  await page.click("#more-btn");
+  const open = await page.evaluate(() => { const x = document.querySelector("#bar-x"); return getComputedStyle(x).display !== "none" && document.querySelector("#more-btn").getAttribute("aria-expanded") === "true" && ["#theme-btn", "#lang-btn", "#view-btn"].every((s) => document.querySelector(s).getBoundingClientRect().height >= 44); });
+  open ? ok("header: «المزيد» opens theme, language and reading settings") : fail("header: more panel did not open");
+  await page.keyboard.press("Escape");
+  const closed = await page.evaluate(() => getComputedStyle(document.querySelector("#bar-x")).display === "none");
+  closed ? ok("header: Escape closes the panel") : fail("header: Escape left the panel open");
+  // reading settings opened from «المزيد»: the panel stays on screen, and Escape closes it alone, focus on a visible button
+  const inView = async () => page.evaluate(() => { const r = document.querySelector(".vpanel").getBoundingClientRect(); return r.left >= 0 && r.right <= innerWidth; });
+  await page.click("#more-btn"); await page.click("#view-btn"); await page.waitForSelector(".vpanel");
+  (await inView()) ? ok("header: reading settings panel fits the phone screen (Arabic)") : fail("header: reading settings panel runs off the screen (Arabic)");
+  await page.keyboard.press("Escape");
+  const step = await page.evaluate(() => { const f = document.activeElement; return !document.querySelector(".vpanel") && getComputedStyle(document.querySelector("#bar-x")).display !== "none" && f.id === "view-btn" && f.getBoundingClientRect().width > 0; });
+  step ? ok("header: Escape closes reading settings first, «المزيد» stays open") : fail("header: Escape from reading settings left focus on a hidden button");
+  await page.keyboard.press("Escape");
+  await page.click("#more-btn"); await page.click("#lang-btn"); await page.waitForTimeout(150); await page.keyboard.press("Escape");
+  await page.setViewportSize({ width: 320, height: 640 });
+  await page.click("#more-btn"); await page.click("#view-btn"); await page.waitForSelector(".vpanel");
+  (await inView()) ? ok("header: reading settings panel fits a 320px screen (English)") : fail("header: reading settings panel runs off the screen (English)");
+  await page.keyboard.press("Escape"); await page.keyboard.press("Escape");
+  await shot(page, "phone-header-ar");
 });
 
 /* Reduced motion: scenes must not animate on their own */

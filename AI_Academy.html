@@ -166,6 +166,8 @@ svg.i{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-widt
 /* ---------- App bar ---------- */
 .bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:60;height:var(--bar-h);display:flex;align-items:center;gap:6px;padding-inline:16px;
   background:var(--glass);backdrop-filter:saturate(1.8) blur(16px);-webkit-backdrop-filter:saturate(1.8) blur(16px);border-bottom:1px solid var(--line)}
+.bar-x{display:contents}
+.bar .more-btn{display:none}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);min-width:0;padding:4px 6px;border-radius:10px}
 .brand-mark{width:30px;height:30px;flex:none;border-radius:8px;background:linear-gradient(180deg,var(--accent-hi),var(--accent));display:grid;place-items:center;color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 1px 2px rgba(47,95,230,.35)}
 .brand-mark svg{width:19px;height:19px}
@@ -873,6 +875,15 @@ html[lang="ar"] .ptext{font-family:var(--font-body);font-size:15px;line-height:2
   .bar{gap:4px;padding-inline:8px}
   .hide-sm{display:none!important}
 }
+/* phones: four main actions at full tap size; the rest open from «المزيد» as a small panel under the bar */
+@media (max-width:560px){
+  .bar .ibtn,.bar .watchbtn,.bar .searchbtn{height:44px;min-width:44px}
+  .bar .searchbtn{width:44px;padding:0;justify-content:center}
+  .bar .more-btn{display:inline-flex}
+  .bar-x{display:none}
+  .bar.more-open .bar-x{display:flex;position:absolute;top:calc(100% + 6px);inset-inline-end:8px;gap:6px;align-items:center;padding:8px;border-radius:16px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-3,0 12px 32px rgba(0,0,0,.18))}
+  .bar.more-open .bar-x .prog{height:44px;display:inline-flex;align-items:center;padding-inline:8px}
+}
 @media (max-width:420px){
   .brand-txt{display:none}
   .levelseg button{padding-inline:7px}
@@ -1026,7 +1037,7 @@ html[dir="rtl"] .cine-card{background:radial-gradient(900px 520px at 15% 15%,col
 @media (prefers-reduced-motion:reduce){.cine-frame,.cine-frame.back{animation:none}.cine-track i{transition:none}}
 
 /*
- Learning Motion Theatre: adapted selected free transition patterns from
+ Motion details (sliding tabs, text reveal, success check): adapted selected free transition patterns from
  Jakub Antalik / transitions.dev (© 2026), https://transitions.dev/
  https://github.com/Jakubantalik/transitions.dev/blob/main/LICENSE
  This is an application-specific implementation, not a redistribution of the library.
@@ -1051,90 +1062,10 @@ html[dir="rtl"] .cine-card{background:radial-gradient(900px 520px at 15% 15%,col
   --stagger-blur: 4px;
   --stagger-ease: cubic-bezier(.22,1,.36,1);
 }
-.motion-theatre { min-width:0; isolation:isolate; }
-.motion-home { max-width:1130px; margin:0 auto 74px; padding:30px clamp(12px,2vw,28px); }
-.motion-show-head { text-align:center; max-width:770px; margin:0 auto 30px; display:grid; gap:12px; justify-items:center; }
-.motion-eyebrow { display:flex; gap:10px; align-items:center; font-size:12px; font-weight:750; letter-spacing:.03em; color:var(--accent); }
-.motion-eyebrow>span:last-child { font-family:var(--font-mono);font-weight:500;opacity:.65;font-size:11px; }
-.motion-led { width:9px;height:9px;display:inline-block;border-radius:99px;background:#3bbda6;box-shadow:0 0 0 5px rgba(59,189,166,.12); }
-.motion-show-head h2 {font-size:clamp(1.55rem,3.2vw,2.65rem);letter-spacing:-.025em;font-weight:800;}
-.motion-show-head p {font-size:clamp(.97rem,1.5vw,1.1rem);color:var(--ink-2);max-width:65ch;line-height:1.85;}
-.motion-studio {display:grid;grid-template-columns:minmax(220px,275px) minmax(0,1fr);gap:18px;align-items:stretch;}
-.motion-lesson .motion-studio {display:block;}
-.motion-choose {display:flex;flex-direction:column;gap:14px;border:1px solid var(--line);padding:20px;border-radius:22px;background:var(--surface);box-shadow:var(--shadow-1);min-width:0;}
-.motion-chooser-label {font-weight:750;color:var(--ink);font-size:.95rem;}
-.motion-cases {display:flex;flex-direction:column;gap:6px;position:relative;background:var(--surface-2);border:1px solid var(--line);border-radius:15px;padding:6px;}
 .t-tabs {position:relative;}
 .t-tabs-pill {position:absolute;z-index:0;inset:0 auto auto 0;pointer-events:none;width:0;height:0;transform:translate(0,0);
   border-radius:11px;background:var(--surface);border:1px solid var(--line-2);box-shadow:0 4px 18px rgba(17,17,20,.08);
   transition:transform var(--tabs-dur) var(--tabs-ease),width var(--tabs-dur) var(--tabs-ease),height var(--tabs-dur) var(--tabs-ease);}
-.motion-cases .t-tab {display:flex;gap:10px;align-items:center;position:relative;z-index:1;width:100%;border:0;border-radius:11px;background:transparent;padding:11px 10px;font-size:14px;color:var(--ink-2);text-align:start;line-height:1.45;min-height:47px;transition:color var(--tabs-dur) var(--tabs-ease);}
-.motion-cases .t-tab>span:first-child {font-size:21px;line-height:1;}
-.motion-cases .t-tab[aria-selected=true] {color:var(--ink);font-weight:750;}
-.motion-instruction {font-size:13px;color:var(--ink-2);line-height:1.75;margin-top:auto;}
-.motion-open {display:flex;justify-content:center;gap:9px;align-items:center;border-radius:14px;min-height:44px;padding:8px 14px;background:var(--accent);color:white;text-decoration:none;font-size:14px;font-weight:750;
-  transition:transform .3s var(--motion-ease),box-shadow .3s var(--motion-ease),background .3s var(--motion-ease);}
-.motion-open:hover {color:white;transform:translateY(-2px);box-shadow:0 9px 24px rgba(72,108,231,.25);}
-.motion-machine {color:#f5f8ff;background:linear-gradient(155deg,#101528,#141c39 58%,#1e1943);border:1px solid rgba(190,211,255,.17);border-radius:23px;min-width:0;overflow:hidden;box-shadow:0 25px 70px rgba(18,25,56,.22);position:relative;isolation:isolate;}
-.motion-machine::before {content:"";position:absolute;inset:-35% auto auto -20%;height:370px;width:370px;pointer-events:none;border-radius:50%;background:radial-gradient(circle,rgba(81,100,247,.18),transparent 67%);z-index:-1;}
-.motion-topbar {display:flex;align-items:center;gap:10px;padding:11px 15px;border-bottom:1px solid rgba(199,211,255,.12);background:rgba(5,12,32,.31);}
-.motion-topdots {display:flex;gap:4px;align-items:center;}
-.motion-topdots i {display:block;width:7px;height:7px;border-radius:50%;background:#ff8198;}
-.motion-topdots i:nth-child(2) {background:#ffca76;}
-.motion-topdots i:nth-child(3) {background:#52d2ae;}
-.motion-top-name {font-size:12px;font-weight:650;color:#c5d0ef;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.motion-quiet {margin-inline-start:auto;flex:none;border:1px solid rgba(200,215,250,.2);border-radius:10px;background:rgba(255,255,255,.045);color:#d9e3ff;min-height:32px;padding:5px 10px;font-size:11.5px;line-height:1.3;transition:background .25s ease;}
-.motion-quiet:hover{background:rgba(255,255,255,.12);}
-.motion-stages {display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;padding:18px 18px 12px;position:relative;isolation:isolate;}
-.motion-stages::before {content:"";position:absolute;inset-inline:10%;top:34px;height:2px;background:rgba(185,205,251,.15);z-index:-1;}
-.motion-node {display:flex;flex-direction:column;align-items:center;gap:7px;border:0;background:none;color:#8c9bbc;min-width:0;padding:3px 2px 7px;line-height:1.3;transition:color .35s ease;}
-.motion-node-number {width:30px;height:30px;border-radius:50%;display:grid;place-items:center;border:1px solid #556281;background:#1c2646;color:#a5b3d7;font:600 13px var(--font-mono);position:relative;box-shadow:0 0 0 5px #18213d;
-  transition:transform .45s cubic-bezier(.34,1.45,.64,1),background .4s ease,color .4s ease,border-color .4s ease,box-shadow .4s ease;}
-.motion-node-label {font-size:clamp(10px,1vw,12px);font-weight:580;text-align:center;}
-.motion-node[aria-pressed=true]{color:#fff;}
-.motion-node[aria-pressed=true] .motion-node-number {background:#5e83ff;color:#fff;border-color:#90abff;transform:scale(1.1);box-shadow:0 0 0 5px #18213d,0 0 23px rgba(111,149,255,.46);}
-.motion-machine[data-stage="3"] .motion-node[aria-pressed=true] .motion-node-number {background:#14ab81;border-color:#5ef5c9;}
-.motion-machine[data-stage="4"] .motion-node[aria-pressed=true] .motion-node-number {background:#d9a550;border-color:#ffce7d;}
-.motion-canvas {position:relative;min-height:270px;margin:6px 16px 0;border:1px solid rgba(180,200,245,.16);border-radius:16px;background:linear-gradient(130deg,rgba(34,50,92,.78),rgba(18,25,56,.7));overflow:hidden;}
-.motion-grid {position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(178,202,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(178,202,255,.045) 1px,transparent 1px);background-size:25px 25px;
-  mask-image:linear-gradient(110deg,transparent,black 40%,black 75%,transparent);}
-.motion-orbit {position:absolute;pointer-events:none;border:1px solid rgba(121,168,251,.12);border-radius:50%;width:190px;height:190px;inset-inline-end:-49px;top:34px;transform:rotate(22deg);}
-.motion-orbit.orbit-b {width:250px;height:250px;top:-6px;inset-inline-end:-91px;border-style:dashed;opacity:.65;}
-.motion-canvas-meta {display:flex;gap:10px;align-items:center;justify-content:space-between;position:relative;padding:16px 17px 4px;}
-.motion-step-index {font-family:var(--font-mono);font-size:11px;color:#9eafdb;white-space:nowrap;}
-.motion-step-index b {font-size:15px;color:#fcfdff;font-weight:750;}
-.motion-specimen {font-size:11px;color:#a1b0d1;text-align:end;}
-/* Adapted transitions.dev page-side-by-side, namespaced to the theatre. */
-.motion-pages {position:relative;min-height:164px;}
-.motion-pages .t-page {position:absolute;inset:0;opacity:0;pointer-events:none;transform:translateX(calc(var(--page-slide-distance) * var(--page-exit-enabled)));filter:blur(calc(var(--page-blur) * var(--page-exit-enabled)));
-  transition:opacity var(--page-fade-dur) var(--page-fade-ease),transform var(--page-slide-dur) var(--page-slide-ease),filter var(--page-slide-dur) var(--page-slide-ease);}
-.motion-pages .t-page[data-page-id="1"] {--t-page-from-x:calc(var(--page-slide-distance) * -1);transform:translateX(calc(var(--t-page-from-x) * var(--page-exit-enabled)));}
-.motion-pages .t-page[data-page-id="2"] {--t-page-from-x:var(--page-slide-distance);transform:translateX(calc(var(--t-page-from-x) * var(--page-exit-enabled)));}
-.motion-pages[data-page="1"] .t-page[data-page-id="1"],.motion-pages[data-page="2"] .t-page[data-page-id="2"] {opacity:1;pointer-events:auto;transform:translateX(0);filter:blur(0);transition-delay:var(--page-stagger);}
-.motion-page-body {position:relative;display:flex;align-items:flex-start;gap:18px;padding:24px 25px 12px;max-width:100%;}
-.motion-symbol {width:54px;height:54px;flex:none;display:grid;place-items:center;border-radius:17px;background:linear-gradient(140deg,#718eff,#4457bc);color:#fff;font-size:31px;line-height:1;font-weight:750;box-shadow:0 14px 30px rgba(28,39,108,.36);}
-.motion-machine[data-stage="3"] .motion-symbol {background:linear-gradient(150deg,#15cda2,#0a7d6f);}
-.motion-machine[data-stage="4"] .motion-symbol {background:linear-gradient(150deg,#f3c272,#a67631);}
-.motion-page-copy {min-width:0;display:grid;gap:9px;max-width:65ch;}
-.motion-page-copy strong{font-size:clamp(1.05rem,1.8vw,1.35rem);color:white;line-height:1.35;}
-.motion-page-copy p{font-size:clamp(.94rem,1.3vw,1.08rem);line-height:1.85;color:#e0e8fc;overflow-wrap:anywhere;}
-.motion-canvas-foot {position:relative;display:flex;align-items:center;gap:7px;padding:4px 18px 13px;font-size:11px;color:#a8b8de;line-height:1.6;}
-.motion-live-dot {width:7px;height:7px;flex:none;border-radius:50%;background:#6bd9b6;}
-.motion-controls {padding:16px 18px 17px;display:grid;gap:14px;}
-.motion-progress {height:3px;width:100%;background:rgba(192,208,245,.15);border-radius:99px;overflow:hidden;}
-.motion-progress span {height:100%;width:20%;display:block;border-radius:99px;background:linear-gradient(90deg,#6de0bf,#8daaff);transition:width .58s var(--motion-ease);}
-.motion-actions {display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:7px;}
-.motion-action,.motion-restart {border:1px solid rgba(183,199,245,.21);min-height:38px;border-radius:12px;padding:7px 11px;background:rgba(255,255,255,.045);color:#dbe5fb;font-size:12px;line-height:1.35;display:inline-flex;gap:8px;align-items:center;justify-content:center;
-  transition:transform .24s var(--motion-ease),background .24s ease,border-color .24s ease;}
-.motion-action:not(:disabled):hover,.motion-restart:hover{background:rgba(120,148,255,.18);border-color:rgba(190,210,255,.45);transform:translateY(-1px);}
-.motion-action:disabled{opacity:.35;}
-.motion-main-action {background:#e7eeff;color:#172246;border:1px solid #e7eeff;font-weight:750;min-width:130px;}
-.motion-main-action:not(:disabled):hover{background:white;color:#14234c;}
-.motion-restart {font-size:23px;min-width:39px;padding:3px;}
-.motion-lesson {margin:17px 0 23px;}
-.motion-lesson .motion-machine {border-radius:16px;box-shadow:0 12px 32px rgba(19,29,62,.17);}
-.motion-lesson .motion-node-label {font-size:11px;}
-.motion-lesson .motion-canvas {min-height:265px;}
 /* Sliding tab indicator borrowed from transitions.dev's tab pattern. */
 .levels .tabs.t-tabs {position:relative;isolation:isolate;}
 .levels .tabs.t-tabs .t-tabs-pill {border-radius:99px;z-index:0;background:var(--surface);box-shadow:0 1px 7px rgba(20,31,60,.14);border-color:var(--line-2);}
@@ -1157,72 +1088,19 @@ html[dir="rtl"] .cine-card{background:radial-gradient(900px 520px at 15% 15%,col
 .t-success-check[data-state="in"] svg path {animation:motion-check-path 550ms var(--motion-ease) 85ms forwards;}
 @keyframes motion-check-in {from{opacity:0;transform:translateY(22px) rotate(55deg);filter:blur(8px)}to{opacity:1;transform:translateY(0) rotate(0);filter:blur(0)}}
 @keyframes motion-check-path {to{stroke-dashoffset:0}}
-@media(max-width:1000px) {
-  .motion-studio {grid-template-columns:minmax(0,1fr);}
-  .motion-choose {display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;}
-  .motion-chooser-label {grid-column:1/-1;}
-  .motion-cases {grid-column:1/-1;flex-direction:row;align-items:stretch;}
-  .motion-cases .t-tab{flex:1;text-align:center;justify-content:center;}
-  .motion-instruction {max-width:50ch;}
-  .motion-open{align-self:center;}
-}
-@media(max-width:650px) {
-  .motion-home{padding:25px 0 4px;margin-bottom:34px;}
-  .motion-show-head{padding:0 10px;}
-  .motion-studio{gap:12px;}
-  .motion-choose{padding:13px;border-radius:16px;grid-template-columns:minmax(0,1fr);}
-  .motion-chooser-label{grid-column:1;}
-  .motion-cases{padding:4px;grid-column:1;gap:3px;}
-  .motion-cases .t-tab{flex-direction:column;gap:3px;font-size:11px;min-width:0;padding:7px 4px;min-height:58px;}
-  .motion-cases .t-tab>span:first-child{font-size:18px;}
-  .motion-instruction{display:none;}
-  .motion-open{width:100%;min-height:38px;font-size:12px;}
-  .motion-machine{border-radius:17px;}
-  .motion-topbar{padding:10px 12px;}
-  .motion-top-name{font-size:11px;}
-  .motion-topdots{gap:3px;}
-  .motion-topdots i{width:6px;height:6px;}
-  .motion-quiet{font-size:10px;padding:4px 7px;}
-  .motion-stages{padding:14px 9px 10px;}
-  .motion-stages::before{top:30px;}
-  .motion-node-number{width:27px;height:27px;}
-  .motion-node-label{font-size:9px;}
-  .motion-canvas{margin:3px 9px 0;min-height:300px;}
-  .motion-pages{min-height:205px;}
-  .motion-canvas-meta{padding:13px 12px 1px;flex-wrap:wrap;}
-  .motion-page-body{padding:19px 15px 9px;gap:11px;}
-  .motion-symbol{width:39px;height:39px;border-radius:12px;font-size:24px;}
-  .motion-page-copy{gap:9px;}
-  .motion-page-copy p{font-size:.95rem;line-height:1.76;}
-  .motion-canvas-foot{padding:7px 12px 13px;font-size:10px;}
-  .motion-controls{padding:13px 10px 14px;gap:10px;}
-  .motion-actions{gap:5px;}
-  .motion-action{min-height:38px;font-size:10px;padding:7px 8px;gap:3px;}
-  .motion-main-action{min-width:92px;}
-  .motion-lesson .motion-canvas{min-height:310px;}
-  .motion-lesson .motion-node-label{font-size:9px;}
-}
-@media(max-width:380px) {
-  .motion-topdots{display:none;}
-  .motion-node-label{font-size:8px;}
-  .motion-page-copy p{font-size:.91rem;}
-  .motion-lesson .motion-canvas{min-height:350px;}
-}
 @media(prefers-reduced-motion:reduce) {
-  .motion-theatre *, .motion-route-enter, .t-success-check, .t-success-check svg path, .t-stagger-line {
+  .motion-route-enter, .t-success-check, .t-success-check svg path, .t-stagger-line {
     transition:none!important;animation:none!important;filter:none!important;scroll-behavior:auto!important;
   }
   .t-stagger-line {opacity:1!important;transform:none!important;}
   .t-success-check{opacity:1!important;transform:none!important;}
   .t-success-check svg path{stroke-dashoffset:0!important;}
 }
-html[data-motion="off"] .motion-theatre *,
 html[data-motion="off"] .motion-route-enter,
 html[data-motion="off"] .t-success-check,
 html[data-motion="off"] .t-success-check svg path {
   animation:none!important;transition:none!important;filter:none!important;
 }
-html[data-motion="off"] .motion-show-head .t-stagger-line {opacity:1!important;transform:none!important;}
 html[data-motion="off"] .t-success-check {opacity:1!important;}
 html[data-motion="off"] .t-success-check svg path {stroke-dashoffset:0!important;}
 
@@ -1493,7 +1371,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     ladderSecTitle: u("من سؤال عابر لفريق رقمي.", "From a passing question to a digital team."),
     labsSecTitle: u("جرّب الفكرة بإيدك، مش تقرأ عنها بس.", "Try the idea with your hands, don’t just read it."),
     footLine: u("مبني من كتاب «أساسيات الذكاء الاصطناعي في بيئة العمل الحديثة» — محمد فوزي. بيشتغل من غير نت.", "Built from the book “AI Essentials for the Modern Workspace” — Mohamed Fawzy. Works offline."),
-    viewBtn: u("إعدادات القراءة", "Reading settings"), viewReset: u("الافتراضي", "Default"),
+    viewBtn: u("إعدادات القراءة", "Reading settings"), moreBtn: u("المزيد", "More"), viewReset: u("الافتراضي", "Default"),
     view_width: u("عرض المحتوى", "Content width"), view_size: u("حجم الخط", "Text size"), view_font: u("نوع الخط", "Font"),
     viewNarrow: u("ضيق", "Narrow"), viewMedium: u("متوسط", "Medium"), viewWide: u("عرض الشاشة", "Full width"),
     sizeSm: u("صغير", "Small"), sizeMd: u("عادي", "Normal"), sizeLg: u("كبير", "Large"), sizeXl: u("أكبر", "Larger"),
@@ -7875,6 +7753,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     moon: "M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z",
     auto: "M12 21a9 9 0 1 0 0-18v18zM12 3a9 9 0 0 1 0 18",
     menu: "M4 7h16M4 12h16M4 17h16",
+    more: "M4.5 12h1M11.5 12h1M18.5 12h1",
     x: "M6 6l12 12M18 6 6 18",
     play: "M7 4 20 12 7 20V4Z",
     pause: "M6 4h4v16H6zM14 4h4v16h-4z",
@@ -8222,11 +8101,14 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     doc.body.append(pan);
     const r = btn.getBoundingClientRect(), rtl = lang() === "ar";
     pan.style.top = r.bottom + 8 + "px";
-    if (rtl) pan.style.left = Math.max(8, r.left) + "px"; else pan.style.right = Math.max(8, innerWidth - r.right) + "px";
+    // keep the whole panel on screen: on phones the button sits inside «المزيد», far from the edge
+    const room = Math.max(8, innerWidth - pan.offsetWidth - 8), fit = (x) => Math.min(Math.max(8, x), room) + "px";
+    if (rtl) pan.style.left = fit(r.left); else pan.style.right = fit(innerWidth - r.right);
     btn.setAttribute("aria-expanded", "true");
     (pan.querySelector("[aria-pressed=true]") || pan.querySelector("button")).focus();
     const close = (e) => {
       if (e && e.type === "keydown" && e.key !== "Escape") return;
+      if (e && e.type === "keydown") e.preventDefault();   // this Escape closes the panel only, not «المزيد» behind it
       if (e && e.type === "pointerdown" && (pan.contains(e.target) || btn.contains(e.target))) return;
       pan.remove(); btn.setAttribute("aria-expanded", "false");
       removeEventListener("pointerdown", close, true); removeEventListener("keydown", close, true);
@@ -8256,14 +8138,22 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       <div class="levelseg hide-sm" role="group" aria-label="${esc(t("levelPick"))}">
         ${A.levels.map((x) => `<button type="button" data-level="${x.id}" aria-pressed="${lv === x.id}" title="${esc(L(x.desc))}"><span class="e" aria-hidden="true">${x.e}</span><span class="t">${esc(L(x.name))}</span></button>`).join("")}
       </div>
+      <button class="ibtn more-btn" id="more-btn" aria-label="${esc(t("moreBtn"))}" title="${esc(t("moreBtn"))}" aria-controls="bar-x" aria-expanded="${bar.classList.contains("more-open")}">${ico("more")}</button>
+      <div class="bar-x" id="bar-x">
       <a class="prog" href="#path" title="${esc(t("progressTitle", { d: p.done, t: p.total }))}" aria-label="${esc(t("progressTitle", { d: p.done, t: p.total }))}"><span class="ring" style="--p:${p.pct}"></span><b class="num">${p.pct}%</b></a>
       <a class="ibtn hide-sm" href="#knowledge" aria-label="${esc(t("nav_knowledge"))}" title="${esc(t("nav_knowledge"))}">${ico("graph")}</a>
       <a class="ibtn" href="#notebook" aria-label="${esc(t("nav_notebook"))}" title="${esc(t("nav_notebook"))}">${ico("note")}</a>
       <button class="ibtn" id="view-btn" aria-haspopup="dialog" aria-expanded="false" aria-label="${esc(t("viewBtn"))}" title="${esc(t("viewBtn"))}">${ico("abc")}</button>
       <button class="ibtn" id="lang-btn" aria-label="${esc(t("switchLang"))}" title="${esc(t("switchLang"))}">${ico("lang")}<span class="lbl">${lang() === "ar" ? "EN" : "ع"}</span></button>
-      <button class="ibtn" id="theme-btn" aria-label="${esc(t("themeBtn") + ": " + themeLbl)}" title="${esc(t("themeBtn") + ": " + themeLbl)}">${ico(themeIcon)}</button>`;
+      <button class="ibtn" id="theme-btn" aria-label="${esc(t("themeBtn") + ": " + themeLbl)}" title="${esc(t("themeBtn") + ": " + themeLbl)}">${ico(themeIcon)}</button>
+      </div>`;
     $("#menu-btn").onclick = () => { doc.body.classList.toggle("nav-open"); $("#menu-btn").setAttribute("aria-expanded", doc.body.classList.contains("nav-open")); };
     $("#search-btn").onclick = () => openPalette();
+    // phones: the secondary actions sit behind «المزيد» so the main ones get full-size tap targets (desktop shows them inline)
+    const setMore = (open) => { bar.classList.toggle("more-open", open); $("#more-btn").setAttribute("aria-expanded", open); };
+    $("#more-btn").onclick = (e) => { e.stopPropagation(); setMore(!bar.classList.contains("more-open")); };
+    $$("#bar-x a", bar).forEach((a) => a.addEventListener("click", () => setMore(false)));
+    if (!bar.dataset.moreWired) { bar.dataset.moreWired = "1"; doc.addEventListener("click", (e) => { if (!e.target.closest("#bar-x, #more-btn, .vp-panel, [role=dialog]")) { bar.classList.remove("more-open"); $("#more-btn")?.setAttribute("aria-expanded", "false"); } }); doc.addEventListener("keydown", (e) => { if (e.key === "Escape" && !e.defaultPrevented && bar.classList.contains("more-open")) { bar.classList.remove("more-open"); $("#more-btn")?.setAttribute("aria-expanded", "false"); $("#more-btn")?.focus(); } }); }
     $("#watch-btn").onclick = openTour;
     $$("[data-level]", bar).forEach((b) => (b.onclick = () => { S.set("level", b.dataset.level); renderBar(); A.emit("level", b.dataset.level); }));
     $("#lang-btn").onclick = () => { S.set("lang", lang() === "ar" ? "en" : "ar"); index = null; applyLang(); renderAll(); };
@@ -8307,7 +8197,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       ${grp("tools", t("grpTools"), navItems(["present", "notebook"]))}
       <button type="button" class="side-motion" id="motion-btn" aria-pressed="${doc.documentElement.dataset.motion === "off"}">${ico("eye")}<span>${esc(t(doc.documentElement.dataset.motion === "off" ? "motionOn" : "motionOff"))}</span></button>
       <div class="side-foot">${esc(t("sideFoot"))}</div>`;
-    // the academy-wide reduce-motion switch lives in the sidebar so it is reachable from every page (home's theatre has its own copy)
+    // the academy-wide reduce-motion switch lives in the sidebar so it is reachable from every page
     $("#motion-btn", side).onclick = () => { if (A.motion) { A.motion.setQuiet(doc.documentElement.dataset.motion !== "off"); toast(t(doc.documentElement.dataset.motion === "off" ? "motionOff" : "motionOn") + " ✓", "eye"); } };
     $$("[data-grp]", side).forEach((b) => (b.onclick = () => {
       const id = b.dataset.grp; const body = $(`[data-grp-body="${id}"]`, side);
@@ -10833,65 +10723,15 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
 })(window.ACADEMY);
 
 /* engine/motion.js */
-/* Learning Motion Theatre for the single-file Academy.
+/* Motion details for the single-file Academy (the home-page theatre was removed 2026-10-17).
    Selected patterns adapted from Jakub Antalik's transitions.dev:
-   08 page-side-by-side, 16 sliding tabs, 18 text reveal, 10 success-check.
+   16 sliding tabs, 18 text reveal, 10 success-check.
    Permission: https://github.com/Jakubantalik/transitions.dev/blob/main/LICENSE
    Adaptations teach actual course scenarios rather than loading or generating fake content.
    No runtime dependency, no network, no automatic playback. */
 "use strict";
 (function (A) {
   const doc = document;
-  const esc = A.esc;
-  const homeChoices = [
-    { id: "p1", ar: "إزاي تطلب صح؟", en: "Ask with clarity", emoji: "💬" },
-    { id: "y4", ar: "إزاي تفحص الأرقام؟", en: "Trust your numbers", emoji: "📊" },
-    { id: "s1", ar: "إزاي تبني نظام؟", en: "Connect the system", emoji: "🧩" }
-  ];
-  const englishExamples = {
-    p1: ["You ask an assistant to make a report, but receive pages of vague advice.",
-      "A goal, a time period, the source data and the expected output.",
-      "Specify the task, constraints, and what the finished report should contain.",
-      "A focused request for the top three stoppage causes with supporting numbers.",
-      "A confident-looking answer is not proof. Check the figures against the source."],
-    y4: ["A dashboard shows high losses, but a duplicated row silently doubled one incident.",
-      "Production logs, dates, identifiers and stoppage durations.",
-      "Check duplicates, missing values, units and totals before calculating.",
-      "A reliable comparison, with a clear list of issues to fix first.",
-      "A beautiful chart cannot repair broken data."],
-    s1: ["A purchase order is typed into purchasing, retyped in stores and retyped in finance.",
-      "One approved order number and the state of each handoff.",
-      "Pass verified data between the steps rather than copying it by hand.",
-      "One traceable process with fewer manual transfers and errors.",
-      "Several separate screens do not make a connected system."]
-  };
-  const captions = {
-    ar: {
-      label: "مختبر الفكرة المتحركة", title: "بدل ما تقرأ الفكرة… شوفها بتحصل.",
-      lead: "اختار موقف من الشغل. حرّك الخطوات وشوف إزاي المشكلة بتتحوّل لنتيجة. مش فيديو، إنت اللي بتقود التجربة.",
-      choose: "اختار قصة نبدأ بيها", steps: ["المشكلة", "معاك إيه؟", "إيه اللي بيحصل؟", "النتيجة", "خد بالك"],
-      kicker: "تجربة تعليمية، مش بيانات حقيقية", next: "الخطوة الجاية", prev: "اللي فات",
-      play: "شغّل القصة", pause: "وقّف", replay: "اعرض من الأول",
-      open: "افتح الدرس كامل", quiet: "قلّل الحركة", motion: "فعّل الحركة",
-      learn: "الدرس كامل فيه شرح أبسط، رسم متحرك، وتجربة بإيدك.",
-      lessonHint: "اضغط على أي محطة علشان تشوف اللي بيحصل فيها.", progress: "المحطة",
-      final: "وصلنا للنهاية. جرّب قصة تانية، أو افتح الدرس.",
-      unit: "الخطوات قدامك"
-    },
-    en: {
-      label: "Motion learning studio", title: "Don't just read the idea. Watch it unfold.",
-      lead: "Choose a workplace challenge and explore the steps yourself. This is a guided, interactive explanation, not a video.",
-      choose: "Pick a scenario", steps: ["The problem", "What you have", "How it works", "The outcome", "Watch out"],
-      kicker: "Illustrative scenario, not real company data", next: "Next step", prev: "Previous",
-      play: "Play the story", pause: "Pause", replay: "Start again",
-      open: "Explore the full lesson", quiet: "Reduce motion", motion: "Enable motion",
-      learn: "The full lesson includes examples, visual explanations and hands-on practice.",
-      lessonHint: "Pick any stage to examine what happens there.", progress: "Stage",
-      final: "That's the journey. Try another scenario or open the lesson.",
-      unit: "Your story, step by step"
-    }
-  };
-  const stageIcons = ["?", "↳", "↝", "✓", "!"];
   const safeStorage = {
     get() { try { return localStorage.getItem("academy.motion") === "off"; } catch (_) { return false; } },
     set(value) { try { localStorage.setItem("academy.motion", value ? "off" : "on"); } catch (_) {} }
@@ -10902,16 +10742,10 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     motionOff = !!off;
     safeStorage.set(motionOff);
     doc.documentElement.dataset.motion = motionOff ? "off" : "on";
-    const side = doc.getElementById("motion-btn");   // keep the sidebar switch in step with the home theatre's button
+    const side = doc.getElementById("motion-btn");   // keep the sidebar switch in step
     if (side) { side.setAttribute("aria-pressed", String(motionOff)); side.querySelector("span").textContent = A.t(motionOff ? "motionOn" : "motionOff"); }
   }
   setMotion(motionOff);
-  function dict() { return captions[A.lang()]; }
-  function story(id) {
-    if (A.lang() === "en") return englishExamples[id] || englishExamples.p1;
-    const data = A.lessonStories && A.lessonStories[id];
-    return data ? [data[0], data[1], data[2], data[3], data[4]] : null;
-  }
   function slidePill(bar, instant) {
     if (!bar || !bar.isConnected) return;
     const active = bar.querySelector('button[aria-selected="true"]');
@@ -10926,212 +10760,8 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       pill.style.transition = "";
     }
   }
-  function createTheatre(id, opts) {
-    const isHome = !!opts.home;
-    const lang = A.lang();
-    const i18n = dict();
-    const host = doc.createElement("section");
-    host.className = "motion-theatre" + (isHome ? " motion-home" : " motion-lesson");
-    host.setAttribute("aria-label", i18n.label);
-    host.dataset.motionLesson = id;
-    const choose = isHome ? '<div class="motion-choose"><p class="motion-chooser-label">' + esc(i18n.choose) +
-      '</p><div class="t-tabs motion-cases" role="tablist" aria-label="' + esc(i18n.choose) +
-      '"><span class="t-tabs-pill" aria-hidden="true"></span>' +
-      homeChoices.map(function (c) {
-        const title = c[lang];
-        return '<button type="button" class="t-tab" role="tab" data-motion-case="' + c.id +
-          '" aria-selected="' + (c.id === id) + '"><span aria-hidden="true">' + c.emoji +
-          '</span><span>' + esc(title) + '</span></button>';
-      }).join("") + '</div><p class="motion-instruction">' + esc(i18n.learn) +
-      '</p><a class="motion-open" href="#lesson-' + id + '">' + esc(i18n.open) + '<span aria-hidden="true"> ↗</span></a></div>' : "";
-    const hdr = isHome ? '<div class="motion-show-head t-stagger is-shown"><div class="motion-eyebrow t-stagger-line t-stagger-line--1"><span class="motion-led"></span>' +
-      esc(i18n.label) + ' <span>· transitions.dev</span></div><h2 class="t-stagger-line t-stagger-line--2">' +
-      esc(i18n.title) + '</h2><p class="t-stagger-line t-stagger-line--3">' + esc(i18n.lead) + '</p></div>' : "";
-    host.innerHTML = hdr + '<div class="motion-studio">' + choose +
-      '<div class="motion-machine" data-stage="0">' +
-        '<div class="motion-topbar"><span class="motion-topdots" aria-hidden="true"><i></i><i></i><i></i></span>' +
-          '<span class="motion-top-name">' + esc(i18n.label) + '</span>' +
-          '<button type="button" class="motion-quiet" data-motion-quiet aria-pressed="' + isQuiet() + '">' +
-          esc(isQuiet() ? i18n.motion : i18n.quiet) + '</button></div>' +
-        '<div class="motion-stages" role="group" aria-label="' + esc(i18n.unit) + '">' +
-           i18n.steps.map(function (name, i) {
-             return '<button type="button" class="motion-node" data-motion-stage="' + i +
-               '" aria-pressed="' + (i === 0) + '" aria-label="' + esc(name) + '" title="' + esc(name) +
-               '"><span class="motion-node-number">' + (i + 1) + '</span><span class="motion-node-label">' +
-                esc(name) + '</span></button>';
-           }).join("") +
-        '</div>' +
-        '<div class="motion-canvas" aria-label="' + esc(i18n.label) + '">' +
-          '<div class="motion-grid" aria-hidden="true"></div>' +
-          '<span class="motion-orbit orbit-a" aria-hidden="true"></span><span class="motion-orbit orbit-b" aria-hidden="true"></span>' +
-          '<div class="motion-canvas-meta"><span class="motion-step-index">' + esc(i18n.progress) +
-            ' <b class="motion-current">01</b> / 05</span>' +
-            '<span class="motion-specimen">' + esc(i18n.kicker) + '</span></div>' +
-          '<div class="t-page-slide motion-pages" data-page="1" aria-live="polite" aria-atomic="true">' +
-            '<div class="t-page" data-page-id="1" aria-hidden="false"><div class="motion-page-body">' +
-              '<div class="motion-symbol" aria-hidden="true">?</div><div class="motion-page-copy"><strong></strong><p></p></div></div></div>' +
-            '<div class="t-page" data-page-id="2" aria-hidden="true"><div class="motion-page-body">' +
-              '<div class="motion-symbol" aria-hidden="true">?</div><div class="motion-page-copy"><strong></strong><p></p></div></div></div>' +
-          '</div>' +
-          '<div class="motion-canvas-foot"><span class="motion-live-dot" aria-hidden="true"></span>' +
-            '<span class="motion-help">' + esc(i18n.lessonHint) + '</span></div>' +
-        '</div>' +
-        '<div class="motion-controls"><div class="motion-progress" aria-hidden="true"><span></span></div>' +
-          '<div class="motion-actions"><button class="motion-action" type="button" data-motion-prev>' +
-             '<span aria-hidden="true">←</span> ' + esc(i18n.prev) + '</button>' +
-            '<button class="motion-action motion-main-action" type="button" data-motion-play aria-pressed="false">' +
-             '<span aria-hidden="true">▶</span> ' + esc(i18n.play) + '</button>' +
-            '<button class="motion-action" type="button" data-motion-next>' +
-             esc(i18n.next) + ' <span aria-hidden="true">→</span></button>' +
-            '<button class="motion-restart" type="button" data-motion-replay title="' +
-              esc(i18n.replay) + '" aria-label="' + esc(i18n.replay) + '">↻</button>' +
-          '</div>' +
-        '</div>' +
-      '</div></div>';
-    // Animate the headline only when the home screen actually appears.
-    // Mounting with .is-shown already set would skip the transition.
-    const heading = host.querySelector(".motion-show-head");
-    if (heading && !isQuiet()) {
-      heading.classList.remove("is-shown");
-      requestAnimationFrame(function () {
-        requestAnimationFrame(function () {
-          if (heading.isConnected) heading.classList.add("is-shown");
-        });
-      });
-    }
-    let activeLesson = id;
-    let stage = 0;
-    let page = 1;
-    let timer = null;
-    const machine = host.querySelector(".motion-machine");
-    const pages = host.querySelector(".motion-pages");
-    const stageButtons = Array.from(host.querySelectorAll("[data-motion-stage]"));
-    const playButton = host.querySelector("[data-motion-play]");
-    const quietButton = host.querySelector("[data-motion-quiet]");
-    const next = host.querySelector("[data-motion-next]");
-    const prev = host.querySelector("[data-motion-prev]");
-    const number = host.querySelector(".motion-current");
-    const trail = host.querySelector(".motion-progress span");
-    const lessonLink = host.querySelector(".motion-open");
-    function stop() {
-      if (timer) { clearInterval(timer); timer = null; }
-      playButton.setAttribute("aria-pressed", "false");
-      playButton.innerHTML = '<span aria-hidden="true">▶</span> ' + esc(i18n.play);
-    }
-    function paintPane(target, index) {
-      const arr = story(activeLesson);
-      const text = (arr && arr[index]) || "";
-      target.querySelector(".motion-symbol").textContent = stageIcons[index];
-      target.querySelector("strong").textContent = i18n.steps[index];
-      target.querySelector("p").textContent = text;
-    }
-    function show(index, immediate) {
-      index = Math.max(0, Math.min(4, index));
-      const changed = stage !== index;
-      stage = index;
-      machine.dataset.stage = String(stage);
-      stageButtons.forEach(function (btn, i) { btn.setAttribute("aria-pressed", String(stage === i)); });
-      trail.style.width = ((stage + 1) * 20) + "%";
-      prev.disabled = stage === 0;
-      next.disabled = stage === 4;
-      number.textContent = String(stage + 1).padStart(2, "0");
-      if (changed && !isQuiet()) {
-        number.classList.remove("motion-count-pop");
-        void number.offsetWidth;
-        number.classList.add("motion-count-pop");
-      }
-      if (immediate || !changed || isQuiet()) {
-        const target = pages.querySelector('.t-page[data-page-id="' + page + '"]');
-        paintPane(target, stage);
-        pages.dataset.page = String(page);
-      } else {
-        page = page === 1 ? 2 : 1;
-        const target = pages.querySelector('.t-page[data-page-id="' + page + '"]');
-        const previous = pages.querySelector('.t-page[data-page-id="' + (page === 1 ? 2 : 1) + '"]');
-        paintPane(target, stage);
-        previous.setAttribute("aria-hidden", "true");
-        target.setAttribute("aria-hidden", "false");
-        pages.dataset.page = String(page);
-      }
-      // The section stays readable without animation, including OS reduced-motion.
-      pages.querySelectorAll(".t-page").forEach(function (panel) {
-        panel.setAttribute("aria-hidden", String(panel.dataset.pageId !== pages.dataset.page));
-      });
-      host.querySelector(".motion-help").textContent = stage === 4 ? i18n.final : i18n.lessonHint;
-    }
-    function play() {
-      if (isQuiet()) { show(stage < 4 ? stage + 1 : 0, true); return; }
-      if (timer) { stop(); return; }
-      if (stage === 4) show(0, false);
-      playButton.setAttribute("aria-pressed", "true");
-      playButton.innerHTML = '<span aria-hidden="true">Ⅱ</span> ' + esc(i18n.pause);
-      timer = setInterval(function () {
-        if (!host.isConnected) { stop(); return; }
-        if (stage >= 4) { stop(); return; }
-        show(stage + 1, false);
-        if (stage >= 4) stop();
-      }, 2100);
-    }
-    function move(index) { stop(); show(index, false); }
-    next.addEventListener("click", function () { move(stage + 1); });
-    prev.addEventListener("click", function () { move(stage - 1); });
-    playButton.addEventListener("click", play);
-    host.querySelector("[data-motion-replay]").addEventListener("click", function () { move(0); });
-    stageButtons.forEach(function (btn, i) {
-      btn.addEventListener("click", function () { move(i); });
-      btn.addEventListener("keydown", function (e) {
-        const delta = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
-        if (!delta) return;
-        e.preventDefault();
-        const at = (i + (A.lang() === "ar" ? -delta : delta) + 5) % 5;
-        stageButtons[at].focus();
-        move(at);
-      });
-    });
-    quietButton.addEventListener("click", function () {
-      stop();
-      setMotion(!motionOff);
-      quietButton.setAttribute("aria-pressed", String(isQuiet()));
-      quietButton.textContent = isQuiet() ? i18n.motion : i18n.quiet;
-      show(stage, true);
-    });
-    if (isHome) {
-      const tabs = host.querySelector(".motion-cases");
-      Array.from(tabs.querySelectorAll("[data-motion-case]")).forEach(function (btn) {
-        btn.addEventListener("click", function () {
-          stop();
-          activeLesson = btn.dataset.motionCase;
-          host.dataset.motionLesson = activeLesson;
-          Array.from(tabs.querySelectorAll("[data-motion-case]")).forEach(function (tab) {
-            tab.setAttribute("aria-selected", String(tab === btn));
-          });
-          lessonLink.href = "#lesson-" + activeLesson;
-          stage = -1;
-          show(0, false);
-          slidePill(tabs, false);
-        });
-      });
-      requestAnimationFrame(function () { slidePill(tabs, true); });
-      const onResize = function () { slidePill(tabs, true); };
-      addEventListener("resize", onResize, { passive: true });
-      A.onLeave(function () { removeEventListener("resize", onResize); stop(); });
-    } else {
-      A.onLeave(stop);
-    }
-    // Keep content and controls available to screen readers; motion is optional.
-    paintPane(pages.querySelector('.t-page[data-page-id="1"]'), 0);
-    show(0, true);
-    return host;
-  }
-
-  function addHome() {
-    const home = doc.querySelector("#main .home");
-    if (!home) return;
-    const anchor = home.querySelector(".showcase");
-    const theatre = createTheatre("p1", { home: true });
-    if (anchor) home.insertBefore(theatre, anchor);
-    else home.append(theatre);
-  }
+  // The home page's «مختبر الفكرة المتحركة» theatre was removed (owner request, 2026-10-17): the home page goes
+  // straight from the hero to the showcase. Lessons keep the sliding level tabs and the completion check.
   function decorateLessonTabs(instant) {
     const tabs = doc.querySelector("#lv .tabs");
     if (!tabs) return;
@@ -11194,7 +10824,6 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     if (main && main.firstElementChild && !isQuiet()) {
       main.firstElementChild.classList.add("motion-route-enter");
     }
-    if (route.name === "home") addHome();
     if (route.name === "lesson" && A.lang() === "ar") addLesson();
     if (route.name === "lesson" && pendingSuccess === route.arg) {
       pendingSuccess = null;
