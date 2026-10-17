@@ -59,7 +59,7 @@ Every view registers cleanup with `A.onLeave(fn)`; leaving a page runs it (stops
 
 ## State and storage
 
-All learner state lives in one `localStorage` key, `aiAcademy.v1`: language, theme, level, done/visited lessons, quiz
+Almost all learner state lives in one `localStorage` key, `aiAcademy.v1`: language, theme, level, done/visited lessons, quiz
 answers and scores, notes, bookmarks, saved prompts, project answers, reading settings (`view`), presenter settings and
 resume points, and `plan` (the course-plan version).
 
@@ -68,6 +68,9 @@ resume points, and `plan` (the course-plan version).
 - `plan: 2` marks the eight-unit plan. A save from the earlier plan has its per-unit best scores for `u1`–`u5` cleared
   once, because those unit ids now hold different questions.
 - Import/export writes and reads the same object as a JSON file.
+- **One setting lives elsewhere:** the site's reduce-motion switch (`engine/motion.js`) is stored under its own key,
+  `academy.motion` (`"off"` or `"on"`). It is not part of import/export or `S.reset()`. The operating-system
+  reduced-motion preference is honoured either way.
 
 ## Story decks
 

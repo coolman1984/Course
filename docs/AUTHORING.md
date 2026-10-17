@@ -6,7 +6,14 @@
 ## Add a lesson
 1. Pick a new id (letter + number, never reused) and add the lesson object to a `data/lessons-*.js` file. Fill in:
    `id, unit, pages, diff, min, related, pre, title, sum, book[], levels{simple, mech, practice, adv}`.
-   Add `scene`/`lab` if it has one. Every text is `u(ar, en)` and says the same thing in both languages.
+   Add `scene`/`lab` if it has one. Lesson files define only two helpers, so write texts in these forms:
+   - `title` and `sum`: plain `{ ar: "…", en: "…" }` objects
+   - book points: `bp(page, ar, en)`
+   - level entries: `L(kind, ar, en)`, where `kind` is one of `what, why, how, inside, example, apply, mistakes,
+     whennot, link`
+
+   `u(ar, en)` exists only in the files that define it (`ui.js`, `meta.js`, prompts and others). Arabic and English
+   must say the same thing.
 2. Place it in `data/course-order.js` (unit and position). Its `unit` field must match.
 3. Add its plain-language entry (9 strings) in `plain-talk-a.js` or `plain-talk-b.js`, and its 7-string intro in
    `stories.js`.
