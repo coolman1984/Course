@@ -98,3 +98,20 @@ Unit 1 in teaching order:
 
 Unit 2 opens with lesson b1 «من ملفات كتير لجدول واحد تثق فيه» and its story, under the question «إزاي ٣٧ ملف يبقوا
 جدول واحد أقدر أثق فيه؟». Units 3–8 hold the earlier lessons in their new places, and each gets its own opening story next.
+
+## Unit 2: Excel automation in detail
+Unit 2 now unfolds lesson f8 into six lessons, each with its own 12-slide story, all built on one sample data kit
+(`data/xl-sample.js`): an invented distributor with six branches, 13 weekly sales files, master sheets, targets and ten
+planted problems. The kit downloads from the lab as real Excel files.
+
+| # | Lesson | Deck question |
+|---|---|---|
+| 1 | x1 The sample data kit | «أجرّب الأداة فين قبل ما ألمس ملفات الشركة؟» |
+| 2 | x2 From the chat to your laptop (ChatGPT, Gemini Enterprise) | «الكود في الشات… يبقى أداة على جهازي إزاي؟» |
+| 3 | x3 Tool one: 13 files into one table | «إزاي ١٣ ملف يبقوا جدول واحد من غير ولا صف ضايع؟» |
+| 4 | x4 Tool two: every code finds its name | «إزاي كل كود يلاقي اسمه، واللي ما لقاش يبان؟» |
+| 5 | x5 Tool three: sales against targets | «إزاي التقرير يطلع مظبوط ومراجَع من غير ما ألمسه؟» |
+| 6 | x6 When the tool stops | «لما الأداة توقف أو تغلط… أعمل إيه؟» |
+
+The former unit 2 (b1, y4, p9, w1, m1) opens unit 3, ahead of the Office lessons. f8's closing slide now leads into unit 2,
+and x6's into b1 («فاكر ملف الربع…»). Course plan 3 clears the old unit 2 and 3 quiz scores once.

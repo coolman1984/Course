@@ -27,7 +27,7 @@
 
   /* ---------- state (localStorage with safe fallback) ---------- */
   const KEY = "aiAcademy.v1";
-  const blank = () => ({ lang: "ar", theme: "auto", level: "simple", done: {}, visited: {}, last: null, quiz: {}, notes: {}, bookmarks: [], saved: [], project: {}, scroll: {}, view: {}, plan: 2 });
+  const blank = () => ({ lang: "ar", theme: "auto", level: "simple", done: {}, visited: {}, last: null, quiz: {}, notes: {}, bookmarks: [], saved: [], project: {}, scroll: {}, view: {}, plan: 3 });
   let memory = blank();
   let storageOk = true;
   let seen = null;   // the stored text as this tab last read or wrote it
@@ -40,6 +40,9 @@
         memory = Object.assign(blank(), saved);
         // course plan 2 (eight units) gave units u1–u5 new meanings: their old best scores belong to other questions
         if ((saved.plan || 1) < 2 && memory.scores) { for (const k of ["u1", "u2", "u3", "u4", "u5"]) delete memory.scores[k]; persist(); }
+        // course plan 3 made unit 2 the Excel automation unit and moved its lessons into unit 3: both old scores belong to other questions
+        else if ((saved.plan || 1) < 3 && memory.scores) { for (const k of ["u1", "u2"]) delete memory.scores[k]; persist(); }
+        memory.plan = 3;
       }
     } catch (e) { storageOk = false; }
   }

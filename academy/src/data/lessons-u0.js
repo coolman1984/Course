@@ -229,7 +229,7 @@
       },
     },
     {
-      id: "f8", unit: "u0", pages: [13, 17], diff: 1, min: 10, related: ["f3", "f5", "y1"], pre: ["f3"],
+      id: "f8", unit: "u0", pages: [13, 17], diff: 1, min: 10, related: ["f3", "f5", "x1"], pre: ["f3"],
       title: { ar: "أول أتمتة في حياتك", en: "Your first automation" },
       sum: { ar: "خمس طرق لأتمتة إكسل من الأبسط للأقوى، ووصفة Prompt بيبني أداة آمنة، وتلات أدوات عملية لشغلك المتكرر: ملفات تحت بعض، وبحث وربط بين الجداول، وتقرير من ملفين.", en: "Five ways to automate Excel from simplest to strongest, the recipe for a Prompt that builds a safe tool, and three practical tools for your repeated work: stacking files, lookups across tables, and a report from two workbooks." },
       book: [
@@ -245,7 +245,7 @@
         mech: [
           L("how", "- **Power Query**: جوّه إكسل، بيسجّل خطوات الجلب والتحويل (فولدر ملفات، تحت بعض، ربط جداول) وتعيدها بزرار «تحديث».\n- **الماكرو**: كود VBA جوّه الملف، بيعمل أي حاجة إنت بتعملها، بس ما بيتلغيش بـ «تراجع».\n- **برنامج من برّه (COM)**: سكريبت PowerShell بيفتح إكسل في الخلفية ويشتغل على الملفات ويقفله، من غير ما تنزّل حاجة.", "- **Power Query**: inside Excel; records import and transform steps (a folder of files, stacking, joining tables) and reruns them with “Refresh”.\n- **Macros**: VBA code inside the workbook; does anything you do, but can’t be undone with “Undo”.\n- **An outside program (COM)**: a PowerShell script opens Excel in the background, works on the files and closes it, with nothing to install."),
           L("inside", "إكسل بيقبل أوامر من برامج تانية على نفس الجهاز، ودي فكرة COM. السكريبت بيقول لإكسل: افتح الملف ده للقراءة بس، وهات القيم دي، واكتب النتيجة في ملف جديد، واقفل. ولازم في الآخر يقفل إكسل ويحرره من الذاكرة حتى لو حصل خطأ، وإلا هتلاقي نسخ إكسل شغالة في الخلفية.", "Excel accepts commands from other programs on the same computer — that is COM. The script tells Excel: open this file read-only, fetch these values, write the result to a new file, close. And at the end it must close Excel and release it from memory even after an error, otherwise you’ll find copies of Excel running in the background."),
-          L("link", "ده تطبيق مباشر لسلسلة [[f3]] على ملفاتك، وبقواعد الأمان من [[f5]]. والوحدة الجاية بتكمّل من هنا: ملفات كتير وبيانات أكبر من إكسل، ونبدأ بفحص جودتها ([[y4]]).", "This applies the [[f3]] chain directly to your files, with the safety rules from [[f5]]. The next unit continues from here: many files and data bigger than Excel, starting with checking their quality ([[y4]])."),
+          L("link", "ده تطبيق مباشر لسلسلة [[f3]] على ملفاتك، وبقواعد الأمان من [[f5]]. والوحدة الجاية بتبني التلات أدوات خطوة بخطوة على بيانات تجريبية جاهزة، بـ ChatGPT أو Gemini Enterprise، وتبدأ من [[x1]].", "This applies the [[f3]] chain directly to your files, with the safety rules from [[f5]]. The next unit builds the three tools step by step on a ready sample data kit, with ChatGPT or Gemini Enterprise, starting from [[x1]]."),
         ],
         practice: [
           L("example", "**تحت بعض**: ٥٢ ملف أسبوعي بنفس الأعمدة في جدول واحد، مع عمود «من أنهي ملف» وجدول محوري.\n**بحث وربط**: جدول خام كبير فيه أكواد بس، بياخد اسم الصنف وفئته واسم الفرع ومنطقته من شيتات صغيرة، مع شيت للأكواد اللي ما اتربطتش.\n**تقرير من ملفين**: المبيعات من ملف والأهداف من ملف، وتقرير بنسبة التحقيق لكل فرع، مع مراجعة إن الإجمالي مطابق للمصدر.", "**Stacking**: 52 weekly files with the same columns into one table, with a “source file” column and a pivot table.\n**Lookups**: a big raw table holding only codes takes product name and category, branch name and region from small sheets, plus a sheet of codes that didn’t match.\n**Two-file report**: sales from one workbook and targets from another, a report of achievement per branch, with a check that the total matches the source."),
@@ -253,7 +253,7 @@
         ],
         adv: [
           L("mistakes", "- تشغّل الأداة على الملف الأصلي بدل نسخة.\n- تثق في أول تشغيل من غير ما تقارن عدد الصفوف والإجماليات.\n- تتجاهل شيت «ما اتربطش» أو رسالة التوقف، وتعتمد على النتيجة.\n- تسيب إكسل مفتوح والأداة شغالة، أو تقفلها في النص.", "- Running the tool on the original file instead of a copy.\n- Trusting the first run without comparing row counts and totals.\n- Ignoring the “unmatched” sheet or a stop message and relying on the result.\n- Leaving Excel open while the tool runs, or closing it midway."),
-          L("whennot", "مش كل حاجة تستاهل أداة: مهمة بتتعمل مرة في السنة، أو قواعدها بتتغيّر كل مرة، الأحسن تفضل بالإيد أو بمعادلة. ولما الملفات تبقى مئات الآلاف من الصفوف، إكسل نفسه بيبقى الحد، وده موضوع المحاضرة الجاية.", "Not everything deserves a tool: a job done once a year, or whose rules change every time, is better left to hand or a formula. And when files reach hundreds of thousands of rows, Excel itself becomes the limit — the subject of the next lecture."),
+          L("whennot", "مش كل حاجة تستاهل أداة: مهمة بتتعمل مرة في السنة، أو قواعدها بتتغيّر كل مرة، الأحسن تفضل بالإيد أو بمعادلة. ولما الملفات تبقى مئات الآلاف من الصفوف، إكسل نفسه بيبقى الحد، وده موضوع الوحدة التالتة.", "Not everything deserves a tool: a job done once a year, or whose rules change every time, is better left to hand or a formula. And when files reach hundreds of thousands of rows, Excel itself becomes the limit — the subject of unit 3."),
         ],
       },
     },

@@ -17,7 +17,9 @@ WHO YOU ARE TALKING TO
   «مساحة العمل» (the workspace).
 
 HOW THE COURSE IS ORGANISED (eight units, shown as 1–8; ids u0–u7; the book is a reference, not the order)
- 1 Foundations   2 Big data (b1 opens it: many files, quality, the editor, model levels)   3 Office (Word, email, decks; Claude Code)
+ 1 Foundations   2 Excel automation in detail (x1–x6: a sample data kit, ChatGPT vs Gemini Enterprise, the three
+ tools of f8 step by step, fixing a tool that stops)   3 Big data and Office (b1 opens it: many files, quality, the editor,
+ model levels; Word, email, decks; Claude Code)
  4 PDF files (cloud or local, free tools)   5 Dashboards (Codex, companies and models)   6 Small tools (shared
  features, saving versions, studying with AI)   7 Your assistant at work (prompts, decisions, pitch, career)
  8 The big picture (systems and digital teams, in general terms) and the graduation project.
@@ -34,11 +36,18 @@ WHERE THINGS ARE INSIDE THIS FILE (search for these names)
 - Lessons: `A.lessons = ` (fields: id, unit, title, sum, book points with page numbers, levels simple/mech/practice/adv).
 - Plain-language Arabic layer: `A.plainTalk`. Intro stories: `A.lessonStories`.
 - Story decks: `A.aiHistory`, `A.modelStory`, `A.contextStory`, `A.windowStory`, `A.agentsStory`, `A.workStory`,
-  `A.limitsStory`, `A.autoStory`, and `A.bigStory` (unit 2's opening story, lesson b1) — each has slides with title, story, answer (the rule) and idea (one line).
+  `A.limitsStory`, `A.autoStory`; unit 2 decks `A.kitStory` (x1), `A.deliverStory` (x2), `A.stackStory` (x3),
+  `A.lookupStory` (x4), `A.reportStory` (x5), `A.runStory` (x6); and `A.bigStory` (unit 3's opening story, lesson b1) —
+  each has slides with title, story, answer (the rule) and idea (one line).
 - Prompt library: `A.prompts = ` (ready prompts with [variables]); quiz: `A.quiz = `; glossary: `A.glossary = `.
 - Lesson 8 automation prompts: ids f8a (stack many files + pivot), f8b (enrich a raw table from small master sheets,
   with an "unmatched" sheet), f8c (report from two workbooks with a totals check). They target a work laptop where
   nothing can be installed: Excel, and PowerShell driving Excel through COM.
+- Unit 2 builds them on a sample data kit, `A.xlSample` (an invented distributor: 6 branches, 13 weekly sales files
+  Week_01…Week_13 with a Sales sheet, Masters.xlsx with Branches/Products, Targets_2026_Q1.xlsx; ten planted problems;
+  `A.xlSample.expected` holds the right answers: 1,302 true rows, EGP 28,428,150). Ready prompts x1a…x6b fill in the
+  kit's real names. ChatGPT can hand over files to download (links expire); Gemini Enterprise usually writes code in
+  the reply: one code box per file, an "# END OF FILE" marker, Notepad "All files", encoding UTF-8 with BOM.
 
 HOW TO HELP A TRAINEE WITH THIS FILE
 - To explain a lesson: find it in `A.lessons` and its deck; explain the deck's question, then each rule with its reason,

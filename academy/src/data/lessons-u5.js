@@ -78,7 +78,7 @@
         } },
     },
     {
-      id: "m1", unit: "u1", pages: [34], diff: 2, min: 9, scene: "moe", lab: "tokens", related: ["f1", "m2", "m3"], pre: ["f1"],
+      id: "m1", unit: "u2", pages: [34], diff: 2, min: 9, scene: "moe", lab: "tokens", related: ["f1", "m2", "m3"], pre: ["f1"],
       title: { ar: "النماذج: الأوزان والأحجام ومعنى «الذكاء»", en: "Models: weights, sizes and what “smart” means" },
       sum: { ar: "أربعة مفاهيم بيفكّوا كل الفروق (المعاملات، نافذة الـ Context، الخبراء المتفرقون، التوكنات)، وليه الأكبر مش الأفضل دايمًا، وطبقات النماذج وقاعدة الاختيار.", en: "Four concepts that explain every difference (parameters, context window, mixture of experts, tokens), why bigger isn’t always best, model tiers and the selection rule." },
       book: [

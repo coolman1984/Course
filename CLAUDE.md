@@ -15,8 +15,10 @@ programming background. The deliverable is **`AI_Academy.html`**: the whole cour
 AI_Academy.html            generated — never hand-edit; rebuild instead
 academy/build.mjs          bundles everything into AI_Academy.html (DATA and ENGINE lists name every source file)
 academy/src/ai-guide.txt   short guide for an AI reading the HTML; injected at the very top of <head>
-academy/src/data/*.js      all content (course-order plan, lessons, decks, prompts, quiz, glossary, plain-language layer, stories, ui)
-academy/src/engine/*.js    behaviour (core router/search, render, decks in history.js, labs, motion, quiz, tools)
+academy/src/data/*.js      all content (course-order plan, lessons, decks, prompts, quiz, glossary, plain-language layer, stories, ui,
+                           xl-sample.js: the unit-2 sample data kit)
+academy/src/engine/*.js    behaviour (core router/search, render, decks in history.js, labs, motion, quiz, tools,
+                           xlkit.js: writes the kit as real .xlsx files in one .zip, offline)
 academy/src/*.css          styles (styles.css, motion.css, history.css for decks)
 academy/src/fonts/         inlined fonts (SIL OFL): Inter («UI Latin»), IBM Plex Sans Arabic («UI Sans»),
                            an Inter symbol subset («UI Symbols»), JetBrains Mono («UI Mono»),
@@ -50,10 +52,14 @@ Commit the rebuilt `AI_Academy.html` together with source changes. CI runs the s
   `meta.js` coverage. Rich text: `**bold**`, `[[lessonId]]`, `((glossaryId|label))`.
 - Unit 0 order today: `f1 f2 f4 f6 f7 f3 f5 f8` (history → inside the model → Prompt & Context → Context limits →
   chat/memory/agents → AI at work → limits → first automation). A data test pins this order; update it deliberately.
+- Unit 1 (shown as 2) is f8 in detail: `x1 x2 x3 x4 x5 x6` (sample kit → ChatGPT/Gemini delivery → stack → lookups →
+  report → when a tool stops). Also pinned by a data test. Big data (`b1` …) opens unit 2 (shown as 3).
+- The sample kit (`A.xlSample`) is generated from a seed; `expected` holds every figure the lessons quote, and a data
+  test recomputes them from the files. Change the generator only together with `expected` and the texts that quote it.
 
 ## Story decks
 
-Each unit-0 lesson, and the first lesson of each later unit (unit 2: `b1`), opens with a 12-slide deck: `academy/src/data/<name>-story.js` registers `A.<name>Story` in `A.decks`
+Each unit-0 and unit-1 lesson, and the first lesson of each later unit (unit 3: `b1`), opens with a 12-slide deck: `academy/src/data/<name>-story.js` registers `A.<name>Story` in `A.decks`
 with `lesson: "<id>"`; the player is `A.mountDeck` in `engine/history.js` (one player for all decks).
 
 Writing rules:

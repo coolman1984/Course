@@ -1,9 +1,9 @@
-/* Big data — the story deck that opens unit 2 (lesson b1).
-   The same sales supervisor as in unit 1, right after the quarter's file froze Excel, carries every slide with one
+/* Big data — the story deck that opens unit 3 (lesson b1).
+   The same sales supervisor as in units 1 and 2, right after the quarter's file froze Excel, carries every slide with one
    question: «إزاي ٣٧ ملف يبقوا جدول واحد أقدر أثق فيه؟». The deck goes from many differently shaped files to one clean,
    checked table: agree on one shape, stack with a source column, check before analysing, clean by written rules, link to
    master sheets with an "unmatched" sheet, take the heavy work outside Excel, organise a project folder, work from the
-   editor, choose the model's level for the task, reconcile the totals — and ends on the question that opens unit 3.
+   editor, choose the model's level for the task, reconcile the totals — and ends on the question that the unit's Office lessons answer.
    Each slide gives one rule with its reason. Figures are illustrative. Drawings are the b_* entries in engine/history.js. */
 "use strict";
 (function (A) {
@@ -12,8 +12,8 @@
     id: "big", lesson: "b1",
     kicker: u("البيانات الكبيرة · الحكاية كاملة في ٨ دقايق", "Big data · the whole story in 8 minutes"),
     title: u("من ملفات كتير لجدول واحد تثق فيه", "From many files to one table you can trust"),
-    lead: u("فاكر ملف الربع اللي وقّف إكسل في آخر الوحدة الأولى؟ الحكاية دي بتكمّل من عنده. هنمشي مع نفس مشرف المبيعات وهو بيحوّل ملفات كتير، كل واحد شكله مختلف، لجدول واحد نضيف ومراجَع، ونتعرّف في السكة على فولدر المشروع والمحرر ومستويات ذكاء النماذج.",
-      "Remember the quarter's file that froze Excel at the end of unit 1? This story picks up from there. We follow the same sales supervisor as he turns many files, each shaped differently, into one clean, checked table, and along the way we meet the project folder, the editor and the levels of model intelligence."),
+    lead: u("فاكر ملف الربع اللي وقّف إكسل في آخر الوحدة التانية؟ الحكاية دي بتكمّل من عنده. هنمشي مع نفس مشرف المبيعات وهو بيحوّل ملفات كتير، كل واحد شكله مختلف، لجدول واحد نضيف ومراجَع، ونتعرّف في السكة على فولدر المشروع والمحرر ومستويات ذكاء النماذج.",
+      "Remember the quarter's file that froze Excel at the end of unit 2? This story picks up from there. We follow the same sales supervisor as he turns many files, each shaped differently, into one clean, checked table, and along the way we meet the project folder, the editor and the levels of model intelligence."),
     answerLabel: u("القاعدة، وليه؟", "The rule, and why"),
     ideaLabel: u("الفكرة في جملة", "The idea in one line"),
     question: u("إزاي ٣٧ ملف يبقوا جدول واحد أقدر أثق فيه؟", "How do 37 files become one table I can trust?"),
@@ -139,13 +139,13 @@
         idea: u("الرقم اللي تقدر تثبته… هو الرقم اللي تقدر تثق فيه.", "A number you can prove… is a number you can trust.")
       },
       {
-        id: "cliff", art: "b_cliff", year: u("الوحدة الجاية", "Next unit"), mark: u("١٢", "12"), era: u("الأرقام جاهزة", "The numbers are ready"),
+        id: "cliff", art: "b_cliff", year: u("الخطوة الجاية", "Next step"), mark: u("١٢", "12"), era: u("الأرقام جاهزة", "The numbers are ready"),
         title: u("الأرقام جاهزة… والمدير طلب تقرير لكل فرع", "The numbers are ready… and the manager wants a report for each branch"),
         story: [u("الجدول بقى بيتحدّث كل شهر في دقايق، والمدير مبسوط. بس طلب حاجة جديدة: «عايز لكل فرع تقرير في وورد، فيه أرقامه وتعليق عليها، ويتبعت لمديره في إيميل». يعني ٣ تقارير كل شهر، ولو الفروع زادت هيبقوا أكتر.",
           "The table now refreshes every month in minutes, and the manager is pleased. But he asked for something new: “I want a Word report for each branch, with its figures and a comment on them, e-mailed to its manager.” That's three reports a month, and more if branches are added."),
-        u("المشرف بص للجدول وفكّر: الأرقام كلها هنا، مراجَعة ومظبوطة. هيرجع ينسخ ويلصق في وورد تاني؟ والسؤال اللي هنبدأ بيه الوحدة الجاية: الأرقام جاهزة… طب التقرير يتكتب ويتبعت لكل فرع لوحده إزاي؟",
-          "The supervisor looked at the table and thought: all the numbers are here, checked and correct. Will he go back to copying and pasting into Word? And the question we'll open the next unit with: the numbers are ready… so how does each branch get its own written report?")],
-        answer: u("واجب الأسبوع: هات تلات ملفات حقيقية من شغلك، وجمّعهم في جدول واحد فيه عمود «المصدر»، واطلب تقرير جودة قبل أي تحليل. لأن الملفات دي هتبقى البيانات اللي هنطلّع منها التقارير في الوحدة الجاية.", "This week's assignment: take three real files from your work, combine them into one table with a “Source” column, and ask for a quality report before any analysis — those files will be the data we build reports from in the next unit."),
+        u("المشرف بص للجدول وفكّر: الأرقام كلها هنا، مراجَعة ومظبوطة. هيرجع ينسخ ويلصق في وورد تاني؟ والسؤال اللي هنكمّل بيه الوحدة دي: الأرقام جاهزة… طب التقرير يتكتب ويتبعت لكل فرع لوحده إزاي؟",
+          "The supervisor looked at the table and thought: all the numbers are here, checked and correct. Will he go back to copying and pasting into Word? And the question the rest of this unit answers: the numbers are ready… so how does each branch get its own written report?")],
+        answer: u("واجب الأسبوع: هات تلات ملفات حقيقية من شغلك، وجمّعهم في جدول واحد فيه عمود «المصدر»، واطلب تقرير جودة قبل أي تحليل. لأن الملفات دي هتبقى البيانات اللي هنطلّع منها التقارير في دروس الوحدة دي الجاية.", "This week's assignment: take three real files from your work, combine them into one table with a “Source” column, and ask for a quality report before any analysis — those files will be the data we build reports from later in this unit."),
         idea: u("البيانات النضيفة هي أول خطوة لأي تقرير بيطلع لوحده.", "Clean data is the first step of any report that builds itself.")
       }
     ]

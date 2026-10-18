@@ -739,6 +739,65 @@
     drawIn(); drawOut();
   };
 
+  /* ===== 14. The unit-2 sample data kit: look inside every file, find the planted problems, download it ===== */
+  LABS.xlkit = (host, lab) => {
+    const f = frame(host, lab), S = A.xlSample, lang = A.lang(), files = S.build(lang), E = S.expected;
+    const short = (p) => p.replace(/^.*\//, "").replace(".xlsx", "");
+    let cur = -1, sheet = 0;
+    const day = (d) => new Date(Date.UTC(1899, 11, 30) + d * 864e5).toISOString().slice(0, 10);
+    const cell = (v) => (v && typeof v === "object" ? day(v.d) : v === null || v === undefined ? "" : typeof v === "number" ? fmt(v) : String(v));
+    const odd = (r, ri, ci, head) => {   // the cells a trap lives in
+      const name = short(files[cur].path), v = r[ci];
+      if (ri === 0) return (name === "Week_07" && ci === 5) || (name === "Week_11" && ci === 4);
+      if (typeof v === "string" && /^\d\d\/\d\d\/2026$/.test(v)) return true;
+      if (v === "BR04 " || v === "br03" || v === "P113" || (typeof v === "number" && ci === 4 && v < 0 && head.length === 6)) return true;
+      if (r[1] === null && r[2]) return true;
+      return false;
+    };
+    function focus(rows) {   // which rows to show: the header, then where the file's problem is
+      const name = short(files[cur].path), n = rows.length, pick = (pred) => rows.map((r, i) => (i && pred(r) ? i : -1)).filter((i) => i > 0);
+      let at = [1, 2, 3, 4, 5];
+      if (name === "Week_02") at = [1, 2, n - 3, n - 2, n - 1];
+      if (name === "Week_04") at = [9, 10, 11, 31, 32];
+      if (name === "Week_05") at = [1, 2, ...pick((r) => r[2] === "BR04 ").slice(0, 3)];
+      if (name === "Week_06") at = [1, 2, ...pick((r) => r[2] === "br03").slice(0, 3)];
+      if (/Week_1[0-3]/.test(name)) at = [1, 2, ...pick((r) => r[3] === "P113").slice(0, 3)];
+      if (name === "Masters") at = rows.map((_, i) => i).slice(1);
+      if (name === "Targets_2026_Q1") at = [1, 2, 3, n - 3, n - 2, n - 1];
+      return [...new Set(at.filter((i) => i > 0 && i < n))].sort((a, b) => a - b);
+    }
+    function drawIn() {
+      f.inp.innerHTML = step(1, tx("بص جوّه أي ملف", "Look inside any file")) + `<div class="row" style="flex-wrap:wrap;gap:6px">${files.map((x, i) => `<button type="button" class="chip${i === cur ? " on" : ""}" data-f="${i}" aria-pressed="${i === cur}">${esc(short(x.path))}</button>`).join("")}</div>` +
+        step(2, tx("نزّل الحقيبة كاملة", "Download the whole kit")) + `<p class="small muted">${esc(tx(`${files.length} ملف إكسل، ودليل للبيانات، ومفتاح إجابة، في ملف مضغوط واحد. فكّه في فولدر لوحده، واشتغل على نسخة منه.`, `${files.length} Excel files, a data dictionary and an answer key, in one zip file. Unzip it into a folder of its own and work on a copy.`))}</p>
+        <button type="button" class="btn pri" id="xk-dl">${ico("download")}${esc(tx("نزّل Excel_Automation_Kit.zip", "Download Excel_Automation_Kit.zip"))}</button>
+        <details class="sp"><summary>${esc(tx("دليل البيانات (README) — ده اللي تديه للنموذج", "The data dictionary (README) — this is what you give the model"))}</summary><pre class="ptext ltr small" style="white-space:pre-wrap" dir="auto">${esc(S.readme(lang))}</pre></details>
+        <details><summary>${esc(tx("مفتاح الإجابة — بعد التشغيل بس", "The answer key — only after the run"))}</summary><pre class="ptext small" style="white-space:pre-wrap" dir="auto">${esc(S.answerKey(lang))}</pre></details>`;
+      f.inp.querySelectorAll("[data-f]").forEach((b) => (b.onclick = () => { cur = Number(b.dataset.f); sheet = 0; drawIn(); drawOut(); }));
+      f.inp.querySelector("#xk-dl").onclick = () => {
+        const url = URL.createObjectURL(new Blob([A.xlKit.kit(lang)], { type: "application/zip" }));
+        const a = h("a", { href: url, download: "Excel_Automation_Kit.zip" }); document.body.append(a); a.click(); a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 4000);
+      };
+    }
+    function drawOut() {
+      if (cur < 0) {
+        f.out.innerHTML = `<div class="statgrid"><div class="stat"><small>${esc(tx("ملفات الأسابيع", "Weekly files"))}</small><b class="num">${E.files}</b></div><div class="stat"><small>${esc(tx("صفوف المبيعات الحقيقية", "True sales rows"))}</small><b class="num">${fmt(E.rowsClean)}</b></div><div class="stat"><small>${esc(tx("فخاخ متعمّدة", "Planted problems"))}</small><b class="num">${S.traps.length}</b></div></div>` +
+          step(3, tx("الفخاخ اللي مستخبية في الملفات", "The problems hidden in the files")) + `<div class="checks">${S.traps.map((x) => ck(false, `<b>${esc(L(x.t))}</b> · <span class="ltr">${esc(x.file)}</span><br><span class="small muted">${esc(L(x.d))}</span>`, true)).join("")}</div>`;
+        return;
+      }
+      const file = files[cur], sh = file.sheets[sheet], rows = sh.rows, head = rows[0], at = focus(rows), trap = S.traps.filter((x) => x.file.includes(short(file.path)) || (x.id === 7 && /Week_1[0-3]/.test(file.path)));
+      let last = 0;
+      const tr = (r, ri) => `<tr><th class="num">${ri + 1}</th>${head.map((_, ci) => `<td class="${odd(r, ri, ci, head) ? "err" : ""}">${esc(cell(r[ci]))}</td>`).join("")}</tr>`;
+      const body = at.map((ri) => { const gap = ri > last + 1 ? `<tr><td colspan="${head.length + 1}" class="muted small">…</td></tr>` : ""; last = ri; return gap + tr(rows[ri], ri); }).join("") + (last < rows.length - 1 ? `<tr><td colspan="${head.length + 1}" class="muted small">…</td></tr>` : "");
+      f.out.innerHTML = step(3, `${short(file.path)} · ${sh.name}`) + (file.sheets.length > 1 ? `<div class="row" style="gap:6px">${file.sheets.map((s, i) => `<button type="button" class="chip${i === sheet ? " on" : ""}" data-s="${i}">${esc(s.name)}</button>`).join("")}</div>` : "") +
+        `<p class="small muted">${esc(tx(`${fmt(rows.length - 1)} صف تحت العناوين. الخلايا الملوّنة فيها مشكلة متعمّدة.`, `${fmt(rows.length - 1)} rows under the headers. Coloured cells hold a planted problem.`))}</p>
+        <div class="table-wrap"><table class="minitable"><thead>${tr(head, 0).replace(/<td/g, "<th").replace(/<\/td>/g, "</th>")}</thead><tbody>${body}</tbody></table></div>` +
+        (trap.length ? `<div class="checks">${trap.map((x) => ck(false, `<b>${esc(L(x.t))}</b><br><span class="small muted">${esc(L(x.d))}</span>`, true)).join("")}</div>` : `<p class="small muted">${esc(tx("الملف ده مفيهوش مشكلة متعمّدة لوحده، بس بيدخل في الإجماليات.", "This file has no planted problem of its own, but it counts in the totals."))}</p>`);
+      f.out.querySelectorAll("[data-s]").forEach((b) => (b.onclick = () => { sheet = Number(b.dataset.s); drawOut(); }));
+    }
+    drawIn(); drawOut();
+  };
+
   A.mountLab = function (host, id) {
     const lab = A.labsById[id];
     if (!lab || !LABS[id]) return;

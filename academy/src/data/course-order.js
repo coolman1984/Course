@@ -3,8 +3,8 @@
 (function (A) {
   A.courseOrder = {
     u0: ["f1", "f2", "f4", "f6", "f7", "f3", "f5", "f8"],                 // 1 foundations
-    u1: ["b1", "y4", "p9", "w1", "m1"],                                                 // 2 big data · the editor · intelligence levels
-    u2: ["p10", "w2"],                                                      // 3 Office · Claude Code · tokens
+    u1: ["x1", "x2", "x3", "x4", "x5", "x6"],                               // 2 Excel automation in detail: the sample kit · ChatGPT and Gemini · three tools · fixing
+    u2: ["b1", "y4", "p9", "w1", "m1", "p10", "w2"],                        // 3 big data · the editor · intelligence levels · Office · Claude Code
     u3: ["m3"],                                                             // 4 PDF · cloud or local · free tools
     u4: ["d1", "d2", "y6", "y5", "m2"],                                     // 5 dashboards · Codex · companies and models
     u5: ["y1", "y2", "y3", "y7", "w3", "w4", "w5", "w6", "g1", "g2"],       // 6 tools · shared features · studying with AI

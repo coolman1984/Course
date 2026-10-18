@@ -8,8 +8,8 @@ import vm from "node:vm";
 import path from "node:path";
 
 const SRC = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "src");
-const DATA = ["ui", "meta", "stories", "scenes", "lessons-u0", "lessons-u1", "lessons-u2", "lessons-u3u4", "lessons-u5", "course-order", "plain-talk-a", "plain-talk-b", "prompts", "quiz", "glossary", "compare", "history", "model-story", "context-story", "window-story", "agents-story", "work-story", "limits-story", "auto-story", "big-story"];
-const ENGINE = ["core", "scene", "render", "quiz", "labs", "tools"];
+const DATA = ["ui", "meta", "stories", "scenes", "lessons-u0", "lessons-u1", "lessons-u2", "lessons-u3u4", "lessons-u5", "lessons-xl", "course-order", "plain-talk-a", "plain-talk-b", "prompts", "quiz", "glossary", "compare", "history", "model-story", "context-story", "window-story", "agents-story", "work-story", "limits-story", "auto-story", "big-story", "kit-story", "deliver-story", "stack-story", "lookup-story", "report-story", "run-story", "xl-sample"];
+const ENGINE = ["core", "scene", "render", "quiz", "labs", "xlkit", "tools"];
 const ctx = { window: { ACADEMY: {} } };
 vm.createContext(ctx);
 for (const f of DATA) vm.runInContext(readFileSync(path.join(SRC, "data", f + ".js"), "utf8"), ctx, { filename: f + ".js" });
@@ -187,6 +187,10 @@ test("story decks: real lessons, one deck per lesson, every slide complete in bo
   assert.equal(A.limitsStory.lesson, "f5");
   assert.equal(A.autoStory.lesson, "f8");
   assert.equal(A.bigStory.lesson, "b1");
+  for (const [k, l] of [["kitStory", "x1"], ["deliverStory", "x2"], ["stackStory", "x3"], ["lookupStory", "x4"], ["reportStory", "x5"], ["runStory", "x6"]]) assert.equal(A[k].lesson, l, k);
+  const u1 = A.lessons.filter((l) => l.unit === "u1").map((l) => l.id);
+  assert.equal(u1.join(" "), "x1 x2 x3 x4 x5 x6", "unit 1 (shown as 2): the kit, delivery, the three tools, fixing");
+  assert.ok(u1.every((id) => A.decks.some((d) => d.lesson === id && d.slides.length === 12)), "every unit-2 lesson opens with its own 12-slide story");
   const u0 = A.lessons.filter((l) => l.unit === "u0").map((l) => l.id);
   assert.equal(u0.join(" "), "f1 f2 f4 f6 f7 f3 f5 f8", "unit 0 order: history, inside the model, Prompt & Context, the Context's limits, chat/memory/agents, AI at work, limits, first automation");
 });
@@ -227,4 +231,53 @@ test("the course plan: eight units, every lesson placed exactly once, and each l
 test("prerequisites come earlier in the course than the lessons that need them", () => {
   const pos = Object.fromEntries(A.lessons.map((l, i) => [l.id, i]));
   for (const l of A.lessons) for (const p of l.pre || []) assert.ok(pos[p] < pos[l.id], `${l.id} lists ${p} as a prerequisite, but ${p} comes later`);
+});
+
+test("the unit-2 sample kit: a correct tool, run on the files, finds exactly the figures the lessons and the answer key quote", () => {
+  const S = A.xlSample, E = S.expected;
+  for (const lang of ["ar", "en"]) {
+    const files = S.build(lang), H = S.headers, at = (head, h) => head.indexOf(h[lang]);
+    const weeks = files.filter((f) => f.path.startsWith("Sales_2026_Q1/"));
+    assert.equal(weeks.length, E.files);
+    let read = 0, skipped = 0, text = 0;
+    const rows = [], seen = new Set(), dups = [];
+    for (const f of weeks) {
+      const [head, ...body] = f.sheets[0].rows;
+      const qi = at(head, H.sales[4]) >= 0 ? at(head, H.sales[4]) : at(head, H.qtyAlt), vi = at(head, H.sales[5]);   // by name, with the agreed alias
+      assert.ok(qi >= 0 && vi >= 0, `${f.path}: columns`);
+      for (const r of body) {
+        if (r[1] === null) { skipped++; continue; }
+        read++; if (typeof r[0] === "string") text++;
+        const key = JSON.stringify(r);
+        if (seen.has(key)) { dups.push(r); continue; } seen.add(key);
+        rows.push({ day: typeof r[0] === "string" ? Math.round((Date.UTC(2026, +r[0].slice(3, 5) - 1, +r[0].slice(0, 2)) - Date.UTC(2026, 0, 1)) / 864e5) : r[0].d - S.serial0, br: String(r[2]).trim().toUpperCase(), raw: r[2], pc: r[3], q: r[qi], v: r[vi] });
+      }
+    }
+    const sum = (a) => a.reduce((s, x) => s + x.v, 0);
+    assert.equal(read, E.rowsRead); assert.equal(skipped, E.totalsRowSkipped); assert.equal(dups.length, E.duplicates); assert.equal(rows.length, E.rowsClean);
+    assert.equal(text, E.textDates); assert.equal(sum(rows), E.value); assert.equal(rows.filter((r) => r.q < 0).length, E.returns);
+    assert.equal(rows.filter((r) => r.raw === "BR04 ").length, E.spacedBranch); assert.equal(rows.filter((r) => r.raw === "br03").length, E.lowerBranch);
+    assert.equal(sum(rows), sum(S.truth()), "the planted problems, handled, give back the true sales");
+    const masters = files.find((f) => f.path === "Masters.xlsx"), prod = masters.sheets[1].rows.slice(1);
+    const codes = prod.map((p) => p[0]), twice = codes.filter((c, i) => codes.indexOf(c) !== i);
+    assert.equal(twice.join(), "P108", "one product listed twice");
+    const un = rows.filter((r) => !codes.includes(r.pc));
+    assert.ok(un.every((r) => r.pc === E.unmatched.code)); assert.equal(un.length, E.unmatched.rows); assert.equal(sum(un), E.unmatched.value);
+    assert.ok(rows.every((r) => S.branches.includes(r.br)), "every branch matches once normalised");
+    const tg = files.find((f) => f.path === "Targets_2026_Q1.xlsx").sheets[0].rows.slice(1);
+    assert.equal(tg.length, E.targets); assert.ok(!tg.some((t) => t[0] === E.missingTarget.br && t[1] === E.missingTarget.month));
+    const pct = tg.map(([b, m, g]) => ({ b, m, p: Math.round((sum(rows.filter((r) => r.br === b && "2026-0" + S.monthOf(r.day) === m)) / g) * 1000) / 10 }));
+    const hi = pct.reduce((a, x) => (x.p > a.p ? x : a)), lo = pct.reduce((a, x) => (x.p < a.p ? x : a));
+    assert.deepEqual([hi.b, hi.m, hi.p, lo.b, lo.m, lo.p].join(), [E.best.br, E.best.month, E.best.pct, E.worst.br, E.worst.month, E.worst.pct].join());
+    const w11 = weeks.find((f) => f.path.endsWith("Week_11.xlsx")).sheets[0].rows;
+    assert.equal(w11.length - 1, E.week11Rows); assert.ok(!w11[0].includes(H.sales[4][lang]), "week 11 renames the quantity column");
+    assert.ok(S.answerKey(lang).includes(E.value.toLocaleString("en-US")) && S.readme(lang).includes("Week_13.xlsx"));
+  }
+});
+
+test("the unit-2 kit's figures appear the same in Arabic and English lesson texts", () => {
+  const ar = (s) => String(s).replace(/[٠-٩]/g, (d) => "٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/[٬,]/g, "").replace(/٫/g, ".");
+  const nums = (s) => [...ar(s).matchAll(/\d+(?:\.\d+)?/g)].map((m) => m[0]).sort().join(" ");
+  for (const l of A.lessons.filter((x) => x.unit === "u1")) for (const k of Object.keys(l.levels)) for (const x of l.levels[k])
+    assert.equal(nums(x.ar), nums(x.en), `${l.id}.${k}.${x.k}: Arabic and English quote different figures`);
 });
