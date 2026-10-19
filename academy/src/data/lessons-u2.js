@@ -106,7 +106,7 @@
       },
     },
     {
-      id: "y4", unit: "u1", pages: [19, 20], diff: 2, min: 9, scene: "drill7", lab: "quality", related: ["p6", "f3", "d2", "y3"], pre: ["f8"],
+      id: "y4", unit: "u2", pages: [19, 20], diff: 2, min: 9, scene: "drill7", lab: "quality", related: ["p6", "f3", "d2", "y3"], pre: ["f8"],
       title: { ar: "ليه لازم نفحص البيانات قبل ما نحللها؟", en: "Level 2: the analysis engine — quality first" },
       sum: { ar: "لو البيانات فيها تكرار أو تواريخ ناقصة أو وحدات مختلفة، أي تحليل مبني عليها هيطلع غلط مهما كان شكله مقنع. فحص البيانات بييجي قبل أي حساب.", en: "DuckDB, Polars and ydata-profiling, why quality checks are mandatory, the seven questions before any chart, and breaking down “efficiency fell 7%”." },
       book: [
@@ -256,7 +256,7 @@
       },
     },
     {
-      id: "b1", unit: "u1", pages: [17, 20], diff: 1, min: 10, related: ["y4", "p9", "w1", "m1"], pre: ["f8"],
+      id: "b1", unit: "u2", pages: [17, 20], diff: 1, min: 10, related: ["y4", "p9", "w1", "m1"], pre: ["f8", "x6"],
       title: { ar: "من ملفات كتير لجدول واحد تثق فيه", en: "From many files to one table you can trust" },
       sum: { ar: "تجميع ملفات بأشكال مختلفة في جدول واحد، وفحصه وتنضيفه بقواعد مكتوبة، وربطه بالشيتات الصغيرة، ولما الملف يكبر على إكسل.", en: "Combining differently shaped files into one table, checking and cleaning it by written rules, linking it to small sheets, and what to do when a file outgrows Excel." },
       book: [
@@ -271,7 +271,7 @@
         mech: [
           L("how", "- **القالب**: الأعمدة المطلوبة بأسمائها وأنواعها.\n- **التجميع**: كل ملف يتطابق مع القالب ويتحط تحت اللي قبله، ومعاه عمود «المصدر».\n- **الفحص**: الناقص، والمتكرر، والأرقام الشاذة، والتواريخ اللي برّه الفترة.\n- **التنضيف**: قواعد مكتوبة على نسخة، وكل تعديل في السجل.\n- **الربط**: بالكود مع الشيتات الصغيرة، وشيت لوحده للي ما اتربطش.\n- **المطابقة**: عدد الصفوف وإجمالي القيمة في الجدول النهائي = مجموعهم في المصادر، وأي فرق متفسّر.", "- **Template**: the required columns with names and types.\n- **Stack**: each file is matched to the template and placed under the previous one, with a “Source” column.\n- **Check**: missing, duplicated, outliers, out-of-range dates.\n- **Clean**: written rules applied to a copy, every change logged.\n- **Link**: by code to the small sheets, with a separate sheet for what didn't link.\n- **Reconcile**: the final row count and total value = their sums across the sources, with every gap explained."),
           L("inside", "إكسل بيقف عند حوالي مليون صف في الشيت، وبيتقل قبلها بكتير. علشان كده الشغل التقيل بيحصل في برنامج صغير برّه إكسل يكتبهولك الذكاء الاصطناعي: يقرا الملفات صف ورا صف، ويطلّع النتيجة الصغيرة بس، وهي اللي بتفتح في إكسل.", "Excel stops at about a million rows per sheet and slows down long before that. So the heavy work happens in a small program outside Excel that AI writes for you: it reads the files row by row and outputs only the small result, which is what opens in Excel."),
-          L("link", "ده امتداد مباشر للأدوات اللي بنيناها في [[f8]]، بس على ملفات أشكالها مختلفة وأكبر. والدرس اللي بعده [[y4]] بيدخل في فحص الجودة بالتفصيل.", "This extends the tools we built in [[f8]] directly, but to files that are larger and shaped differently. The next lesson, [[y4]], goes into quality checking in detail."),
+          L("link", "ده امتداد مباشر للأدوات اللي بنيناها في [[f8]] وفي [[x3]]، بس على ملفات أشكالها مختلفة وأكبر. والدرس اللي بعده [[y4]] بيدخل في فحص الجودة بالتفصيل.", "This extends the tools we built in [[f8]] and in [[x3]] directly, but to files that are larger and shaped differently. The next lesson, [[y4]], goes into quality checking in detail."),
         ],
         practice: [
           L("example", "مشرف مبيعات عنده ٣٦ ملف شهري من تلات فروع، وملف ربع فيه ٣٠٠ ألف صف لمبيعات الجملة. بعد القالب والتجميع والفحص والتنضيف، طلع جدول واحد فيه ٤١٢ ألف صف وتقرير جودة. والصفوف والمبيعات مطابقين للمصدر، والفرق الوحيد ٣٤٠ صف متكرر قيمتهم ١٨٬٦٠٠ جنيه، ومتسجّلين في السجل.", "A sales supervisor has 36 monthly files from three branches and a 300,000-row quarter file of wholesale sales. After the template, stacking, checking and cleaning, he gets one 412,000-row table and a quality report. Rows and sales match the source; the only gap is 340 duplicate rows worth 18,600 pounds, recorded in the log."),

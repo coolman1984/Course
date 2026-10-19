@@ -80,7 +80,7 @@
     },
     /* ---------------- UNIT 4 ---------------- */
     {
-      id: "w1", unit: "u1", pages: [26], diff: 1, min: 6, scene: "vscode", related: ["w2", "w5", "g2"], pre: [],
+      id: "w1", unit: "u2", pages: [26], diff: 1, min: 6, scene: "vscode", related: ["w2", "w5", "g2"], pre: [],
       title: { ar: "بيئة الشغل: محرر VS Code", en: "Your workspace: the VS Code editor" },
       sum: { ar: "مكان واحد تشوف فيه ملفاتك وتكتب وتشغّل الأوامر: خمس مناطق، أول خمس خطوات، وتلات أخطاء شائعة.", en: "One place to see your files, write and run commands: five areas, the first five steps, and three common mistakes." },
       book: [

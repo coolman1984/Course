@@ -32,6 +32,16 @@ jobs:
           node --check academy/src/data/limits-story.js
           node --check academy/src/data/auto-story.js
           node --check academy/src/data/big-story.js
+          node --check academy/src/data/kit-story.js
+          node --check academy/src/data/deliver-story.js
+          node --check academy/src/data/stack-story.js
+          node --check academy/src/data/lookup-story.js
+          node --check academy/src/data/report-story.js
+          node --check academy/src/data/run-story.js
+          node --check academy/src/data/xl-sample.js
+          node --check academy/src/data/lessons-xl.js
+          node --check academy/src/engine/xlkit.js
+          node --check academy/src/engine/labs.js
           node --check academy/src/data/course-order.js
           node --check academy/src/engine/history.js
           node --check academy/src/data/model-story.js

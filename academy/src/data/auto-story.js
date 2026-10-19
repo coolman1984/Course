@@ -3,7 +3,7 @@
    (stacking weekly files, enriching a raw sheet with lookups, a report built from two workbooks), and the question
    «إمتى الشغل ده يشتغل لوحده؟». The deck climbs the ladder of Excel automation — by hand, formulas and pivots, Power Query,
    macros, a script that drives Excel from outside (COM) — then the recipe for a prompt that builds a safe tool, the three
-   jobs automated, and a cliffhanger into lecture two: a file too big for Excel, and the question of taking data out of it.
+   jobs automated, and a cliffhanger into unit 2: practising safely, and getting the code onto the laptop from ChatGPT or Gemini Enterprise.
    Each slide gives one rule with its reason («القاعدة، وليه؟»). Figures are illustrative. Same slide schema as
    data/model-story.js; drawings are the x_* entries in engine/history.js. */
 "use strict";
@@ -18,7 +18,7 @@
     answerLabel: u("القاعدة، وليه؟", "The rule, and why"),
     ideaLabel: u("الفكرة في جملة", "The idea in one line"),
     question: u("إمتى الشغل ده يشتغل لوحده؟", "When will this work run by itself?"),
-    finalQuestion: u("طب لو البيانات طلعت من إكسل خالص… يحصل إيه؟", "What if the data left Excel altogether?"),
+    finalQuestion: u("طب نبني أدوات إكسل التلاتة خطوة بخطوة إزاي، أيًّا كان النموذج اللي في إيدك؟", "So how do we build the three Excel tools step by step, whatever model you have?"),
     note: u("الأرقام والأوقات توضيحية. جرّب أي أداة على نسخة من ملفاتك الأول، وراجع سياسة شركتك قبل ما ترفع أي بيانات.", "Figures and timings are illustrative. Try any tool on a copy of your files first, and check your company's policy before uploading any data."),
     ui: {
       prev: u("اللي فات", "Previous"), next: u("اللي بعده", "Next"),
@@ -140,14 +140,14 @@
         idea: u("الأداة لازم تثبت إنها صح قبل ما تثق فيها.", "A tool must prove it's right before you trust it.")
       },
       {
-        id: "cliff", art: "x_cliff", year: u("الحلقة الجاية", "Next episode"), mark: u("١٢", "12"), era: u("لحد ما وصل الملف الرابع", "Until the fourth file arrived"),
-        title: u("كل حاجة اشتغلت… لحد ما وصل ملف الربع", "Everything worked… until the quarter's file arrived"),
-        story: [u("ست ساعات بقوا عشر دقايق، والمشرف بقى يبعت تقاريره الصبح بدري. لحد ما وصل ملف الربع من الإدارة: ٣٠٠ ألف صف، وخلايا مدموجة في العناوين، وتواريخ مكتوبة كنص زي «٣ مارس». إكسل وقف عند ٧٠٪ ورسالة «لا يستجيب».",
-          "Six hours became ten minutes, and the supervisor sent his reports early in the morning. Until the quarter's file arrived from management: 300,000 rows, merged cells in the headers, dates written as text like “3 March”. Excel froze at 70% with “Not responding”."),
-        u("الأداة عملت الصح ووقفت برسالة واضحة بدل ما تطلّع نتيجة غلط. بس المشكلة الحقيقية مش في الأداة: إكسل نفسه اتعمل للجداول اللي بتشوفها بعينك، مش لمئات الآلاف من الصفوف. والسؤال اللي هنبدأ بيه المحاضرة الجاية: طب لو البيانات طلعت من إكسل خالص؟",
-          "The tool did the right thing and stopped with a clear message instead of producing a wrong result. But the real problem isn't the tool: Excel itself was built for tables you look at, not for hundreds of thousands of rows. And the question we'll open the next lecture with: what if the data left Excel altogether?")],
-        answer: u("واجب الأسبوع: جرّب Prompt من التلاتة على نسخة من ملف حقيقي من شغلك، وتعالى ومعاك النتيجة وأول مشكلة قابلتك. لأن المشاكل دي هي بداية المحاضرة الجاية.", "This week's assignment: try one of the three Prompts on a copy of a real file from your work, and bring the result and the first problem you hit — those problems open the next lecture."),
-        idea: u("إكسل اتعمل علشان تشوف البيانات… مش علشان يشيلها كلها.", "Excel was built for looking at data… not for holding all of it.")
+        id: "cliff", art: "x_cliff", year: u("الوحدة الجاية", "Next unit"), mark: u("١٢", "12"), era: u("من الورق للجهاز", "From paper to laptop"),
+        title: u("التلات أدوات جاهزين على الورق… والسؤال: نبنيهم إزاي بجد؟", "The three tools are ready on paper… so how do we really build them?"),
+        story: [u("المشرف خرج من المحاضرة متحمس، وكان هيرفع ملف المبيعات الحقيقي من موبايله ويجرّب. وقبل ما يدوس، افتكر إن الملف فيه أسماء عملاء وأسعار خاصة. وزميلته في الحسابات قالتله: «إحنا شغالين على Gemini Enterprise، وبيكتبلي الكود في الرد، ومفيش ملف أنزّله».",
+          "The supervisor left the lecture enthusiastic, about to upload the real sales file from his phone and try. Before pressing, he remembered the file holds customer names and special prices. And his colleague from accounts told him: “We work on Gemini Enterprise; it writes me the code in the reply, and there's no file to download.”"),
+        u("يعني فيه تلات أسئلة لسه ما اتجاوبتش: نجرّب على بيانات إيه من غير ما نعرّض ملفات الشركة؟ والكود يوصل للجهاز إزاي، سواء النموذج ChatGPT أو Gemini Enterprise؟ ولما الأداة توقف، نصلّحها إزاي؟ والوحدة الجاية بتبني التلات أدوات خطوة بخطوة، على شركة تجريبية كاملة.",
+          "So three questions remain open: what data do we practise on without exposing company files? How does the code reach the laptop, whether the model is ChatGPT or Gemini Enterprise? And when the tool stops, how do we fix it? The next unit builds the three tools step by step, on a complete practice company.")],
+        answer: u("واجب الأسبوع: اكتب خطوات مهمة من التلاتة زي ما بتشرحها لموظف جديد، واعرف من شركتك أنهي نموذج مسموح. لأن الوصف والسياسة هم أول حاجتين الوحدة الجاية بتبدأ بيهم.", "This week's assignment: write the steps of one of the three jobs as you'd explain them to a new colleague, and find out from your company which model is allowed — the description and the policy are the first two things the next unit starts from."),
+        idea: u("الأداة بتتبني على وصف… وبتتجرّب على بيانات آمنة.", "A tool is built on a description… and tried on safe data.")
       }
     ]
   };

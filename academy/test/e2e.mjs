@@ -368,14 +368,26 @@ await session({ label: "model-deck-ar", viewport: { width: 1360, height: 900 } }
   const xfinal = await page.$eval("#sec-auto [data-aih-q]", (e) => e.dataset.final === "true" && /إكسل/.test(e.textContent));
   xn >= 10 && /8 من 8/.test(xcrumb) && xfinal ? ok(`automation deck: ${xn} slides close unit 0 (lesson 8 of 8) on the cliffhanger question`) : fail(`automation deck: incomplete (${xn} slides, crumb «${xcrumb}», final ${xfinal})`);
   xprompts >= 3 ? ok(`automation lesson: ${xprompts} copy-ready automation prompts`) : fail("automation lesson: prompts missing (" + xprompts + ")");
-  // unit 2 opens with its own story: lesson b1, first of its unit, ending on the question that opens unit 3
+  // unit 2: every lesson opens with its own 12-slide story; the last one ends on the question that opens unit 3
+  for (const [deck, lesson, k] of [["kit", "x1", 1], ["deliver", "x2", 2], ["stack", "x3", 3], ["lookup", "x4", 4], ["report", "x5", 5], ["run", "x6", 6]]) {
+    await page.evaluate((l) => (location.hash = "lesson-" + l), lesson); await page.waitForSelector(`#sec-${deck} .aih-stage`);
+    const n = await page.$$eval(`#sec-${deck} .aih-slide`, (s) => s.length);
+    const crumb = await page.$eval(".crumbs .num", (e) => e.textContent);
+    await page.click(`#sec-${deck} [data-aih-go="11"]`); await page.waitForTimeout(500);
+    const fin = await page.$eval(`#sec-${deck} [data-aih-q]`, (e) => e.dataset.final === "true");
+    const art = await page.$eval(`#sec-${deck} .aih-slide[data-i="11"] .aih-svg`, (v) => v.querySelectorAll("rect,circle,path,text").length > 8);
+    n === 12 && new RegExp(`(^|\\s)${k} من 6`).test(crumb) && fin && art ? ok(`unit 2 deck ${deck}: 12 slides open lesson ${k} of 6 and end on its question`) : fail(`unit 2 deck ${deck}: ${n} slides, crumb «${crumb}», final ${fin}, art ${art}`);
+  }
+  const xfin = await page.$eval("#sec-run [data-aih-q]", (e) => /إكسل/.test(e.textContent));
+  xfin ? ok("unit 2 ends on a file bigger than Excel, the question unit 3 opens with") : fail("unit 2: closing question lost");
+  // unit 3 opens with lesson b1's story, ending on the question its Office lessons answer
   await page.evaluate(() => (location.hash = "lesson-b1")); await page.waitForSelector("#sec-big .aih-stage");
   const bn = await page.$$eval("#sec-big .aih-slide", (s) => s.length);
   const bcrumb = await page.$eval(".crumbs .num", (e) => e.textContent);
   await page.click('#sec-big [data-aih-go="11"]'); await page.waitForTimeout(700);
   const bfinal = await page.$eval("#sec-big [data-aih-q]", (e) => e.dataset.final === "true" && /فرع/.test(e.textContent));
   const bart = await page.$eval('#sec-big .aih-slide[data-i="11"] .aih-svg', (v) => v.querySelectorAll("rect,circle,path,text").length > 8);
-  bn === 12 && /(^|\s)1 من 5/.test(bcrumb) && bfinal && bart ? ok("unit 2 deck: 12 slides open the unit (lesson 1) and end on the question that opens unit 3") : fail(`unit 2 deck: ${bn} slides, crumb «${bcrumb}», final ${bfinal}, art ${bart}`);
+  bn === 12 && /(^|\s)1 من 7/.test(bcrumb) && bfinal && bart ? ok("unit 3 deck: 12 slides open the unit (lesson 1 of 7) and end on the question its Office lessons answer") : fail(`unit 3 deck: ${bn} slides, crumb «${bcrumb}», final ${bfinal}, art ${bart}`);
   const leftBuilt = await page.evaluate(async () => {   // leaving the page stops on-demand drawing: no SVGs are built in the detached deck afterwards
     location.hash = "lesson-f6"; await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
     const deck = document.querySelector("#sec-window"); const before = deck.querySelectorAll(".aih-svg").length;
@@ -401,6 +413,37 @@ await session({ label: "history-deck-quiet", viewport: { width: 1280, height: 86
   await page.waitForTimeout(1200);
   const still = await page.$eval("#sec-history .aih-slide.is-on", (e) => Number(e.dataset.i));
   still === 9 ? ok("history: nothing advances by itself") : fail("history: deck advanced without the reader");
+});
+
+await session({ label: "plan-3-migration", viewport: { width: 1280, height: 860 } }, async (page) => {
+  // a learner from the plan where unit 2 was big data: its u1 and u2 best scores belong to other questions now
+  await page.evaluate(() => { localStorage.setItem("aiAcademy.v1", JSON.stringify({ lang: "ar", plan: 2, scores: { u0: { best: 80, last: 80 }, u1: { best: 90, last: 90 }, u2: { best: 60, last: 60 }, u3: { best: 70, last: 70 } } })); location.hash = "quiz"; location.reload(); });
+  await page.waitForSelector("#main .unit-card"); await page.waitForTimeout(400);
+  const s = await page.evaluate(() => { const v = JSON.parse(localStorage.getItem("aiAcademy.v1") || "{}"); return { k: Object.keys(v.scores || {}).sort().join(" "), plan: v.plan }; });
+  s.k === "u0 u3" && s.plan === 3 ? ok("upgrade to plan 3: units 2 and 3 scores cleared, the others kept") : fail("plan 3 upgrade: " + JSON.stringify(s));
+  await page.evaluate(() => location.reload()); await page.waitForSelector("#main h1"); await page.waitForTimeout(300);
+  const again = await page.evaluate(() => JSON.parse(localStorage.getItem("aiAcademy.v1") || "{}").plan);
+  again === 3 ? ok("plan 3 upgrade runs once") : fail("plan 3 upgrade repeats: plan " + again);
+});
+
+await session({ label: "sample-kit", viewport: { width: 1280, height: 860 }, acceptDownloads: true }, async (page) => {
+  // the unit-2 kit downloads as one zip of real workbooks, generated in the page with no network
+  await page.evaluate(() => (location.hash = "lesson-x1")); await page.waitForSelector("#sec-lab .lab .lab-in");
+  await page.click('#sec-lab [data-f="10"]');
+  const prev = await page.$eval("#sec-lab .lab-out", (e) => ({ hasTrap: !!e.querySelector("td.err"), text: e.textContent }));
+  prev.hasTrap && /Week_11/.test(prev.text) ? ok("sample kit: a file preview marks its planted problem") : fail("sample kit: preview " + prev.text.slice(0, 80));
+  const [dl] = await Promise.all([page.waitForEvent("download"), page.click("#xk-dl")]);
+  const { readFileSync } = await import("node:fs"); const zlib = await import("node:zlib");
+  const buf = readFileSync(await dl.path());
+  const names = []; let bad = 0;
+  for (let o = 0; o + 30 < buf.length && buf.readUInt32LE(o) === 0x04034b50;) {   // walk the stored entries and check each one's CRC
+    const size = buf.readUInt32LE(o + 18), nl = buf.readUInt16LE(o + 26), name = buf.slice(o + 30, o + 30 + nl).toString("utf8"), data = buf.slice(o + 30 + nl, o + 30 + nl + size);
+    if (zlib.crc32(data) !== buf.readUInt32LE(o + 14)) bad++;
+    names.push(name); o += 30 + nl + size;
+  }
+  const weeks = names.filter((n) => /Sales_2026_Q1\/Week_\d\d\.xlsx$/.test(n)).length;
+  dl.suggestedFilename() === "Excel_Automation_Kit.zip" && weeks === 13 && names.some((n) => n.endsWith("Masters.xlsx")) && names.some((n) => n.endsWith("Answer_key.txt")) && !bad
+    ? ok(`sample kit: Excel_Automation_Kit.zip holds ${names.length} files, 13 weekly workbooks, every CRC valid`) : fail(`sample kit zip: ${names.length} files, ${weeks} weeks, ${bad} bad CRC`);
 });
 
 await session({ label: "plan-2-migration", viewport: { width: 1280, height: 860 } }, async (page) => {
