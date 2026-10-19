@@ -74,14 +74,14 @@ Dates are 2026. Pull-request numbers are in brackets.
 | | |
 |---|---|
 | Units | 8 |
-| Lessons | 45, each at four levels |
-| Story decks | 9 (12 slides each): all of unit 1, and unit 2's opening story |
+| Lessons | 51, each at four levels |
+| Story decks | 15 (12 slides each): all of units 1 and 2, and unit 3's opening story |
 | Animated scenes | 35 |
-| Labs | 13 (7 real calculations, 6 simulations) |
-| Prompts | 105 |
-| Questions | 90 |
-| Glossary terms | 73 |
-| File size | about 5.7 MB, zero network requests |
+| Labs | 14 (8 real calculations, 6 simulations) |
+| Prompts | 113 |
+| Questions | 102 |
+| Glossary terms | 76 |
+| File size | about 6.2 MB, zero network requests |
 
 Unit 1 in teaching order:
 

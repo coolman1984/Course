@@ -6,7 +6,7 @@
 ## The one-file principle
 
 `AI_Academy.html` is the whole product: styles, fonts (base64), the 41 book-page images (WebP, base64), all content and
-the engine in a single file of about 5.7 MB. It opens from a USB stick or an e-mail attachment with no server and makes
+the engine in a single file of about 6.2 MB. It opens from a USB stick or an e-mail attachment with no server and makes
 **zero network requests** (an e2e check fails on any request that is not `file:`, `data:` or `blob:`). The same file is
 published to GitHub Pages on every merge to `main`.
 
