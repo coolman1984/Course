@@ -1,125 +1,127 @@
-/* The unit-2 sample data kit: one invented distribution company, one quarter (Q1 2026), every file the three tools
-   of lesson f8 work on. A seeded generator builds the same rows every time, so the figures quoted in the lessons and the
-   answer key never drift (data.test.mjs recomputes them from the files, the way a correct tool would).
-   Ten problems are planted on purpose («الفخاخ»): each lesson of the unit meets some of them. The kit is offered in the
-   reader's language (headers, names); codes, file names, sheet names and every figure are the same in both.
-   Everything is illustrative: no real company, branch or price. */
+/* The unit-2 sample data kit: the production lines of a television factory (no factory or company is named), one
+   quarter (Q1 2026), every file the three tools of lesson f8 work on. A seeded generator builds the same rows every
+   time, so the figures quoted in the lessons and the answer key never drift (data.test.mjs recomputes them from the
+   files, the way a correct tool would).
+   Each row is one production batch: a work order on a line, building one TV model; Value is the quantity at the model's
+   standard cost. Ten problems are planted on purpose («الفخاخ»): each lesson of the unit meets some of them. The kit is
+   offered in the reader's language (headers, names); codes, file names, sheet names and every figure are the same in
+   both. Everything is illustrative. */
 "use strict";
 (function (A) {
   const u = (ar, en) => ({ ar, en });
-  const BR = [   // code, name, region
-    ["BR01", u("مدينة نصر", "Nasr City"), u("القاهرة", "Cairo"), 6],
-    ["BR02", u("الدقي", "Dokki"), u("الجيزة", "Giza"), 5],
-    ["BR03", u("سموحة", "Smouha"), u("الإسكندرية", "Alexandria"), 5],
-    ["BR04", u("طنطا", "Tanta"), u("الدلتا", "Delta"), 4],
-    ["BR05", u("المنصورة", "Mansoura"), u("الدلتا", "Delta"), 4],
-    ["BR06", u("أسيوط", "Assiut"), u("الصعيد", "Upper Egypt"), 3],
+  const LN = [   // code, name, hall, batches a day at most
+    ["L01", u("خط تجميع ١", "Assembly line 1"), u("عنبر أ", "Hall A"), 6],
+    ["L02", u("خط تجميع ٢", "Assembly line 2"), u("عنبر أ", "Hall A"), 5],
+    ["L03", u("خط تجميع ٣", "Assembly line 3"), u("عنبر ب", "Hall B"), 5],
+    ["L04", u("خط تجميع ٤", "Assembly line 4"), u("عنبر ب", "Hall B"), 4],
+    ["L05", u("خط تجميع ٥", "Assembly line 5"), u("عنبر ج", "Hall C"), 4],
+    ["L06", u("خط تجميع ٦", "Assembly line 6"), u("عنبر ج", "Hall C"), 3],
   ];
-  const CAT = { ac: u("تكييف", "Air conditioning"), fr: u("ثلاجات", "Refrigeration"), wa: u("غسالات", "Washers"), ki: u("أجهزة مطبخ", "Kitchen"), sm: u("أجهزة صغيرة", "Small appliances") };
-  const PR = [   // code, name, category, unit price (EGP, illustrative), max quantity per invoice line
-    ["P101", u("تكييف 1.5 حصان", "Air conditioner 1.5 HP"), "ac", 21500, 2],
-    ["P102", u("تكييف 2.25 حصان", "Air conditioner 2.25 HP"), "ac", 28900, 2],
-    ["P103", u("ثلاجة 14 قدم", "Refrigerator 14 ft"), "fr", 17800, 2],
-    ["P104", u("ثلاجة 18 قدم", "Refrigerator 18 ft"), "fr", 24600, 2],
-    ["P105", u("ديب فريزر", "Chest freezer"), "fr", 13900, 2],
-    ["P106", u("غسالة 8 كيلو", "Washer 8 kg"), "wa", 15400, 2],
-    ["P107", u("غسالة 10 كيلو", "Washer 10 kg"), "wa", 19700, 2],
-    ["P108", u("بوتاجاز 5 شعلة", "Gas cooker 5 burners"), "ki", 11200, 3],
-    ["P109", u("ميكروويف", "Microwave"), "ki", 4300, 3],
-    ["P110", u("خلاط", "Blender"), "sm", 1650, 6],
-    ["P111", u("مكواة بخار", "Steam iron"), "sm", 1250, 6],
-    ["P112", u("مكنسة كهربا", "Vacuum cleaner"), "sm", 3900, 4],
+  const CAT = { s: u("شاشات صغيرة", "Small screens"), m: u("شاشات متوسطة", "Medium screens"), l: u("شاشات كبيرة", "Large screens"), x: u("شاشات كبيرة جدًا", "Extra-large screens") };
+  const MD = [   // code, name, category, standard cost per unit (EGP, illustrative), most units in one batch
+    ["M101", u("شاشة 24 بوصة HD", "24-inch HD TV"), "s", 2900, 60],
+    ["M102", u("شاشة 32 بوصة HD", "32-inch HD TV"), "s", 3900, 60],
+    ["M103", u("شاشة 32 بوصة سمارت", "32-inch smart TV"), "s", 4600, 60],
+    ["M104", u("شاشة 40 بوصة Full HD", "40-inch Full HD TV"), "m", 6200, 45],
+    ["M105", u("شاشة 43 بوصة Full HD", "43-inch Full HD TV"), "m", 6900, 45],
+    ["M106", u("شاشة 43 بوصة سمارت", "43-inch smart TV"), "m", 7800, 45],
+    ["M107", u("شاشة 50 بوصة 4K", "50-inch 4K TV"), "l", 10400, 30],
+    ["M108", u("شاشة 55 بوصة 4K", "55-inch 4K TV"), "l", 12300, 30],
+    ["M109", u("شاشة 55 بوصة QLED", "55-inch QLED TV"), "l", 15600, 30],
+    ["M110", u("شاشة 65 بوصة 4K", "65-inch 4K TV"), "x", 19800, 18],
+    ["M111", u("شاشة 65 بوصة QLED", "65-inch QLED TV"), "x", 24500, 18],
+    ["M112", u("شاشة 75 بوصة 4K", "75-inch 4K TV"), "x", 31200, 12],
   ];
-  const NEW = ["P113", 6800];   // a water heater, sold from week 10, not yet in the products sheet (trap 7)
+  const NEW = ["M113", 13800, 30];   // a 58-inch model built from week 10, not yet in the models sheet (trap 7)
   const H = {   // headers
-    sales: [u("التاريخ", "Date"), u("رقم الفاتورة", "InvoiceNo"), u("كود الفرع", "BranchCode"), u("كود الصنف", "ProductCode"), u("الكمية", "Qty"), u("القيمة", "Value")],
+    prod: [u("التاريخ", "Date"), u("رقم أمر التشغيل", "WorkOrder"), u("كود الخط", "LineCode"), u("كود الموديل", "ModelCode"), u("الكمية", "Qty"), u("القيمة", "Value")],
     qtyAlt: u("الكميه", "Quantity"), notes: u("ملاحظات", "Notes"), total: u("الإجمالي", "Total"),
-    branches: [u("كود الفرع", "BranchCode"), u("اسم الفرع", "BranchName"), u("المنطقة", "Region")],
-    products: [u("كود الصنف", "ProductCode"), u("اسم الصنف", "ProductName"), u("الفئة", "Category"), u("سعر الوحدة", "UnitPrice")],
-    targets: [u("كود الفرع", "BranchCode"), u("الشهر", "Month"), u("الهدف", "Target")],
+    lines: [u("كود الخط", "LineCode"), u("اسم الخط", "LineName"), u("العنبر", "Hall")],
+    models: [u("كود الموديل", "ModelCode"), u("اسم الموديل", "ModelName"), u("الفئة", "Category"), u("التكلفة المعيارية", "StdCost")],
+    plan: [u("كود الخط", "LineCode"), u("الشهر", "Month"), u("الخطة", "Plan")],
   };
 
   const rng = (seed) => () => { seed |= 0; seed = (seed + 0x6d2b79f5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
   const DAY0 = Date.UTC(2026, 0, 1), SERIAL0 = Math.round((DAY0 - Date.UTC(1899, 11, 30)) / 864e5);   // Excel's day number for 1 Jan 2026
+  const monthOf = (day) => (day < 31 ? 1 : day < 59 ? 2 : 3);
 
-  /* the true sales of the quarter: one row per invoice line, in date order */
+  /* the true production of the quarter: one row per batch, in date order */
   function truth() {
     const r = rng(20260101), rows = [];
-    let inv = 0;
+    let wo = 0;
     for (let d = 0; d < 90; d++) {
       const date = new Date(DAY0 + d * 864e5);
-      if (date.getUTCDay() === 5) continue;   // Friday: branches closed
-      for (const [code, , , size] of BR) {
+      if (date.getUTCDay() === 5) continue;   // Friday: the factory is closed
+      for (const [code, , , size] of LN) {
         const n = 1 + Math.floor(r() * size);
         for (let k = 0; k < n; k++) {
-          let p = PR[Math.floor(r() * PR.length)], price = p[3], pc = p[0];
-          if (d >= 63 && r() < 0.06) { pc = NEW[0]; price = NEW[1]; }
-          let q = 1 + Math.floor(r() * p[4]);
-          if (r() < 0.012) q = -1;   // a return: legitimate, counts against net sales
-          rows.push({ day: d, week: Math.floor(d / 7) + 1, inv: "INV-" + String(++inv).padStart(5, "0"), br: code, pc, q, v: q * price });
+          let m = MD[Math.floor(r() * MD.length)], mc = m[0], cost = m[3], most = m[4];
+          if (d >= 63 && r() < 0.06) { mc = NEW[0]; cost = NEW[1]; most = NEW[2]; }
+          let q = 5 + Math.floor(r() * most);
+          if (r() < 0.012) q = -(2 + Math.floor(r() * 5));   // units sent back by quality: a real correction, it reduces net output
+          rows.push({ day: d, week: Math.floor(d / 7) + 1, wo: "WO-" + String(++wo).padStart(5, "0"), ln: code, mc, q, v: q * cost });
         }
       }
     }
     return rows;
   }
 
-  /* the files as the branches really send them, with the planted problems */
+  /* the files as the lines really send them, with the planted problems */
   function build(lang) {
     const L = (x) => x[lang] || x.en;
     const all = truth(), files = [];
     const pad = (n) => String(n).padStart(2, "0");
     for (let w = 1; w <= 13; w++) {
-      const head = H.sales.map(L);
+      const head = H.prod.map(L);
       if (w === 11) head[4] = L(H.qtyAlt);                               // trap 3: a renamed column
       if (w === 7) head.splice(5, 0, L(H.notes));                       // trap 2: an extra column in the middle
       const body = [];
       for (const x of all.filter((x) => x.week === w)) {
         let date = { d: SERIAL0 + x.day };
         if (w === 9) { const dt = new Date(DAY0 + x.day * 864e5); date = pad(dt.getUTCDate()) + "/" + pad(dt.getUTCMonth() + 1) + "/2026"; }   // trap 4: dates typed as text
-        let br = x.br;
-        if (w === 5 && br === "BR04") br = "BR04 ";                       // trap 6: a stray space
-        if (w === 6 && br === "BR03") br = "br03";                        // trap 6: lower case
-        const row = [date, x.inv, br, x.pc, x.q, x.v];
-        if (w === 7) row.splice(5, 0, x.q < 0 ? L(u("مرتجع", "return")) : "");
+        let ln = x.ln;
+        if (w === 5 && ln === "L04") ln = "L04 ";                         // trap 6: a stray space
+        if (w === 6 && ln === "L03") ln = "l03";                          // trap 6: lower case
+        const row = [date, x.wo, ln, x.mc, x.q, x.v];
+        if (w === 7) row.splice(5, 0, x.q < 0 ? L(u("مرتجع من الجودة", "back from quality")) : "");
         body.push(row);
       }
-      if (w === 4) { body.splice(10, 0, body[9].slice()); body.splice(31, 0, body[30].slice()); }   // trap 5: two rows entered twice
+      if (w === 4) { body.splice(10, 0, body[9].slice()); body.splice(31, 0, body[30].slice()); }   // trap 5: two batches entered twice
       if (w === 2) { const vi = head.length - 1; body.push([null, null, L(H.total), null, body.reduce((s, r) => s + r[4], 0), body.reduce((s, r) => s + r[vi], 0)]); }   // trap 1: a totals row at the bottom
-      files.push({ path: `Sales_2026_Q1/Week_${pad(w)}.xlsx`, sheets: [{ name: "Sales", rows: [head, ...body] }] });
+      files.push({ path: `Production_2026_Q1/Week_${pad(w)}.xlsx`, sheets: [{ name: "Production", rows: [head, ...body] }] });
     }
-    const prod = PR.map((p) => [p[0], L(p[1]), L(CAT[p[2]]), p[3]]);
-    prod.splice(8, 0, ["P108", L(PR[7][1]), L(CAT.ki), 11900]);           // trap 8: one code listed twice, with two prices
+    const mod = MD.map((m) => [m[0], L(m[1]), L(CAT[m[2]]), m[3]]);
+    mod.splice(8, 0, ["M108", L(MD[7][1]), L(CAT.l), 12900]);            // trap 8: one code listed twice, with two standard costs
     files.push({ path: "Masters.xlsx", sheets: [
-      { name: "Branches", rows: [H.branches.map(L), ...BR.map((b) => [b[0], L(b[1]), L(b[2])])] },
-      { name: "Products", rows: [H.products.map(L), ...prod] },
+      { name: "Lines", rows: [H.lines.map(L), ...LN.map((b) => [b[0], L(b[1]), L(b[2])])] },
+      { name: "Models", rows: [H.models.map(L), ...mod] },
     ] });
-    const tg = [];
-    for (const [code] of BR) for (let m = 1; m <= 3; m++) {
-      if (code === "BR06" && m === 3) continue;                          // trap 9: a branch with no target for March
-      const actual = all.filter((x) => x.br === code && monthOf(x.day) === m).reduce((s, x) => s + x.v, 0);
-      const f = [1.08, 0.94, 1.02, 1.12, 0.97, 1.05][Number(code.slice(3)) - 1] + (m - 2) * 0.03;
-      tg.push([code, "2026-" + pad(m), Math.round((actual * f) / 50000) * 50000]);
+    const pl = [];
+    for (const [code] of LN) for (let m = 1; m <= 3; m++) {
+      if (code === "L06" && m === 3) continue;                           // trap 9: a line with no plan for March
+      const actual = all.filter((x) => x.ln === code && monthOf(x.day) === m).reduce((s, x) => s + x.q, 0);
+      const f = [1.08, 0.94, 1.02, 1.12, 0.97, 1.05][Number(code.slice(1)) - 1] + (m - 2) * 0.03;
+      pl.push([code, "2026-" + pad(m), Math.round((actual * f) / 100) * 100]);
     }
-    files.push({ path: "Targets_2026_Q1.xlsx", sheets: [{ name: "Targets", rows: [H.targets.map(L), ...tg] }] });
+    files.push({ path: "Plan_2026_Q1.xlsx", sheets: [{ name: "Plan", rows: [H.plan.map(L), ...pl] }] });
     return files;
   }
-  const monthOf = (day) => (day < 31 ? 1 : day < 59 ? 2 : 3);
   const n = (x) => Number(x).toLocaleString("en-US");
   const rowsAr = (k) => (k >= 3 && k <= 10 ? "صفوف" : "صف");
 
-  /* README.txt: the data dictionary — exactly the description a Prompt needs, and safe to paste anywhere */
+  /* README.txt: the data dictionary — exactly the description a Prompt needs */
   function readme(lang) {
     const L = (x) => x[lang] || x.en, T = (ar, en) => (lang === "ar" ? ar : en);
     return [
       T("حقيبة بيانات تدريبية: أتمتة إكسل (الوحدة ٢)", "Training data kit: Excel automation (unit 2)"),
-      T("شركة توزيع أجهزة منزلية متخيّلة، ٦ فروع، الربع الأول ٢٠٢٦. كل الأسماء والأرقام توضيحية.", "An invented home-appliance distributor, 6 branches, Q1 2026. Every name and figure is illustrative."),
+      T("خطوط إنتاج مصنع تلفزيونات: ٦ خطوط في ٣ عنابر، ١٢ موديل، الربع الأول ٢٠٢٦. كل الأرقام توضيحية.", "The production lines of a television factory: 6 lines in 3 halls, 12 models, Q1 2026. Every figure is illustrative."),
       "",
       T("الملفات", "Files"),
-      T("- Sales_2026_Q1/Week_01.xlsx … Week_13.xlsx: شيت اسمه Sales، صف عناوين واحد، صف لكل سطر فاتورة.", "- Sales_2026_Q1/Week_01.xlsx … Week_13.xlsx: one sheet named Sales, one header row, one row per invoice line."),
-      "  " + H.sales.map(L).join(" | "),
-      T("  التاريخ: تاريخ · رقم الفاتورة: نص INV-00001 · الكود: نص · الكمية: رقم صحيح (السالب = مرتجع) · القيمة: بالجنيه = الكمية × سعر الوحدة", "  Date: date · InvoiceNo: text INV-00001 · codes: text · Qty: whole number (negative = a return) · Value: EGP = Qty × unit price"),
-      T("- Masters.xlsx: شيت Branches (", "- Masters.xlsx: sheet Branches (") + H.branches.map(L).join(" | ") + T(") وشيت Products (", ") and sheet Products (") + H.products.map(L).join(" | ") + ")",
-      T("- Targets_2026_Q1.xlsx: شيت Targets (", "- Targets_2026_Q1.xlsx: sheet Targets (") + H.targets.map(L).join(" | ") + T(")، الشهر نص بالشكل 2026-01.", "), the month as text like 2026-01."),
+      T("- Production_2026_Q1/Week_01.xlsx … Week_13.xlsx: شيت اسمه Production، صف عناوين واحد، صف لكل دفعة إنتاج.", "- Production_2026_Q1/Week_01.xlsx … Week_13.xlsx: one sheet named Production, one header row, one row per production batch."),
+      "  " + H.prod.map(L).join(" | "),
+      T("  التاريخ: تاريخ · رقم أمر التشغيل: نص WO-00001 · الأكواد: نص · الكمية: عدد الأجهزة السليمة (السالب = وحدات رجعت من الجودة) · القيمة: بالجنيه = الكمية × التكلفة المعيارية", "  Date: date · WorkOrder: text WO-00001 · codes: text · Qty: good units (negative = units sent back by quality) · Value: EGP = Qty × standard cost"),
+      T("- Masters.xlsx: شيت Lines (", "- Masters.xlsx: sheet Lines (") + H.lines.map(L).join(" | ") + T(") وشيت Models (", ") and sheet Models (") + H.models.map(L).join(" | ") + ")",
+      T("- Plan_2026_Q1.xlsx: شيت Plan (", "- Plan_2026_Q1.xlsx: sheet Plan (") + H.plan.map(L).join(" | ") + T(")، الخطة بعدد الأجهزة، والشهر نص بالشكل 2026-01.", "), the plan in units, the month as text like 2026-01."),
       "",
       T("مهم", "Important"),
       T("- في الملفات مشاكل متعمّدة زي اللي بتقابلها في الشغل. ما تقولهاش للنموذج: الأداة الكويسة هي اللي تكتشفها أو توقف عندها.", "- The files hold deliberate problems like the ones you meet at work. Don't tell the model: a good tool is one that finds them or stops at them."),
@@ -131,42 +133,42 @@
   /* Answer_key.txt: what a correct run must find, computed from the true rows */
   function answerKey(lang) {
     const L = (x) => x[lang] || x.en, T = (ar, en) => (lang === "ar" ? ar : en), E = A.xlSample.expected, all = truth();
-    const tg = build(lang).at(-1).sheets[0].rows.slice(1), lines = [];
+    const pl = build(lang).at(-1).sheets[0].rows.slice(1), lines = [];
     lines.push(T("مفتاح الإجابة — راجعه بعد التشغيل", "Answer key — check it after the run"), "");
     lines.push(T(`- ملفات الأسابيع: ${E.files} · صفوف بيانات اتقرت: ${n(E.rowsRead)} · صف إجمالي اتساب: ${E.totalsRowSkipped} (Week_02)`, `- Weekly files: ${E.files} · data rows read: ${n(E.rowsRead)} · totals row skipped: ${E.totalsRowSkipped} (Week_02)`));
-    lines.push(T(`- متكرر بالظبط: ${E.duplicates} (Week_04) · الصفوف بعد حذفهم: ${n(E.rowsClean)} · مرتجعات: ${E.returns}`, `- Exact duplicates: ${E.duplicates} (Week_04) · rows after removing them: ${n(E.rowsClean)} · returns: ${E.returns}`));
-    lines.push(T(`- صافي مبيعات الربع: ${n(E.value)} جنيه`, `- Net sales for the quarter: EGP ${n(E.value)}`));
-    lines.push(T(`- تواريخ كنص: ${E.textDates} ${rowsAr(E.textDates)} (Week_09) · «BR04 » بمسافة: ${E.spacedBranch} ${rowsAr(E.spacedBranch)} (Week_05) · «br03»: ${E.lowerBranch} ${rowsAr(E.lowerBranch)} (Week_06)`, `- Dates as text: ${E.textDates} rows (Week_09) · “BR04 ” with a space: ${E.spacedBranch} rows (Week_05) · “br03”: ${E.lowerBranch} rows (Week_06)`));
-    lines.push(T(`- ما اتربطش: ${E.unmatched.code} في ${E.unmatched.rows} ${rowsAr(E.unmatched.rows)}، قيمتهم ${n(E.unmatched.value)} جنيه · P108 مكرر في شيت الأصناف (11200 و11900)`, `- Unmatched: ${E.unmatched.code} on ${E.unmatched.rows} rows worth EGP ${n(E.unmatched.value)} · P108 listed twice in Products (11200 and 11900)`));
-    lines.push("", T("المبيعات والهدف لكل فرع وشهر", "Sales and target per branch and month"));
-    for (const [code, name] of BR) for (let m = 1; m <= 3; m++) {
-      const s = all.filter((x) => x.br === code && monthOf(x.day) === m).reduce((a, x) => a + x.v, 0), t = tg.find((r) => r[0] === code && r[1] === "2026-0" + m);
-      lines.push(`  ${code} ${L(name)} 2026-0${m}: ${n(s)} / ${t ? n(t[2]) + " = " + ((s / t[2]) * 100).toFixed(1) + "%" : T("مفيش هدف", "no target")}`);
+    lines.push(T(`- متكرر بالظبط: ${E.duplicates} (Week_04) · الصفوف بعد حذفهم: ${n(E.rowsClean)} · تصحيحات من الجودة بالسالب: ${E.returns}`, `- Exact duplicates: ${E.duplicates} (Week_04) · rows after removing them: ${n(E.rowsClean)} · negative corrections from quality: ${E.returns}`));
+    lines.push(T(`- صافي إنتاج الربع: ${n(E.units)} جهاز · قيمته بالتكلفة المعيارية: ${n(E.value)} جنيه`, `- Net output for the quarter: ${n(E.units)} units · at standard cost: EGP ${n(E.value)}`));
+    lines.push(T(`- تواريخ كنص: ${E.textDates} ${rowsAr(E.textDates)} (Week_09) · «L04 » بمسافة: ${E.spacedLine} ${rowsAr(E.spacedLine)} (Week_05) · «l03»: ${E.lowerLine} ${rowsAr(E.lowerLine)} (Week_06)`, `- Dates as text: ${E.textDates} rows (Week_09) · “L04 ” with a space: ${E.spacedLine} rows (Week_05) · “l03”: ${E.lowerLine} rows (Week_06)`));
+    lines.push(T(`- ما اتربطش: ${E.unmatched.code} في ${E.unmatched.rows} ${rowsAr(E.unmatched.rows)}، ${n(E.unmatched.units)} جهاز، قيمتهم ${n(E.unmatched.value)} جنيه · M108 مكرر في شيت الموديلات (12300 و12900)`, `- Unmatched: ${E.unmatched.code} on ${E.unmatched.rows} rows, ${n(E.unmatched.units)} units worth EGP ${n(E.unmatched.value)} · M108 listed twice in Models (12300 and 12900)`));
+    lines.push("", T("الإنتاج والخطة لكل خط وشهر (بعدد الأجهزة)", "Output and plan per line and month (units)"));
+    for (const [code, name] of LN) for (let m = 1; m <= 3; m++) {
+      const s = all.filter((x) => x.ln === code && monthOf(x.day) === m).reduce((a, x) => a + x.q, 0), t = pl.find((r) => r[0] === code && r[1] === "2026-0" + m);
+      lines.push(`  ${code} ${L(name)} 2026-0${m}: ${n(s)} / ${t ? n(t[2]) + " = " + ((s / t[2]) * 100).toFixed(1) + "%" : T("مفيش خطة", "no plan")}`);
     }
     return lines.join("\r\n") + "\r\n";
   }
 
   A.xlSample = {
     folder: "Excel_Automation_Kit", serial0: SERIAL0, build, truth, monthOf, readme, answerKey, headers: H,
-    branches: BR.map((b) => b[0]), products: PR.map((p) => p[0]),
+    lines: LN.map((b) => b[0]), models: MD.map((p) => p[0]),
     /* what a correct run finds (data.test.mjs recomputes every figure from the files) */
     expected: {
-      files: 13, rowsRead: 1304, totalsRowSkipped: 1, duplicates: 2, rowsClean: 1302, returns: 16, value: 28428150,
-      unmatched: { code: "P113", rows: 20, value: 292400 }, spacedBranch: 9, lowerBranch: 17, textDates: 99, week11Rows: 116,
-      targets: 17, missingTarget: { br: "BR06", month: "2026-03" },
-      best: { br: "BR02", month: "2026-01", pct: 111.6 }, worst: { br: "BR04", month: "2026-02", pct: 87.9 },
+      files: 13, rowsRead: 1290, totalsRowSkipped: 1, duplicates: 2, rowsClean: 1288, returns: 14, units: 29304, value: 275234900,
+      unmatched: { code: "M113", rows: 23, units: 407, value: 5616600 }, spacedLine: 18, lowerLine: 19, textDates: 98, week11Rows: 104,
+      plans: 17, missingPlan: { line: "L06", month: "2026-03" },
+      best: { line: "L02", month: "2026-01", pct: 111.1 }, worst: { line: "L04", month: "2026-03", pct: 85.1 },
     },
     traps: [
-      { id: 1, tool: "stack", file: "Week_02", t: u("صف «الإجمالي» في آخر الشيت", "A “Total” row at the bottom of the sheet"), d: u("لو اتجمّع مع الصفوف، مبيعات الأسبوع هتتحسب مرتين.", "Stacked with the rows, the week's sales count twice.") },
+      { id: 1, tool: "stack", file: "Week_02", t: u("صف «الإجمالي» في آخر الشيت", "A “Total” row at the bottom of the sheet"), d: u("لو اتجمّع مع الصفوف، إنتاج الأسبوع هيتحسب مرتين.", "Stacked with the rows, the week's output counts twice.") },
       { id: 2, tool: "stack", file: "Week_07", t: u("عمود «ملاحظات» زيادة في النص", "An extra “Notes” column in the middle"), d: u("الربط بترتيب الأعمدة هيحط الملاحظات مكان القيمة؛ لازم الربط باسم العمود.", "Matching columns by position puts the notes where the value belongs; match by column name.") },
       { id: 3, tool: "stack", file: "Week_11", t: u("عمود «الكمية» مكتوب «الكميه»", "The “Qty” column is titled “Quantity”"), d: u("الأداة الصح بتوقف وتسمّي الملف والعمود، وإنت تقرر القاعدة.", "A good tool stops and names the file and the column; you decide the rule.") },
       { id: 4, tool: "stack", file: "Week_09", t: u("التواريخ مكتوبة كنص (يوم/شهر/سنة)", "Dates typed as text (day/month/year)"), d: u("لازم تتحوّل لتاريخ حقيقي، والنموذج لازم يسألك: اليوم الأول ولا الشهر؟", "They must become real dates, and the model must ask: day first or month first?") },
-      { id: 5, tool: "stack", file: "Week_04", t: u("صفّين متكررين بالظبط", "Two rows entered twice"), d: u("نفس رقم الفاتورة مرتين. الأداة تبلّغ عنهم، وإنت توافق على الحذف.", "The same invoice number twice. The tool reports them; you approve removing them.") },
-      { id: 6, tool: "lookup", file: "Week_05, Week_06", t: u("«BR04 » بمسافة، و«br03» بحروف صغيرة", "“BR04 ” with a space, and “br03” in lower case"), d: u("من غير تظبيط الأكواد، الفرع هيظهر كأنه فرعين.", "Without normalising codes, one branch shows up as two.") },
-      { id: 7, tool: "lookup", file: "Week_10 … Week_13", t: u("صنف جديد P113 مش في شيت الأصناف", "A new product, P113, missing from the products sheet"), d: u("يظهر في شيت «ما اتربطش»، ومبيعاته تفضل محسوبة للفرع.", "It belongs on the “Unmatched” sheet, and its sales still count for the branch.") },
-      { id: 8, tool: "lookup", file: "Masters.xlsx", t: u("الصنف P108 متسجّل مرتين بسعرين", "Product P108 listed twice, with two prices"), d: u("الأداة لازم توقف وتسألك أنهي سعر، مش تاخد أول واحد وتسكت.", "The tool must stop and ask which price, not take the first and stay silent.") },
-      { id: 9, tool: "report", file: "Targets_2026_Q1.xlsx", t: u("فرع أسيوط من غير هدف لشهر مارس", "Assiut has no target for March"), d: u("التقرير يكتب «مفيش هدف»، مش صفر ولا قسمة على صفر.", "The report writes “no target”, not zero and not a division by zero.") },
-      { id: 10, tool: "report", file: "Week_01 … Week_13", t: u("مرتجعات بكمية سالبة", "Returns with a negative quantity"), d: u("مرتجعات حقيقية بتتخصم من صافي المبيعات؛ متتحذفش.", "Real returns that reduce net sales; never delete them.") },
+      { id: 5, tool: "stack", file: "Week_04", t: u("دفعتين متسجّلين مرتين", "Two batches entered twice"), d: u("نفس رقم أمر التشغيل مرتين. الأداة تبلّغ عنهم، وإنت توافق على الحذف.", "The same work order twice. The tool reports them; you approve removing them.") },
+      { id: 6, tool: "lookup", file: "Week_05, Week_06", t: u("«L04 » بمسافة، و«l03» بحروف صغيرة", "“L04 ” with a space, and “l03” in lower case"), d: u("من غير تظبيط الأكواد، الخط هيظهر كأنه خطّين.", "Without normalising codes, one line shows up as two.") },
+      { id: 7, tool: "lookup", file: "Week_10 … Week_13", t: u("موديل جديد M113 مش في شيت الموديلات", "A new model, M113, missing from the models sheet"), d: u("يظهر في شيت «ما اتربطش»، وإنتاجه يفضل محسوب للخط.", "It belongs on the “Unmatched” sheet, and its output still counts for the line.") },
+      { id: 8, tool: "lookup", file: "Masters.xlsx", t: u("الموديل M108 متسجّل مرتين بتكلفتين", "Model M108 listed twice, with two standard costs"), d: u("الأداة لازم توقف وتسألك أنهي تكلفة، مش تاخد أول واحدة وتسكت.", "The tool must stop and ask which cost, not take the first and stay silent.") },
+      { id: 9, tool: "report", file: "Plan_2026_Q1.xlsx", t: u("خط ٦ من غير خطة لشهر مارس", "Line 6 has no plan for March"), d: u("التقرير يكتب «مفيش خطة»، مش صفر ولا قسمة على صفر.", "The report writes “no plan”, not zero and not a division by zero.") },
+      { id: 10, tool: "report", file: "Week_01 … Week_13", t: u("تصحيحات بكمية سالبة من الجودة", "Negative corrections from quality"), d: u("وحدات رجعت من الجودة بتتخصم من صافي الإنتاج؛ متتحذفش.", "Units sent back by quality reduce net output; never delete them.") },
     ],
   };
 })(window.ACADEMY = window.ACADEMY || {});

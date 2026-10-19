@@ -43,10 +43,11 @@ WHERE THINGS ARE INSIDE THIS FILE (search for these names)
 - Lesson 8 automation prompts: ids f8a (stack many files + pivot), f8b (enrich a raw table from small master sheets,
   with an "unmatched" sheet), f8c (report from two workbooks with a totals check). They target a work laptop where
   nothing can be installed: Excel, and PowerShell driving Excel through COM.
-- Unit 2 builds them on a sample data kit, `A.xlSample` (an invented distributor: 6 branches, 13 weekly sales files
-  Week_01…Week_13 with a Sales sheet, Masters.xlsx with Branches/Products, Targets_2026_Q1.xlsx; ten planted problems;
-  `A.xlSample.expected` holds the right answers: 1,302 true rows, EGP 28,428,150). Ready prompts x1a…x6b fill in the
-  kit's real names. ChatGPT can hand over files to download (links expire); Gemini Enterprise usually writes code in
+- Unit 2 builds them on a sample data kit, `A.xlSample`: the production lines of a TV factory (no factory is named; 6
+  lines in 3 halls, 13 weekly files Production_2026_Q1/Week_01…Week_13 with a Production sheet, Masters.xlsx with
+  Lines/Models, Plan_2026_Q1.xlsx; ten planted problems; `A.xlSample.expected` holds the right answers: 1,288 true
+  batches, 29,304 units). Purchasing and materials are the second example. Ready prompts x1a…x6b fill in the kit's real
+  names. ChatGPT can hand over files to download (links expire); Gemini Enterprise usually writes code in
   the reply: one code box per file, an "# END OF FILE" marker, Notepad "All files", encoding UTF-8 with BOM.
 
 HOW TO HELP A TRAINEE WITH THIS FILE

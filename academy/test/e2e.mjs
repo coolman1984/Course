@@ -441,7 +441,7 @@ await session({ label: "sample-kit", viewport: { width: 1280, height: 860 }, acc
     if (zlib.crc32(data) !== buf.readUInt32LE(o + 14)) bad++;
     names.push(name); o += 30 + nl + size;
   }
-  const weeks = names.filter((n) => /Sales_2026_Q1\/Week_\d\d\.xlsx$/.test(n)).length;
+  const weeks = names.filter((n) => /Production_2026_Q1\/Week_\d\d\.xlsx$/.test(n)).length;
   dl.suggestedFilename() === "Excel_Automation_Kit.zip" && weeks === 13 && names.some((n) => n.endsWith("Masters.xlsx")) && names.some((n) => n.endsWith("Answer_key.txt")) && !bad
     ? ok(`sample kit: Excel_Automation_Kit.zip holds ${names.length} files, 13 weekly workbooks, every CRC valid`) : fail(`sample kit zip: ${names.length} files, ${weeks} weeks, ${bad} bad CRC`);
 });

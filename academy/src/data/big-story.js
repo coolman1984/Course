@@ -1,5 +1,5 @@
 /* Big data — the story deck that opens unit 3 (lesson b1).
-   The same sales supervisor as in units 1 and 2, right after the quarter's file froze Excel, carries every slide with one
+   The sales supervisor of unit 1, facing the same kind of file that froze Excel at the end of unit 2, carries every slide with one
    question: «إزاي ٣٧ ملف يبقوا جدول واحد أقدر أثق فيه؟». The deck goes from many differently shaped files to one clean,
    checked table: agree on one shape, stack with a source column, check before analysing, clean by written rules, link to
    master sheets with an "unmatched" sheet, take the heavy work outside Excel, organise a project folder, work from the
@@ -12,8 +12,8 @@
     id: "big", lesson: "b1",
     kicker: u("البيانات الكبيرة · الحكاية كاملة في ٨ دقايق", "Big data · the whole story in 8 minutes"),
     title: u("من ملفات كتير لجدول واحد تثق فيه", "From many files to one table you can trust"),
-    lead: u("فاكر ملف الربع اللي وقّف إكسل في آخر الوحدة التانية؟ الحكاية دي بتكمّل من عنده. هنمشي مع نفس مشرف المبيعات وهو بيحوّل ملفات كتير، كل واحد شكله مختلف، لجدول واحد نضيف ومراجَع، ونتعرّف في السكة على فولدر المشروع والمحرر ومستويات ذكاء النماذج.",
-      "Remember the quarter's file that froze Excel at the end of unit 2? This story picks up from there. We follow the same sales supervisor as he turns many files, each shaped differently, into one clean, checked table, and along the way we meet the project folder, the editor and the levels of model intelligence."),
+    lead: u("فاكر ملف الربع اللي وقّف إكسل في آخر الوحدة التانية؟ المشكلة دي مش في المصنع بس. في الحكاية دي هنرجع لمشرف المبيعات اللي قابلناه في الوحدة الأولى، وهو بيحوّل ملفات كتير، كل واحد شكله مختلف، لجدول واحد نضيف ومراجَع، ونتعرّف في السكة على فولدر المشروع والمحرر ومستويات ذكاء النماذج.",
+      "Remember the quarter's file that froze Excel at the end of unit 2? That problem isn't the factory's alone. In this story we return to the sales supervisor we met in unit 1, as he turns many files, each shaped differently, into one clean, checked table, and along the way we meet the project folder, the editor and the levels of model intelligence."),
     answerLabel: u("القاعدة، وليه؟", "The rule, and why"),
     ideaLabel: u("الفكرة في جملة", "The idea in one line"),
     question: u("إزاي ٣٧ ملف يبقوا جدول واحد أقدر أثق فيه؟", "How do 37 files become one table I can trust?"),
@@ -31,8 +31,8 @@
       {
         id: "files", art: "b_files", year: u("الموقف", "Scene"), mark: u("٠١", "01"), era: u("٣٧ ملف على المكتب", "37 files on the desk"),
         title: u("٣٧ ملف، وسؤال واحد من المدير", "37 files, and one question from the manager"),
-        story: [u("فاكر ملف الربع اللي وقّف إكسل؟ المدير رجع بسؤال أكبر: «عايز أعرف مبيعات كل صنف في التلات فروع على مدار السنة». يعني ٣٦ ملف شهري، ١٢ لكل فرع، وفوقهم ملف الربع الكبير اللي فيه مبيعات الجملة من الإدارة، ودي مش موجودة في ملفات الفروع.",
-          "Remember the quarter's file that froze Excel? The manager came back with a bigger question: “I want each product's sales across the three branches over the whole year.” That means 36 monthly files, 12 per branch, plus the big quarter file holding wholesale sales from head office, which aren't in the branch files."),
+        story: [u("مشرف المبيعات كمان وصله ملف ربع وقّف إكسل. والمدير رجع بسؤال أكبر: «عايز أعرف مبيعات كل صنف في التلات فروع على مدار السنة». يعني ٣٦ ملف شهري، ١٢ لكل فرع، وفوقهم ملف الربع الكبير اللي فيه مبيعات الجملة من الإدارة، ودي مش موجودة في ملفات الفروع.",
+          "The sales supervisor, too, received a quarter's file that froze Excel. And the manager came back with a bigger question: “I want each product's sales across the three branches over the whole year.” That means 36 monthly files, 12 per branch, plus the big quarter file holding wholesale sales from head office, which aren't in the branch files."),
         u("المشرف فتح أول ملفين جنب بعض، واكتشف إن المشكلة مش في العدد بس. كل فرع بيسجّل بطريقته، وكل شهر فيه حاجة اتغيّرت. والسؤال اللي ماشي معانا في الحكاية: إزاي الملفات دي كلها تبقى جدول واحد أقدر أثق في أرقامه؟",
           "The supervisor opened the first two files side by side and found the problem isn't only the number. Each branch records in its own way, and something changed every month. The question we carry through the story: how do all these files become one table whose numbers I can trust?")],
         answer: u("قبل ما تجمّع أي حاجة، اعرف إيه اللي قدامك: كام ملف، وجايين منين، وشكلهم إيه. لأن المفاجآت اللي ما شفتهاش في الأول بتظهر في الآخر أرقام غلط.", "Before combining anything, know what's in front of you: how many files, where from, what shape — surprises you don't see at the start show up at the end as wrong numbers."),

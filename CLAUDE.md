@@ -54,6 +54,9 @@ Commit the rebuilt `AI_Academy.html` together with source changes. CI runs the s
   chat/memory/agents → AI at work → limits → first automation). A data test pins this order; update it deliberately.
 - Unit 1 (shown as 2) is f8 in detail: `x1 x2 x3 x4 x5 x6` (sample kit → ChatGPT/Gemini delivery → stack → lookups →
   report → when a tool stops). Also pinned by a data test. Big data (`b1` …) opens unit 2 (shown as 3).
+- Unit 2's examples are a TV factory's production lines (purchasing and materials as the second example). Never name
+  the factory or a company, and don't discuss personal accounts or what may be uploaded: talk about the automation itself,
+  with ChatGPT and Gemini Enterprise side by side.
 - The sample kit (`A.xlSample`) is generated from a seed; `expected` holds every figure the lessons quote, and a data
   test recomputes them from the files. Change the generator only together with `expected` and the texts that quote it.
 

@@ -101,16 +101,16 @@ Unit 2 opens with lesson b1 «من ملفات كتير لجدول واحد تث�
 
 ## Unit 2: Excel automation in detail
 Unit 2 now unfolds lesson f8 into six lessons, each with its own 12-slide story, all built on one sample data kit
-(`data/xl-sample.js`): an invented distributor with six branches, 13 weekly sales files, master sheets, targets and ten
-planted problems. The kit downloads from the lab as real Excel files.
+(`data/xl-sample.js`): the production lines of a TV factory (no factory is named), with 13 weekly production files,
+master sheets for lines and models, a monthly plan and ten planted problems; purchasing and materials are the second example. The kit downloads from the lab as real Excel files.
 
 | # | Lesson | Deck question |
 |---|---|---|
-| 1 | x1 The sample data kit | «أجرّب الأداة فين قبل ما ألمس ملفات الشركة؟» |
+| 1 | x1 The training data kit | «أجرّب الأدوات دي على إيه، وأعرف منين إنها صح؟» |
 | 2 | x2 From the chat to your laptop (ChatGPT, Gemini Enterprise) | «الكود في الشات… يبقى أداة على جهازي إزاي؟» |
-| 3 | x3 Tool one: 13 files into one table | «إزاي ١٣ ملف يبقوا جدول واحد من غير ولا صف ضايع؟» |
+| 3 | x3 Tool one: 13 production reports into one table | «إزاي ١٣ تقرير إنتاج يبقوا جدول واحد من غير ولا صف ضايع؟» |
 | 4 | x4 Tool two: every code finds its name | «إزاي كل كود يلاقي اسمه، واللي ما لقاش يبان؟» |
-| 5 | x5 Tool three: sales against targets | «إزاي التقرير يطلع مظبوط ومراجَع من غير ما ألمسه؟» |
+| 5 | x5 Tool three: output against plan | «إزاي التقرير يطلع مظبوط ومراجَع من غير ما ألمسه؟» |
 | 6 | x6 When the tool stops | «لما الأداة توقف أو تغلط… أعمل إيه؟» |
 
 The former unit 2 (b1, y4, p9, w1, m1) opens unit 3, ahead of the Office lessons. f8's closing slide now leads into unit 2,
