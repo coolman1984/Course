@@ -340,3 +340,9 @@ test("the unit-2 kit's figures appear the same in Arabic and English lesson text
   for (const l of A.lessons.filter((x) => x.unit === "u1")) for (const k of Object.keys(l.levels)) for (const x of l.levels[k])
     assert.equal(nums(x.ar), nums(x.en), `${l.id}.${k}.${x.k}: Arabic and English quote different figures`);
 });
+
+test("the delivery Prompt gives .bat launchers an end marker cmd.exe can read", () => {
+  // `#` is not a comment in a .bat file: a launcher ending in “# END OF FILE” prints an error after pause
+  const x = A.prompts.find((p) => p.id === "x2a");
+  for (const lang of ["ar", "en"]) assert.ok(x.text[lang].includes("rem END OF FILE"), `x2a (${lang}) must ask for “rem END OF FILE” in the .bat file`);
+});

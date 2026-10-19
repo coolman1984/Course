@@ -50,8 +50,8 @@
       {
         id: "shape", art: "xd_shape", year: u("الطلب", "The request"), mark: u("٠٣", "03"), era: u("اطلب شكل التسليم", "Ask for the delivery shape"),
         title: u("اطلب الشكل اللي يخلّي النسخ سهل ومضمون", "Ask for the shape that makes copying easy and certain"),
-        story: [u("مهندس التخطيط زوّد فقرة في آخر الـ Prompt اسمها «طريقة التسليم»: كل ملف في صندوق كود لوحده، واسم الملف مكتوب فوق الصندوق، وآخر سطر في كل ملف «‎# END OF FILE» واسمه. وفي الآخر قايمة: اسم كل ملف وعدد سطوره.",
-          "The planning engineer added a paragraph at the end of the Prompt called “Delivery”: each file in a code box of its own, the file name above the box, and a last line in each file reading “# END OF FILE” with its name. At the end, a list: each file's name and line count."),
+        story: [u("مهندس التخطيط زوّد فقرة في آخر الـ Prompt اسمها «طريقة التسليم»: كل ملف في صندوق كود لوحده، واسم الملف مكتوب فوق الصندوق، وآخر سطر في كل ملف «‎# END OF FILE» واسمه، وفي ملف ‎.bat ‏«rem END OF FILE» لأن # مش تعليق فيه. وفي الآخر قايمة: اسم كل ملف وعدد سطوره.",
+          "The planning engineer added a paragraph at the end of the Prompt called “Delivery”: each file in a code box of its own, the file name above the box, and a last line in each file reading “# END OF FILE” with its name — “rem END OF FILE” in the .bat file, where # isn't a comment. At the end, a list: each file's name and line count."),
         u("الفقرة دي بتحل تلات مشاكل مرة واحدة: إنت عارف كل صندوق يتحفظ باسم إيه، وتقدر تتأكد إن الصندوق اتنسخ لآخره، وتقدر تعدّ السطور لو شكّيت. والفقرة نفسها جاهزة في مكتبة البرومبتات، تحطها في آخر أي طلب أداة.",
           "This paragraph solves three problems at once: you know what name each box is saved under, you can confirm a box was copied to its end, and you can count lines if in doubt. The paragraph itself is ready in the prompt library, to add to the end of any tool request.")],
         answer: u("اطلب علامة نهاية في آخر كل ملف. لأنها أسهل طريقة تتأكد بيها إن مفيش سطر ضاع من آخره.", "Ask for an end marker in each file — it's the easiest way to be sure no line went missing from its end."),
