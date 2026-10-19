@@ -1,9 +1,9 @@
-/* Tool one on the kit — the story deck of lesson x3 (unit 2).
+/* Tool one — the story deck of lesson x3 (unit 2), on the lesson's project (Lesson_3_Stack_Weekly_Reports).
    The planning engineer of the TV factory carries every slide with one question:
-   «إزاي ١٣ تقرير إنتاج يبقوا جدول واحد من غير ولا صف ضايع؟». The deck runs the first tool of lesson f8 on the kit: the
-   Prompt with real names, the model's questions, matching by name, the totals row, text dates, the first stop at a renamed
-   column, a rule instead of a hand fix, duplicates sent for review, reading in one block, and the log checked against
-   the answer key. Each slide gives one rule with its reason. Figures are the kit's own. Drawings are the xs_* entries in
+   «إزاي ١٣ تقرير إنتاج يبقوا جدول واحد من غير ولا صف ضايع؟». The deck runs the first tool of lesson f8 on the project: the
+   Prompt with real names, the model's questions, matching by name, the totals row, the SourceFile column, the first stop
+   at a renamed column, a rule instead of a hand fix, duplicates sent for review, reading in one block, and the log checked
+   against the answer key. Each slide gives one rule with its reason. Figures are the project's own. Drawings are the xs_* entries in
    engine/history.js. */
 "use strict";
 (function (A) {
@@ -12,13 +12,13 @@
     id: "stack", lesson: "x3",
     kicker: u("الأداة الأولى · الحكاية كاملة في ٨ دقايق", "Tool one · the whole story in 8 minutes"),
     title: u("١٣ تقرير إنتاج أسبوعي في جدول واحد، من غير ولا صف ضايع", "13 weekly production reports into one table, without losing a row"),
-    lead: u("السكة للجهاز بقت جاهزة، والحقيبة قدامنا. في الحكاية دي مهندس التخطيط بيبني أول أداة من التلاتة على ملفات الحقيبة: يملا الـ Prompt، ويجاوب أسئلة النموذج، ويشغّل، ويقابل خمس مشاكل من العشرة، واحدة ورا التانية.",
-      "The road to the laptop is ready, and the kit is in front of us. In this story the planning engineer builds the first of the three tools on the kit's files: he fills in the Prompt, answers the model's questions, runs it, and meets five of the ten problems, one after another."),
+    lead: u("السكة للجهاز بقت جاهزة، ومشروع الدرس قدامنا: ١٣ ملف أسبوعي بالإنجليزي. في الحكاية دي مهندس التخطيط بيبني أول أداة من التلاتة: يملا الـ Prompt، ويجاوب أسئلة النموذج، ويشغّل، ويقابل أربع مشاكل متعمّدة، واحدة ورا التانية.",
+      "The road to the laptop is ready, and the lesson's project is in front of us: 13 weekly files in English. In this story the planning engineer builds the first of the three tools: he fills in the Prompt, answers the model's questions, runs it, and meets four planted problems, one after another."),
     answerLabel: u("القاعدة، وليه؟", "The rule, and why"),
     ideaLabel: u("الفكرة في جملة", "The idea in one line"),
     question: u("إزاي ١٣ تقرير إنتاج يبقوا جدول واحد من غير ولا صف ضايع؟", "How do 13 production reports become one table without losing a row?"),
     finalQuestion: u("الجدول كامل… بس فيه أكواد بس. الأسماء تيجي منين؟", "The table is complete… but it holds only codes. Where do the names come from?"),
-    note: u("الأرقام والرسايل هي اللي بتطلع من الحقيبة نفسها. نص الرسايل ممكن يختلف حسب الكود اللي النموذج يكتبه.", "The figures and messages are the ones the kit itself produces. The wording of messages may differ with the code the model writes."),
+    note: u("الأرقام والرسايل هي اللي بتطلع من مشروع الدرس نفسه. نص الرسايل ممكن يختلف حسب الكود اللي النموذج يكتبه.", "The figures and messages are the ones the lesson's project itself produces. The wording of messages may differ with the code the model writes."),
     ui: {
       prev: u("اللي فات", "Previous"), next: u("اللي بعده", "Next"),
       play: u("شغّل الحكاية", "Play the story"), pause: u("وقّف", "Pause"), replay: u("من الأول", "From the start"),
@@ -40,79 +40,79 @@
       },
       {
         id: "prompt", art: "xs_prompt", year: u("الطلب", "The request"), mark: u("٠٢", "02"), era: u("الأسماء بالحرف", "Names letter for letter"),
-        title: u("نفس وصفة الـ Prompt… بأسماء الحقيبة بالحرف", "The same Prompt recipe… with the kit's names letter for letter"),
-        story: [u("مهندس التخطيط فتح مكتبة البرومبتات، وخد Prompt «الأداة الأولى على الحقيبة». هو نفس Prompt درس أول أتمتة، بس كل الفراغات متملية: الفولدر Production_2026_Q1، والملفات Week_01 لحد Week_13، والشيت Production، والعناوين الستة بالحرف.",
-          "The planning engineer opened the prompt library and took “Tool one on the kit”. It's the same Prompt as in the first-automation lesson, but every blank is filled: the folder Production_2026_Q1, the files Week_01 to Week_13, the sheet Production, and the six headers letter for letter."),
-        u("وزوّد عليه القواعد العامة اللي اتعلمها في الحكاية الأولى: طابق الأعمدة بالاسم، والصف اللي مفيهوش رقم أمر تشغيل يتساب ويتسجّل، وأي عمود ناقص وقّف. وفي آخره فقرة «طريقة التسليم». ودوس «إرسال» في Gemini Enterprise.",
-          "And he added the general rules he learned in the first story: match columns by name, skip and log a row with no work order, stop on any missing column. At the end, the “Delivery” paragraph. And he pressed “Send” in Gemini Enterprise.")],
-        answer: u("املا كل فراغ في الـ Prompt باسم حقيقي من الملف، مش بوصف. لأن «شيت الإنتاج» غير «Production»، والأداة بتدوّر على الاسم.", "Fill every blank in the Prompt with a real name from the file, not a description — “the production sheet” isn't “Production”, and the tool looks for the name."),
+        title: u("نفس وصفة الـ Prompt… بأسماء الملفات بالحرف", "The same Prompt recipe… with the files' names letter for letter"),
+        story: [u("مهندس التخطيط فتح Prompt.txt من مشروع الدرس. هو نفس Prompt درس أول أتمتة، بس كل الفراغات متملية: فولدر Data، والملفات Week_01 لحد Week_13، والشيت Production، والعناوين الستة بالحرف: Date وWorkOrder وLineCode وModelCode وQty وValue.",
+          "The planning engineer opened Prompt.txt from the lesson's project. It's the same Prompt as in the first-automation lesson, but every blank is filled: the Data folder, the files Week_01 to Week_13, the sheet Production, and the six headers letter for letter: Date, WorkOrder, LineCode, ModelCode, Qty and Value."),
+        u("وفيه القواعد العامة اللي اتعلمها في الحكاية الأولى: طابق الأعمدة بالاسم، والصف اللي مفيهوش WorkOrder يتساب ويتسجّل، وأي عمود ناقص وقّف. وفي آخره فقرة «طريقة التسليم». حط مسار الفولدر، ودوس «إرسال» في Gemini Enterprise.",
+          "It holds the general rules he learned in the first story: match columns by name, skip and log a row with no WorkOrder, stop on any missing column. At the end, the “Delivery” paragraph. He put in the folder path and pressed “Send” in Gemini Enterprise.")],
+        answer: u("كل اسم في الـ Prompt لازم يبقى اسم حقيقي من الملف، مش وصف. لأن «شيت الإنتاج» غير «Production»، والأداة بتدوّر على الاسم.", "Every name in the Prompt must be a real name from the file, not a description — “the production sheet” isn't “Production”, and the tool looks for the name."),
         idea: u("الـ Prompt الجاهز نصه وصفة… ونصه أسماءك.", "A ready Prompt is half recipe… half your names.")
       },
       {
         id: "questions", art: "xs_questions", year: u("الأسئلة", "Questions"), mark: u("٠٣", "03"), era: u("قبل أي كود", "Before any code"),
         title: u("النموذج سأل تلات أسئلة… قبل ولا سطر كود", "The model asked three questions… before a line of code"),
-        story: [u("زي ما الـ Prompt طلب، النموذج ما كتبش كود. سأل: «التاريخ المكتوب كنص، يوم/شهر/سنة ولا شهر/يوم/سنة؟»، و«الصف اللي من غير رقم أمر تشغيل، أسيبه وأسجّله ولا أوقف؟»، و«الصفوف المتكررة بالظبط، أحذفها ولا أوريهالك؟».",
-          "As the Prompt asked, the model wrote no code. It asked: “Is a date typed as text day/month/year or month/day/year?”, “A row with no work order: skip and log it, or stop?”, and “Exact duplicate rows: delete them, or show them to you?”"),
-        u("مهندس التخطيط جاوب: «يوم/شهر/سنة، زي ما بنكتب في مصر»، و«سيبه وسجّله»، و«ما تحذفش؛ حطهم في شيت للمراجعة». تلات إجابات في دقيقة، وكل واحدة منهم كانت هتبقى غلطة صامتة في الأداة لو النموذج خمّنها.",
-          "The planning engineer answered: “day/month/year, as we write it in Egypt”, “skip and log it”, and “don't delete; put them on a sheet for review”. Three answers in a minute, and each would have been a silent mistake in the tool had the model guessed.")],
+        story: [u("زي ما الـ Prompt طلب، النموذج ما كتبش كود. سأل: «لو عمود Qty جه باسم تاني، أوقف ولا أعتبره هو؟»، و«الصف اللي من غير WorkOrder، أسيبه وأسجّله ولا أوقف؟»، و«الصفوف المتكررة بالظبط، أحذفها ولا أوريهالك؟».",
+          "As the Prompt asked, the model wrote no code. It asked: “If the Qty column comes under another name, do I stop or treat it as Qty?”, “A row with no WorkOrder: skip and log it, or stop?”, and “Exact duplicate rows: delete them, or show them to you?”"),
+        u("مهندس التخطيط جاوب: «أوقف وقولّي الاسم اللي لقيته، وأنا أقرر»، و«سيبه وسجّله»، و«ما تحذفش؛ حطهم في شيت To_Review». تلات إجابات في دقيقة، وكل واحدة منهم كانت هتبقى غلطة صامتة في الأداة لو النموذج خمّنها.",
+          "The planning engineer answered: “stop and tell me the name you found; I'll decide”, “skip and log it”, and “don't delete; put them on a To_Review sheet”. Three answers in a minute, and each would have been a silent mistake in the tool had the model guessed.")],
         answer: u("جاوب أسئلة النموذج بقرار واضح، مش «اللي تشوفه». لأن السؤال ده بالظبط هو المكان اللي القرار فيه بتاعك إنت.", "Answer the model's questions with a clear decision, not “whatever you think” — that question is exactly where the decision is yours."),
         idea: u("كل سؤال قبل الكود… غلطة ما حصلتش.", "Every question before the code… is a mistake that didn't happen.")
       },
       {
-        id: "byname", art: "xs_byname", year: u("الفخ ٢", "Trap 2"), mark: u("٠٤", "04"), era: u("بالاسم مش بالترتيب", "By name, not position"),
-        title: u("Week_07: عمود زيادة في النص", "Week_07: an extra column in the middle"),
-        story: [u("في Week_07، حد في الخط زوّد عمود «ملاحظات» بين «الكمية» و«القيمة» علشان يكتب فيه الوحدات اللي رجعت من الجودة. لو الأداة بتنسخ العمود السادس على إنه القيمة، هتنسخ الملاحظات مكان الفلوس، وقيمة إنتاج الأسبوع كله هتختفي من الإجمالي، ومفيش ولا رسالة.",
-          "In Week_07, someone on the line added a “Notes” column between “Qty” and “Value” to record units sent back by quality. If the tool copies the sixth column as the value, it copies the notes in place of the money, and the whole week's output value vanishes from the total, without a single message."),
-        u("بس الأداة دي بتدوّر على كل عمود باسمه: «القيمة» في أي مكان كانت. فلقت القيمة في العمود السابع، وكمّلت صح، وكتبت في السجل: «Week_07.xlsx: عمود زيادة اسمه ملاحظات، اتساب». ده الفرق بين قاعدة «بالاسم» وقاعدة «بالترتيب».",
-          "But this tool looks for each column by name: “Value” wherever it is. So it found the value in the seventh column, carried on correctly, and logged: “Week_07.xlsx: extra column Notes, left out”. That's the difference between “by name” and “by position”.")],
+        id: "byname", art: "xs_byname", year: u("الفخ ٣", "Trap 3"), mark: u("٠٤", "04"), era: u("بالاسم مش بالترتيب", "By name, not position"),
+        title: u("Week_07: الأعمدة بترتيب تاني، وعمود زيادة", "Week_07: columns in another order, and an extra one"),
+        story: [u("في Week_07، الخط بعت الملف من نسخة قديمة: Qty جه قبل ModelCode، وفيه عمود Notes زيادة بيكتبوا فيه الوحدات اللي رجعت من الجودة. لو الأداة بتنسخ العمود الرابع على إنه الموديل والخامس على إنه الكمية، الأرقام هتتلخبط كلها، ومفيش ولا رسالة.",
+          "In Week_07, the line sent the file from an old template: Qty comes before ModelCode, and there's an extra Notes column where they record units sent back by quality. If the tool copies the fourth column as the model and the fifth as the quantity, every figure goes wrong, without a single message."),
+        u("بس الأداة دي بتدوّر على كل عمود باسمه: Qty في أي مكان كان، وModelCode في أي مكان كان. فلقت كل عمود في مكانه الجديد، وكمّلت صح، وكتبت في السجل: «Week_07.xlsx: extra column Notes, left out». ده الفرق بين قاعدة «بالاسم» وقاعدة «بالترتيب».",
+          "But this tool looks for each column by name: Qty wherever it is, ModelCode wherever it is. So it found each column in its new place, carried on correctly, and logged: “Week_07.xlsx: extra column Notes, left out”. That's the difference between “by name” and “by position”.")],
         answer: u("اطلب دايمًا مطابقة الأعمدة بالاسم. لأن ترتيب الأعمدة بيتغيّر من غير ما حد يقولك، والاسم نادرًا.", "Always ask for columns matched by name — column order changes without anyone telling you; names rarely do."),
         idea: u("الترتيب بيتغيّر… والاسم بيفضل.", "Order changes… names stay.")
       },
       {
         id: "total", art: "xs_total", year: u("الفخ ١", "Trap 1"), mark: u("٠٥", "05"), era: u("صف الإجمالي", "The totals row"),
         title: u("Week_02: صف «الإجمالي» كان هيتحسب مرتين", "Week_02: the “Total” row would have counted twice"),
-        story: [u("اللي بعت Week_02 كان متعوّد يحط في آخر الشيت سطر «الإجمالي» فيه مجموع الكمية والقيمة. شكله لطيف للي بيقرا الملف، بس للأداة هو سطر إنتاج زي أي سطر. لو اتجمع، إنتاج الأسبوع كله هيتحسب مرتين.",
+        story: [u("اللي بعت Week_02 كان متعوّد يحط في آخر الشيت سطر «Total» فيه مجموع الكمية والقيمة. شكله لطيف للي بيقرا الملف، بس للأداة هو سطر إنتاج زي أي سطر. لو اتجمع، إنتاج الأسبوع كله هيتحسب مرتين.",
           "Whoever sent Week_02 used to put a “Total” line at the bottom of the sheet with the sums of quantity and value. It looks nice to a reader, but to a tool it's a production line like any other. Stacked in, the whole week's output would count twice."),
-        u("القاعدة العامة مسكته: السطر ده مفيهوش رقم أمر تشغيل. فالأداة سابته وكتبت في السجل: «Week_02.xlsx: صف ١٠٢ من غير أمر تشغيل، اتساب». ١٠٠ صف إنتاج دخلوا، والسطر اللي تحتهم ما دخلش.",
-          "The general rule caught it: that line has no work order. So the tool left it out and logged: “Week_02.xlsx: row 102 has no work order, skipped”. 100 production rows went in, and the line beneath them didn't.")],
-        answer: u("اطلب قاعدة تحدد إيه اللي يعتبر «سطر بيانات»، زي وجود رقم أمر تشغيل. لأن صفوف الإجمالي والعناوين المكررة شكلها بيانات وهي مش بيانات.", "Ask for a rule that defines a “data row”, such as having a work order — totals rows and repeated headers look like data but aren't."),
+        u("القاعدة العامة مسكته: السطر ده مفيهوش WorkOrder. فالأداة سابته وكتبت في السجل: «Week_02.xlsx: row 102 has no WorkOrder, skipped». ١٠٠ صف إنتاج دخلوا، والسطر اللي تحتهم ما دخلش.",
+          "The general rule caught it: that line has no WorkOrder. So the tool left it out and logged: “Week_02.xlsx: row 102 has no WorkOrder, skipped”. 100 production rows went in, and the line beneath them didn't.")],
+        answer: u("اطلب قاعدة تحدد إيه اللي يعتبر «سطر بيانات»، زي وجود WorkOrder. لأن صفوف الإجمالي والعناوين المكررة شكلها بيانات وهي مش بيانات.", "Ask for a rule that defines a “data row”, such as having a WorkOrder — totals rows and repeated headers look like data but aren't."),
         idea: u("مش كل سطر في الشيت… سطر بيانات.", "Not every line in a sheet… is a data line.")
       },
       {
-        id: "dates", art: "xs_dates", year: u("الفخ ٤", "Trap 4"), mark: u("٠٦", "06"), era: u("تواريخ كنص", "Dates as text"),
-        title: u("Week_09: ٩٨ تاريخ مكتوبين كلام", "Week_09: 98 dates typed as words"),
-        story: [u("في Week_09 التواريخ اتكتبت بالإيد كنص، زي «26/02/2026». إكسل بيعرضها زي التاريخ، بس جوّاها كلام. ولما الأداة بتقرا الشيت، التاريخ الحقيقي بيوصلها رقم يوم، والتاريخ النص بيوصل حروف. ولو اتحطوا جنب بعض، الفرز بالتاريخ والتجميع بالشهر هيتلخبطوا.",
-          "In Week_09 the dates were typed by hand as text, like “26/02/2026”. Excel shows them like dates, but inside they're words. When the tool reads the sheet, a real date arrives as a day number and a text date as characters. Put side by side, sorting by date and grouping by month go wrong."),
-        u("وهنا السؤال اللي النموذج سأله في الأول بيرجع: يوم/شهر ولا شهر/يوم؟ لأن «03/02» ممكن تبقى ٣ فبراير أو ٢ مارس، ودفعات كاملة ممكن تتحسب في خطة الشهر الغلط. الإجابة اتكتبت مرة، والأداة حوّلت الـ ٩٨ تاريخ وسجّلت عددهم.",
-          "Here the model's first question returns: day/month or month/day? Because “03/02” could be 3 February or 2 March, and whole batches could count against the wrong month's plan. The answer was given once, and the tool converted the 98 dates and logged how many.")],
-        answer: u("أي تحويل للتواريخ لازم يبقى بقاعدة إنت قلتها. لأن نفس الكتابة ليها معنيين، والتخمين بيحط إنتاج في الشهر الغلط.", "Any date conversion must follow a rule you stated — the same writing has two meanings, and guessing puts output in the wrong month."),
-        idea: u("«03/02»… فبراير ولا مارس؟ إنت اللي تقول.", "“03/02”… February or March? You decide.")
+        id: "source", art: "xs_source", year: u("المصدر", "The source"), mark: u("٠٦", "06"), era: u("كل صف جه منين", "Where each row came from"),
+        title: u("عمود SourceFile: كل صف عارف جه منين", "The SourceFile column: every row knows where it came from"),
+        story: [u("الأداة بتضيف لكل صف عمود SourceFile فيه اسم الملف اللي جه منه: Week_01.xlsx، Week_02.xlsx… شكله عمود زيادة مالوش لازمة، لحد ما رقم يطلع غريب في التقرير.",
+          "The tool adds to every row a SourceFile column holding the name of the file it came from: Week_01.xlsx, Week_02.xlsx… It looks like a pointless extra column, until a figure in the report looks odd."),
+        u("لما مدير المصنع سأل «ليه خط ٤ في أسبوع ٧ قليل كده؟»، مهندس التخطيط فلتر على SourceFile = Week_07.xlsx ولقى الصفوف في ثانية، وفتح الملف الأصلي وقارن. من غير العمود ده، كان هيدوّر في ١٬٢٨٧ صف من غير ما يعرف يبدأ منين.",
+          "When the factory manager asked “why is line 4 so low in week 7?”, the planning engineer filtered on SourceFile = Week_07.xlsx, found the rows in a second, opened the original file and compared. Without that column he'd have searched 1,287 rows with no idea where to start.")],
+        answer: u("اطلب عمود مصدر في أي جدول بيتجمع من كذا ملف. لأن أول سؤال عن أي رقم غريب هو «الرقم ده جه منين؟».", "Ask for a source column in any table stacked from several files — the first question about any odd figure is “where did this come from?”"),
+        idea: u("كل صف بيشاور على ملفه.", "Every row points to its file.")
       },
       {
-        id: "stop", art: "xs_stop", year: u("أول تشغيل", "First run"), mark: u("٠٧", "07"), era: u("الأداة وقفت", "The tool stopped"),
+        id: "stop", art: "xs_stop", year: u("الفخ ٤", "Trap 4"), mark: u("٠٧", "07"), era: u("الأداة وقفت", "The tool stopped"),
         title: u("أول تشغيل وقف عند Week_11… وده نجاح", "The first run stopped at Week_11… and that's success"),
-        story: [u("مهندس التخطيط دوس دبل كليك. الشاشة السودا بدأت تكتب: Week_01 اتقرا، Week_02 اتقرا… لحد Week_11 ووقفت: «Week_11.xlsx: العمود الكمية مش موجود؛ لقيت الكميه». العشر ملفات اللي قبله اتقروا، بس الأداة ما كتبتش أي نتيجة.",
+        story: [u("مهندس التخطيط دوس دبل كليك. الشاشة السودا بدأت تكتب: Week_01 read، Week_02 read… لحد Week_11 ووقفت: «Week_11.xlsx: column Qty not found; found Quantity». العشر ملفات اللي قبله اتقروا، بس الأداة ما كتبتش أي نتيجة.",
           "The planning engineer double-clicked. The black window began writing: Week_01 read, Week_02 read… until Week_11, where it stopped: “Week_11.xlsx: column Qty not found; found Quantity”. The ten files before it were read, but the tool wrote no result."),
-        u("أول إحساس كان إحباط، وبعدين افتكر قاعدة درس أول أتمتة: الأداة الكويسة بتقولك إيه اللي ما قدرتش تعمله. لو كانت كمّلت، كانت هتحط الأسبوع ده من غير كميات، و١٠٤ صف كانوا هيدخلوا التقرير ناقصين.",
-          "The first feeling was frustration, then he remembered the first-automation rule: a good tool tells you what it couldn't do. Had it carried on, it would have entered this week with no quantities, and 104 rows would have reached the report incomplete.")],
+        u("أول إحساس كان إحباط، وبعدين افتكر قاعدة درس أول أتمتة: الأداة الكويسة بتقولك إيه اللي ما قدرتش تعمله. لو كانت كمّلت، كانت هتحط الأسبوع ده من غير كميات، و٩٤ صف كانوا هيدخلوا التقرير ناقصين.",
+          "The first feeling was frustration, then he remembered the first-automation rule: a good tool tells you what it couldn't do. Had it carried on, it would have entered this week with no quantities, and 94 rows would have reached the report incomplete.")],
         answer: u("لما الأداة توقف برسالة فيها اسم الملف والعمود، اقرا الرسالة قبل أي حاجة. لأن الوقفة دي هي الأداة بتحميك من رقم غلط.", "When the tool stops with a message naming the file and column, read the message before anything — that stop is the tool protecting you from a wrong figure."),
         idea: u("الأداة اللي بتوقف… بتشتغل.", "A tool that stops… is working.")
       },
       {
         id: "alias", art: "xs_alias", year: u("التصليح", "The fix"), mark: u("٠٨", "08"), era: u("قاعدة مش تعديل", "A rule, not an edit"),
         title: u("صلّح القاعدة… مش الملف", "Fix the rule… not the file"),
-        story: [u("أسهل حل كان قدامه: يفتح Week_11 ويصلّح «الكميه» لـ «الكمية» بإيده، ويشغّل تاني. بس الأسبوع الجاي نفس الخط هيبعت نفس الكتابة، ويرجع يصلّح بإيده تاني. وده بالظبط الشغل اليدوي اللي الأداة جت علشان تشيله.",
+        story: [u("أسهل حل كان قدامه: يفتح Week_11 ويصلّح Quantity لـ Qty بإيده، ويشغّل تاني. بس الأسبوع الجاي نفس الخط هيبعت نفس الكتابة، ويرجع يصلّح بإيده تاني. وده بالظبط الشغل اليدوي اللي الأداة جت علشان تشيله.",
           "The easiest fix was right there: open Week_11, correct the header by hand and run again. But next week the same line will send the same spelling, and he'll be fixing it by hand again — exactly the manual work the tool came to remove."),
-        u("فرجع في نفس المحادثة وكتب: «اعتبر الكميه نفس الكمية، وسجّل في السجل كل مرة القاعدة دي اتطبقت». النموذج عدّل سطرين، وادّاله نسخة جديدة باسم ‎stack_tool_v2.ps1. والملف الأصلي فضل زي ما هو.",
+        u("فرجع في نفس المحادثة وكتب: «اعتبر Quantity نفس Qty، وسجّل في السجل كل مرة القاعدة دي اتطبقت». النموذج عدّل سطرين، وادّاله نسخة جديدة باسم ‎stack_tool_v2.ps1. والملف الأصلي فضل زي ما هو.",
           "So he went back in the same chat and wrote: “Treat Quantity as Qty, and log every time this rule is applied.” The model changed two lines and gave him a new version named stack_tool_v2.ps1. The original file stayed as it was.")],
         answer: u("لما الأداة توقف عند حاجة هتتكرر، ضيف قاعدة للأداة بدل ما تصلّح الملف بإيدك. لأن التصليح بالإيد بيرجع كل أسبوع، والقاعدة بتتكتب مرة.", "When the tool stops at something that will recur, add a rule to the tool instead of fixing the file by hand — a hand fix returns every week; a rule is written once."),
         idea: u("التصليح بالإيد شغل متكرر… والقاعدة أتمتة.", "A hand fix is repeated work… a rule is automation.")
       },
       {
-        id: "dups", art: "xs_dups", year: u("الفخ ٥", "Trap 5"), mark: u("٠٩", "09"), era: u("المتكرر", "Duplicates"),
+        id: "dups", art: "xs_dups", year: u("الفخ ٢", "Trap 2"), mark: u("٠٩", "09"), era: u("المتكرر", "Duplicates"),
         title: u("دفعتين متسجّلين مرتين… والقرار للإنسان", "Two batches entered twice… and the decision is human"),
-        story: [u("التشغيل التاني خلص. وفي شيت «للمراجعة» صفين من Week_04: نفس التاريخ، ونفس رقم أمر التشغيل، ونفس كل حاجة. غالبًا حد في الخط دخّلهم مرتين. الأداة ما حذفتهمش، ودي كانت إجابة مهندس التخطيط على سؤال النموذج في الأول.",
-          "The second run finished. On the “To review” sheet sat two rows from Week_04: the same date, the same work order, the same everything. Most likely someone on the line entered them twice. The tool didn't delete them, as the planning engineer had answered the model at the start."),
+        story: [u("التشغيل التاني خلص. وفي شيت To_Review صفين من Week_04: نفس التاريخ، ونفس WorkOrder، ونفس كل حاجة. غالبًا حد في الخط دخّلهم مرتين. الأداة ما حذفتهمش، ودي كانت إجابة مهندس التخطيط على سؤال النموذج في الأول.",
+          "The second run finished. On the To_Review sheet sat two rows from Week_04: the same date, the same WorkOrder, the same everything. Most likely someone on the line entered them twice. The tool didn't delete them, as the planning engineer had answered the model at the start."),
         u("ليه ما تحذفش على طول؟ لأن مرة من كل كام مرة، الصف المتكرر بيبقى حقيقي: نفس أمر التشغيل اتقفل على دفعتين متساويتين. مهندس التخطيط كلّم مشرف الخط، واتأكد إنها غلطة إدخال، ووافق على الحذف. القرار اتاخد في دقيقتين، بس اتاخد بعلم.",
           "Why not delete them straight away? Because now and then a duplicate is real: the same work order closed on two equal batches. The planning engineer called the line supervisor, confirmed it was an entry mistake, and approved removing them. The decision took two minutes, but it was taken knowingly.")],
         answer: u("الأداة تبلّغ عن المتكرر، وإنت توافق على الحذف. لأن الحذف قرار، والأداة ما تعرفش اللي الخط يعرفه.", "The tool reports duplicates and you approve deleting them — deleting is a decision, and the tool doesn't know what the line knows."),
@@ -123,29 +123,29 @@
         title: u("ليه الأداة خلصت في ثواني مش دقايق؟", "Why the tool finished in seconds, not minutes"),
         story: [u("زميل في التخطيط جرّب Prompt تاني، والأداة بتاعته فضلت شغالة تلات دقايق على نفس الملفات. الفرق كان سطر واحد في الـ Prompt: «اقرا كل شيت مرة واحدة في مصفوفة، واكتب الناتج مرة واحدة، مش خلية خلية».",
           "A colleague in planning tried a different Prompt, and his tool kept running for three minutes on the same files. The difference was one line in the Prompt: “Read each sheet at once into an array, and write the result at once, not cell by cell.”"),
-        u("كل مرة السكريبت بيكلّم إكسل، فيه وقت ضايع في السكة. ١٬٣٠٠ صف في ٦ أعمدة يعني حوالي ٨٬٠٠٠ مرة لو خلية خلية، و١٣ مرة بس لو شيت شيت. مع الحقيبة الفرق دقايق، ومع ملفات سنة كاملة من الخطوط الفرق ممكن يبقى ساعة.",
-          "Every time the script speaks to Excel, time is lost on the way. 1,300 rows in 6 columns is about 8,000 trips cell by cell, and just 13 sheet by sheet. With the kit the difference is minutes; with a full year of line files it can be an hour.")],
+        u("كل مرة السكريبت بيكلّم إكسل، فيه وقت ضايع في السكة. ١٬٣٠٠ صف في ٧ أعمدة يعني حوالي ٩٬٠٠٠ مرة لو خلية خلية، و١٣ مرة بس لو شيت شيت. مع مشروع الدرس الفرق دقايق، ومع ملفات سنة كاملة من الخطوط الفرق ممكن يبقى ساعة.",
+          "Every time the script speaks to Excel, time is lost on the way. 1,300 rows in 7 columns is about 9,000 trips cell by cell, and just 13 sheet by sheet. With the lesson's project the difference is minutes; with a full year of line files it can be an hour.")],
         answer: u("اطلب القراءة والكتابة في كتلة واحدة لكل شيت. لأن عدد مرات الكلام مع إكسل هو اللي بيحدد سرعة الأداة.", "Ask for reading and writing in one block per sheet — the number of trips to Excel decides the tool's speed."),
         idea: u("رحلة واحدة لكل شيت… مش لكل خلية.", "One trip per sheet… not per cell.")
       },
       {
         id: "log", art: "xs_log", year: u("المقارنة", "The check"), mark: u("١١", "11"), era: u("السجل قصاد المفتاح", "Log against key"),
         title: u("السجل قصاد مفتاح الإجابة: رقم برقم", "The log against the answer key: figure by figure"),
-        story: [u("آخر سطور السجل: ١٣ ملف اتقروا، و١٬٢٩٠ صف بيانات، وصف واحد اتساب من غير أمر تشغيل، وصفين في «للمراجعة»، وعمود زيادة في Week_07، و٩٨ تاريخ اتحوّلوا، وقاعدة «الكميه» اتطبقت مرة. والإجمالي بعد حذف المتكرر: ٢٩٬٣٠٤ جهاز.",
-          "The log's last lines: 13 files read, 1,290 data rows, one row skipped with no work order, two rows in “To review”, an extra column in Week_07, 98 dates converted, the Quantity rule applied once. And the total after removing duplicates: 29,304 units."),
-        u("ودلوقتي بس، فتح Answer_key.txt. نفس الأرقام بالظبط. ومع كده عمل اختبار أخير: نسخة من Week_03 مسح منها عمود القيمة، وشغّل. الأداة وقفت وسمّت الملف والعمود. دلوقتي يقدر يقول إنه بيثق فيها.",
-          "Only now did he open Answer_key.txt. The same figures exactly. Still, he ran one last test: a copy of Week_03 with the Value column deleted. The tool stopped and named the file and the column. Now he can say he trusts it.")],
+        story: [u("آخر سطور السجل: ١٣ ملف اتقروا، و١٬٢٨٩ صف بيانات، وصف واحد اتساب من غير WorkOrder، وصفين في To_Review، وعمود زيادة في Week_07، وقاعدة Quantity اتطبقت مرة. والإجمالي بعد حذف المتكرر: ١٬٢٨٧ دفعة، و٢٩٬٣١٨ جهاز.",
+          "The log's last lines: 13 files read, 1,289 data rows, one row skipped with no WorkOrder, two rows in To_Review, an extra column in Week_07, the Quantity rule applied once. And the total after removing duplicates: 1,287 batches and 29,318 units."),
+        u("ودلوقتي بس، فتح Answer_Key.txt. نفس الأرقام بالظبط. ومع كده عمل اختبار أخير: في نسخة من المشروع مسح عمود Value من Week_03، وشغّل. الأداة وقفت وسمّت الملف والعمود. دلوقتي يقدر يقول إنه بيثق فيها.",
+          "Only now did he open Answer_Key.txt. The same figures exactly. Still, he ran one last test: in a copy of the project he deleted Week_03's Value column. The tool stopped and named the file and the column. Now he can say he trusts it.")],
         answer: u("اعتمد الأداة بعد ما تطابق مفتاح الإجابة، وبعد ما تشوفها بتوقف عمدًا. لأن النجاح لوحده ما بيثبتش إنها هتوقف لما تغلط.", "Rely on the tool once it matches the answer key and you've seen it stop on purpose — success alone doesn't prove it will stop when it goes wrong."),
         idea: u("طابقت المفتاح… ووقفت لما كسرناها.", "It matched the key… and stopped when we broke it.")
       },
       {
         id: "cliff", art: "xs_cliff", year: u("الدرس الجاي", "Next lesson"), mark: u("١٢", "12"), era: u("أكواد بس", "Codes only"),
         title: u("الجدول كامل… والمدير سأل عن الفئات والعنابر", "The table is complete… and the manager asked about categories and halls"),
-        story: [u("مهندس التخطيط بعت الجدول، و١٬٢٨٨ دفعة مراجَعة. بعد ساعة مدير المصنع رد: «عايز الإنتاج حسب فئة الشاشة وحسب العنبر». مهندس التخطيط بص في الجدول: كود الخط L04، وكود الموديل M105. مفيش كلمة «خط تجميع ٤» ولا كلمة «شاشات متوسطة».",
-          "The planning engineer sent the table: 1,288 checked batches. An hour later the factory manager replied: “I want output by screen category and by hall.” The planning engineer looked at the table: line code L04, model code M105. Not the words “Assembly line 4”, not the words “Medium screens”."),
-        u("الأسماء والفئات والعنابر في ملف تاني خالص: Masters.xlsx. وفاكر الفخاخ العشرة؟ لسه فيه أكواد بمسافات، وأكواد بحروف صغيرة، وموديل مش في القايمة، وموديل متسجّل مرتين. والسؤال اللي الدرس الجاي بيجاوبه: إزاي كل كود يلاقي اسمه؟",
-          "The names, categories and halls live in another file altogether: Masters.xlsx. And remember the ten traps? There are still codes with spaces, codes in lower case, a model missing from the list, and a model listed twice. And the question the next lesson answers: how does every code find its name?")],
-        answer: u("واجب الدرس: شغّل الأداة الأولى على الحقيبة، وقارن ٤ أرقام بالمفتاح، وجرّب تكسرها بنسخة ناقصة عمود. لأن الأداة اللي ما شفتهاش بتوقف لسه ما اتجرّبتش.", "This lesson's task: run tool one on the kit, compare 4 figures with the key, and try to break it with a copy missing a column — a tool you haven't seen stop hasn't been tested yet."),
+        story: [u("مهندس التخطيط بعت الجدول، و١٬٢٨٧ دفعة مراجَعة. بعد ساعة مدير المصنع رد: «عايز الإنتاج حسب فئة الشاشة وحسب العنبر، وبالقيمة». مهندس التخطيط بص في الجدول: كود الخط L04، وكود الموديل M105. مفيش اسم خط، ولا فئة، ولا عنبر.",
+          "The planning engineer sent the table: 1,287 checked batches. An hour later the factory manager replied: “I want output by screen category and by hall, and its value.” The planning engineer looked at the table: line code L04, model code M105. No line name, no category, no hall."),
+        u("الأسماء والفئات والعنابر والتكلفة في ملف تاني خالص: Masters.xlsx. ومشروع الدرس الجاي فيه مشاكل جديدة: أكواد بمسافات، وأكواد بحروف صغيرة، وموديل مش في القايمة، وموديل متسجّل مرتين. والسؤال اللي الدرس الجاي بيجاوبه: إزاي كل كود يلاقي اسمه؟",
+          "The names, categories, halls and costs live in another file altogether: Masters.xlsx. And the next lesson's project brings new problems: codes with spaces, codes in lower case, a model missing from the list, and a model listed twice. And the question the next lesson answers: how does every code find its name?")],
+        answer: u("واجب الدرس: شغّل الأداة الأولى على مشروع الدرس، وقارن ٤ أرقام بالمفتاح، وجرّب تكسرها بنسخة ناقصة عمود. لأن الأداة اللي ما شفتهاش بتوقف لسه ما اتجرّبتش.", "This lesson's task: run tool one on the lesson's project, compare 4 figures with the key, and try to break it with a copy missing a column — a tool you haven't seen stop hasn't been tested yet."),
         idea: u("الجدول كامل… بس لسه ساكت عن الأسماء.", "The table is complete… but still silent about names.")
       }
     ]

@@ -1,6 +1,6 @@
-/* Writes the unit-2 sample data kit (data/xl-sample.js) as real files, offline: each workbook is a minimal .xlsx
-   (inline strings, a date style, a bold header row, right-to-left sheets in Arabic), and the whole kit is one .zip
-   (stored, no compression; UTF-8 names). Nothing leaves the page: the zip becomes a blob the reader saves. */
+/* Writes each unit-2 project (data/xl-sample.js) as real files, offline: each workbook is a minimal .xlsx (inline
+   strings, a date style, a bold header row), and each project is one .zip (stored, no compression; UTF-8 names).
+   Nothing leaves the page: the zip becomes a blob the reader saves. */
 "use strict";
 (function (A) {
   const enc = new TextEncoder();
@@ -55,15 +55,28 @@
     ]);
   }
 
-  /* the whole kit in the reader's language: workbooks, a data dictionary and the answer key (text files start with a
-     byte-order mark so Notepad and Excel read the Arabic correctly) */
-  function kit(lang) {
-    const S = A.xlSample, root = S.folder + "/";
+  /* one lesson's project as one zip: a folder holding Data/ (the English workbooks), README.txt, Prompt.txt and
+     Answer_Key.txt in the reader's language (text files start with a byte-order mark so Notepad reads the Arabic) */
+  function promptText(p, lang) {
+    const X = (id) => (A.prompts || []).find((x) => x.id === id), main = X(p.prompt), add = X("x2a");
+    let text = main ? main.text[lang] : "";
+    if (p.tool && p.n !== 8 && add) text += "\r\n\r\n" + add.text[lang].replace(lang === "ar" ? "[أسماء الملفات]" : "[file names]", `${p.tool}.ps1, run_${p.tool.replace("_tool", "")}.bat`);
+    return text.replace(/\n/g, "\r\n") + "\r\n";
+  }
+  function lockFile() {   // what Excel leaves beside a workbook while someone has it open: 165 bytes holding the user's name
+    const b = new Uint8Array(165), name = "planning.engineer";
+    b[0] = name.length; for (let i = 0; i < name.length; i++) b[1 + i] = name.charCodeAt(i);
+    for (let i = 1 + name.length; i < 54; i++) b[i] = 32;
+    return b;
+  }
+  function project(p, lang) {
+    const S = A.xlProjects, root = p.folder + "/";
     return zip([
-      ...S.build(lang).map((f) => ({ name: root + f.path, data: workbook(f.sheets, lang === "ar") })),
-      { name: root + "README.txt", data: "﻿" + S.readme(lang) },
-      { name: root + "Answer_key.txt", data: "﻿" + S.answerKey(lang) },
+      { name: root + "README.txt", data: "\ufeff" + S.readme(p, lang) },
+      { name: root + "Prompt.txt", data: "\ufeff" + promptText(p, lang) },
+      ...p.files().map((f) => ({ name: root + f.path, data: f.lock ? lockFile() : workbook(f.sheets, false) })),
+      { name: root + "Answer_Key.txt", data: "\ufeff" + S.answerKey(p, lang) },
     ]);
   }
-  A.xlKit = { zip, workbook, kit, crc32 };
+  A.xlKit = { zip, workbook, project, promptText, crc32 };
 })(window.ACADEMY);

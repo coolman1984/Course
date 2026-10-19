@@ -48,8 +48,8 @@ number is its position in `A.courseOrder`, so reordering a unit is a one-line ch
 | `render.js` | home, unit, lesson, book map, coverage, learning path, review, glossary, prompts, compare, notebook, labs, project |
 | `history.js` | the deck player (`A.mountDeck`) and every deck drawing (`ART.*`) |
 | `scene.js` | the scene player (`A.mountScene`): timeline, stages, viewBox zoom, flow dots |
-| `labs.js` | the 14 labs (8 real calculations, 6 teaching simulations, each labelled); `xlkit` previews the unit-2 sample kit |
-| `xlkit.js` | writes the sample kit (`data/xl-sample.js`) as real `.xlsx` workbooks inside one stored `.zip`, in the page, offline |
+| `labs.js` | the 14 labs (8 real calculations, 6 teaching simulations, each labelled); `A.mountXlProject` is the unit-2 project panel (the ladder, a peek inside every workbook, the download), shown in each unit-2 lesson and in the `xlkit` lab |
+| `xlkit.js` | writes each unit-2 project (`data/xl-sample.js`) as real `.xlsx` workbooks plus README, Prompt and answer key inside one stored `.zip` per lesson, in the page, offline |
 | `quiz.js` | unit quizzes, the comprehensive test, mistakes review |
 | `tools.js` | knowledge graph and the presenter |
 | `motion.js` | page transitions and the home "motion stage" (adapted from transitions.dev under its licence) |
@@ -70,6 +70,8 @@ resume points, and `plan` (the course-plan version).
   once, because those unit ids now hold different questions.
 - `plan: 3` made unit 2 (`u1`) the Excel automation unit and moved its lessons into unit 3 (`u2`): a save from plan 2
   has the `u1` and `u2` best scores cleared once.
+- `plan: 4` made unit 2 eight projects (one zip per lesson) with new questions: a save from plan 3 has the `u1` best
+  score cleared once.
 - Import/export writes and reads the same object as a JSON file.
 - **One setting lives elsewhere:** the site's reduce-motion switch (`engine/motion.js`) is stored under its own key,
   `academy.motion` (`"off"` or `"on"`). It is not part of import/export or `S.reset()`. The operating-system
@@ -127,7 +129,7 @@ Drawings always use `--font-art` (the default stack), because their labels were 
 
 | Check | What it proves |
 |---|---|
-| `data.test.mjs` (node --test, 22 tests) | every page mapped, links resolve, prompt variables appear, UI keys exist, Arabic and English carry the same lesson links, the course plan places every lesson once and in order, prerequisites come earlier, decks are wired, no doubled SVG attributes, the AI guide names every unit-1 lesson and deck, the sample kit's quoted figures are recomputed from its files, and unit-2 lessons quote the same figures in both languages |
+| `data.test.mjs` (node --test, 23 tests) | every page mapped, links resolve, prompt variables appear, UI keys exist, Arabic and English carry the same lesson links, the course plan places every lesson once and in order, prerequisites come earlier, decks are wired, no doubled SVG attributes, the AI guide names every unit-1 lesson and deck, the sample kit's quoted figures are recomputed from its files, and unit-2 lessons quote the same figures in both languages |
 | `e2e.mjs` (Playwright) | every route in both languages on desktop and phone, no console errors, zero network requests, labs, scenes, quizzes, search, glossary, decks, the upgrade path, reading settings, the presenter |
 | `art-check.mjs` | every drawing label inside 480 × 320 and clear of others, in both languages, measured in root SVG coordinates, and drawn in an inlined font (via `CSS.getPlatformFontsForNode`) |
 

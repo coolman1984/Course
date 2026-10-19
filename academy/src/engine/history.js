@@ -1272,7 +1272,7 @@
     }
   });
 
-  /* ---------- unit 2 decks: Excel automation in detail (xk_ kit, xd_ delivery, xs_ stack, xj_ join, xr_ report, xt_ when it stops) ---------- */
+  /* ---------- unit 2 decks: Excel automation, one project per lesson (xk_ describe, xd_ delivery, xs_ stack, xj_ join, xr_ report, xm_ purchasing match, xn_ materials need, xt_ when it stops) ---------- */
   const tr = (a, e) => (ar() ? a : e);
   const b8 = 'font-weight="800"';
   const cap = (s, d = 1.8, y = 302) => `<g ${an("fade", d)}>${txt(240, y, s, "t-ink2", 12.5, bold)}</g>`;
@@ -1291,107 +1291,118 @@
   const cells = (cx, cy, vals, w, h, cls, tcls, size = 10.5, d = 0) => { const X = rowX(vals.length, w, 3, cx);   // one row of labelled cells, mirrored for Arabic
     return `<g ${an("rise", d)}>${vals.map((v, i) => `<rect x="${X(i) - w / 2}" y="${cy - h / 2}" width="${w}" height="${h}" rx="4" class="${[].concat(cls)[i] || [].concat(cls)[0]}"/>${v === "" ? "" : txt(X(i), cy + size * 0.36, v, [].concat(tcls)[i] || [].concat(tcls)[0], size, bold)}`).join("")}</g>`; };
   const n_ = (s) => digits(s).replace(/,/g, ar() ? "٬" : ",").replace(/\./g, ar() ? "٫" : ".");
+  const rowL = (cx, cy, vals, w, h, cls, tcls, size = 10, d = 0, gap = 4) => {   // one row of an English sheet: left to right in both languages
+    const X = (i) => cx + (i - (vals.length - 1) / 2) * (w + gap);
+    return `<g ${an("rise", d)}>${vals.map((v, i) => `<rect x="${X(i) - w / 2}" y="${cy - h / 2}" width="${w}" height="${h}" rx="4" class="${[].concat(cls)[i] || [].concat(cls)[0]}"/>${v === "" ? "" : txt(X(i), cy + size * 0.36, v, [].concat(tcls)[i] || [].concat(tcls)[0], size, 'font-weight="700" direction="ltr"')}`).join("")}</g>`; };
 
   Object.assign(ART, {
-    /* ----- the training data kit (data/kit-story.js) ----- */
+    /* ----- describing the file, and the unit's ladder (data/kit-story.js) ----- */
     xk_scene: () => {
-      const T = ar() ? [["تقارير الخطوط تحت بعض", "٢٫٥ ساعة"], ["أسماء الخطوط والموديلات", "٢ ساعة"], ["الإنتاج قصاد الخطة", "١٫٥ ساعة"]] : [["stack the lines' reports", "2.5 h"], ["line and model names", "2 h"], ["output against plan", "1.5 h"]];
-      const cx = mx(176), ck = mx(400), d = dirx();
-      return `${T.map(([t, h], i) => `<g ${an("rise", 0.1 + i * 0.2)}>${box(cx, 80 + i * 72, 264, 56, "f-s1 s-line2")}<circle cx="${cx - d * 110}" cy="${80 + i * 72}" r="15" class="f-acc"/>${txt(cx - d * 110, 85 + i * 72, digits(i + 1), "t-white", 13, b8)}
-        ${txt(cx + d * 12, 76 + i * 72, t, "t-ink", 12, b8)}${txt(cx + d * 12, 94 + i * 72, h, "t-rose", 11.5, bold)}</g>`).join("")}
-      <g ${an("pop", 0.9)}>${[0, 1, 2].map((k) => `<rect x="${ck - 44}" y="${96 + k * 22}" width="88" height="14" rx="4" class="f-acc-soft s-acc" stroke-width="1.5"/>`).join("")}${txt(ck, 80, tr("٦ خطوط", "6 lines"), "t-acc", 13, b8)}${txt(ck, 182, tr("كل أسبوع", "every week"), "t-ink3", 12, bold)}</g>
-      ${cap(tr("تلات أدوات… تتجرّب على إيه؟", "three tools… tried on what?"), 1.4, 300)}`;
+      const a = mx(128), b = mx(354);
+      return `${sheet(a, 118, 200, 134, "f-s1 s-ink2", "Production_Week_03.xlsx", 0.05)}
+      <g ${an("fade", 0.3)}>${txt(a, 214, tr("الملف قدامك", "the file in front of you"), "t-ink2", 12, b8)}</g>
+      <line ${an("fade", 0.5, "s-line2")} x1="240" y1="40" x2="240" y2="236" stroke-width="2" stroke-dasharray="6 6"/>
+      <g ${an("pop", 0.7)}>${bubble(b, 112, 176, 108, "f-acc-soft s-acc", ar())}${txt(b, 128, tr("؟", "?"), "t-acc", 44, b8)}</g>
+      <g ${an("fade", 1.0)}>${txt(b, 214, tr("النموذج ما شافهوش", "the model has never seen it"), "t-acc", 12, b8)}</g>
+      ${cap(tr("كل اللي هيعرفه… هو اللي هتكتبه", "all it will know… is what you write"), 1.4)}`;
     },
-    xk_idea: () => {
-      const a = mx(136), b = mx(360), d = dirx();
-      return `<g ${an("rise", 0.05)}>${folder(a, 120, 170, 120)}${txt(a, 132, tr("حقيبة البيانات", "the data kit"), "t-amber", 13, b8)}${txt(a, 152, tr("نفس شكل المصنع", "the factory's shape"), "t-ink3", 11, bold)}</g>
-      <g ${an("pop", 0.5)}><circle cx="${b}" cy="104" r="26" class="f-amber-soft s-amber" stroke-width="5"/><circle cx="${b}" cy="104" r="9" class="f-s1 s-amber" stroke-width="3"/><path d="M${b} 130 v54 M${b} 162 h${d * 16} M${b} 178 h${d * 10}" class="s-amber" stroke-width="7" stroke-linecap="round" fill="none"/>${txt(b, 212, tr("مفتاح الإجابة", "the answer key"), "t-amber", 13, b8)}</g>
-      <g ${an("fade", 0.8)}>${txt(240, 112, "+", "t-ink2", 30, b8)}</g>
-      ${pill(240, 260, 340, 38, tr("الأداة طلّعت نفس الأرقام؟", "did the tool produce the same figures?"), "f-mint", "t-white", 12.5, 1.2)}`;
+    xk_ladder: () => {
+      const X = rowX(8, 50, 6), top = (i) => 232 - i * 21;
+      const G = [[[0, 1], tr("تمهيد", "warm-up"), "t-ink2"], [[2, 3, 4], tr("التلات أدوات", "the three tools"), "t-acc"], [[5, 6], tr("مشتريات وخامات", "purchasing"), "t-mint"], [[7], tr("لما توقف", "fixing"), "t-rose"]];
+      const fill = (i) => (i < 2 ? "f-s2 s-line2" : i < 5 ? "f-acc-soft s-acc" : i < 7 ? "f-mint-soft s-mint" : "f-rose-soft s-rose");
+      return `${[...Array(8)].map((_, i) => `<g ${an("rise", 0.1 + i * 0.1)}><rect x="${X(i) - 25}" y="${top(i)}" width="50" height="${270 - top(i)}" rx="6" class="${fill(i)}" stroke-width="1.5"/><circle cx="${X(i)}" cy="${top(i) + 16}" r="11" class="f-white"/>${txt(X(i), top(i) + 20.5, digits(i + 1), "t-ink", 12, b8)}</g>`).join("")}
+      ${G.map(([is, s, tc], k) => { const cx = is.reduce((a, i) => a + X(i), 0) / is.length, y = Math.min(...is.map(top)) - 14; return `<g ${an("fade", 1.0 + k * 0.15)}>${txt(cx, y, s, tc, 11.5, b8)}</g>`; }).join("")}
+      ${cap(tr("فكرة جديدة واحدة في كل درجة", "one new idea on each step"), 1.7, 298)}`;
     },
-    xk_twin: () => {
-      const a = mx(130), b = mx(350), d = dirx();
-      return `${sheet(a, 120, 170, 120, "f-s1 s-ink2", tr("ملفات الخطوط", "the lines' files"), 0.05)}${sheet(b, 120, 170, 120, "f-s1 s-mint", tr("الحقيبة", "the kit"), 0.35)}
-      <path ${an("draw", 0.8, "s-acc")} pathLength="1" d="M${a + d * 88} 54 H ${b - d * 90}" stroke-width="2.5" fill="none" marker-end="url(#aih-arrow)"/>
-      <g ${an("fade", 0.9)}>${txt(240, 40, tr("نفس العناوين", "same headers"), "t-acc", 11.5, b8)}</g>
-      ${pill(a, 220, 170, 34, tr("نتيجتها مش معروفة", "result unknown"), "f-s2 s-line2", "t-ink2", 11, 1.1)}
-      ${pill(b, 220, 170, 34, tr("نتيجتها معروفة", "result known"), "f-mint-soft s-mint", "t-mint", 11, 1.3)}
-      ${cap(tr("نفس الشكل والمشاكل… ونتيجة معروفة", "the same shape and problems… and a known result"), 1.6)}`;
+    xk_zip: () => {
+      const r = mx(58), c = mx(78), z = mx(404), d = dirx();
+      const rows = [["Data/", tr("ملفات الإكسل بالإنجليزي", "the Excel files, in English"), "f-mint-soft s-mint"], ["README.txt", tr("المهمة ودليل البيانات", "the task and the dictionary"), "f-acc-soft s-acc"], ["Prompt.txt", tr("جاهز تنسخه", "ready to copy"), "f-acc-soft s-acc"], ["Answer_Key.txt", tr("بعد التشغيل بس", "after the run only"), "f-amber-soft s-amber"]];
+      return `<g ${an("rise", 0.05)}>${folder(r + d * 40, 50, 104, 34)}${txt(r + d * 176, 56, "Lesson_1_Describe_The_Data/", "t-ink", 11, 'font-weight="800" direction="ltr"')}</g>
+      <path ${an("draw", 0.3, "s-line2")} pathLength="1" d="M${c} 70 V ${100 + 3 * 46}" stroke-width="2" fill="none"/>
+      ${rows.map(([f, s, cls], i) => { const y = 100 + i * 46;
+        return `<g ${an("fade", 0.4 + i * 0.15)}><path d="M${c} ${y} h${d * 18}" class="s-line2" stroke-width="2"/>${box(c + d * 120, y, 200, 36, cls, 1.5)}${txt(c + d * 120, y - 2, f, "t-ink", 10.5, 'font-weight="800" direction="ltr"')}${txt(c + d * 120, y + 12, s, "t-ink3", 9.5, bold)}</g>`; }).join("")}
+      <g ${an("pop", 1.1)}>${folder(z, 140, 92, 70, "f-acc-soft s-acc")}<rect x="${z - 5}" y="${110}" width="10" height="56" rx="2" class="f-acc"/>${[0, 1, 2, 3].map((k) => `<rect x="${z - 8}" y="${114 + k * 12}" width="16" height="4" rx="1" class="f-white"/>`).join("")}</g>
+      <g ${an("fade", 1.3)}>${txt(z, 198, ".zip", "t-acc", 13, 'font-weight="800" direction="ltr"')}${txt(z, 218, tr("لكل درس", "per lesson"), "t-ink2", 11, b8)}</g>
+      ${cap(tr("بيانات، ومهمة، وPrompt، وإجابة… في ملف واحد", "data, a task, a Prompt and an answer… in one zip"), 1.6)}`;
     },
-    xk_factory: () => {
-      const H = ar() ? ["عنبر أ", "عنبر ب", "عنبر ج"] : ["Hall A", "Hall B", "Hall C"];
-      const X = rowX(3, 132, 14);
-      return `${H.map((h, i) => `<g ${an("pop", 0.1 + i * 0.2)}>${box(X(i), 104, 132, 118, "f-s1 s-acc")}${txt(X(i), 64, h, "t-acc", 13, b8)}
-        ${[0, 1].map((k) => `<rect x="${X(i) - 50}" y="${82 + k * 40}" width="100" height="26" rx="6" class="f-acc-soft"/>${txt(X(i), 100 + k * 40, "L0" + (i * 2 + k + 1), "t-ink", 11.5, 'font-weight="800" direction="ltr"')}`).join("")}</g>`).join("")}
-      ${[[tr("١٢ موديل · ٤ فئات", "12 models · 4 categories"), 0], [tr("١٬٢٨٨ دفعة", "1,288 batches"), 1], [tr("٢٩٬٣٠٤ جهاز", "29,304 units"), 2]].map(([s, i]) => pill(rowX(3, 146, 6)(i), 222, 146, 36, s, i === 2 ? "f-mint-soft s-mint" : "f-acc-soft s-acc", i === 2 ? "t-mint" : "t-acc", 10.5, 1.0 + i * 0.15)).join("")}
-      ${cap(tr("الربع الأول ٢٠٢٦ · أرقام توضيحية وحجم حقيقي", "Q1 2026 · illustrative figures, real size"), 1.6)}`;
-    },
-    xk_folder: () => {
-      const r = mx(58), c = mx(78), t = mx(380), d = dirx();
-      const rows = [["Production_2026_Q1/", tr("١٣ ملف أسبوعي", "13 weekly files"), tr("أداة ١", "tool 1"), "f-acc-soft s-acc", "t-acc"], ["Masters.xlsx", tr("الخطوط والموديلات", "lines, models"), tr("أداة ٢", "tool 2"), "f-mint-soft s-mint", "t-mint"], ["Plan_2026_Q1.xlsx", tr("الخطة", "the plan"), tr("أداة ٣", "tool 3"), "f-amber-soft s-amber", "t-amber"], ["README.txt", tr("دليل البيانات", "data dictionary"), "", "f-s2 s-line2", "t-ink2"], ["Answer_key.txt", tr("مفتاح الإجابة", "answer key"), "", "f-s2 s-line2", "t-ink2"]];
-      return `<g ${an("rise", 0.05)}>${folder(r + d * 40, 44, 104, 34)}${txt(r + d * 164, 50, "Excel_Automation_Kit/", "t-ink", 11.5, 'font-weight="800" direction="ltr"')}</g>
-      <path ${an("draw", 0.3, "s-line2")} pathLength="1" d="M${c} 64 V ${84 + 4 * 44}" stroke-width="2" fill="none"/>
-      ${rows.map(([f, s, tool, cls, tc], i) => { const y = 92 + i * 44;
-        return `<g ${an("fade", 0.4 + i * 0.15)}><path d="M${c} ${y} h${d * 18}" class="s-line2" stroke-width="2"/>${box(c + d * 120, y, 200, 34, cls, 1.5)}${txt(c + d * 120, y - 2, f, "t-ink", 10.5, 'font-weight="800" direction="ltr"')}${txt(c + d * 120, y + 12, s, "t-ink3", 9.5, bold)}</g>${tool ? pill(t, y, 86, 28, tool, cls, tc, 11, 0.6 + i * 0.15) : ""}`; }).join("")}
-      ${cap(tr("لكل أداة ملفاتها… والأسماء بالحرف", "each tool its files… names letter for letter"), 1.6)}`;
+    xk_english: () => {
+      const H = ["Date", "WorkOrder", "LineCode", "ModelCode", "Qty", "Value"], X = (i) => 240 + (i - 2.5) * 74;
+      const a = mx(140), b = mx(340);
+      return `<g ${an("rise", 0.05)}>${H.map((h, i) => `<rect x="${X(i) - 35}" y="48" width="70" height="30" rx="4" class="${i === 4 ? "f-mint-soft" : "f-acc-soft"}"/>${txt(X(i), 67, h, i === 4 ? "t-mint" : "t-acc", 10.5, 'font-weight="800" direction="ltr"')}`).join("")}</g>
+      <g ${an("fade", 0.3)}>${txt(240, 34, "Production", "t-ink3", 11, 'font-weight="700" direction="ltr"')}</g>
+      <path ${an("draw", 0.7, "s-mint")} pathLength="1" d="M${X(4)} 82 C ${X(4)} 120, ${b} 120, ${b} 150" stroke-width="2.4" fill="none" marker-end="url(#aih-arrow)"/>
+      <g ${an("pop", 0.9)}>${box(a, 176, 170, 44, "f-rose-soft s-rose", 1.5)}${txt(a, 181, tr("«عمود الكمية»", "“the quantity column”"), "t-rose", 12, b8)}<line x1="${a - 70}" y1="176" x2="${a + 70}" y2="176" class="s-rose" stroke-width="2"/></g>
+      <g ${an("pop", 1.1)}>${box(b, 176, 170, 44, "f-mint-soft s-mint", 1.5)}${txt(b, 181, "Qty", "t-mint", 14, 'font-weight="800" direction="ltr"')}</g>${check(b + 70, 156, 1.3)}
+      <g ${an("fade", 1.3)}>${txt(a, 222, tr("عمود مش موجود", "a column that isn't there"), "t-ink3", 11, bold)}${txt(b, 222, tr("الاسم بالحرف", "the name, letter for letter"), "t-ink3", 11, bold)}</g>
+      ${cap(tr("الكلام بلغتك… والأسماء بالحرف", "your words in your language… the names letter for letter"), 1.6)}`;
     },
     xk_columns: () => {
-      const H = ar() ? ["التاريخ", "أمر التشغيل", "كود الخط", "كود الموديل", "الكمية", "القيمة"] : ["Date", "WorkOrder", "LineCode", "ModelCode", "Qty", "Value"];
-      const V = ["2026-01-06", "WO-00077", "L04", "M105", "16", "110,400"], R = ["2026-01-21", "WO-00297", "L03", "M111", "-6", "-147,000"];
-      const X = rowX(6, 72, 3);
-      return `${cells(240, 64, H, 72, 30, "f-acc-soft", "t-acc", 10, 0.05)}${cells(240, 100, V, 72, 30, "f-s1", "t-ink", 10, 0.3)}${cells(240, 136, R, 72, 30, ["f-s1", "f-s1", "f-s1", "f-s1", "f-rose-soft", "f-rose-soft"], ["t-ink", "t-ink", "t-ink", "t-ink", "t-rose", "t-rose"], 10, 0.5)}
-      ${[[[2, 3], tr("أكواد بس… الأسماء في Masters", "codes only… names live in Masters"), "t-acc", 0.9], [[4], tr("سالب = رجع من الجودة", "negative = back from quality"), "t-rose", 1.1], [[5], tr("= الكمية × التكلفة المعيارية", "= Qty × standard cost"), "t-mint", 1.3]].map(([cs, s, tc, dd], k) => {
-        const x0 = Math.min(...cs.map(X)), x1 = Math.max(...cs.map(X)), cx = (x0 + x1) / 2, y = 186 + k * 34;
-        return `<g ${an("fade", dd)}><path d="M${cx} 154 V ${y - 12}" class="s-line2" stroke-width="1.8" stroke-dasharray="3 3"/>${txt(Math.max(110, Math.min(370, cx)), y, s, tc, 11.5, b8)}</g>`; }).join("")}
+      const H = ["Date", "WorkOrder", "LineCode", "ModelCode", "Qty", "Value"], X = (i) => 240 + (i - 2.5) * 74;
+      const V = ["2026-01-15", "WO-00205", "L01", "M103", "42", "193,200"], R = ["2026-01-15", "WO-00208", "L02", "M111", "18", "441,000"];
+      const row = (y, vals, cls, tcls, d) => `<g ${an("rise", d)}>${vals.map((v, i) => `<rect x="${X(i) - 35}" y="${y - 15}" width="70" height="30" rx="4" class="${cls}"/>${txt(X(i), y + 4, v, tcls, 10, 'font-weight="700" direction="ltr"')}`).join("")}</g>`;
+      return `${row(64, H, "f-acc-soft", "t-acc", 0.05)}${row(100, V, "f-s1", "t-ink", 0.3)}${row(136, R, "f-s1", "t-ink", 0.45)}
+      ${[[[0], tr("تاريخ حقيقي", "a real date"), "t-acc", 0.9], [[2, 3], tr("أكواد بس… الأسماء في ملفات تانية", "codes only… names live in other files"), "t-acc", 1.1], [[4, 5], tr("Value = Qty × التكلفة المعيارية", "Value = Qty × standard cost"), "t-mint", 1.3]].map(([cs, s, tc, dd], k) => {
+        const cx = cs.reduce((a, i) => a + X(i), 0) / cs.length, y = 186 + k * 34;
+        return `<g ${an("fade", dd)}><path d="M${cx} 154 V ${y - 12}" class="s-line2" stroke-width="1.8" stroke-dasharray="3 3"/>${txt(Math.max(120, Math.min(360, cx)), y, s, tc, 11.5, b8)}</g>`; }).join("")}
       ${cap(tr("كل عمود ليه حكاية… والنموذج محتاج يسمعها", "every column has a story… the model needs to hear it"), 1.6, 300)}`;
     },
-    xk_traps: () => {
-      const T = ar() ? ["صف «الإجمالي»", "عمود زيادة", "عمود اسمه اتغيّر", "تواريخ كنص", "دفعتين متكررين", "كود بمسافة", "موديل جديد", "كود مرتين", "مفيش خطة", "تصحيحات بالسالب"] : ["a “Total” row", "an extra column", "a renamed column", "dates as text", "two duplicates", "a spaced code", "a new model", "a code twice", "no plan", "negative fixes"];
-      const F = ["Week_02", "Week_07", "Week_11", "Week_09", "Week_04", "Week_05/06", "Week_10+", "Masters", "Plan", tr("كل الأسابيع", "all weeks")];
-      const c1 = mx(126), c2 = mx(354), d = dirx();
-      return `${T.map((s, i) => { const x = i < 5 ? c1 : c2, y = 52 + (i % 5) * 46;
-        return `<g ${an("pop", 0.1 + i * 0.1)}>${box(x, y, 210, 38, "f-s1 s-line2", 1.5)}<circle cx="${x - d * 86}" cy="${y}" r="12" class="f-rose"/>${txt(x - d * 86, y + 4.5, digits(i + 1), "t-white", 11, b8)}${txt(x - d * 8, y + 4.5, s, "t-ink", 11.5, b8)}${txt(x + d * 72, y + 4, F[i], "t-ink3", 9, 'font-weight="700" direction="ltr"')}</g>`; }).join("")}
-      ${cap(tr("كل واحدة لو عدّت… بتغيّر رقم في التقرير", "any one that slips by… changes a figure in the report"), 1.4, 300)}`;
-    },
-    xk_readme: () => {
-      const p = mx(110), c = mx(352), d = dirx();
-      return `${page(p, 140, 170, 210, "README.txt", [120, 96, 132, 80, 112, 100, 70, 124, 90], 0.05)}
-      <path ${an("draw", 0.6, "s-acc")} pathLength="1" d="M${p + d * 90} 120 H ${c - d * 104}" stroke-width="2.5" fill="none" marker-end="url(#aih-arrow)"/>
-      <g ${an("pop", 0.8)}>${bubble(c, 112, 196, 92, "f-acc-soft s-acc", !ar())}${txt(c, 100, "Prompt", "t-acc", 13, 'font-weight="800" direction="ltr"')}${txt(c, 120, tr("+ دليل البيانات", "+ the data dictionary"), "t-ink", 12, b8)}${txt(c, 138, tr("الملفات والأعمدة بالحرف", "files and columns, exactly"), "t-ink3", 10.5, bold)}</g>
-      <g ${an("rise", 1.2)}>${txt(c, 214, "ChatGPT", "t-mint", 12, 'font-weight="800" direction="ltr"')}${txt(c, 236, "Gemini Enterprise", "t-acc", 12, 'font-weight="800" direction="ltr"')}${txt(c, 258, tr("نفس الدليل للاتنين", "the same dictionary for both"), "t-ink2", 11, b8)}</g>
-      ${cap(tr("دليل البيانات = Context الأداة", "the data dictionary = the tool's Context"), 1.6)}`;
+    xk_odd: () => {
+      const X = (i) => 240 + (i - 2.5) * 74, a = mx(128), b = mx(352);
+      const R = [["2026-01-20", "WO-00287", "L05", "M112", "11", "343,200", 0], ["2026-01-20", "WO-00288", "L05", "M101", "-2", "-5,800", 1], ["2026-01-21", "WO-00297", "L03", "M111", "-6", "-147,000", 1]];
+      return `${R.map((r, k) => `<g ${an("rise", 0.05 + k * 0.15)}>${r.slice(0, 6).map((v, i) => `<rect x="${X(i) - 35}" y="${52 + k * 36 - 15}" width="70" height="30" rx="4" class="${r[6] && i >= 4 ? "f-rose-soft" : "f-s1"}"/>${txt(X(i), 52 + k * 36 + 4, v, r[6] && i >= 4 ? "t-rose" : "t-ink", 10, 'font-weight="700" direction="ltr"')}`).join("")}</g>`).join("")}
+      <g ${an("fade", 0.6)}>${txt(240, 150, tr("٨ وحدات رجعت من الجودة", "8 units sent back by quality"), "t-rose", 12.5, b8)}</g>
+      ${[tr("يتحذفوا ← الإنتاج يزيد", "deleted → output too high"), tr("يوقف عندهم كل مرة", "stops at them every time")].map((s, i) => `<g ${an("pop", 0.9 + i * 0.15)}>${box(a, 196 + i * 44, 196, 36, "f-s2 s-line2", 1.5)}${txt(a + dirx() * 10, 200 + i * 44, s, "t-ink3", 11, b8)}</g>${check(a - dirx() * 84, 196 + i * 44, 1.0 + i * 0.15, false)}`).join("")}
+      <g ${an("pop", 1.3)}>${box(b, 218, 196, 60, "f-mint-soft s-mint", 1.5)}${txt(b, 213, tr("تتخصم… وما تتحذفش", "deduct… never delete"), "t-mint", 12.5, b8)}${txt(b, 233, tr("سطر واحد في الوصف", "one line in the description"), "t-ink3", 10.5, bold)}</g>
+      ${cap(tr("قيمة غريبة من غير شرح = قرار في إيد النموذج", "an odd value unexplained = a decision left to the model"), 1.6, 300)}`;
     },
     xk_rows: () => {
-      const T = ar() ? ["عادي", "تصحيح", "تاريخ كنص", "كود غريب", "عادي"] : ["ordinary", "correction", "text date", "odd code", "ordinary"];
-      const R = [["2026-01-12", "L01", "M102", "48", "187,200"], ["2026-01-21", "L03", "M111", "-6", "-147,000"], ["26/02/2026", "L02", "M104", "30", "186,000"], ["2026-02-02", "L04 ", "M106", "22", "171,600"], ["2026-03-15", "L05", "M108", "18", "221,400"]];
-      const hot = [-1, 3, 0, 1, -1], t = mx(206), tg = mx(424);
-      return `${cells(t, 52, tr(["التاريخ", "الخط", "الموديل", "الكمية", "القيمة"], ["Date", "Line", "Model", "Qty", "Value"]), 66, 28, "f-acc-soft", "t-acc", 10, 0.05)}
-      ${R.map((r, i) => cells(t, 88 + i * 36, r, 66, 30, r.map((_, k) => (k === hot[i] ? "f-rose-soft" : "f-s1")), r.map((_, k) => (k === hot[i] ? "t-rose" : "t-ink")), 9.5, 0.25 + i * 0.15)).join("")}
+      const T = tr(["أول صف", "سالب", "خط تاني", "موديل كبير", "آخر صف"], ["first row", "negative", "another line", "large model", "last row"]);
+      const R = [["2026-01-15", "L01", "M103", "42", "193,200"], ["2026-01-21", "L03", "M111", "-6", "-147,000"], ["2026-01-15", "L02", "M109", "20", "312,000"], ["2026-01-15", "L06", "M112", "8", "249,600"], ["2026-01-21", "L06", "M101", "46", "133,400"]];
+      const hot = [-1, 3, 1, 2, -1], t = mx(206), tg = mx(424), X = (i) => t + (i - 2) * 68;
+      const row = (y, vals, cls, tcls, d) => `<g ${an("rise", d)}>${vals.map((v, i) => `<rect x="${X(i) - 32}" y="${y - 14}" width="64" height="28" rx="4" class="${[].concat(cls)[i] || cls}"/>${txt(X(i), y + 4, v, [].concat(tcls)[i] || tcls, 9.5, 'font-weight="700" direction="ltr"')}`).join("")}</g>`;
+      return `${row(52, ["Date", "LineCode", "ModelCode", "Qty", "Value"], "f-acc-soft", "t-acc", 0.05)}
+      ${R.map((r, i) => row(88 + i * 36, r, r.map((_, k) => (k === hot[i] ? "f-rose-soft" : "f-s1")), r.map((_, k) => (k === hot[i] ? "t-rose" : "t-ink")), 0.25 + i * 0.15)).join("")}
       ${T.map((s, i) => pill(tg, 88 + i * 36, 92, 28, s, hot[i] >= 0 ? "f-rose-soft s-rose" : "f-s2 s-line2", hot[i] >= 0 ? "t-rose" : "t-ink3", 11, 0.5 + i * 0.15)).join("")}
       ${cap(tr("خمس صفوف من حالات مختلفة", "five rows from different cases"), 1.6, 290)}`;
+    },
+    xk_ask: () => {
+      const a = mx(150), b = mx(296), d = dirx();
+      const Q = tr(["التاريخ تاريخ ولا نص؟", "الكمية السالبة معناها إيه؟", "القيمة بتتحسب إزاي؟"], ["Is the date a date or text?", "What does a negative Qty mean?", "How is Value worked out?"]);
+      return `<g ${an("rise", 0.05)}>${bubble(a, 58, 244, 44, "f-s1 s-ink3", !ar())}${txt(a, 63, tr("«اسألني قبل ما تكتب»", "“ask me before you write”"), "t-ink", 12.5, b8)}</g>
+      <g ${an("rise", 0.5)}>${bubble(b, 168, 300, 128, "f-acc-soft s-acc", ar())}</g>
+      ${Q.map((q, i) => { const y = 132 + i * 34, nx = b - d * 124; return `<g ${an("fade", 0.8 + i * 0.2)}><circle cx="${nx}" cy="${y}" r="11" class="f-acc"/>${txt(nx, y + 4, digits(i + 1), "t-white", 11, b8)}${txt(b + d * 14, y + 4, q, "t-ink", 11.5, b8)}</g>`; }).join("")}
+      ${cap(tr("كل سؤال بيتسأل… تخمين أقل", "every question asked… one guess fewer"), 1.6)}`;
+    },
+    xk_dict: () => {
+      const p = mx(182), nx = mx(98), tx = mx(252), z = mx(414);
+      const R = [["Date", tr("تاريخ حقيقي", "a real date")], ["WorkOrder", tr("نص WO-00000", "text WO-00000")], ["LineCode", "L01 … L06"], ["ModelCode", "M101 … M112"], ["Qty", tr("سالب = رجع من الجودة", "negative = back from quality")], ["Value", tr("Qty × التكلفة", "Qty × cost")]];
+      return `<g ${an("rise", 0.05)}>${box(p, 150, 312, 236, "f-s1 s-line2")}${txt(p, 52, "Data_Dictionary.txt", "t-ink", 12, 'font-weight="800" direction="ltr"')}</g>
+      ${R.map(([n, s], i) => { const y = 84 + i * 32; return `<g ${an("fade", 0.3 + i * 0.12)}><rect x="${nx - 52}" y="${y - 12}" width="104" height="24" rx="5" class="f-acc-soft"/>${txt(nx, y + 4, n, "t-acc", 10.5, 'font-weight="800" direction="ltr"')}${txt(tx, y + 4, s, "t-ink", 10.5, b8)}</g>`; }).join("")}
+      <g ${an("pop", 1.1)}>${xl(z, 112, 1.3)}</g>
+      ${pill(z, 176, 104, 34, tr("مع كل Prompt", "with every Prompt"), "f-mint-soft s-mint", "t-mint", 10.5, 1.3)}
+      ${cap(tr("دليل البيانات = Context الأداة", "the data dictionary = the tool's Context"), 1.6)}`;
+    },
+    xk_test: () => {
+      const q = mx(132), a = mx(306), c = mx(420);
+      const R = tr([["كم عمود؟", "٦"], ["السالب معناه إيه؟", "رجع من الجودة"], ["التاريخ نوعه إيه؟", "تاريخ حقيقي"]], [["How many columns?", "6"], ["A negative Qty?", "back from quality"], ["The date's type?", "a real date"]]);
+      return `<g ${an("rise", 0.05)}>${box(240, 140, 420, 212, "f-s1 s-line2")}${txt(240, 56, tr("محادثة جديدة", "a new chat"), "t-ink2", 12, b8)}</g>
+      ${pill(240, 84, 190, 28, "Data_Dictionary.txt", "f-acc-soft s-acc", "t-acc", 10.5, 0.3)}
+      ${R.map(([x, y], i) => { const yy = 128 + i * 40; return `<g ${an("fade", 0.6 + i * 0.25)}>${txt(q, yy + 4, x, "t-ink", 11.5, b8)}${txt(a, yy + 4, y, "t-mint", 11.5, b8)}</g>${check(c, yy, 0.8 + i * 0.25)}`; }).join("")}
+      ${pill(240, 270, 230, 34, tr("فهمه من غير الملف… جاهز", "understood without the file… ready"), "f-mint", "t-white", 11.5, 1.6)}`;
     },
     xk_rules: () => {
       const a = mx(118), b = mx(338);
       const fx = ar() ? ["شيل صف Week_02", "صلّح عمود Week_11", "ضيف M113 للقايمة"] : ["drop Week_02's row", "fix Week_11's column", "add M113 to the list"];
-      const ru = ar() ? ["صف من غير أمر تشغيل ← يتساب ويتسجّل", "عمود ناقص ← وقّف وسمّي الملف", "كود مش في القايمة ← شيت لوحده"] : ["no work order → skip and log", "missing column → stop, name it", "unknown code → its own sheet"];
+      const ru = ar() ? ["صف من غير WorkOrder ← يتساب ويتسجّل", "عمود ناقص ← وقّف وسمّي الملف", "كود مش في القايمة ← شيت لوحده"] : ["no WorkOrder → skip and log", "missing column → stop, name it", "unknown code → its own sheet"];
       return `<g ${an("fade", 0.05)}>${txt(a, 46, tr("علاج لكل مشكلة", "a fix per problem"), "t-rose", 12.5, b8)}${txt(b, 46, tr("قاعدة لكل نوع", "a rule per kind"), "t-mint", 12.5, b8)}</g>
       ${fx.map((s, i) => `<g ${an("rise", 0.2 + i * 0.15)}>${box(a, 86 + i * 52, 180, 38, "f-rose-soft s-rose", 1.5)}${txt(a, 90 + i * 52, s, "t-rose", 11, b8)}<line x1="${a - 80}" y1="${86 + i * 52}" x2="${a + 80}" y2="${86 + i * 52}" class="s-rose" stroke-width="2"/></g>`).join("")}
       ${ru.map((s, i) => `<g ${an("rise", 0.8 + i * 0.15)}>${box(b, 86 + i * 52, 236, 38, "f-mint-soft s-mint", 1.5)}${txt(b, 90 + i * 52, s, "t-mint", 10.5, b8)}</g>`).join("")}
-      ${pill(b, 246, 236, 34, tr("بتمسك العشرة… واللي بعدهم", "catches the ten… and the next ones"), "f-mint", "t-white", 11.5, 1.4)}
+      ${pill(b, 246, 236, 34, tr("بتمسك المعروف… واللي بعده", "catches the known… and the next"), "f-mint", "t-white", 11.5, 1.4)}
       ${cap(tr("العلاج بيصلّح ملف… والقاعدة بتحمي كل الملفات", "a fix repairs a file… a rule protects them all"), 1.7)}`;
-    },
-    xk_key: () => {
-      const k = mx(96), p = mx(300), d = dirx();
-      const L = ar() ? ["١٬٢٩٠ صف اتقروا", "صف إجمالي اتساب", "صفين متكررين", "١٬٢٨٨ دفعة حقيقية", "٢٩٬٣٠٤ جهاز"] : ["1,290 rows read", "a totals row skipped", "two duplicates", "1,288 true batches", "29,304 units"];
-      return `<g ${an("pop", 0.05)}><circle cx="${k}" cy="110" r="30" class="f-amber-soft s-amber" stroke-width="5"/><circle cx="${k}" cy="110" r="10" class="f-s1 s-amber" stroke-width="3"/><path d="M${k} 140 v84 M${k} 186 h${d * 18} M${k} 206 h${d * 12}" class="s-amber" stroke-width="7" stroke-linecap="round" fill="none"/></g>
-      <g ${an("rise", 0.3)}>${box(p, 132, 220, 196, "f-s1 s-amber")}${txt(p, 54, "Answer_key.txt", "t-amber", 12, 'font-weight="800" direction="ltr"')}</g>
-      ${L.map((s, i) => `<g ${an("fade", 0.5 + i * 0.15)}>${txt(p + d * 10, 88 + i * 34, s, i === 4 ? "t-mint" : "t-ink", 12, b8)}</g>`).join("")}
-      ${pill(240, 262, 290, 34, tr("بتفتحه بعد التشغيل… ومش للنموذج", "opened after the run… never for the model"), "f-amber-soft s-amber", "t-amber", 11.5, 1.4)}
-      ${cap(tr("الإجابة المعروفة بتحوّل «شكلها صح» لـ «صح»", "a known answer turns “looks right” into “is right”"), 1.7)}`;
     },
     xk_cliff: () => {
       const a = mx(120), b = mx(360), d = dirx();
-      return `<g ${an("rise", 0.05)}>${bubble(a, 84, 190, 84, "f-s1 s-mint", !ar())}${txt(a, 66, "ChatGPT", "t-mint", 12.5, 'font-weight="800" direction="ltr"')}${box(a, 96, 150, 28, "f-mint-soft s-mint", 1.5)}${dl(a - d * 56, 96)}${txt(a + d * 12, 100, "stack_tool.ps1", "t-ink", 10, 'font-weight="700" direction="ltr"')}</g>
+      return `<g ${an("rise", 0.05)}>${bubble(a, 84, 190, 84, "f-s1 s-mint", !ar())}${txt(a, 66, "ChatGPT", "t-mint", 12.5, 'font-weight="800" direction="ltr"')}${box(a, 96, 150, 28, "f-mint-soft s-mint", 1.5)}${dl(a - d * 56, 96)}${txt(a + d * 12, 100, "file_list.ps1", "t-ink", 10, 'font-weight="700" direction="ltr"')}</g>
       <g ${an("rise", 0.4)}>${bubble(b, 84, 190, 84, "f-s1 s-acc", ar())}${txt(b, 62, "Gemini Enterprise", "t-acc", 12, 'font-weight="800" direction="ltr"')}<rect x="${b - 76}" y="74" width="152" height="40" rx="6" class="f-ink2"/>${[0, 1, 2].map((k) => `<rect x="${b - 66}" y="${82 + k * 10}" width="${[110, 84, 120][k]}" height="4" rx="2" class="f-crt"/>`).join("")}</g>
       <path ${an("draw", 0.8, "s-ink3")} pathLength="1" d="M${a} 144 C ${a} 190, 240 170, 240 196" stroke-width="2.4" fill="none" marker-end="url(#aih-arrow)"/>
       <path ${an("draw", 0.9, "s-ink3")} pathLength="1" d="M${b} 144 C ${b} 190, 240 170, 240 196" stroke-width="2.4" fill="none" marker-end="url(#aih-arrow)"/>
@@ -1403,33 +1414,33 @@
     xd_reply: () => {
       const w = mx(196), d = dirx();
       return `<g ${an("rise", 0.05)}>${box(w, 150, 300, 236, "f-s1 s-line2")}<rect x="${w - 150}" y="32" width="300" height="30" rx="12" class="f-s2"/>${txt(w, 52, "Gemini Enterprise", "t-ink2", 12, 'font-weight="800" direction="ltr"')}</g>
-      ${["stack_tool.ps1", "run_stack.bat", tr("خطوات التشغيل", "run steps")].map((s, i) => `<g ${an("rise", 0.3 + i * 0.2)}><rect x="${w - 130}" y="${74 + i * 66}" width="260" height="54" rx="8" class="f-ink2"/>${txt(w, 92 + i * 66, s, "t-bg", 10.5, i < 2 ? 'font-weight="700" direction="ltr"' : bold)}${[0, 1].map((k) => `<rect x="${w - 116}" y="${102 + i * 66 + k * 9}" width="${[200, 150][k] - i * 30}" height="4" rx="2" class="f-crt"/>`).join("")}</g>`).join("")}
+      ${["file_list.ps1", "run_file_list.bat", tr("خطوات التشغيل", "run steps")].map((s, i) => `<g ${an("rise", 0.3 + i * 0.2)}><rect x="${w - 130}" y="${74 + i * 66}" width="260" height="54" rx="8" class="f-ink2"/>${txt(w, 92 + i * 66, s, "t-bg", 10.5, i < 2 ? 'font-weight="700" direction="ltr"' : bold)}${[0, 1].map((k) => `<rect x="${w - 116}" y="${102 + i * 66 + k * 9}" width="${[200, 150][k] - i * 30}" height="4" rx="2" class="f-crt"/>`).join("")}</g>`).join("")}
       <g ${an("pop", 1.1)}><circle cx="${mx(420)}" cy="140" r="34" class="f-s1 s-rose" stroke-width="3"/>${dl(mx(420), 138, "s-rose")}<path d="M${mx(420) - 24} 116 l48 48" class="s-rose" stroke-width="3.5" stroke-linecap="round"/></g>
       <g ${an("fade", 1.3)}>${txt(mx(420), 196, tr("مفيش رابط", "no link"), "t-rose", 12, b8)}</g>
       ${cap(tr("الكود سليم… والخطوة الأخيرة عليك", "the code is sound… the last step is yours"), 1.6, 304)}`;
     },
     xd_two: () => {
       const a = mx(110), b = mx(270), e = mx(410), d = dirx();
-      return `<g ${an("pop", 0.1)}>${fileIcon(a, 128, "s-amber")}${txt(a, 170, "run_stack.bat", "t-ink", 11, 'font-weight="800" direction="ltr"')}${txt(a, 188, tr("سطرين بس", "two lines"), "t-ink3", 11, bold)}</g>
+      return `<g ${an("pop", 0.1)}>${fileIcon(a, 128, "s-amber")}${txt(a, 170, "run_file_list.bat", "t-ink", 11, 'font-weight="800" direction="ltr"')}${txt(a, 188, tr("سطرين بس", "two lines"), "t-ink3", 11, bold)}</g>
       <path ${an("draw", 0.4, "s-ink3")} pathLength="1" d="M${a + d * 34} 122 H ${b - d * 48}" stroke-width="2.4" fill="none" marker-end="url(#aih-arrow)"/>
       <g ${an("pop", 0.6)}><path d="M${b - 34} 78 h50 l18 18 v74 h-68z" class="f-s1 s-acc" stroke-width="2.4"/>${[0, 1, 2, 3, 4].map((k) => `<rect x="${b - 24}" y="${100 + k * 12}" width="${[46, 38, 50, 30, 42][k]}" height="5" rx="2" class="f-acc-soft"/>`).join("")}
-        ${txt(b, 194, "stack_tool.ps1", "t-ink", 11, 'font-weight="800" direction="ltr"')}${txt(b, 212, tr("كل الشغل", "all the work"), "t-ink3", 11, bold)}</g>
+        ${txt(b, 194, "file_list.ps1", "t-ink", 11, 'font-weight="800" direction="ltr"')}${txt(b, 212, tr("كل الشغل", "all the work"), "t-ink3", 11, bold)}</g>
       <path ${an("draw", 1.0, "s-acc")} pathLength="1" d="M${b + d * 44} 122 H ${e - d * 30}" stroke-width="2.4" fill="none" marker-end="url(#aih-arrow)"/>
       <g ${an("pop", 1.2)}>${xl(e, 122, 1.2)}${txt(e, 166, tr("إكسل في الخلفية", "hidden Excel"), "t-mint", 11, b8)}</g>
       ${pill(240, 252, 330, 36, tr("ملفين نص في نفس الفولدر · ولا تنزيل برامج", "two text files, one folder · nothing to install"), "f-mint-soft s-mint", "t-mint", 11.5, 1.4)}`;
     },
     xd_shape: () => {
       const c = mx(196), s = mx(410), d = dirx();
-      return `<g ${an("rise", 0.05)}><rect x="${c - 120}" y="36" width="130" height="24" rx="6" class="f-acc"/>${mono(c - 110, 53, "stack_tool.ps1", "t-white", 11, b8)}<rect x="${c - 120}" y="58" width="240" height="186" rx="8" class="f-ink2"/></g>
-      ${["# stack 13 weekly files", "$ErrorActionPreference = 'Stop'", "$xl = New-Object -Com Excel...", "...", "finally { $xl.Quit() }"].map((t, i) => mono(c - 108, 84 + i * 24, t, "t-crt an type", 10, `style="--d:${0.3 + i * 0.15}s"`)).join("")}
-      <g ${an("pop", 1.1)}><rect x="${c - 112}" y="206" width="224" height="26" rx="5" class="f-mint"/>${mono(c - 104, 223, "# END OF FILE stack_tool.ps1", "t-white", 10.5, b8)}</g>
+      return `<g ${an("rise", 0.05)}><rect x="${c - 120}" y="36" width="130" height="24" rx="6" class="f-acc"/>${mono(c - 110, 53, "file_list.ps1", "t-white", 11, b8)}<rect x="${c - 120}" y="58" width="240" height="186" rx="8" class="f-ink2"/></g>
+      ${["# list every file and sheet", "$ErrorActionPreference = 'Stop'", "$xl = New-Object -Com Excel...", "...", "finally { $xl.Quit() }"].map((t, i) => mono(c - 108, 84 + i * 24, t, "t-crt an type", 10, `style="--d:${0.3 + i * 0.15}s"`)).join("")}
+      <g ${an("pop", 1.1)}><rect x="${c - 112}" y="206" width="224" height="26" rx="5" class="f-mint"/>${mono(c - 104, 223, "# END OF FILE file_list.ps1", "t-white", 10.5, b8)}</g>
       <g ${an("rise", 1.3)}>${box(s, 140, 112, 108, "f-s1 s-line2")}${txt(s, 106, tr("القايمة", "the list"), "t-ink", 12, b8)}${txt(s, 132, tr("ps1: ١٨٤ سطر", "ps1: 184 lines"), "t-ink2", 10.5, bold)}${txt(s, 154, tr("bat: سطرين", "bat: 2 lines"), "t-ink2", 10.5, bold)}${check(s, 178, 1.6)}</g>
       ${cap(tr("صندوق لكل ملف · اسمه فوقه · وعلامة النهاية", "a box per file · its name above · an end marker"), 1.7)}`;
     },
     xd_chatgpt: () => {
       const a = mx(130), f = mx(372), d = dirx();
       return `<g ${an("rise", 0.05)}>${bubble(a, 108, 210, 128, "f-s1 s-mint", !ar())}${txt(a, 66, "ChatGPT", "t-mint", 12.5, 'font-weight="800" direction="ltr"')}</g>
-      ${["stack_tool.ps1", "run_stack.bat"].map((s, i) => `<g ${an("pop", 0.3 + i * 0.2)}>${box(a, 98 + i * 38, 176, 30, "f-mint-soft s-mint", 1.5)}${dl(a - d * 70, 98 + i * 38)}${txt(a + d * 12, 102 + i * 38, s, "t-ink", 10.5, 'font-weight="700" direction="ltr"')}</g>`).join("")}
+      ${["file_list.ps1", "run_file_list.bat"].map((s, i) => `<g ${an("pop", 0.3 + i * 0.2)}>${box(a, 98 + i * 38, 176, 30, "f-mint-soft s-mint", 1.5)}${dl(a - d * 70, 98 + i * 38)}${txt(a + d * 12, 102 + i * 38, s, "t-ink", 10.5, 'font-weight="700" direction="ltr"')}</g>`).join("")}
       <path ${an("draw", 0.8, "s-mint")} pathLength="1" d="M${a + d * 110} 116 H ${f - d * 62}" stroke-width="2.5" fill="none" marker-end="url(#aih-arrow)"/>
       <g ${an("pop", 1.0)}>${folder(f, 116, 110, 76, "f-mint-soft s-mint")}${txt(f, 124, tr("فولدر الأداة", "tool folder"), "t-mint", 11.5, b8)}</g>
       <g ${an("pop", 1.3)}><circle cx="${a}" cy="234" r="22" class="f-s1 s-amber" stroke-width="3"/><path d="M${a} 234 v-12 M${a} 234 l9 6" class="s-amber" stroke-width="3" stroke-linecap="round"/>${txt(a + d * 96, 238, tr("الرابط بينتهي بعد وقت", "the link expires"), "t-amber", 12, b8)}</g>
@@ -1447,7 +1458,7 @@
     },
     xd_notepad: () => {
       const w = 240, d = dirx();
-      const F = ar() ? [["الفولدر", "Kit_Tools"], ["اسم الملف", "stack_tool.ps1"], ["النوع", "All files (*.*)"], ["الترميز", "UTF-8 with BOM"]] : [["Folder", "Kit_Tools"], ["File name", "stack_tool.ps1"], ["Save as type", "All files (*.*)"], ["Encoding", "UTF-8 with BOM"]];
+      const F = ar() ? [["الفولدر", "Lesson_2"], ["اسم الملف", "file_list.ps1"], ["النوع", "All files (*.*)"], ["الترميز", "UTF-8 with BOM"]] : [["Folder", "Lesson_2"], ["File name", "file_list.ps1"], ["Save as type", "All files (*.*)"], ["Encoding", "UTF-8 with BOM"]];
       return `<g ${an("rise", 0.05)}>${box(w, 150, 380, 236, "f-s1 s-line2")}<rect x="${w - 190}" y="32" width="380" height="30" rx="12" class="f-s2"/>${txt(w, 52, tr("حفظ باسم", "Save As"), "t-ink", 12.5, b8)}</g>
       ${F.map(([k, v], i) => { const y = 92 + i * 46;
         return `<g ${an("fade", 0.3 + i * 0.25)}>${txt(mx(118), y + 5, k, "t-ink2", 11.5, b8)}${box(mx(286), y, 200, 32, i >= 2 ? "f-acc-soft s-acc" : "f-s2 s-line2", 1.5)}${txt(mx(286), y + 4, v, "t-ink", 11, 'font-weight="700" direction="ltr"')}</g>${check(mx(408), y, 0.5 + i * 0.25)}`; }).join("")}
@@ -1457,16 +1468,16 @@
       const a = mx(106), r = mx(350), d = dirx();
       const row = (y, enc, out, ok, dd) => `<g ${an("rise", dd)}>${box(a, y, 170, 44, ok ? "f-mint-soft s-mint" : "f-s2 s-line2")}${txt(a, y + 4, enc, ok ? "t-mint" : "t-ink2", 12, 'font-weight="800" direction="ltr"')}</g>
         <path ${an("draw", dd + 0.3, ok ? "s-mint" : "s-rose")} pathLength="1" d="M${a + d * 90} ${y} H ${r - d * 96}" stroke-width="2.4" fill="none" marker-end="url(#aih-arrow)"/>
-        <g ${an("pop", dd + 0.5)}>${box(r, y, 180, 44, ok ? "f-mint" : "f-rose-soft s-rose")}${ok ? txt(r, y + 6, "الكمية", "t-white", 15, b8) : mono(r - 56, y + 5, "Ø§Ù©Ù§Ø©", "t-rose", 13, b8)}</g>${check(r + d * 102, y, dd + 0.7, ok)}`;
+        <g ${an("pop", dd + 0.5)}>${box(r, y, 180, 44, ok ? "f-mint" : "f-rose-soft s-rose")}${ok ? txt(r, y + 6, "اتقرا", "t-white", 15, b8) : mono(r - 56, y + 5, "Ø§Ù©Ù§Ø©", "t-rose", 13, b8)}</g>${check(r + d * 102, y, dd + 0.7, ok)}`;
       return `<g ${an("fade", 0.05)}>${txt(a, 52, tr("الحفظ", "saved as"), "t-ink3", 12, b8)}${txt(r, 52, tr("PowerShell 5.1 بيقرا", "PowerShell 5.1 reads"), "t-ink3", 12, b8)}</g>
       ${row(104, "UTF-8", "", false, 0.2)}${row(186, "UTF-8 with BOM", "", true, 0.9)}
-      ${cap(tr("أي حرف عربي في السكريبت ← UTF-8 with BOM", "any Arabic letter in the script → UTF-8 with BOM"), 1.7, 270)}`;
+      ${cap(tr("رسايل أو مسار بالعربي ← UTF-8 with BOM", "Arabic messages or paths → UTF-8 with BOM"), 1.7, 270)}`;
     },
     xd_ext: () => {
       const r = mx(184), t = mx(404), d = dirx();
       return `<g ${an("rise", 0.05)}>${box(r, 140, 300, 200, "f-s1 s-line2")}<rect x="${r - 150}" y="40" width="300" height="28" rx="12" class="f-s2"/>${txt(r, 59, tr("مستكشف الملفات", "File Explorer"), "t-ink2", 11.5, b8)}</g>
-      <g ${an("fade", 0.3)}>${fileIcon(r - d * 110, 104, "s-acc")}${txt(r + d * 10, 108, "stack_tool.ps1", "t-ink", 12, 'font-weight="700" direction="ltr"')}${txt(r + d * 10, 126, tr("قبل: الاسم شكله سليم", "before: the name looks fine"), "t-ink3", 10.5, bold)}</g>
-      <g ${an("fade", 1.0)}>${fileIcon(r - d * 110, 180, "s-rose")}<text x="${r + d * 10}" y="184" class="t-ink" font-size="12" font-family="var(--font-mono)" direction="ltr" text-anchor="middle" font-weight="800">stack_tool.ps1<tspan class="t-rose">.txt</tspan></text>${txt(r + d * 10, 204, tr("بعد: الاسم الحقيقي", "after: the real name"), "t-rose", 10.5, b8)}</g>
+      <g ${an("fade", 0.3)}>${fileIcon(r - d * 110, 104, "s-acc")}${txt(r + d * 10, 108, "file_list.ps1", "t-ink", 12, 'font-weight="700" direction="ltr"')}${txt(r + d * 10, 126, tr("قبل: الاسم شكله سليم", "before: the name looks fine"), "t-ink3", 10.5, bold)}</g>
+      <g ${an("fade", 1.0)}>${fileIcon(r - d * 110, 180, "s-rose")}<text x="${r + d * 10}" y="184" class="t-ink" font-size="12" font-family="var(--font-mono)" direction="ltr" text-anchor="middle" font-weight="800">file_list.ps1<tspan class="t-rose">.txt</tspan></text>${txt(r + d * 10, 204, tr("بعد: الاسم الحقيقي", "after: the real name"), "t-rose", 10.5, b8)}</g>
       <g ${an("pop", 0.6)}><rect x="${t - 26}" y="128" width="52" height="28" rx="14" class="f-mint"/><circle cx="${t + 12}" cy="142" r="10" class="f-white"/>${txt(t, 184, tr("امتدادات", "file name"), "t-mint", 11.5, b8)}${txt(t, 202, tr("أسماء الملفات", "extensions"), "t-mint", 11.5, b8)}</g>
       ${cap(tr("فعّلها مرة… وشوف الاسم الحقيقي على طول", "turn it on once… and always see the real name"), 1.5, 290)}`;
     },
@@ -1482,8 +1493,8 @@
     },
     xd_bat: () => {
       const c = 240;
-      return `<g ${an("rise", 0.05)}><rect x="${c - 210}" y="40" width="420" height="96" rx="10" class="f-ink2"/>${mono(c - 196, 34, "run_stack.bat", "t-ink2", 11, b8)}
-        ${mono(c - 196, 78, 'powershell -NoProfile -ExecutionPolicy Bypass', "t-crt", 10.5)}${mono(c - 196, 96, '  -File "%~dp0stack_tool.ps1"', "t-crt", 10.5)}${mono(c - 196, 120, "pause", "t-crt", 10.5)}</g>
+      return `<g ${an("rise", 0.05)}><rect x="${c - 210}" y="40" width="420" height="96" rx="10" class="f-ink2"/>${mono(c - 196, 34, "run_file_list.bat", "t-ink2", 11, b8)}
+        ${mono(c - 196, 78, 'powershell -NoProfile -ExecutionPolicy Bypass', "t-crt", 10.5)}${mono(c - 196, 96, '  -File "%~dp0file_list.ps1"', "t-crt", 10.5)}${mono(c - 196, 120, "pause", "t-crt", 10.5)}</g>
       <g ${an("pop", 0.7)}><path d="M${mx(150)} 168 l0 34 l9 -8 l7 15 l6 -3 l-7 -15 l12 0z" class="f-s1 s-ink2" stroke-width="2"/>${txt(mx(150), 236, tr("دبل كليك", "double-click"), "t-mint", 12, b8)}</g>
       <g ${an("pop", 1.1)}><rect x="${mx(330) - 16}" y="182" width="32" height="26" rx="4" class="f-rose"/><path d="M${mx(330) - 10} 182 v-9 a10 10 0 0 1 20 0 v9" class="s-rose" stroke-width="3.5" fill="none"/>${txt(mx(330), 236, tr("مقفول من IT؟", "locked by IT?"), "t-rose", 12, b8)}</g>
       ${pill(mx(330), 266, 200, 30, tr("ما تتحايلش · اسأل أو البديل", "don't bypass · ask, or switch"), "f-rose-soft s-rose", "t-rose", 11, 1.3)}
@@ -1499,11 +1510,11 @@
     },
     xd_cliff: () => {
       const t = mx(150), f = mx(390), d = dirx();
-      return `${term(t, 112, 220, 120, ["> run_stack_test.bat", "15 Excel files found", "Press any key . . ."], 0.05, 11, (i) => (i === 1 ? "t-crt2" : "t-crt"))}
+      return `${term(t, 112, 220, 120, ["> run_stack_test.bat", "6 files read, 1 skipped", "Press any key . . ."], 0.05, 11, (i) => (i === 1 ? "t-crt2" : "t-crt"))}
       ${check(t, 196, 1.0)}<g ${an("fade", 1.0)}>${txt(t, 226, tr("السكة شغالة", "the road works"), "t-mint", 12, b8)}</g>
       <path ${an("draw", 1.2, "s-acc")} pathLength="1" d="M${t + d * 116} 112 H ${f - d * 70}" stroke-width="2.6" stroke-dasharray="1" fill="none" marker-end="url(#aih-arrow)"/>
       <g ${an("rise", 1.4)}>${[0, 1, 2, 3].map((k) => fileIcon(rowX(4, 30, 4, f)(k), 96, "s-acc", 1.4 + k * 0.05)).join("")}${txt(f, 140, tr("١٣ ملف أسبوعي", "13 weekly files"), "t-ink", 12, b8)}${txt(f, 184, "?", "t-acc", 26, b8)}</g>
-      ${cap(tr("الدرس الجاي: الأداة الأولى على الحقيبة", "next lesson: tool one on the kit"), 1.8, 292)}`;
+      ${cap(tr("الدرس الجاي: الأداة الأولى، تحت بعض", "next lesson: tool one, stacking"), 1.8, 292)}`;
     },
 
     /* ----- tool one: stacking (data/stack-story.js) ----- */
@@ -1518,63 +1529,61 @@
     },
     xs_prompt: () => {
       const c = 240;
-      const chips = [["Production_2026_Q1", 70], ["Week_01 … Week_13", 116], ["Production", 162], [tr("٦ عناوين بالحرف", "6 headers, exactly"), 208]];
-      return `<g ${an("rise", 0.05)}>${box(c, 150, 400, 236, "f-s1 s-acc", 2.5)}${txt(c, 52, tr("Prompt الأداة الأولى على الحقيبة", "Tool one on the kit — the Prompt"), "t-acc", 12.5, b8)}</g>
+      const chips = [[tr("فولدر Data", "the Data folder"), 70], ["Week_01 … Week_13", 116], ["Production", 162], [tr("٦ عناوين بالحرف", "6 headers, exactly"), 208]];
+      return `<g ${an("rise", 0.05)}>${box(c, 150, 400, 236, "f-s1 s-acc", 2.5)}${txt(c, 52, tr("Prompt الأداة الأولى", "Tool one — the Prompt"), "t-acc", 12.5, b8)}</g>
       ${chips.map(([s, y], i) => `<g ${an("fade", 0.3 + i * 0.25)}>${[0, 1].map((k) => `<rect x="${ar() ? 240 + 180 - 120 - k * 196 : 60 + k * 196}" y="${y + 6}" width="${k ? 120 : 120}" height="6" rx="3" class="f-s3"/>`).join("")}</g>${pill(c, y + 9, 168, 30, s, "f-mint-soft s-mint", "t-mint", 11, 0.4 + i * 0.25)}`).join("")}
       ${cap(tr("الوصفة جاهزة… والأسماء بتاعتك", "the recipe is ready… the names are yours"), 1.6)}`;
     },
     xs_questions: () => {
       const m = mx(150), p = mx(340), d = dirx();
-      const Q = ar() ? [["التاريخ النص: يوم/شهر؟", "يوم/شهر/سنة"], ["صف من غير فاتورة؟", "يتساب ويتسجّل"], ["المتكرر بالظبط؟", "شيت للمراجعة"]] : [["text date: day/month?", "day/month/year"], ["row with no invoice?", "skip and log it"], ["exact duplicates?", "a review sheet"]];
+      const Q = ar() ? [["Qty باسم تاني؟", "أوقف وقولّي"], ["صف من غير WorkOrder؟", "يتساب ويتسجّل"], ["المتكرر بالظبط؟", "شيت To_Review"]] : [["Qty under another name?", "stop and tell me"], ["row with no WorkOrder?", "skip and log it"], ["exact duplicates?", "a To_Review sheet"]];
       return `${Q.map(([q, a], i) => `<g ${an("rise", 0.1 + i * 0.4)}>${bubble(m, 64 + i * 80, 210, 40, "f-acc-soft s-acc", !ar())}${txt(m, 68 + i * 80, q, "t-acc", 11.5, b8)}</g>
         <g ${an("rise", 0.3 + i * 0.4)}>${bubble(p, 96 + i * 80, 170, 36, "f-mint-soft s-mint", ar())}${txt(p, 100 + i * 80, a, "t-mint", 11.5, b8)}</g>`).join("")}
       <g ${an("fade", 0.05)}>${txt(m, 26, tr("النموذج", "the model"), "t-ink3", 11.5, b8)}${txt(p, 26, tr("مهندس التخطيط", "the planner"), "t-ink3", 11.5, b8)}</g>
       ${cap(tr("تلات أسئلة قبل ولا سطر كود", "three questions before a line of code"), 1.5, 306)}`;
     },
     xs_byname: () => {
-      const H = ar() ? ["التاريخ", "أمر التشغيل", "الخط", "الموديل", "الكمية", "ملاحظات", "القيمة"] : ["Date", "WorkOrder", "Line", "Model", "Qty", "Notes", "Value"];
-      const X = rowX(7, 60, 4), d = dirx();
+      const H = ["Date", "WorkOrder", "LineCode", "Qty", "Notes", "ModelCode", "Value"], X = (i) => 240 + (i - 3) * 64;
       return `<g ${an("fade", 0.05)}>${txt(240, 40, "Week_07.xlsx · Production", "t-ink2", 12, 'font-weight="800" direction="ltr"')}</g>
-      ${cells(240, 72, H, 60, 32, H.map((_, i) => (i === 5 ? "f-amber-soft" : "f-acc-soft")), H.map((_, i) => (i === 5 ? "t-amber" : "t-acc")), 10, 0.2)}
-      <path ${an("draw", 0.7, "s-rose")} pathLength="1" d="M${X(5)} 92 C ${X(5)} 140, ${X(5)} 140, ${X(5)} 168" stroke-width="2.4" stroke-dasharray="5 4" fill="none" marker-end="url(#aih-arrow)"/>
-      <path ${an("draw", 1.1, "s-mint")} pathLength="1" d="M${X(6)} 92 C ${X(6)} 150, ${mx(366)} 150, ${mx(366)} 212" stroke-width="2.6" fill="none" marker-end="url(#aih-arrow)"/>
-      ${pill(X(5), 190, 176, 36, tr("بالترتيب: ملاحظات مكان الفلوس", "by position: notes as money"), "f-rose-soft s-rose", "t-rose", 10.5, 0.9)}
-      ${pill(mx(366), 234, 200, 36, tr("بالاسم: «القيمة» أينما كانت", "by name: “Value” wherever it is"), "f-mint-soft s-mint", "t-mint", 10.5, 1.3)}
+      ${rowL(240, 72, H, 60, 32, H.map((_, i) => (i === 4 ? "f-amber-soft" : i === 3 || i === 5 ? "f-mint-soft" : "f-acc-soft")), H.map((_, i) => (i === 4 ? "t-amber" : i === 3 || i === 5 ? "t-mint" : "t-acc")), 9.5, 0.2)}
+      <path ${an("draw", 0.7, "s-rose")} pathLength="1" d="M${X(3)} 92 C ${X(3)} 140, 140 140, 140 172" stroke-width="2.4" stroke-dasharray="5 4" fill="none" marker-end="url(#aih-arrow)"/>
+      <path ${an("draw", 1.1, "s-mint")} pathLength="1" d="M${X(5)} 92 C ${X(5)} 150, 350 150, 350 212" stroke-width="2.6" fill="none" marker-end="url(#aih-arrow)"/>
+      ${pill(140, 194, 220, 36, tr("بالترتيب: Qty اتقري كموديل", "by position: Qty read as the model"), "f-rose-soft s-rose", "t-rose", 10.5, 0.9)}
+      ${pill(350, 236, 220, 36, tr("بالاسم: ModelCode أينما كان", "by name: ModelCode wherever it is"), "f-mint-soft s-mint", "t-mint", 10.5, 1.3)}
       ${cap(tr("الترتيب بيتغيّر… والاسم بيفضل", "order changes… names stay"), 1.6, 296)}`;
     },
     xs_total: () => {
       const t = mx(170), l = mx(380), d = dirx();
-      const rows = [["WO-00202", "L05", "32"], ["WO-00203", "L06", "40"], ["WO-00204", "L06", "8"], ["", tr("الإجمالي", "Total"), "2,259"]];
+      const rows = [["WO-00202", "L05", "32"], ["WO-00203", "L06", "40"], ["WO-00204", "L06", "8"], ["", "Total", "2,259"]];
       return `<g ${an("fade", 0.05)}>${txt(t, 40, "Week_02.xlsx", "t-ink2", 12, 'font-weight="800" direction="ltr"')}</g>
-      ${cells(t, 70, tr(["أمر التشغيل", "الخط", "الكمية"], ["WorkOrder", "Line", "Qty"]), 86, 28, "f-acc-soft", "t-acc", 10, 0.1)}
-      ${rows.map((r, i) => cells(t, 104 + i * 34, r, 86, 28, i === 3 ? "f-rose-soft" : "f-s1", i === 3 ? "t-rose" : "t-ink", 10, 0.3 + i * 0.15)).join("")}
+      ${rowL(t, 70, ["WorkOrder", "LineCode", "Qty"], 86, 28, "f-acc-soft", "t-acc", 10, 0.1)}
+      ${rows.map((r, i) => rowL(t, 104 + i * 34, r, 86, 28, i === 3 ? "f-rose-soft" : "f-s1", i === 3 ? "t-rose" : "t-ink", 10, 0.3 + i * 0.15)).join("")}
       <g ${an("pop", 1.0)}><line x1="${t - 140}" y1="206" x2="${t + 140}" y2="206" class="s-rose" stroke-width="3"/></g>
-      <g ${an("rise", 1.2)}>${box(l, 120, 164, 104, "f-s2 s-line2")}${txt(l, 94, tr("السجل", "log"), "t-ink", 12, b8)}${txt(l, 118, tr("صف ١٠٢: من غير أمر", "row 102: no work order"), "t-rose", 10.5, b8)}${txt(l, 138, tr("← اتساب", "→ skipped"), "t-rose", 10.5, b8)}${txt(l, 158, tr("١٠٠ صف دخلوا", "100 rows stacked"), "t-mint", 10.5, b8)}</g>
+      <g ${an("rise", 1.2)}>${box(l, 120, 164, 104, "f-s2 s-line2")}${txt(l, 94, tr("السجل", "log"), "t-ink", 12, b8)}${txt(l, 118, tr("صف ١٠٢: من غير WorkOrder", "row 102: no WorkOrder"), "t-rose", 10.5, b8)}${txt(l, 138, tr("← اتساب", "→ skipped"), "t-rose", 10.5, b8)}${txt(l, 158, tr("١٠٠ صف دخلوا", "100 rows stacked"), "t-mint", 10.5, b8)}</g>
       ${cap(tr("مش كل سطر في الشيت… سطر بيانات", "not every line in a sheet… is a data line"), 1.5, 270)}`;
     },
-    xs_dates: () => {
-      const a = mx(120), b = mx(360), d = dirx();
-      return `<g ${an("rise", 0.05)}>${box(a, 76, 170, 42, "f-mint-soft s-mint")}${txt(a, 72, tr("تاريخ حقيقي", "a real date"), "t-mint", 11, b8)}${txt(a, 89, tr("بيوصل رقم: 46079", "arrives as 46079"), "t-ink2", 10.5, bold)}</g>
-      <g ${an("rise", 0.3)}>${box(b, 76, 170, 42, "f-rose-soft s-rose")}${txt(b, 72, "“26/02/2026”", "t-rose", 11, 'font-weight="800" direction="ltr"')}${txt(b, 89, tr("بيوصل كلام", "arrives as text"), "t-ink2", 10.5, bold)}</g>
-      <g ${an("pop", 0.7)}>${box(240, 158, 120, 50, "f-s1 s-ink2", 2.5)}${txt(240, 165, "03/02", "t-ink", 18, 'font-weight="800" direction="ltr"')}</g>
-      <path ${an("draw", 0.9, "s-ink3")} pathLength="1" d="M${240 - d * 64} 158 H ${a + d * 66}" stroke-width="2.2" fill="none" marker-end="url(#aih-arrow)"/>
-      <path ${an("draw", 0.9, "s-ink3")} pathLength="1" d="M${240 + d * 64} 158 H ${b - d * 66}" stroke-width="2.2" fill="none" marker-end="url(#aih-arrow)"/>
-      ${pill(a, 158, 120, 38, tr("٣ فبراير؟", "3 February?"), "f-acc-soft s-acc", "t-acc", 12, 1.1)}${pill(b, 158, 120, 38, tr("٢ مارس؟", "2 March?"), "f-acc-soft s-acc", "t-acc", 12, 1.2)}
-      ${pill(240, 236, 300, 36, tr("إنت قلت: يوم/شهر ← ٩٩ تاريخ اتحوّلوا", "you said day/month → 99 dates converted"), "f-mint", "t-white", 11.5, 1.5)}
-      ${cap(tr("التحويل بقاعدة… مش بتخمين", "conversion by a rule… not a guess"), 1.7, 294)}`;
+    xs_source: () => {
+      const a = mx(110), t = mx(318);
+      const R = [["L04", "12", "Week_06.xlsx", 0], ["L04", "9", "Week_07.xlsx", 1], ["L02", "30", "Week_07.xlsx", 1], ["L01", "41", "Week_08.xlsx", 0]];
+      return `<g ${an("rise", 0.05)}>${bubble(a, 64, 196, 50, "f-s1 s-ink3", !ar())}${txt(a, 69, tr("«ليه خط ٤ في أسبوع ٧ قليل؟»", "“why is line 4 low in week 7?”"), "t-ink", 11, b8)}</g>
+      <g ${an("pop", 0.5)}><path d="M${a - 30} 128 h60 l-22 26 v22 l-16 -8 v-14z" class="f-acc-soft s-acc" stroke-width="2.4" stroke-linejoin="round"/></g>
+      ${pill(a, 212, 196, 32, "SourceFile = Week_07.xlsx", "f-mint-soft s-mint", "t-mint", 10, 0.8)}
+      ${rowL(t, 64, ["LineCode", "Qty", "SourceFile"], [66, 50, 110][0], 30, "f-acc-soft", "t-acc", 10, 0.2)}
+      ${R.map(([l, q, f, on], i) => rowL(t, 100 + i * 34, [l, q, f], 66, 28, on ? "f-mint-soft" : "f-s1", on ? "t-mint" : "t-ink3", 9.5, 0.4 + i * 0.15)).join("")}
+      ${cap(tr("كل صف بيشاور على ملفه", "every row points to its file"), 1.6)}`;
     },
     xs_stop: () => {
       const t = mx(178), s = mx(418), d = dirx();
-      return `${term(t, 126, 300, 176, ["Week_01.xlsx  read  104 rows", "Week_02.xlsx  read  100 rows", "...", "Week_10.xlsx  read  100 rows", "STOP  Week_11.xlsx:", "  column Qty not found"], 0.05, 10.5, (i) => (i >= 4 ? "t-rose" : "t-crt"))}
+      return `${term(t, 126, 300, 176, ["Week_01.xlsx  read  104 rows", "Week_02.xlsx  read  100 rows", "...", "Week_10.xlsx  read  114 rows", "STOP  Week_11.xlsx:", "  column Qty not found"], 0.05, 10.5, (i) => (i >= 4 ? "t-rose" : "t-crt"))}
       <g ${an("pop", 1.6)}>${stopSign(s, 108, 28)}</g>
       <g ${an("fade", 1.8)}>${txt(s, 164, tr("ولا نتيجة", "no result"), "t-rose", 12, b8)}${txt(s, 182, tr("اتكتبت", "written"), "t-rose", 12, b8)}</g>
-      ${pill(240, 252, 330, 34, tr("١٠٤ صف ما دخلوش التقرير ناقصين", "104 rows didn't reach the report incomplete"), "f-mint-soft s-mint", "t-mint", 11.5, 2.0)}
+      ${pill(240, 252, 330, 34, tr("٩٤ صف ما دخلوش التقرير ناقصين", "94 rows didn't reach the report incomplete"), "f-mint-soft s-mint", "t-mint", 11.5, 2.0)}
       ${cap(tr("الأداة اللي بتوقف… بتشتغل", "a tool that stops… is working"), 2.1, 300)}`;
     },
     xs_alias: () => {
       const a = mx(120), b = mx(352), d = dirx();
       return `<g ${an("rise", 0.05)}>${fileIcon(a, 82, "s-rose")}${txt(a, 122, tr("تعديل Week_11 بالإيد", "edit Week_11 by hand"), "t-rose", 11.5, b8)}${txt(a, 140, tr("يرجع كل شهر", "returns every month"), "t-ink3", 11, bold)}</g>${check(a + d * 30, 70, 0.4, false)}
-      <g ${an("rise", 0.6)}>${box(b, 98, 220, 86, "f-mint-soft s-mint")}${txt(b, 82, tr("قاعدة للأداة", "a rule for the tool"), "t-mint", 12.5, b8)}${txt(b, 104, tr("«الكميه» = «الكمية»", "“Quantity” = “Qty”"), "t-ink", 12, b8)}${txt(b, 124, tr("وسجّلها كل مرة", "logged each time"), "t-ink3", 11, bold)}</g>
+      <g ${an("rise", 0.6)}>${box(b, 98, 220, 86, "f-mint-soft s-mint")}${txt(b, 82, tr("قاعدة للأداة", "a rule for the tool"), "t-mint", 12.5, b8)}${txt(b, 104, "Quantity = Qty", "t-ink", 12, 'font-weight="800" direction="ltr"')}${txt(b, 124, tr("وسجّلها كل مرة", "logged each time"), "t-ink3", 11, bold)}</g>
       <path ${an("draw", 1.0, "s-mint")} pathLength="1" d="M${b} 144 V 180" stroke-width="2.5" fill="none" marker-end="url(#aih-arrow)"/>
       <g ${an("pop", 1.2)}>${fileIcon(b, 210, "s-mint")}${txt(b, 248, "stack_tool_v2.ps1", "t-mint", 11, 'font-weight="800" direction="ltr"')}</g>
       <g ${an("fade", 1.3)}>${fileIcon(a, 210, "s-ink3")}${txt(a, 248, tr("الملف الأصلي زي ما هو", "the original, untouched"), "t-ink3", 11, b8)}</g>
@@ -1584,10 +1593,10 @@
       const t = mx(154), r = mx(388), d = dirx();
       const row = ["2026-01-22", "WO-00320", "L02", "M108"];
       return `<g ${an("fade", 0.05)}>${txt(t, 40, "Week_04.xlsx", "t-ink2", 12, 'font-weight="800" direction="ltr"')}</g>
-      ${cells(t, 74, row, 68, 28, "f-amber-soft", "t-amber", 9.5, 0.2)}${cells(t, 106, row, 68, 28, "f-amber-soft", "t-amber", 9.5, 0.35)}
+      ${rowL(t, 74, row, 68, 28, "f-amber-soft", "t-amber", 9.5, 0.2)}${rowL(t, 106, row, 68, 28, "f-amber-soft", "t-amber", 9.5, 0.35)}
       <g ${an("pop", 0.6)}>${txt(t, 146, "=", "t-amber", 22, b8)}</g>
       <path ${an("draw", 0.8, "s-amber")} pathLength="1" d="M${t + d * 146} 90 H ${r - d * 66}" stroke-width="2.4" fill="none" marker-end="url(#aih-arrow)"/>
-      <g ${an("rise", 1.0)}>${box(r, 96, 120, 70, "f-amber-soft s-amber")}${txt(r, 92, tr("للمراجعة", "To review"), "t-amber", 12.5, b8)}${txt(r, 112, tr("صفين", "2 rows"), "t-ink2", 11, bold)}</g>
+      <g ${an("rise", 1.0)}>${box(r, 96, 120, 70, "f-amber-soft s-amber")}${txt(r, 92, "To_Review", "t-amber", 12, 'font-weight="800" direction="ltr"')}${txt(r, 112, tr("صفين", "2 rows"), "t-ink2", 11, bold)}</g>
       <g ${an("rise", 1.3)}>${person(r, 226, 1.1, "f-acc")}</g>${check(r + d * 30, 182, 1.6)}
       <g ${an("fade", 1.5)}>${txt(t, 212, tr("مشرف الخط: «اتدخّل مرتين بالغلط»", "line supervisor: “entered twice”"), "t-ink", 11.5, b8)}${txt(t, 234, tr("← مهندس التخطيط وافق على الحذف", "→ the planner approved deleting"), "t-mint", 11.5, b8)}</g>
       ${cap(tr("الأداة بتلاقي… والإنسان بيقرر", "the tool finds… the human decides"), 1.7, 296)}`;
@@ -1595,23 +1604,23 @@
     xs_array: () => {
       const a = mx(124), b = mx(356), d = dirx();
       let many = ""; for (let r = 0; r < 6; r++) for (let c = 0; c < 6; c++) many += `<path d="M${a - 66 + c * 26 - (d < 0 ? -14 : 0)} ${62 + r * 18} h${14 * d}" class="s-rose" stroke-width="2" marker-end="url(#aih-arrow)"/>`;
-      return `<g ${an("fade", 0.1)}>${many}</g><g ${an("fade", 0.4)}>${txt(a, 194, tr("خلية خلية", "cell by cell"), "t-rose", 12.5, b8)}${txt(a, 214, tr("≈ ٨٬٠٠٠ مرة · ٣ دقايق", "≈ 8,000 trips · 3 min"), "t-ink2", 11.5, bold)}</g>
+      return `<g ${an("fade", 0.1)}>${many}</g><g ${an("fade", 0.4)}>${txt(a, 194, tr("خلية خلية", "cell by cell"), "t-rose", 12.5, b8)}${txt(a, 214, tr("≈ ٩٬٠٠٠ مرة · ٣ دقايق", "≈ 9,000 trips · 3 min"), "t-ink2", 11.5, bold)}</g>
       <g ${an("rise", 0.7)}>${[0, 1, 2].map((k) => `<path d="M${b - d * 60} ${78 + k * 34} h${96 * d}" class="s-mint" stroke-width="10" stroke-linecap="round"/><path d="M${b + d * 44} ${70 + k * 34} l${14 * d} 8 l${-14 * d} 8z" class="f-mint"/>`).join("")}</g>
       <g ${an("fade", 1.0)}>${txt(b, 194, tr("شيت شيت", "sheet by sheet"), "t-mint", 12.5, b8)}${txt(b, 214, tr("١٣ مرة · ثواني", "13 trips · seconds"), "t-ink2", 11.5, bold)}</g>
       ${pill(240, 258, 330, 34, tr("«اقرا الشيت مرة واحدة في مصفوفة»", "“read each sheet at once into an array”"), "f-acc-soft s-acc", "t-acc", 11.5, 1.3)}`;
     },
     xs_log: () => {
       const a = mx(130), b = mx(366), d = dirx();
-      const L = ar() ? ["١٣ ملف اتقروا", "١٬٢٩٠ صف بيانات", "صف إجمالي اتساب", "صفين للمراجعة", "٢٩٬٣٠٤ جهاز"] : ["13 files read", "1,290 data rows", "a totals row skipped", "2 rows to review", "29,304 units"];
+      const L = ar() ? ["١٣ ملف اتقروا", "١٬٢٨٩ صف بيانات", "صف Total اتساب", "صفين في To_Review", "٢٩٬٣١٨ جهاز"] : ["13 files read", "1,289 data rows", "a Total row skipped", "2 rows in To_Review", "29,318 units"];
       return `<g ${an("rise", 0.05)}>${box(a, 140, 200, 220, "f-s2 s-line2")}${txt(a, 48, tr("السجل", "the log"), "t-ink", 12.5, b8)}</g>
-      <g ${an("rise", 0.3)}>${box(b, 140, 170, 220, "f-s1 s-amber")}${txt(b, 48, "Answer_key.txt", "t-amber", 11.5, 'font-weight="800" direction="ltr"')}</g>
+      <g ${an("rise", 0.3)}>${box(b, 140, 170, 220, "f-s1 s-amber")}${txt(b, 48, "Answer_Key.txt", "t-amber", 11.5, 'font-weight="800" direction="ltr"')}</g>
       ${L.map((s, i) => `<g ${an("fade", 0.5 + i * 0.2)}>${txt(a, 86 + i * 38, s, "t-ink", 11.5, b8)}${txt(b, 86 + i * 38, s, "t-ink2", 11.5, bold)}</g>${check(240 + d * 4, 82 + i * 38, 0.7 + i * 0.2)}`).join("")}
       ${pill(240, 280, 330, 32, tr("واختبار أخير: نسخة ناقصة عمود ← وقفت", "and a last test: a copy missing a column → stopped"), "f-mint", "t-white", 11, 1.7)}`;
     },
     xs_cliff: () => {
       const t = mx(150), m = mx(388), d = dirx();
-      return `${cells(t, 70, tr(["كود الخط", "كود الموديل", "الكمية"], ["Line", "Model", "Qty"]), 80, 28, "f-acc-soft", "t-acc", 10, 0.05)}
-      ${[["L04", "M105", "16"], ["L01", "M102", "48"], ["L03", "M111", "25"]].map((r, i) => cells(t, 104 + i * 32, r, 80, 26, "f-s1", "t-ink", 10, 0.2 + i * 0.1)).join("")}
+      return `${rowL(t, 70, ["LineCode", "ModelCode", "Qty"], 80, 28, "f-acc-soft", "t-acc", 10, 0.05)}
+      ${[["L04", "M105", "16"], ["L01", "M102", "48"], ["L03", "M111", "25"]].map((r, i) => rowL(t, 104 + i * 32, r, 80, 26, "f-s1", "t-ink", 10, 0.2 + i * 0.1)).join("")}
       <g ${an("rise", 0.7)}>${person(m, 120, 1.2, "f-ink2")}${bubble(m, 52, 170, 40, "f-acc-soft s-acc", ar())}${txt(m, 57, tr("حسب الفئة والعنبر؟", "by category and hall?"), "t-acc", 11.5, b8)}</g>
       <g ${an("pop", 1.1)}>${xl(t, 230, 1.1)}${txt(t + d * 70, 235, "Masters.xlsx", "t-mint", 12, 'font-weight="800" direction="ltr"')}</g>
       <g ${an("pop", 1.3)}>${txt(m, 214, "?", "t-acc", 34, b8)}</g>
@@ -1620,12 +1629,12 @@
 
     /* ----- tool two: lookups (data/lookup-story.js) ----- */
     xj_codes: () => {
-      const N = ar() ? ["اسم الخط", "العنبر", "اسم الموديل", "الفئة", "التكلفة"] : ["Line", "Hall", "Model", "Category", "Cost"];
-      const X = rowX(7, 58, 4);
-      return `${cells(240, 70, ["L", "M", ...N], 58, 30, ["f-acc-soft", "f-acc-soft", "f-s2", "f-s2", "f-s2", "f-s2", "f-s2"], ["t-acc", "t-acc", "t-ink3", "t-ink3", "t-ink3", "t-ink3", "t-ink3"], 9.5, 0.05)}
+      const N = ["LineName", "Hall", "ModelName", "Category", "StdCost"];
+      const X = (i) => 240 + (i - 3) * 62;
+      return `${rowL(240, 70, ["Line", "Model", ...N], 58, 30, ["f-acc-soft", "f-acc-soft", "f-s2", "f-s2", "f-s2", "f-s2", "f-s2"], ["t-acc", "t-acc", "t-ink3", "t-ink3", "t-ink3", "t-ink3", "t-ink3"], 8.5, 0.05)}
       ${[0, 1, 2, 3].map((r) => `<g ${an("fade", 0.3 + r * 0.1)}>${[0, 1, 2, 3, 4, 5, 6].map((c) => `<rect x="${X(c) - 29}" y="${94 + r * 28}" width="58" height="24" rx="3" class="${c < 2 ? "f-s1" : "f-s1 s-line2"}" ${c >= 2 ? 'stroke-dasharray="3 3" stroke-width="1.2"' : ""}/>`).join("")}${txt(X(0), 110 + r * 28, ["L04", "L01", "L03", "L05"][r], "t-ink", 9.5, 'font-weight="700" direction="ltr"')}${txt(X(1), 110 + r * 28, ["M105", "M102", "M113", "M108"][r], "t-ink", 9.5, 'font-weight="700" direction="ltr"')}</g>`).join("")}
       <g ${an("pop", 1.0)}><rect x="${X(4) - 29}" y="${94 + 2 * 28}" width="58" height="24" rx="3" class="f-rose-soft"/>${txt(X(4), 166, "#N/A", "t-rose", 10, 'font-weight="800" direction="ltr"')}</g>
-      ${pill(240, 236, 320, 36, tr("بالإيد: ٥ معادلات × ١٬٢٨٨ صف · ساعتين", "by hand: 5 formulas × 1,288 rows · 2 h"), "f-rose-soft s-rose", "t-rose", 11.5, 1.2)}
+      ${pill(240, 236, 320, 36, tr("بالإيد: ٥ معادلات × ١٬٢٨٧ صف · ساعتين", "by hand: 5 formulas × 1,287 rows · 2 h"), "f-rose-soft s-rose", "t-rose", 11.5, 1.2)}
       ${cap(tr("الكود لوحده رقم… والاسم هو اللي بيتقري", "a code alone is a number… the name is what's read"), 1.5, 296)}`;
     },
     xj_dict: () => {
@@ -1633,9 +1642,9 @@
       return `${grid(s, 116, 2, 6, 52, 20, "f-s1", -1, 0.05)}<g ${an("fade", 0.2)}>${txt(s, 46, "Models", "t-ink3", 12, 'font-weight="800" direction="ltr"')}</g>
       <path ${an("draw", 0.5, "s-acc")} pathLength="1" d="M${s + d * 60} 116 H ${k - d * 72}" stroke-width="2.4" fill="none" marker-end="url(#aih-arrow)"/>
       <g ${an("pop", 0.7)}>${box(k, 116, 136, 132, "f-acc-soft s-acc", 2.5)}${txt(k, 66, tr("القاموس", "dictionary"), "t-acc", 12.5, b8)}
-        ${[["M102", tr("شاشة 32 HD", "32-inch HD")], ["M105", tr("شاشة 43 FHD", "43-inch FHD")], ["M108", tr("شاشة 55 4K", "55-inch 4K")]].map(([c, n], i) => `${txt(k - d * 40, 98 + i * 30, c, "t-ink", 10, 'font-weight="800" direction="ltr"')}${txt(k + d * 22, 98 + i * 30, n, "t-ink2", 10, bold)}`).join("")}</g>
+        ${[["M102", "32-inch HD"], ["M105", "43-inch FHD"], ["M108", "55-inch 4K"]].map(([c, n], i) => `${txt(k - d * 40, 98 + i * 30, c, "t-ink", 10, 'font-weight="800" direction="ltr"')}${txt(k + d * 22, 98 + i * 30, n, "t-ink2", 10, 'font-weight="700" direction="ltr"')}`).join("")}</g>
       ${[0, 1, 2, 3, 4].map((i) => `<path ${an("draw", 1.1 + i * 0.08, "s-mint")} pathLength="1" d="M${k + d * 70} 116 L ${t - d * 40} ${64 + i * 26}" stroke-width="1.6" fill="none"/>`).join("")}
-      ${grid(t, 116, 2, 6, 34, 20, "f-s1", [1], 1.0)}<g ${an("fade", 1.2)}>${txt(t, 46, tr("١٬٢٨٨ صف", "1,288 rows"), "t-ink3", 12, b8)}</g>
+      ${grid(t, 116, 2, 6, 34, 20, "f-s1", [1], 1.0)}<g ${an("fade", 1.2)}>${txt(t, 46, tr("١٬٢٨٧ صف", "1,287 rows"), "t-ink3", 12, b8)}</g>
       ${pill(240, 246, 330, 34, tr("يتبني مرة… والبحث فيه لحظة لكل صف", "built once… an instant per row"), "f-mint-soft s-mint", "t-mint", 11.5, 1.5)}
       ${cap(tr("نفس منطق البحث في إكسل… من غير ولا معادلة", "Excel's lookup logic… without a single formula"), 1.7, 300)}`;
     },
@@ -1643,8 +1652,8 @@
       const t = mx(156), s = mx(396), d = dirx();
       const R = [["M107", "10400"], ["M108", "12300"], ["M108", "12900"], ["M109", "15600"]];
       return `<g ${an("fade", 0.05)}>${txt(t, 40, "Masters.xlsx · Models", "t-ink2", 12, 'font-weight="800" direction="ltr"')}</g>
-      ${cells(t, 72, tr(["كود الموديل", "التكلفة المعيارية"], ["ModelCode", "StdCost"]), 120, 28, "f-acc-soft", "t-acc", 10.5, 0.1)}
-      ${R.map((r, i) => cells(t, 106 + i * 34, r, 120, 28, i === 1 || i === 2 ? "f-rose-soft" : "f-s1", i === 1 || i === 2 ? "t-rose" : "t-ink", 11, 0.3 + i * 0.12)).join("")}
+      ${rowL(t, 72, ["ModelCode", "StdCost"], 120, 28, "f-acc-soft", "t-acc", 10.5, 0.1)}
+      ${R.map((r, i) => rowL(t, 106 + i * 34, r, 120, 28, i === 1 || i === 2 ? "f-rose-soft" : "f-s1", i === 1 || i === 2 ? "t-rose" : "t-ink", 11, 0.3 + i * 0.12)).join("")}
       <g ${an("pop", 1.0)}>${stopSign(s, 120, 32)}</g>
       <g ${an("fade", 1.2)}>${txt(s, 180, tr("وقّف واكتب القيمتين", "stop, write both values"), "t-rose", 11.5, b8)}</g>
       ${pill(240, 262, 340, 34, tr("معادلة البحث: تاخد أول واحد وتسكت", "a lookup formula: takes the first, stays silent"), "f-s2 s-line2", "t-ink2", 11.5, 1.4)}`;
@@ -1659,20 +1668,20 @@
     },
     xj_space: () => {
       const a = mx(130), p = mx(360), d = dirx();
-      const B = ar() ? ["خط ١", "خط ٢", "خط ٣", "خط ٤", "خط ٥", "خط ٦", "«L04 » ؟"] : ["Line 1", "Line 2", "Line 3", "Line 4", "Line 5", "Line 6", "“L04 ” ?"];
+      const B = ["L01", "L02", "L03", "L04", "L05", "L06", "“L04 ” ?"];
       return `<g ${an("rise", 0.05)}>${box(a, 92, 116, 48, "f-rose-soft s-rose")}${mono(a - 26, 98, "L04", "t-rose", 16, b8)}<rect x="${a + 12}" y="80" width="14" height="24" rx="3" class="f-rose"/></g>
       <g ${an("rise", 0.3)}>${box(a, 170, 116, 48, "f-s1 s-ink2")}${mono(a - 16, 176, "L04", "t-ink", 16, b8)}</g>
       <g ${an("pop", 0.6)}>${txt(a, 138, "≠", "t-rose", 22, b8)}</g>
-      <g ${an("fade", 0.8)}>${txt(a, 222, tr("مسافة مش باينة", "an invisible space"), "t-rose", 11.5, b8)}${txt(a, 240, tr("١٨ صف من Week_05", "18 rows from Week_05"), "t-ink3", 11, bold)}</g>
+      <g ${an("fade", 0.8)}>${txt(a, 222, tr("مسافة مش باينة", "an invisible space"), "t-rose", 11.5, b8)}${txt(a, 240, tr("١٨ صف من الأسبوع ٥", "18 rows from week 5"), "t-ink3", 11, bold)}</g>
       <g ${an("rise", 0.9)}>${box(p, 150, 170, 236, "f-s1 s-line2")}${txt(p, 50, tr("الجدول المحوري", "the pivot"), "t-ink", 12, b8)}</g>
-      ${B.map((s, i) => `<g ${an("fade", 1.0 + i * 0.1)}>${txt(p, 78 + i * 28, s, i === 6 ? "t-rose" : "t-ink2", 11.5, i === 6 ? b8 : bold)}</g>`).join("")}
+      ${B.map((s, i) => `<g ${an("fade", 1.0 + i * 0.1)}>${txt(p, 78 + i * 28, s, i === 6 ? "t-rose" : "t-ink2", 11.5, i === 6 ? 'font-weight="800" direction="ltr"' : 'font-weight="700" direction="ltr"')}</g>`).join("")}
       ${cap(tr("مسافة واحدة… خط زيادة", "one space… one extra line"), 1.8, 300)}`;
     },
     xj_case: () => {
       return `<g ${an("rise", 0.05)}>${box(mx(130), 110, 140, 64, "f-rose-soft s-rose")}${mono(mx(130) - 20, 120, "l03", "t-rose", 22, b8)}</g>
       <g ${an("pop", 0.4)}>${txt(240, 120, "≠ ?", "t-ink2", 24, b8)}</g>
       <g ${an("rise", 0.2)}>${box(mx(350), 110, 140, 64, "f-s1 s-ink2")}${mono(mx(350) - 20, 120, "L03", "t-ink", 22, b8)}</g>
-      <g ${an("fade", 0.7)}>${txt(mx(130), 168, tr("١٩ صف · Week_06", "19 rows · Week_06"), "t-ink3", 11.5, bold)}${txt(mx(350), 168, tr("في القاموس", "in the dictionary"), "t-ink3", 11.5, bold)}</g>
+      <g ${an("fade", 0.7)}>${txt(mx(130), 168, tr("١٩ صف · الأسبوع ٦", "19 rows · week 6"), "t-ink3", 11.5, bold)}${txt(mx(350), 168, tr("في القاموس", "in the dictionary"), "t-ink3", 11.5, bold)}</g>
       ${pill(240, 222, 340, 40, tr("«حوّل كل الأكواد لحروف كبيرة قبل الربط»", "“upper-case every code before joining”"), "f-mint", "t-white", 12, 1.0)}
       ${cap(tr("اللي مش مكتوب في الـ Prompt… صدفة", "what isn't in the Prompt… is chance"), 1.4, 290)}`;
     },
@@ -1692,14 +1701,14 @@
       return `<g ${an("fade", 0.05)}>${txt(a, 44, tr("بيسيب اللي اتربط بس", "keeps matches only"), "t-rose", 12, b8)}${txt(b, 44, tr("بيسيب كل الصفوف", "keeps every row"), "t-mint", 12, b8)}</g>
       ${tbl(a, false, 0.2)}${tbl(b, true, 0.5)}
       <g ${an("pop", 0.8)}>${txt(a, 140, tr("اختفى", "gone"), "t-rose", 10.5, b8)}${txt(b, 140, tr("خانات فاضية", "blank cells"), "t-amber", 10.5, b8)}</g>
-      ${pill(a, 236, 190, 36, tr("١٬٢٨٨ ← ١٬٢٦٥", "1,288 → 1,265"), "f-rose-soft s-rose", "t-rose", 13, 1.0)}${pill(b, 236, 190, 36, tr("١٬٢٨٨ = ١٬٢٨٨", "1,288 = 1,288"), "f-mint", "t-white", 13, 1.2)}
+      ${pill(a, 236, 190, 36, tr("١٬٢٨٧ ← ١٬٢٧٣", "1,287 → 1,273"), "f-rose-soft s-rose", "t-rose", 13, 1.0)}${pill(b, 236, 190, 36, tr("١٬٢٨٧ = ١٬٢٨٧", "1,287 = 1,287"), "f-mint", "t-white", 13, 1.2)}
       ${cap(tr("قبل الربط = بعد الربط… وإلا فيه حاجة ضاعت", "before = after… or something got lost"), 1.5, 296)}`;
     },
     xj_unmatched: () => {
       const s = mx(140), n = mx(372), d = dirx();
-      return `<g ${an("rise", 0.05)}>${box(s, 130, 220, 160, "f-rose-soft s-rose", 2.5)}${txt(s, 72, tr("شيت «ما اتربطش»", "the “Unmatched” sheet"), "t-rose", 13, b8)}
-        ${mono(s - 70, 116, "M113", "t-ink", 22, b8)}${txt(s, 150, tr("٢٣ صف", "23 rows"), "t-ink2", 12.5, b8)}${txt(s, 176, tr("٤٠٧ جهاز", "407 units"), "t-rose", 14, b8)}</g>
-      <g ${an("rise", 0.6)}>${box(n, 130, 160, 160, "f-s2 s-line2")}${txt(n, 72, tr("المعادلة كانت", "a formula gives"), "t-ink3", 11.5, b8)}${[0, 1, 2, 3].map((k) => txt(n + (k % 2 ? 26 : -26) * d, 104 + k * 22, "#N/A", "t-ink3", 11, 'font-weight="700" direction="ltr"')).join("")}${txt(n, 196, tr("وسط ١٬٢٨٨ صف", "among 1,288 rows"), "t-ink3", 10.5, bold)}</g>
+      return `<g ${an("rise", 0.05)}>${box(s, 130, 220, 160, "f-rose-soft s-rose", 2.5)}${txt(s, 72, tr("شيت Unmatched", "the Unmatched sheet"), "t-rose", 13, b8)}
+        ${mono(s - 70, 116, "M113", "t-ink", 22, b8)}${txt(s, 150, tr("١٤ صف", "14 rows"), "t-ink2", 12.5, b8)}${txt(s, 176, tr("٢٢٩ جهاز", "229 units"), "t-rose", 14, b8)}</g>
+      <g ${an("rise", 0.6)}>${box(n, 130, 160, 160, "f-s2 s-line2")}${txt(n, 72, tr("المعادلة كانت", "a formula gives"), "t-ink3", 11.5, b8)}${[0, 1, 2, 3].map((k) => txt(n + (k % 2 ? 26 : -26) * d, 104 + k * 22, "#N/A", "t-ink3", 11, 'font-weight="700" direction="ltr"')).join("")}${txt(n, 196, tr("وسط ١٬٢٨٧ صف", "among 1,287 rows"), "t-ink3", 10.5, bold)}</g>
       ${pill(s, 248, 220, 32, tr("موديل جديد: شاشة ٥٨ بوصة", "a new model: 58-inch TV"), "f-s1 s-rose", "t-rose", 11.5, 1.0)}
       ${cap(tr("اللي ما اتربطش أهم من اللي اتربط", "what didn't match matters more than what did"), 1.3, 298)}`;
     },
@@ -1707,25 +1716,25 @@
       const a = mx(126), b = mx(354);
       return `<g ${an("rise", 0.05)}>${box(a, 104, 196, 56, "f-rose-soft s-rose")}${mono(a - 86, 109, "=VLOOKUP(D2,Models!A:C,2)", "t-rose", 9.5, b8)}</g>
       <g ${an("fade", 0.4)}>${txt(a, 160, tr("بيتغيّر لو الشيت اتغيّر", "changes when the sheet does"), "t-rose", 11.5, b8)}${txt(a, 180, tr("وبيتقّل الملف", "and slows the workbook"), "t-ink3", 11, bold)}</g>
-      <g ${an("rise", 0.6)}>${box(b, 104, 196, 56, "f-mint-soft s-mint")}${txt(b, 109, tr("شاشة 43 بوصة FHD", "43-inch Full HD TV"), "t-mint", 12.5, b8)}</g>
+      <g ${an("rise", 0.6)}>${box(b, 104, 196, 56, "f-mint-soft s-mint")}${txt(b, 109, "43-inch Full HD TV", "t-mint", 12.5, 'font-weight="800" direction="ltr"')}</g>
       <g ${an("fade", 0.9)}>${txt(b, 160, tr("قيمة ثابتة", "a fixed value"), "t-mint", 11.5, b8)}${txt(b, 180, tr("نفس الرقم بعد شهر", "the same figure a month on"), "t-ink3", 11, bold)}</g>
-      <g ${an("pop", 1.2)}>${xl(240, 234, 1.1)}${txt(240, 274, "Enriched_Q1.xlsx", "t-ink", 11.5, 'font-weight="800" direction="ltr"')}</g>
+      <g ${an("pop", 1.2)}>${xl(240, 234, 1.1)}${txt(240, 274, "Production_Enriched_Q1.xlsx", "t-ink", 11.5, 'font-weight="800" direction="ltr"')}</g>
       ${cap(tr("القيمة ثابتة… والمعادلة بتتحرك", "a value stays put… a formula moves"), 1.4, 304)}`;
     },
     xj_category: () => {
-      const C = ar() ? [["شاشات صغيرة", 10871], ["شاشات متوسطة", 8321], ["شاشات كبيرة", 5823], ["كبيرة جدًا", 3882], ["من غير فئة", 407]] : [["Small screens", 10871], ["Medium screens", 8321], ["Large screens", 5823], ["Extra-large", 3882], ["no category", 407]];
+      const C = [["Small", 11270], ["Medium", 7936], ["Large", 6036], ["Extra Large", 3847], [tr("من غير فئة", "no category"), 229]];
       const d = dirx(), lx = mx(98);
       return `${C.map(([s, v], i) => { const y = 54 + i * 34;
-        return `<g ${an("fade", 0.05 + i * 0.12)}>${txt(lx, y + 5, s, i === 5 ? "t-rose" : "t-ink", 11.5, b8)}</g>${grow(176, y - 9, Math.max(4, Math.round((v / 10871) * 190)), 18, i === 5 ? "f-rose" : "f-acc", 0.2 + i * 0.12)}<g ${an("fade", 0.4 + i * 0.12)}>${txt(mx(176 + Math.max(4, Math.round((v / 10871) * 190)) + 46), y + 5, n_(v.toLocaleString("en-US")), "t-ink2", 10.5, b8)}</g>`; }).join("")}
-      ${pill(240, 262, 280, 36, tr("المجموع = ٢٩٬٣٠٤ جهاز ✓", "total = 29,304 units ✓"), "f-mint", "t-white", 13, 1.3)}
+        return `<g ${an("fade", 0.05 + i * 0.12)}>${txt(lx, y + 5, s, i === 4 ? "t-rose" : "t-ink", 11.5, i === 4 ? b8 : 'font-weight="800" direction="ltr"')}</g>${grow(176, y - 9, Math.max(4, Math.round((v / 11270) * 190)), 18, i === 4 ? "f-rose" : "f-acc", 0.2 + i * 0.12)}<g ${an("fade", 0.4 + i * 0.12)}>${txt(mx(176 + Math.max(4, Math.round((v / 11270) * 190)) + 46), y + 5, n_(v.toLocaleString("en-US")), "t-ink2", 10.5, b8)}</g>`; }).join("")}
+      ${pill(240, 262, 280, 36, tr("المجموع = ٢٩٬٣١٨ جهاز ✓", "total = 29,318 units ✓"), "f-mint", "t-white", 13, 1.3)}
       ${cap(tr("الأجزاء بتجمع للكل… والفرق باين", "the parts add up to the whole… the gap shows"), 1.6, 304)}`;
     },
     xj_cliff: () => {
       const t = mx(150), m = mx(380), d = dirx();
-      return `${cells(t, 80, tr(["الخط", "العنبر", "الفئة"], ["Line", "Hall", "Category"]), 82, 28, "f-acc-soft", "t-acc", 10, 0.05)}
-      ${(ar() ? [["خط ٤", "عنبر ب", "متوسطة"], ["خط ١", "عنبر أ", "صغيرة"], ["خط ٦", "عنبر ج", "كبيرة"]] : [["Line 4", "Hall B", "Medium"], ["Line 1", "Hall A", "Small"], ["Line 6", "Hall C", "Large"]]).map((r, i) => cells(t, 114 + i * 32, r, 82, 26, "f-mint-soft", "t-ink", 10, 0.2 + i * 0.1)).join("")}
+      return `${rowL(t, 80, ["LineCode", "Hall", "Category"], 82, 28, "f-acc-soft", "t-acc", 10, 0.05)}
+      ${[["L04", "Hall B", "Medium"], ["L01", "Hall A", "Small"], ["L06", "Hall C", "Large"]].map((r, i) => rowL(t, 114 + i * 32, r, 82, 26, "f-mint-soft", "t-ink", 10, 0.2 + i * 0.1)).join("")}
       <g ${an("rise", 0.7)}>${person(m, 128, 1.2, "f-ink2")}${bubble(m, 56, 176, 44, "f-acc-soft s-acc", ar())}${txt(m, 61, tr("كل خط حقق كام من خطته؟", "how much of its plan?"), "t-acc", 11, b8)}</g>
-      <g ${an("pop", 1.1)}>${xl(t, 240, 1.1)}${txt(t + d * 86, 245, "Plan_2026_Q1.xlsx", "t-amber", 11, 'font-weight="800" direction="ltr"')}</g>
+      <g ${an("pop", 1.1)}>${xl(t, 240, 1.1)}${txt(t + d * 86, 245, "Plan_Q1.xlsx", "t-amber", 11, 'font-weight="800" direction="ltr"')}</g>
       <g ${an("pop", 1.3)}>${txt(m, 222, "?", "t-acc", 34, b8)}</g>
       ${cap(tr("الدرس الجاي: الإنتاج قصاد الخطة", "next lesson: output against plan"), 1.5, 300)}`;
     },
@@ -1741,8 +1750,8 @@
     },
     xr_key: () => {
       const a = mx(120), b = mx(360), d = dirx();
-      return `${cells(a, 70, tr(["الخط", "التاريخ", "الكمية"], ["Line", "Date", "Qty"]), 64, 28, "f-acc-soft", "t-acc", 10, 0.05)}${cells(a, 102, ["L04", "2026-02-10", "22"], 64, 26, ["f-mint-soft", "f-mint-soft", "f-s1"], "t-ink", 9, 0.15)}
-      ${cells(b, 70, tr(["الخط", "الشهر", "الخطة"], ["Line", "Month", "Plan"]), 64, 28, "f-acc-soft", "t-acc", 10, 0.3)}${cells(b, 102, ["L04", "2026-02", "1,600"], 64, 26, ["f-mint-soft", "f-mint-soft", "f-s1"], "t-ink", 9, 0.4)}
+      return `${rowL(a, 70, ["LineCode", "Date", "Qty"], 64, 28, "f-acc-soft", "t-acc", 9.5, 0.05)}${rowL(a, 102, ["L04", "2026-02-10", "22"], 64, 26, ["f-mint-soft", "f-mint-soft", "f-s1"], "t-ink", 9, 0.15)}
+      ${rowL(b, 70, ["LineCode", "Month", "PlanQty"], 64, 28, "f-acc-soft", "t-acc", 9.5, 0.3)}${rowL(b, 102, ["L04", "2026-02", "1,600"], 64, 26, ["f-mint-soft", "f-mint-soft", "f-s1"], "t-ink", 9, 0.4)}
       <g ${an("fade", 0.6)}>${txt(a, 140, tr("التاريخ ← الشهر", "date → month"), "t-ink3", 11, b8)}</g>
       <g ${an("pop", 0.8)}>${box(240, 196, 240, 50, "f-mint", 0)}${txt(240, 202, "L04 + 2026-02", "t-white", 15, 'font-weight="800" direction="ltr"')}</g>
       <path ${an("draw", 1.0, "s-mint")} pathLength="1" d="M${a} 118 C ${a} 170, ${240 - d * 140} 196, ${240 - d * 122} 196" stroke-width="2.2" fill="none"/>
@@ -1750,97 +1759,323 @@
       ${cap(tr("المفتاح الكامل: الخط + الشهر", "the full key: line + month"), 1.3, 262)}`;
     },
     xr_sum: () => {
-      const g = mx(300), d = dirx(), V = [[2018, 1673, 2257], [1777, 1525, 1843], [1842, 1892, 1748], [1618, 1472, 1362], [1631, 1412, 1516], [1261, 1050, 1407]];
+      const g = mx(300), d = dirx(), V = [[2018, 1673, 2104], [1777, 1525, 2084], [1842, 1892, 1808], [1618, 1472, 1624], [1631, 1412, 1266], [1261, 1050, 1261]];
       const fm = (v) => n_(v.toLocaleString("en-US"));
-      return `<g ${an("rise", 0.05)}>${[0, 1, 2, 3, 4, 5, 6, 7].map((k) => `<rect x="${mx(70) - 40}" y="${50 + k * 26}" width="80" height="20" rx="3" class="f-s1 s-line2" stroke-width="1"/>`).join("")}${txt(mx(70), 270, tr("١٬٢٨٨ دفعة", "1,288 batches"), "t-ink3", 11.5, b8)}</g>
+      return `<g ${an("rise", 0.05)}>${[0, 1, 2, 3, 4, 5, 6, 7].map((k) => `<rect x="${mx(70) - 40}" y="${50 + k * 26}" width="80" height="20" rx="3" class="f-s1 s-line2" stroke-width="1"/>`).join("")}${txt(mx(70), 270, tr("١٬٢٨٧ دفعة", "1,287 batches"), "t-ink3", 11.5, b8)}</g>
       <path ${an("draw", 0.4, "s-acc")} pathLength="1" d="M${mx(122)} 150 H ${g - d * 128}" stroke-width="2.6" fill="none" marker-end="url(#aih-arrow)"/>
       ${cells(g, 44, ["", tr("يناير", "Jan"), tr("فبراير", "Feb"), tr("مارس", "Mar")], 58, 22, "f-acc-soft", "t-acc", 10, 0.5)}
       ${V.map((r, i) => cells(g, 72 + i * 28, ["L0" + (i + 1), ...r.map(fm)], 58, 24, ["f-s2", "f-mint-soft"], ["t-ink2", "t-ink"], 9.5, 0.6 + i * 0.1)).join("")}
       ${cap(tr("١٨ خانة… ومجموعها = مجموع الجدول", "18 cells… their sum = the table's sum"), 1.5, 270)}`;
     },
     xr_target: () => {
-      const g = mx(200), s = mx(410), d = dirx();
-      return `${[0, 1, 2, 3, 4, 5].map((r) => cells(g, 62 + r * 34, ["L0" + (r + 1), "", "", ""], 66, 28, ["f-s2", "f-mint", "f-mint", r === 5 ? "f-rose-soft" : "f-mint"], "t-ink2", 10, 0.1 + r * 0.12)).join("")}
-      ${cells(g, 30, ["", tr("يناير", "Jan"), tr("فبراير", "Feb"), tr("مارس", "Mar")], 66, 22, "f-acc-soft", "t-acc", 10, 0.05)}
-      <g ${an("pop", 1.0)}>${txt(rowX(4, 66, 3, g)(3), 236, "?", "t-rose", 16, b8)}</g>
-      <g ${an("rise", 1.2)}>${box(s, 120, 110, 100, "f-s1 s-acc")}${txt(s, 112, tr("١٧ من ١٨", "17 of 18"), "t-acc", 18, b8)}${txt(s, 140, tr("خطة اتلقت", "plans found"), "t-ink3", 11, bold)}</g>
-      ${pill(240, 284, 340, 32, tr("السجل: L06 في 2026-03 من غير خطة", "log: L06 in 2026-03 has no plan"), "f-rose-soft s-rose", "t-rose", 11.5, 1.5)}`;
+      const g = mx(196), s = mx(410), X = rowX(4, 60, 3, g);
+      const cell = (r, c) => (r === 6 ? (c === 3 ? ["f-amber-soft", "No output", "t-amber"] : ["f-s2", "", "t-ink3"]) : r === 5 && c === 3 ? ["f-rose-soft", "No plan", "t-rose"] : ["f-mint", "", "t-ink"]);
+      return `${cells(g, 30, ["", tr("يناير", "Jan"), tr("فبراير", "Feb"), tr("مارس", "Mar")], 60, 22, "f-acc-soft", "t-acc", 10, 0.05)}
+      ${[0, 1, 2, 3, 4, 5, 6].map((r) => `<g ${an("rise", 0.1 + r * 0.1)}>${[0, 1, 2, 3].map((c) => { const [cls, t, tc] = c ? cell(r, c) : ["f-s2", "L0" + (r + 1), "t-ink2"];
+        return `<rect x="${X(c) - 30}" y="${54 + r * 30 - 12}" width="60" height="24" rx="4" class="${cls}"/>${t ? txt(X(c), 54 + r * 30 + 3.5, t, tc, c ? 8.5 : 10, 'font-weight="800" direction="ltr"') : ""}`; }).join("")}</g>`).join("")}
+      <g ${an("rise", 1.0)}>${box(s, 130, 112, 120, "f-s1 s-acc")}${txt(s, 106, "17", "t-mint", 16, b8)}${txt(s, 128, "+ 1 No plan", "t-rose", 10.5, 'font-weight="800" direction="ltr"')}${txt(s, 148, "+ 1 No output", "t-amber", 10.5, 'font-weight="800" direction="ltr"')}${txt(s, 176, tr("= ١٩ صف", "= 19 rows"), "t-acc", 13, b8)}</g>
+      ${pill(240, 286, 360, 32, tr("التقرير من القايمتين… مش من الإنتاج بس", "the report from both lists… not output alone"), "f-acc-soft s-acc", "t-acc", 11.5, 1.4)}`;
     },
     xr_none: () => {
       const c = 240, d = dirx();
-      const row = (y, vals, cls, tc, dd) => cells(c, y, vals, 96, 34, cls, tc, 11, dd);
-      return `${row(64, tr(["الخط", "الشهر", "الإنتاج", "النسبة"], ["Line", "Month", "Output", "Rate"]), "f-acc-soft", "t-acc", 0.05)}
-      ${row(106, tr(["خط ٦", "مارس", "١٬٤٠٧", "٠٪ · الأخير"], ["Line 6", "March", "1,407", "0% · last"]), ["f-s1", "f-s1", "f-s1", "f-rose-soft"], ["t-ink", "t-ink", "t-ink", "t-rose"], 0.3)}
+      const row = (y, vals, cls, tc, dd) => rowL(c, y, vals, 96, 34, cls, tc, 11, dd);
+      return `${row(64, ["LineCode", "Month", "Output", "Rate"], "f-acc-soft", "t-acc", 0.05)}
+      ${row(106, ["L06", "2026-03", "1,261", "0% · last"], ["f-s1", "f-s1", "f-s1", "f-rose-soft"], ["t-ink", "t-ink", "t-ink", "t-rose"], 0.3)}
       <g ${an("pop", 0.7)}><line x1="${c - 200}" y1="106" x2="${c + 200}" y2="106" class="s-rose" stroke-width="3"/></g>
-      ${row(160, tr(["خط ٦", "مارس", "١٬٤٠٧", "مفيش خطة"], ["Line 6", "March", "1,407", "no plan"]), ["f-s1", "f-s1", "f-s1", "f-mint-soft"], ["t-ink", "t-ink", "t-ink", "t-mint"], 1.0)}${check(mx(450), 160, 1.2)}
+      ${row(160, ["L06", "2026-03", "1,261", "No plan"], ["f-s1", "f-s1", "f-s1", "f-mint-soft"], ["t-ink", "t-ink", "t-ink", "t-mint"], 1.0)}${check(mx(450), 160, 1.2)}
       <g ${an("fade", 1.3)}>${txt(c, 214, tr("برّه ترتيب مارس · النسبة فاضية", "out of March's ranking · rate blank"), "t-ink2", 11.5, b8)}</g>
-      ${cap(tr("«مفيش خطة» حقيقة… و«٠٪» اتهام", "“no plan” is a fact… “0%” an accusation"), 1.5, 262)}`;
+      ${cap(tr("No plan حقيقة… و«٠٪» اتهام", "“No plan” is a fact… “0%” an accusation"), 1.5, 262)}`;
     },
     xr_returns: () => {
       const t = mx(180), s = mx(408), d = dirx();
       const R = [["M105", "16", "110,400"], ["M111", "-6", "-147,000"], ["M102", "48", "187,200"], ["M101", "-2", "-5,800"]];
-      return `${cells(t, 62, tr(["الموديل", "الكمية", "القيمة"], ["Model", "Qty", "Value"]), 92, 28, "f-acc-soft", "t-acc", 10, 0.05)}
-      ${R.map((r, i) => cells(t, 96 + i * 32, r, 92, 26, r[1].startsWith("-") ? "f-rose-soft" : "f-s1", r[1].startsWith("-") ? "t-rose" : "t-ink", 10, 0.2 + i * 0.12)).join("")}
-      <g ${an("rise", 0.8)}>${box(s, 130, 112, 96, "f-s1 s-rose")}${txt(s, 118, tr("١٤ تصحيح", "14 fixes"), "t-rose", 14, b8)}${txt(s, 144, tr("من الجودة", "from quality"), "t-ink3", 11, bold)}</g>
+      return `${rowL(t, 62, ["ModelCode", "Qty", "Value"], 92, 28, "f-acc-soft", "t-acc", 10, 0.05)}
+      ${R.map((r, i) => rowL(t, 96 + i * 32, r, 92, 26, r[1].startsWith("-") ? "f-rose-soft" : "f-s1", r[1].startsWith("-") ? "t-rose" : "t-ink", 10, 0.2 + i * 0.12)).join("")}
+      <g ${an("rise", 0.8)}>${box(s, 130, 112, 96, "f-s1 s-rose")}${txt(s, 118, tr("١٥ تصحيح", "15 fixes"), "t-rose", 14, b8)}${txt(s, 144, tr("من الجودة", "from quality"), "t-ink3", 11, bold)}</g>
       ${pill(240, 252, 330, 36, tr("بتتخصم من الصافي… ما بتتحذفش", "deducted from the net… never deleted"), "f-mint", "t-white", 12, 1.2)}
       ${cap(tr("السالب مش غلط… السالب تصحيح من الجودة", "a negative isn't an error… it's a quality fix"), 1.5, 300)}`;
     },
     xr_rank: () => {
-      const B = ar() ? ["خط ١", "خط ٢", "خط ٣", "خط ٤", "خط ٥", "خط ٦"] : ["Line 1", "Line 2", "Line 3", "Line 4", "Line 5", "Line 6"];
+      const B = ["L01", "L02", "L03", "L04", "L05", "L06"];
       const V = [96.1, 111.1, 102.3, 89.9, 108.7, 97.0], d = dirx(), x0 = 150, sc = 2.3, base = 60;
       const w = (v) => Math.round((v - base) * sc);
       return `<g ${an("fade", 0.05)}>${txt(240, 30, tr("يناير: نسبة التحقيق", "January: achievement"), "t-ink2", 12, b8)}</g>
       ${V.map((v, i) => { const y = 50 + i * 36;
-        return `<g ${an("fade", 0.1 + i * 0.1)}>${txt(mx(84), y + 14, B[i], i === 3 ? "t-rose" : "t-ink", 11.5, b8)}</g>${grow(x0, y + 1, w(v), 20, v >= 100 ? "f-mint" : v >= 90 ? "f-amber" : "f-rose", 0.3 + i * 0.1)}<g ${an("fade", 0.6 + i * 0.1)}>${txt(mx(x0 + w(v) + 30), y + 15, n_(v.toFixed(1)) + tr("٪", "%"), "t-ink2", 10.5, b8)}</g>`; }).join("")}
+        return `<g ${an("fade", 0.1 + i * 0.1)}>${txt(mx(84), y + 14, B[i], i === 3 ? "t-rose" : "t-ink", 11.5, 'font-weight="800" direction="ltr"')}</g>${grow(x0, y + 1, w(v), 20, v >= 100 ? "f-mint" : v >= 90 ? "f-amber" : "f-rose", 0.3 + i * 0.1)}<g ${an("fade", 0.6 + i * 0.1)}>${txt(mx(x0 + w(v) + 30), y + 15, n_(v.toFixed(1)) + tr("٪", "%"), "t-ink2", 10.5, b8)}</g>`; }).join("")}
       <g ${an("fade", 1.1)}><line x1="${mx(x0 + w(100))}" y1="44" x2="${mx(x0 + w(100))}" y2="262" class="s-ink3" stroke-width="1.8" stroke-dasharray="4 4"/>${txt(mx(x0 + w(100)), 278, "100%", "t-ink3", 10.5, 'font-weight="700" direction="ltr"')}</g>
-      ${cap(tr("أعلى نسبة في الربع: خط ٢ يناير ١١١٫١٪", "the quarter's best: line 2 January 111.1%"), 1.3, 304)}`;
+      ${cap(tr("أعلى نسبة في الربع: L02 يناير ١١١٫١٪", "the quarter's best: L02 January 111.1%"), 1.3, 304)}`;
     },
     xr_check: () => {
       const a = mx(120), b = mx(360);
-      return `<g ${an("rise", 0.05)}>${box(a, 110, 180, 96, "f-s1 s-acc")}${txt(a, 92, tr("Σ التقرير", "Σ report"), "t-acc", 13, b8)}${txt(a, 122, n_("29,304"), "t-ink", 16, b8)}</g>
-      <g ${an("rise", 0.3)}>${box(b, 110, 180, 96, "f-s1 s-acc")}${txt(b, 92, tr("Σ المصدر", "Σ source"), "t-acc", 13, b8)}${txt(b, 122, n_("29,304"), "t-ink", 16, b8)}</g>
+      return `<g ${an("rise", 0.05)}>${box(a, 110, 180, 96, "f-s1 s-acc")}${txt(a, 92, tr("Σ التقرير", "Σ report"), "t-acc", 13, b8)}${txt(a, 122, n_("29,318"), "t-ink", 16, b8)}</g>
+      <g ${an("rise", 0.3)}>${box(b, 110, 180, 96, "f-s1 s-acc")}${txt(b, 92, tr("Σ المصدر", "Σ source"), "t-acc", 13, b8)}${txt(b, 122, n_("29,318"), "t-ink", 16, b8)}</g>
       <g ${an("pop", 0.7)}><circle cx="240" cy="110" r="22" class="f-mint"/>${txt(240, 118, "=", "t-white", 22, b8)}</g>
       ${pill(240, 206, 300, 40, tr("متساويين ← تحفظ · مش متساويين ← توقف", "equal → save · not equal → stop"), "f-mint-soft s-mint", "t-mint", 12, 1.0)}
       ${cap(tr("الأداة ما تقولش «خلصت» قبل ما تثبت", "the tool doesn't say “done” before it proves it"), 1.4, 270)}`;
     },
     xr_gap: () => {
       const d = dirx();
-      return `<g ${an("rise", 0.05)}>${box(240, 62, 380, 48, "f-rose-soft s-rose")}${mono(130, 68, "28,897  !=  29,304", "t-rose", 15, b8)}</g>
+      return `<g ${an("rise", 0.05)}>${box(240, 62, 380, 48, "f-rose-soft s-rose")}${mono(130, 68, "29,377  !=  29,318", "t-rose", 15, b8)}</g>
       <path ${an("draw", 0.4, "s-rose")} pathLength="1" d="M240 88 V 116" stroke-width="2.4" fill="none" marker-end="url(#aih-arrow)"/>
-      ${pill(240, 142, 300, 40, tr("الفرق ٤٠٧ = إنتاج M113", "gap 407 = M113's output"), "f-s1 s-rose", "t-rose", 13, 0.6)}
-      <path ${an("draw", 0.9, "s-acc")} pathLength="1" d="M${240 - d * 150} 142 C ${240 - d * 200} 142, ${mx(110)} 170, ${mx(110)} 196" stroke-width="2.4" fill="none" marker-end="url(#aih-arrow)"/>
-      <g ${an("pop", 1.1)}>${box(mx(110), 226, 170, 50, "f-acc-soft s-acc")}${txt(mx(110), 222, tr("الأداة التانية", "tool two"), "t-acc", 12, b8)}${txt(mx(110), 240, tr("كانت بتمسح الصفوف", "was dropping rows"), "t-ink2", 10.5, bold)}</g>
-      <g ${an("pop", 1.4)}>${box(mx(350), 226, 190, 50, "f-mint-soft s-mint")}${txt(mx(350), 222, tr("التصليح في الربط", "the fix: in the join"), "t-mint", 12, b8)}${txt(mx(350), 240, tr("مش في التقرير", "not in the report"), "t-ink2", 10.5, bold)}</g>
+      ${pill(240, 142, 320, 40, tr("الفرق ٥٩ = اللي رجع من الجودة", "gap 59 = units back from quality"), "f-s1 s-rose", "t-rose", 13, 0.6)}
+      <path ${an("draw", 0.9, "s-acc")} pathLength="1" d="M${240 - d * 160} 142 C ${240 - d * 200} 142, ${mx(110)} 170, ${mx(110)} 196" stroke-width="2.4" fill="none" marker-end="url(#aih-arrow)"/>
+      <g ${an("pop", 1.1)}>${box(mx(110), 226, 180, 50, "f-acc-soft s-acc")}${txt(mx(110), 222, tr("نسخة الزميل", "the colleague's copy"), "t-acc", 12, b8)}${txt(mx(110), 240, tr("كانت بتشيل السالب", "was dropping negatives"), "t-ink2", 10.5, bold)}</g>
+      <g ${an("pop", 1.4)}>${box(mx(350), 226, 190, 50, "f-mint-soft s-mint")}${txt(mx(350), 222, tr("التصليح في القاعدة", "the fix: in the rule"), "t-mint", 12, b8)}${txt(mx(350), 240, tr("مش في التقرير", "not in the report"), "t-ink2", 10.5, bold)}</g>
       ${cap(tr("الفرق مش مشكلة التقرير… الفرق دليل", "the gap isn't the report's problem… it's evidence"), 1.7, 300)}`;
     },
     xr_format: () => {
       const a = mx(122), b = mx(358);
       const raw = [["L02", "1777", "1.1106"], ["L04", "1618", "0.8989"], ["L05", "1631", "1.0873"]], fin = [["L02", "1,777", "111.1%"], ["L04", "1,618", "89.9%"], ["L05", "1,631", "108.7%"]];
       return `<g ${an("fade", 0.05)}>${txt(a, 44, tr("قبل", "before"), "t-ink3", 12, b8)}${txt(b, 44, tr("بعد المراجعة", "after the check"), "t-mint", 12, b8)}</g>
-      ${raw.map((r, i) => cells(a, 78 + i * 32, r, 66, 26, "f-s1", "t-ink2", 9.5, 0.2 + i * 0.1)).join("")}
-      ${fin.map((r, i) => cells(b, 78 + i * 32, r, 66, 26, i === 1 ? "f-rose-soft" : "f-s1", i === 1 ? "t-rose" : "t-ink", 9.5, 0.8 + i * 0.1)).join("")}
+      ${raw.map((r, i) => rowL(a, 78 + i * 32, r, 66, 26, "f-s1", "t-ink2", 9.5, 0.2 + i * 0.1)).join("")}
+      ${fin.map((r, i) => rowL(b, 78 + i * 32, r, 66, 26, i === 1 ? "f-rose-soft" : "f-s1", i === 1 ? "t-rose" : "t-ink", 9.5, 0.8 + i * 0.1)).join("")}
       ${[[tr("فاصل آلاف", "thousands"), 0], [tr("علامة ٪", "percent sign"), 1], [tr("أحمر فاتح تحت ٩٠٪", "light red < 90%"), 2]].map(([s, i]) => pill(b, 186 + i * 30, 170, 24, s, "f-mint-soft s-mint", "t-mint", 10.5, 1.2 + i * 0.15)).join("")}
       ${cap(tr("اللون بيشاور… والرقم هو اللي بيتكلم", "colour points… the figure speaks"), 1.7, 300)}`;
     },
     xr_compare: () => {
       const a = mx(180), s = mx(408), d = dirx();
-      const R = ar() ? [["خط ٢ · يناير", "١١١٫١٪"], ["خط ٤ · مارس", "٨٥٫١٪"], ["خط ٦ · مارس", "مفيش خطة"], ["الإجمالي", "٢٩٬٣٠٤"], ["خطط مستخدمة", "١٧"]] : [["Line 2 · Jan", "111.1%"], ["Line 4 · Mar", "85.1%"], ["Line 6 · Mar", "no plan"], ["Total", "29,304"], ["plans used", "17"]];
+      const R = ar() ? [["L02 · يناير", "١١١٫١٪"], ["L04 · مارس", "٨٥٫٥٪"], ["L06 · مارس", "No plan"], ["L07 · مارس", "No output"], ["الإجمالي", "٢٩٬٣١٨"]] : [["L02 · Jan", "111.1%"], ["L04 · Mar", "85.5%"], ["L06 · Mar", "No plan"], ["L07 · Mar", "No output"], ["Total", "29,318"]];
       return `${R.map(([k, v], i) => `<g ${an("fade", 0.1 + i * 0.2)}>${box(a, 54 + i * 44, 270, 36, "f-s1 s-line2", 1.5)}${txt(a - d * 60, 59 + i * 44, k, "t-ink", 11.5, b8)}${txt(a + d * 76, 59 + i * 44, v, "t-acc", 12, b8)}</g>${check(a + d * 156, 54 + i * 44, 0.3 + i * 0.2)}`).join("")}
       <g ${an("pop", 1.3)}>${box(s, 140, 100, 90, "f-amber-soft s-amber")}${txt(s, 134, tr("مفتاح", "answer"), "t-amber", 12, b8)}${txt(s, 152, tr("الإجابة", "key"), "t-amber", 12, b8)}</g>
       ${cap(tr("ومع ملفاتك: قصاد تقرير الشهر اللي فات المعتمد", "with your files: against last month's approved report"), 1.5, 290)}`;
     },
     xr_cliff: () => {
-      const X = rowX(3, 96, 26, 240), d = dirx();
-      return `${[tr("١٣ تقرير", "13 reports"), tr("الأسماء", "names"), tr("الخطة", "plan")].map((s, i) => `${pill(X(i), 62, 96, 40, s, "f-mint-soft s-mint", "t-mint", 12, 0.1 + i * 0.2)}${i < 2 ? `<path ${an("draw", 0.3 + i * 0.2, "s-mint")} pathLength="1" d="M${X(i) + d * 50} 62 H ${X(i + 1) - d * 52}" stroke-width="2.2" fill="none" marker-end="url(#aih-arrow)"/>` : ""}`).join("")}
-      <g ${an("fade", 0.8)}>${txt(240, 112, tr("٦ ساعات ← ١٠ دقايق", "6 hours → 10 minutes"), "t-ink", 13, b8)}</g>
-      <g ${an("rise", 1.1)}><rect x="${mx(240) - 110}" y="136" width="220" height="130" rx="16" class="f-s1 s-ink2" stroke-width="3"/><rect x="${mx(240) - 96}" y="150" width="192" height="100" rx="6" class="f-ink2"/>${mono(mx(240) - 86, 178, "> run_lookup.bat", "t-crt", 10.5)}${mono(mx(240) - 86, 200, "Exception from HRESULT:", "t-rose", 10.5, b8)}${mono(mx(240) - 86, 220, "  0x800A03EC", "t-rose", 12, b8)}</g>
-      ${cap(tr("صباح الأحد · الوردية التانية", "Sunday morning · the second shift"), 1.6, 296)}`;
+      const X = rowX(3, 96, 26, 240), d = dirx(), p = mx(120), r = mx(350);
+      return `${[tr("تحت بعض", "stacking"), tr("بحث وربط", "lookups"), tr("قصاد الخطة", "vs plan")].map((s, i) => `${pill(X(i), 52, 96, 36, s, "f-mint-soft s-mint", "t-mint", 11.5, 0.1 + i * 0.2)}${i < 2 ? `<path ${an("draw", 0.3 + i * 0.2, "s-mint")} pathLength="1" d="M${X(i) + d * 50} 52 H ${X(i + 1) - d * 52}" stroke-width="2.2" fill="none" marker-end="url(#aih-arrow)"/>` : ""}`).join("")}${check(X(2) + d * 54, 36, 0.8)}
+      <g ${an("rise", 1.0)}>${box(p, 170, 176, 70, "f-acc-soft s-acc")}${txt(p, 150, "PO-26-0202", "t-acc", 12, 'font-weight="800" direction="ltr"')}${txt(p, 172, "PSU-L · 150", "t-ink", 11.5, 'font-weight="800" direction="ltr"')}${txt(p, 192, tr("سطر أمر شراء واحد", "one order line"), "t-ink3", 10.5, bold)}</g>
+      ${[27, 27, 28].map((q, i) => { const y = 120 + i * 50; return `<path ${an("draw", 1.3 + i * 0.15, "s-ink3")} pathLength="1" d="M${p + d * 90} 170 C ${p + d * 140} 170, ${r - d * 120} ${y}, ${r - d * 76} ${y}" stroke-width="2" fill="none" marker-end="url(#aih-arrow)"/>${pill(r, y, 144, 34, tr("استلام · " + digits(q), "receipt · " + q), "f-s1 s-line2", "t-ink", 11, 1.5 + i * 0.15)}`; }).join("")}
+      <g ${an("pop", 2.0)}>${txt(r + d * 100, 172, "?", "t-acc", 30, b8)}</g>
+      ${cap(tr("الدرس الجاي: أوامر الشراء قصاد الاستلام", "next lesson: purchase orders against receipts"), 2.1, 300)}`;
+    },
+
+    /* ----- tool four: purchase orders against receipts (data/match-story.js) ----- */
+    xm_scene: () => {
+      const a = mx(96), b = mx(232), c = mx(388);
+      return `${sheet(a, 110, 150, 110, "f-s1 s-line2", "PO_Lines", 0.05)}${sheet(b, 110, 120, 110, "f-s1 s-line2", "Receipts", 0.25)}
+      <g ${an("pop", 0.6)}><rect x="${c - 34}" y="62" width="68" height="96" rx="8" class="f-ink2"/><rect x="${c - 26}" y="70" width="52" height="20" rx="3" class="f-crt"/>${[0, 1, 2].map((r) => [0, 1, 2].map((k) => `<rect x="${c - 26 + k * 18}" y="${98 + r * 18}" width="14" height="13" rx="2" class="f-s3"/>`).join("")).join("")}</g>
+      <g ${an("pop", 0.9)}><circle cx="${c}" cy="208" r="24" class="f-s1 s-rose" stroke-width="3.5"/><path d="M${c} 208 v-14 M${c} 208 l9 6" class="s-rose" stroke-width="3.5" stroke-linecap="round"/>${txt(c, 254, tr("يوم كامل", "a full day"), "t-rose", 12.5, b8)}</g>
+      ${pill(mx(164), 214, 250, 36, tr("٣٢ سطر قصاد ٥٦ استلام", "32 lines against 56 receipts"), "f-acc-soft s-acc", "t-acc", 11.5, 1.2)}
+      ${cap(tr("نفس الخطوة ٣٢ مرة… بالإيد", "the same step 32 times… by hand"), 1.5)}`;
+    },
+    xm_files: () => {
+      return `<g ${an("fade", 0.05)}>${txt(240, 34, "Purchase_Orders_Feb.xlsx · PO_Lines", "t-ink2", 11.5, 'font-weight="800" direction="ltr"')}</g>
+      ${rowL(240, 60, ["PONumber", "MaterialCode", "OrderedQty", "UnitPrice"], 98, 26, "f-acc-soft", "t-acc", 9.5, 0.1)}
+      ${rowL(240, 90, ["PO-26-0202", "PSU-L", "150", "410"], 98, 24, "f-s1", "t-ink", 9.5, 0.25)}
+      <g ${an("fade", 0.6)}>${txt(240, 146, "Goods_Receipts_Feb.xlsx · Receipts", "t-ink2", 11.5, 'font-weight="800" direction="ltr"')}</g>
+      ${rowL(240, 172, ["ReceiptNo", "PONumber", "MaterialCode", "ReceivedQty"], 98, 26, "f-mint-soft", "t-mint", 9.5, 0.7)}
+      ${[["GRN-26-0010", "27"], ["GRN-26-0024", "27"], ["GRN-26-0038", "28"]].map(([g, q], i) => rowL(240, 202 + i * 28, [g, "PO-26-0202", "PSU-L", q], 98, 24, "f-s1", "t-ink", 9.5, 0.85 + i * 0.12)).join("")}
+      ${cap(tr("الطلب من ناحية… والاستلام من ناحية", "the order on one side… the receipt on the other"), 1.4, 304)}`;
+    },
+    xm_key: () => {
+      const a = mx(130), b = mx(354);
+      return `${rowL(240, 50, ["PONumber", "MaterialCode", "OrderedQty"], 110, 26, "f-acc-soft", "t-acc", 10, 0.05)}
+      ${[["PO-26-0201", "PNL-55Q", "80"], ["PO-26-0210", "PNL-55Q", "60"]].map((r, i) => rowL(240, 80 + i * 28, r, 110, 24, ["f-s1", "f-amber-soft", "f-s1"], ["t-ink", "t-amber", "t-ink"], 10, 0.2 + i * 0.12)).join("")}
+      <g ${an("pop", 0.6)}>${box(a, 162, 196, 40, "f-rose-soft s-rose", 1.5)}${txt(a, 159, tr("PONumber بس", "PONumber only"), "t-rose", 11, b8)}${txt(a, 175, tr("خامات الأمر تتجمع على بعض", "an order's materials summed together"), "t-ink3", 9.5, bold)}</g>${check(a, 138, 0.7, false)}
+      <g ${an("pop", 0.8)}>${box(b, 162, 196, 40, "f-rose-soft s-rose", 1.5)}${txt(b, 159, tr("MaterialCode بس", "MaterialCode only"), "t-rose", 11, b8)}${txt(b, 175, tr("PNL-55Q من أمرين يتلخبطوا", "PNL-55Q from two orders mixed"), "t-ink3", 9.5, bold)}</g>${check(b, 138, 0.9, false)}
+      ${pill(240, 236, 300, 42, "PONumber + MaterialCode", "f-mint", "t-white", 14, 1.2)}
+      ${cap(tr("المفتاح بيميّز كل سطر لوحده", "the key singles out each line"), 1.5, 290)}`;
+    },
+    xm_many: () => {
+      const p = mx(108), r = mx(316), d = dirx();
+      return `<g ${an("rise", 0.05)}>${box(p, 116, 168, 84, "f-acc-soft s-acc")}${txt(p, 100, "PO-26-0202", "t-acc", 12, 'font-weight="800" direction="ltr"')}${txt(p, 120, "PSU-L", "t-ink", 12, 'font-weight="800" direction="ltr"')}${txt(p, 140, tr("المطلوب ١٥٠", "ordered 150"), "t-ink2", 11, b8)}</g>
+      ${[27, 27, 28].map((q, i) => `${pill(r, 62 + i * 46, 150, 34, tr("استلام · " + digits(q), "receipt · " + q), "f-s1 s-line2", "t-ink", 11, 0.4 + i * 0.15)}<path ${an("draw", 0.9 + i * 0.1, "s-mint")} pathLength="1" d="M${r + d * 78} ${62 + i * 46} C ${r + d * 120} ${62 + i * 46}, ${r + d * 120} 232, ${r + d * 40} 232" stroke-width="1.8" fill="none"/>`).join("")}
+      <g ${an("pop", 1.3)}>${box(mx(276), 232, 210, 52, "f-mint-soft s-mint")}${txt(mx(276), 228, "27 + 27 + 28 = 82", "t-mint", 13, 'font-weight="800" direction="ltr"')}${txt(mx(276), 246, tr("٨٢ من ١٥٠ ← Partial", "82 of 150 → Partial"), "t-ink2", 11, b8)}</g>
+      <path ${an("draw", 1.5, "s-acc")} pathLength="1" d="M${p} 160 C ${p} 210, ${mx(276) - d * 140} 232, ${mx(276) - d * 108} 232" stroke-width="2" stroke-dasharray="4 4" fill="none"/>
+      ${cap(tr("اجمع الأول… وبعدين قارن", "sum first… then compare"), 1.7, 296)}`;
+    },
+    xm_tol: () => {
+      const X = (p) => 60 + ((p - 90) / 20) * 360;
+      return `<g ${an("fade", 0.05)}>${txt(240, 44, "347 / 350 = 99.1%", "t-ink", 15, 'font-weight="800" direction="ltr"')}</g>
+      <g ${an("rise", 0.2)}><rect x="${X(90)}" y="128" width="${X(98) - X(90)}" height="24" rx="6" class="f-amber-soft"/><rect x="${X(98)}" y="128" width="${X(102) - X(98)}" height="24" class="f-mint"/><rect x="${X(102)}" y="128" width="${X(110) - X(102)}" height="24" rx="6" class="f-acc-soft"/></g>
+      <g ${an("fade", 0.5)}>${txt((X(90) + X(98)) / 2, 116, "Partial", "t-amber", 12, 'font-weight="800" direction="ltr"')}${txt(240, 116, "Complete", "t-mint", 12, 'font-weight="800" direction="ltr"')}${txt((X(102) + X(110)) / 2, 116, "Over", "t-acc", 12, 'font-weight="800" direction="ltr"')}</g>
+      <g ${an("fade", 0.6)}>${[90, 98, 102, 110].map((p) => txt(X(p), 172, p + "%", "t-ink3", 10.5, 'font-weight="700" direction="ltr"')).join("")}</g>
+      <g ${an("pop", 0.9)}><path d="M${X(99.1)} 80 v44" class="s-ink2" stroke-width="2.5"/><circle cx="${X(99.1)}" cy="76" r="6" class="f-ink2"/></g>
+      ${pill(240, 222, 280, 40, tr("سياسة المشتريات: ٢٪", "purchasing's policy: 2%"), "f-s1 s-ink2", "t-ink", 13, 1.1)}
+      ${cap(tr("السماح رقم… وليه صاحب", "a tolerance is a figure… with an owner"), 1.4, 280)}`;
+    },
+    xm_status: () => {
+      const X = rowX(4, 104, 10, 240);
+      const S = [["Complete", 22, "f-mint-soft s-mint", "t-mint", "f-mint"], ["Partial", 4, "f-amber-soft s-amber", "t-amber", "f-amber"], ["Over", 2, "f-acc-soft s-acc", "t-acc", "f-acc"], ["Not received", 4, "f-rose-soft s-rose", "t-rose", "f-rose"]];
+      let x0 = 50;
+      const bar = S.map(([, n, , , f], i) => { const w = (n / 32) * 380, r = `<rect x="${ar() ? 430 - (x0 - 50) - w : x0}" y="196" width="${w}" height="24" class="${f}"/>`; x0 += w; return r; }).join("");
+      return `${S.map(([s, n, cls, tc], i) => `<g ${an("pop", 0.1 + i * 0.2)}>${box(X(i), 104, 104, 96, cls)}${txt(X(i), 106, digits(n), tc, 26, b8)}${txt(X(i), 134, s, tc, 10.5, 'font-weight="800" direction="ltr"')}</g>`).join("")}
+      <g ${an("rise", 1.0)}>${bar}</g>
+      <g ${an("fade", 1.2)}>${txt(240, 244, tr("٣٢ سطر · حالة واحدة لكل سطر", "32 lines · one status each"), "t-ink2", 11.5, b8)}</g>
+      ${cap(tr("أربع كلمات… بتلخّص شهر", "four words… sum up a month"), 1.4, 290)}`;
+    },
+    xm_norm: () => {
+      const a = mx(100), g = 240, b = mx(380), d = dirx();
+      const I = ["po-26-0207_", "po-26-0206_", "PO-26-0204"], O = ["PO-26-0207", "PO-26-0206", "PO-26-0204"];
+      return `${I.map((s, i) => `<g ${an("rise", 0.05 + i * 0.12)}>${box(a, 74 + i * 52, 128, 38, i < 2 ? "f-rose-soft s-rose" : "f-s1 s-line2", 1.5)}${txt(a, 79 + i * 52, s, i < 2 ? "t-rose" : "t-ink", 11.5, 'font-weight="800" direction="ltr"')}</g>`).join("")}
+      <g ${an("pop", 0.6)}><circle cx="${g}" cy="126" r="36" class="f-acc"/><g class="an turn" style="--d:0.9s;transform-box:fill-box;transform-origin:center">${[0, 45, 90, 135].map((r) => `<rect x="${g - 4}" y="${126 - 24}" width="8" height="48" rx="3" class="f-white" transform="rotate(${r} ${g} 126)"/>`).join("")}</g><circle cx="${g}" cy="126" r="13" class="f-acc"/></g>
+      <g ${an("fade", 0.7)}>${txt(g, 186, tr("شيل المسافات · حروف كبيرة", "trim · upper case"), "t-acc", 11.5, b8)}</g>
+      ${[0, 1, 2].map((i) => `<path ${an("draw", 0.5 + i * 0.1, "s-ink3")} pathLength="1" d="M${a + d * 66} ${74 + i * 52} L ${g - d * 40} 126" stroke-width="1.8" fill="none"/><path ${an("draw", 1.0 + i * 0.1, "s-mint")} pathLength="1" d="M${g + d * 40} 126 L ${b - d * 66} ${74 + i * 52}" stroke-width="1.8" fill="none" marker-end="url(#aih-arrow)"/>`).join("")}
+      ${O.map((s, i) => `<g ${an("pop", 1.2 + i * 0.12)}>${box(b, 74 + i * 52, 128, 38, "f-mint-soft s-mint", 1.5)}${txt(b, 79 + i * 52, s, "t-mint", 11.5, 'font-weight="800" direction="ltr"')}</g>`).join("")}
+      ${pill(240, 250, 300, 34, tr("السجل: اتظبط ٤ أرقام", "log: 4 numbers normalised"), "f-s2 s-line2", "t-ink", 11.5, 1.6)}
+      ${cap(tr("نفس فخ «L04 »… في ملف تاني", "the same trap as “L04 ”… in another file"), 1.8, 300)}`;
+    },
+    xm_unmatched: () => {
+      const a = mx(130), b = mx(354);
+      return `<g ${an("rise", 0.05)}>${box(240, 98, 420, 118, "f-rose-soft s-rose", 2.5)}${txt(240, 56, "Unmatched_Receipts", "t-rose", 12.5, 'font-weight="800" direction="ltr"')}</g>
+      ${rowL(240, 84, ["GRN-26-9001", "PO-26-0299", "CBL-PWR", "400"], 96, 24, "f-s1", "t-ink", 9.5, 0.3)}${rowL(240, 116, ["GRN-26-9002", "PO-26-0201", "RC-02", "300"], 96, 24, "f-s1", "t-ink", 9.5, 0.45)}
+      <g ${an("fade", 0.7)}>${txt(240, 146, tr("أمر مش موجود · خامة مش على أمرها", "no such order · material not on its order"), "t-rose", 11, b8)}</g>
+      <g ${an("pop", 1.0)}>${box(a, 214, 190, 46, "f-s2 s-line2", 1.5)}${txt(a + dirx() * 10, 219, tr("نضيفه سطر جديد؟", "add it as a new line?"), "t-ink3", 11.5, b8)}</g>${check(a - dirx() * 80, 214, 1.1, false)}
+      <g ${an("pop", 1.3)}>${box(b, 214, 190, 46, "f-mint-soft s-mint", 1.5)}${txt(b, 219, tr("المخازن تراجع رقم الأمر", "the stores check the number"), "t-mint", 11, b8)}</g>${check(b + dirx() * 80, 214, 1.4)}
+      ${cap(tr("اللي مالوش سطر… ليه سؤال", "what has no line… has a question"), 1.6, 290)}`;
+    },
+    xm_over: () => {
+      const R = [["LED-32", 100, 110], ["RC-01", 700, 770]], d = dirx();
+      return `${R.map(([m, o, g], i) => { const y = 70 + i * 92, w0 = 220, w1 = Math.round((g / o) * w0);
+        return `<g ${an("fade", 0.05 + i * 0.3)}>${txt(mx(70), y + 18, m, "t-ink", 12, 'font-weight="800" direction="ltr"')}</g>
+        ${grow(130, y, w0, 16, "f-acc-soft", 0.2 + i * 0.3)}${grow(130, y + 22, w1, 16, "f-mint", 0.35 + i * 0.3)}<rect ${an("pop", 0.7 + i * 0.3, "f-rose")} x="${mx(130 + w0) - (ar() ? w1 - w0 : 0)}" y="${y + 22}" width="${w1 - w0}" height="16"/>
+        <g ${an("fade", 0.6 + i * 0.3)}>${txt(mx(130 + w1 + 54), y + 13, tr("طلبنا ", "ordered ") + digits(o), "t-ink3", 10.5, b8)}${txt(mx(130 + w1 + 54), y + 35, tr("وصل ", "received ") + digits(g), "t-ink", 10.5, b8)}${txt(mx(130 + w0 + 12), y + 62, "+" + (g - o), "t-rose", 12, 'font-weight="800" direction="ltr"')}</g>`; }).join("")}
+      ${pill(240, 262, 340, 36, tr("القرار للمشتريات: يترجع ولا يتعدّل الأمر", "purchasing decides: return, or amend the order"), "f-s1 s-ink2", "t-ink", 11.5, 1.2)}
+      ${cap(tr("الزيادة… فرق برضه", "an excess… is a difference too"), 1.4, 304)}`;
+    },
+    xm_check: () => {
+      const X = rowX(3, 130, 30, 240);
+      const B = [[n_("23,942"), tr("كل الاستلامات", "all receipts"), "f-s1 s-acc", "t-acc"], [n_("23,242"), tr("على السطور", "on the lines"), "f-mint-soft s-mint", "t-mint"], [n_("700"), "Unmatched", "f-rose-soft s-rose", "t-rose"]];
+      return `${B.map(([v, s, cls, tc], i) => `<g ${an("pop", 0.1 + i * 0.25)}>${box(X(i), 110, 130, 90, cls)}${txt(X(i), 108, v, "t-ink", 17, b8)}${txt(X(i), 134, s, tc, 11, i === 2 ? 'font-weight="800" direction="ltr"' : b8)}</g>`).join("")}
+      <g ${an("fade", 0.4)}>${txt((X(0) + X(1)) / 2, 117, "=", "t-ink2", 22, b8)}</g><g ${an("fade", 0.65)}>${txt((X(1) + X(2)) / 2, 117, "+", "t-ink2", 22, b8)}</g>
+      ${check(240, 190, 1.0)}
+      ${pill(240, 236, 320, 36, tr("مش متساويين ← توقف وتكتب الفرق", "not equal → stop and write the gap"), "f-s2 s-line2", "t-ink", 11.5, 1.2)}
+      ${cap(tr("الكل = المتطابق + اللي مالوش", "the whole = the matched + the unmatched"), 1.5, 290)}`;
+    },
+    xm_open: () => {
+      const S = [["Boards", 538180], ["Packaging", 37755], ["Plastics", 18000], ["Printing", 5022]];
+      return `<g ${an("fade", 0.05)}>${txt(240, 34, tr("قيمة المتبقي لكل مورّد", "open value per supplier"), "t-ink2", 12, b8)}</g>
+      ${S.map(([s, v], i) => { const y = 56 + i * 40, w = Math.max(4, Math.round((v / 538180) * 220));
+        return `<g ${an("fade", 0.1 + i * 0.12)}>${txt(mx(76), y + 13, s, i ? "t-ink" : "t-rose", 11.5, 'font-weight="800" direction="ltr"')}</g>${grow(140, y, w, 18, i ? "f-acc" : "f-rose", 0.2 + i * 0.12)}<g ${an("fade", 0.5 + i * 0.12)}>${txt(mx(140 + w + 44), y + 13, n_(v.toLocaleString("en-US")), "t-ink2", 10.5, b8)}</g>`; }).join("")}
+      ${pill(240, 232, 330, 38, "MB-SM · 400 · 312,000", "f-rose-soft s-rose", "t-rose", 13, 1.1)}
+      <g ${an("fade", 1.3)}>${txt(240, 268, tr("ما وصلش منه ولا واحدة ← أول مكالمة", "not one arrived → the first call"), "t-ink2", 11.5, b8)}</g>
+      ${cap(tr("الملخص بيقولك تتصل بمين الأول", "the summary says whom to call first"), 1.5, 300)}`;
+    },
+    xm_cliff: () => {
+      const p = mx(92), tv = mx(232), d = dirx(), q = mx(390);
+      const M = ["PNL", "MB", "RC-02", "CTN", "SCR"];
+      return `${page(p, 132, 120, 150, "Plan_Apr", [80, 60, 86, 70, 54], 0.05)}<g ${an("fade", 0.3)}>${txt(p, 230, "11,150", "t-acc", 14, 'font-weight="800" direction="ltr"')}</g>
+      <path ${an("draw", 0.5, "s-acc")} pathLength="1" d="M${p + d * 66} 132 H ${tv - d * 58}" stroke-width="2.4" fill="none" marker-end="url(#aih-arrow)"/>
+      <g ${an("pop", 0.7)}><rect x="${tv - 50}" y="96" width="100" height="64" rx="6" class="f-ink2"/><rect x="${tv - 43}" y="103" width="86" height="50" rx="3" class="f-acc-soft"/><path d="M${tv - 18} 176 l18 -16 l18 16z" class="f-ink3"/></g>
+      ${M.map((s, i) => `<path ${an("draw", 1.0 + i * 0.08, "s-ink3")} pathLength="1" d="M${tv + d * 54} 128 L ${q - d * 52} ${56 + i * 42}" stroke-width="1.6" fill="none"/>${pill(q, 56 + i * 42, 96, 30, s + " ?", "f-s1 s-line2", "t-ink", 11, 1.1 + i * 0.1)}`).join("")}
+      ${cap(tr("الدرس الجاي: من الخطة لطلب الخامات", "next lesson: from the plan to the materials order"), 1.7, 290)}`;
+    },
+
+    /* ----- tool five: from the plan to the materials order (data/needs-story.js) ----- */
+    xn_scene: () => {
+      const p = mx(96), tv = mx(250), c = mx(400), d = dirx();
+      const M = ["PNL", "MB", "PSU", "LED", "RC", "CTN", "STD", "SCR-M3", "SCR-M4", "CBL", "MAN"];
+      return `${page(p, 118, 128, 150, "Plan_Apr", [84, 62, 90, 70, 56], 0.05)}<g ${an("fade", 0.3)}>${txt(p, 214, "11,150", "t-acc", 15, 'font-weight="800" direction="ltr"')}${txt(p, 234, tr("جهاز · ١٣ موديل", "TVs · 13 models"), "t-ink3", 11, bold)}</g>
+      <g ${an("pop", 0.5)}><rect x="${tv - 50}" y="62" width="100" height="64" rx="6" class="f-ink2"/><rect x="${tv - 43}" y="69" width="86" height="50" rx="3" class="f-acc-soft"/><path d="M${tv - 18} 142 l18 -16 l18 16z" class="f-ink3"/></g>
+      ${M.map((s, i) => { const x = tv + (i % 4 - 1.5) * 52 * d, y = 176 + Math.floor(i / 4) * 30; return pill(x, y, 48, 24, s, "f-s1 s-line2", "t-ink2", 8.5, 0.7 + i * 0.05); }).join("")}
+      <g ${an("pop", 1.3)}><circle cx="${c}" cy="110" r="26" class="f-s1 s-rose" stroke-width="3.5"/><path d="M${c} 110 v-15 M${c} 110 l10 7" class="s-rose" stroke-width="3.5" stroke-linecap="round"/>${txt(c, 162, tr("يومين", "2 days"), "t-rose", 12.5, b8)}</g>
+      ${cap(tr("كل جهاز محتاج ١١ خامة… نطلب قد إيه؟", "each TV needs 11 materials… how much to order?"), 1.6, 290)}`;
+    },
+    xn_files: () => {
+      const X = rowX(4, 104, 10, 240);
+      const F = [["Plan", tr("هنعمل كام؟", "how many TVs?"), "f-acc-soft s-acc", "t-acc"], ["BOM", tr("الجهاز محتاج إيه؟", "what is in a TV?"), "f-mint-soft s-mint", "t-mint"], ["Materials", tr("من مين وبالعبوة كام؟", "who, what pack?"), "f-amber-soft s-amber", "t-amber"], ["Stock", tr("عندنا كام؟", "in stock?"), "f-s2 s-line2", "t-ink2"]];
+      return `${F.map(([f, q, cls, tc], i) => `<g ${an("rise", 0.1 + i * 0.2)}>${box(X(i), 112, 104, 120, cls)}${xl(X(i), 84, 0.8)}${txt(X(i), 128, f, tc, 12.5, 'font-weight="800" direction="ltr"')}${txt(X(i), 152, q, "t-ink2", 9.5, b8)}</g>`).join("")}
+      <g ${an("fade", 1.0)}>${[0, 1, 2].map((i) => `<path d="M${(X(i) + X(i + 1)) / 2} 182 V 206" class="s-ink3" stroke-width="2"/>`).join("")}<path d="M${X(0)} 206 H ${X(3)}" class="s-ink3" stroke-width="2"/></g>
+      ${pill(240, 236, 220, 38, "Material_Needs_Apr.xlsx", "f-mint", "t-white", 11.5, 1.2)}
+      ${cap(tr("أربع أسئلة… وأربع ملفات", "four questions… four files"), 1.5, 290)}`;
+    },
+    xn_steps: () => {
+      const X = rowX(5, 80, 10, 240), d = dirx();
+      const S = ["Explosion", "Gross", "Net", "OrderQty", "Check"];
+      return `${S.map((s, i) => `<g ${an("pop", 0.1 + i * 0.2)}>${box(X(i), 110, 80, 76, i === 4 ? "f-mint-soft s-mint" : "f-acc-soft s-acc")}<circle cx="${X(i)}" cy="88" r="12" class="${i === 4 ? "f-mint" : "f-acc"}"/>${txt(X(i), 92.5, digits(i + 1), "t-white", 11, b8)}${txt(X(i), 126, s, i === 4 ? "t-mint" : "t-acc", 10.5, 'font-weight="800" direction="ltr"')}</g>${i < 4 ? `<path ${an("draw", 0.3 + i * 0.2, "s-ink3")} pathLength="1" d="M${X(i) + d * 42} 110 H ${X(i + 1) - d * 44}" stroke-width="2" fill="none" marker-end="url(#aih-arrow)"/>` : ""}`).join("")}
+      ${S.map((_, i) => `<g ${an("fade", 1.2 + i * 0.08)}><rect x="${X(i) - 26}" y="168" width="52" height="34" rx="4" class="f-s1 s-line2" stroke-width="1.5"/><rect x="${X(i) - 20}" y="176" width="40" height="5" rx="2" class="f-s3"/><rect x="${X(i) - 20}" y="186" width="28" height="5" rx="2" class="f-s3"/></g>`).join("")}
+      <g ${an("fade", 1.6)}>${txt(240, 228, tr("كل خطوة شيت لوحده", "each step a sheet of its own"), "t-ink2", 12, b8)}</g>
+      ${cap(tr("خمس خطوات… خمس فرص تمسك الغلط", "five steps… five chances to catch a mistake"), 1.8, 290)}`;
+    },
+    xn_explode: () => {
+      const t = mx(200), r = mx(408);
+      const R = [["M108", "PNL-55", "1100 × 1", "1,100"], ["M108", "MB-4K", "1100 × 1", "1,100"], ["M108", "SCR-M3", "1100 × 18", "19,800"], ["M108", "SCR-M4", "1100 × 8", "8,800"]];
+      return `${rowL(t, 56, ["ModelCode", "MaterialCode", "Plan × Qty", "Need"], 84, 26, "f-acc-soft", "t-acc", 9.5, 0.05)}
+      ${R.map((x, i) => rowL(t, 88 + i * 30, x, 84, 24, i === 2 ? ["f-s1", "f-amber-soft", "f-s1", "f-amber-soft"] : "f-s1", i === 2 ? ["t-ink", "t-amber", "t-ink", "t-amber"] : "t-ink", 9.5, 0.25 + i * 0.12)).join("")}
+      <g ${an("fade", 0.8)}>${txt(t, 222, tr("… و٧ خامات تانية لـ M108", "… and 7 more materials for M108"), "t-ink3", 11, b8)}</g>
+      <g ${an("pop", 1.0)}>${box(r, 128, 112, 110, "f-mint-soft s-mint")}${txt(r, 104, "12 × 11", "t-ink", 14, 'font-weight="800" direction="ltr"')}${txt(r, 132, "=", "t-ink2", 16, b8)}${txt(r, 158, tr("١٣٢ سطر", "132 rows"), "t-mint", 13, b8)}</g>
+      ${cap(tr("عدد السطور… أول اختبار", "the row count… the first test"), 1.4, 290)}`;
+    },
+    xn_nobom: () => {
+      const a = mx(130), b = mx(358), d = dirx();
+      return `${rowL(a, 60, ["ModelCode", "PlannedQty"], 96, 26, "f-acc-soft", "t-acc", 10, 0.05)}
+      ${[["M112", "150", 0], ["M113", "600", 1]].map(([m, q, on], i) => rowL(a, 92 + i * 30, [m, q], 96, 24, on ? "f-rose-soft" : "f-s1", on ? "t-rose" : "t-ink", 10, 0.2 + i * 0.12)).join("")}
+      <g ${an("rise", 0.5)}>${box(b, 90, 170, 76, "f-s2 s-line2")}${txt(b, 70, "BOM.xlsx", "t-ink2", 12, 'font-weight="800" direction="ltr"')}${txt(b, 96, "M101 … M112", "t-ink", 12, 'font-weight="700" direction="ltr"')}${txt(b, 116, tr("مفيش M113", "no M113"), "t-rose", 11.5, b8)}</g>
+      <g ${an("pop", 0.9)}>${stopSign(a, 176, 24)}</g><g ${an("fade", 1.0)}>${txt(a, 222, "M113: 600 planned, no BOM", "t-rose", 10.5, 'font-weight="800" direction="ltr" font-family="var(--font-mono)"')}</g>
+      ${pill(b, 186, 170, 40, "Not_Planned", "f-amber-soft s-amber", "t-amber", 12.5, 1.3)}
+      ${pill(240, 262, 330, 34, tr("الهندسة تبعت الـ BOM… وباقي الطلب يكمّل", "engineering sends the BOM… the rest goes ahead"), "f-mint-soft s-mint", "t-mint", 11, 1.5)}
+      ${cap(tr("اللي مالوش BOM… مالوش طلب", "no BOM… no order"), 1.7, 300)}`;
+    },
+    xn_gross: () => {
+      const a = mx(120), b = mx(352), d = dirx();
+      const M = ["M101", "M104", "M108", "M110", "M112"];
+      return `<g ${an("rise", 0.05)}>${box(a, 90, 170, 70, "f-acc-soft s-acc")}${txt(a, 82, "PNL-55", "t-acc", 13, 'font-weight="800" direction="ltr"')}${txt(a, 104, tr("من M108 بس", "from M108 only"), "t-ink2", 11, b8)}</g>
+      ${pill(a, 160, 120, 36, "1,100", "f-s1 s-acc", "t-acc", 14, 0.4)}
+      ${M.map((m, i) => `${pill(b - d * 86, 62 + i * 34, 64, 26, m, "f-s1 s-line2", "t-ink2", 9.5, 0.5 + i * 0.08)}<path ${an("draw", 0.9 + i * 0.06, "s-amber")} pathLength="1" d="M${b - d * 52} ${62 + i * 34} L ${b + d * 30} 130" stroke-width="1.6" fill="none"/>`).join("")}
+      <g ${an("fade", 1.0)}>${txt(b - d * 86, 238, tr("+ ٧ موديلات", "+ 7 more"), "t-ink3", 10.5, b8)}</g>
+      <g ${an("pop", 1.3)}>${box(b + d * 66, 130, 92, 64, "f-amber-soft s-amber")}${txt(b + d * 66, 124, "SCR-M3", "t-amber", 11, 'font-weight="800" direction="ltr"')}${txt(b + d * 66, 144, "160,700", "t-ink", 11.5, 'font-weight="800" direction="ltr"')}</g>
+      ${cap(tr("خامة بسيطة… وخامة مشتركة بين ١٢ موديل", "a simple material… and one shared by 12 models"), 1.6, 290)}`;
+    },
+    xn_units: () => {
+      const a = mx(130), b = mx(352), d = dirx();
+      return `<g ${an("rise", 0.05)}>${box(a, 84, 180, 72, "f-s1 s-line2")}${txt(a, 66, "Stock.xlsx", "t-ink2", 11.5, 'font-weight="800" direction="ltr"')}${txt(a, 90, "SCR-M3 · 88", "t-ink", 13, 'font-weight="800" direction="ltr"')}${txt(a, 110, "box of 1000", "t-rose", 11, 'font-weight="800" direction="ltr"')}</g>
+      <g ${an("rise", 0.3)}>${box(b, 84, 180, 72, "f-s1 s-line2")}${txt(b, 66, "BOM · Materials", "t-ink2", 11.5, 'font-weight="800" direction="ltr"')}${txt(b, 90, "160,700", "t-ink", 13, 'font-weight="800" direction="ltr"')}${txt(b, 110, "pcs", "t-mint", 11, 'font-weight="800" direction="ltr"')}</g>
+      <g ${an("pop", 0.6)}>${txt(240, 92, "≠", "t-rose", 26, b8)}</g>
+      <g ${an("pop", 0.9)}>${box(a, 186, 180, 50, "f-rose-soft s-rose", 1.5)}${txt(a, 182, tr("من غير تحويل", "without converting"), "t-rose", 11, b8)}${txt(a, 200, tr("طلب ١٦١٬٠٠٠", "order 161,000"), "t-rose", 12, b8)}</g>${check(a - d * 98, 186, 1.0, false)}
+      <g ${an("pop", 1.2)}>${box(b, 186, 180, 50, "f-mint-soft s-mint", 1.5)}${txt(b, 182, tr("٨٨ علبة = ٨٨٬٠٠٠", "88 boxes = 88,000"), "t-mint", 11, b8)}${txt(b, 200, tr("طلب ٧٣٬٠٠٠", "order 73,000"), "t-mint", 12, b8)}</g>${check(b + d * 98, 186, 1.3)}
+      ${pill(240, 252, 330, 34, tr("قبل أي طرح: الوحدات تتطابق", "before any subtraction: units must match"), "f-s2 s-line2", "t-ink", 11.5, 1.5)}
+      ${cap(tr("٨٨… علبة ولا قطعة؟", "88… boxes or pieces?"), 1.7, 300)}`;
+    },
+    xn_net: () => {
+      const R = [["PNL-55", "1,100", "380", "0", "720", 0], ["PSU-S", "7,300", "5,340", "2,650", "0", 1]];
+      return `${rowL(240, 58, ["Material", "Gross", "OnHand", "OnOrder", "Net"], 84, 28, "f-acc-soft", "t-acc", 10, 0.05)}
+      ${R.map(([m, g, o, w, nn, z], i) => rowL(240, 94 + i * 34, [m, g, "− " + o, "− " + w, nn], 84, 28, ["f-s1", "f-s1", "f-s1", "f-s1", z ? "f-s2" : "f-mint-soft"], ["t-ink", "t-ink", "t-ink2", "t-ink2", z ? "t-ink3" : "t-mint"], 10, 0.3 + i * 0.2)).join("")}
+      <g ${an("fade", 0.9)}>${txt(240, 166, tr("PSU-S: ٧٬٣٠٠ − ٥٬٣٤٠ − ٢٬٦٥٠ سالب ← صفر، مفيش طلب", "PSU-S: 7,300 − 5,340 − 2,650 is negative → zero, no order"), "t-ink2", 11, b8)}</g>
+      ${pill(240, 214, 300, 38, "Net = Gross − OnHand − OnOrder", "f-mint", "t-white", 12, 1.2)}
+      <g ${an("fade", 1.4)}>${txt(240, 254, tr("٣ خامات عندنا منها كفاية", "3 materials already covered"), "t-ink3", 11.5, b8)}</g>
+      ${cap(tr("اللي عندنا + اللي جاي… قبل ما نطلب", "what we have + what's coming… before we order"), 1.6, 296)}`;
+    },
+    xn_pack: () => {
+      const R = [["SCR-M3", "72,700", "1,000", "73,000"], ["MB-SM", "1,010", "50", "1,050"], ["PNL-55", "720", "10", "720"]];
+      return `${rowL(240, 58, ["Material", "Net", "PackSize", "OrderQty"], 96, 28, "f-acc-soft", "t-acc", 10, 0.05)}
+      ${R.map((r, i) => rowL(240, 94 + i * 32, r, 96, 26, ["f-s1", "f-s1", "f-s1", "f-mint-soft"], ["t-ink", "t-ink", "t-ink2", "t-mint"], 10, 0.3 + i * 0.15)).join("")}
+      <g ${an("pop", 1.0)}>${box(mx(140), 222, 200, 50, "f-rose-soft s-rose", 1.5)}${txt(mx(140), 218, tr("للأقرب: ١٬٠١٠ ← ١٬٠٠٠", "nearest: 1,010 → 1,000"), "t-rose", 11, b8)}${txt(mx(140), 236, tr("١٠ أجهزة واقفة", "10 TVs held up"), "t-ink2", 10.5, bold)}</g>
+      <g ${an("pop", 1.2)}>${box(mx(352), 222, 190, 50, "f-mint-soft s-mint", 1.5)}${txt(mx(352), 218, tr("لفوق: ١٬٠١٠ ← ١٬٠٥٠", "up: 1,010 → 1,050"), "t-mint", 11, b8)}${txt(mx(352), 236, tr("الخط شغال", "the line runs"), "t-ink2", 10.5, bold)}</g>
+      ${cap(tr("«لفوق»… كلمة بتحمي الخط", "“up”… one word that protects the line"), 1.5, 290)}`;
+    },
+    xn_check: () => {
+      const a = mx(118), b = mx(352), d = dirx();
+      const L = ["1,100 − 380 − 0", "= 720", "pack 10 → 720"];
+      return `<g ${an("rise", 0.05)}>${page(a, 128, 170, 176, tr("بإيدك · PNL-55", "by hand · PNL-55"), [], 0.05)}</g>
+      ${L.map((s, i) => `<g ${an("fade", 0.3 + i * 0.2)}>${txt(a, 110 + i * 30, s, i === 1 ? "t-mint" : "t-ink", 12.5, 'font-weight="800" direction="ltr"')}</g>`).join("")}
+      <g ${an("rise", 0.7)}>${box(b, 128, 196, 176, "f-s1 s-acc")}${txt(b, 54, "Check", "t-acc", 12.5, 'font-weight="800" direction="ltr"')}</g>
+      ${[["Plan", "11,150"], ["Explosion", "132"], [tr("للطلب", "to order"), "29"], ["Value", "26,825,700"]].map(([k, v], i) => `<g ${an("fade", 0.9 + i * 0.15)}>${txt(b - d * 44, 88 + i * 34, k, "t-ink2", 10.5, b8)}${txt(b + d * 40, 88 + i * 34, v, "t-ink", 11, 'font-weight="800" direction="ltr"')}</g>`).join("")}
+      ${check(240, 128, 1.6)}
+      ${cap(tr("رقم بإيدك… قبل رقم الأداة", "your figure… before the tool's"), 1.7, 290)}`;
+    },
+    xn_review: () => {
+      const S = [["PNL", 18753000, "30–45"], [tr("الباقي", "the rest"), 8072700, "7–21"]], d = dirx();
+      return `<g ${an("fade", 0.05)}>${txt(240, 34, tr("٢٩ خامة للطلب · ٢٦٬٨٢٥٬٧٠٠ جنيه", "29 materials to order · EGP 26,825,700"), "t-ink", 12.5, b8)}</g>
+      ${S.map(([s, v, lt], i) => { const y = 62 + i * 46, w = Math.round((v / 18753000) * 230);
+        return `<g ${an("fade", 0.2 + i * 0.15)}>${txt(mx(78), y + 14, s, i ? "t-ink2" : "t-acc", 12, i ? b8 : 'font-weight="800" direction="ltr"')}</g>${grow(130, y, w, 22, i ? "f-s3" : "f-acc", 0.3 + i * 0.15)}<g ${an("fade", 0.6 + i * 0.15)}>${txt(mx(130 + w + 60), y + 15, n_(v.toLocaleString("en-US")), "t-ink2", 10.5, b8)}</g>`; }).join("")}
+      <g ${an("fade", 0.9)}>${txt(240, 168, tr("الشاشات ≈ ٧٠٪ · توريد من ٣٠ لـ ٤٥ يوم ← تتطلب الأول", "panels ≈ 70% · 30–45 days → ordered first"), "t-acc", 11, b8)}</g>
+      <g ${an("rise", 1.1)}>${person(mx(120), 252, 1.0, "f-acc")}</g>
+      ${pill(mx(300), 222, 270, 36, tr("المشتريات بتراجع… وبعدين أوامر شراء", "purchasing reviews… then purchase orders"), "f-mint-soft s-mint", "t-mint", 11, 1.2)}
+      ${pill(mx(300), 264, 270, 32, "Not_Planned: M113", "f-amber-soft s-amber", "t-amber", 11, 1.4)}
+      ${cap(tr("الأداة بتحسب… والمشتريات بتقرر", "the tool calculates… purchasing decides"), 1.6, 304)}`;
+    },
+    xn_cliff: () => {
+      const X = rowX(5, 80, 8, 240), t = mx(186), s = mx(418);
+      const T = [tr("تحت بعض", "stack"), tr("ربط", "lookup"), tr("تقرير", "report"), tr("مطابقة", "match"), tr("خامات", "materials")];
+      return `${T.map((x, i) => pill(X(i), 50, 80, 34, x, "f-mint-soft s-mint", "t-mint", 11, 0.1 + i * 0.12)).join("")}
+      ${term(t, 168, 300, 132, ["Week_14.xlsx  read  99 rows", "Week_15.xlsx  read  104 rows", "STOP  Week_16.xlsx:", "  sheet Production not found"], 0.9, 10.5, (i) => (i >= 2 ? "t-rose" : "t-crt"))}
+      <g ${an("pop", 1.8)}>${stopSign(s, 150, 26)}</g><g ${an("fade", 2.0)}>${txt(s, 204, tr("أبريل", "April"), "t-rose", 12, b8)}</g>
+      ${cap(tr("الدرس الجاي: لما الأداة توقف", "next lesson: when the tool stops"), 2.1, 296)}`;
     },
 
     /* ----- when the tool stops (data/run-story.js) ----- */
     xt_stop: () => {
       const t = mx(186), a = mx(410), d = dirx();
-      return `${term(t, 108, 330, 132, ["Week_01.xlsx: opening sheet", "Exception from HRESULT:", "  0x800A03EC", "STOP"], 0.05, 11, (i) => (i ? "t-rose" : "t-crt"))}
+      return `${term(t, 108, 330, 132, ["Week_14.xlsx  read  99 rows", "Week_15.xlsx  read  104 rows", "STOP  Week_16.xlsx:", "  sheet Production not found"], 0.05, 11, (i) => (i >= 2 ? "t-rose" : "t-crt"))}
       ${pill(mx(126), 222, 200, 40, tr("وقفت برسالة = معلومة", "a clear stop = information"), "f-mint-soft s-mint", "t-mint", 11, 1.0)}${check(mx(126), 196, 1.2)}
       ${pill(mx(354), 222, 200, 40, tr("كمّلت بصمت = خطر", "a silent carry-on = danger"), "f-rose-soft s-rose", "t-rose", 11, 1.3)}${check(mx(354), 196, 1.5, false)}
       ${cap(tr("الأداة ما اتكسرتش… الأداة وقفت", "the tool isn't broken… it stopped"), 1.7, 290)}`;
@@ -1866,11 +2101,11 @@
     },
     xt_encoding: () => {
       const d = dirx();
-      return `${term(240, 62, 420, 52, ["column Ø§Ù©Ù§Ø© not found"], 0.05, 12.5, () => "t-rose")}
+      return `${term(240, 62, 420, 52, ["Ø§Ù©Ù§Ø© Ø§Ù©Ù§"], 0.05, 12.5, () => "t-rose")}
       <path ${an("draw", 0.5, "s-ink3")} pathLength="1" d="M240 92 V 118" stroke-width="2.2" fill="none" marker-end="url(#aih-arrow)"/>
       <g ${an("rise", 0.7)}>${box(240, 152, 300, 56, "f-s1 s-acc")}${txt(240, 146, tr("المفكرة ← حفظ باسم ← الترميز", "Notepad → Save As → Encoding"), "t-ink", 11.5, b8)}${txt(240, 166, "UTF-8 with BOM", "t-acc", 12.5, 'font-weight="800" direction="ltr"')}</g>
       <path ${an("draw", 1.0, "s-mint")} pathLength="1" d="M240 182 V 206" stroke-width="2.2" fill="none" marker-end="url(#aih-arrow)"/>
-      <g ${an("pop", 1.2)}>${box(240, 236, 220, 44, "f-mint")}${txt(240, 243, "الكمية", "t-white", 18, b8)}</g>${check(240 + d * 130, 236, 1.4)}
+      <g ${an("pop", 1.2)}>${box(240, 236, 220, 44, "f-mint")}${txt(240, 243, "الملف اتقرا", "t-white", 16, b8)}</g>${check(240 + d * 130, 236, 1.4)}
       ${cap(tr("دقيقة واحدة… ولا سطر كود اتغيّر", "one minute… not a line of code changed"), 1.5, 290)}`;
     },
     xt_locked: () => {
@@ -1878,16 +2113,16 @@
       return `<g ${an("rise", 0.05)}>${box(t, 140, 300, 196, "f-s1 s-line2")}<rect x="${t - 150}" y="42" width="300" height="28" rx="12" class="f-s2"/>${txt(t, 61, tr("إدارة المهام", "Task Manager"), "t-ink2", 11.5, b8)}</g>
       ${[0, 1, 2].map((i) => `<g ${an("fade", 0.3 + i * 0.15)}>${xl(t - d * 110, 98 + i * 40, 0.6)}${mono(ar() ? t - 30 : t - 82, 103 + i * 40, "EXCEL.EXE", "t-ink", 12, b8)}${txt(t + d * 84, 103 + i * 40, tr("من غير شباك", "no window"), "t-ink3", 10.5, bold)}</g>`).join("")}
       ${pill(t, 220, 140, 32, tr("إنهاء المهمة", "End task"), "f-acc", "t-white", 12, 0.9)}
-      <g ${an("rise", 1.1)}>${fileIcon(f, 104, "s-amber")}${txt(f, 140, "Week_03.xlsx", "t-ink", 10.5, 'font-weight="700" direction="ltr"')}${txt(f, 158, tr("مفتوح قدامك", "open for you"), "t-amber", 11, b8)}${txt(f, 176, tr("= مقفول عليها", "= locked for it"), "t-amber", 11, b8)}</g>
+      <g ${an("rise", 1.1)}>${fileIcon(f, 104, "s-amber")}${txt(f, 140, "Week_14.xlsx", "t-ink", 10.5, 'font-weight="700" direction="ltr"')}${txt(f, 158, tr("مفتوح قدامك", "open for you"), "t-amber", 11, b8)}${txt(f, 176, tr("= مقفول عليها", "= locked for it"), "t-amber", 11, b8)}</g>
       ${cap(tr("اقفل الملفات… واتأكد إن مفيش إكسل مستخبي", "close the files… and check no Excel is hiding"), 1.4, 290)}`;
     },
-    xt_hresult: () => {
+    xt_sheet: () => {
       const a = mx(126), b = mx(354), d = dirx();
-      return `<g ${an("rise", 0.05)}>${box(a, 96, 190, 84, "f-acc-soft s-acc")}${txt(a, 80, tr("الـ Prompt والسكريبت", "the Prompt and script"), "t-acc", 11.5, b8)}${mono(a - 50, 114, "Production", "t-ink", 18, b8)}</g>
-      <g ${an("rise", 0.3)}>${box(b, 96, 190, 84, "f-rose-soft s-rose")}${txt(b, 80, tr("الشيت في نسخة الزميل", "the sheet in his copy"), "t-rose", 11.5, b8)}${txt(b, 116, "الإنتاج", "t-ink", 17, b8)}</g>
+      return `<g ${an("rise", 0.05)}>${box(a, 96, 190, 84, "f-acc-soft s-acc")}${txt(a, 80, tr("الأداة بتدوّر على", "the tool looks for"), "t-acc", 11.5, b8)}${txt(a, 116, "Production", "t-ink", 17, 'font-weight="800" direction="ltr"')}</g>
+      <g ${an("rise", 0.3)}>${box(b, 96, 190, 84, "f-rose-soft s-rose")}${txt(b, 80, tr("الشيت في Week_16", "the sheet in Week_16"), "t-rose", 11.5, b8)}${txt(b, 116, "Sheet1", "t-ink", 17, 'font-weight="800" direction="ltr"')}</g>
       <g ${an("pop", 0.6)}>${txt(240, 106, "≠", "t-rose", 26, b8)}</g>
-      <g ${an("rise", 0.9)}>${box(240, 196, 300, 52, "f-mint-soft s-mint")}${txt(240, 190, tr("رجّع اسم الشيت «Production»", "rename it back to “Production”"), "t-mint", 12, b8)}${txt(240, 210, tr("ولا سطر كود اتغيّر", "not a line of code changed"), "t-ink2", 11, bold)}</g>${check(240 + d * 168, 196, 1.2)}
-      ${cap(tr("رقم غريب… وسبب بسيط", "a strange number… a simple cause"), 1.4, 270)}`;
+      <g ${an("rise", 0.9)}>${box(240, 196, 330, 52, "f-mint-soft s-mint")}${txt(240, 190, tr("شيت واحد بس؟ اقراه مهما كان اسمه", "only one sheet? read it whatever its name"), "t-mint", 12, b8)}${txt(240, 210, tr("ويتسجّل في السجل", "and log it"), "t-ink2", 11, bold)}</g>${check(240 + d * 180, 196, 1.2)}
+      ${cap(tr("نفس البيانات… باسم تاني", "the same data… under another name"), 1.4, 270)}`;
     },
     xt_report: () => {
       const c = mx(340), X = mx(112), d = dirx();
@@ -1898,32 +2133,33 @@
     },
     xt_versions: () => {
       const X = rowX(3, 110, 40, 240), d = dirx();
-      const V = [["stack_tool.ps1", "v1", "s-ink3"], ["stack_tool_v2.ps1", "v2", "s-mint"], ["stack_tool_v3.ps1", "v3", "s-rose"]];
-      return `${V.map(([f, v, cls], i) => `<g ${an("pop", 0.1 + i * 0.3)}>${fileIcon(X(i), 96, cls)}${txt(X(i), 140, f, "t-ink", 9.5, 'font-weight="700" direction="ltr"')}${txt(X(i), 60, v, i === 2 ? "t-rose" : i === 1 ? "t-mint" : "t-ink3", 14, 'font-weight="800" direction="ltr"')}</g>${i < 2 ? `<path ${an("draw", 0.3 + i * 0.3, "s-ink3")} pathLength="1" d="M${X(i) + d * 30} 96 H ${X(i + 1) - d * 30}" stroke-width="2.2" fill="none" marker-end="url(#aih-arrow)"/>` : ""}`).join("")}
-      <path ${an("draw", 1.2, "s-mint")} pathLength="1" d="M${X(2)} 156 C ${X(2)} 200, ${X(1)} 200, ${X(1)} 162" stroke-width="2.4" fill="none" marker-end="url(#aih-arrow)"/>
-      <g ${an("fade", 1.3)}>${txt((X(1) + X(2)) / 2, 218, tr("v3 أسوأ؟ ارجع لـ v2 في ثانية", "v3 worse? back to v2 in a second"), "t-mint", 11.5, b8)}</g>
+      const V = [["stack_tool.ps1", "v1", "s-ink3"], ["stack_tool_v2.ps1", "v2", "s-mint"], ["stack_tool_v3.ps1", "v3", "s-acc"]];
+      return `${V.map(([f, v, cls], i) => `<g ${an("pop", 0.1 + i * 0.3)}>${fileIcon(X(i), 96, cls)}${txt(X(i), 140, f, "t-ink", 9.5, 'font-weight="700" direction="ltr"')}${txt(X(i), 60, v, i === 2 ? "t-acc" : i === 1 ? "t-mint" : "t-ink3", 14, 'font-weight="800" direction="ltr"')}</g>${i < 2 ? `<path ${an("draw", 0.3 + i * 0.3, "s-ink3")} pathLength="1" d="M${X(i) + d * 30} 96 H ${X(i + 1) - d * 30}" stroke-width="2.2" fill="none" marker-end="url(#aih-arrow)"/>` : ""}`).join("")}
+      <g ${an("fade", 1.2)}>${txt(X(1), 166, tr("+ قاعدة الشيت", "+ the sheet rule"), "t-mint", 11, b8)}${txt(X(2), 166, tr("+ قاعدة التاريخ", "+ the date rule"), "t-acc", 11, b8)}${txt(X(0), 166, tr("الدرس ٣", "lesson 3"), "t-ink3", 11, b8)}</g>
+      <g ${an("fade", 1.3)}>${txt(240, 210, tr("كل نسخة قديمة بتفضل جنب الجديدة", "each old version stays beside the new one"), "t-ink2", 11.5, b8)}</g>
       ${pill(240, 258, 330, 34, tr("تعديل واحد في كل نسخة · وسطر في البطاقة", "one change per version · a line on the card"), "f-s1 s-ink2", "t-ink", 11.5, 1.5)}`;
     },
-    xt_break: () => {
-      const X = rowX(3, 128, 16, 240), d = dirx();
-      const B = ar() ? ["عمود القيمة ناقص", "اسم الشيت متغيّر", "ملف فاضي"] : ["Value column missing", "sheet renamed", "an empty file"];
-      return `<g ${an("fade", 0.05)}>${txt(240, 36, tr("فولدر الاختبار", "the test folder"), "t-ink2", 12, b8)}</g>
-      ${B.map((s, i) => `<g ${an("rise", 0.1 + i * 0.25)}>${fileIcon(X(i), 86, "s-rose")}${txt(X(i), 126, s, "t-rose", 11, b8)}</g>
-        <path ${an("draw", 0.5 + i * 0.25, "s-ink3")} pathLength="1" d="M${X(i)} 140 V 166" stroke-width="2" fill="none" marker-end="url(#aih-arrow)"/>
-        <g ${an("pop", 0.8 + i * 0.25)}>${stopSign(X(i), 196, 20)}</g>${check(X(i) + 30, 176, 1.0 + i * 0.25)}`).join("")}
-      ${pill(240, 258, 340, 34, tr("المطلوب: توقف برسالة فيها الملف والمشكلة", "wanted: a stop naming the file and the problem"), "f-mint-soft s-mint", "t-mint", 11.5, 1.6)}
-      ${cap(tr("لو ما عرفتش تكسرها… ما تعرفش تثق فيها", "if you can't break it… you can't trust it"), 1.8, 300)}`;
+    xt_dates: () => {
+      const t = mx(150), r = mx(372), d = dirx();
+      const R = [["2026-04-02", "L01", "31"], ["09/04/2026", "L03", "18"], ["2026-04-16", "L02", "26"]];
+      return `<g ${an("fade", 0.05)}>${txt(t, 40, tr("الجدول بعد التشغيل", "the table after the run"), "t-ink2", 11.5, b8)}</g>
+      ${rowL(t, 68, ["Date", "LineCode", "Qty"], 76, 28, "f-acc-soft", "t-acc", 10, 0.1)}
+      ${R.map((x, i) => rowL(t, 102 + i * 32, x, 76, 26, i === 1 ? ["f-rose-soft", "f-s1", "f-s1"] : "f-s1", i === 1 ? ["t-rose", "t-ink", "t-ink"] : "t-ink", 9.5, 0.3 + i * 0.12)).join("")}
+      <g ${an("rise", 0.8)}>${box(r, 104, 170, 96, "f-s2 s-line2")}${txt(r, 82, tr("محوري بالشهر", "a pivot by month"), "t-ink", 11.5, b8)}${txt(r, 104, "2026-04 · 186", "t-ink2", 11, 'font-weight="700" direction="ltr"')}${txt(r, 126, tr("(فاضي) · ١٠٤", "(blank) · 104"), "t-rose", 11, b8)}</g>
+      ${pill(t, 224, 220, 40, tr("«09/04»: ٩ أبريل ولا ٤ سبتمبر؟", "“09/04”: 9 April or 4 September?"), "f-amber-soft s-amber", "t-amber", 11, 1.1)}
+      ${pill(r, 224, 196, 40, tr("v3: اليوم الأول", "v3: day first"), "f-mint", "t-white", 12, 1.4)}
+      ${cap(tr("اللي ما وقّفش الأداة… لازم المراجعة توقّفه", "what didn't stop the tool… the check must stop"), 1.6, 290)}`;
     },
     xt_tests: () => {
       const X = rowX(3, 132, 14, 240);
-      const T = ar() ? [["العدد", "صفوف السجل = الحقيقة"], ["الإجمالي", "الناتج = المصدر"], ["المشاكل", "اتعاملت صح ووقفت"]] : [["Count", "log rows = reality"], ["Total", "output = source"], ["Problems", "handled, and it stops"]];
+      const T = ar() ? [["العدد", "٢٩٠ صف = المفتاح"], ["الإجمالي", "٦٬٨١٠ جهاز = المصدر"], ["المشاكل", "اتعاملت صح ووقفت"]] : [["Count", "290 rows = the key"], ["Total", "6,810 units = source"], ["Problems", "handled, and it stops"]];
       return `${T.map(([h, s], i) => `<g ${an("rise", 0.1 + i * 0.3)}>${box(X(i), 120, 132, 150, "f-s1 s-mint", 2.5)}<circle cx="${X(i)}" cy="72" r="16" class="f-mint"/>${txt(X(i), 78, digits(i + 1), "t-white", 14, b8)}${txt(X(i), 116, h, "t-ink", 14, b8)}${txt(X(i), 140, s, "t-ink3", 10.5, bold)}</g>${check(X(i), 174, 0.6 + i * 0.3)}`).join("")}
       ${pill(240, 236, 330, 34, tr("التلاتة عدّوا ← تعتمد · واحد فشل ← بالإيد الشهر ده", "all three pass → sign off · one fails → by hand"), "f-acc-soft s-acc", "t-acc", 11, 1.4)}
       ${cap(tr("العدد + الإجمالي + المشاكل = ثقة", "the count + the total + the problems = trust"), 1.6, 290)}`;
     },
     xt_card: () => {
       const p = mx(104), c = mx(270), t = mx(412), d = dirx();
-      return `${page(p, 140, 150, 200, "TOOL_CARD.txt", [100, 80, 110, 70, 96, 88, 60, 104], 0.05)}
+      return `${page(p, 140, 150, 200, "Tool_Card.txt", [100, 80, 110, 70, 96, 88, 60, 104], 0.05)}
       <path ${an("draw", 0.5, "s-acc")} pathLength="1" d="M${p + d * 80} 140 H ${c - d * 76}" stroke-width="2.4" fill="none" marker-end="url(#aih-arrow)"/>
       <g ${an("pop", 0.7)}>${bubble(c, 128, 140, 84, "f-s1 s-mint", !ar())}${txt(c, 112, tr("محادثة جديدة", "a new chat"), "t-ink", 11.5, b8)}${txt(c, 132, "ChatGPT", "t-mint", 12, 'font-weight="800" direction="ltr"')}</g>
       <path ${an("draw", 1.0, "s-mint")} pathLength="1" d="M${c + d * 74} 128 H ${t - d * 40}" stroke-width="2.4" fill="none" marker-end="url(#aih-arrow)"/>

@@ -1,151 +1,151 @@
-/* The training data kit — the story deck that opens unit 2 (lesson x1).
+/* Describing the file — the story deck that opens unit 2 (lesson x1).
    One hero, a production planning engineer at a television factory (no factory is named), carries every slide with
-   one question: «أجرّب الأدوات دي على إيه، وأعرف منين إنها صح؟». The deck builds the kit of data/xl-sample.js: six lines,
-   a quarter of weekly production files, master sheets and the plan, ten planted problems, the data dictionary, the
-   answer key, and ends on the question the next lesson answers: how does code in a chat reach the laptop?
-   Each slide gives one rule with its reason. Figures are the kit's own. Drawings are the xk_* entries in engine/history.js. */
+   one question: «النموذج ما شافش ملفي… أوصفه له إزاي؟». The deck lays out the unit's ladder of eight projects (one zip
+   per lesson, English Excel files), then builds the first one: a data dictionary for one weekly production report,
+   tested in a fresh chat. It ends on the question the next lesson answers: how does code in a chat reach the laptop?
+   Each slide gives one rule with its reason. Figures are project 1's own. Drawings are the xk_* entries in engine/history.js. */
 "use strict";
 (function (A) {
   const u = (ar, en) => ({ ar, en });
   A.kitStory = {
     id: "kit", lesson: "x1",
-    kicker: u("حقيبة البيانات التدريبية · الحكاية كاملة في ٨ دقايق", "The training data kit · the whole story in 8 minutes"),
-    title: u("ملفات تدريب بنفس شكل ملفات المصنع", "Training files shaped like the factory's files"),
-    lead: u("فاكر التلات أدوات اللي اتكلّمنا عنهم في آخر الوحدة الأولى؟ الوحدة دي بتبنيهم بجد، خطوة بخطوة، في مصنع تلفزيونات. بس قبل أول Prompt، فيه سؤال لازم يتجاوب: هنجرّب على إيه، وهنعرف منين إن النتيجة صح؟ في الحكاية دي هنبني حقيبة بيانات كاملة لخطوط الإنتاج، بملفاتها ومشاكلها ومفتاح إجابتها.",
-      "Remember the three tools we discussed at the end of unit 1? This unit builds them for real, step by step, in a television factory. But before the first Prompt, one question needs an answer: what do we practise on, and how will we know the result is right? In this story we build a complete data kit for the production lines, with its files, its problems and its answer key."),
+    kicker: u("قبل أي أداة · الحكاية كاملة في ٨ دقايق", "Before any tool · the whole story in 8 minutes"),
+    title: u("صِف الملف زي ما هو… قبل ما تطلب أي أداة", "Describe the file as it is… before asking for any tool"),
+    lead: u("فاكر التلات أدوات اللي اتكلّمنا عنهم في آخر الوحدة الأولى؟ الوحدة دي بتبنيهم بجد، واحدة واحدة، ومعاهم أداتين للمشتريات والخامات، في مصنع تلفزيونات. كل درس معاه مشروع في ملف مضغوط لوحده. بس قبل أول أداة، فيه سؤال لازم يتجاوب: النموذج عمره ما شاف ملفاتك، فهيعرفها إزاي؟",
+      "Remember the three tools we discussed at the end of unit 1? This unit builds them for real, one at a time, plus two tools for purchasing and materials, in a television factory. Each lesson comes with a project in a zip of its own. But before the first tool, one question needs an answer: the model has never seen your files, so how will it know them?"),
     answerLabel: u("القاعدة، وليه؟", "The rule, and why"),
     ideaLabel: u("الفكرة في جملة", "The idea in one line"),
-    question: u("أجرّب الأدوات دي على إيه، وأعرف منين إنها صح؟", "What do I try these tools on, and how do I know they're right?"),
+    question: u("النموذج ما شافش ملفي… أوصفه له إزاي؟", "The model hasn't seen my file… how do I describe it?"),
     finalQuestion: u("طب الكود اللي هيكتبه النموذج… هيوصل لجهازي إزاي؟", "So the code the model writes… how does it reach my laptop?"),
-    note: u("الأرقام والأسماء توضيحية، وهي أرقام الحقيبة نفسها. ما فيش اسم مصنع ولا شركة.", "Figures and names are illustrative, and they are the kit's own. No factory or company is named."),
+    note: u("الأرقام والأسماء توضيحية، وهي أرقام مشروع الدرس نفسه. ما فيش اسم مصنع ولا شركة.", "Figures and names are illustrative, and they are the lesson project's own. No factory or company is named."),
     ui: {
       prev: u("اللي فات", "Previous"), next: u("اللي بعده", "Next"),
       play: u("شغّل الحكاية", "Play the story"), pause: u("وقّف", "Pause"), replay: u("من الأول", "From the start"),
       skip: u("تخطّى للدرس", "Skip to the lesson"), start: u("نكمّل الدرس", "Continue the lesson"),
       slideOf: u("{n} من {t}", "{n} of {t}"), timeline: u("خطوات الحكاية", "Story steps"),
-      deck: u("حقيبة البيانات التدريبية، في شرائح", "The training data kit, in slides"), slide: u("شريحة", "slide"),
+      deck: u("وصف الملف قبل أي أداة، في شرائح", "Describing the file before any tool, in slides"), slide: u("شريحة", "slide"),
       keys: u("استخدم الأسهم أو اسحب على الشاشة", "Use the arrow keys or swipe")
     },
     slides: [
       {
-        id: "scene", art: "xk_scene", year: u("الموقف", "Scene"), mark: u("٠١", "01"), era: u("تلات مهام كل أسبوع", "Three jobs every week"),
-        title: u("ستة خطوط، وتلات مهام بتتكرر", "Six lines, and three jobs that repeat"),
-        story: [u("مهندس التخطيط في مصنع تلفزيونات بيستلم كل أسبوع تقرير إنتاج من ستة خطوط تجميع. وعنده نفس التلات مهام اللي قابلناها في درس أول أتمتة: يحط تقارير الأسابيع تحت بعض، ويضيف أسماء الخطوط والموديلات من شيتات صغيرة، ويطلّع تقرير الإنتاج قصاد الخطة لمدير المصنع.",
-          "The planning engineer at a television factory receives a production report from six assembly lines every week. He has the same three jobs we met in the first-automation lesson: stack the weeks' reports, add line and model names from small sheets, and produce the output-against-plan report for the factory manager."),
-        u("المهام دي بتاخد منه حوالي ست ساعات كل شهر. وقرّر يبني التلات أدوات. بس قبل ما يكتب أول Prompt، سأل نفسه سؤال الحكاية: هجرّب الأدوات دي على إيه، وهعرف منين إن الرقم اللي طالع صح؟",
-          "These jobs take him about six hours a month. He decided to build the three tools. But before writing the first Prompt, he asked himself this story's question: what do I try these tools on, and how will I know the figure they produce is right?")],
-        answer: u("قبل ما تبني أداة، حدّد هتختبرها على إيه وهتقارن نتيجتها بإيه. لأن الأداة اللي ما لهاش نتيجة معروفة تتقارن بيها، ما تقدرش تحكم عليها.", "Before building a tool, decide what you'll test it on and what you'll compare its result with — a tool with no known result to compare against can't be judged."),
-        idea: u("الأداة بتتبني مرة… وبتتجرّب على نتيجة معروفة.", "A tool is built once… and tried against a known result.")
+        id: "scene", art: "xk_scene", year: u("الموقف", "Scene"), mark: u("٠١", "01"), era: u("الملف عندك بس", "The file is only with you"),
+        title: u("ستة خطوط، وملف ما حدش غيرك شافه", "Six lines, and a file nobody else has seen"),
+        story: [u("مهندس التخطيط في مصنع تلفزيونات بيستلم كل أسبوع تقرير إنتاج من ستة خطوط تجميع، وعنده نفس التلات مهام اللي قابلناها في درس أول أتمتة. قرّر يبني الأدوات، وفتح الشات علشان يكتب أول طلب.",
+          "The planning engineer at a television factory receives a production report from six assembly lines every week, and he has the same three jobs we met in the first-automation lesson. He decided to build the tools, and opened the chat to write the first request."),
+        u("وقبل ما يكتب، وقف عند حاجة بسيطة: الملف قدامه على الشاشة، بس النموذج عمره ما شافه. ما يعرفش اسم الشيت، ولا العناوين، ولا يعني إيه كمية سالبة. كل اللي هيعرفه هو اللي هيتكتب في الطلب.",
+          "And before writing, he paused at something simple: the file is in front of him on screen, but the model has never seen it. It doesn't know the sheet's name, the headers, or what a negative quantity means. All it will know is what goes into the request.")],
+        answer: u("افترض إن النموذج ما يعرفش عن ملفك غير اللي إنت كاتبه. لأن أي حاجة ما اتقالتش، النموذج هيخمّنها، والتخمين بيطلع أداة غلط.", "Assume the model knows nothing of your file beyond what you write — whatever isn't said, the model guesses, and guessing makes a wrong tool."),
+        idea: u("الملف عندك… والنموذج بيعرفه من كلامك بس.", "The file is with you… the model knows it only from your words.")
       },
       {
-        id: "idea", art: "xk_idea", year: u("الفكرة", "The idea"), mark: u("٠٢", "02"), era: u("حقيبة ومفتاح", "A kit and a key"),
-        title: u("حقيبة بيانات… ومعاها الإجابة", "A data kit… with the answer"),
-        story: [u("الفكرة إنه يعمل حقيبة بيانات تدريبية: نفس ملفات المصنع بالظبط في الشكل، بأرقام توضيحية اتحسبت نتيجتها من الأول. يعني قبل ما أي أداة تشتغل، هو عارف كام دفعة لازم تطلع، وكام جهاز، وأنهي خط أعلى من خطته وأنهي خط أقل.",
-          "The idea is to build a training data kit: exactly the factory's files in shape, with illustrative figures whose result was worked out in advance. So before any tool runs, he knows how many batches must come out, how many units, which line is above its plan and which is below."),
-        u("وكده أي أداة يبنيها، بـ ChatGPT أو بـ Gemini Enterprise، بيحكم عليها بسؤال واحد بسيط: طلّعت نفس الأرقام ولا لأ؟ ولو كل اللي في التدريب اشتغلوا على نفس الحقيبة، كلهم بيقارنوا بنفس المفتاح.",
-          "So any tool he builds, with ChatGPT or with Gemini Enterprise, is judged by one simple question: did it produce the same figures or not? And if everyone in the training works on the same kit, they all compare against the same key.")],
-        answer: u("جرّب الأداة على بيانات نتيجتها معروفة قبل أي حاجة. لأن «شكلها صح» مش دليل، والمطابقة مع إجابة معروفة دليل.", "Try the tool on data whose result is known before anything else — “looks right” is no proof; matching a known answer is."),
-        idea: u("نفس الملفات… ونفس المفتاح للكل.", "The same files… and the same key for everyone.")
+        id: "ladder", art: "xk_ladder", year: u("السلّم", "The ladder"), mark: u("٠٢", "02"), era: u("٨ مشاريع", "8 projects"),
+        title: u("٨ مشاريع… كل واحد أصعب من اللي قبله بخطوة", "8 projects… each one step harder than the last"),
+        story: [u("الوحدة دي سلّم من ٨ مشاريع. الأول وصف ملف من غير كود، والتاني أول أداة صغيرة بتقرا بس. وبعدهم التلات أدوات من درس أول أتمتة: تحت بعض، وبحث وربط، وتقرير قصاد الخطة.",
+          "This unit is a ladder of 8 projects. The first describes a file with no code, and the second is a small first tool that only reads. Then come the three tools from the first-automation lesson: stacking, lookups, and a report against plan."),
+        u("وبعدها أداتين للمثال التاني في المصنع، المشتريات والخامات: مطابقة أوامر الشراء بالاستلام، وطلب الخامات من خطة الإنتاج. وفي الآخر: لما الأداة توقف، تعمل إيه. كل مشروع بيزوّد فكرة واحدة على اللي قبله، مش أكتر.",
+          "After that, two tools for the factory's second example, purchasing and materials: matching purchase orders with receipts, and a materials order from the production plan. And finally: what to do when a tool stops. Each project adds one idea to the one before, no more.")],
+        answer: u("ابدأ بأسهل أداة واطلع درجة درجة. لأن كل فكرة جديدة لوحدها سهلة تتفهم، وخمس أفكار مرة واحدة بتلخبط.", "Start with the easiest tool and climb one step at a time — each new idea alone is easy to grasp, and five at once confuse."),
+        idea: u("فكرة جديدة واحدة في كل درجة.", "One new idea on each step.")
       },
       {
-        id: "twin", art: "xk_twin", year: u("الشكل", "The shape"), mark: u("٠٣", "03"), era: u("نفس الشكل بالظبط", "Exactly the same shape"),
-        title: u("نسخة بنفس الشيتات والأعمدة والمشاكل", "A copy with the same sheets, columns and problems"),
-        story: [u("الحقيبة لازم تشبه ملفات المصنع في كل حاجة: نفس اسم الشيت، ونفس العناوين، ونفس طريقة كتابة الأكواد، ونفس المشاكل اللي بتظهر كل أسبوع من الخطوط. الأرقام بس هي اللي توضيحية.",
-          "The kit must resemble the factory's files in everything: the same sheet name, the same headers, the same way of writing codes, the same problems that come from the lines every week. Only the figures are illustrative."),
-        u("الأداة ما بتفرّقش: هي بتشوف شيت اسمه Production وأعمدة بأسماء معيّنة. لو نجحت على الحقيبة، هتنجح على ملفات الخطوط الحقيقية. ولو الحقيبة كانت نضيفة ومثالية، الأداة هتنجح عليها وتقع عند أول ملف حقيقي.",
-          "The tool can't tell the difference: it sees a sheet named Production and columns with certain names. If it succeeds on the kit, it will succeed on the lines' real files. And if the kit were clean and perfect, the tool would pass on it and fall at the first real file.")],
-        answer: u("جرّب على بيانات بنفس الشكل والمشاكل، مش على بيانات «نضيفة». لأن الأداة اللي اتجرّبت على ملف مثالي بتقع عند أول ملف حقيقي.", "Practise on data with the same shape and problems, not on “clean” data — a tool tried on a perfect file falls at the first real one."),
-        idea: u("نفس الشكل… ونتيجة معروفة.", "The same shape… and a known result.")
+        id: "zip", art: "xk_zip", year: u("المشروع", "The project"), mark: u("٠٣", "03"), era: u("ملف مضغوط لكل درس", "A zip per lesson"),
+        title: u("كل درس معاه ملف مضغوط لوحده", "Each lesson comes with a zip of its own"),
+        story: [u("كل مشروع بينزل لوحده في ملف مضغوط، زي Lesson_1_Describe_The_Data.zip. جوّاه فولدر Data فيه ملفات الإكسل، وREADME.txt فيه المهمة ودليل البيانات، وPrompt.txt جاهز تنسخه، وAnswer_Key.txt فيه النتيجة الصح.",
+          "Each project downloads on its own as a zip, like Lesson_1_Describe_The_Data.zip. Inside is a Data folder holding the Excel files, README.txt with the task and the data dictionary, Prompt.txt ready to copy, and Answer_Key.txt with the right result."),
+        u("ومفتاح الإجابة ليه قاعدة: بتفتحه بعد التشغيل، مش قبله، وما تديهوش للنموذج. لو الأداة شافت الإجابة، هتطلّعها حتى لو منطقها غلط. المفتاح ليك إنت، علشان تقارن رقم برقم.",
+          "And the answer key has a rule: you open it after the run, not before, and never give it to the model. A tool that saw the answer will produce it even if its logic is wrong. The key is for you, to compare figure by figure.")],
+        answer: u("جرّب كل أداة على بيانات نتيجتها معروفة قبل ما تلمس ملف حقيقي. لأن «شكلها صح» مش دليل، والمطابقة مع إجابة معروفة دليل.", "Try every tool on data whose result is known before touching a real file — “looks right” is no proof; matching a known answer is."),
+        idea: u("بيانات، ومهمة، وPrompt، وإجابة… في ملف واحد.", "Data, a task, a Prompt and an answer… in one zip.")
       },
       {
-        id: "factory", art: "xk_factory", year: u("المصنع", "The factory"), mark: u("٠٤", "04"), era: u("ستة خطوط وربع سنة", "Six lines, one quarter"),
-        title: u("ستة خطوط تجميع في تلات عنابر", "Six assembly lines in three halls"),
-        story: [u("المصنع في الحقيبة فيه ستة خطوط تجميع: خطين في عنبر أ، وخطين في عنبر ب، وخطين في عنبر ج. وبيعمل ١٢ موديل تلفزيون في أربع فئات، من شاشة ٢٤ بوصة للمكاتب لحد شاشة ٧٥ بوصة 4K.",
-          "The factory in the kit has six assembly lines: two in hall A, two in hall B and two in hall C. It builds 12 TV models in four categories, from a 24-inch office screen to a 75-inch 4K screen."),
-        u("والفترة: الربع الأول من ٢٠٢٦، من أول يناير لآخر مارس، من غير أيام الجمعة. الحصيلة: ١٬٢٨٨ دفعة إنتاج، فيها ٢٩٬٣٠٤ جهاز سليم، وقيمتها بالتكلفة المعيارية ٢٧٥٬٢٣٤٬٩٠٠ جنيه. أرقام توضيحية، بس حجمها وشكلها زي شغل مصنع حقيقي.",
-          "The period: the first quarter of 2026, from early January to the end of March, without Fridays. The result: 1,288 production batches holding 29,304 good units, worth EGP 275,234,900 at standard cost. Illustrative figures, but with the size and shape of a real factory's work.")],
-        answer: u("خلّي البيانات التدريبية قريبة من حجم شغلك وتنوّعه. لأن أداة اتجرّبت على عشر صفوف ما بتقولكش هتعمل إيه في ألف.", "Keep training data close to your work's size and variety — a tool tried on ten rows can't tell you what it will do with a thousand."),
-        idea: u("أرقام توضيحية… وحجم حقيقي.", "Illustrative figures… real size.")
+        id: "english", art: "xk_english", year: u("اللغة", "The language"), mark: u("٠٤", "04"), era: u("الملفات بالإنجليزي", "Files in English"),
+        title: u("ملفات الإكسل بالإنجليزي… زي ملفات الشغل", "The Excel files are in English… like the files at work"),
+        story: [u("ملفات المشاريع كلها بالإنجليزي: اسم الشيت Production، والعناوين Date وWorkOrder وLineCode وQty، والقيم أكواد زي L03 وM108. بالظبط زي الملفات اللي بتطلع من أنظمة المصنع.",
+          "Every project file is in English: the sheet is named Production, the headers are Date, WorkOrder, LineCode and Qty, and the values are codes like L03 and M108. Exactly like the files that come out of the factory's systems."),
+        u("وإنت بتكلّم النموذج بالعربي عادي، بس كل اسم من الملف يتكتب زي ما هو بالحرف. لو كتبت «عمود الكمية» والعنوان الحقيقي Qty، الأداة هتدوّر على عمود مش موجود. الكلام بلغتك، والأسماء بلغة الملف.",
+          "You talk to the model in Arabic as usual, but every name from the file is written exactly as it is. Write “the quantity column” when the real header is Qty, and the tool will look for a column that doesn't exist. Your words in your language, the names in the file's.")],
+        answer: u("انسخ أسماء الشيتات والعناوين من الملف نفسه، ما تكتبهاش من الذاكرة. لأن الأداة بتدوّر على الاسم بالظبط، وحرف واحد مختلف بيوقّفها.", "Copy sheet names and headers from the file itself, never from memory — the tool looks for the exact name, and one different letter stops it."),
+        idea: u("الكلام بلغتك… والأسماء بالحرف.", "Your words in your language… the names letter for letter.")
       },
       {
-        id: "folder", art: "xk_folder", year: u("الملفات", "The files"), mark: u("٠٥", "05"), era: u("فولدر واحد", "One folder"),
-        title: u("فولدر واحد فيه كل اللي التلات أدوات محتاجينه", "One folder holding everything the three tools need"),
-        story: [u("الحقيبة فولدر اسمه Excel_Automation_Kit. جوّاه فولدر Production_2026_Q1 فيه ١٣ ملف أسبوعي من Week_01 لحد Week_13. وجنبه Masters.xlsx فيه شيت للخطوط وشيت للموديلات بتكلفتها المعيارية، وPlan_2026_Q1.xlsx فيه خطة كل خط في كل شهر.",
-          "The kit is a folder named Excel_Automation_Kit. Inside is a folder Production_2026_Q1 with 13 weekly files, Week_01 to Week_13. Beside it, Masters.xlsx holds a lines sheet and a models sheet with standard costs, and Plan_2026_Q1.xlsx holds each line's plan for each month."),
-        u("كل ملف ليه دور: الأسابيع للأداة الأولى اللي بتحطهم تحت بعض، والـ Masters للأداة التانية اللي بتجيب الأسماء، والخطة للأداة التالتة اللي بتعمل التقرير. ومعاهم ملفين نصّيين: دليل البيانات ومفتاح الإجابة.",
-          "Each file has a role: the weeks for tool one, which stacks them; Masters for tool two, which brings the names; the plan for tool three, which builds the report. With them come two text files: the data dictionary and the answer key.")],
-        answer: u("أسماء الملفات والشيتات تتكتب في الـ Prompt بالحرف، زي ما هي على الجهاز. لأن الأداة بتدوّر على الاسم بالظبط، وحرف زيادة بيوقّفها.", "File and sheet names go into the Prompt letter for letter, as they are on disk — the tool looks for the exact name, and one extra letter stops it."),
-        idea: u("لكل أداة ملفاتها… وكلهم في فولدر واحد.", "Each tool has its files… all in one folder.")
-      },
-      {
-        id: "columns", art: "xk_columns", year: u("الشيت", "The sheet"), mark: u("٠٦", "06"), era: u("ستة أعمدة", "Six columns"),
+        id: "columns", art: "xk_columns", year: u("الشيت", "The sheet"), mark: u("٠٥", "05"), era: u("ستة أعمدة", "Six columns"),
         title: u("سطر واحد في تقرير الإنتاج بيحكي إيه؟", "What does one line of the production report say?"),
-        story: [u("كل ملف أسبوع فيه شيت اسمه Production، وأول صف فيه العناوين: التاريخ، ورقم أمر التشغيل، وكود الخط، وكود الموديل، والكمية، والقيمة. يعني كل سطر بيقول: يوم كذا، أمر تشغيل رقم كذا، الخط ده جمّع الموديل ده، بالكمية دي من الأجهزة السليمة.",
-          "Each weekly file has a sheet named Production whose first row holds the headers: Date, WorkOrder, LineCode, ModelCode, Qty and Value. So each line says: on this day, work order number this, this line assembled this model, in this quantity of good units."),
-        u("لاحظ إن الشيت فيه أكواد بس، زي L04 وM105، مش أسماء. الأسماء موجودة في الـ Masters. ولاحظ إن القيمة = الكمية × التكلفة المعيارية للموديل، والكمية ممكن تبقى سالبة لما وحدات ترجع من الجودة. الملاحظات الصغيرة دي هي اللي النموذج محتاج يعرفها.",
-          "Notice the sheet holds only codes, like L04 and M105, not names; the names live in Masters. And notice Value = Qty × the model's standard cost, and Qty can be negative when units come back from quality. These small notes are exactly what the model needs to know.")],
-        answer: u("اوصف كل عمود: اسمه، ونوعه، وشكله، والقيم الغريبة اللي ممكن تيجي فيه. لأن النموذج ما بيعرفش إن السالب وحدات رجعت من الجودة إلا لو قلتله.", "Describe each column: its name, type, shape and the odd values it may hold — the model doesn't know a negative means units back from quality unless you say so."),
+        story: [u("ملف المشروع الأول تقرير أسبوع واحد فيه ١٠٦ دفعة إنتاج. كل سطر بيقول: يوم كذا، أمر تشغيل رقم كذا، الخط ده جمّع الموديل ده، بالكمية دي من الأجهزة السليمة، وقيمتها كذا.",
+          "The first project's file is one week's report holding 106 production batches. Each line says: on this day, work order number this, this line assembled this model, in this quantity of good units, worth this much."),
+        u("لاحظ إن الشيت فيه أكواد بس، زي L04 وM105، مش أسماء: الأسماء في ملفات تانية هتقابلها في الدرس الرابع. ولاحظ إن Value مش رقم عشوائي: هو Qty × التكلفة المعيارية للموديل. الملاحظات الصغيرة دي هي اللي النموذج محتاج يعرفها.",
+          "Notice the sheet holds only codes, like L04 and M105, not names: the names live in other files you'll meet in lesson four. And notice Value isn't a random figure: it is Qty × the model's standard cost. These small notes are exactly what the model needs to know.")],
+        answer: u("اوصف كل عمود: اسمه، ونوعه، وشكله، ومثال منه. لأن العمود اللي ما اتوصفش، النموذج هيعامله بأول نوع يخطر له.", "Describe each column: its name, type, shape and an example — a column left undescribed gets treated as whatever type the model first thinks of."),
         idea: u("كل عمود ليه حكاية… والنموذج محتاج يسمعها.", "Every column has a story… and the model needs to hear it.")
       },
       {
-        id: "traps", art: "xk_traps", year: u("الفخاخ", "The traps"), mark: u("٠٧", "07"), era: u("عشر مشاكل متعمّدة", "Ten planted problems"),
-        title: u("عشر مشاكل مستخبية… زي اللي بتيجي من الخطوط كل أسبوع", "Ten hidden problems… like the ones the lines send every week"),
-        story: [u("الحقيبة مش نضيفة، ودي أهم ميزة فيها. في آخر Week_02 صف «الإجمالي». وفي Week_04 دفعتين متسجّلين مرتين. وفي Week_05 كود خط بمسافة زيادة، وفي Week_06 كود بحروف صغيرة. وفي Week_07 عمود «ملاحظات» زيادة، وفي Week_09 التواريخ مكتوبة كنص.",
-          "The kit isn't clean, and that's its most important feature. At the end of Week_02 sits a “Total” row. Week_04 has two batches entered twice. Week_05 has a line code with a stray space, Week_06 one in lower case. Week_07 has an extra “Notes” column, and Week_09 has dates typed as text."),
-        u("وفي Week_11 عمود الكمية اسمه مكتوب بشكل مختلف. وفيه موديل جديد مش في قايمة الموديلات، وموديل متسجّل مرتين بتكلفتين، وخط مالوش خطة لشهر مارس. كل واحدة منهم لو عدّت من غير ما حد ياخد باله، بتغيّر رقم في تقرير مدير المصنع.",
-          "In Week_11 the quantity column is titled differently. There's a new model missing from the models list, a model listed twice with two costs, and a line with no plan for March. Any one of them, passing unnoticed, changes a figure in the factory manager's report.")],
-        answer: u("الأداة لازم تتجرّب على المشاكل، مش بعيد عنها. لأن الأداة بتتعرف وقت المشكلة: بتوقف وتقول، ولا بتكمّل وتغلط؟", "A tool must be tried on the problems, not away from them — a tool shows itself when trouble comes: does it stop and say so, or carry on and get it wrong?"),
-        idea: u("الحقيبة النضيفة بتخبّي ضعف الأداة.", "A clean kit hides a tool's weakness.")
+        id: "odd", art: "xk_odd", year: u("الغريب", "The odd values"), mark: u("٠٦", "06"), era: u("كمية سالبة", "A negative quantity"),
+        title: u("صفين كميتهم سالبة… ومعناهم مش غلط", "Two rows with a negative quantity… and they aren't mistakes"),
+        story: [u("في الملف صفين الكمية فيهم بالسالب: ٨ وحدات رجعت من الجودة بعد ما اتحسبت إنتاج. ده مش غلط في الإدخال؛ ده تصحيح حقيقي بيقلّل صافي الإنتاج. وقيمتهم بالسالب كمان.",
+          "Two rows in the file have a negative quantity: 8 units sent back by quality after being counted as output. That isn't a typing mistake; it's a real correction that lowers net output. Their value is negative too."),
+        u("لو ما قلتش ده للنموذج، فيه احتمالين وحشين: يحذفهم علشان «شكلهم غلط»، فالإنتاج يزيد عن الحقيقة، أو يوقف عندهم كل مرة. سطر واحد في الوصف بيحل الموضوع: «السالب = وحدات رجعت من الجودة، تتخصم وما تتحذفش».",
+          "Without telling the model, two bad outcomes are possible: it deletes them because they “look wrong”, so output exceeds the truth, or it stops at them every time. One line in the description settles it: “negative = units sent back by quality; deduct, never delete.”")],
+        answer: u("قول معنى كل قيمة غريبة: السالب، والفاضي، والرموز. لأن النموذج ما يعرفش معناها في مصنعك إلا لو إنت قلت.", "Say what every odd value means: negatives, blanks, symbols — the model can't know what they mean in your factory unless you say."),
+        idea: u("قيمة غريبة من غير شرح = قرار في إيد النموذج.", "An odd value with no explanation = a decision left to the model.")
       },
       {
-        id: "readme", art: "xk_readme", year: u("الوصف", "The description"), mark: u("٠٨", "08"), era: u("دليل البيانات", "The data dictionary"),
-        title: u("دليل البيانات: الـ Context اللي الأداة محتاجاه", "The data dictionary: the Context a tool needs"),
-        story: [u("فاكر ورقة الـ Context من درس الـ Prompt والـ Context؟ هنا ليها اسم: دليل البيانات. ملف README.txt في الحقيبة بيقول: أسماء الملفات، واسم كل شيت، والعناوين بالحرف، ونوع كل عمود، والقيم الغريبة اللي ممكن تيجي.",
-          "Remember the context sheet from the lesson on the Prompt and the Context? Here it has a name: the data dictionary. README.txt in the kit says: the file names, each sheet's name, the headers letter for letter, each column's type, and the odd values that may appear."),
-        u("الدليل ده هو اللي بيتلصق مع الـ Prompt، سواء على ChatGPT أو على Gemini Enterprise. والأهم: نفس الشكل ينفع لأي ملف في المصنع، تقرير إنتاج أو كشف استلام خامات. تكتب الدليل مرة، والنموذج يبني الأداة منه.",
-          "This dictionary is what gets pasted with the Prompt, whether on ChatGPT or on Gemini Enterprise. More importantly, the same shape works for any file in the factory, a production report or a materials receipt list. You write the dictionary once, and the model builds the tool from it.")],
-        answer: u("قبل أي طلب أداة، اكتب دليل بيانات للملف. لأن النموذج بيبني الأداة على اللي إنت وصفته، مش على اللي إنت فاكره.", "Before any tool request, write a data dictionary for the file — the model builds the tool on what you described, not on what you had in mind."),
-        idea: u("دليل البيانات = Context الأداة.", "The data dictionary = the tool's Context.")
-      },
-      {
-        id: "rows", art: "xk_rows", year: u("المثال", "The example"), mark: u("٠٩", "09"), era: u("خمس صفوف", "Five rows"),
+        id: "rows", art: "xk_rows", year: u("المثال", "The example"), mark: u("٠٧", "07"), era: u("خمس صفوف", "Five rows"),
         title: u("خمس صفوف مثال… من حالات مختلفة", "Five example rows… from different cases"),
-        story: [u("الوصف لوحده ساعات مش كفاية: النموذج يفهم أحسن لما يشوف شكل السطر. فمهندس التخطيط بيضيف خمس صفوف مثال مع الدليل، بس بيختارهم بذكاء.",
-          "A description alone is sometimes not enough: the model understands better when it sees what a line looks like. So the planning engineer adds five example rows to the dictionary, chosen with care."),
-        u("سطر عادي، وسطر كميته سالبة لأن وحدات رجعت من الجودة، وسطر تاريخه مكتوب كنص، وسطر كوده بشكل غريب، وسطر عادي تاني. خمس صفوف من حالات مختلفة بتعلّم النموذج أكتر من عشر صفحات وصف.",
-          "An ordinary line, a line with a negative quantity because units came back from quality, a line with a text date, a line with an oddly shaped code, and another ordinary line. Five rows from different cases teach the model more than ten pages of description.")],
-        answer: u("اختار الصفوف المثال من الحالات المختلفة، مش من أول الشيت. لأن أول خمس صفوف غالبًا عادية، والأداة محتاجة تشوف الغريب.", "Pick the example rows from different cases, not from the top of the sheet — the first five rows are usually ordinary, and the tool needs to see the odd ones."),
+        story: [u("الوصف لوحده ساعات مش كفاية: النموذج يفهم أحسن لما يشوف شكل السطر. فمهندس التخطيط بيضيف خمس صفوف مثال، بس بيختارهم بذكاء، مش أول خمس صفوف في الشيت.",
+          "A description alone is sometimes not enough: the model understands better when it sees what a line looks like. So the planning engineer adds five example rows, chosen with care rather than the sheet's first five."),
+        u("أول صف، وصف كميته سالبة، وصف من خط تاني، وصف لموديل كبير قيمته عالية، وآخر صف. خمس صفوف من حالات مختلفة بتعلّم النموذج أكتر من صفحة وصف كاملة.",
+          "The first row, a row with a negative quantity, a row from another line, a row for a large model with a high value, and the last row. Five rows from different cases teach the model more than a whole page of description.")],
+        answer: u("اختار الصفوف المثال من الحالات المختلفة، مش من أول الشيت. لأن أول خمس صفوف غالبًا شبه بعض، والأداة محتاجة تشوف الغريب.", "Pick the example rows from different cases, not from the top of the sheet — the first five rows usually look alike, and the tool needs to see the odd ones."),
         idea: u("صف غريب واحد في المثال بيوفّر غلطة في الأداة.", "One odd row in the example saves one mistake in the tool.")
       },
       {
-        id: "silent", art: "xk_rules", year: u("التحذير", "The warning"), mark: u("١٠", "10"), era: u("ما تلقّنش المشاكل", "Don't feed it the problems"),
-        title: u("ما تقولش للنموذج المشاكل… اطلب قواعد عامة", "Don't tell the model the problems… ask for general rules"),
-        story: [u("مهندس التخطيط كان عارف المشاكل العشرة، وفكّر يكتبها في الـ Prompt: «في Week_02 صف إجمالي، شيله». بس افتكر إن تقرير الخطوط الشهر الجاي هيكون فيه مشكلة جديدة ما حدش يعرفها، والأداة اللي اتعلّمت عشر حالات بعينها هتعدّيها من غير ما تقول.",
-          "The planning engineer knew the ten problems and thought of writing them into the Prompt: “Week_02 has a totals row; remove it.” Then he remembered that next month's line reports will hold a new problem nobody knows of, and a tool taught ten specific cases will let it pass silently."),
-        u("فكتب قواعد عامة بدالها: «أي صف مفيهوش رقم أمر تشغيل يتساب ويتسجّل»، «أي عمود ناقص أو اسمه مختلف، وقّف وسمّي الملف»، «أي كود مش في القايمة، طلّعه في شيت لوحده». القواعد دي بتمسك المشاكل العشرة… واللي بعدهم.",
-          "So he wrote general rules instead: “any row without a work order is skipped and logged”, “any missing or renamed column: stop and name the file”, “any code missing from the list goes on a sheet of its own”. These rules catch the ten problems… and the ones after them.")],
+        id: "ask", art: "xk_ask", year: u("الأسئلة", "The questions"), mark: u("٠٨", "08"), era: u("ما تخمّنش", "Don't guess"),
+        title: u("«اسألني قبل ما تكتب»", "“Ask me before you write”"),
+        story: [u("آخر جملة في الـ Prompt هي أهم جملة: «أي حاجة مش واضحة، اسألني في قايمة مترقّمة، واستنى إجاباتي». ومن غيرها، النموذج هيملا الفراغات بنفسه ويكمّل.",
+          "The Prompt's last sentence matters most: “anything not clear, ask me in a numbered list, and wait for my answers.” Without it, the model fills the gaps itself and carries on."),
+        u("النموذج سأل مهندس التخطيط ٣ أسئلة: «التاريخ تاريخ ولا نص؟»، «الكمية السالبة معناها إيه؟»، «القيمة بتتحسب إزاي؟». تلات إجابات قصيرة، وكل واحدة منهم كانت هتبقى تخمين في الأداة.",
+          "The model asked the planning engineer 3 questions: “Is the date a date or text?”, “What does a negative quantity mean?”, “How is the value worked out?” Three short answers, and each would otherwise have been a guess inside the tool.")],
+        answer: u("اطلب من النموذج يسأل قبل ما يكتب، وجاوب بدقة. لأن السؤال اللي اتسأل دلوقتي هو غلطة ما حصلتش بعدين.", "Ask the model to ask before it writes, and answer precisely — a question asked now is a mistake that never happens later."),
+        idea: u("كل سؤال بيتسأل… تخمين أقل.", "Every question asked… one guess fewer.")
+      },
+      {
+        id: "dict", art: "xk_dict", year: u("الدليل", "The dictionary"), mark: u("٠٩", "09"), era: u("دليل البيانات", "The data dictionary"),
+        title: u("دليل البيانات: الـ Context اللي كل أداة محتاجاه", "The data dictionary: the Context every tool needs"),
+        story: [u("فاكر ورقة الـ Context من درس الـ Prompt والـ Context؟ هنا ليها اسم: دليل البيانات. لكل عمود سطر: الاسم بالحرف، والنوع، والشكل، ومثال، والقيم المسموحة، ومعنى أي قيمة غريبة.",
+          "Remember the context sheet from the lesson on the Prompt and the Context? Here it has a name: the data dictionary. One line per column: the name letter for letter, the type, the shape, an example, the allowed values, and the meaning of any odd value."),
+        u("مهندس التخطيط حفظه في Data_Dictionary.txt جنب الملف. ومن الدرس الجاي، أي Prompt أداة هيتكتب على الدليل ده. والأهم: نفس الشكل ينفع لأي ملف في المصنع، تقرير إنتاج أو كشف استلام خامات.",
+          "The planning engineer saved it as Data_Dictionary.txt next to the file. From the next lesson on, every tool Prompt is written on this dictionary. More importantly, the same shape works for any file in the factory, a production report or a materials receipt list.")],
+        answer: u("اكتب الدليل مرة، واحفظه جنب الملف، واستخدمه في كل طلب. لأن النموذج بيبني الأداة على اللي إنت وصفته، مش على اللي إنت فاكره.", "Write the dictionary once, keep it next to the file, and use it in every request — the model builds the tool on what you described, not on what you had in mind."),
+        idea: u("دليل البيانات = Context الأداة.", "The data dictionary = the tool's Context.")
+      },
+      {
+        id: "test", art: "xk_test", year: u("الاختبار", "The test"), mark: u("١٠", "10"), era: u("محادثة جديدة", "A new chat"),
+        title: u("اختبار الدليل: محادثة جديدة، والدليل لوحده", "Testing the dictionary: a new chat, the dictionary alone"),
+        story: [u("إزاي تعرف إن الدليل كفاية؟ مهندس التخطيط فتح محادثة جديدة خالص، ولصق الدليل لوحده من غير الملف، وسأل تلات أسئلة: «كم عمود؟»، «الكمية السالبة معناها إيه؟»، «التاريخ نوعه إيه؟».",
+          "How do you know the dictionary is enough? The planning engineer opened a brand-new chat, pasted the dictionary alone without the file, and asked three questions: “How many columns?”, “What does a negative quantity mean?”, “What type is the date?”"),
+        u("الإجابات طلعت: ٦ أعمدة، ووحدات رجعت من الجودة بتتخصم، وتاريخ حقيقي. لو أي إجابة كانت غلط، يبقى فيه سطر ناقص في الدليل، ويتزوّد قبل أي أداة. وبعدها قارن دليله بمفتاح الإجابة في المشروع.",
+          "The answers came back: 6 columns, units sent back by quality that are deducted, and a real date. Had any answer been wrong, a line would be missing from the dictionary, to be added before any tool. Then he compared his dictionary with the project's answer key.")],
+        answer: u("اختبر الدليل في محادثة جديدة قبل ما تبني عليه. لأن المحادثة القديمة فاكرة كلامك، والجديدة بتشوف الدليل زي ما الأداة هتشوفه.", "Test the dictionary in a new chat before building on it — the old chat remembers your words, while a new one sees the dictionary as the tool will."),
+        idea: u("لو فهمه نموذج من غير ما يشوف الملف… الدليل جاهز.", "If a model understands it without seeing the file… the dictionary is ready.")
+      },
+      {
+        id: "rules", art: "xk_rules", year: u("التحذير", "The warning"), mark: u("١١", "11"), era: u("ما تلقّنش المشاكل", "Don't feed it the problems"),
+        title: u("الدليل بيوصف الملف… مش مشاكله", "The dictionary describes the file… not its problems"),
+        story: [u("في المشاريع الجاية، الملفات فيها مشاكل متعمّدة، زي صف «Total» في آخر شيت، أو عمود اسمه اتغيّر. وهتبقى عارفها لو قريت مفتاح الإجابة، وهتفكّر تكتبها في الطلب: «في Week_02 صف إجمالي، شيله».",
+          "In the coming projects the files hold planted problems, such as a “Total” row at the bottom of a sheet or a renamed column. You'll know them if you read the answer key, and you'll be tempted to write them into the request: “Week_02 has a totals row; remove it.”"),
+        u("ما تعملهاش. ملفات الشهر الجاي هيكون فيها مشكلة جديدة ما حدش يعرفها. اكتب قواعد عامة بدالها: «أي صف من غير WorkOrder يتساب ويتسجّل»، «أي عمود ناقص، وقّف وسمّي الملف». القواعد دي بتمسك المشاكل المعروفة… واللي بعدها.",
+          "Don't. Next month's files will hold a new problem nobody knows of. Write general rules instead: “any row without a WorkOrder is skipped and logged”, “any missing column: stop and name the file”. These rules catch the known problems… and the ones after them.")],
         answer: u("اطلب قاعدة لكل نوع مشكلة، مش علاج لكل مشكلة. لأن القاعدة بتشتغل على ملفات ما شفتهاش لسه.", "Ask for a rule per kind of problem, not a fix per problem — a rule works on files you haven't seen yet."),
         idea: u("العلاج بيصلّح ملف… والقاعدة بتحمي كل الملفات.", "A fix repairs one file… a rule protects them all.")
       },
       {
-        id: "key", art: "xk_key", year: u("المفتاح", "The key"), mark: u("١١", "11"), era: u("الإجابة المعروفة", "The known answer"),
-        title: u("مفتاح الإجابة: بتفتحه بعد التشغيل، مش قبله", "The answer key: opened after the run, not before"),
-        story: [u("في الحقيبة ملف اسمه Answer_key.txt فيه كل اللي الأداة الصح لازم تلاقيه: ١٬٢٩٠ صف اتقروا، وصف إجمالي اتساب، وصفين متكررين، و١٬٢٨٨ دفعة حقيقية، و٢٩٬٣٠٤ جهاز، والموديل اللي ما اتربطش، ونسبة تحقيق كل خط في كل شهر.",
-          "The kit has a file named Answer_key.txt holding everything a correct tool must find: 1,290 rows read, a totals row skipped, two duplicates, 1,288 true batches, 29,304 units, the model that didn't match, and each line's achievement each month."),
-        u("القاعدة: ما تفتحوش قبل التشغيل، وما تديهوش للنموذج. لو الأداة شافت الإجابة، هتطلّعها حتى لو منطقها غلط. المفتاح ليك إنت، علشان تقارن بعد ما الأداة تخلص، رقم برقم.",
-          "The rule: don't open it before the run, and don't give it to the model. A tool that saw the answer will produce it even if its logic is wrong. The key is for you, to compare after the tool finishes, figure by figure.")],
-        answer: u("قارن نتيجة الأداة بإجابة معروفة اتحسبت بطريقة مستقلة. لأن الأداة اللي بتراجع نفسها بس ممكن تغلط مرتين بنفس الطريقة.", "Compare the tool's result with a known answer computed independently — a tool that only checks itself can make the same mistake twice."),
-        idea: u("الإجابة المعروفة بتحوّل «شكلها صح» لـ «صح».", "A known answer turns “looks right” into “is right”.")
-      },
-      {
         id: "cliff", art: "xk_cliff", year: u("الدرس الجاي", "Next lesson"), mark: u("١٢", "12"), era: u("الكود في الشات", "Code in the chat"),
-        title: u("الحقيبة جاهزة… والزميلة عندها سؤال", "The kit is ready… and a colleague has a question"),
-        story: [u("مهندس التخطيط نزّل الحقيبة، وفكّها في فولدر لوحده، وفتح Week_02 ولقى صف الإجمالي بعينه. وكان هيبدأ أول Prompt، لما زميلته في المشتريات عدّت عليه: «أنا شغالة على Gemini Enterprise. طلبت منه أداة لكشوف استلام الخامات، كتبلي الكود في الرد، بس مفيش ملف أنزّله».",
-          "The planning engineer downloaded the kit, unzipped it into a folder of its own, opened Week_02 and found the totals row himself. He was about to write the first Prompt when his colleague from purchasing stopped by: “I work on Gemini Enterprise. I asked it for a tool for the materials receipt lists; it wrote the code in the reply, but there's no file to download.”"),
+        title: u("الدليل جاهز… والزميلة عندها سؤال", "The dictionary is ready… and a colleague has a question"),
+        story: [u("مهندس التخطيط حفظ الدليل، وكان هيبدأ أول أداة، لما زميلته في المشتريات عدّت عليه: «أنا شغالة على Gemini Enterprise. طلبت منه أداة لكشوف استلام الخامات، كتبلي الكود في الرد، بس مفيش ملف أنزّله».",
+          "The planning engineer saved the dictionary and was about to start the first tool when his colleague from purchasing stopped by: “I work on Gemini Enterprise. I asked it for a tool for the materials receipt lists; it wrote the code in the reply, but there's no file to download.”"),
         u("وهو كان متعوّد إن ChatGPT بيديه رابط ينزّل منه. يعني الطريقين مختلفين، والاتنين لازم يوصلوا لنفس النتيجة: ملف على اللابتوب يشتغل بدبل كليك. والسؤال اللي الدرس الجاي بيجاوبه: الكود اللي في الشات… يوصل لجهازك إزاي؟",
           "And he was used to ChatGPT giving him a link to download from. So the two paths differ, and both must reach the same result: a file on the laptop that runs with a double click. And the question the next lesson answers: the code in the chat… how does it reach your laptop?")],
-        answer: u("واجب الدرس: نزّل الحقيبة، ودوّر على ٣ مشاكل بعينك قبل ما تقرا القايمة، واكتب دليل بيانات لملف من شغلك. لأن عينك هي أول اختبار لأي أداة.", "This lesson's task: download the kit, find 3 problems yourself before reading the list, and write a data dictionary for a file from your work — your own eye is the first test of any tool."),
-        idea: u("البيانات جاهزة… فاضل الطريق للجهاز.", "The data is ready… the road to the laptop remains.")
+        answer: u("واجب الدرس: نزّل مشروع الدرس، واكتب الدليل، واختبره في محادثة جديدة، وبعدين قارنه بمفتاح الإجابة. لأن الدليل اللي اتختبر هو اللي تبني عليه.", "This lesson's task: download the lesson's project, write the dictionary, test it in a new chat, then compare it with the answer key — a tested dictionary is one you can build on."),
+        idea: u("الوصف جاهز… فاضل الطريق للجهاز.", "The description is ready… the road to the laptop remains.")
       }
     ]
   };

@@ -3,7 +3,7 @@
 (function (A) {
   A.courseOrder = {
     u0: ["f1", "f2", "f4", "f6", "f7", "f3", "f5", "f8"],                 // 1 foundations
-    u1: ["x1", "x2", "x3", "x4", "x5", "x6"],                               // 2 Excel automation in detail: the sample kit · ChatGPT and Gemini · three tools · fixing
+    u1: ["x1", "x2", "x3", "x4", "x5", "x7", "x8", "x6"],                   // 2 Excel automation, one project per lesson: describe · first tool · three tools · purchasing · materials · fixing
     u2: ["b1", "y4", "p9", "w1", "m1", "p10", "w2"],                        // 3 big data · the editor · intelligence levels · Office · Claude Code
     u3: ["m3"],                                                             // 4 PDF · cloud or local · free tools
     u4: ["d1", "d2", "y6", "y5", "m2"],                                     // 5 dashboards · Codex · companies and models
