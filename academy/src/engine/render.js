@@ -253,6 +253,7 @@
       <div id="sec-scene"></div>
       <section class="sec" id="sec-book">${ar ? '<details class="book-original"><summary>📖 افتح كلام الكتاب الأصلي وربطه بصفحاته</summary>' : secHead("book", t("bookSays"), t("bookSaysSub"))}<div class="bookpts">${(l.book || []).map((b) => `<div class="bookpt"><div>${A.inline(L(b))}</div>${pageChips([b.p])}</div>`).join("")}</div>${ar ? "</details>" : ""}</section>
       <section class="sec levels" id="sec-levels">${secHead("layers", t("levelsTitle"), t("levelsSub"), "sp")}<div id="lv"></div></section>
+      <div id="sec-proj"></div>
       <div id="sec-lab"></div>
       <div id="sec-case"></div>
       <div id="sec-prompts"></div>
@@ -338,6 +339,12 @@
     drawLevels();
     const offLevel = A.on("level", (k) => { curLv = k; showAll = false; drawLevels(); });
     A.onLeave(offLevel);
+    // the unit-2 project (one zip per lesson)
+    if (A.xlProjects && A.xlProjects.byLesson[l.id] && A.mountXlProject) {
+      const sp = A.$("#sec-proj"); sp.className = "sec";
+      sp.innerHTML = secHead("db", t("projTitle"), t("projSub"), "mt");
+      A.mountXlProject(sp, l.id, false);
+    }
     // lab
     if (l.lab && A.labsById[l.lab]) {
       const sl = A.$("#sec-lab"); sl.className = "sec";

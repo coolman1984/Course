@@ -969,3 +969,25 @@ html[dir="rtl"] .cine-card{background:radial-gradient(900px 520px at 15% 15%,col
 .cine:fullscreen{grid-template-rows:minmax(0,1fr)}.cine:fullscreen .cine-view{grid-row:1/-1;height:100vh}
 @media (max-width:760px){.cine-ib span,.cine-time{display:none}.cine-top,.cine-bot{padding:8px 10px;gap:6px}}
 @media (prefers-reduced-motion:reduce){.cine-frame,.cine-frame.back{animation:none}.cine-track i{transition:none}}
+
+/* unit-2 projects: the ladder of eight, one card, a peek inside each workbook */
+.xp{display:grid;gap:12px;grid-template-columns:minmax(0,1fr);min-width:0}
+.xp-ladder{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:6px;counter-reset:none}
+.xp-ladder li>*{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 4px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink-2);font-size:12px;text-align:center;text-decoration:none;width:100%;height:100%;font:inherit;font-size:12px;cursor:pointer}
+.xp-ladder li span[aria-current]{cursor:default}
+.xp-ladder .n{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--surface-3);color:var(--ink);font-weight:600;font-size:12px}
+.xp-ladder li.on>*{border-color:var(--mint);background:var(--mint-soft);color:var(--ink)}
+.xp-ladder li.on .n{background:var(--mint);color:#fff}
+.xp-card{display:grid;grid-template-columns:minmax(0,1fr);min-width:0;gap:10px;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.xp-card p{margin:0}
+.xp-top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.xp-lv{display:inline-flex;gap:3px}
+.xp-lv i{width:14px;height:6px;border-radius:3px;background:var(--surface-3)}
+.xp-lv i.on{background:var(--mint)}
+.xp-dl{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.xp-peek{display:grid;gap:6px;min-width:0}
+.xp-peek .table-wrap{max-width:100%;overflow-x:auto}
+.lab-body.one{grid-template-columns:minmax(0,1fr)}
+.lab-body.one .lab-in{border-inline-end:0}
+.xp-ladder button[disabled]{cursor:default;opacity:1}
+@media (max-width:640px){.xp-ladder{grid-template-columns:repeat(4,minmax(0,1fr))}}

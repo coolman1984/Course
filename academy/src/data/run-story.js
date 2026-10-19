@@ -1,9 +1,9 @@
-/* When the tool stops — the story deck of lesson x6, the closing lesson of unit 2.
-   The planning engineer of the TV factory, helping a colleague whose run stopped, carries every slide with one question:
-   «لما الأداة توقف أو تغلط… أعمل إيه؟». The deck sorts messages into three families (the file, the laptop, the code),
-   meets the common ones (execution policy, encoding, a locked file, 0x800A03EC, a leftover EXCEL.EXE), shows how to go
-   back to the model, one change per version, tests that break the tool on purpose, the three tests before sign-off,
-   the tool card — and ends on the cliffhanger into unit 3: a file bigger than Excel itself.
+/* When the tool stops — the story deck of lesson x6, the closing lesson of unit 2, on the lesson's project
+   (Lesson_8_Next_Month_Changes: April's weekly files run through lesson 3's tool). The planning engineer carries every
+   slide with one question: «لما الأداة توقف أو تغلط… أعمل إيه؟». The deck sorts messages into three families (the file,
+   the laptop, the code), meets the common ones (execution policy, encoding, a locked file, a renamed sheet), shows how to
+   go back to the model, one change per version, a problem that did not stop the tool (text dates), the three tests
+   before sign-off, the tool card — and ends on the cliffhanger into unit 3: a file bigger than Excel itself.
    Each slide gives one rule with its reason. Drawings are the xt_* entries in engine/history.js. */
 "use strict";
 (function (A) {
@@ -11,9 +11,9 @@
   A.runStory = {
     id: "run", lesson: "x6",
     kicker: u("لما الأداة توقف · الحكاية كاملة في ٨ دقايق", "When the tool stops · the whole story in 8 minutes"),
-    title: u("لما الأداة توقف: تقرا، وتختبر، وتصلّح", "When the tool stops: read, test, fix"),
-    lead: u("فاكر صورة الشاشة اللي وصلت صباح الأحد؟ الحكاية دي بتبدأ منها. هنمشي مع مهندس التخطيط وهو بيساعد زميله، ونتعلّم نقرا رسايل الأدوات، ونرجع للنموذج صح، ونختبر قبل ما نعتمد، ونكتب للأداة بطاقة تخلّيها تعيش.",
-      "Remember the screenshot that arrived on Sunday morning? This story starts there. We follow the planning engineer as he helps his colleague, and learn to read a tool's messages, go back to the model the right way, test before relying, and write the tool a card that keeps it alive."),
+    title: u("لما الأداة توقف: ملفات الشهر الجديد", "When the tool stops: next month's files"),
+    lead: u("الأداة الأولى اشتغلت على الربع الأول كله. ودلوقتي تقارير أبريل وصلت، وفيها تغييرات ما حدش قال عليها. هنمشي مع مهندس التخطيط وهو بيشغّل نفس الأداة عليها، ونتعلّم نقرا رسايل الأدوات، ونرجع للنموذج صح، ونختبر قبل ما نعتمد، ونكتب للأداة بطاقة تخلّيها تعيش.",
+      "Tool one ran on the whole first quarter. Now April's reports have arrived, with changes nobody announced. We follow the planning engineer as he runs the same tool on them, and learn to read a tool's messages, go back to the model the right way, test before relying, and write the tool a card that keeps it alive."),
     answerLabel: u("القاعدة، وليه؟", "The rule, and why"),
     ideaLabel: u("الفكرة في جملة", "The idea in one line"),
     question: u("لما الأداة توقف أو تغلط… أعمل إيه؟", "When the tool stops or goes wrong… what do I do?"),
@@ -30,11 +30,11 @@
     slides: [
       {
         id: "calm", art: "xt_stop", year: u("الموقف", "Scene"), mark: u("٠١", "01"), era: u("سطر أحمر", "A red line"),
-        title: u("سطر أحمر بالإنجليزي… والخطوة الأولى: الهدوء", "A red English line… and the first step: calm"),
-        story: [u("الزميل في الوردية التانية كتب: «الأداة مش شغالة خالص». مهندس التخطيط رد: «ابعتلي الرسالة كاملة وآخر سطور السجل». الرسالة كانت فيها كلام كتير بالإنجليزي، وفي وسطها «0x800A03EC»، والسجل واقف عند «Week_01.xlsx: opening sheet».",
-          "The colleague on the second shift wrote: “The tool doesn't work at all.” The planning engineer replied: “Send me the whole message and the last lines of the log.” The message held a lot of English, with “0x800A03EC” in the middle, and the log had stopped at “Week_01.xlsx: opening sheet”."),
-        u("أول حاجة مهندس التخطيط قالها: «الأداة ما اتكسرتش؛ الأداة وقفت». ودول حاجتين مختلفين. الأداة اللي بتوقف برسالة بتقولك فين المشكلة، والأداة اللي بتكمّل بصمت هي اللي فعلًا بتخوّف. والسؤال اللي ماشي معانا: لما الأداة توقف أو تغلط، تعمل إيه؟",
-          "The first thing the planning engineer said: “The tool isn't broken; it stopped.” Those are two different things. A tool that stops with a message tells you where the problem is; the one that carries on silently is the one to fear. The question we carry: when a tool stops or goes wrong, what do you do?")],
+        title: u("ملفات أبريل… وسطر أحمر عند Week_16", "April's files… and a red line at Week_16"),
+        story: [u("مهندس التخطيط حط تقارير أبريل الأربعة في فولدر Data، وشغّل نفس أداة الدرس ٣. الشاشة السودا كتبت: Week_14 اتقرا ٩٩ صف، وعمود زيادة اسمه Shift اتساب. Week_15 اتقرا. وعند Week_16 وقفت بسطر أحمر: «Week_16.xlsx: sheet Production not found».",
+          "The planning engineer put April's four reports in the Data folder and ran the same tool from lesson 3. The black window wrote: Week_14 read, 99 rows, an extra column named Shift left out. Week_15 read. And at Week_16 it stopped with a red line: “Week_16.xlsx: sheet Production not found.”"),
+        u("أول حاجة قالها لنفسه: «الأداة ما اتكسرتش؛ الأداة وقفت». ودول حاجتين مختلفين. الأداة اللي بتوقف برسالة بتقولك فين المشكلة، والأداة اللي بتكمّل بصمت هي اللي فعلًا بتخوّف. والسؤال اللي ماشي معانا: لما الأداة توقف أو تغلط، تعمل إيه؟",
+          "The first thing he told himself: “The tool isn't broken; it stopped.” Those are two different things. A tool that stops with a message tells you where the problem is; the one that carries on silently is the one to fear. The question we carry: when a tool stops or goes wrong, what do you do?")],
         answer: u("أول ما الأداة توقف، اقرا الرسالة والسجل قبل ما تغيّر أي حاجة. لأن الرسالة غالبًا فيها مكان المشكلة، والتغيير العشوائي بيضيّعه.", "The moment the tool stops, read the message and the log before changing anything — the message usually holds the problem's location, and random changes lose it."),
         idea: u("الوقفة معلومة… مش كارثة.", "A stop is information… not a disaster.")
       },
@@ -60,41 +60,41 @@
       },
       {
         id: "encoding", art: "xt_encoding", year: u("الجهاز ٢", "Laptop 2"), mark: u("٠٤", "04"), era: u("حروف غريبة", "Odd characters"),
-        title: u("«Ø§Ù„ÙƒÙ…ÙŠØ©»: العربي اتلخبط", "“Ø§Ù„ÙƒÙ…ÙŠØ©”: the Arabic got scrambled"),
-        story: [u("زميل تالت شغّل الأداة، فوقفت عند أول ملف: «column Ø§Ù„ÙƒÙ…ÙŠØ© not found». الحروف الغريبة دي هي كلمة «الكمية»، بس اتقرت غلط. فاكر شريحة الترميز في حكاية «من الشات لجهازك»؟ ده بالظبط اللي بيحصل لما السكريبت يتحفظ من غير BOM.",
-          "A third colleague ran the tool and it stopped at the first file: “column Ø§Ù„ÙƒÙ…ÙŠØ© not found”. Those odd characters are the word «الكمية», misread. Remember the encoding slide in the story “From the chat to your laptop”? That is exactly what happens when the script is saved without a BOM."),
-        u("الحل مش في الكود ولا في الملف: افتح السكريبت في المفكرة، و«حفظ باسم»، واختار الترميز «UTF-8 with BOM»، واحفظ فوقه. وشغّل تاني. دقيقة واحدة، والأداة اشتغلت من غير ما سطر يتغيّر.",
-          "The fix is neither in the code nor in the file: open the script in Notepad, “Save As”, choose the encoding “UTF-8 with BOM”, and save over it. Run again. One minute, and the tool ran without a line changing.")],
-        answer: u("لو العربي ظهر حروف غريبة في الرسالة، المشكلة في ترميز السكريبت. لأن النموذج كتب الاسم صح، والحفظ هو اللي غيّره.", "If Arabic shows up as odd characters in the message, the problem is the script's encoding — the model wrote the name right, and saving changed it."),
+        title: u("«Ø§Ù„Ù…Ù„Ù»: العربي اتلخبط", "“Ø§Ù„Ù…Ù„Ù”: the Arabic got scrambled"),
+        story: [u("زميل في الوردية التانية طلب نفس الأداة برسايل سجل بالعربي، وشغّلها، فالسجل طلع حروف غريبة زي «Ø§Ù„Ù…Ù„Ù Ø§ØªÙ‚Ø±Ø§» بدل «الملف اتقرا». فاكر شريحة الترميز في حكاية «من الشات لجهازك»؟ ده بالظبط اللي بيحصل لما السكريبت يتحفظ من غير BOM.",
+          "A colleague on the second shift asked for the same tool with Arabic log messages, ran it, and the log came out as odd characters like “Ø§Ù„Ù…Ù„Ù Ø§ØªÙ‚Ø±Ø§” instead of «الملف اتقرا». Remember the encoding slide in the story “From the chat to your laptop”? That is exactly what happens when the script is saved without a BOM."),
+        u("الحل مش في الكود ولا في الملفات: افتح السكريبت في المفكرة، و«حفظ باسم»، واختار الترميز «UTF-8 with BOM»، واحفظ فوقه. وشغّل تاني. دقيقة واحدة، والسجل بقى مقروء من غير ما سطر يتغيّر.",
+          "The fix is neither in the code nor in the files: open the script in Notepad, “Save As”, choose the encoding “UTF-8 with BOM”, and save over it. Run again. One minute, and the log was readable without a line changing.")],
+        answer: u("لو العربي ظهر حروف غريبة في الرسايل، المشكلة في ترميز السكريبت. لأن النموذج كتب الكلام صح، والحفظ هو اللي غيّره.", "If Arabic shows up as odd characters in the messages, the problem is the script's encoding — the model wrote the words right, and saving changed them."),
         idea: u("الحروف الغريبة = احفظ تاني بـ BOM.", "Odd characters = save again with a BOM.")
       },
       {
         id: "locked", art: "xt_locked", year: u("الملف", "The file"), mark: u("٠٥", "05"), era: u("الملف مفتوح", "The file is open"),
         title: u("الملف مفتوح في إكسل… وإكسل مستخبي في الخلفية", "The file is open in Excel… and Excel is hiding in the background"),
-        story: [u("مرة الأداة وقفت برسالة إن الملف «in use» أو «read-only». السبب كان بسيط: Week_03 كان مفتوح في إكسل قدام الزميل، علشان كان بيبص فيه. قفل الملف، وشغّل تاني، والأداة كمّلت.",
-          "Once the tool stopped with a message that the file was “in use” or “read-only”. The cause was simple: Week_03 was open in Excel in front of the colleague, who'd been looking at it. He closed the file, ran again, and the tool carried on."),
+        story: [u("مرة الأداة وقفت برسالة إن الملف «in use» أو «read-only». السبب كان بسيط: Week_14 كان مفتوح في إكسل قدامه، علشان كان بيبص على عمود Shift. وفي الفولدر ملف صغير اسمه ‎~$Week_14.xlsx، نفس ملف القفل اللي قابلناه في الدرس التاني. قفل الملف، وشغّل تاني، والأداة كمّلت.",
+          "Once the tool stopped with a message that the file was “in use” or “read-only”. The cause was simple: Week_14 was open in Excel in front of him, as he'd been looking at the Shift column. And the folder held a small file named ~$Week_14.xlsx — the same lock file we met in lesson two. He closed the file, ran again, and the tool carried on."),
         u("بس مرة تانية مكانش فيه ولا ملف مفتوح، والرسالة لسه موجودة. في «إدارة المهام» لقى تلات نسخ من EXCEL.EXE شغالة من غير شبابيك: بواقي تشغيلات وقفت في النص قبل ما الأداة تتعلّم تقفل إكسل في كل الحالات. قفلهم، واشتغلت.",
           "But another time no file was open and the message remained. In Task Manager he found three copies of EXCEL.EXE running with no windows: leftovers of runs that stopped midway, before the tool learned to close Excel in every case. He ended them, and it ran.")],
         answer: u("قبل أي تشغيل، اقفل ملفات الأداة، واتأكد إن مفيش EXCEL.EXE فاضل في إدارة المهام. لأن الملف المفتوح أو إكسل المستخبي بيقفل الملفات على الأداة.", "Before any run, close the tool's files and check no EXCEL.EXE is left in Task Manager — an open file or a hidden Excel locks the files against the tool."),
         idea: u("الملف المفتوح عندك… مقفول على الأداة.", "A file open for you… is locked for the tool.")
       },
       {
-        id: "hresult", art: "xt_hresult", year: u("الملف ٢", "The file 2"), mark: u("٠٦", "06"), era: u("0x800A03EC", "0x800A03EC"),
-        title: u("0x800A03EC: إكسل رفض أمر… والسبب كان اسم شيت", "0x800A03EC: Excel refused a command… and the cause was a sheet name"),
-        story: [u("نرجع لرسالة الوردية التانية. الرقم ده معناه إن إكسل رفض أمر من السكريبت، وغالبًا لأنه طلب حاجة مش موجودة: شيت، أو نطاق، أو خلية. والسجل كان واقف عند «opening sheet»، يعني المشكلة في الشيت.",
-          "Back to the second shift's message. That number means Excel refused a command from the script, usually because it asked for something that isn't there: a sheet, a range, a cell. The log had stopped at “opening sheet”, so the problem lay in the sheet."),
-        u("مهندس التخطيط طلب من زميله يفتح Week_01 ويقرا اسم الشيت. الاسم كان «الإنتاج» مش «Production»: الزميل كان غيّر اسم الشيتات في نسخته علشان تبقى بالعربي. رجّع الاسم، والأداة اشتغلت. ولا سطر كود اتغيّر.",
-          "The planning engineer asked his colleague to open Week_01 and read the sheet name. It said «الإنتاج», not “Production”: the colleague had renamed the sheets in his copy to Arabic. He restored the name and the tool ran. Not a line of code changed.")],
-        answer: u("لما إكسل يرفض أمر، قارن الأسماء في الملف بالأسماء في الـ Prompt حرف بحرف. لأن أغلب الرفض سببه اسم اتغيّر، مش كود غلط.", "When Excel refuses a command, compare the names in the file with those in the Prompt letter by letter — most refusals come from a renamed item, not wrong code."),
-        idea: u("رقم غريب… وسبب بسيط.", "A strange number… a simple cause.")
+        id: "sheet", art: "xt_sheet", year: u("الملف ٢", "The file 2"), mark: u("٠٦", "06"), era: u("Sheet1", "Sheet1"),
+        title: u("Week_16: الشيت اسمه Sheet1… مش Production", "Week_16: the sheet is named Sheet1… not Production"),
+        story: [u("نرجع لرسالة Week_16. مهندس التخطيط فتح الملف وقرا اسم الشيت: Sheet1. الخط بعت التقرير الأسبوع ده من برنامج تاني، والبرنامج سمّى الشيت باسمه الافتراضي. العناوين نفسها، والبيانات نفسها، والاسم بس اللي اتغيّر.",
+          "Back to Week_16's message. The planning engineer opened the file and read the sheet name: Sheet1. The line sent this week's report from another program, which gave the sheet its default name. The same headers, the same data; only the name changed."),
+        u("الأداة عملت الصح لأنها بتدوّر على الشيت بالاسم وبتقول لو ما لقيتهوش. أداة تانية كانت هتطلّع رسالة مبهمة زي 0x800A03EC، أو أسوأ: تقرا أي شيت موجود. والحل مش إنه يغيّر اسم الشيت بإيده، لأن الأسبوع الجاي نفس البرنامج هيعمل نفس الحاجة.",
+          "The tool did the right thing: it looks for the sheet by name and says when it isn't found. Another tool would have given a cryptic message such as 0x800A03EC, or worse, read whatever sheet was there. And the fix isn't renaming the sheet by hand, because next week the same program will do the same thing.")],
+        answer: u("لما الملف يختلف عن الوصف، قارن الأسماء في الملف بالأسماء في الـ Prompt حرف بحرف. لأن أغلب الوقفات سببها اسم اتغيّر، مش كود غلط.", "When a file differs from the description, compare the names in the file with those in the Prompt letter by letter — most stops come from a renamed item, not wrong code."),
+        idea: u("نفس البيانات… باسم تاني.", "The same data… under another name.")
       },
       {
         id: "report", art: "xt_report", year: u("الرجوع للنموذج", "Back to the model"), mark: u("٠٧", "07"), era: u("بالحرف", "Word for word"),
         title: u("لما المشكلة في الكود: ارجع للنموذج بأربع حاجات", "When the problem is the code: go back to the model with four things"),
-        story: [u("مرة الملف سليم، والجهاز سليم، والأداة لسه بتوقف. هنا بس مهندس التخطيط رجع للنموذج، في نفس المحادثة اللي الأداة اتكتبت فيها، علشان يفتكر القواعد اللي اتفقوا عليها. وبعتله أربع حاجات: الرسالة بالحرف، وآخر ١٠ سطور من السجل، واسم الملف اللي وقف عنده، ونسخة PowerShell.",
-          "Once, the file was sound, the laptop was sound, and the tool still stopped. Only then did the planning engineer go back to the model, in the same chat where the tool was written, so it would remember the agreed rules. He sent four things: the message word for word, the last 10 lines of the log, the file it stopped at, and the PowerShell version."),
-        u("وطلب منه حاجة قبل الكود: «قولّي في ٣ سطور المشكلة غالبًا فين، وإيه اللي محتاج أتأكد منه بنفسي». النموذج ما شافش الجهاز؛ كل اللي يعرفه هو اللي اتقاله. وكل ما الرسالة أدق، التصليح بييجي من أول مرة.",
-          "And he asked for something before code: “Tell me in 3 lines where the problem most likely is, and what I need to check myself.” The model hasn't seen the laptop; all it knows is what it's told. The more precise the message, the more likely the fix lands the first time.")],
+        story: [u("الجهاز سليم، والملف مختلف عن الوصف. مهندس التخطيط رجع للنموذج بـ Prompt.txt بتاع مشروع الدرس، في نفس المحادثة اللي الأداة اتكتبت فيها في الدرس ٣، علشان يفتكر القواعد اللي اتفقوا عليها. وبعتله أربع حاجات: الرسالة بالحرف، وآخر ١٠ سطور من السجل، واسم الملف اللي وقف عنده، ونسخة PowerShell.",
+          "The laptop is sound, and the file differs from the description. The planning engineer went back to the model with the project's Prompt.txt, in the same chat where the tool was written in lesson 3, so it would remember the agreed rules. He sent four things: the message word for word, the last 10 lines of the log, the file it stopped at, and the PowerShell version."),
+        u("وطلب منه حاجة قبل الكود: «قولّي في ٣ سطور المشكلة غالبًا فين، واقترح قاعدة واحدة». النموذج رد: «الملف فيه شيت واحد اسمه Sheet1. أقترح: لو الملف فيه شيت واحد بس، يتقري مهما كان اسمه، ويتسجّل ده». مهندس التخطيط وافق.",
+          "And he asked for something before code: “Tell me in 3 lines where the problem most likely is, and propose one rule.” The model replied: “The file has one sheet, named Sheet1. I suggest: if a file has only one sheet, read it whatever its name, and log that.” The planning engineer agreed.")],
         answer: u("ابعت للنموذج الرسالة والسجل والملف والنسخة، في نفس المحادثة. لأن «مش شغالة» من غير تفاصيل بتطلّع تعديلات عشوائية.", "Send the model the message, the log, the file and the version, in the same chat — “it doesn't work” without details yields random edits."),
         idea: u("النموذج بيصلّح اللي بيشوفه… فورّيه كويس.", "The model fixes what it sees… so show it well.")
       },
@@ -103,36 +103,36 @@
         title: u("تعديل واحد… ونسخة باسم جديد", "One change… and a version with a new name"),
         story: [u("النموذج اقترح تلات تعديلات مرة واحدة. مهندس التخطيط قاله: «واحد بس، الأهم». لأن لو التلاتة اتعملوا والأداة اشتغلت، مش هيعرف أنهي واحد صلّح. ولو اتعملوا والأداة اتلخبطت أكتر، مش هيعرف أنهي واحد عمل المشكلة.",
           "The model suggested three changes at once. The planning engineer said: “Just one, the most important.” Because if all three were made and the tool ran, he wouldn't know which one fixed it. And if they were made and the tool got worse, he wouldn't know which one caused it."),
-        u("وكل تعديل بيتحفظ في ملف جديد: ‎stack_tool_v2.ps1، وبعده v3. والقديم بيفضل جنبه. لو v3 طلع أسوأ، يرجع لـ v2 في ثانية. وفي بطاقة الأداة سطر لكل نسخة: اتغيّر فيها إيه، وليه.",
-          "And each change is saved in a new file: stack_tool_v2.ps1, then v3. The old one stays beside it. If v3 turns out worse, he goes back to v2 in a second. And the tool card holds a line per version: what changed, and why.")],
+        u("والقاعدة الجديدة اتحفظت في ملف جديد: ‎stack_tool_v2.ps1. والتشغيل التاني خلص الأربع ملفات، وWeek_17 طلع صفر صفوف من غير وقفة: أسبوع صيانة، والأداة كتبت «0 rows» وكمّلت. والقديم بيفضل جنبه. لو v3 طلع أسوأ، يرجع لـ v2 في ثانية. وفي بطاقة الأداة سطر لكل نسخة: اتغيّر فيها إيه، وليه.",
+          "The new rule was saved in a new file: stack_tool_v2.ps1. The second run finished all four files, and Week_17 came out at zero rows without a stop: a maintenance week, and the tool wrote “0 rows” and carried on. The old one stays beside it. If v3 turns out worse, he goes back to v2 in a second. And the tool card holds a line per version: what changed, and why.")],
         answer: u("غيّر حاجة واحدة في المرة، واحفظ كل نسخة باسم جديد. لأنك محتاج تعرف إيه اللي صلّح، وتقدر ترجع للي كان شغال.", "Change one thing at a time and save each version under a new name — you need to know what fixed it, and to be able to return to what worked."),
         idea: u("تعديل واحد = سبب واحد واضح.", "One change = one clear cause.")
       },
       {
-        id: "break", art: "xt_break", year: u("الاختبار", "Testing"), mark: u("٠٩", "09"), era: u("اكسرها بإيدك", "Break it yourself"),
-        title: u("أحسن اختبار: إنك تكسر الأداة بإيدك", "The best test: breaking the tool yourself"),
-        story: [u("بعد كل تصليح، مهندس التخطيط بيعمل تلات نسخ فيها عيوب متعمّدة في فولدر اختبار: نسخة من ملف ناقصها عمود القيمة، ونسخة اسم شيتها متغيّر، ونسخة فاضية مفيهاش ولا صف. ويشغّل الأداة على كل واحدة.",
-          "After every fix, the planning engineer makes three deliberately faulty copies in a test folder: a file missing its Value column, one with a renamed sheet, and an empty one with not a single row. He runs the tool on each."),
-        u("والمطلوب مش إن الأداة تنجح؛ المطلوب إنها توقف برسالة واضحة فيها اسم الملف والمشكلة. لو أي واحدة عدّت وطلّعت نتيجة، يبقى فيه قاعدة ناقصة. الاختبار ده بياخد خمس دقايق، وبيقولك الأداة هتعمل إيه في يوم وحش.",
-          "What's wanted isn't for the tool to succeed; it's for it to stop with a clear message naming the file and the problem. If any copy slips through and yields a result, a rule is missing. This test takes five minutes and tells you what the tool will do on a bad day.")],
-        answer: u("جرّب الأداة على ملفات فيها مشاكل عمدًا، واتأكد إنها بتوقف. لأن الأداة اللي ما شفتهاش بتوقف ممكن تكمّل بصمت لما المشكلة الحقيقية تيجي.", "Try the tool on deliberately faulty files and make sure it stops — a tool you've never seen stop may carry on silently when the real problem comes."),
-        idea: u("لو ما عرفتش تكسرها… ما تعرفش تثق فيها.", "If you can't break it… you can't trust it.")
+        id: "dates", art: "xt_dates", year: u("الصامت", "The silent one"), mark: u("٠٩", "09"), era: u("ما وقفتش", "It didn't stop"),
+        title: u("Week_15: ١٠٤ تاريخ نص… والأداة ما وقفتش", "Week_15: 104 text dates… and the tool didn't stop"),
+        story: [u("التشغيل خلص، بس مهندس التخطيط عمل مراجعته المعتادة: جدول محوري بالشهر. لقى ١٠٤ صف من غير شهر. كلهم من Week_15: التواريخ مكتوبة نص زي «09/04/2026»، والأداة نسختها زي ما هي، لأن مفيش قاعدة في الـ Prompt بتقول التاريخ لازم يبقى تاريخ.",
+          "The run finished, but the planning engineer did his usual check: a pivot by month. He found 104 rows with no month. All from Week_15: the dates were typed as text like “09/04/2026”, and the tool copied them as they were, because no rule in the Prompt said a date must be a date."),
+        u("وهنا سؤال النموذج: «09/04» يبقى ٩ أبريل ولا ٤ سبتمبر؟ مهندس التخطيط جاوب: «اليوم الأول، زي ما بنكتب في مصر». ونسخة v3 فيها قاعدتين: التاريخ النص يتحوّل يوم/شهر/سنة، وأي قيمة في Date مش تاريخ بعد التحويل توقف الأداة. مش كل مشكلة بتوقف الأداة لوحدها.",
+          "And here is the model's question: is “09/04” 9 April or 4 September? The planning engineer answered: “day first, as we write it in Egypt.” Version v3 holds two rules: a text date is converted as day/month/year, and any Date value still not a date after converting stops the tool. Not every problem stops a tool by itself.")],
+        answer: u("بعد أي تشغيل، راجع الناتج بطريقة تانية، زي جدول محوري بالشهر. لأن المشكلة اللي ما ليهاش قاعدة بتعدّي من غير رسالة.", "After any run, check the output another way, such as a pivot by month — a problem with no rule passes without a message."),
+        idea: u("اللي ما وقّفش الأداة… لازم المراجعة توقّفه.", "What didn't stop the tool… the check must stop.")
       },
       {
         id: "tests", art: "xt_tests", year: u("الاعتماد", "Sign-off"), mark: u("١٠", "10"), era: u("تلات اختبارات", "Three tests"),
         title: u("تلات اختبارات قبل ما تعتمد على أي أداة", "Three tests before relying on any tool"),
-        story: [u("مهندس التخطيط لخّص الاعتماد في تلات اختبارات بيعملهم على كل أداة. الأول: العدد، عدد الصفوف في السجل يساوي العدد الحقيقي. التاني: الإجمالي، إجمالي الناتج يساوي إجمالي المصدر أو المفتاح. التالت: المشاكل، كل مشكلة معروفة في البيانات اتعاملت صح، وكل نسخة مكسورة وقّفت الأداة.",
-          "The planning engineer reduced sign-off to three tests he runs on every tool. First: the count — the log's row count equals the real one. Second: the total — the output's total equals the source or the key. Third: the problems — every known problem in the data was handled right, and every broken copy stopped the tool."),
-        u("لو التلاتة عدّوا، الأداة تتعتمد. لو واحد فشل، الأداة ترجع للتصليح، والتقرير يتعمل بالإيد الشهر ده. والتلات اختبارات بيتكتبوا في بطاقة الأداة بنتيجتهم، علشان أي حد يقدر يعيدهم.",
-          "If all three pass, the tool is signed off. If one fails, the tool goes back for fixing and this month's report is made by hand. And the three tests are written on the tool card with their results, so anyone can repeat them.")],
+        story: [u("مهندس التخطيط لخّص الاعتماد في تلات اختبارات بيعملهم على كل أداة. الأول: العدد، عدد الصفوف في السجل يساوي العدد الحقيقي. التاني: الإجمالي، إجمالي الناتج يساوي إجمالي المصدر أو المفتاح. التالت: المشاكل، كل مشكلة معروفة اتعاملت صح، ونسخ مكسورة بالقصد: ملف ناقص عمود Value لازم يوقّفها، وملف عناوين بس زي Week_17 لازم يعدّي بصفر صفوف.",
+          "The planning engineer reduced sign-off to three tests he runs on every tool. First: the count — the log's row count equals the real one. Second: the total — the output's total equals the source or the key. Third: the problems — every known problem was handled right, and deliberately broken copies behave: a file missing its Value column must stop it, and a headers-only file like Week_17 must pass with zero rows."),
+        u("على ملفات أبريل: ٢٩٠ صف، و٦٬٨١٠ جهاز، زي مفتاح الإجابة. لو التلاتة عدّوا، الأداة تتعتمد. لو واحد فشل، الأداة ترجع للتصليح، والتقرير يتعمل بالإيد الشهر ده. والتلات اختبارات بيتكتبوا في بطاقة الأداة بنتيجتهم، علشان أي حد يقدر يعيدهم.",
+          "On April's files: 290 rows and 6,810 units, as in the answer key. If all three pass, the tool is signed off. If one fails, the tool goes back for fixing and this month's report is made by hand. And the three tests are written on the tool card with their results, so anyone can repeat them.")],
         answer: u("ما تعتمدش على أداة إلا لما تعدّي العدد والإجمالي والمشاكل. لأن كل اختبار بيمسك نوع مختلف من الغلط.", "Rely on a tool only once it passes the count, the total and the problems — each test catches a different kind of mistake."),
         idea: u("العدد + الإجمالي + المشاكل = ثقة.", "The count + the total + the problems = trust.")
       },
       {
         id: "card", art: "xt_card", year: u("البطاقة", "The card"), mark: u("١١", "11"), era: u("الأداة تعيش", "The tool lives on"),
         title: u("بطاقة الأداة: صفحة واحدة بتخلّيها تعيش سنين", "The tool card: one page that keeps it alive for years"),
-        story: [u("جنب كل أداة، مهندس التخطيط حط ملف اسمه TOOL_CARD.txt. فيه: الأداة بتعمل إيه في سطرين، والملفات والشيتات والأعمدة بالحرف، وكل القواعد بما فيها إجاباته على أسئلة النموذج، والتلات اختبارات ونتيجتهم، وسطر لكل نسخة.",
-          "Beside each tool, the planning engineer put a file named TOOL_CARD.txt. It holds: what the tool does in two lines, the files, sheets and columns letter for letter, every rule including his answers to the model's questions, the three tests and their results, and a line per version."),
+        story: [u("جنب كل أداة، مهندس التخطيط حط ملف اسمه Tool_Card.txt. فيه: الأداة بتعمل إيه في سطرين، والملفات والشيتات والأعمدة بالحرف، وكل القواعد بما فيها إجاباته على أسئلة النموذج، والتلات اختبارات ونتيجتهم، وسطر لكل نسخة: v2 الشيت، وv3 التواريخ.",
+          "Beside each tool, the planning engineer put a file named Tool_Card.txt. It holds: what the tool does in two lines, the files, sheets and columns letter for letter, every rule including his answers to the model's questions, the three tests and their results, and a line per version: v2 the sheet, v3 the dates."),
         u("وجه يوم الاختبار الحقيقي: زميلة شغالة على ChatGPT طلبت نفس الأداة. مهندس التخطيط ادّاها البطاقة بس، مش السكريبت. لصقتها في محادثة جديدة، والنموذج بنى نفس الأداة في ربع ساعة، من غير ما يسألها حاجة اتسألت قبل كده. والاختبارات التلاتة عدّت.",
           "Then came the real test: a colleague working on ChatGPT asked for the same tool. The planning engineer gave her the card only, not the script. She pasted it into a new chat, and the model built the same tool in a quarter of an hour, without asking her anything already asked. And the three tests passed.")],
         answer: u("اكتب لكل أداة بطاقة فيها الوصف والقواعد والاختبارات. لأن البطاقة بتبني الأداة تاني على أي نموذج، والسكريبت لوحده بيموت مع أول تغيير.", "Write each tool a card with its description, rules and tests — the card rebuilds the tool on any model, while the script alone dies at the first change."),
@@ -141,11 +141,11 @@
       {
         id: "cliff", art: "xt_cliff", year: u("الوحدة الجاية", "Next unit"), mark: u("١٢", "12"), era: u("ملف الربع", "The quarter's file"),
         title: u("كل حاجة اشتغلت… لحد ما وصل ملف الربع من الإدارة", "Everything worked… until the quarter's file arrived from head office"),
-        story: [u("تلات أدوات، وتلات بطاقات، وتلات اختبارات بتعدّي كل شهر. ست ساعات بقوا عشر دقايق، ومهندس التخطيط بقى يبعت تقاريره الصبح بدري. لحد ما وصل ملف الربع من نظام الإدارة: ٣٠٠ ألف صف من كل محطات الفحص، وخلايا مدموجة في العناوين، وتواريخ مكتوبة كنص زي «٣ مارس».",
-          "Three tools, three cards, three tests passing every month. Six hours became ten minutes, and the planning engineer sent his reports early in the morning. Until the quarter's file arrived from the management system: 300,000 rows from every test station, merged cells in the headers, dates written as text like “3 March”."),
+        story: [u("خمس أدوات، وخمس بطاقات، واختبارات بتعدّي كل شهر: تحت بعض، وبحث وربط، وتقرير قصاد الخطة، ومطابقة المشتريات، وطلب الخامات. ساعات الشغل بقت دقايق. لحد ما وصل ملف الربع من نظام الإدارة: ٣٠٠ ألف صف من كل محطات الفحص، وخلايا مدموجة في العناوين، وتواريخ مكتوبة كنص.",
+          "Five tools, five cards, and tests passing every month: stacking, lookups, the report against plan, the purchasing match and the materials order. Hours of work became minutes. Until the quarter's file arrived from the management system: 300,000 rows from every test station, merged cells in the headers, dates typed as text."),
         u("الأداة عملت الصح ووقفت برسالة واضحة بدل ما تطلّع نتيجة غلط. بس المرة دي إكسل نفسه وقف عند ٧٠٪ ورسالة «لا يستجيب». إكسل اتعمل للجداول اللي بتشوفها بعينك، مش لمئات الآلاف من الصفوف. والسؤال اللي هنبدأ بيه الوحدة الجاية: طب لو جالك ملف أكبر من إكسل نفسه؟",
           "The tool did the right thing and stopped with a clear message instead of producing a wrong result. But this time Excel itself froze at 70% with “Not responding”. Excel was built for tables you look at, not for hundreds of thousands of rows. And the question we'll open the next unit with: what if a file arrives that is bigger than Excel itself?")],
-        answer: u("واجب الوحدة: شغّل التلات أدوات على الحقيبة، واكتب بطاقة لواحدة منهم، واعمل التلات اختبارات. وتعالى ومعاك أول ملف حقيقي من شغلك محتاج أداة. لأن الملفات دي هي بداية الوحدة الجاية.", "This unit's task: run the three tools on the kit, write a card for one of them, and do the three tests. Then bring the first real file from your work that needs a tool — such files open the next unit."),
+        answer: u("واجب الوحدة: شغّل أداة الدرس ٣ على ملفات أبريل، وأضف القواعد واحدة واحدة، واكتب بطاقتها، واعمل التلات اختبارات. وتعالى ومعاك أول ملف حقيقي من شغلك محتاج أداة. لأن الملفات دي هي بداية الوحدة الجاية.", "This unit's task: run lesson 3's tool on April's files, add the rules one at a time, write its card, and do the three tests. Then bring the first real file from your work that needs a tool — such files open the next unit."),
         idea: u("إكسل اتعمل علشان تشوف البيانات… مش علشان يشيلها كلها.", "Excel was built for looking at data… not for holding all of it.")
       }
     ]

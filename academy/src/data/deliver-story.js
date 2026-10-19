@@ -30,8 +30,8 @@
       {
         id: "reply", art: "xd_reply", year: u("الموقف", "Scene"), mark: u("٠١", "01"), era: u("مفيش زرار تنزيل", "No download button"),
         title: u("الكود كله في الرد… ومفيش ولا ملف", "All the code in the reply… and not one file"),
-        story: [u("في المصنع فيه ناس بتشتغل على ChatGPT وناس على Gemini Enterprise. مهندس التخطيط كان متعوّد على ChatGPT: يطلب أداة، ييجي رابط، ينزّل الملف، يشغّل. أول مرة طلب نفس الأداة من Gemini Enterprise، الرد جه صناديق كود طويلة، ومفيش ولا رابط.",
-          "At the factory some people work on ChatGPT and some on Gemini Enterprise. The planning engineer was used to ChatGPT: ask for a tool, get a link, download the file, run it. The first time he asked Gemini Enterprise for the same tool, the reply came as long code boxes, without a single link."),
+        story: [u("في المصنع فيه ناس بتشتغل على ChatGPT وناس على Gemini Enterprise. مهندس التخطيط كان متعوّد على ChatGPT: يطلب أداة، ييجي رابط، ينزّل الملف، يشغّل. أول مرة طلب من Gemini Enterprise أداة صغيرة بتعمل قايمة بالملفات اللي في فولدر، الرد جه صناديق كود، ومفيش ولا رابط.",
+          "At the factory some people work on ChatGPT and some on Gemini Enterprise. The planning engineer was used to ChatGPT: ask for a tool, get a link, download the file, run it. The first time he asked Gemini Enterprise for a small tool listing the files in a folder, the reply came as code boxes, without a single link."),
         u("ده مش عيب في النموذج؛ ده اختيار في الإعدادات، وكتير بيبقى مقفول أو مش متفعّل. والكود سليم. الفرق إن الخطوة الأخيرة بقت عليك: إنت اللي هتحوّل الكلام ده لملف. والسؤال اللي ماشي معانا: إزاي من غير ما حاجة تضيع في السكة؟",
           "That's not a flaw in the model; it's a setting, often locked or not enabled. The code is sound. The difference is that the last step is now yours: you turn this text into a file. And the question we carry: how, without anything getting lost on the way?")],
         answer: u("اعرف نموذجك بيسلّم إزاي قبل ما تطلب أداة كبيرة. لأن طريقة التسليم بتحدد إنت هتطلب الكود بأنهي شكل.", "Know how your model delivers before asking for a big tool — the way it delivers decides the shape you ask the code in."),
@@ -70,8 +70,8 @@
       {
         id: "copy", art: "xd_copy", year: u("الطريق ٢", "Path 2"), mark: u("٠٥", "05"), era: u("Gemini Enterprise", "Gemini Enterprise"),
         title: u("Gemini Enterprise: زرار النسخ، مش الماوس", "Gemini Enterprise: the copy button, not the mouse"),
-        story: [u("في Gemini Enterprise الرد جه تلات صناديق: ‎stack_tool.ps1، و‎run_stack.bat، وخطوات التشغيل. فوق كل صندوق زرار صغير للنسخ. مهندس التخطيط في الأول ظلّل الكود بالماوس، وضاع منه أول سطر من غير ما ياخد باله.",
-          "In Gemini Enterprise the reply came as three boxes: stack_tool.ps1, run_stack.bat, and the run steps. Above each box is a small copy button. At first the planning engineer selected the code with the mouse, and lost the first line without noticing."),
+        story: [u("في Gemini Enterprise الرد جه تلات صناديق: ‎file_list.ps1، و‎run_file_list.bat، وخطوات التشغيل. فوق كل صندوق زرار صغير للنسخ. مهندس التخطيط في الأول ظلّل الكود بالماوس، وضاع منه أول سطر من غير ما ياخد باله.",
+          "In Gemini Enterprise the reply came as three boxes: file_list.ps1, run_file_list.bat, and the run steps. Above each box is a small copy button. At first the planning engineer selected the code with the mouse, and lost the first line without noticing."),
         u("زرار النسخ بياخد الصندوق كله بالظبط، من أول حرف لآخر حرف، من غير مسافات زيادة ولا كلام من برّه الصندوق. صندوق واحد في المرة: انسخ، والصق في ملف، واحفظ، وبعدين الصندوق اللي بعده.",
           "The copy button takes the whole box exactly, from the first character to the last, with no extra spaces and no text from outside the box. One box at a time: copy, paste into a file, save, then the next box.")],
         answer: u("انسخ كل صندوق بزرار النسخ اللي فوقه. لأن التظليل بالماوس بيضيّع أول سطر أو آخر سطر من غير ما تحس.", "Copy each box with the button above it — selecting with the mouse drops a first or last line without your noticing."),
@@ -80,30 +80,30 @@
       {
         id: "notepad", art: "xd_notepad", year: u("الحفظ", "Saving"), mark: u("٠٦", "06"), era: u("المفكرة", "Notepad"),
         title: u("المفكرة: «حفظ باسم» بأربع اختيارات", "Notepad: “Save As” with four choices"),
-        story: [u("مهندس التخطيط فتح المفكرة، ولصق الصندوق الأول، ودوس «حفظ باسم». وهنا أربع حاجات لازم تتظبط: الفولدر يبقى فولدر الأداة، والنوع «كل الملفات» مش «مستند نصي»، والاسم بالظبط ‎stack_tool.ps1، والترميز «UTF-8 with BOM».",
-          "The planning engineer opened Notepad, pasted the first box and pressed “Save As”. Four things must be set here: the folder is the tool's folder, the type is “All files”, not “Text document”, the name is exactly stack_tool.ps1, and the encoding is “UTF-8 with BOM”."),
-        u("وبعدين نفس الخطوات لملف التشغيل باسم ‎run_stack.bat. الاتنين في نفس الفولدر، جنب بعض. أربع اختيارات بتاخد عشر ثواني، وكل واحد فيهم لو اتنسي، الأداة مش هتشتغل، والرسالة مش هتقولك ليه.",
-          "Then the same steps for the launcher, named run_stack.bat. Both in the same folder, side by side. Four choices that take ten seconds, and if any one is forgotten, the tool won't run and the message won't tell you why.")],
+        story: [u("مهندس التخطيط فتح المفكرة، ولصق الصندوق الأول، ودوس «حفظ باسم». وهنا أربع حاجات لازم تتظبط: الفولدر يبقى فولدر الأداة، والنوع «كل الملفات» مش «مستند نصي»، والاسم بالظبط ‎file_list.ps1، والترميز «UTF-8 with BOM».",
+          "The planning engineer opened Notepad, pasted the first box and pressed “Save As”. Four things must be set here: the folder is the tool's folder, the type is “All files”, not “Text document”, the name is exactly file_list.ps1, and the encoding is “UTF-8 with BOM”."),
+        u("وبعدين نفس الخطوات لملف التشغيل باسم ‎run_file_list.bat. الاتنين في نفس الفولدر، جنب بعض. أربع اختيارات بتاخد عشر ثواني، وكل واحد فيهم لو اتنسي، الأداة مش هتشتغل، والرسالة مش هتقولك ليه.",
+          "Then the same steps for the launcher, named run_file_list.bat. Both in the same folder, side by side. Four choices that take ten seconds, and if any one is forgotten, the tool won't run and the message won't tell you why.")],
         answer: u("في «حفظ باسم» راجع الأربعة: الفولدر، والنوع، والاسم، والترميز. لأن أغلب الأدوات اللي «مش شغالة» وقعت هنا.", "In “Save As” check the four: folder, type, name and encoding — most tools that “don't work” fell right here."),
         idea: u("عشر ثواني في الحفظ بتوفّر ساعة تصليح.", "Ten seconds at saving spare an hour of fixing.")
       },
       {
-        id: "bom", art: "xd_bom", year: u("الترميز", "Encoding"), mark: u("٠٧", "07"), era: u("العربي جوّه الكود", "Arabic inside the code"),
+        id: "bom", art: "xd_bom", year: u("الترميز", "Encoding"), mark: u("٠٧", "07"), era: u("العربي جوّه السكريبت", "Arabic inside the script"),
         title: u("ليه «UTF-8 with BOM» بالذات؟", "Why “UTF-8 with BOM” in particular?"),
-        story: [u("السكريبت فيه أسماء الأعمدة بالعربي: «الكمية» و«القيمة». وPowerShell اللي على أغلب الأجهزة (النسخة 5.1) لو لقى الملف UTF-8 من غير العلامة الصغيرة اللي اسمها BOM، بيقرا العربي حروف غريبة زي «Ø§Ù„ÙƒÙ…ÙŠØ©».",
-          "The script holds column names in Arabic: «الكمية» and «القيمة». The PowerShell on most laptops (version 5.1), if it finds a UTF-8 file without the small mark called a BOM, reads the Arabic as odd characters like “Ø§Ù„ÙƒÙ…ÙŠØ©”."),
-        u("والنتيجة: الأداة تفتح الملف وتقول «العمود الكمية مش موجود»، مع إن العمود قدامك. الكود سليم، والملف سليم، والمشكلة في طريقة الحفظ بس. الحل: «UTF-8 with BOM» في المفكرة، أو تطلب من النموذج يكتب الكلام العربي في مكان واحد بس فوق السكريبت.",
-          "The result: the tool opens the file and says “column Qty not found”, though the column is right in front of you. The code is sound, the file is sound; only the way it was saved is wrong. The fix: “UTF-8 with BOM” in Notepad, or ask the model to keep the Arabic text in one place at the top of the script.")],
-        answer: u("أي سكريبت فيه حرف عربي يتحفظ «UTF-8 with BOM». لأن PowerShell 5.1 من غيرها بيقرا العربي غلط من غير ما يقولك.", "Any script holding an Arabic letter is saved as “UTF-8 with BOM” — without it PowerShell 5.1 misreads the Arabic without telling you."),
-        idea: u("العلامة الصغيرة بتفرق بين «الكمية» و«Ø§Ù„».", "The small mark is the difference between «الكمية» and “Ø§Ù„”.")
+        story: [u("ملفات الإكسل بالإنجليزي، بس السكريبت نفسه ممكن يبقى فيه عربي: رسايل السجل اللي طلبتها بالعربي زي «الملف اتقرا»، أو مسار فولدر زي «سطح المكتب». وPowerShell اللي على أغلب الأجهزة (النسخة 5.1) لو لقى الملف UTF-8 من غير العلامة الصغيرة اللي اسمها BOM، بيقرا العربي حروف غريبة زي «Ø§ØªÙ‚Ø±Ø§».",
+          "The Excel files are in English, but the script itself may hold Arabic: log messages you asked for in Arabic, like «الملف اتقرا», or a folder path such as «سطح المكتب». The PowerShell on most laptops (version 5.1), if it finds a UTF-8 file without the small mark called a BOM, reads the Arabic as odd characters like “Ø§ØªÙ‚Ø±Ø§”."),
+        u("والنتيجة: السجل يطلع كلام مش مفهوم، أو الأداة تقول «المسار مش موجود» مع إن الفولدر قدامك. الكود سليم، والملفات سليمة، والمشكلة في طريقة الحفظ بس. الحل: «UTF-8 with BOM» في المفكرة، وكده مش هتفكّر فيها تاني.",
+          "The result: the log comes out unreadable, or the tool says “path not found” though the folder is right in front of you. The code is sound, the files are sound; only the way it was saved is wrong. The fix: “UTF-8 with BOM” in Notepad, and you never think about it again.")],
+        answer: u("احفظ كل سكريبت «UTF-8 with BOM»، حتى لو شكله كله إنجليزي. لأن PowerShell 5.1 من غيرها بيقرا أي حرف عربي غلط من غير ما يقولك.", "Any script holding an Arabic letter is saved as “UTF-8 with BOM” — without it PowerShell 5.1 misreads the Arabic without telling you."),
+        idea: u("العلامة الصغيرة بتفرق بين «اتقرا» و«Ø§Øª».", "The small mark is the difference between «اتقرا» and “Ø§Øª”.")
       },
       {
         id: "ext", art: "xd_ext", year: u("الامتداد", "Extension"), mark: u("٠٨", "08"), era: u("الاسم المستخبي", "The hidden name"),
-        title: u("‎stack_tool.ps1… ولا ‎stack_tool.ps1.txt؟", "stack_tool.ps1… or stack_tool.ps1.txt?"),
-        story: [u("الزميلة حفظت السكريبت ودوست دبل كليك على ملف التشغيل، فطلعت رسالة «الملف مش موجود». الملف قدامها في الفولدر، اسمه ‎stack_tool.ps1. بس ويندوز بيخبّي الامتداد، والمفكرة كانت زوّدت ‎.txt من غير ما حد يشوف.",
-          "The colleague saved the script and double-clicked the launcher, and got “file not found”. The file was right there in the folder, named stack_tool.ps1. But Windows hides extensions, and Notepad had added .txt without anyone seeing."),
-        u("الحل خطوة واحدة مرة واحدة في العمر: في مستكشف الملفات، من «عرض»، فعّل «امتدادات أسماء الملفات». ساعتها الاسم الحقيقي يبان: ‎stack_tool.ps1.txt. تمسح ‎.txt، وتوافق على التغيير، والأداة تشتغل.",
-          "The fix is one step, once in a lifetime: in File Explorer, under “View”, turn on “File name extensions”. Then the real name shows: stack_tool.ps1.txt. Delete .txt, accept the change, and the tool runs.")],
+        title: u("‎file_list.ps1… ولا ‎file_list.ps1.txt؟", "file_list.ps1… or file_list.ps1.txt?"),
+        story: [u("الزميلة حفظت السكريبت ودوست دبل كليك على ملف التشغيل، فطلعت رسالة «الملف مش موجود». الملف قدامها في الفولدر، اسمه ‎file_list.ps1. بس ويندوز بيخبّي الامتداد، والمفكرة كانت زوّدت ‎.txt من غير ما حد يشوف.",
+          "The colleague saved the script and double-clicked the launcher, and got “file not found”. The file was right there in the folder, named file_list.ps1. But Windows hides extensions, and Notepad had added .txt without anyone seeing."),
+        u("الحل خطوة واحدة مرة واحدة في العمر: في مستكشف الملفات، من «عرض»، فعّل «امتدادات أسماء الملفات». ساعتها الاسم الحقيقي يبان: ‎file_list.ps1.txt. تمسح ‎.txt، وتوافق على التغيير، والأداة تشتغل.",
+          "The fix is one step, once in a lifetime: in File Explorer, under “View”, turn on “File name extensions”. Then the real name shows: file_list.ps1.txt. Delete .txt, accept the change, and the tool runs.")],
         answer: u("فعّل عرض امتدادات الملفات على جهازك من النهارده. لأنك مش هتعرف تصلّح اسم إنت مش شايفه.", "Turn on file name extensions on your laptop from today — you can't fix a name you can't see."),
         idea: u("اللي ويندوز بيخبّيه… لازم إنت تشوفه.", "What Windows hides… you need to see.")
       },
@@ -120,8 +120,8 @@
       {
         id: "bat", art: "xd_bat", year: u("التشغيل", "Running"), mark: u("١٠", "10"), era: u("ملف التشغيل", "The launcher"),
         title: u("سطرين بيشغّلوا الأداة بدبل كليك", "Two lines that run the tool with a double click"),
-        story: [u("ملف ‎run_stack.bat فيه سطرين: الأول بيقول لـ PowerShell يشغّل السكريبت اللي جنبه، ويسمح بتشغيله المرة دي بس، والتاني «pause» علشان الشاشة السودا تفضل مفتوحة لحد ما تقرا اللي حصل. دبل كليك، والأداة تشتغل.",
-          "run_stack.bat holds two lines: the first tells PowerShell to run the script beside it, allowing it for this run only; the second is “pause”, so the black window stays open until you've read what happened. Double-click, and the tool runs."),
+        story: [u("ملف ‎run_file_list.bat فيه سطرين: الأول بيقول لـ PowerShell يشغّل السكريبت اللي جنبه، ويسمح بتشغيله المرة دي بس، والتاني «pause» علشان الشاشة السودا تفضل مفتوحة لحد ما تقرا اللي حصل. دبل كليك، والأداة تشتغل.",
+          "run_file_list.bat holds two lines: the first tells PowerShell to run the script beside it, allowing it for this run only; the second is “pause”, so the black window stays open until you've read what happened. Double-click, and the tool runs."),
         u("بس على بعض الأجهزة، قسم IT قافل تشغيل السكريبتات خالص، وتطلع رسالة «running scripts is disabled». القاعدة هنا واضحة: ما تدوّرش على طريقة تتحايل بيها. ده قرار أمان، وفيه بدائل مسموحة.",
           "But on some laptops IT has locked script running altogether, and you get “running scripts is disabled”. The rule here is clear: don't look for a way around it. It's a security decision, and there are allowed alternatives.")],
         answer: u("لو السكريبتات مقفولة، احترم القفل واسأل IT أو استخدم البديل. لأن التحايل على إعدادات الأمان بيحوّل أداة مفيدة لمشكلة.", "If scripts are locked, respect the lock and ask IT or use the alternative — getting around security settings turns a useful tool into a problem."),
@@ -139,12 +139,12 @@
       },
       {
         id: "cliff", art: "xd_cliff", year: u("الدرس الجاي", "Next lesson"), mark: u("١٢", "12"), era: u("أول تجربة", "First try"),
-        title: u("أول سكريبت اشتغل… والأداة الكبيرة جاية", "The first script ran… the big tool is next"),
-        story: [u("قبل الأداة الكبيرة، مهندس التخطيط جرّب السكة بطلب صغير: سكريبت بيكتب أسماء ملفات الحقيبة في ملف نصّي. نسخ، وحفظ بالأربع اختيارات، ودبل كليك. الشاشة السودا كتبت «15 Excel files found» وفضلت مستنية. والزميلة عملت نفس الحاجة على جهازها، بالماكرو.",
-          "Before the big tool, the planning engineer tried the road with a small request: a script that writes the kit's file names to a text file. He copied, saved with the four choices, and double-clicked. The black window wrote “15 Excel files found” and waited. His colleague did the same on her laptop, with the macro."),
-        u("الطريقين وصلوا لنفس المكان: ملف على اللابتوب بيشتغل. ودلوقتي ييجي الشغل الحقيقي: ١٣ ملف أسبوعي، كل واحد شكله مختلف شوية، وفيهم مشاكل متعمّدة. والسؤال اللي الدرس الجاي بيجاوبه: الأداة الأولى هتعمل إيه فيهم؟",
-          "Both roads reached the same place: a file on the laptop that runs. Now comes the real work: 13 weekly files, each a little different, with planted problems. And the question the next lesson answers: what will tool one do with them?")],
-        answer: u("واجب الدرس: جرّب السكة بسكريبت صغير قبل أي أداة كبيرة. لأن لو المشكلة في السكة، أحسن تعرفها على سطرين مش على ٢٠٠ سطر.", "This lesson's task: try the road with a small script before any big tool — if the problem is in the road, better to find it on two lines than on 200."),
+        title: u("أول أداة اشتغلت… والشغل الحقيقي جاي", "The first tool ran… the real work is next"),
+        story: [u("مهندس التخطيط شغّل أول أداة على مشروع الدرس: ٦ تقارير من الخطوط. الشاشة السودا كتبت «6 files read, 1 skipped» وفضلت مستنية: الملف اللي اتساب كان ملف قفل من إكسل، لأن زميل كان فاتح تقرير خط ٣. وFile_List.xlsx طلع فيه ٧ شيتات و١٠٠ صف، زي مفتاح الإجابة. والزميلة عملت نفس الحاجة على جهازها، بالماكرو.",
+          "The planning engineer ran the first tool on the lesson's project: 6 reports from the lines. The black window wrote “6 files read, 1 skipped” and waited: the skipped file was an Excel lock file, because a colleague had line 3's report open. File_List.xlsx came out with 7 sheets and 100 rows, just like the answer key. His colleague did the same on her laptop, with the macro."),
+        u("الطريقين وصلوا لنفس المكان: أداة على اللابتوب بتشتغل، وما غيّرتش ولا ملف. ودلوقتي ييجي أول شغل حقيقي: ١٣ ملف أسبوعي، كل واحد شكله مختلف شوية، وفيهم مشاكل متعمّدة. والسؤال اللي الدرس الجاي بيجاوبه: الأداة الأولى هتعمل إيه فيهم؟",
+          "Both roads reached the same place: a tool on the laptop that runs and changed no file. Now comes the first real work: 13 weekly files, each a little different, with planted problems. And the question the next lesson answers: what will tool one do with them?")],
+        answer: u("واجب الدرس: شغّل أداة قايمة الملفات على مشروع الدرس، وقارنها بمفتاح الإجابة، قبل أي أداة كبيرة. لأن لو المشكلة في السكة، أحسن تعرفها على أداة بتقرا بس.", "This lesson's task: run the file-list tool on the lesson's project and check it against the answer key, before any big tool — if the problem is in the road, better to find it on a tool that only reads."),
         idea: u("جرّب السكة فاضية… قبل ما تحمّلها.", "Test the road empty… before loading it.")
       }
     ]

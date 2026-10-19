@@ -8,7 +8,7 @@ import vm from "node:vm";
 import path from "node:path";
 
 const SRC = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "src");
-const DATA = ["ui", "meta", "stories", "scenes", "lessons-u0", "lessons-u1", "lessons-u2", "lessons-u3u4", "lessons-u5", "lessons-xl", "course-order", "plain-talk-a", "plain-talk-b", "prompts", "quiz", "glossary", "compare", "history", "model-story", "context-story", "window-story", "agents-story", "work-story", "limits-story", "auto-story", "big-story", "kit-story", "deliver-story", "stack-story", "lookup-story", "report-story", "run-story", "xl-sample"];
+const DATA = ["ui", "meta", "stories", "scenes", "lessons-u0", "lessons-u1", "lessons-u2", "lessons-u3u4", "lessons-u5", "lessons-xl", "course-order", "plain-talk-a", "plain-talk-b", "prompts", "quiz", "glossary", "compare", "history", "model-story", "context-story", "window-story", "agents-story", "work-story", "limits-story", "auto-story", "big-story", "kit-story", "deliver-story", "stack-story", "lookup-story", "report-story", "run-story", "match-story", "needs-story", "xl-sample"];
 const ENGINE = ["core", "scene", "render", "quiz", "labs", "xlkit", "tools"];
 const ctx = { window: { ACADEMY: {} } };
 vm.createContext(ctx);
@@ -189,7 +189,7 @@ test("story decks: real lessons, one deck per lesson, every slide complete in bo
   assert.equal(A.bigStory.lesson, "b1");
   for (const [k, l] of [["kitStory", "x1"], ["deliverStory", "x2"], ["stackStory", "x3"], ["lookupStory", "x4"], ["reportStory", "x5"], ["runStory", "x6"]]) assert.equal(A[k].lesson, l, k);
   const u1 = A.lessons.filter((l) => l.unit === "u1").map((l) => l.id);
-  assert.equal(u1.join(" "), "x1 x2 x3 x4 x5 x6", "unit 1 (shown as 2): the kit, delivery, the three tools, fixing");
+  assert.equal(u1.join(" "), "x1 x2 x3 x4 x5 x7 x8 x6", "unit 1 (shown as 2): one project per lesson — describe, first tool, the three tools, purchasing, materials, fixing");
   assert.ok(u1.every((id) => A.decks.some((d) => d.lesson === id && d.slides.length === 12)), "every unit-2 lesson opens with its own 12-slide story");
   const u0 = A.lessons.filter((l) => l.unit === "u0").map((l) => l.id);
   assert.equal(u0.join(" "), "f1 f2 f4 f6 f7 f3 f5 f8", "unit 0 order: history, inside the model, Prompt & Context, the Context's limits, chat/memory/agents, AI at work, limits, first automation");
@@ -233,46 +233,105 @@ test("prerequisites come earlier in the course than the lessons that need them",
   for (const l of A.lessons) for (const p of l.pre || []) assert.ok(pos[p] < pos[l.id], `${l.id} lists ${p} as a prerequisite, but ${p} comes later`);
 });
 
-test("the unit-2 sample kit: a correct tool, run on the files, finds exactly the figures the lessons and the answer key quote", () => {
-  const S = A.xlSample, E = S.expected;
-  for (const lang of ["ar", "en"]) {
-    const files = S.build(lang), H = S.headers, at = (head, h) => head.indexOf(h[lang]);
-    const weeks = files.filter((f) => f.path.startsWith("Production_2026_Q1/"));
-    assert.equal(weeks.length, E.files);
-    let read = 0, skipped = 0, text = 0;
-    const rows = [], seen = new Set(), dups = [];
-    for (const f of weeks) {
-      const [head, ...body] = f.sheets[0].rows;
-      const qi = at(head, H.prod[4]) >= 0 ? at(head, H.prod[4]) : at(head, H.qtyAlt), vi = at(head, H.prod[5]);   // by name, with the agreed alias
-      assert.ok(qi >= 0 && vi >= 0, `${f.path}: columns`);
-      for (const r of body) {
-        if (r[1] === null) { skipped++; continue; }
-        read++; if (typeof r[0] === "string") text++;
-        const key = JSON.stringify(r);
-        if (seen.has(key)) { dups.push(r); continue; } seen.add(key);
-        rows.push({ day: typeof r[0] === "string" ? Math.round((Date.UTC(2026, +r[0].slice(3, 5) - 1, +r[0].slice(0, 2)) - Date.UTC(2026, 0, 1)) / 864e5) : r[0].d - S.serial0, ln: String(r[2]).trim().toUpperCase(), raw: r[2], mc: r[3], q: r[qi], v: r[vi] });
-      }
+test("the unit-2 projects: a correct tool, run on each project's files, finds exactly the figures the lessons and answer keys quote", () => {
+  const X = A.xlProjects, P = (n) => X.list[n - 1], sum = (a, f) => a.reduce((s, x) => s + f(x), 0);
+  const day = (v) => (typeof v === "string" ? Math.round((Date.UTC(2026, +v.slice(3, 5) - 1, +v.slice(0, 2)) - Date.UTC(2026, 0, 1)) / 864e5) : v.d - X.serial0);
+  const month = (v) => "2026-" + String(new Date(Date.UTC(2026, 0, 1) + day(v) * 864e5).getUTCMonth() + 1).padStart(2, "0");
+  const table = (rows) => { const [head, ...body] = rows; return body.map((r) => Object.fromEntries(head.map((h, i) => [h, r[i]]))); };
+  const english = (v) => typeof v !== "string" || !/[؀-ۿ]/.test(v);
+  assert.equal(X.list.map((p) => p.lesson).join(" "), A.courseOrder.u1.join(" "), "one project per unit-2 lesson, in course order");
+  for (const p of X.list) {
+    assert.equal(p.zip, `Lesson_${p.n}_${p.slug}.zip`);
+    for (const f of p.files()) {
+      assert.ok(f.path.startsWith("Data/"), `${p.zip}: ${f.path} sits in Data/`);
+      for (const sh of f.sheets || []) for (const r of sh.rows) assert.ok(r.every(english), `${p.zip}: ${f.path} holds English only`);
     }
-    const sum = (a, k = "v") => a.reduce((s, x) => s + x[k], 0);
-    assert.equal(read, E.rowsRead); assert.equal(skipped, E.totalsRowSkipped); assert.equal(dups.length, E.duplicates); assert.equal(rows.length, E.rowsClean);
-    assert.equal(text, E.textDates); assert.equal(sum(rows), E.value); assert.equal(sum(rows, "q"), E.units); assert.equal(rows.filter((r) => r.q < 0).length, E.returns);
-    assert.equal(rows.filter((r) => r.raw === "L04 ").length, E.spacedLine); assert.equal(rows.filter((r) => r.raw === "l03").length, E.lowerLine);
-    assert.equal(sum(rows), sum(S.truth()), "the planted problems, handled, give back the true output");
-    const masters = files.find((f) => f.path === "Masters.xlsx"), mod = masters.sheets[1].rows.slice(1);
-    const codes = mod.map((p) => p[0]), twice = codes.filter((c, i) => codes.indexOf(c) !== i);
-    assert.equal(twice.join(), "M108", "one model listed twice");
-    const un = rows.filter((r) => !codes.includes(r.mc));
-    assert.ok(un.every((r) => r.mc === E.unmatched.code)); assert.equal(un.length, E.unmatched.rows); assert.equal(sum(un, "q"), E.unmatched.units); assert.equal(sum(un), E.unmatched.value);
-    assert.ok(rows.every((r) => S.lines.includes(r.ln)), "every line matches once normalised");
-    const pl = files.find((f) => f.path === "Plan_2026_Q1.xlsx").sheets[0].rows.slice(1);
-    assert.equal(pl.length, E.plans); assert.ok(!pl.some((t) => t[0] === E.missingPlan.line && t[1] === E.missingPlan.month));
-    const pct = pl.map(([b, m, g]) => ({ b, m, p: Math.round((sum(rows.filter((r) => r.ln === b && "2026-0" + S.monthOf(r.day) === m), "q") / g) * 1000) / 10 }));
-    const hi = pct.reduce((a, x) => (x.p > a.p ? x : a)), lo = pct.reduce((a, x) => (x.p < a.p ? x : a));
-    assert.equal([hi.b, hi.m, hi.p, lo.b, lo.m, lo.p].join(), [E.best.line, E.best.month, E.best.pct, E.worst.line, E.worst.month, E.worst.pct].join());
-    const w11 = weeks.find((f) => f.path.endsWith("Week_11.xlsx")).sheets[0].rows;
-    assert.equal(w11.length - 1, E.week11Rows); assert.ok(!w11[0].includes(H.prod[4][lang]), "week 11 renames the quantity column");
-    assert.ok(S.answerKey(lang).includes(E.value.toLocaleString("en-US")) && S.readme(lang).includes("Week_13.xlsx"));
+    for (const lang of ["ar", "en"]) { assert.ok(X.readme(p, lang).includes(p.files().find((f) => !f.lock).path.replace("Data/", "")), `${p.zip}: README names its files`); X.answerKey(p, lang); }
+    assert.ok(A.prompts.some((x) => x.id === p.prompt && x.lesson === p.lesson), `${p.zip}: its Prompt belongs to its lesson`);
   }
+  // 1 · describe
+  { const E = P(1).expected(), t = table(P(1).files()[0].sheets[0].rows);
+    assert.equal(t.length, E.rows); assert.equal(sum(t, (r) => r.Qty), E.units); assert.equal(t.filter((r) => r.Qty < 0).length, E.returns); assert.equal(new Set(t.map((r) => r.LineCode)).size, E.lines); }
+  // 2 · file list: skip the lock file, list every sheet
+  { const E = P(2).expected(), fs = P(2).files().filter((f) => !f.lock), sheets = fs.flatMap((f) => f.sheets);
+    assert.equal(fs.length, E.files); assert.equal(sheets.length, E.sheets); assert.equal(P(2).files().filter((f) => f.lock).length, E.skipped);
+    const prod = sheets.filter((s) => s.name === "Production"); assert.equal(sum(prod, (s) => s.rows.length - 1), E.rows); assert.equal(sum(prod.flatMap((s) => table(s.rows)), (r) => r.Qty), E.units); }
+  // 3 · stack: by name, Quantity = Qty, skip rows with no WorkOrder, duplicates to review
+  { const E = P(3).expected(); let read = 0, skipped = 0; const rows = [], seen = new Set(), dups = [];
+    for (const f of P(3).files()) for (const r of table(f.sheets[0].rows)) {
+      if (!r.WorkOrder) { skipped++; continue; }
+      read++; const q = r.Qty !== undefined ? r.Qty : r.Quantity, key = [day(r.Date), r.WorkOrder, r.LineCode, r.ModelCode, q, r.Value].join("|");
+      if (seen.has(key)) { dups.push(r); continue; } seen.add(key); rows.push({ q, v: r.Value });
+    }
+    assert.equal(read, E.rowsRead); assert.equal(skipped, E.totalsRow); assert.equal(dups.length, E.duplicates); assert.equal(rows.length, E.rows);
+    assert.equal(sum(rows, (x) => x.q), E.units); assert.equal(sum(rows, (x) => x.v), E.value);
+    assert.ok(!P(3).files()[10].sheets[0].rows[0].includes("Qty"), "Week_11 renames Qty"); }
+  // 4 · lookup: normalise, one model listed twice, M113 unmatched
+  { const E = P(4).expected(), [prod, masters] = P(4).files(), t = table(prod.sheets[0].rows), mod = table(masters.sheets[1].rows);
+    const twice = mod.map((m) => m.ModelCode).filter((c, i, a) => a.indexOf(c) !== i); assert.equal(twice.join(), "M108");
+    const cost = {}; for (const m of mod) if (!(m.ModelCode in cost)) cost[m.ModelCode] = m; cost.M108 = { ...cost.M108, StdCost: 12300 };
+    const lines = new Set(table(masters.sheets[0].rows).map((l) => l.LineCode));
+    assert.equal(t.filter((r) => r.LineCode === "L04 ").length, E.spaced); assert.equal(t.filter((r) => r.LineCode === "l03").length, E.lower);
+    assert.ok(t.every((r) => lines.has(r.LineCode.trim().toUpperCase())), "every line matches once normalised");
+    const un = t.filter((r) => !cost[r.ModelCode]); assert.ok(un.every((r) => r.ModelCode === E.unmatched.code)); assert.equal(un.length, E.unmatched.rows); assert.equal(sum(un, (r) => r.Qty), E.unmatched.units);
+    const ok = t.filter((r) => cost[r.ModelCode]); assert.equal(sum(ok, (r) => r.Qty * cost[r.ModelCode].StdCost), E.value);
+    for (const c of Object.keys(E.cats)) assert.equal(sum(ok.filter((r) => cost[r.ModelCode].Category === c), (r) => r.Qty), E.cats[c]);
+    assert.equal(sum(t, (r) => r.Qty), P(3).expected().units, "projects 3 and 4 share the quarter"); }
+  // 5 · report: output by line and month against plan, both sides shown
+  { const E = P(5).expected(), [prod, plan] = P(5).files(), t = table(prod.sheets[0].rows), pl = table(plan.sheets[0].rows), out = {};
+    for (const r of t) { const k = r.LineCode + "|" + month(r.Date); out[k] = (out[k] || 0) + r.Qty; }
+    const keys = new Set([...Object.keys(out), ...pl.map((x) => x.LineCode + "|" + x.Month)]);
+    assert.equal(keys.size, E.reportRows); assert.equal(pl.length, E.plans);
+    const rated = pl.filter((x) => out[x.LineCode + "|" + x.Month]).map((x) => ({ line: x.LineCode, month: x.Month, pct: Math.round((out[x.LineCode + "|" + x.Month] / x.PlanQty) * 1000) / 10 }));
+    assert.equal(rated.length, E.rated);
+    const hi = rated.reduce((a, x) => (x.pct > a.pct ? x : a)), lo = rated.reduce((a, x) => (x.pct < a.pct ? x : a));
+    assert.equal([hi.line, hi.month, hi.pct, lo.line, lo.month, lo.pct].join(), [E.best.line, E.best.month, E.best.pct, E.worst.line, E.worst.month, E.worst.pct].join());
+    assert.ok(out["L06|2026-03"] && !pl.some((x) => x.LineCode === "L06" && x.Month === "2026-03"), "L06 has output and no plan in March");
+    assert.ok(!out["L07|2026-03"] && pl.some((x) => x.LineCode === "L07"), "L07 has a plan and no output");
+    assert.equal(sum(Object.values(out), (x) => x), E.units); assert.equal(E.units, P(3).expected().units); }
+  // 6 · purchasing: key = PO + material, normalised, 2% tolerance
+  { const E = P(6).expected(), [po, gr] = P(6).files(), lines = table(po.sheets[0].rows), rec = table(gr.sheets[0].rows), got = {}, un = [];
+    const keys = new Set(lines.map((l) => l.PONumber + "|" + l.MaterialCode));
+    let fixed = 0;
+    for (const r of rec) { const n = r.PONumber.trim().toUpperCase(); if (n !== r.PONumber) fixed++; const k = n + "|" + r.MaterialCode; if (!keys.has(k)) { un.push(r); continue; } got[k] = (got[k] || 0) + r.ReceivedQty; }
+    assert.equal(rec.length, E.receipts); assert.equal(fixed, E.fixedCase); assert.equal(un.length, E.unmatched); assert.equal(new Set(lines.map((l) => l.PONumber)).size, E.orders); assert.equal(lines.length, E.lines);
+    const st = { Complete: 0, Partial: 0, Over: 0, "Not received": 0 }; let open = 0;
+    for (const l of lines) { const g = got[l.PONumber + "|" + l.MaterialCode] || 0, s = !g ? "Not received" : g < l.OrderedQty * 0.98 ? "Partial" : g > l.OrderedQty * 1.02 ? "Over" : "Complete"; st[s]++; if (s === "Partial" || s === "Not received") open += (l.OrderedQty - g) * l.UnitPrice; }
+    assert.deepEqual({ ...st }, { ...E.status }); assert.equal(Math.round(open), E.openValue);
+    assert.equal(sum(rec, (r) => r.ReceivedQty), sum(Object.values(got), (x) => x) + sum(un, (r) => r.ReceivedQty), "the match closes"); }
+  // 7 · materials: explode, net, round up to the pack; screws in boxes; M113 has no BOM
+  { const E = P(7).expected(), [plan, bom, mat, stock] = P(7).files().map((f) => table(f.sheets[0].rows));
+    const withBom = new Set(bom.map((b) => b.ModelCode)), missing = plan.filter((p) => !withBom.has(p.ModelCode));
+    assert.equal(missing.map((m) => m.ModelCode + ":" + m.PlannedQty).join(), E.notPlanned.code + ":" + E.notPlanned.units);
+    const explosion = []; for (const p of plan) for (const b of bom.filter((x) => x.ModelCode === p.ModelCode)) explosion.push({ mc: b.MaterialCode, q: p.PlannedQty * b.QtyPerUnit });
+    assert.equal(explosion.length, E.bomRows); assert.equal(sum(plan, (p) => p.PlannedQty), E.planned);
+    const M = Object.fromEntries(mat.map((m) => [m.MaterialCode, m])), S = Object.fromEntries(stock.map((s) => [s.MaterialCode, s]));
+    const units = stock.filter((s) => s.Unit !== M[s.MaterialCode].Unit).map((s) => s.MaterialCode); assert.equal(units.join(), "SCR-M3,SCR-M4", "screws are counted in boxes");
+    const pcs = (s) => (s.Unit === "box of 1000" ? 1000 : 1), gross = {};
+    for (const x of explosion) gross[x.mc] = (gross[x.mc] || 0) + x.q;
+    let value = 0, toOrder = 0;
+    const need = (mc) => { const s = S[mc], net = Math.max(0, gross[mc] - s.OnHand * pcs(s) - s.OnOrder * pcs(s)), order = Math.ceil(net / M[mc].PackSize) * M[mc].PackSize; return { gross: gross[mc], net, order }; };
+    for (const mc of Object.keys(gross)) { const n = need(mc); if (n.order) { toOrder++; value += n.order * M[mc].UnitPrice; } }
+    assert.equal(Object.keys(gross).length, E.materials); assert.equal(toOrder, E.toOrder); assert.equal(Math.round(value), E.value);
+    assert.equal([need("PNL-55").gross, need("PNL-55").net, need("PNL-55").order].join(), [E.panel55.gross, E.panel55.net, E.panel55.order].join());
+    assert.equal(need("SCR-M3").order, E.screwM3.order); }
+  // 8 · next month: read the one sheet whatever its name, text dates day first, extra column ignored, empty week fine
+  { const E = P(8).expected(); let rows = 0, units = 0, value = 0, text = 0; const per = [];
+    for (const f of P(8).files()) { const t = table(f.sheets[0].rows); per.push(t.length); for (const r of t) { rows++; units += r.Qty; value += r.Value; if (typeof r.Date === "string") { text++; assert.ok(day(r.Date) >= 91, "day first"); } } }
+    assert.equal(rows, E.rows); assert.equal(units, E.units); assert.equal(value, E.value); assert.equal(text, E.textDates); assert.equal(per.join(), E.perWeek.join());
+    assert.equal(P(8).files()[2].sheets[0].name, "Sheet1"); assert.ok(P(8).files()[0].sheets[0].rows[0].includes("Shift")); }
+});
+
+test("the unit-2 lessons quote their project's figures", () => {
+  const X = A.xlProjects, n = (x) => Number(x).toLocaleString("en-US"), lesson = (id) => JSON.stringify(A.lessons.find((l) => l.id === id).levels);
+  const has = (id, ...figs) => { const s = lesson(id); for (const f of figs) assert.ok(s.includes(String(f)), `${id} should quote ${f}`); };
+  const E = (k) => X.list[k - 1].expected();
+  has("x1", E(1).rows); has("x2", E(2).rows); has("x3", n(E(3).rows), n(E(3).units), n(E(3).rowsRead));
+  has("x4", n(E(4).rows), E(4).unmatched.units, E(4).unmatched.rows, E(4).spaced, n(E(4).cats.Small));
+  has("x5", E(5).best.pct, E(5).worst.pct, n(E(5).units), E(5).reportRows);
+  has("x7", E(6).lines, E(6).receipts, E(6).status.Complete, n(E(6).openValue));
+  has("x8", n(E(7).planned), E(7).toOrder, n(E(7).value), E(7).bomRows, E(7).panel55.net, n(E(7).screwM3.order));
+  has("x6", E(8).rows);
 });
 
 test("the unit-2 kit's figures appear the same in Arabic and English lesson texts", () => {

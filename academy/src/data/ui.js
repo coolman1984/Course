@@ -86,6 +86,7 @@
     pnAria: u("الدرس السابق والتالي", "Previous and next lesson"), prevLesson: u("الدرس السابق", "Previous lesson"), nextLesson: u("الدرس التالي", "Next lesson"), finalStep: u("الخطوة الأخيرة", "Final step"),
     nav_project: u("المشروع النهائي", "Final project"),
     watch: u("شوف الفكرة بتتكوّن", "Watch the idea form"), watchSub: u("مشهد على مراحل: شغّل، وقف، تنقّل، واضغط أي عنصر عشان تعرف وظيفته.", "A staged scene: play, pause, step, and tap any element to learn its role."),
+    projTitle: u("مشروع الدرس", "The lesson's project"), projSub: u("ملف مضغوط للدرس ده لوحده: ملفات إكسل بالإنجليزي، ومعاها المهمة والـ Prompt ومفتاح الإجابة.", "A zip for this lesson alone: English Excel files, with the task, the Prompt and the answer key."),
     tryIt: u("جرّب بنفسك", "Try it yourself"), tryItSub: u("غيّر المدخلات وشوف النتيجة وليه حصلت.", "Change the inputs and see the result and why."),
     caseTitle: u("حالة عملية", "A practical case"), caseSub: u("المشكلة ← الطريقة التقليدية ← فكرة الذكاء الاصطناعي ← الخطوات ← النتيجة ← القيود.", "Problem → old way → AI idea → steps → result → limits."),
     addedCase: u("قصة توضيحية من الأكاديمية", "Academy illustrative story"), assumedNums: u("الأرقام في القصة دي افتراضية للتوضيح بس.", "The numbers in this story are hypothetical, for illustration only."),

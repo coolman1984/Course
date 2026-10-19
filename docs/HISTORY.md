@@ -99,19 +99,22 @@ Unit 1 in teaching order:
 Unit 2 opens with lesson b1 «من ملفات كتير لجدول واحد تثق فيه» and its story, under the question «إزاي ٣٧ ملف يبقوا
 جدول واحد أقدر أثق فيه؟». Units 3–8 hold the earlier lessons in their new places, and each gets its own opening story next.
 
-## Unit 2: Excel automation in detail
-Unit 2 now unfolds lesson f8 into six lessons, each with its own 12-slide story, all built on one sample data kit
-(`data/xl-sample.js`): the production lines of a TV factory (no factory is named), with 13 weekly production files,
-master sheets for lines and models, a monthly plan and ten planted problems; purchasing and materials are the second example. The kit downloads from the lab as real Excel files.
+## Unit 2: Excel automation, one project per lesson
+Unit 2 unfolds lesson f8 into a ladder of eight projects in one TV factory (no factory is named). Each lesson has its own
+12-slide story and its own zip, `Lesson_N_<Name>.zip`: a Data folder of Excel files, always in English like the factory's
+own files, and README, Prompt and answer key in the reader's language (`data/xl-sample.js`). Each project adds one idea:
+the three tools of f8 come one at a time, and purchasing and materials, the second example, get two tools of their own.
 
-| # | Lesson | Deck question |
-|---|---|---|
-| 1 | x1 The training data kit | «أجرّب الأدوات دي على إيه، وأعرف منين إنها صح؟» |
-| 2 | x2 From the chat to your laptop (ChatGPT, Gemini Enterprise) | «الكود في الشات… يبقى أداة على جهازي إزاي؟» |
-| 3 | x3 Tool one: 13 production reports into one table | «إزاي ١٣ تقرير إنتاج يبقوا جدول واحد من غير ولا صف ضايع؟» |
-| 4 | x4 Tool two: every code finds its name | «إزاي كل كود يلاقي اسمه، واللي ما لقاش يبان؟» |
-| 5 | x5 Tool three: output against plan | «إزاي التقرير يطلع مظبوط ومراجَع من غير ما ألمسه؟» |
-| 6 | x6 When the tool stops | «لما الأداة توقف أو تغلط… أعمل إيه؟» |
+| # | Lesson | Project | Deck question |
+|---|---|---|---|
+| 1 | x1 Before any tool: describe the file | a data dictionary for one weekly report | «النموذج ما شافش ملفي… أوصفه له إزاي؟» |
+| 2 | x2 A first tool: from the chat to your laptop | a read-only file list (a lock file, a second sheet) | «الكود في الشات… يبقى أداة على جهازي إزاي؟» |
+| 3 | x3 Tool one: 13 weekly reports into one table | stacking: a Total row, duplicates, another column order, a renamed column | «إزاي ١٣ تقرير إنتاج يبقوا جدول واحد من غير ولا صف ضايع؟» |
+| 4 | x4 Tool two: every code finds its name and cost | lookups: spaced and lower-case codes, a new model, a code listed twice | «إزاي كل كود يلاقي اسمه، واللي ما لقاش يبان؟» |
+| 5 | x5 Tool three: output against plan | a line with no plan, a plan with no output, negative corrections | «إزاي التقرير يطلع مظبوط ومراجَع من غير ما ألمسه؟» |
+| 6 | x7 Tool four: purchase orders against receipts | a key of two columns, many receipts per line, a 2% tolerance | «كل أمر شراء وصل منه قد إيه، لو السطر بيوصل على كذا دفعة؟» |
+| 7 | x8 Tool five: from the plan to the materials order | plan × BOM − stock, rounded up to the pack; a model with no BOM, screws in boxes | «من خطة الإنتاج… نطلب إيه وقد إيه؟» |
+| 8 | x6 When the tool stops: next month's files | April's files through lesson 3's tool: a new column, text dates, Sheet1, an empty week | «لما الأداة توقف أو تغلط… أعمل إيه؟» |
 
 The former unit 2 (b1, y4, p9, w1, m1) opens unit 3, ahead of the Office lessons. f8's closing slide now leads into unit 2,
-and x6's into b1 («فاكر ملف الربع…»). Course plan 3 clears the old unit 2 and 3 quiz scores once.
+and x6's into b1 («فاكر ملف الربع…»). Course plan 3 clears the old unit 2 and 3 quiz scores once; plan 4 clears unit 2's once more for its new questions.
