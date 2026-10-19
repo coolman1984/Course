@@ -28,7 +28,7 @@
       card.innerHTML = `<div class="qhead"><span class="chip vi">${ico(typeIcon[q.type] || "quiz")}${esc(t("qt_" + q.type))}</span>${prevRec && !opts.fresh ? `<span class="chip ${prevRec.ok ? "ok" : "bad"}">${esc(prevRec.ok ? t("answeredRight") : t("answeredWrong"))}</span>` : ""}</div>
         <p class="qtext">${A.inline(L(q.q))}</p>
         ${q.code ? `<div class="ptext">${esc(L(q.code))}</div>` : ""}
-        <div class="opts" role="group" aria-label="${esc(t("chooseOne"))}">${order.map((oi, k) => `<button type="button" class="opt" data-oi="${oi}"><span class="k">${"ABCDEF"[k]}</span><span>${A.inline(L(q.opts[oi]))}</span></button>`).join("")}</div>
+        <div class="opts" role="group" aria-label="${esc(t("chooseOne"))}">${order.map((oi, k) => `<button type="button" class="opt" data-oi="${oi}"><span class="k" aria-hidden="true">${ico("check", "on")}${ico("x", "no")}</span><span>${A.inline(L(q.opts[oi]))}</span></button>`).join("")}</div>
         <div class="fbz" aria-live="polite"></div>`;
       A.$$(".opt", card).forEach((b) => (b.onclick = () => {
         const oi = Number(b.dataset.oi);

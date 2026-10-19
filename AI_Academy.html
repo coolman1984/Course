@@ -439,9 +439,14 @@ html[lang="en"] .hero2 h1{letter-spacing:-.045em;line-height:1.02;max-width:14ch
 .cbx{flex:none;width:18px;height:18px;border-radius:5px;border:1.5px solid var(--line-2);background:var(--surface);display:grid;place-items:center;padding:0;color:transparent;transition:all var(--dur)}
 .cbx svg.i{width:12px;height:12px;stroke-width:2.6}
 .cbx[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
-.lb{flex:none;width:18px;height:18px;border-radius:5px;display:grid;place-items:center;color:#fff;font-size:10.5px;font-weight:700;line-height:1}
-.lb.a{background:var(--sig-blue)}.lb.b{background:var(--sig-violet)}.lb.g{background:var(--sig-green)}
-.win-legend{font-size:11.5px;color:var(--ink-3);margin-top:auto}
+.lb{flex:none;width:24px;height:24px;border-radius:8px;display:grid;place-items:center}
+.lb svg.i{width:14px;height:14px}
+.lb.book{background:var(--accent-soft);color:var(--accent)}.lb.scene{background:var(--violet-soft);color:var(--violet)}
+.lb.lab{background:var(--mint-soft);color:var(--mint)}.lb.proj{background:var(--mint-soft);color:var(--sig-teal)}
+.lb.deck{background:var(--spark-soft);color:var(--spark)}
+.win-legend{font-size:11.5px;color:var(--ink-3);margin-top:auto;display:flex;flex-wrap:wrap;gap:6px 14px}
+.win-legend .lg{display:inline-flex;align-items:center;gap:6px}
+.win-legend .lb{width:20px;height:20px;border-radius:6px}.win-legend .lb svg.i{width:12px;height:12px}
 .win-code{padding:16px 18px;display:grid;align-content:start;gap:8px;min-width:0;background:var(--surface)}
 .cb-h{display:flex;justify-content:space-between;gap:12px;font-size:11.5px;color:var(--ink-3);margin-top:6px}
 .cb-h span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -664,11 +669,14 @@ details.more[open]>summary{margin-bottom:8px}
 .opts{display:grid;gap:8px}
 .opt{display:flex;gap:12px;align-items:flex-start;text-align:start;width:100%;padding:12px 14px;border-radius:var(--r-md);border:1.5px solid var(--line);background:var(--surface);color:var(--ink);font-size:15px;line-height:1.6;transition:border-color var(--dur),background var(--dur)}
 .opt:hover:not(:disabled){border-color:var(--accent)}
-.opt .k{flex:none;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;background:var(--surface-3);font-size:12.5px;font-weight:700;color:var(--ink-3)}
+.opt .k{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;border:2px solid var(--line-2);background:var(--surface);color:#fff;margin-top:1px}
+.opt .k svg.i{width:13px;height:13px;display:none}
+.opt:hover:not([disabled]) .k{border-color:var(--accent)}
+.opt.ok .k svg.on,.opt.bad .k svg.no{display:block}
 .opt.ok{border-color:var(--mint);background:var(--mint-soft)}
-.opt.ok .k{background:var(--mint);color:#fff}
+.opt.ok .k{background:var(--mint);border-color:var(--mint);color:#fff}
 .opt.bad{border-color:var(--rose);background:var(--rose-soft)}
-.opt.bad .k{background:var(--rose);color:#fff}
+.opt.bad .k{background:var(--rose);border-color:var(--rose);color:#fff}
 .opt:disabled{cursor:default;opacity:1}
 .opt.dim{opacity:.6}
 .fb{display:grid;gap:6px;padding:14px 16px;border-radius:var(--r-md);font-size:14.5px}
@@ -706,7 +714,8 @@ details.more[open]>summary{margin-bottom:8px}
 .stat.ok b{color:var(--mint)}.stat.bad b{color:var(--rose)}.stat.sp b{color:var(--spark)}
 .checks{display:grid;gap:6px}
 .ck{display:flex;gap:8px;align-items:flex-start;font-size:14px;line-height:1.55}
-.ck .m{flex:none;width:20px;height:20px;border-radius:6px;display:grid;place-items:center;font-size:12px;font-weight:800}
+.ck .m{flex:none;width:20px;height:20px;border-radius:6px;display:grid;place-items:center}
+.ck .m svg.i{width:12px;height:12px}
 .ck.ok .m{background:var(--mint-soft);color:var(--mint)}
 .ck.bad .m{background:var(--rose-soft);color:var(--rose)}
 .ck.warn .m{background:var(--spark-soft);color:var(--spark)}
@@ -1404,7 +1413,6 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     winBefore: u("قبل ← بعد", "before → after"), winHuman: u("الإنسان في الحلقة", "human in the loop"),
     winHumanTitle: u("قبل ما تشارك أي حاجة", "Before anything is shared"),
     winH1: u("راجع اللي كتبه الذكاء الاصطناعي سطر بسطر", "review the AI draft line by line"), winH2: u("طابق كل رقم هيدخل تقرير رسمي", "match every number entering an official report"), winH3: u("إنسان يعتمد قبل الإرسال", "a person approves before sending"), winH4: u("ابعت للإدارة", "send to management"),
-    winLegend: u("م = مشهد متحرك · خ = مختبر · ك = نص الكتاب", "S = animated scene · L = lab · B = book text"),
     winToggle: u("علّم الدرس إنك فهمته", "Mark lesson as understood"),
     palTitle: u("كل مهمة بتتكرر، على بُعد Prompt واحد.", "Every repetitive task, one prompt away."),
     palLead: u("اطلب مرة واحدة وسيب الذكاء الاصطناعي يشيل الروتين — تلخيص، مقارنة، صياغة، تحليل. في الأكاديمية مكتبة من {n} Prompt جاهزة، تنسخها وتملى الأقواس وتستخدمها في شغلك اليوم.", "Ask once and let AI handle the routine — summarise, compare, draft, analyse. The academy carries a library of {n} ready prompts you copy, fill in and use at work today."),
@@ -1454,7 +1462,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     crumbs: u("مسار التنقل", "Breadcrumbs"), unitN: u("الوحدة {n}", "Unit {n}"), lessonsWord: u("دروس", "lessons"), bigIdea: u("الفكرة الكبرى", "The big idea"),
     unitLessons: u("دروس الوحدة", "Unit lessons"), unitTools: u("أدوات هذه الوحدة", "Tools for this unit"), unitQuiz: u("اختبار الوحدة", "Unit quiz"),     unitQuizSub: u("أسئلة وكل إجابة لها تفسير.", "Questions with an explanation for every answer."),
     nav_review: u("المراجعة السريعة", "Quick review"), reviewSub: u("الأفكار الأساسية وعلاقاتها في صفحة واحدة.", "Core ideas and how they link, on one page."), nav_present: u("وضع المحاضر", "Presenter mode"), presentSub: u("اعرض الوحدة على شاشة كبيرة مع ملاحظات.", "Present the unit on a big screen with notes."),
-    hasScene: u("فيه مشهد متحرك", "Has an animated scene"), hasLab: u("فيه مختبر", "Has a lab"), done: u("أنهيته", "Done"),
+    hasScene: u("فيه مشهد متحرك", "Has an animated scene"), hasLab: u("فيه مختبر", "Has a lab"), hasProject: u("فيه مشروع تنزّله", "Has a project to download"), hasDeck: u("بيبدأ بحكاية في شرائح", "Opens with a story in slides"), hasBook: u("من نص الكتاب", "From the book text"), done: u("أنهيته", "Done"),
     lessonOf: u("الدرس {n} من {t}", "Lesson {n} of {t}"), minutes: u("دقائق", "min"), bookmarked: u("محفوظ", "Saved"), bookmark: u("احفظ الدرس", "Save lesson"), markDone: u("فهمت الدرس ده", "I understood this"), unmark: u("شيل «فهمت»", "Undo “understood”"),
     compassAria: u("بوصلة الأسئلة العشرة", "The ten-question compass"), compassTitle: u("أسئلة الدرس ده بيجاوب عليها — اضغط للقفز:", "Questions this lesson answers — tap to jump:"),
     bookSays: u("الكتاب بيقول إيه", "What the book says"), bookSaysSub: u("أفكار الكتاب باختصار، مع رقم الصفحة الأصلية.", "The book’s ideas in brief, with the original page number."),
@@ -11073,7 +11081,11 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       const sc = A.meta.showcase[u.id];
       const sl = A.byId[sc.lesson];
       const done = S.get("done");
-      const badge = (l) => l.lab ? `<span class="lb g" title="${esc(t("hasLab"))}">${ar ? "خ" : "L"}</span>` : l.scene ? `<span class="lb b" title="${esc(t("hasScene"))}">${ar ? "م" : "S"}</span>` : `<span class="lb a">${ar ? "ك" : "B"}</span>`;
+      // what each lesson opens with, as a small icon: a project to download, a lab, an animated scene, a story deck, or book text
+      const kind = (l) => (A.xlProjects && A.xlProjects.byLesson[l.id] ? "proj" : l.lab ? "lab" : l.scene ? "scene" : (A.decks || []).some((d) => d.lesson === l.id) ? "deck" : "book");
+      const KIND = { proj: ["folder", "hasProject"], lab: ["flask", "hasLab"], scene: ["film", "hasScene"], deck: ["screen", "hasDeck"], book: ["book", "hasBook"] };
+      const badge = (l) => { const [i, k] = KIND[kind(l)]; return `<span class="lb ${kind(l)}" title="${esc(t(k))}" aria-label="${esc(t(k))}">${ico(i)}</span>`; };
+      const legend = (ls) => [...new Set(ls.map(kind))].map((k) => `<span class="lg"><span class="lb ${k}" aria-hidden="true">${ico(KIND[k][0])}</span>${esc(t(KIND[k][1]))}</span>`).join("");
       let n = 13;
       const code = (rows) => rows.map(([k, txt]) => { const a = k === "-" ? n : k === "+" ? "" : n, b = k === "-" ? "" : ++n; return `<div class="cl ${k === "-" ? "del" : k === "+" ? "add" : ""}"><span class="ln">${a}</span><span class="ln">${b}</span><span class="cx">${k === " " ? "" : k}${esc(txt)}</span></div>`; }).join("");
       win.innerHTML = `
@@ -11088,7 +11100,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
           <div class="win-top"><span class="pill2">${ico("route")}${ico("spark")}</span><div><b>${esc(L(u.short))}</b><small>${esc(t("bookPagesN", { n: u.bookPages.length }))}</small></div></div>
           <div class="win-sub"><b>${esc(t("winLessons"))}</b><span class="num">${ls.length}</span><span class="sp"></span><a href="#unit-${u.id}" class="small">${esc(t("winAll"))}</a></div>
           <ul class="steps">${ls.map((l) => `<li class="${l.id === sc.lesson ? "on" : ""}"><button type="button" class="cbx" data-done="${l.id}" aria-pressed="${!!done[l.id]}" aria-label="${esc(t("winToggle") + ": " + L(l.title))}">${ico("check")}</button>${badge(l)}<a href="#lesson-${l.id}">${esc(L(l.title))}</a></li>`).join("")}</ul>
-          <p class="win-legend">${esc(t("winLegend"))}</p>
+          <p class="win-legend">${legend(ls)}</p>
         </div>
         <div class="win-code">
           <div class="cb-h"><span>${esc(L(sl.title))} · ${esc(L(sc.file))}</span><span>${esc(t("winBefore"))}</span></div>
@@ -11783,7 +11795,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       card.innerHTML = `<div class="qhead"><span class="chip vi">${ico(typeIcon[q.type] || "quiz")}${esc(t("qt_" + q.type))}</span>${prevRec && !opts.fresh ? `<span class="chip ${prevRec.ok ? "ok" : "bad"}">${esc(prevRec.ok ? t("answeredRight") : t("answeredWrong"))}</span>` : ""}</div>
         <p class="qtext">${A.inline(L(q.q))}</p>
         ${q.code ? `<div class="ptext">${esc(L(q.code))}</div>` : ""}
-        <div class="opts" role="group" aria-label="${esc(t("chooseOne"))}">${order.map((oi, k) => `<button type="button" class="opt" data-oi="${oi}"><span class="k">${"ABCDEF"[k]}</span><span>${A.inline(L(q.opts[oi]))}</span></button>`).join("")}</div>
+        <div class="opts" role="group" aria-label="${esc(t("chooseOne"))}">${order.map((oi, k) => `<button type="button" class="opt" data-oi="${oi}"><span class="k" aria-hidden="true">${ico("check", "on")}${ico("x", "no")}</span><span>${A.inline(L(q.opts[oi]))}</span></button>`).join("")}</div>
         <div class="fbz" aria-live="polite"></div>`;
       A.$$(".opt", card).forEach((b) => (b.onclick = () => {
         const oi = Number(b.dataset.oi);
@@ -11909,14 +11921,14 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     return { box, inp: box.querySelector(".lab-in"), out: box.querySelector(".lab-out"), learn };
   }
   const step = (n, label) => `<div class="lab-step">${ico("spark")}${esc(t("labStepN", { n }))} · ${esc(label)}</div>`;
-  const ck = (ok, text, warn) => `<div class="ck ${warn ? "warn" : ok ? "ok" : "bad"}"><span class="m">${warn ? "!" : ok ? "✓" : "✗"}</span><span>${text}</span></div>`;
+  const ck = (ok, text, warn) => `<div class="ck ${warn ? "warn" : ok ? "ok" : "bad"}"><span class="m" aria-hidden="true">${ico(warn ? "info" : ok ? "check" : "x")}</span><span>${text}</span></div>`;
   function predictBox(q, opts, ans, explain, onDone) {
     const box = h("div", { class: "predict" });
     box.innerHTML = `<b>${ico("spark")} ${esc(t("predictFirst"))}</b><div>${esc(q)}</div><div class="row">${opts.map((o, i) => `<button type="button" class="chip" data-i="${i}">${esc(o)}</button>`).join("")}</div><div class="pr-fb small"></div>`;
     box.querySelectorAll("[data-i]").forEach((b) => (b.onclick = () => {
       const i = Number(b.dataset.i);
       box.querySelectorAll("[data-i]").forEach((x) => { x.disabled = true; if (Number(x.dataset.i) === ans) x.classList.add("ok"); else if (x === b) x.classList.add("bad"); });
-      box.querySelector(".pr-fb").innerHTML = (i === ans ? "✓ " + esc(t("predictRight")) : "✗ " + esc(t("predictWrong"))) + " " + esc(explain);
+      box.querySelector(".pr-fb").innerHTML = (i === ans ? ico("check") + " " + esc(t("predictRight")) : ico("x") + " " + esc(t("predictWrong"))) + " " + esc(explain);
       onDone && onDone(i === ans);
     }));
     return box;
@@ -12143,7 +12155,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       const yearH = monthlyH * 12;
       const payback = monthlyH > 0 ? st.build / monthlyH : Infinity;
       const yes = freq && stable && ver;
-      const verdict = yes ? tx("تستاهل أداة ✓", "Worth a tool ✓") : !stable ? tx("أسرع بإيدك دلوقتي — ثبّت القواعد الأول", "Faster by hand for now — stabilise the rules first") : !ver ? tx("ماتبنيش قبل ما تلاقي طريقة تتأكد بيها من النتيجة", "Don’t build until you can verify the output") : tx("لسه أسرع بإيدك", "Still faster by hand");
+      const verdict = yes ? tx("تستاهل أداة", "Worth a tool") : !stable ? tx("أسرع بإيدك دلوقتي — ثبّت القواعد الأول", "Faster by hand for now — stabilise the rules first") : !ver ? tx("ماتبنيش قبل ما تلاقي طريقة تتأكد بيها من النتيجة", "Don’t build until you can verify the output") : tx("لسه أسرع بإيدك", "Still faster by hand");
       f.out.innerHTML = step(2, tx("بوصلة القرار — الأسئلة الأربعة", "Decision compass — the four questions")) + `<div class="checks">
         ${ck(freq, esc(tx("التكرار: كل أسبوع أو أكتر، أو كل شهر بس بتاخد ساعات", "Frequency: weekly or more, or monthly but takes hours")))}
         ${ck(stable, esc(tx("الثبات: قواعدها مش بتتغيّر وتقدر تحصر الاستثناءات", "Stability: rules don’t change, exceptions can be listed")), st.stable === "some")}

@@ -444,6 +444,23 @@ const unzip = async (dl) => {   // walk a stored zip's entries and check each on
   }
   return { names, bad };
 };
+await session({ label: "icons-not-letters", viewport: { width: 390, height: 844 } }, async (page) => {
+  // what a lesson opens with, the quiz choices and lab checks are drawn icons, never letters or font glyphs
+  const units = await page.evaluate(() => window.ACADEMY.units.map((u) => u.id));
+  let bad = [], seen = 0;
+  for (const u of units) {
+    await page.evaluate((x) => document.querySelector(`#win [data-u="${x}"]`).click(), u); await page.waitForTimeout(80);
+    const r = await page.$$eval("#win .steps .lb, #win .win-legend .lb", (els) => els.map((e) => ({ t: e.textContent.trim(), svg: !!e.querySelector("svg") })));
+    seen += r.length; bad = bad.concat(r.filter((x) => x.t || !x.svg).map((x) => u + ":" + x.t));
+  }
+  seen > 40 && !bad.length ? ok(`home: ${seen} lesson badges are icons, none a letter`) : fail("home badges: " + bad.slice(0, 5).join(", "));
+  await page.evaluate(() => (location.hash = "lesson-f1")); await page.waitForSelector("#qc .opt");
+  const q = await page.$$eval("#qc .opt .k", (els) => els.map((e) => e.textContent.trim()).join(""));
+  await page.evaluate(() => (location.hash = "lab-worth")); await page.waitForSelector(".lab .ck .m");
+  const c = await page.$$eval(".lab .ck .m", (els) => els.every((e) => !e.textContent.trim() && e.querySelector("svg")));
+  !q && c ? ok("quiz choices and lab checks: drawn icons, no letters or glyphs") : fail(`quiz markers «${q}», lab checks icons ${c}`);
+});
+
 await session({ label: "unit-2-projects", viewport: { width: 1280, height: 860 }, acceptDownloads: true }, async (page) => {
   // every unit-2 lesson has its own project, downloaded as one zip of real English workbooks, generated in the page offline
   await page.evaluate(() => (location.hash = "lesson-x3")); await page.waitForSelector("#sec-proj .xp-card");

@@ -17,14 +17,14 @@
     return { box, inp: box.querySelector(".lab-in"), out: box.querySelector(".lab-out"), learn };
   }
   const step = (n, label) => `<div class="lab-step">${ico("spark")}${esc(t("labStepN", { n }))} · ${esc(label)}</div>`;
-  const ck = (ok, text, warn) => `<div class="ck ${warn ? "warn" : ok ? "ok" : "bad"}"><span class="m">${warn ? "!" : ok ? "✓" : "✗"}</span><span>${text}</span></div>`;
+  const ck = (ok, text, warn) => `<div class="ck ${warn ? "warn" : ok ? "ok" : "bad"}"><span class="m" aria-hidden="true">${ico(warn ? "info" : ok ? "check" : "x")}</span><span>${text}</span></div>`;
   function predictBox(q, opts, ans, explain, onDone) {
     const box = h("div", { class: "predict" });
     box.innerHTML = `<b>${ico("spark")} ${esc(t("predictFirst"))}</b><div>${esc(q)}</div><div class="row">${opts.map((o, i) => `<button type="button" class="chip" data-i="${i}">${esc(o)}</button>`).join("")}</div><div class="pr-fb small"></div>`;
     box.querySelectorAll("[data-i]").forEach((b) => (b.onclick = () => {
       const i = Number(b.dataset.i);
       box.querySelectorAll("[data-i]").forEach((x) => { x.disabled = true; if (Number(x.dataset.i) === ans) x.classList.add("ok"); else if (x === b) x.classList.add("bad"); });
-      box.querySelector(".pr-fb").innerHTML = (i === ans ? "✓ " + esc(t("predictRight")) : "✗ " + esc(t("predictWrong"))) + " " + esc(explain);
+      box.querySelector(".pr-fb").innerHTML = (i === ans ? ico("check") + " " + esc(t("predictRight")) : ico("x") + " " + esc(t("predictWrong"))) + " " + esc(explain);
       onDone && onDone(i === ans);
     }));
     return box;
@@ -251,7 +251,7 @@
       const yearH = monthlyH * 12;
       const payback = monthlyH > 0 ? st.build / monthlyH : Infinity;
       const yes = freq && stable && ver;
-      const verdict = yes ? tx("تستاهل أداة ✓", "Worth a tool ✓") : !stable ? tx("أسرع بإيدك دلوقتي — ثبّت القواعد الأول", "Faster by hand for now — stabilise the rules first") : !ver ? tx("ماتبنيش قبل ما تلاقي طريقة تتأكد بيها من النتيجة", "Don’t build until you can verify the output") : tx("لسه أسرع بإيدك", "Still faster by hand");
+      const verdict = yes ? tx("تستاهل أداة", "Worth a tool") : !stable ? tx("أسرع بإيدك دلوقتي — ثبّت القواعد الأول", "Faster by hand for now — stabilise the rules first") : !ver ? tx("ماتبنيش قبل ما تلاقي طريقة تتأكد بيها من النتيجة", "Don’t build until you can verify the output") : tx("لسه أسرع بإيدك", "Still faster by hand");
       f.out.innerHTML = step(2, tx("بوصلة القرار — الأسئلة الأربعة", "Decision compass — the four questions")) + `<div class="checks">
         ${ck(freq, esc(tx("التكرار: كل أسبوع أو أكتر، أو كل شهر بس بتاخد ساعات", "Frequency: weekly or more, or monthly but takes hours")))}
         ${ck(stable, esc(tx("الثبات: قواعدها مش بتتغيّر وتقدر تحصر الاستثناءات", "Stability: rules don’t change, exceptions can be listed")), st.stable === "some")}

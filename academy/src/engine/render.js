@@ -110,7 +110,11 @@
       const sc = A.meta.showcase[u.id];
       const sl = A.byId[sc.lesson];
       const done = S.get("done");
-      const badge = (l) => l.lab ? `<span class="lb g" title="${esc(t("hasLab"))}">${ar ? "خ" : "L"}</span>` : l.scene ? `<span class="lb b" title="${esc(t("hasScene"))}">${ar ? "م" : "S"}</span>` : `<span class="lb a">${ar ? "ك" : "B"}</span>`;
+      // what each lesson opens with, as a small icon: a project to download, a lab, an animated scene, a story deck, or book text
+      const kind = (l) => (A.xlProjects && A.xlProjects.byLesson[l.id] ? "proj" : l.lab ? "lab" : l.scene ? "scene" : (A.decks || []).some((d) => d.lesson === l.id) ? "deck" : "book");
+      const KIND = { proj: ["folder", "hasProject"], lab: ["flask", "hasLab"], scene: ["film", "hasScene"], deck: ["screen", "hasDeck"], book: ["book", "hasBook"] };
+      const badge = (l) => { const [i, k] = KIND[kind(l)]; return `<span class="lb ${kind(l)}" title="${esc(t(k))}" aria-label="${esc(t(k))}">${ico(i)}</span>`; };
+      const legend = (ls) => [...new Set(ls.map(kind))].map((k) => `<span class="lg"><span class="lb ${k}" aria-hidden="true">${ico(KIND[k][0])}</span>${esc(t(KIND[k][1]))}</span>`).join("");
       let n = 13;
       const code = (rows) => rows.map(([k, txt]) => { const a = k === "-" ? n : k === "+" ? "" : n, b = k === "-" ? "" : ++n; return `<div class="cl ${k === "-" ? "del" : k === "+" ? "add" : ""}"><span class="ln">${a}</span><span class="ln">${b}</span><span class="cx">${k === " " ? "" : k}${esc(txt)}</span></div>`; }).join("");
       win.innerHTML = `
@@ -125,7 +129,7 @@
           <div class="win-top"><span class="pill2">${ico("route")}${ico("spark")}</span><div><b>${esc(L(u.short))}</b><small>${esc(t("bookPagesN", { n: u.bookPages.length }))}</small></div></div>
           <div class="win-sub"><b>${esc(t("winLessons"))}</b><span class="num">${ls.length}</span><span class="sp"></span><a href="#unit-${u.id}" class="small">${esc(t("winAll"))}</a></div>
           <ul class="steps">${ls.map((l) => `<li class="${l.id === sc.lesson ? "on" : ""}"><button type="button" class="cbx" data-done="${l.id}" aria-pressed="${!!done[l.id]}" aria-label="${esc(t("winToggle") + ": " + L(l.title))}">${ico("check")}</button>${badge(l)}<a href="#lesson-${l.id}">${esc(L(l.title))}</a></li>`).join("")}</ul>
-          <p class="win-legend">${esc(t("winLegend"))}</p>
+          <p class="win-legend">${legend(ls)}</p>
         </div>
         <div class="win-code">
           <div class="cb-h"><span>${esc(L(sl.title))} · ${esc(L(sc.file))}</span><span>${esc(t("winBefore"))}</span></div>
