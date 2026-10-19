@@ -481,6 +481,18 @@ await session({ label: "unit-2-projects", viewport: { width: 1280, height: 860 }
   dl2.suggestedFilename() === "Lesson_2_First_Tool_File_List.zip" && z2.names.some((n) => n.endsWith("Data/~$Line_L03_Week_02.xlsx")) && z2.names.filter((n) => /Line_L0\d_Week_02\.xlsx$/.test(n) && !n.includes("~$")).length === 6 && !z2.bad
     ? ok("lab: the ladder switches to project 2, whose zip holds six reports and an Excel lock file") : fail("lab project 2 zip: " + z2.names.join(", "));
 });
+/* A narrow phone (340px), both languages: unit-2 lessons, whose download button carries a long zip name, stay inside the screen */
+await session({ label: "unit-2-narrow", viewport: { width: 340, height: 760 }, isMobile: true, hasTouch: true }, async (page) => {
+  const bad = [];
+  for (const lang of ["ar", "en"]) {
+    if (lang === "en") { await page.click("#more-btn"); await page.click("#lang-btn"); await page.waitForTimeout(150); }
+    for (const id of await page.evaluate(() => window.ACADEMY.lessons.filter((l) => l.unit === "u1").map((l) => l.id))) {
+      await page.evaluate((x) => (location.hash = "lesson-" + x), id); await page.waitForSelector("#sec-proj .xp-card");
+      const ov = await overflow(page); if (ov > 1) bad.push(`${lang} ${id} ${ov}px`);
+    }
+  }
+  bad.length ? fail("unit 2 at 340px: horizontal overflow " + bad.join(", ")) : ok("unit 2 at 340px: every lesson fits the screen, Arabic and English");
+});
 
 await session({ label: "plan-2-migration", viewport: { width: 1280, height: 860 } }, async (page) => {
   // a learner from the six-unit course: old best scores for u1–u5 belong to other questions now and must not show
