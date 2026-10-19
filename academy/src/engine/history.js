@@ -1308,7 +1308,7 @@
     },
     xk_ladder: () => {
       const X = rowX(8, 50, 6), top = (i) => 232 - i * 21;
-      const G = [[[0, 1], tr("تمهيد", "warm-up"), "t-ink2"], [[2, 3, 4], tr("التلات أدوات", "the three tools"), "t-acc"], [[5, 6], tr("مشتريات وخامات", "purchasing"), "t-mint"], [[7], tr("لما توقف", "when it stops"), "t-rose"]];
+      const G = [[[0, 1], tr("تمهيد", "warm-up"), "t-ink2"], [[2, 3, 4], tr("التلات أدوات", "the three tools"), "t-acc"], [[5, 6], tr("مشتريات وخامات", "purchasing"), "t-mint"], [[7], tr("لما توقف", "fixing"), "t-rose"]];
       const fill = (i) => (i < 2 ? "f-s2 s-line2" : i < 5 ? "f-acc-soft s-acc" : i < 7 ? "f-mint-soft s-mint" : "f-rose-soft s-rose");
       return `${[...Array(8)].map((_, i) => `<g ${an("rise", 0.1 + i * 0.1)}><rect x="${X(i) - 25}" y="${top(i)}" width="50" height="${270 - top(i)}" rx="6" class="${fill(i)}" stroke-width="1.5"/><circle cx="${X(i)}" cy="${top(i) + 16}" r="11" class="f-white"/>${txt(X(i), top(i) + 20.5, digits(i + 1), "t-ink", 12, b8)}</g>`).join("")}
       ${G.map(([is, s, tc], k) => { const cx = is.reduce((a, i) => a + X(i), 0) / is.length, y = Math.min(...is.map(top)) - 14; return `<g ${an("fade", 1.0 + k * 0.15)}>${txt(cx, y, s, tc, 11.5, b8)}</g>`; }).join("")}
@@ -1972,7 +1972,7 @@
     },
     xn_files: () => {
       const X = rowX(4, 104, 10, 240);
-      const F = [["Plan", tr("هنعمل كام؟", "how many TVs?"), "f-acc-soft s-acc", "t-acc"], ["BOM", tr("الجهاز محتاج إيه؟", "what does a TV need?"), "f-mint-soft s-mint", "t-mint"], ["Materials", tr("من مين وبالعبوة كام؟", "from whom, what pack?"), "f-amber-soft s-amber", "t-amber"], ["Stock", tr("عندنا كام؟", "how much do we have?"), "f-s2 s-line2", "t-ink2"]];
+      const F = [["Plan", tr("هنعمل كام؟", "how many TVs?"), "f-acc-soft s-acc", "t-acc"], ["BOM", tr("الجهاز محتاج إيه؟", "what is in a TV?"), "f-mint-soft s-mint", "t-mint"], ["Materials", tr("من مين وبالعبوة كام؟", "who, what pack?"), "f-amber-soft s-amber", "t-amber"], ["Stock", tr("عندنا كام؟", "in stock?"), "f-s2 s-line2", "t-ink2"]];
       return `${F.map(([f, q, cls, tc], i) => `<g ${an("rise", 0.1 + i * 0.2)}>${box(X(i), 112, 104, 120, cls)}${xl(X(i), 84, 0.8)}${txt(X(i), 128, f, tc, 12.5, 'font-weight="800" direction="ltr"')}${txt(X(i), 152, q, "t-ink2", 9.5, b8)}</g>`).join("")}
       <g ${an("fade", 1.0)}>${[0, 1, 2].map((i) => `<path d="M${(X(i) + X(i + 1)) / 2} 182 V 206" class="s-ink3" stroke-width="2"/>`).join("")}<path d="M${X(0)} 206 H ${X(3)}" class="s-ink3" stroke-width="2"/></g>
       ${pill(240, 236, 220, 38, "Material_Needs_Apr.xlsx", "f-mint", "t-white", 11.5, 1.2)}
