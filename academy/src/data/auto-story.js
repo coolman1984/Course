@@ -3,7 +3,7 @@
    (stacking weekly files, enriching a raw sheet with lookups, a report built from two workbooks), and the question
    «إمتى الشغل ده يشتغل لوحده؟». The deck climbs the ladder of Excel automation — by hand, formulas and pivots, Power Query,
    macros, a script that drives Excel from outside (COM) — then the recipe for a prompt that builds a safe tool, the three
-   jobs automated, and a cliffhanger into unit 2: practising safely, and getting the code onto the laptop from ChatGPT or Gemini Enterprise.
+   jobs automated, and a cliffhanger into unit 2: the same three jobs in a TV factory, and getting the code onto the laptop from ChatGPT or Gemini Enterprise.
    Each slide gives one rule with its reason («القاعدة، وليه؟»). Figures are illustrative. Same slide schema as
    data/model-story.js; drawings are the x_* entries in engine/history.js. */
 "use strict";
@@ -142,11 +142,11 @@
       {
         id: "cliff", art: "x_cliff", year: u("الوحدة الجاية", "Next unit"), mark: u("١٢", "12"), era: u("من الورق للجهاز", "From paper to laptop"),
         title: u("التلات أدوات جاهزين على الورق… والسؤال: نبنيهم إزاي بجد؟", "The three tools are ready on paper… so how do we really build them?"),
-        story: [u("المشرف خرج من المحاضرة متحمس، وكان هيرفع ملف المبيعات الحقيقي من موبايله ويجرّب. وقبل ما يدوس، افتكر إن الملف فيه أسماء عملاء وأسعار خاصة. وزميلته في الحسابات قالتله: «إحنا شغالين على Gemini Enterprise، وبيكتبلي الكود في الرد، ومفيش ملف أنزّله».",
-          "The supervisor left the lecture enthusiastic, about to upload the real sales file from his phone and try. Before pressing, he remembered the file holds customer names and special prices. And his colleague from accounts told him: “We work on Gemini Enterprise; it writes me the code in the reply, and there's no file to download.”"),
-        u("يعني فيه تلات أسئلة لسه ما اتجاوبتش: نجرّب على بيانات إيه من غير ما نعرّض ملفات الشركة؟ والكود يوصل للجهاز إزاي، سواء النموذج ChatGPT أو Gemini Enterprise؟ ولما الأداة توقف، نصلّحها إزاي؟ والوحدة الجاية بتبني التلات أدوات خطوة بخطوة، على شركة تجريبية كاملة.",
-          "So three questions remain open: what data do we practise on without exposing company files? How does the code reach the laptop, whether the model is ChatGPT or Gemini Enterprise? And when the tool stops, how do we fix it? The next unit builds the three tools step by step, on a complete practice company.")],
-        answer: u("واجب الأسبوع: اكتب خطوات مهمة من التلاتة زي ما بتشرحها لموظف جديد، واعرف من شركتك أنهي نموذج مسموح. لأن الوصف والسياسة هم أول حاجتين الوحدة الجاية بتبدأ بيهم.", "This week's assignment: write the steps of one of the three jobs as you'd explain them to a new colleague, and find out from your company which model is allowed — the description and the policy are the first two things the next unit starts from."),
+        story: [u("المهام التلاتة دي مش عند المشرف بس. مهندس تخطيط في مصنع تلفزيونات بيعملها كل أسبوع: تقارير ستة خطوط تحت بعض، وأسماء الموديلات من شيت صغير، والإنتاج قصاد الخطة. وزميلته في المشتريات قالتله: «Gemini Enterprise بيكتبلي الكود في الرد، ومفيش ملف أنزّله».",
+          "These three jobs aren't the supervisor's alone. A planning engineer at a TV factory does them every week: six lines' reports stacked, model names from a small sheet, output against plan. And his colleague from purchasing told him: “Gemini Enterprise writes me the code in the reply, and there's no file to download.”"),
+        u("فاضل تلات أسئلة: نجرّب الأدوات على إيه ونعرف منين إنها صح؟ والكود يوصل للجهاز إزاي، من ChatGPT أو Gemini Enterprise؟ ولما الأداة توقف، نصلّحها إزاي؟ والوحدة الجاية بتبني التلات أدوات خطوة بخطوة على ملفات مصنع التلفزيونات ده.",
+          "Three questions remain: what do we try the tools on, and how do we know they're right? How does the code reach the laptop, from ChatGPT or Gemini Enterprise? And when a tool stops, how do we fix it? The next unit builds the three tools step by step on this TV factory's files.")],
+        answer: u("واجب الأسبوع: اكتب خطوات مهمة من التلاتة زي ما بتشرحها لموظف جديد. لأن الوصف الدقيق هو أول حاجة الوحدة الجاية بتبدأ بيها.", "This week's assignment: write the steps of one of the three jobs as you'd explain them to a new colleague — a precise description is the first thing the next unit starts from."),
         idea: u("الأداة بتتبني على وصف… وبتتجرّب على بيانات آمنة.", "A tool is built on a description… and tried on safe data.")
       }
     ]

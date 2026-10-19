@@ -237,40 +237,40 @@ test("the unit-2 sample kit: a correct tool, run on the files, finds exactly the
   const S = A.xlSample, E = S.expected;
   for (const lang of ["ar", "en"]) {
     const files = S.build(lang), H = S.headers, at = (head, h) => head.indexOf(h[lang]);
-    const weeks = files.filter((f) => f.path.startsWith("Sales_2026_Q1/"));
+    const weeks = files.filter((f) => f.path.startsWith("Production_2026_Q1/"));
     assert.equal(weeks.length, E.files);
     let read = 0, skipped = 0, text = 0;
     const rows = [], seen = new Set(), dups = [];
     for (const f of weeks) {
       const [head, ...body] = f.sheets[0].rows;
-      const qi = at(head, H.sales[4]) >= 0 ? at(head, H.sales[4]) : at(head, H.qtyAlt), vi = at(head, H.sales[5]);   // by name, with the agreed alias
+      const qi = at(head, H.prod[4]) >= 0 ? at(head, H.prod[4]) : at(head, H.qtyAlt), vi = at(head, H.prod[5]);   // by name, with the agreed alias
       assert.ok(qi >= 0 && vi >= 0, `${f.path}: columns`);
       for (const r of body) {
         if (r[1] === null) { skipped++; continue; }
         read++; if (typeof r[0] === "string") text++;
         const key = JSON.stringify(r);
         if (seen.has(key)) { dups.push(r); continue; } seen.add(key);
-        rows.push({ day: typeof r[0] === "string" ? Math.round((Date.UTC(2026, +r[0].slice(3, 5) - 1, +r[0].slice(0, 2)) - Date.UTC(2026, 0, 1)) / 864e5) : r[0].d - S.serial0, br: String(r[2]).trim().toUpperCase(), raw: r[2], pc: r[3], q: r[qi], v: r[vi] });
+        rows.push({ day: typeof r[0] === "string" ? Math.round((Date.UTC(2026, +r[0].slice(3, 5) - 1, +r[0].slice(0, 2)) - Date.UTC(2026, 0, 1)) / 864e5) : r[0].d - S.serial0, ln: String(r[2]).trim().toUpperCase(), raw: r[2], mc: r[3], q: r[qi], v: r[vi] });
       }
     }
-    const sum = (a) => a.reduce((s, x) => s + x.v, 0);
+    const sum = (a, k = "v") => a.reduce((s, x) => s + x[k], 0);
     assert.equal(read, E.rowsRead); assert.equal(skipped, E.totalsRowSkipped); assert.equal(dups.length, E.duplicates); assert.equal(rows.length, E.rowsClean);
-    assert.equal(text, E.textDates); assert.equal(sum(rows), E.value); assert.equal(rows.filter((r) => r.q < 0).length, E.returns);
-    assert.equal(rows.filter((r) => r.raw === "BR04 ").length, E.spacedBranch); assert.equal(rows.filter((r) => r.raw === "br03").length, E.lowerBranch);
-    assert.equal(sum(rows), sum(S.truth()), "the planted problems, handled, give back the true sales");
-    const masters = files.find((f) => f.path === "Masters.xlsx"), prod = masters.sheets[1].rows.slice(1);
-    const codes = prod.map((p) => p[0]), twice = codes.filter((c, i) => codes.indexOf(c) !== i);
-    assert.equal(twice.join(), "P108", "one product listed twice");
-    const un = rows.filter((r) => !codes.includes(r.pc));
-    assert.ok(un.every((r) => r.pc === E.unmatched.code)); assert.equal(un.length, E.unmatched.rows); assert.equal(sum(un), E.unmatched.value);
-    assert.ok(rows.every((r) => S.branches.includes(r.br)), "every branch matches once normalised");
-    const tg = files.find((f) => f.path === "Targets_2026_Q1.xlsx").sheets[0].rows.slice(1);
-    assert.equal(tg.length, E.targets); assert.ok(!tg.some((t) => t[0] === E.missingTarget.br && t[1] === E.missingTarget.month));
-    const pct = tg.map(([b, m, g]) => ({ b, m, p: Math.round((sum(rows.filter((r) => r.br === b && "2026-0" + S.monthOf(r.day) === m)) / g) * 1000) / 10 }));
+    assert.equal(text, E.textDates); assert.equal(sum(rows), E.value); assert.equal(sum(rows, "q"), E.units); assert.equal(rows.filter((r) => r.q < 0).length, E.returns);
+    assert.equal(rows.filter((r) => r.raw === "L04 ").length, E.spacedLine); assert.equal(rows.filter((r) => r.raw === "l03").length, E.lowerLine);
+    assert.equal(sum(rows), sum(S.truth()), "the planted problems, handled, give back the true output");
+    const masters = files.find((f) => f.path === "Masters.xlsx"), mod = masters.sheets[1].rows.slice(1);
+    const codes = mod.map((p) => p[0]), twice = codes.filter((c, i) => codes.indexOf(c) !== i);
+    assert.equal(twice.join(), "M108", "one model listed twice");
+    const un = rows.filter((r) => !codes.includes(r.mc));
+    assert.ok(un.every((r) => r.mc === E.unmatched.code)); assert.equal(un.length, E.unmatched.rows); assert.equal(sum(un, "q"), E.unmatched.units); assert.equal(sum(un), E.unmatched.value);
+    assert.ok(rows.every((r) => S.lines.includes(r.ln)), "every line matches once normalised");
+    const pl = files.find((f) => f.path === "Plan_2026_Q1.xlsx").sheets[0].rows.slice(1);
+    assert.equal(pl.length, E.plans); assert.ok(!pl.some((t) => t[0] === E.missingPlan.line && t[1] === E.missingPlan.month));
+    const pct = pl.map(([b, m, g]) => ({ b, m, p: Math.round((sum(rows.filter((r) => r.ln === b && "2026-0" + S.monthOf(r.day) === m), "q") / g) * 1000) / 10 }));
     const hi = pct.reduce((a, x) => (x.p > a.p ? x : a)), lo = pct.reduce((a, x) => (x.p < a.p ? x : a));
-    assert.deepEqual([hi.b, hi.m, hi.p, lo.b, lo.m, lo.p].join(), [E.best.br, E.best.month, E.best.pct, E.worst.br, E.worst.month, E.worst.pct].join());
+    assert.equal([hi.b, hi.m, hi.p, lo.b, lo.m, lo.p].join(), [E.best.line, E.best.month, E.best.pct, E.worst.line, E.worst.month, E.worst.pct].join());
     const w11 = weeks.find((f) => f.path.endsWith("Week_11.xlsx")).sheets[0].rows;
-    assert.equal(w11.length - 1, E.week11Rows); assert.ok(!w11[0].includes(H.sales[4][lang]), "week 11 renames the quantity column");
+    assert.equal(w11.length - 1, E.week11Rows); assert.ok(!w11[0].includes(H.prod[4][lang]), "week 11 renames the quantity column");
     assert.ok(S.answerKey(lang).includes(E.value.toLocaleString("en-US")) && S.readme(lang).includes("Week_13.xlsx"));
   }
 });

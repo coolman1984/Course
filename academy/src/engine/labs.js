@@ -750,7 +750,7 @@
       const name = short(files[cur].path), v = r[ci];
       if (ri === 0) return (name === "Week_07" && ci === 5) || (name === "Week_11" && ci === 4);
       if (typeof v === "string" && /^\d\d\/\d\d\/2026$/.test(v)) return true;
-      if (v === "BR04 " || v === "br03" || v === "P113" || (typeof v === "number" && ci === 4 && v < 0 && head.length === 6)) return true;
+      if (v === "L04 " || v === "l03" || v === "M113" || (typeof v === "number" && ci === 4 && v < 0 && head.length === 6)) return true;
       if (r[1] === null && r[2]) return true;
       return false;
     };
@@ -759,11 +759,11 @@
       let at = [1, 2, 3, 4, 5];
       if (name === "Week_02") at = [1, 2, n - 3, n - 2, n - 1];
       if (name === "Week_04") at = [9, 10, 11, 31, 32];
-      if (name === "Week_05") at = [1, 2, ...pick((r) => r[2] === "BR04 ").slice(0, 3)];
-      if (name === "Week_06") at = [1, 2, ...pick((r) => r[2] === "br03").slice(0, 3)];
-      if (/Week_1[0-3]/.test(name)) at = [1, 2, ...pick((r) => r[3] === "P113").slice(0, 3)];
+      if (name === "Week_05") at = [1, 2, ...pick((r) => r[2] === "L04 ").slice(0, 3)];
+      if (name === "Week_06") at = [1, 2, ...pick((r) => r[2] === "l03").slice(0, 3)];
+      if (/Week_1[0-3]/.test(name)) at = [1, 2, ...pick((r) => r[3] === "M113").slice(0, 3)];
       if (name === "Masters") at = rows.map((_, i) => i).slice(1);
-      if (name === "Targets_2026_Q1") at = [1, 2, 3, n - 3, n - 2, n - 1];
+      if (name === "Plan_2026_Q1") at = [1, 2, 3, n - 3, n - 2, n - 1];
       return [...new Set(at.filter((i) => i > 0 && i < n))].sort((a, b) => a - b);
     }
     function drawIn() {
@@ -781,7 +781,7 @@
     }
     function drawOut() {
       if (cur < 0) {
-        f.out.innerHTML = `<div class="statgrid"><div class="stat"><small>${esc(tx("ملفات الأسابيع", "Weekly files"))}</small><b class="num">${E.files}</b></div><div class="stat"><small>${esc(tx("صفوف المبيعات الحقيقية", "True sales rows"))}</small><b class="num">${fmt(E.rowsClean)}</b></div><div class="stat"><small>${esc(tx("فخاخ متعمّدة", "Planted problems"))}</small><b class="num">${S.traps.length}</b></div></div>` +
+        f.out.innerHTML = `<div class="statgrid"><div class="stat"><small>${esc(tx("ملفات الأسابيع", "Weekly files"))}</small><b class="num">${E.files}</b></div><div class="stat"><small>${esc(tx("دفعات الإنتاج الحقيقية", "True production batches"))}</small><b class="num">${fmt(E.rowsClean)}</b></div><div class="stat"><small>${esc(tx("فخاخ متعمّدة", "Planted problems"))}</small><b class="num">${S.traps.length}</b></div></div>` +
           step(3, tx("الفخاخ اللي مستخبية في الملفات", "The problems hidden in the files")) + `<div class="checks">${S.traps.map((x) => ck(false, `<b>${esc(L(x.t))}</b> · <span class="ltr">${esc(x.file)}</span><br><span class="small muted">${esc(L(x.d))}</span>`, true)).join("")}</div>`;
         return;
       }
