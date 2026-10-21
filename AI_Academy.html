@@ -664,6 +664,16 @@ details.more[open]>summary{margin-bottom:8px}
 .custom{display:grid;gap:12px;padding:16px;border-radius:var(--r-md);background:var(--spark-soft)}
 .custom .grid{gap:10px}
 
+/* ---------- Start with AI (situations) ---------- */
+.situation-card{scroll-margin-top:calc(var(--bar-h) + 16px)}
+.start-ai .sit-title{font-size:1.15rem;margin:0}
+.start-ai .sit-intro{font-size:15px;line-height:1.9;color:var(--ink-2);margin:0}
+.sit-prompt-wrap{display:grid;gap:10px;min-width:0}
+.sit-code{margin:0;padding:14px 16px;border-radius:var(--r-md);background:var(--surface-2);border:1px solid var(--line);overflow-x:auto;max-width:100%;direction:ltr;text-align:left}
+.sit-code code{display:block;font-family:var(--font-mono);font-size:12.5px;line-height:1.6;color:var(--ink);white-space:pre-wrap;word-break:break-word}
+html[data-theme="dark"] .sit-code{background:var(--surface-3);border-color:var(--line-2)}
+html[data-theme="dark"] .sit-code code{color:var(--ink)}
+
 /* ---------- Quiz ---------- */
 .quiz{display:grid;gap:16px}
 .qhead{display:flex;flex-wrap:wrap;align-items:center;gap:10px;justify-content:space-between}
@@ -1492,6 +1502,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     noQuick: u("لسه مفيش أسئلة للدرس ده.", "No questions for this lesson yet."), prereq: u("يستحسن تقراه قبله", "Best read first"), nextIdea: u("الفكرة اللي جاية", "The next idea"), seeInGraph: u("شوف مكانها في الخريطة المعرفية ←", "See it on the knowledge map →"),
     saved: u("اتحفظ", "Saved"), notSaved: u("مش متحفظ — المتصفح بيمنع الحفظ", "Not saved — the browser blocks saving"), saving: u("بيتحفظ…", "Saving…"),
     markedDone: u("الدرس اتضاف لتقدمك", "Well done! Lesson added to your progress"), unmarked: u("اتشال التعليم", "Mark removed"), bookmarkAdded: u("الدرس اتحفظ في دفترك", "Lesson saved to your notebook"), bookmarkRemoved: u("اتشال من المحفوظات", "Removed from saved"),
+    nav_start: u("البداية مع الذكاء الاصطناعي", "Getting started with AI"), startSub: u("برومبتات جاهزة لنماذج الشات المجانية", "Ready prompts for free chat models"), startCopy: u("انسخ البرومبت", "Copy prompt"), startCopied: u("اتنسخ ✓", "Copied ✓"), startCopyManual: u("حدّدنا النص — اضغط Ctrl+C", "Text selected — press Ctrl+C"), startPromptLabel: u("البرومبت (إنجليزي)", "Prompt (English)"),
     nav_map: u("خريطة الكتاب", "Book map"), mapTitle: u("الكتاب كله في نظرة واحدة", "The whole book at a glance"), mapLead: u("41 صفحة ملوّنة حسب الوحدة. اضغط أي صفحة عشان تشوف صورتها الأصلية والدروس اللي بتشرحها.", "41 pages coloured by unit. Tap any page to see its original image and the lessons that explain it."),
     visualPage: u("صفحة بصرية (إنفوجرافيك)", "Visual page (infographic)"), bookParts: u("أجزاء الكتاب", "Parts of the book"),
     nav_coverage: u("تقرير التغطية", "Coverage report"), covTitle: u("تقرير تغطية الصفحات 1–41", "Coverage report, pages 1–41"), covLead: u("أفكار كل صفحة اتشرحت فين، وإيه اللي موجود في الأكاديمية.", "Where each page’s ideas are explained, and what the academy contains."),
@@ -1569,6 +1580,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
 
   A.routes = [
     { id: "home", icon: "home", label: u("الرئيسية", "Home"), desc: u("البداية والمعادلة الحاكمة وسلّم التعلم", "Start, the governing equation and the learning ladder") },
+    { id: "start", icon: "spark", label: u("البداية مع الذكاء الاصطناعي", "Getting started with AI"), desc: u("مواقف عملية وبرومبتات لنماذج الشات المجانية", "Practical situations and prompts for free chat models"), count: () => (A.situations || []).length },
     { id: "map", icon: "map", label: u("خريطة الكتاب", "Book map"), desc: u("الصفحات الـ41 وصورها الأصلية", "The 41 pages and their original images") },
     { id: "path", icon: "route", label: u("مسار التعلم", "Learning path"), desc: u("إيه اللي خلصته وإيه اللي محتاج مراجعة", "What you’ve done and what needs review") },
     { id: "labs", icon: "flask", label: u("مختبر التجارب", "Labs"), desc: u("13 مختبر تفاعلي", "13 interactive labs"), count: () => A.labs.length },
@@ -5930,6 +5942,66 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       v("الفريق شغال من [المدة]. صمّملي طريقة قياس عملية لأدائه: إيه المؤشرات اللي أتابعها؟ وإزاي أقيس نسبة المخرجات اللي احتاجت تدخل بشري وليه احتاجته؟ وإزاي أعرف أي وكيل بالظبط مصدر الأخطاء المتكررة؟ واقترح تقرير أسبوعي مختصر يعرض المؤشرات دي على الإدارة بلغة النتائج مش بلغة التقنية.",
         "The team has been running for [the duration]. Design a practical way to measure it: which indicators do I track? How do I measure the share of outputs needing human intervention and why? How do I find which agent causes repeated errors? And propose a short weekly report presenting these to management in results language, not technical language."),
       [v("المدة", "the duration")], v("5 مؤشرات + قالب تقرير أسبوعي من نصف صفحة.", "5 indicators + a half-page weekly report template."), v("من غير سجل كامل لكل خطوة مش هتقدر تقيس.", "Without a full log of every step you can’t measure."), ),
+  ];
+})(window.ACADEMY = window.ACADEMY || {});
+
+/* data/situations.js */
+/* Situations for «البداية مع الذكاء الاصطناعي» — add new entries to A.situations only. */
+"use strict";
+(function (A) {
+  A.situationsPage = {
+    title: "البداية مع الذكاء الاصطناعي",
+    intro:
+      "الصفحة دي ليك لو بتستخدم نماذج شات مجانية بس. اختار موقفك من اللي تحت، اقرا المقدمة كده في سرك، وانسخ الـ Prompt الإنجليزي وحطّه في الشات. النموذج هيسألك أسئلة — جاوب عليه صراحة. بعد ما يخلص، هتاخد أداة جاهزة تنفّذها على لابتوبك.",
+  };
+
+  A.situations = [
+    {
+      id: "excel-company-laptop",
+      title: "أتمتة ملفات Excel على لابتوب الشركة",
+      intro:
+        "تخيّل إن لابتوب الشغل مقفول عليك: ممنوع تنزّل حاجة، ومفيش pandas ولا openpyxl. Python العادي موجود بس. الـ Prompt ده بيخلّي النموذج يبني لك أداة كاملة: PowerShell يفتح Excel من برّه، يصدّر الشيتات CSV، وPython يحمّلها في SQLite ويعمل التقارير — من غير ما يلمس الملف الأصلي.",
+      prompt: `You are a senior Python and Windows desktop automation engineer. I work on a company laptop with strict DRM: I cannot install third-party Python packages (no pandas, openpyxl, pywin32, xlwings, etc.). I only have the Python standard library plus whatever ships with Windows (Excel, PowerShell, cscript).
+
+Your job: design and deliver a complete, production-minded automation that reads Excel workbooks, loads data into SQLite, runs SQL for joins/aggregations/calculations, and writes outputs — without ever modifying my original files.
+
+## Hard constraints (non-negotiable)
+1. **Excel access**: Use Excel COM automation driven by a PowerShell script (\`export_excel.ps1\`) that Python generates and runs via:
+   \`subprocess.run(["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", path_to_ps1, ...], ...)\`
+   VBScript is an acceptable alternative only if you document why PowerShell is unsuitable on my machine.
+2. **No pywin32**: Python must NOT use COM directly; only subprocess to PowerShell/VBScript.
+3. **CSV bridge**: For each sheet needed, export to CSV (UTF-8). Python reads CSV with the \`csv\` module only.
+4. **Standard library only** in Python: no pip packages. Pure Python logic; heavy work in SQL.
+5. **SQLite**: Use \`sqlite3\`. Load CSV rows into tables; perform queries, joins, aggregations, and calculations in SQL, not Python loops over large datasets.
+6. **Never touch originals**: Copy all inputs to a working folder first; open workbooks read-only in COM. Document this in README.
+7. **COM hygiene**: In PowerShell, always \`DisplayAlerts = $false\`, release COM objects (\`[System.Runtime.InteropServices.Marshal]::ReleaseComObject\`), call \`[GC]::Collect()\`, and \`Quit()\` Excel in \`try/finally\` so no orphan EXCEL.EXE processes remain on errors.
+8. **Arabic & Excel quirks**: UTF-8 with BOM when writing CSV for Excel; read with \`utf-8-sig\` in Python; set PowerShell output encoding appropriately. Handle merged cells (unmerge on the working copy and fill down), Excel serial dates and text dates (normalize to ISO YYYY-MM-DD), empty rows, and header row detection.
+9. **Configuration**: All paths, sheet names, column mapping, output folder, and log level live in \`config.json\`. Validate config on startup with clear, actionable error messages.
+10. **Logging**: Use Python \`logging\` with timestamps; write a log file (rotating or per-run). Print clear console messages for operators.
+11. **Deliverables** (each file written out **in full** in your answer — no placeholders, no "...", no "rest of code here"):
+    - \`main.py\`
+    - \`config.json\` (with sensible defaults and comments in a separate README section if JSON cannot hold comments)
+    - \`export_excel.ps1\`
+    - \`README.txt\` (operator steps, assumptions, troubleshooting)
+    - \`run.bat\` (double-click friendly)
+    Plus step-by-step instructions to zip the project folder using Windows Explorer ("Send to > Compressed (zipped) folder") and PowerShell \`Compress-Archive\`.
+
+## How you must work with me
+**Before writing ANY code**, ask clarifying questions about everything that is missing, including at minimum:
+- Exact input file names and folder paths
+- Which sheets to process and their purpose
+- Column names, types, and business meaning
+- Required calculations, reports, and output format (Excel, CSV, SQLite views, printed summary)
+- Excel version and locale
+- PowerShell execution policy restrictions on my machine
+- Python version (\`python --version\` output)
+Wait for my answers. Only then produce the full deliverables.
+
+Include a short **"Context to fill in"** block with bracketed fields I should complete before I send this prompt, for example:
+[INPUT_FOLDER], [OUTPUT_FOLDER], [WORKBOOK_NAMES], [SHEETS_AND_COLUMNS], [REPORT_DESCRIPTION], [PYTHON_VERSION], [EXCEL_VERSION], [EXECUTION_POLICY].
+
+Start by presenting the "Context to fill in" block and your clarifying questions. Do not write code until I reply.`,
+    },
   ];
 })(window.ACADEMY = window.ACADEMY || {});
 
@@ -10320,6 +10392,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       items.push({ type: "lesson", id: l.id, href: "#lesson-" + l.id, title: l.title, sub: l.sum, icon: "book", hay: norm(parts.join(" ")), th: norm(both(l.title)) });
     }
     for (const p of A.prompts) items.push({ type: "prompt", id: p.id, href: "#prompts-" + p.id, title: p.title, sub: p.goal, icon: "msg", hay: norm([both(p.title), both(p.goal), both(p.text)].join(" ")), th: norm(both(p.title)) });
+    for (const s of A.situations || []) items.push({ type: "situation", id: s.id, href: "#start-" + s.id, title: { ar: s.title, en: s.title }, sub: { ar: s.intro, en: s.intro }, icon: "spark", hay: norm([s.title, s.intro, s.prompt].join(" ")), th: norm(s.title) });
     for (const g of A.glossary) items.push({ type: "term", id: g.id, href: "#glossary-" + g.id, title: { ar: g.term.ar + (g.en_term ? " · " + g.en_term : ""), en: g.term.en + (g.en_term && g.en_term !== g.term.en ? " · " + g.en_term : "") }, sub: g.def, icon: "abc", hay: norm([both(g.term), g.en_term, both(g.def)].join(" ")), th: norm(both(g.term) + " " + (g.en_term || "")) });
     for (const lb of A.labs) items.push({ type: "lab", id: lb.id, href: "#lab-" + lb.id, title: lb.title, sub: lb.sum, icon: "flask", hay: norm([both(lb.title), both(lb.sum)].join(" ")), th: norm(both(lb.title)) });
     for (const c of A.coverage) items.push({ type: "page", id: "p" + c.p, page: c.p, title: { ar: "ص " + c.p + " — " + c.title.ar, en: "Page " + c.p + " — " + c.title.en }, sub: c.sum, icon: "page", hay: norm([both(c.title), both(c.sum), "صفحه " + c.p, "ص " + c.p, "page " + c.p].join(" ")), th: norm(both(c.title)) });
@@ -10359,10 +10432,10 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     const d = openDialog({ title: null, body: wrap, cls: "palette" });
     d.body.style.padding = "0";
     let sel = 0, items = [];
-    const groups = { nav: "grpNav", lesson: "grpLessons", lab: "grpLabs", prompt: "grpPrompts", term: "grpTerms", page: "grpPages" };
+    const groups = { nav: "grpNav", lesson: "grpLessons", lab: "grpLabs", prompt: "grpPrompts", situation: "grpPrompts", term: "grpTerms", page: "grpPages" };
     function draw() {
       const q = input.value;
-      items = q.trim() ? search(q) : A.routes.slice(0, 9).map((r) => ({ type: "nav", href: "#" + r.id, title: r.label, sub: r.desc, icon: r.icon }));
+      items = q.trim() ? search(q) : A.routes.slice(0, 10).map((r) => ({ type: "nav", href: "#" + r.id, title: r.label, sub: r.desc, icon: r.icon }));
       res.innerHTML = "";
       if (!items.length) { res.append(h("div", { class: "empty", html: ico("search") + "<p>" + esc(t("noResults")) + "</p>" })); return; }
       let lastType = null;
@@ -10534,7 +10607,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
     }).join("");
     side.innerHTML = `
       ${last ? `<a class="continue" href="#lesson-${last.id}">${ico("play")}<span><small>${esc(t("continueLast"))}</small><b>${esc(L(last.title))}</b></span></a>` : ""}
-      ${grp("start", t("grpStart"), navItems(["home", "map", "path"]))}
+      ${grp("start", t("grpStart"), navItems(["home", "start", "map", "path"]))}
       ${grp("units", t("grpUnits"), units)}
       ${grp("practice", t("grpPractice"), navItems(["labs", "prompts", "compare", "quiz", "project"]))}
       ${grp("reference", t("grpReference"), navItems(["glossary", "knowledge", "review", "coverage"]))}
@@ -11009,6 +11082,7 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
           <p class="lead">${esc(t("heroLead"))}</p>
           <div class="cta">
             <a class="btn pri lg" href="#lesson-${(last || first).id}">${ico("play")}${esc(last ? t("continueLast") : t("startHere"))}</a>
+            <a class="btn lg" href="#start">${ico("spark")}${esc(t("nav_start"))}</a>
             <a class="btn lg" href="#map">${esc(t("nav_map"))}</a>
           </div>
           <p class="cred">${esc(t("heroCredOf", { pg: A.meta.pages, l: A.lessons.length, s: A.scenes.length, b: A.labs.length, p: A.prompts.length }))}</p>
@@ -11768,6 +11842,100 @@ html[data-motion="off"] .aih .travel{opacity:0!important}
       A.$("#pjt").textContent = t("rubricScore", { n, t: pj.rubric.length });
     }
     score();
+  });
+
+  /* ================= START WITH AI (free chat situations) ================= */
+  function announceLive(liveEl, msg) {
+    if (!liveEl) return;
+    liveEl.textContent = "";
+    setTimeout(() => { liveEl.textContent = msg; }, 0);
+  }
+  function copySituationPrompt(text, codeEl, liveEl, btn) {
+    const done = () => {
+      announceLive(liveEl, t("startCopied"));
+      if (btn) {
+        btn.setAttribute("aria-label", t("startCopied"));
+        btn.innerHTML = ico("check") + esc(t("startCopied"));
+      }
+      A.toast(t("startCopied"));
+    };
+    const manual = () => {
+      if (codeEl) {
+        const r = document.createRange();
+        r.selectNodeContents(codeEl);
+        const s = getSelection();
+        s.removeAllRanges();
+        s.addRange(r);
+      }
+      announceLive(liveEl, t("startCopyManual"));
+      A.toast(t("startCopyManual"), "info");
+    };
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text).then(done).catch(() => fallback());
+    }
+    return fallback();
+    function fallback() {
+      const prevFocus = document.activeElement;
+      const ta = A.h("textarea");
+      ta.value = text;
+      ta.setAttribute("tabindex", "-1");
+      ta.setAttribute("readonly", "");
+      ta.style.cssText = "position:fixed;top:0;left:0;width:1px;height:1px;padding:0;border:0;opacity:0;font-size:16px;pointer-events:none";
+      document.body.append(ta);
+      ta.focus({ preventScroll: true });
+      ta.select();
+      ta.setSelectionRange(0, ta.value.length);
+      let ok = false;
+      try { ok = document.execCommand("copy"); } catch (_) {}
+      const hasSel = ta.selectionEnd > ta.selectionStart;
+      ta.remove();
+      const restore = prevFocus && typeof prevFocus.focus === "function" ? prevFocus : btn;
+      if (restore) restore.focus({ preventScroll: true });
+      if (ok && hasSel) done();
+      else manual();
+    }
+  }
+  A.copySituationPrompt = copySituationPrompt;
+
+  A.view("start", (main, focusId) => {
+    const page = A.situationsPage || {};
+    const title = page.title || t("nav_start");
+    const intro = page.intro || "";
+    const list = A.situations || [];
+    const wrap = h("div", { class: "wrap-wide stack start-ai" });
+    wrap.append(h("div", { html: head(ico("spark") + " " + esc(title), title, esc(intro)) }));
+    const live = h("div", { class: "start-copy-live sr-only", role: "status", "aria-live": "polite" });
+    wrap.append(live);
+    for (const s of list) {
+      const card = h("article", { class: "card stack situation-card", id: "sit-" + s.id });
+      card.append(h("h2", { class: "sit-title" }, s.title));
+      card.append(h("p", { class: "sit-intro" }, s.intro));
+      const box = h("div", { class: "sit-prompt-wrap" });
+      box.append(h("div", { class: "row", style: "justify-content:space-between;align-items:center" }, h("span", { class: "small muted" }, t("startPromptLabel"))));
+      const pre = h("pre", { class: "sit-code" });
+      const code = h("code", { dir: "ltr" });
+      code.textContent = s.prompt;
+      pre.append(code);
+      box.append(pre);
+      const btn = h("button", { type: "button", class: "btn sm pri", "aria-label": t("startCopy"), html: ico("copy") + esc(t("startCopy")) });
+      btn.onclick = () => copySituationPrompt(s.prompt, code, live, btn);
+      box.append(h("div", { class: "row" }, btn));
+      card.append(box);
+      wrap.append(card);
+    }
+    main.append(wrap);
+    if (focusId) {
+      setTimeout(() => {
+        const el = A.$("#sit-" + focusId);
+        if (el) {
+          el.setAttribute("tabindex", "-1");
+          el.scrollIntoView({ block: "start" });
+          el.focus({ preventScroll: true });
+          el.style.borderColor = "var(--accent)";
+          el.style.boxShadow = "0 0 0 4px var(--accent-soft)";
+        }
+      }, 40);
+    }
   });
 })(window.ACADEMY);
 /* engine/quiz.js */
