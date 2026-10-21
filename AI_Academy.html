@@ -178,6 +178,8 @@ button:disabled{cursor:not-allowed;opacity:.5}
 svg.i{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .ltr{direction:ltr;unicode-bidi:isolate}
 .num{font-variant-numeric:tabular-nums}
+/* figures line up digit for digit everywhere (counts, progress, scores update in place) */
+body{font-variant-numeric:tabular-nums}
 
 /* ---------- App bar ---------- */
 .bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:60;height:var(--bar-h);display:flex;align-items:center;gap:6px;padding-inline:16px;
@@ -207,7 +209,7 @@ svg.i{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-widt
 .tour .dialog-b{padding:0}
 .tour-miss{padding:28px 22px;color:var(--ink-2);line-height:1.9}
 .tour-v{display:block;width:100%;height:auto;aspect-ratio:1440/1152;max-height:78vh;background:#000;border-radius:0 0 var(--r-xl) var(--r-xl)}
-kbd{font-family:var(--font-mono);font-size:10.5px;line-height:1;padding:4px 6px;border-radius:6px;border:1px solid var(--line-2);border-bottom-width:2px;background:var(--surface);color:var(--ink-3);font-weight:500}
+kbd{font-family:var(--font-mono);font-size:12px;line-height:1;padding:4px 6px;border-radius:6px;border:1px solid var(--line-2);border-bottom-width:2px;background:var(--surface);color:var(--ink-3);font-weight:500}
 .levelseg{display:flex;align-items:center;padding:3px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line)}
 .levelseg button{display:flex;align-items:center;gap:5px;height:28px;padding-inline:11px;border:0;border-radius:999px;background:transparent;color:var(--ink-3);font-size:12.5px;font-weight:500;white-space:nowrap;transition:color var(--dur)}
 .levelseg button:hover{color:var(--ink)}
@@ -781,7 +783,7 @@ details.more[open]>summary{margin-bottom:8px}
 .path{display:grid;gap:20px}
 .path-unit{display:grid;gap:10px}
 .path-unit h3{display:flex;align-items:center;gap:10px}
-.path-unit h3 .ub{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:var(--uc);color:#fff;font-size:14px}
+.path-unit h3 .ub{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:color-mix(in srgb,var(--uc) 74%,#000);color:#fff;font-size:14px}
 .path-steps{display:grid;gap:8px;padding-inline-start:14px;border-inline-start:3px solid var(--line);margin-inline-start:14px}
 .path-step{position:relative;display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;padding:10px 14px;border-radius:var(--r-md);background:var(--surface);border:1px solid var(--line);text-decoration:none;color:var(--ink)}
 .path-step::before{content:"";position:absolute;inset-inline-start:-24px;top:50%;width:13px;height:13px;margin-top:-6.5px;border-radius:50%;background:var(--surface);border:3px solid var(--line-2)}
@@ -908,6 +910,7 @@ html[lang="ar"] .ptext{font-family:var(--font-body);font-size:15px;line-height:2
   .bar-x{display:none}
   .bar.more-open .bar-x{display:flex;position:absolute;top:calc(100% + 6px);inset-inline-end:8px;gap:6px;align-items:center;padding:8px;border-radius:16px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-3,0 12px 32px rgba(0,0,0,.18))}
   .bar.more-open .bar-x .prog{height:44px;display:inline-flex;align-items:center;padding-inline:8px}
+  .brand,.nav a,.side-h,.unit-t,.unit-l a{min-height:44px}.brand{min-width:44px}
 }
 @media (max-width:420px){
   .brand-txt{display:none}
