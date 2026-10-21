@@ -94,6 +94,7 @@
     noQuick: u("لسه مفيش أسئلة للدرس ده.", "No questions for this lesson yet."), prereq: u("يستحسن تقراه قبله", "Best read first"), nextIdea: u("الفكرة اللي جاية", "The next idea"), seeInGraph: u("شوف مكانها في الخريطة المعرفية ←", "See it on the knowledge map →"),
     saved: u("اتحفظ", "Saved"), notSaved: u("مش متحفظ — المتصفح بيمنع الحفظ", "Not saved — the browser blocks saving"), saving: u("بيتحفظ…", "Saving…"),
     markedDone: u("الدرس اتضاف لتقدمك", "Well done! Lesson added to your progress"), unmarked: u("اتشال التعليم", "Mark removed"), bookmarkAdded: u("الدرس اتحفظ في دفترك", "Lesson saved to your notebook"), bookmarkRemoved: u("اتشال من المحفوظات", "Removed from saved"),
+    nav_start: u("البداية مع الذكاء الاصطناعي", "Getting started with AI"), startSub: u("برومبتات جاهزة لنماذج الشات المجانية", "Ready prompts for free chat models"), startCopy: u("انسخ البرومبت", "Copy prompt"), startCopied: u("اتنسخ ✓", "Copied ✓"), startCopyManual: u("حدّدنا النص — اضغط Ctrl+C", "Text selected — press Ctrl+C"), startPromptLabel: u("البرومبت (إنجليزي)", "Prompt (English)"),
     nav_map: u("خريطة الكتاب", "Book map"), mapTitle: u("الكتاب كله في نظرة واحدة", "The whole book at a glance"), mapLead: u("41 صفحة ملوّنة حسب الوحدة. اضغط أي صفحة عشان تشوف صورتها الأصلية والدروس اللي بتشرحها.", "41 pages coloured by unit. Tap any page to see its original image and the lessons that explain it."),
     visualPage: u("صفحة بصرية (إنفوجرافيك)", "Visual page (infographic)"), bookParts: u("أجزاء الكتاب", "Parts of the book"),
     nav_coverage: u("تقرير التغطية", "Coverage report"), covTitle: u("تقرير تغطية الصفحات 1–41", "Coverage report, pages 1–41"), covLead: u("أفكار كل صفحة اتشرحت فين، وإيه اللي موجود في الأكاديمية.", "Where each page’s ideas are explained, and what the academy contains."),
@@ -171,6 +172,7 @@
 
   A.routes = [
     { id: "home", icon: "home", label: u("الرئيسية", "Home"), desc: u("البداية والمعادلة الحاكمة وسلّم التعلم", "Start, the governing equation and the learning ladder") },
+    { id: "start", icon: "spark", label: u("البداية مع الذكاء الاصطناعي", "Getting started with AI"), desc: u("مواقف عملية وبرومبتات لنماذج الشات المجانية", "Practical situations and prompts for free chat models"), count: () => (A.situations || []).length },
     { id: "map", icon: "map", label: u("خريطة الكتاب", "Book map"), desc: u("الصفحات الـ41 وصورها الأصلية", "The 41 pages and their original images") },
     { id: "path", icon: "route", label: u("مسار التعلم", "Learning path"), desc: u("إيه اللي خلصته وإيه اللي محتاج مراجعة", "What you’ve done and what needs review") },
     { id: "labs", icon: "flask", label: u("مختبر التجارب", "Labs"), desc: u("13 مختبر تفاعلي", "13 interactive labs"), count: () => A.labs.length },

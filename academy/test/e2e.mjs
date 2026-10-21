@@ -29,7 +29,7 @@ const overflow = (page) => page.evaluate(() => document.documentElement.scrollWi
 export { session, overflow, ok, fail, results, browser, outDir };
 const routes = process.env.ROUTES ? process.env.ROUTES.split(",") : null;
 await session({ label: "desktop-ar", viewport: { width: 1440, height: 900 } }, async (page) => {
-  const hashes = routes || await page.evaluate(() => ["home", "map", "path", "labs", "prompts", "compare", "quiz", "project", "glossary", "knowledge", "review", "coverage", "present", "notebook", ...window.ACADEMY.lessons.map((l) => "lesson-" + l.id), ...window.ACADEMY.units.map((u) => "unit-" + u.id), ...window.ACADEMY.labs.map((l) => "lab-" + l.id), ...window.ACADEMY.units.map((u) => "quiz-" + u.id), "quiz-all"]);
+  const hashes = routes || await page.evaluate(() => ["home", "start", "start-excel-company-laptop", "map", "path", "labs", "prompts", "compare", "quiz", "project", "glossary", "knowledge", "review", "coverage", "present", "notebook", ...window.ACADEMY.lessons.map((l) => "lesson-" + l.id), ...window.ACADEMY.units.map((u) => "unit-" + u.id), ...window.ACADEMY.labs.map((l) => "lab-" + l.id), ...window.ACADEMY.units.map((u) => "quiz-" + u.id), "quiz-all"]);
   for (const hsh of hashes) {
     await page.evaluate((x) => (location.hash = x), hsh);
     await page.waitForTimeout(120);

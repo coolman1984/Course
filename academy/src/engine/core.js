@@ -349,6 +349,7 @@
       items.push({ type: "lesson", id: l.id, href: "#lesson-" + l.id, title: l.title, sub: l.sum, icon: "book", hay: norm(parts.join(" ")), th: norm(both(l.title)) });
     }
     for (const p of A.prompts) items.push({ type: "prompt", id: p.id, href: "#prompts-" + p.id, title: p.title, sub: p.goal, icon: "msg", hay: norm([both(p.title), both(p.goal), both(p.text)].join(" ")), th: norm(both(p.title)) });
+    for (const s of A.situations || []) items.push({ type: "situation", id: s.id, href: "#start-" + s.id, title: { ar: s.title, en: s.title }, sub: { ar: s.intro, en: s.intro }, icon: "spark", hay: norm([s.title, s.intro, s.prompt].join(" ")), th: norm(s.title) });
     for (const g of A.glossary) items.push({ type: "term", id: g.id, href: "#glossary-" + g.id, title: { ar: g.term.ar + (g.en_term ? " · " + g.en_term : ""), en: g.term.en + (g.en_term && g.en_term !== g.term.en ? " · " + g.en_term : "") }, sub: g.def, icon: "abc", hay: norm([both(g.term), g.en_term, both(g.def)].join(" ")), th: norm(both(g.term) + " " + (g.en_term || "")) });
     for (const lb of A.labs) items.push({ type: "lab", id: lb.id, href: "#lab-" + lb.id, title: lb.title, sub: lb.sum, icon: "flask", hay: norm([both(lb.title), both(lb.sum)].join(" ")), th: norm(both(lb.title)) });
     for (const c of A.coverage) items.push({ type: "page", id: "p" + c.p, page: c.p, title: { ar: "ص " + c.p + " — " + c.title.ar, en: "Page " + c.p + " — " + c.title.en }, sub: c.sum, icon: "page", hay: norm([both(c.title), both(c.sum), "صفحه " + c.p, "ص " + c.p, "page " + c.p].join(" ")), th: norm(both(c.title)) });
@@ -388,10 +389,10 @@
     const d = openDialog({ title: null, body: wrap, cls: "palette" });
     d.body.style.padding = "0";
     let sel = 0, items = [];
-    const groups = { nav: "grpNav", lesson: "grpLessons", lab: "grpLabs", prompt: "grpPrompts", term: "grpTerms", page: "grpPages" };
+    const groups = { nav: "grpNav", lesson: "grpLessons", lab: "grpLabs", prompt: "grpPrompts", situation: "grpPrompts", term: "grpTerms", page: "grpPages" };
     function draw() {
       const q = input.value;
-      items = q.trim() ? search(q) : A.routes.slice(0, 9).map((r) => ({ type: "nav", href: "#" + r.id, title: r.label, sub: r.desc, icon: r.icon }));
+      items = q.trim() ? search(q) : A.routes.slice(0, 10).map((r) => ({ type: "nav", href: "#" + r.id, title: r.label, sub: r.desc, icon: r.icon }));
       res.innerHTML = "";
       if (!items.length) { res.append(h("div", { class: "empty", html: ico("search") + "<p>" + esc(t("noResults")) + "</p>" })); return; }
       let lastType = null;
@@ -563,7 +564,7 @@
     }).join("");
     side.innerHTML = `
       ${last ? `<a class="continue" href="#lesson-${last.id}">${ico("play")}<span><small>${esc(t("continueLast"))}</small><b>${esc(L(last.title))}</b></span></a>` : ""}
-      ${grp("start", t("grpStart"), navItems(["home", "map", "path"]))}
+      ${grp("start", t("grpStart"), navItems(["home", "start", "map", "path"]))}
       ${grp("units", t("grpUnits"), units)}
       ${grp("practice", t("grpPractice"), navItems(["labs", "prompts", "compare", "quiz", "project"]))}
       ${grp("reference", t("grpReference"), navItems(["glossary", "knowledge", "review", "coverage"]))}
