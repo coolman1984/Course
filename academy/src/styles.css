@@ -1006,6 +1006,7 @@ html[dir="rtl"] .cine-card{background:radial-gradient(900px 520px at 15% 15%,col
 .xp-lv{display:inline-flex;gap:3px}
 .xp-lv i{width:14px;height:6px;border-radius:3px;background:var(--surface-3)}
 .xp-lv i.on{background:var(--mint)}
+.xp-card .chip{white-space:normal;height:auto;min-height:26px;padding-block:3px;line-height:1.35}.xp-card .chip .ltr{overflow-wrap:anywhere}
 .xp-dl{display:flex;align-items:center;gap:10px;flex-wrap:wrap;min-width:0}
 .xp-dl .btn{max-width:100%;min-width:0;white-space:normal}
 .xp-dl .btn svg.i{flex:none}

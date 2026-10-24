@@ -79,6 +79,17 @@
   a blank screen".
 - If the whole story must be on screen, measure it: find the tallest slide in each language and size the layout to it.
 
+## Generated files (unit 3)
+- **Read what you write.** The kit's PDFs and Word memos are tested by reading them back the way a tool would (the PDF
+  bytes, the memo's tables), not only from the generator's own data. Opening them in pdftotext and python-docx once
+  caught nothing, which is the point: the test keeps it that way.
+- **Count the files, then quote the count.** The commercial example was first described as 13 files; it is 11 sources
+  plus Masters. Every figure in a story should come from `expected()`, including how many files there are.
+- **Paths in a drawing start with a letter.** A label such as `.claude\skills` or `%USERPROFILE%` starts with a neutral
+  character, and in an Arabic drawing the browser moves it. `project\.claude\skills` reads correctly in both languages.
+- **The active deck dot widens with its label.** On a 340px phone, a long first-slide label pushed the timeline past
+  the screen; keep the first slide's `year` short («الموقف»/Scene), and avoid one long word as an `era`.
+
 ## Testing
 - **A test that never fails proves nothing.** Reproduce the bug first, show the test failing, then passing with the fix.
   A resume test that passed against the buggy code had to be tightened to compare the exact slide.

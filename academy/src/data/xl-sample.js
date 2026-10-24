@@ -494,6 +494,7 @@
   for (const p of P) { p.folder = `Lesson_${p.n}_${p.slug}`; p.zip = p.folder + ".zip"; p.tool = TOOL[p.n] || null; p.prompt = PROMPT[p.n]; p.traps = G[p.n]((ar, en) => en, p.expected()).traps; }
   A.xlProjects = {
     list: P, byLesson: Object.fromEntries(P.map((p) => [p.lesson, p])), serial0: SERIAL0, lines: LN.map((l) => l[0]), models: MD.map((m) => m[0]), newModel: NEW[0],
+    linesTable: LN, modelsTable: MD, rng,   // the factory itself, shared with the unit-3 projects (data/office-projects.js)
     q1, apr, monthOf, planRows, bom, materials: MAT, aprPlan: APR_PLAN, purchasing, needs, readme, answerKey, guide: (p, lang) => G[p.n]((ar, en) => (lang === "ar" ? ar : en), p.expected()),
   };
 })(window.ACADEMY = window.ACADEMY || {});

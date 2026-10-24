@@ -210,6 +210,80 @@
       o("المشكلة إنه ما طلبش كود أطول", "The problem is not asking for longer code", "الكود الأطول مش حل؛ المطلوب تعديل صغير مبني على الرسالة.", "Longer code isn't a fix; a small change based on the message is.")
     ], 0, ["ارجع في نفس المحادثة، ومعاك الرسالة بالحرف وآخر سطور السجل واسم الملف ونسخة PowerShell، واطلب أقل تعديل ممكن في نسخة جديدة باسم جديد.", "Go back in the same chat with the message word for word, the last log lines, the file name and the PowerShell version, and ask for the smallest change in a new version under a new name."]),
 
+    /* ---------- Unit 3: two big Office examples, Claude Code and skills ---------- */
+    Q("a1a", "a1", "predict", ["ملف Confirmations_W06 (1).xlsx هو نفس تصدير الأسبوع ٦ اتنزّل مرتين. أداة بتحط كل الملفات تحت بعض من غير ما تبص على Prod Order. يحصل إيه؟", "Confirmations_W06 (1).xlsx is week 6's export downloaded twice. A tool stacks every file without looking at Prod Order. What happens?"], [
+      o("الأسبوع ٦ يتحسب مرتين: ٩٦ صف زيادة، والإجمالي يكبر من غير رسالة", "Week 6 counts twice: 96 extra rows, and the total grows without a message"),
+      o("إكسل يرفض يفتح ملف اسمه فيه قوسين", "Excel refuses to open a file with brackets in its name", "إكسل بيفتحه عادي؛ الاسم مش مشكلة.", "Excel opens it normally; the name isn't the problem."),
+      o("الأداة توقف لوحدها لأن الملفين شبه بعض", "The tool stops by itself because the two files look alike", "مفيش حاجة تخليها توقف من غير قاعدة؛ هتجمع الاتنين.", "Nothing makes it stop without a rule; it adds both."),
+      o("مفيش فرق، لأن الأرقام نفسها", "No difference, because the figures are the same", "علشان الأرقام نفسها بالظبط، الإجمالي بيتضاعف للأسبوع ده.", "Precisely because the figures are the same, that week's total doubles.")
+    ], 0, ["Prod Order رقم فريد، فالأمر اللي اتقرا قبل كده ما يتضافش تاني، والملف اللي كل أوامره اتقرت بيتساب كله ويتسجّل.", "Prod Order is unique, so an order already read isn't added again, and a file whose orders were all read is skipped whole and logged."]),
+    Q("a1b", "a1", "mcq", ["الموديل M114 الجديد مش موجود في شيت Models. الأداة الصح تعمل إيه في صفوفه؟", "The new model M114 isn't in the Models sheet. What should a correct tool do with its rows?"], [
+      o("تسيبها في الجدول بـ ModelName = «(not in master)»، وتكتبها في Unmatched بعددها وكميتها", "Keep them in the table with ModelName = “(not in master)”, and list them on Unmatched with their count and quantity"),
+      o("تمسحها لأنها ناقصة", "Delete them because they're incomplete", "المسح بيقلل الإجمالي ٨٧٤ جهاز من غير ما حد يعرف.", "Deleting lowers the total by 874 sets without anyone knowing."),
+      o("تخمّن الاسم من موديل شبهه", "Guess the name from a similar model", "التخمين بيدخّل اسم غلط في التقرير، والأداة ما تخمّنش.", "Guessing puts a wrong name in the report; tools don't guess."),
+      o("توقف ومتكملش أي ملف", "Stop and process no file", "الوقفة هنا مالهاش لازمة: الكمية والقيمة معروفين، الناقص الاسم بس.", "Stopping isn't needed here: quantity and value are known; only the name is missing.")
+    ], 0, ["الصف اللي ما لقاش اسم بيفضل ويبان، والقرار (تحديث Masters) بيتاخد بعلم.", "A row with no name stays and shows, and the decision (updating Masters) is taken knowingly."]),
+    Q("a2a", "a2", "spot", ["داشبورد فيه ٣ رسوم وسلايسر للخط. اخترت L01، فرسم الشهور اتغيّر، ورسم البلاد فضل زي ما هو. فين المشكلة؟", "A dashboard has 3 charts and a slicer for line. You pick L01: the months chart changes, the countries chart stays the same. Where's the problem?"], [
+      o("السلايسر متوصل بجدول محوري واحد بس، مش بالتلاتة", "The slicer is connected to one pivot table only, not all three"),
+      o("رسم البلاد لازم يتعمل من الأول", "The countries chart must be rebuilt", "الرسم سليم؛ اللي ناقص هو التوصيل بالسلايسر.", "The chart is fine; what's missing is its connection to the slicer."),
+      o("لازم تدوس Refresh All بعد كل اختيار", "You must press Refresh All after every pick", "Refresh بيجيب بيانات جديدة؛ الفلترة بتحصل من غيره.", "Refresh brings new data; filtering happens without it."),
+      o("البيانات فيها غلط", "The data is wrong", "البيانات واحدة للرسمين؛ الفرق في التوصيل.", "Both charts share the same data; the difference is the connection.")
+    ], 0, ["كل سلايسر لازم يتوصل بكل الجداول المحورية اللي في الداشبورد (Report Connections)، وإلا الأجزاء تعرض أرقام متناقضة.", "Every slicer must be connected to every pivot table on the dashboard (Report Connections), or the parts show contradicting figures."]),
+    O("a2b", "a2", ["رتّب خطوات الأداة التانية في المثال الأول:", "Put the steps of example 1's second tool in order:"], [
+      ["الجداول المحورية من tblProduction", "The pivot tables from tblProduction"],
+      ["المراجعة: الجدول = الجداول المحورية الكاملة = الكارت", "The check: the table = the full pivot tables = the card"],
+      ["الرسوم والسلايسر", "The charts and the slicers"],
+      ["التنسيق والألوان والطباعة", "Formatting, colours and printing"],
+      ["تجربة سلايسر وقارن بفلتر على الجدول", "Try a slicer and compare with a filter on the table"]
+    ], ["المراجعة قبل التنسيق، علشان ما تجمّلش رقم غلط، والتجربة الأخيرة بإيدك.", "The check before formatting, so you don't polish a wrong figure, and the last test by hand."]),
+    Q("a3a", "a3", "predict", ["في PDF سبتمبر سطر إشعار دائن مكتوب (12). الأداة قرت الرقم من غير القوسين. يحصل إيه؟", "September's PDF holds a credit-note line printed (12). The tool read the number without the brackets. What happens?"], [
+      o("مجموع الصفوف يطلع أكبر من TOTAL المطبوع بـ ٢٤، والأداة الصح توقف عند المقارنة", "The rows sum to 24 more than the printed TOTAL, and a correct tool stops at the comparison"),
+      o("مفيش فرق، لأن ١٢ رقم صغير", "No difference, because 12 is a small number", "صغير أو كبير، المبيعات بتزيد غلط، والمقارنة بتمسكه.", "Small or not, sales rise wrongly, and the comparison catches it."),
+      o("وورد يصلّح القوسين وهو بيحوّل الـ PDF", "Word fixes the brackets while converting the PDF", "وورد بيحوّل النص زي ما هو؛ معنى القوسين قاعدة إنت بتقولها.", "Word converts the text as it is; what brackets mean is a rule you state."),
+      o("الأداة تتجاهل السطر لأنه مش رقم", "The tool ignores the line because it isn't a number", "لو اتجاهله، الإجمالي برضه يختلف بـ ١٢.", "If ignored, the total still differs by 12.")
+    ], 0, ["القوسين = سالب. والأهم: كل PDF فيه TOTAL مطبوع، ومقارنته بمجموع الصفوف بتمسك أي غلطة قراءة.", "Brackets = negative. More importantly: every PDF prints a TOTAL, and comparing it with the sum of the rows catches any reading mistake."]),
+    Q("a3b", "a3", "compare", ["إيه أحسن شكل لجدول بيجمع ٧ مقاييس من ٨ مصادر؟", "What is the best shape for a table gathering 7 measures from 8 sources?"], [
+      o("جدول طويل: Month وChannel وCountry وModelCode وMeasure وValue وSource", "A long table: Month, Channel, Country, ModelCode, Measure, Value, Source"),
+      o("شيت لكل مصدر", "One sheet per source", "كده لسه ٨ أشكال، وأي تقرير لازم يجمّعهم من الأول.", "That's still 8 shapes, and every report must gather them again."),
+      o("عمود لكل مقياس ولكل شهر", "A column per measure and per month", "أي مقياس أو شهر جديد بيغيّر شكل الجدول وكل حاجة مبنية عليه.", "Any new measure or month changes the table's shape and everything built on it."),
+      o("نسخ الأرقام في ملف العرض على طول", "Copying the figures straight into the deck", "من غير جدول، مفيش مراجعة ولا تكرار.", "Without a table there's no check and no repeat.")
+    ], 0, ["الجدول الطويل بيخلّي أي مصدر جديد يضيف صفوف مش أعمدة، والجداول المحورية بتشتغل عليه على طول.", "A long table lets any new source add rows, not columns, and pivot tables work on it directly."]),
+    Q("a4a", "a4", "mcq", ["ليه الشريحة ٨ في عرض المراجعة بتفضل فاضية؟", "Why does slide 8 of the review deck stay empty?"], [
+      o("لأن الاستنتاج والقرار للمدير؛ الأداة بتعرض أرقام مراجَعة بس", "Because the conclusion and the decision belong to the director; the tool shows checked figures only"),
+      o("لأن باوربوينت ما بيقدرش يكتب نص من أداة", "Because PowerPoint can't take text from a tool", "الأداة بتكتب كل العناوين والأرقام؛ الفراغ مقصود.", "The tool writes every title and number; the gap is deliberate."),
+      o("علشان العرض يبقى عدد زوجي", "So the deck has an even number of slides", "مالوش علاقة بالعدد.", "It has nothing to do with the count."),
+      o("لأن النموذج نسي يكتبها", "Because the model forgot it", "الـ Prompt طالبها فاضية بالنص.", "The Prompt asks for it empty in so many words.")
+    ], 0, ["الأداة بتقول «الدلتا ٩١٫١٪»؛ وليه، وهنعمل إيه، رأي المدير. خلط الأدوار بيطلّع عرض شكله مقنع ومضمونه مش بتاع حد.", "The tool says “Delta 91.1%”; why, and what to do, is the director's view. Mixing roles produces a convincing-looking deck whose content belongs to no one."]),
+    Q("a4b", "a4", "spot", ["مهندس كتب نسبة الدلتا في الشريحة ٣ بإيده علشان أسرع. الشهر الجاي إيه اللي ممكن يحصل؟", "An engineer typed Delta's rate on slide 3 by hand because it was faster. What may happen next month?"], [
+      o("الأرقام تتحدّث في الإكسل والشريحة تفضل بالرقم القديم", "The figures update in Excel while the slide keeps the old number"),
+      o("باوربوينت يحدّث الرقم لوحده", "PowerPoint updates the number by itself", "الرقم المكتوب بالإيد نص ثابت؛ ما بيتحدّثش.", "A hand-typed number is fixed text; it doesn't update."),
+      o("الأداة توقف", "The tool stops", "الأداة ما تعرفش إن في رقم اتكتب بالإيد.", "The tool doesn't know a number was typed by hand."),
+      o("مفيش مشكلة لو اتراجع مرة", "No problem if it was checked once", "اتراجع للربع ده بس.", "It was checked for this quarter only.")
+    ], 0, ["كل رقم في الشرايح يتقري من الجدول المحوري، فالعرض والإكسل ما يختلفوش أبدًا.", "Every number on the slides is read from the pivot table, so the deck and Excel never disagree."]),
+    Q("a5a", "a5", "compare", ["عندك فولدر على جهازك فيه ملفات المثال التاني وعايز Claude Code يبني الأداة ويشغّلها عليه. تستخدم أنهي واحد؟", "You have a folder on your laptop holding example 2's files and want Claude Code to build the tool and run it there. Which do you use?"], [
+      o("تطبيق سطح المكتب أو الطرفية على جهازك", "The desktop app or the terminal on your laptop"),
+      o("Claude Code على الويب", "Claude Code on the web", "الويب بيشتغل على السحابة على مستودع GitHub، مش على ملفات جهازك.", "The web runs in the cloud on a GitHub repository, not on your laptop's files."),
+      o("محادثة عادية وتلصق الملفات", "An ordinary chat, pasting the files", "ده اللي عملناه في المثال؛ هنا الهدف إنه يشتغل جوّه الفولدر.", "That's what we did in the example; here the point is working inside the folder."),
+      o("أي واحد، مفيش فرق", "Any of them, no difference", "الفرق في مكان الملفات: محلي ولا على GitHub.", "The difference is where the files live: local or on GitHub.")
+    ], 0, ["الويب للمستودعات على GitHub والمهام الطويلة وإنت بعيد؛ تطبيق سطح المكتب والطرفية والمحرر لملفات جهازك.", "The web suits GitHub repositories and long tasks while you're away; the desktop app, the terminal and the editor suit your laptop's files."]),
+    Q("a5b", "a5", "mcq", ["مهمة صغيرة: تغيير اسم عمود في الأداة وإنت هتراجعها بنفسك. أنسب مستوى تفكير؟", "A small task: renaming a column in the tool, which you'll review yourself. The best level of thinking?"], [
+      o("low أو medium", "low or medium"),
+      o("max دايمًا، علشان أضمن", "max always, to be safe", "max أبطأ وأغلى، وممكن يفكّر زيادة عن اللزوم في مهمة بسيطة.", "max is slower and dearer, and may overthink a simple task."),
+      o("xhigh لأن الملفات مهمة", "xhigh because the files matter", "الأهمية بتتحمي بالمراجعة والنسخة، مش بالمستوى الأعلى.", "Importance is protected by review and copies, not by the highest level."),
+      o("مستوى التفكير مالوش أثر", "The level of thinking has no effect", "ليه أثر على العمق والوقت والتكلفة.", "It affects depth, time and cost.")
+    ], 0, ["اختار المستوى على قد المهمة: low وmedium للتعديلات الصغيرة، وhigh لما المراجعة مهمة، والأعلى للمشاكل الصعبة.", "Pick the level to fit the task: low and medium for small changes, high when checking matters, and the top levels for hard problems."]),
+    Q("a6a", "a6", "spot", ["مهارة وصفها: «description: مهارة إكسل». طلبت «حدّث داشبورد الإنتاج» وClaude ما استخدمهاش. ليه؟", "A skill's description reads “description: an Excel skill”. You asked “refresh the production dashboard” and Claude didn't use it. Why?"], [
+      o("الوصف عام، ومش بيقول المهارة بتعمل إيه وإمتى بالكلام اللي قلته", "The description is vague and doesn't say what the skill does and when, in the words you used"),
+      o("المهارات بتشتغل بالأمر بس", "Skills only run on command", "بتشتغل لوحدها كمان لما الطلب يطابق الوصف.", "They also run by themselves when the request matches the description."),
+      o("الملف لازم يتسمّى skill.txt", "The file must be named skill.txt", "الاسم الصح SKILL.md.", "The right name is SKILL.md."),
+      o("Claude ما بيقراش المهارات في الفولدر", "Claude doesn't read skills in the folder", "بيقرا ‎.claude\skills في المشروع.", "It reads .claude\skills in the project.")
+    ], 0, ["الوصف هو الحاجة الوحيدة اللي Claude شايفها طول الوقت، فلازم يقول المهمة والمواقف بوضوح.", "The description is the only part Claude sees all the time, so it must state the task and the situations clearly."]),
+    Q("a6b", "a6", "compare", ["قاعدة «ما تعدّلش أي ملف في فولدر Data» لازم تتطبق في كل جلسة. مكانها فين؟", "The rule “never edit any file in the Data folder” must apply in every session. Where does it go?"], [
+      o("ملف CLAUDE.md بتاع المشروع", "The project's CLAUDE.md file"),
+      o("مهارة لوحدها", "A skill of its own", "المهارة بتتقري لما مهمتها تيجي؛ القاعدة دي لازم تبقى موجودة دايمًا.", "A skill is read when its task arrives; this rule must always be present."),
+      o("في أول كل Prompt", "At the start of every Prompt", "هتنساها مرة؛ CLAUDE.md بيتقري لوحده.", "You'll forget it once; CLAUDE.md is read by itself."),
+      o("مش محتاجة تتكتب", "It needn't be written", "اللي ما يتكتبش ما يتطبقش.", "What isn't written isn't applied.")
+    ], 0, ["CLAUDE.md لقواعد المشروع اللي بتتطبق دايمًا، والمهارة لطريقة شغل مهمة معيّنة، والـ Prompt لطلب مرة واحدة.", "CLAUDE.md holds the project's always-on rules, a skill holds the method for one task, and a Prompt is a one-time request."]),
     /* ---------- Unit 1: personal assistant & second brain ---------- */
     Q("p1a", "p1", "mcq", ["إيه المعادلة الحاكمة لأي Prompt كويس؟", "What is the governing equation of any good prompt?"], [
       o("هدف واضح + Context كافي + طلب محدد + شكل مخرج = نتيجة تنفع تنفّذها", "Clear goal + enough context + specific request + output format = an actionable result"),

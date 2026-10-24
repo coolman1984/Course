@@ -743,22 +743,29 @@
   /* The project panel: where this project sits on the ladder, what is in its zip (a peek inside every workbook), the
      download, and the guide files. The planted problems stay hidden until the reader asks for the answer key. */
   function mountXlProject(host, lessonId, pick) {
-    const X = A.xlProjects, lang = A.lang();
+    const O = A.officeProjects, unit3 = !!(O && O.byLesson[lessonId]), X = unit3 ? O : A.xlProjects, lang = A.lang();   // unit 2's ladder, or unit 3's two examples and kit
     let p = X.byLesson[lessonId] || X.list[0], cur = 0, sheet = 0;
     const box = h("div", { class: "xp" });
     host.append(box);
     const day = (d) => new Date(Date.UTC(1899, 11, 30) + d * 864e5).toISOString().slice(0, 10);
     const cell = (v) => (v && typeof v === "object" ? day(v.d) : v === null || v === undefined ? "" : typeof v === "number" ? fmt(v, Number.isInteger(v) ? 0 : 2) : String(v));
-    const short = (path) => path.replace(/^Data\//, "");
+    const short = (path) => path.replace(/^Data\//, "").replace(/^skills\//, "");
+    const lines = (f) => f.pdf ? f.pdf.pages.flatMap((pg, i) => { const rows = {}; for (const it of pg.items) (rows[it.y] = rows[it.y] || []).push(it); return [...(i ? ["— " + tx("صفحة", "page") + " " + (i + 1) + " —"] : []), ...Object.keys(rows).sort((a, b) => b - a).map((y) => rows[y].sort((a, b) => a.x - b.x).map((it) => it.t).join("   "))]; })
+      : f.docx ? f.docx.blocks.flatMap((b) => (b.table ? b.table.map((r) => r.join("  |  ")) : [b.p]))
+      : String(f.text).split("\n");
     function draw() {
-      const g = X.guide(p, lang), files = p.files(), f = files[cur], lv = p.level;
+      const g = unit3 ? null : X.guide(p, lang), files = p.files(), f = files[cur], lv = p.level;
       const ladder = `<ol class="xp-ladder" aria-label="${esc(tx("مشاريع الوحدة", "The unit's projects"))}">${X.list.map((q) => {
         const inner = `<span class="n num">${q.n}</span><span>${esc(L(q.short))}</span>`;
         return `<li class="${q === p ? "on" : ""}">${pick ? `<button type="button" data-p="${q.n}" aria-pressed="${q === p}"${q === p ? " disabled" : ""}>${inner}</button>` : q === p ? `<span aria-current="step">${inner}</span>` : `<a href="#lesson-${q.lesson}">${inner}</a>`}</li>`;
       }).join("")}</ol>`;
       const dots = `<span class="xp-lv" title="${esc(tx("الصعوبة", "Difficulty"))}">${[1, 2, 3, 4, 5].map((i) => `<i class="${i <= lv ? "on" : ""}"></i>`).join("")}</span>`;
       let peek = "";
-      if (f.lock) peek = `<div class="note">${ico("info")}<div>${esc(tx("ده مش تقرير: ملف صغير بيعمله إكسل لما حد يكون فاتح الملف. الأداة لازم تتخطاه.", "This isn't a report: a small file Excel makes while someone has the workbook open. The tool must skip it."))}</div></div>`;
+      if (f.pdf || f.docx || f.text !== undefined) {   // a system report, a memo or a skill file: its text as the reader will see it
+        const all = lines(f), brk = all.findIndex((x) => /^— /.test(x));   // a long report: its start, the top of page 2, and its end
+        const at = all.length <= 28 ? all : brk > 0 ? [...all.slice(0, Math.min(brk, 14)), "…", ...all.slice(brk, brk + 5), "…", ...all.slice(-3)] : [...all.slice(0, 22), "…", ...all.slice(-4)];
+        peek = `<p class="small muted">${esc(f.pdf ? tx(`تقرير PDF من النظام: ${fmt(f.pdf.pages.length)} صفحة.`, `A PDF report from the system: ${fmt(f.pdf.pages.length)} page(s).`) : f.docx ? tx("مذكرة وورد: الفقرات والجداول.", "A Word memo: its paragraphs and tables.") : tx("ملف نصّي من المهارة.", "A text file of the skill."))}</p><pre class="ptext small ltr" dir="ltr" style="white-space:pre-wrap">${esc(at.join("\n"))}</pre>`;
+      } else if (f.lock) peek = `<div class="note">${ico("info")}<div>${esc(tx("ده مش تقرير: ملف صغير بيعمله إكسل لما حد يكون فاتح الملف. الأداة لازم تتخطاه.", "This isn't a report: a small file Excel makes while someone has the workbook open. The tool must skip it."))}</div></div>`;
       else {
         const sh = f.sheets[Math.min(sheet, f.sheets.length - 1)], rows = sh.rows, head = rows[0], nr = rows.length - 1;
         const at = nr <= 8 ? rows.slice(1).map((_, i) => i + 1) : [1, 2, 3, 4, 5, nr - 1, nr];
@@ -769,17 +776,18 @@
           `<p class="small muted">${esc(tx(`شيت ${sh.name}: ${fmt(nr)} صف تحت العناوين.`, `Sheet ${sh.name}: ${fmt(nr)} rows under the headers.`))}</p>` +
           `<div class="table-wrap ltr" dir="ltr"><table class="minitable"><thead><tr><th>#</th>${head.map((x) => `<th>${esc(x)}</th>`).join("")}</tr></thead><tbody>${body}</tbody></table></div>`;
       }
+      const docs = unit3 ? p.guides(lang).map((d) => [d.path === "README.txt" ? tx("README.txt — المهمة ودليل البيانات", "README.txt — the task and the data dictionary") : d.path === "Answer_Key.txt" ? tx("Answer_Key.txt — افتحه بعد التشغيل بس", "Answer_Key.txt — open it only after the run") : tx(`${d.path} — جاهز تنسخه`, `${d.path} — ready to copy`), d.text.replace(/^\ufeff/, "")])
+        : [[tx("README.txt — المهمة ودليل البيانات", "README.txt — the task and the data dictionary"), X.readme(p, lang)], [tx("Prompt.txt — جاهز تنسخه", "Prompt.txt — ready to copy"), A.xlKit.promptText(p, lang)], [tx("Answer_Key.txt — افتحه بعد التشغيل بس", "Answer_Key.txt — open it only after the run"), X.answerKey(p, lang)]];
+      const head = unit3 ? (p.n === 3 ? tx("طقم المهارات", "The skills kit") : tx(`المثال ${p.n} من ٢`, `Example ${p.n} of 2`)) : tx(`المشروع ${p.n} من ${X.list.length}`, `Project ${p.n} of ${X.list.length}`);
       box.innerHTML = ladder + `<div class="xp-card">
-        <div class="xp-top"><b>${esc(tx(`المشروع ${p.n} من ${X.list.length}`, `Project ${p.n} of ${X.list.length}`))} · ${esc(L(p.title))}</b>${lv ? dots : `<span class="chip">${esc(tx("تمهيد", "Warm-up"))}</span>`}</div>
-        <p>${esc(g.about)}</p>
+        <div class="xp-top"><b>${esc(head)} · ${esc(L(p.title))}</b>${unit3 ? "" : lv ? dots : `<span class="chip">${esc(tx("تمهيد", "Warm-up"))}</span>`}</div>
+        <p>${esc(unit3 ? L(p.about) : g.about)}</p>
         <div class="xp-dl"><button type="button" class="btn pri" data-dl>${ico("download")}<span class="ltr">${esc(p.zip)}</span></button>
-        <span class="small muted">${esc(tx("كل ملفات إكسل بالإنجليزي، ومعاها README وPrompt ومفتاح إجابة. فكّه في فولدر لوحده.", "Every Excel file is in English, with a README, a Prompt and an answer key. Unzip it into a folder of its own."))}</span></div>
+        <span class="small muted">${esc(unit3 && p.n === 3 ? tx("ملفات المهارات بالإنجليزي، ومعاها README وPrompt. فكّه وحط فولدر skills جوّه ‎.claude في مشروعك.", "The skill files are in English, with a README and a Prompt. Unzip it and put the skills folder inside .claude in your project.") : unit3 ? tx("كل ملفات البيانات (إكسل وPDF ووورد) بالإنجليزي، ومعاها README وPrompt لكل خطوة ومفتاح إجابة. فكّه في فولدر لوحده.", "Every data file (Excel, PDF, Word) is in English, with a README, a Prompt per step and an answer key. Unzip it into a folder of its own.") : tx("كل ملفات إكسل بالإنجليزي، ومعاها README وPrompt ومفتاح إجابة. فكّه في فولدر لوحده.", "Every Excel file is in English, with a README, a Prompt and an answer key. Unzip it into a folder of its own."))}</span></div>
         <div class="lab-step">${ico("db")}${esc(tx("بص جوّه الملفات", "Look inside the files"))}</div>
         <div class="row" style="flex-wrap:wrap;gap:6px">${files.map((x, i) => `<button type="button" class="chip${i === cur ? " on" : ""}" data-f="${i}" aria-pressed="${i === cur}"><span class="ltr">${esc(short(x.path))}</span></button>`).join("")}</div>
         <div class="xp-peek">${peek}</div>
-        <details><summary>${esc(tx("README.txt — المهمة ودليل البيانات", "README.txt — the task and the data dictionary"))}</summary><pre class="ptext small" style="white-space:pre-wrap" dir="auto">${esc(X.readme(p, lang))}</pre></details>
-        <details><summary>${esc(tx("Prompt.txt — جاهز تنسخه", "Prompt.txt — ready to copy"))}</summary><pre class="ptext small" style="white-space:pre-wrap" dir="auto">${esc(A.xlKit.promptText(p, lang))}</pre></details>
-        <details><summary>${esc(tx("Answer_Key.txt — افتحه بعد التشغيل بس", "Answer_Key.txt — open it only after the run"))}</summary><pre class="ptext small" style="white-space:pre-wrap" dir="auto">${esc(X.answerKey(p, lang))}</pre></details>
+        ${docs.map(([sum, text]) => `<details><summary>${esc(sum)}</summary><pre class="ptext small" style="white-space:pre-wrap" dir="auto">${esc(text)}</pre></details>`).join("")}
       </div>`;
       box.querySelectorAll("[data-p]").forEach((b) => (b.onclick = () => { p = X.list[Number(b.dataset.p) - 1]; cur = 0; sheet = 0; draw(); }));
       box.querySelectorAll("[data-f]").forEach((b) => (b.onclick = () => { cur = Number(b.dataset.f); sheet = 0; draw(); }));

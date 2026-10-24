@@ -106,7 +106,7 @@
       },
     },
     {
-      id: "y4", unit: "u2", pages: [19, 20], diff: 2, min: 9, scene: "drill7", lab: "quality", related: ["p6", "f3", "d2", "y3"], pre: ["f8"],
+      id: "y4", unit: "u3", pages: [19, 20], diff: 2, min: 9, scene: "drill7", lab: "quality", related: ["p6", "f3", "d2", "y3"], pre: ["f8"],
       title: { ar: "ليه لازم نفحص البيانات قبل ما نحللها؟", en: "Level 2: the analysis engine — quality first" },
       sum: { ar: "لو البيانات فيها تكرار أو تواريخ ناقصة أو وحدات مختلفة، أي تحليل مبني عليها هيطلع غلط مهما كان شكله مقنع. فحص البيانات بييجي قبل أي حساب.", en: "DuckDB, Polars and ydata-profiling, why quality checks are mandatory, the seven questions before any chart, and breaking down “efficiency fell 7%”." },
       book: [
@@ -256,7 +256,7 @@
       },
     },
     {
-      id: "b1", unit: "u2", pages: [17, 20], diff: 1, min: 10, related: ["y4", "p9", "w1", "m1"], pre: ["f8", "x6"],
+      id: "b1", unit: "u3", pages: [17, 20], diff: 1, min: 10, related: ["y4", "p9", "w1", "m1"], pre: ["f8", "x6"],
       title: { ar: "من ملفات كتير لجدول واحد تثق فيه", en: "From many files to one table you can trust" },
       sum: { ar: "تجميع ملفات بأشكال مختلفة في جدول واحد، وفحصه وتنضيفه بقواعد مكتوبة، وربطه بالشيتات الصغيرة، ولما الملف يكبر على إكسل.", en: "Combining differently shaped files into one table, checking and cleaning it by written rules, linking it to small sheets, and what to do when a file outgrows Excel." },
       book: [

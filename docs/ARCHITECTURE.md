@@ -48,8 +48,8 @@ number is its position in `A.courseOrder`, so reordering a unit is a one-line ch
 | `render.js` | home, unit, lesson, book map, coverage, learning path, review, glossary, prompts, compare, notebook, labs, project |
 | `history.js` | the deck player (`A.mountDeck`) and every deck drawing (`ART.*`) |
 | `scene.js` | the scene player (`A.mountScene`): timeline, stages, viewBox zoom, flow dots |
-| `labs.js` | the 14 labs (8 real calculations, 6 teaching simulations, each labelled); `A.mountXlProject` is the unit-2 project panel (the ladder, a peek inside every workbook, the download), shown in each unit-2 lesson and in the `xlkit` lab |
-| `xlkit.js` | writes each unit-2 project (`data/xl-sample.js`) as real `.xlsx` workbooks plus README, Prompt and answer key inside one stored `.zip` per lesson, in the page, offline |
+| `labs.js` | the 14 labs (8 real calculations, 6 teaching simulations, each labelled); `A.mountXlProject` is the project panel (the ladder, a peek inside every workbook, PDF, memo or skill file, the download), shown in each unit-2 lesson, in unit 3's project lessons (`A.officeProjects`) and in the `xlkit` lab |
+| `xlkit.js` | writes each project as real files inside one stored `.zip`, in the page, offline: `.xlsx` workbooks (a header row below title lines when a sheet sets `head`), text PDFs in the standard Helvetica faces (`pdf()`), minimal `.docx` memos with bordered tables (`docx()`), plus README, Prompt(s) and answer key. A unit-3 project lists its own files with `bundle(lang)` |
 | `quiz.js` | unit quizzes, the comprehensive test, mistakes review |
 | `tools.js` | knowledge graph and the presenter |
 | `motion.js` | page transitions and the home "motion stage" (adapted from transitions.dev under its licence) |
@@ -72,6 +72,8 @@ resume points, and `plan` (the course-plan version).
   has the `u1` and `u2` best scores cleared once.
 - `plan: 4` made unit 2 eight projects (one zip per lesson) with new questions: a save from plan 3 has the `u1` best
   score cleared once.
+- `plan: 5` made unit 3 (`u2`) the Office automation unit (lessons a1–a6) and moved its old lessons into unit 4 (`u3`):
+  a save from plan 4 or earlier has the `u2` and `u3` best scores cleared once.
 - Import/export writes and reads the same object as a JSON file.
 - **One setting lives elsewhere:** the site's reduce-motion switch (`engine/motion.js`) is stored under its own key,
   `academy.motion` (`"off"` or `"on"`). It is not part of import/export or `S.reset()`. The operating-system

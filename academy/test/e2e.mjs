@@ -379,15 +379,27 @@ await session({ label: "model-deck-ar", viewport: { width: 1360, height: 900 } }
     n === 12 && new RegExp(`(^|\\s)${k} من 8`).test(crumb) && fin && art ? ok(`unit 2 deck ${deck}: 12 slides open lesson ${k} of 8 and end on its question`) : fail(`unit 2 deck ${deck}: ${n} slides, crumb «${crumb}», final ${fin}, art ${art}`);
   }
   const xfin = await page.$eval("#sec-run [data-aih-q]", (e) => /إكسل/.test(e.textContent));
-  xfin ? ok("unit 2 ends on a file bigger than Excel, the question unit 3 opens with") : fail("unit 2: closing question lost");
-  // unit 3 opens with lesson b1's story, ending on the question its Office lessons answer
+  xfin ? ok("unit 2 ends on a dashboard inside Excel, the question unit 3 opens with") : fail("unit 2: closing question lost");
+  // unit 3: every lesson opens with its own 12-slide story; the last one ends on the file bigger than Excel that opens unit 4
+  for (const [deck, lesson, k] of [["ptable", "a1", 1], ["pdash", "a2", 2], ["gather", "a3", 3], ["pdeck", "a4", 4], ["ccode", "a5", 5], ["skillset", "a6", 6]]) {
+    await page.evaluate((l) => (location.hash = "lesson-" + l), lesson); await page.waitForSelector(`#sec-${deck} .aih-stage`);
+    const n = await page.$$eval(`#sec-${deck} .aih-slide`, (s) => s.length);
+    const crumb = await page.$eval(".crumbs .num", (e) => e.textContent);
+    await page.click(`#sec-${deck} [data-aih-go="11"]`); await page.waitForTimeout(500);
+    const fin = await page.$eval(`#sec-${deck} [data-aih-q]`, (e) => e.dataset.final === "true");
+    const art = await page.$eval(`#sec-${deck} .aih-slide[data-i="11"] .aih-svg`, (v) => v.querySelectorAll("rect,circle,path,text").length > 8);
+    n === 12 && new RegExp(`(^|\\s)${k} من 6`).test(crumb) && fin && art ? ok(`unit 3 deck ${deck}: 12 slides open lesson ${k} of 6 and end on its question`) : fail(`unit 3 deck ${deck}: ${n} slides, crumb «${crumb}», final ${fin}, art ${art}`);
+  }
+  const sfin = await page.$eval("#sec-skillset [data-aih-q]", (e) => /أكبر من إكسل/.test(e.textContent));
+  sfin ? ok("unit 3 ends on a file bigger than Excel, the question unit 4 opens with") : fail("unit 3: closing question lost");
+  // unit 4 opens with lesson b1's story, ending on the question its Office lessons answer
   await page.evaluate(() => (location.hash = "lesson-b1")); await page.waitForSelector("#sec-big .aih-stage");
   const bn = await page.$$eval("#sec-big .aih-slide", (s) => s.length);
   const bcrumb = await page.$eval(".crumbs .num", (e) => e.textContent);
   await page.click('#sec-big [data-aih-go="11"]'); await page.waitForTimeout(700);
   const bfinal = await page.$eval("#sec-big [data-aih-q]", (e) => e.dataset.final === "true" && /فرع/.test(e.textContent));
   const bart = await page.$eval('#sec-big .aih-slide[data-i="11"] .aih-svg', (v) => v.querySelectorAll("rect,circle,path,text").length > 8);
-  bn === 12 && /(^|\s)1 من 7/.test(bcrumb) && bfinal && bart ? ok("unit 3 deck: 12 slides open the unit (lesson 1 of 7) and end on the question its Office lessons answer") : fail(`unit 3 deck: ${bn} slides, crumb «${bcrumb}», final ${bfinal}, art ${bart}`);
+  bn === 12 && /(^|\s)1 من 8/.test(bcrumb) && bfinal && bart ? ok("unit 4 deck: 12 slides open the unit (lesson 1 of 8) and end on the question its Office lessons answer") : fail(`unit 4 deck: ${bn} slides, crumb «${bcrumb}», final ${bfinal}, art ${bart}`);
   const leftBuilt = await page.evaluate(async () => {   // leaving the page stops on-demand drawing: no SVGs are built in the detached deck afterwards
     location.hash = "lesson-f6"; await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
     const deck = document.querySelector("#sec-window"); const before = deck.querySelectorAll(".aih-svg").length;
@@ -420,10 +432,10 @@ await session({ label: "plan-3-migration", viewport: { width: 1280, height: 860 
   await page.evaluate(() => { localStorage.setItem("aiAcademy.v1", JSON.stringify({ lang: "ar", plan: 2, scores: { u0: { best: 80, last: 80 }, u1: { best: 90, last: 90 }, u2: { best: 60, last: 60 }, u3: { best: 70, last: 70 } } })); location.hash = "quiz"; location.reload(); });
   await page.waitForSelector("#main .unit-card"); await page.waitForTimeout(400);
   const s = await page.evaluate(() => { const v = JSON.parse(localStorage.getItem("aiAcademy.v1") || "{}"); return { k: Object.keys(v.scores || {}).sort().join(" "), plan: v.plan }; });
-  s.k === "u0 u3" && s.plan === 4 ? ok("upgrade to plan 3: units 2 and 3 scores cleared, the others kept") : fail("plan 3 upgrade: " + JSON.stringify(s));
+  s.k === "u0" && s.plan === 5 ? ok("upgrade from plan 2: units 2, 3 and 4 scores cleared (plans 3 and 5), unit 1 kept") : fail("plan 3 upgrade: " + JSON.stringify(s));
   await page.evaluate(() => location.reload()); await page.waitForSelector("#main h1"); await page.waitForTimeout(300);
   const again = await page.evaluate(() => JSON.parse(localStorage.getItem("aiAcademy.v1") || "{}").plan);
-  again === 4 ? ok("plan upgrade runs once") : fail("plan upgrade repeats: plan " + again);
+  again === 5 ? ok("plan upgrade runs once") : fail("plan upgrade repeats: plan " + again);
 });
 
 await session({ label: "plan-4-migration", viewport: { width: 1280, height: 860 } }, async (page) => {
@@ -431,7 +443,15 @@ await session({ label: "plan-4-migration", viewport: { width: 1280, height: 860 
   await page.evaluate(() => { localStorage.setItem("aiAcademy.v1", JSON.stringify({ lang: "ar", plan: 3, scores: { u0: { best: 80, last: 80 }, u1: { best: 90, last: 90 }, u2: { best: 60, last: 60 } } })); location.hash = "quiz"; location.reload(); });
   await page.waitForSelector("#main .unit-card"); await page.waitForTimeout(400);
   const s = await page.evaluate(() => { const v = JSON.parse(localStorage.getItem("aiAcademy.v1") || "{}"); return { k: Object.keys(v.scores || {}).sort().join(" "), plan: v.plan }; });
-  s.k === "u0 u2" && s.plan === 4 ? ok("upgrade to plan 4: only unit 2's score cleared") : fail("plan 4 upgrade: " + JSON.stringify(s));
+  s.k === "u0" && s.plan === 5 ? ok("upgrade from plan 3: unit 2's score cleared (plan 4), and unit 3's (plan 5)") : fail("plan 4 upgrade: " + JSON.stringify(s));
+});
+
+await session({ label: "plan-5-migration", viewport: { width: 1280, height: 860 } }, async (page) => {
+  // a learner from plan 4: unit 3 became the Office automation unit and its lessons moved to unit 4, so both old scores go
+  await page.evaluate(() => { localStorage.setItem("aiAcademy.v1", JSON.stringify({ lang: "ar", plan: 4, scores: { u0: { best: 80, last: 80 }, u1: { best: 90, last: 90 }, u2: { best: 60, last: 60 }, u3: { best: 70, last: 70 } } })); location.hash = "quiz"; location.reload(); });
+  await page.waitForSelector("#main .unit-card"); await page.waitForTimeout(400);
+  const s = await page.evaluate(() => { const v = JSON.parse(localStorage.getItem("aiAcademy.v1") || "{}"); return { k: Object.keys(v.scores || {}).sort().join(" "), plan: v.plan }; });
+  s.k === "u0 u1" && s.plan === 5 ? ok("upgrade to plan 5: units 3 and 4 scores cleared, units 1 and 2 kept") : fail("plan 5 upgrade: " + JSON.stringify(s));
 });
 
 const unzip = async (dl) => {   // walk a stored zip's entries and check each one's CRC
@@ -486,12 +506,38 @@ await session({ label: "unit-2-narrow", viewport: { width: 340, height: 760 }, i
   const bad = [];
   for (const lang of ["ar", "en"]) {
     if (lang === "en") { await page.click("#more-btn"); await page.click("#lang-btn"); await page.waitForTimeout(150); }
-    for (const id of await page.evaluate(() => window.ACADEMY.lessons.filter((l) => l.unit === "u1").map((l) => l.id))) {
+    for (const id of await page.evaluate(() => window.ACADEMY.lessons.filter((l) => l.unit === "u1" || (window.ACADEMY.officeProjects.byLesson[l.id])).map((l) => l.id))) {
       await page.evaluate((x) => (location.hash = "lesson-" + x), id); await page.waitForSelector("#sec-proj .xp-card");
       const ov = await overflow(page); if (ov > 1) bad.push(`${lang} ${id} ${ov}px`);
     }
   }
-  bad.length ? fail("unit 2 at 340px: horizontal overflow " + bad.join(", ")) : ok("unit 2 at 340px: every lesson fits the screen, Arabic and English");
+  bad.length ? fail("units 2–3 at 340px: horizontal overflow " + bad.join(", ")) : ok("units 2–3 at 340px: every project lesson fits the screen, Arabic and English");
+});
+
+await session({ label: "unit-3-projects", viewport: { width: 1280, height: 860 }, acceptDownloads: true }, async (page) => {
+  // unit 3's two examples and the skills kit: each downloads complete, generated in the page offline
+  await page.evaluate(() => (location.hash = "lesson-a2")); await page.waitForSelector("#sec-proj .xp-card");
+  const head = await page.$eval("#sec-proj", (e) => ({ steps: e.querySelectorAll(".xp-ladder li").length, on: e.querySelector(".xp-ladder li.on")?.textContent.trim(), zip: e.querySelector("[data-dl]")?.textContent.trim(), docs: e.querySelectorAll("details").length }));
+  head.steps === 3 && /^1/.test(head.on) && head.zip === "Unit3_Example_1_Production_Dashboard.zip" && head.docs === 4 ? ok("unit 3 project: lesson a2 shows example 1 of the three downloads, with README, two Prompts and the key") : fail("unit 3 project head: " + JSON.stringify(head));
+  const [d1] = await Promise.all([page.waitForEvent("download"), page.click("#sec-proj [data-dl]")]);
+  const z1 = await unzip(d1), weeks = z1.names.filter((n) => /\/Data\/Weekly_Exports\/Confirmations_W\d\d( \(1\))?\.xlsx$/.test(n)).length;
+  weeks === 14 && z1.names.some((n) => n.endsWith("Data/Masters.xlsx")) && ["Prompt_1.txt", "Prompt_2.txt", "README.txt", "Answer_Key.txt"].every((f) => z1.names.includes("Unit3_Example_1_Production_Dashboard/" + f)) && !z1.bad
+    ? ok(`unit 3 example 1: ${z1.names.length} files, 14 weekly exports (one downloaded twice), Masters, two Prompts, every CRC valid`) : fail(`example 1 zip: ${z1.names.join(", ")} bad ${z1.bad}`);
+  await page.evaluate(() => (location.hash = "lesson-a3")); await page.waitForSelector("#sec-proj .xp-card");
+  const pdfBtn = await page.$$eval("#sec-proj [data-f]", (b) => b.findIndex((x) => /Export_Sales_2026-08\.pdf/.test(x.textContent)));
+  await page.click(`#sec-proj [data-f="${pdfBtn}"]`);
+  const peek = await page.$eval("#sec-proj .xp-peek", (e) => e.textContent);
+  /Export Sales Summary - August 2026/.test(peek) && /\(continued\)/.test(peek) ? ok("unit 3 example 2: the PDF preview shows the report's text, page 2 included") : fail("PDF preview: " + peek.slice(0, 160));
+  const [d2] = await Promise.all([page.waitForEvent("download"), page.click("#sec-proj [data-dl]")]);
+  const z2 = await unzip(d2);
+  z2.names.filter((n) => n.endsWith(".pdf")).length === 6 && z2.names.filter((n) => n.endsWith(".docx")).length === 2 && z2.names.filter((n) => /\/Data\/Excel\/.*\.xlsx$/.test(n)).length === 4 && !z2.bad
+    ? ok("unit 3 example 2: 6 PDF reports, 2 Word memos and 4 workbooks, every CRC valid") : fail("example 2 zip: " + z2.names.join(", "));
+  await page.evaluate(() => (location.hash = "lesson-a6")); await page.waitForSelector("#sec-proj .xp-card");
+  const [d3] = await Promise.all([page.waitForEvent("download"), page.click("#sec-proj [data-dl]")]);
+  const z3 = await unzip(d3);
+  z3.names.filter((n) => n.endsWith("/SKILL.md")).length === 3 && !z3.bad ? ok("unit 3 skills kit: three skills, each with its SKILL.md") : fail("skills zip: " + z3.names.join(", "));
+  const noProj = await page.evaluate(() => { location.hash = "lesson-a5"; return new Promise((r) => setTimeout(() => r(!document.querySelector("#sec-proj .xp-card")), 400)); });
+  noProj ? ok("lesson a5 (Claude Code) has no download panel") : fail("lesson a5 shows a project panel");
 });
 
 await session({ label: "plan-2-migration", viewport: { width: 1280, height: 860 } }, async (page) => {
