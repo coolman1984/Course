@@ -215,7 +215,7 @@
     rr.sort((a, b) => b.rate - a.rate);
     const salesQ = sum(Object.values(ch), (x) => x.q), salesV = sum(Object.values(ch), (x) => x.v);
     const pdfTotals = [7, 8, 9].map((m) => ({ m, exportQty: sum(exportRows(m), (x) => x.q) + (m === 9 ? credit.q : 0), shipments: C.ships.filter((x) => x.m === m).length, units: sum(C.ships.filter((x) => x.m === m), (x) => x.units) }));
-    return { files: 14, salesQty: salesQ, salesValue: salesV, channels: ch, months: bym, countries: byc, achievement: ach, target: C.target,
+    return { files: 12, salesQty: salesQ, salesValue: salesV, channels: ch, months: bym, countries: byc, achievement: ach, target: C.target,
       shipments: C.ships.length, shipUnits: sum(C.ships, (x) => x.units), freight: sum(C.ships, (x) => x.freight), freightPerUnit: perUnit,
       returns: sum(C.returns, (x) => x.q), topReturn: rr[0], cairoLines: C.cairo.length, credit, june: C.june, pdfTotals,
       bestChannel: Object.entries(ach).sort((a, b) => b[1] - a[1])[0], worstChannel: Object.entries(ach).sort((a, b) => a[1] - b[1])[0] };
@@ -372,8 +372,8 @@ The last slide is left for the director's own conclusions: never write conclusio
   P.push({
     n: 2, lessons: ["a3", "a4"], lesson: "a3", slug: "Commercial_Review", short: u("المراجعة التجارية", "Commercial review"),
     title: u("المثال التاني: إكسل وPDF ووورد في قاعدة واحدة، وعرض باوربوينت في الآخر", "Example 2: Excel, PDF and Word into one database, and a PowerPoint deck at the end"),
-    about: u("مراجعة الربع التالت التجارية من ١٣ ملف في ٣ أشكال: ٣ ملفات إكسل لمبيعات الفروع كل واحد بشكل، و٦ تقارير PDF من النظام (مبيعات التصدير والشحنات)، ومذكرتين وورد (المرتجعات والمستهدف). كلهم بيتجمعوا في جدول بيانات خام واحد، وبعدين تقرير ورسوم، وفي الآخر عرض باوربوينت جاهز.",
-      "The third quarter's commercial review from 13 files in 3 formats: 3 Excel files of branch sales, each shaped its own way; 6 PDF reports from the system (export sales and shipments); and 2 Word memos (returns and targets). All of them are gathered into one raw-data table, then a report and charts, and finally a ready PowerPoint deck."),
+    about: u("مراجعة الربع التالت التجارية من ١١ ملف في ٣ أشكال: ٣ ملفات إكسل لمبيعات الفروع كل واحد بشكل، و٦ تقارير PDF من النظام (مبيعات التصدير والشحنات)، ومذكرتين وورد (المرتجعات والمستهدف). كلهم بيتجمعوا في جدول بيانات خام واحد، وبعدين تقرير ورسوم، وفي الآخر عرض باوربوينت جاهز.",
+      "The third quarter's commercial review from 11 files in 3 formats: 3 Excel files of branch sales, each shaped its own way; 6 PDF reports from the system (export sales and shipments); and 2 Word memos (returns and targets). All of them are gathered into one raw-data table, then a report and charts, and finally a ready PowerPoint deck."),
     prompts: ["a3a", "a4a"], files: ex2Files, expected: ex2Expected,
   });
   P.push({

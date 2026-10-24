@@ -3,7 +3,7 @@
    slide with one question: «لما الأداة توقف أو تغلط… أعمل إيه؟». The deck sorts messages into three families (the file,
    the laptop, the code), meets the common ones (execution policy, encoding, a locked file, a renamed sheet), shows how to
    go back to the model, one change per version, a problem that did not stop the tool (text dates), the three tests
-   before sign-off, the tool card — and ends on the cliffhanger into unit 3: a file bigger than Excel itself.
+   before sign-off, the tool card — and ends on the cliffhanger into unit 3: the tools coming together in a dashboard inside Excel.
    Each slide gives one rule with its reason. Drawings are the xt_* entries in engine/history.js. */
 "use strict";
 (function (A) {
@@ -17,7 +17,7 @@
     answerLabel: u("القاعدة، وليه؟", "The rule, and why"),
     ideaLabel: u("الفكرة في جملة", "The idea in one line"),
     question: u("لما الأداة توقف أو تغلط… أعمل إيه؟", "When the tool stops or goes wrong… what do I do?"),
-    finalQuestion: u("طب لو جالك ملف أكبر من إكسل نفسه؟", "And what if a file arrives that is bigger than Excel itself?"),
+    finalQuestion: u("الأدوات شغالة… طب كل ده يبقى داشبورد جوّه إكسل يتحدّث لوحده إزاي؟", "The tools work… so how does all of it become a dashboard inside Excel that updates itself?"),
     note: u("الرسايل بالإنجليزي زي ما بتظهر في ويندوز. نصها الدقيق ممكن يختلف حسب نسخة ويندوز وإكسل. ما تتحايلش على أي إعداد أمان في الجهاز.", "Messages are in English as Windows shows them. Their exact wording may vary with the Windows and Excel version. Never get around a security setting on the laptop."),
     ui: {
       prev: u("اللي فات", "Previous"), next: u("اللي بعده", "Next"),
@@ -139,14 +139,14 @@
         idea: u("السكريبت بيتكتب تاني… والبطاقة هي الأداة.", "The script can be rewritten… the card is the tool.")
       },
       {
-        id: "cliff", art: "xt_cliff", year: u("الوحدة الجاية", "Next unit"), mark: u("١٢", "12"), era: u("ملف الربع", "The quarter's file"),
-        title: u("كل حاجة اشتغلت… لحد ما وصل ملف الربع من الإدارة", "Everything worked… until the quarter's file arrived from head office"),
-        story: [u("خمس أدوات، وخمس بطاقات، واختبارات بتعدّي كل شهر: تحت بعض، وبحث وربط، وتقرير قصاد الخطة، ومطابقة المشتريات، وطلب الخامات. ساعات الشغل بقت دقايق. لحد ما وصل ملف الربع من نظام الإدارة: ٣٠٠ ألف صف من كل محطات الفحص، وخلايا مدموجة في العناوين، وتواريخ مكتوبة كنص.",
-          "Five tools, five cards, and tests passing every month: stacking, lookups, the report against plan, the purchasing match and the materials order. Hours of work became minutes. Until the quarter's file arrived from the management system: 300,000 rows from every test station, merged cells in the headers, dates typed as text."),
-        u("الأداة عملت الصح ووقفت برسالة واضحة بدل ما تطلّع نتيجة غلط. بس المرة دي إكسل نفسه وقف عند ٧٠٪ ورسالة «لا يستجيب». إكسل اتعمل للجداول اللي بتشوفها بعينك، مش لمئات الآلاف من الصفوف. والسؤال اللي هنبدأ بيه الوحدة الجاية: طب لو جالك ملف أكبر من إكسل نفسه؟",
-          "The tool did the right thing and stopped with a clear message instead of producing a wrong result. But this time Excel itself froze at 70% with “Not responding”. Excel was built for tables you look at, not for hundreds of thousands of rows. And the question we'll open the next unit with: what if a file arrives that is bigger than Excel itself?")],
-        answer: u("واجب الوحدة: شغّل أداة الدرس ٣ على ملفات أبريل، وأضف القواعد واحدة واحدة، واكتب بطاقتها، واعمل التلات اختبارات. وتعالى ومعاك أول ملف حقيقي من شغلك محتاج أداة. لأن الملفات دي هي بداية الوحدة الجاية.", "This unit's task: run lesson 3's tool on April's files, add the rules one at a time, write its card, and do the three tests. Then bring the first real file from your work that needs a tool — such files open the next unit."),
-        idea: u("إكسل اتعمل علشان تشوف البيانات… مش علشان يشيلها كلها.", "Excel was built for looking at data… not for holding all of it.")
+        id: "cliff", art: "xt_cliff", year: u("الوحدة الجاية", "Next unit"), mark: u("١٢", "12"), era: u("طلب المدير", "The manager's request"),
+        title: u("كل حاجة اشتغلت… والمدير عايز يدوس ويشوف", "Everything worked… and the manager wants to click and see"),
+        story: [u("خمس أدوات، وخمس بطاقات، واختبارات بتعدّي كل شهر: تحت بعض، وبحث وربط، وتقرير قصاد الخطة، ومطابقة المشتريات، وطلب الخامات. ساعات الشغل بقت دقايق. وفي أول أكتوبر مدير المصنع قال: «الربع التالت خلص. عايزه كله قدامي في ملف إكسل واحد».",
+          "Five tools, five cards, and tests passing every month: stacking, lookups, the report against plan, the purchasing match and the materials order. Hours of work became minutes. Early in October the factory manager said: “The third quarter is over. I want all of it in front of me in one Excel file.”"),
+        u("«أدوس على شهر أو خط أو بلد، والأرقام تتغيّر. والمدير التجاري عايز نفس الحاجة للمبيعات، وفي الآخر عرض للإدارة». يعني الأدوات لازم تتجمع في حاجة أكبر: جدول واحد، وداشبورد، وعرض. والسؤال اللي هنبدأ بيه الوحدة الجاية: الأدوات شغالة… طب كل ده يبقى داشبورد جوّه إكسل يتحدّث لوحده إزاي؟",
+          "“I click a month, a line or a country, and the figures change. And the commercial director wants the same for sales, with a deck for management at the end.” So the tools must come together into something bigger: one table, a dashboard and a deck. And the question we'll open the next unit with: the tools work… so how does all of it become a dashboard inside Excel that updates itself?")],
+        answer: u("واجب الوحدة: شغّل أداة الدرس ٣ على ملفات أبريل، وأضف القواعد واحدة واحدة، واكتب بطاقتها، واعمل التلات اختبارات. لأن الأدوات اللي اتجربت كويس هي اللي هتتجمع في الوحدة الجاية.", "This unit's task: run lesson 3's tool on April's files, add the rules one at a time, write its card, and do the three tests — well-tried tools are the ones that come together in the next unit."),
+        idea: u("الأدوات الصغيرة… بتتجمع في حاجة أكبر.", "Small tools… come together into something bigger.")
       }
     ]
   };
