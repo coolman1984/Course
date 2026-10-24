@@ -605,3 +605,23 @@ test("the unit-3 lessons and decks quote their projects' figures, the same in Ar
   for (const l of A.lessons.filter((x) => x.unit === "u2")) for (const k of Object.keys(l.levels)) for (const x of l.levels[k])
     assert.equal(nums(x.ar), nums(x.en), `${l.id}.${k}.${x.k}: Arabic and English quote different figures`);
 });
+
+test("unit-3 checks and rules can actually pass on the project's own data (review findings on PR 40)", () => {
+  const P = (id) => A.prompts.find((p) => p.id === id).text, O = A.officeProjects, E = O.list[0].expected();
+  // the top-10 model pivot can't equal the full total, so the check must name only the unfiltered pivots
+  const byModel = {}; for (const x of O.production()) { const k = x.mc; byModel[k] = (byModel[k] || 0) + x.q; }
+  const top10 = Object.values(byModel).sort((a, b) => b - a).slice(0, 10).reduce((s, x) => s + x, 0);
+  assert.ok(top10 < E.units, "the data has more than 10 models, so a top-10 pivot is a subset");
+  for (const lang of ["ar", "en"]) {
+    assert.ok(!/every pivot table|كل جدول محوري/.test(P("a2a")[lang]), `a2a (${lang}) checks a filtered top-10 pivot against the full total`);
+    assert.ok(/PT_MonthLine/.test(P("a2a")[lang].split(/before formatting|قبل التنسيق/)[1] || ""), `a2a (${lang}) names the unfiltered pivots in its check`);
+  }
+  const kit = O.skills["production-dashboard/reference/checks.md"]; assert.ok(!/every pivot table/.test(kit), "the kit's checks.md repeats the impossible check");
+  // step 2 reads step 1's output: the shared rule must allow reading Output, while never writing to Data
+  for (const id of ["a2a", "a4a"]) for (const lang of ["ar", "en"]) {
+    const t = P(id)[lang];
+    assert.ok(!/read only from the Data folder|اقرا من فولدر Data بس/.test(t), `${id} (${lang}) forbids reading the Output file it takes as input`);
+    assert.ok(/Output/.test(t) && /(never|ما تكتبش)/.test(t), `${id} (${lang}) still protects Data`);
+  }
+  assert.ok(!/Read only from the Data folder/.test(O.skills["safe-office-automation"]), "the safety skill forbids reading intermediate outputs");
+});

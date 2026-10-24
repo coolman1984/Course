@@ -231,7 +231,7 @@
     ], 0, ["كل سلايسر لازم يتوصل بكل الجداول المحورية اللي في الداشبورد (Report Connections)، وإلا الأجزاء تعرض أرقام متناقضة.", "Every slicer must be connected to every pivot table on the dashboard (Report Connections), or the parts show contradicting figures."]),
     O("a2b", "a2", ["رتّب خطوات الأداة التانية في المثال الأول:", "Put the steps of example 1's second tool in order:"], [
       ["الجداول المحورية من tblProduction", "The pivot tables from tblProduction"],
-      ["المراجعة: الجدول = كل جدول محوري = الكارت", "The check: the table = every pivot table = the card"],
+      ["المراجعة: الجدول = الجداول المحورية الكاملة = الكارت", "The check: the table = the full pivot tables = the card"],
       ["الرسوم والسلايسر", "The charts and the slicers"],
       ["التنسيق والألوان والطباعة", "Formatting, colours and printing"],
       ["تجربة سلايسر وقارن بفلتر على الجدول", "Try a slicer and compare with a filter on the table"]

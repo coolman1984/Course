@@ -2339,7 +2339,7 @@
       const T = ["Pivots", "Report", "Charts", "Dashboard"], X = rowX(4, 92, 8);
       return `<g ${an("fade", 0.05)}>${txt(240, 40, "Production_Q3_Dashboard.xlsx", "t-ink2", 12, b8 + ' direction="ltr"')}</g>
       ${T.map((s, i) => `<g ${an("pop", 0.2 + i * 0.15)}><path d="M${X(i) - 44} 86 v-22 q0 -6 6 -6 h76 q6 0 6 6 v22z" class="${i === 0 ? "f-acc" : "f-acc-soft s-acc"}" stroke-width="1.5"/>${txt(X(i), 77, s, i === 0 ? "t-white" : "t-acc", 11, b8 + ' direction="ltr"')}${txt(X(i), 108, digits(i + 1), "t-ink3", 11, b8)}</g>`).join("")}
-      <g ${an("rise", 0.9)}>${box(240, 168, 380, 70, "f-mint-soft s-mint", 2.5)}${txt(240, 160, tr("قبل التنسيق:", "before formatting:"), "t-mint", 12, b8)}${txt(240, 182, tr("الجدول = كل جدول محوري = الكارت", "table = every pivot = the card"), "t-ink", 12, b8)}</g>
+      <g ${an("rise", 0.9)}>${box(240, 168, 380, 70, "f-mint-soft s-mint", 2.5)}${txt(240, 160, tr("قبل التنسيق:", "before formatting:"), "t-mint", 12, b8)}${txt(240, 182, tr("الجدول = الجداول الكاملة = الكارت", "table = the full pivots = the card"), "t-ink", 12, b8)}</g>
       <g ${an("fade", 1.2)}>${txt(240, 240, tr("التنسيق بياخد أغلب الوقت…", "formatting takes most of the time…"), "t-ink2", 11, bold)}${txt(240, 258, tr("فالأرقام تتراجع قبله", "so the figures are checked first"), "t-ink2", 11, bold)}</g>
       ${cap(tr("الأرقام الأول… والألوان بعدين", "figures first… colours later"), 1.5)}`;
     },

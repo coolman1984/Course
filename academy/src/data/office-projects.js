@@ -232,7 +232,8 @@ description: House rules for any tool that reads Excel, Word, PDF or PowerPoint 
 
 Apply these rules to every script you write for Office files. They are not optional.
 
-1. Read only from the Data folder. Open every file read-only. Never save into Data.
+1. Read the original files from Data, and intermediate workbooks made earlier from Output. Open every file
+   read-only. Never save into Data.
 2. Write every result to an Output folder next to Data. Name versions _v2, _v3; never overwrite an approved output.
 3. Turn Office alerts off while the tool runs, and close and release Excel, Word and PowerPoint at the end,
    even after an error (try/finally, then release every COM object).
@@ -299,7 +300,8 @@ Run every check in reference/checks.md and paste their results at the end of the
     "production-dashboard/reference/checks.md": `# Checks
 
 1. Rows in tblProduction = the sum of data rows read, minus the duplicate download. Write both numbers.
-2. Sum of Qty in tblProduction = the grand total of every pivot table.
+2. Sum of Qty in tblProduction = the grand total of PT_MonthLine = the grand total of PT_Country. (PT_Model shows
+   the top 10 only, so its total is smaller: it is not part of this check.)
 3. Every Unmatched code is listed with its rows and quantity; nothing was dropped.
 4. With every slicer cleared, the KPI cards equal the Report sheet.
 5. Pick one slicer value (one line) and compare one figure with a filter on tblProduction.
