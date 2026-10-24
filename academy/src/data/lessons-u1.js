@@ -283,7 +283,7 @@
         } },
     },
     {
-      id: "p9", unit: "u2", pages: [13], diff: 2, min: 8, scene: "leap", lab: "formula", related: ["p3", "p10", "d1", "p1"], pre: ["f4", "f8"],
+      id: "p9", unit: "u3", pages: [13], diff: 2, min: 8, scene: "leap", lab: "formula", related: ["p3", "p10", "d1", "p1"], pre: ["f4", "f8"],
       title: { ar: "إزاي تخلي إكسل يعمل حساباتك من غير ما تحفظ معادلات؟", en: "The leap: Excel with AI" },
       sum: { ar: "مش لازم تحفظ معادلات إكسل. اشرح الحساب اللي محتاجه بالكلام، وخلّي المساعد يكتب المعادلة، واختبرها على كام صف قبل ما تعمّمها.", en: "Don’t start with code, start with a problem: the right formula request, its three elements, and the nine-stage ladder." },
       book: [
@@ -315,7 +315,7 @@
       },
     },
     {
-      id: "p10", unit: "u2", pages: [13, 14], diff: 2, min: 9, scene: "macro", related: ["p9", "y1", "w2"], pre: ["p9"],
+      id: "p10", unit: "u3", pages: [13, 14], diff: 2, min: 9, scene: "macro", related: ["p9", "y1", "w2"], pre: ["p9"],
       title: { ar: "إزاي تخلي الخطوات اللي بتكررها تحصل بضغطة؟", en: "First real automation: macros and AI-written code" },
       sum: { ar: "أي خطوات بتكررها كل يوم بنفس الترتيب، زي فتح ملف وتنسيقه ونسخ جدول منه، ممكن تتسجل مرة وتتنفذ بضغطة، بشرط تجربها على نسخة الأول.", en: "The macro recorder, then let AI write the code, two unbreakable rules, and the golden code prompt." },
       book: [

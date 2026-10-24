@@ -80,7 +80,7 @@
     },
     /* ---------------- UNIT 4 ---------------- */
     {
-      id: "w1", unit: "u2", pages: [26], diff: 1, min: 6, scene: "vscode", related: ["w2", "w5", "g2"], pre: [],
+      id: "w1", unit: "u3", pages: [26], diff: 1, min: 6, scene: "vscode", related: ["w2", "w5", "g2"], pre: [],
       title: { ar: "بيئة الشغل: محرر VS Code", en: "Your workspace: the VS Code editor" },
       sum: { ar: "مكان واحد تشوف فيه ملفاتك وتكتب وتشغّل الأوامر: خمس مناطق، أول خمس خطوات، وتلات أخطاء شائعة.", en: "One place to see your files, write and run commands: five areas, the first five steps, and three common mistakes." },
       book: [
@@ -110,7 +110,7 @@
       },
     },
     {
-      id: "w2", unit: "u2", pages: [27], diff: 2, min: 8, scene: "claude", related: ["w1", "p10", "g2"], pre: ["w1"],
+      id: "w2", unit: "u3", pages: [27], diff: 2, min: 8, scene: "claude", related: ["w1", "p10", "g2"], pre: ["w1"],
       title: { ar: "المساعد البرمجي Claude Code", en: "The coding assistant: Claude Code" },
       sum: { ar: "بيقرأ مشروعك ويكتب الملفات ويشغّل الأوامر ويصلح الأخطاء؛ إنت بتراجع وتوافق. ومعاه CLAUDE.md و Prompt «الخطة قبل التنفيذ» وتلات ضوابط أمان.", en: "It reads your project, writes files, runs commands and fixes errors; you review and approve. Plus CLAUDE.md, the “plan before executing” prompt and three security controls." },
       book: [

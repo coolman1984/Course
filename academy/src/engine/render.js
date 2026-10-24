@@ -112,7 +112,7 @@
       const sl = A.byId[sc.lesson];
       const done = S.get("done");
       // what each lesson opens with, as a small icon: a project to download, a lab, an animated scene, a story deck, or book text
-      const kind = (l) => (A.xlProjects && A.xlProjects.byLesson[l.id] ? "proj" : l.lab ? "lab" : l.scene ? "scene" : (A.decks || []).some((d) => d.lesson === l.id) ? "deck" : "book");
+      const kind = (l) => ((A.xlProjects && A.xlProjects.byLesson[l.id]) || (A.officeProjects && A.officeProjects.byLesson[l.id]) ? "proj" : l.lab ? "lab" : l.scene ? "scene" : (A.decks || []).some((d) => d.lesson === l.id) ? "deck" : "book");
       const KIND = { proj: ["folder", "hasProject"], lab: ["flask", "hasLab"], scene: ["film", "hasScene"], deck: ["screen", "hasDeck"], book: ["book", "hasBook"] };
       const badge = (l) => { const [i, k] = KIND[kind(l)]; return `<span class="lb ${kind(l)}" title="${esc(t(k))}" aria-label="${esc(t(k))}">${ico(i)}</span>`; };
       const legend = (ls) => [...new Set(ls.map(kind))].map((k) => `<span class="lg"><span class="lb ${k}" aria-hidden="true">${ico(KIND[k][0])}</span>${esc(t(KIND[k][1]))}</span>`).join("");
@@ -345,7 +345,7 @@
     const offLevel = A.on("level", (k) => { curLv = k; showAll = false; drawLevels(); });
     A.onLeave(offLevel);
     // the unit-2 project (one zip per lesson)
-    if (A.xlProjects && A.xlProjects.byLesson[l.id] && A.mountXlProject) {
+    if (((A.xlProjects && A.xlProjects.byLesson[l.id]) || (A.officeProjects && A.officeProjects.byLesson[l.id])) && A.mountXlProject) {
       const sp = A.$("#sec-proj"); sp.className = "sec";
       sp.innerHTML = secHead("db", t("projTitle"), t("projSub"), "mt");
       A.mountXlProject(sp, l.id, false);
