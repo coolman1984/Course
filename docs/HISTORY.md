@@ -74,14 +74,14 @@ Dates are 2026. Pull-request numbers are in brackets.
 | | |
 |---|---|
 | Units | 8 |
-| Lessons | 51, each at four levels |
-| Story decks | 15 (12 slides each): all of units 1 and 2, and unit 3's opening story |
+| Lessons | 59, each at four levels |
+| Story decks | 23 (12 slides each): all of units 1, 2 and 3, and unit 4's opening story |
 | Animated scenes | 35 |
 | Labs | 14 (8 real calculations, 6 simulations) |
-| Prompts | 113 |
-| Questions | 102 |
-| Glossary terms | 76 |
-| File size | about 6.2 MB, zero network requests |
+| Prompts | 122 |
+| Questions | 118 |
+| Glossary terms | 83 |
+| File size | about 7 MB, zero network requests |
 
 Unit 1 in teaching order:
 
@@ -118,3 +118,23 @@ the three tools of f8 come one at a time, and purchasing and materials, the seco
 
 The former unit 2 (b1, y4, p9, w1, m1) opens unit 3, ahead of the Office lessons. f8's closing slide now leads into unit 2,
 and x6's into b1 («فاكر ملف الربع…»). Course plan 3 clears the old unit 2 and 3 quiz scores once; plan 4 clears unit 2's once more for its new questions.
+
+## Unit 3: Office automation at scale (October)
+Unit 3 now holds six lessons built like unit 2, in the same factory, each with its own 12-slide story. Two big examples
+download complete (`data/office-projects.js`), and the last two lessons make the work repeat:
+
+| # | Lesson | Download | Deck question |
+|---|---|---|---|
+| 1 | a1 Example 1: 13 weekly exports into one table with names | `Unit3_Example_1_Production_Dashboard.zip` | «إزاي ١٣ تصدير من النظام يبقوا جدول واحد بالأسماء؟» |
+| 2 | a2 Example 1: pivot tables, a report and a dashboard with slicers | (the same zip, Prompt_2) | «إزاي الجدول يبقى داشبورد يتفهم في دقيقة ويتحدّث لوحده؟» |
+| 3 | a3 Example 2: Excel, PDF and Word into one data table | `Unit3_Example_2_Commercial_Review.zip` | «إزاي أرقام في ٣ أشكال يبقوا جدول بيانات واحد أثق فيه؟» |
+| 4 | a4 Example 2: from the database to a report, charts and a PowerPoint deck | (the same zip, Prompt_2) | «إزاي جدول البيانات يبقى عرض باوربوينت جاهز، وكل رقم فيه مظبوط؟» |
+| 5 | a5 Claude Code in detail: web and PC, abilities, models and levels of thinking | — | «إمتى أستخدم Claude Code، وفين، وبأنهي موديل ومستوى تفكير؟» |
+| 6 | a6 Skills: work that succeeded repeats with one command | `Unit3_Skills_Kit.zip` | «إزاي الشغل اللي نجح مرة يتكرر بنفس الجودة كل مرة؟» |
+
+Example 1 plants title lines above the header, an export downloaded twice, blank markets, a new model and a new market
+missing from the two-column masters. Example 2 plants a June invoice and credit notes, months as columns, a sheet named
+September, PDFs that run onto page 2 with a credit note in brackets, models named in a Word memo, and targets in
+thousands. The kit writes real PDFs and Word files in the page, and a data test reads them back. Unit 2 now ends on the
+dashboard question; unit 3 ends on the file bigger than Excel, and the former unit 3 (b1 …) opens unit 4. Course plan 5
+clears the old unit 3 and 4 quiz scores once.

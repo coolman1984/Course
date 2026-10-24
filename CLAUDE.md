@@ -16,9 +16,10 @@ AI_Academy.html            generated — never hand-edit; rebuild instead
 academy/build.mjs          bundles everything into AI_Academy.html (DATA and ENGINE lists name every source file)
 academy/src/ai-guide.txt   short guide for an AI reading the HTML; injected at the very top of <head>
 academy/src/data/*.js      all content (course-order plan, lessons, decks, prompts, quiz, glossary, plain-language layer, stories, ui,
-                           xl-sample.js: the unit-2 projects, one per lesson)
+                           xl-sample.js: the unit-2 projects, one per lesson;
+                           office-projects.js: unit 3's two examples and skills kit)
 academy/src/engine/*.js    behaviour (core router/search, render, decks in history.js, labs, motion, quiz, tools,
-                           xlkit.js: writes each project as real .xlsx files in one .zip per lesson, offline)
+                           xlkit.js: writes each project as real .xlsx/.pdf/.docx files in one .zip, offline)
 academy/src/*.css          styles (styles.css, motion.css, history.css for decks)
 academy/src/fonts/         inlined fonts (SIL OFL): Inter («UI Latin»), IBM Plex Sans Arabic («UI Sans»),
                            an Inter symbol subset («UI Symbols»), JetBrains Mono («UI Mono»),
@@ -54,10 +55,18 @@ Commit the rebuilt `AI_Academy.html` together with source changes. CI runs the s
   chat/memory/agents → AI at work → limits → first automation). A data test pins this order; update it deliberately.
 - Unit 1 (shown as 2) is f8 in detail, a ladder of projects: `x1 x2 x3 x4 x5 x7 x8 x6` (describe a file → first tool,
   ChatGPT/Gemini delivery → stack → lookups → report → purchase orders vs receipts → materials order from the plan →
-  when a tool stops). Also pinned by a data test. Big data (`b1` …) opens unit 2 (shown as 3).
+  when a tool stops). Also pinned by a data test.
+- Unit 2 (shown as 3) is Office automation at scale: `a1 a2 a3 a4 a5 a6` (example 1: weekly exports → one table with two
+  lookups → pivots, report, charts, dashboard with slicers; example 2: Excel + PDF + Word → one long Fact table → report
+  and a PowerPoint deck; Claude Code in detail; skills). Pinned by a data test. Big data (`b1` …) opens unit 3 (shown as 4).
 - Unit 2's examples are a TV factory's production lines (purchasing and materials as the second example). Never name
   the factory or a company, and don't discuss personal accounts or what may be uploaded: talk about the automation itself,
   with ChatGPT and Gemini Enterprise side by side.
+- Unit 3's downloads are `A.officeProjects` (`data/office-projects.js`): `Unit3_Example_1_Production_Dashboard.zip`
+  (a1–a2), `Unit3_Example_2_Commercial_Review.zip` (a3–a4, with system PDFs and Word memos) and `Unit3_Skills_Kit.zip`
+  (a6, three SKILL.md skills). Each example has a Prompt per step (`a1a`…`a4a`, ending with the Office tail: Excel, Word
+  and PowerPoint through COM). A data test reads the generated PDF bytes and Word tables back like a correct tool.
+  Lesson a5 states Claude Code's models and effort levels: when they change, update a5, `code-story.js` and `cc_*`.
 - Each unit-2 lesson has its own project (`A.xlProjects`, one zip `Lesson_N_<Name>.zip`): Excel files in English only
   (the factory's real files are English), README/Prompt/answer key in the reader's language. Each project adds one idea
   and its own planted problems. Data come from seeded generators; each project's `expected()` holds every figure the
@@ -66,7 +75,7 @@ Commit the rebuilt `AI_Academy.html` together with source changes. CI runs the s
 
 ## Story decks
 
-Each unit-0 and unit-1 lesson, and the first lesson of each later unit (unit 3: `b1`), opens with a 12-slide deck: `academy/src/data/<name>-story.js` registers `A.<name>Story` in `A.decks`
+Each lesson of units 0, 1 and 2, and the first lesson of each later unit (unit 4: `b1`), opens with a 12-slide deck: `academy/src/data/<name>-story.js` registers `A.<name>Story` in `A.decks`
 with `lesson: "<id>"`; the player is `A.mountDeck` in `engine/history.js` (one player for all decks).
 
 Writing rules:

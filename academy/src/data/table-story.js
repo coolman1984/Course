@@ -108,7 +108,7 @@
         idea: u("اللي ما لقاش اسمه… يبان.", "Whatever finds no name… shows.")
       },
       {
-        id: "table", art: "pt_table", year: u("الجدول", "The Table"), mark: u("٠٩", "09"), era: u("tblProduction", "tblProduction"),
+        id: "table", art: "pt_table", year: u("الجدول", "The Table"), mark: u("٠٩", "09"), era: u("جدول باسم", "A named table"),
         title: u("جدول إكسل باسم، مش نطاق ملوّن", "An Excel Table with a name, not a coloured range"),
         story: [u("الأداة كتبت الصفوف في شيت Data وحوّلتها لجدول إكسل (Table) اسمه tblProduction. شكله زي أي جدول ملوّن، بس الفرق كبير: الجدول ليه اسم، وكل عمود ليه اسم، ولما صفوف تتضاف بيكبر لوحده.",
           "The tool wrote the rows on the Data sheet and turned them into an Excel Table named tblProduction. It looks like any coloured table, but the difference is big: the table has a name, every column has a name, and when rows are added it grows by itself."),

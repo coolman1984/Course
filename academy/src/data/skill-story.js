@@ -32,7 +32,7 @@
         title: u("ملفات أكتوبر وصلت… والطريقة في محادثة قديمة", "October's files arrived… and the method is in an old chat"),
         story: [u("أول نوفمبر، تصديرات أكتوبر وصلت، ومهندس التخطيط عنده إجازة. زميله لازم يحدّث داشبورد الإنتاج. فتح Claude Code وكتب: «حدّث الداشبورد». Claude سأل: «أنهي داشبورد؟ الملفات شكلها إيه؟ القواعد إيه؟». كل اللي اتعلمناه في الربع التالت كان في جلسة قفلت.",
           "Early November, October's exports arrived, and the planning engineer is on leave. His colleague must refresh the production dashboard. He opened Claude Code and wrote: “Refresh the dashboard.” Claude asked: “Which dashboard? What do the files look like? What are the rules?” Everything learned in the third quarter was in a session that had closed."),
-        u("الزميل اتصل بمهندس التخطيط في إجازته، وقعدوا نص ساعة على التليفون: صف العناوين، والملف المتكرر، والسوق الفاضي. والسؤال اللي ماشي معانا: إزاي الشغل اللي نجح مرة يتكرر بنفس الجودة كل مرة؟",
+        u("الزميل اتصل بمهندس التخطيط في إجازته، واتكلموا نص ساعة على التليفون: صف العناوين، والملف المتكرر، والسوق الفاضي. والسؤال اللي ماشي معانا: إزاي الشغل اللي نجح مرة يتكرر بنفس الجودة كل مرة؟",
           "The colleague phoned the planning engineer on his leave, and they spent half an hour on the line: the header row, the repeated file, the blank market. The question we carry: how does work that succeeded once repeat with the same quality every time?")],
         answer: u("أي طريقة شغل نجحت واتراجعت، احفظها في مكان يتقري، مش في محادثة. لأن المحادثة بتخلص، والطريقة لازم تفضل.", "Any way of working that succeeded and was checked, keep it somewhere readable, not in a chat — chats end; methods must stay."),
         idea: u("اللي في المحادثة… بيضيع معاها.", "What's in the chat… is lost with it.")

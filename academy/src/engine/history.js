@@ -1143,7 +1143,7 @@
     }
   });
 
-  /* ---------- unit 3 deck: from many files to one table (b_*) ---------- */
+  /* ---------- unit 4 deck: from many files to one table (b_*) ---------- */
   const fileIcon = (x, y, cls = "s-acc", d = 0) =>   // a small file: folded corner, two lines
     `<g ${an("pop", d)}><path d="M${x - 14} ${y - 18} h20 l8 8 v28 h-28z" class="f-s1 ${cls}" stroke-width="1.8"/><rect x="${x - 8}" y="${y - 6}" width="16" height="3.5" rx="1.5" class="f-acc-soft"/><rect x="${x - 8}" y="${y + 2}" width="12" height="3.5" rx="1.5" class="f-s3"/></g>`;
   const folder = (x, y, w, h, cls = "f-amber-soft s-amber") =>

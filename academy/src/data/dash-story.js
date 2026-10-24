@@ -28,7 +28,7 @@
     },
     slides: [
       {
-        id: "three", art: "pd_three", year: u("الأسئلة", "Questions"), mark: u("٠١", "01"), era: u("تلات أسئلة", "Three questions"),
+        id: "three", art: "pd_three", year: u("الموقف", "Scene"), mark: u("٠١", "01"), era: u("تلات أسئلة", "Three questions"),
         title: u("المدير عنده تلات أسئلة… مش ١٬٣٠٢ صف", "The manager has three questions… not 1,302 rows"),
         story: [u("مهندس التخطيط كتب أسئلة المدير على ورقة قبل ما يفتح إكسل: «أنهي شهر وأنهي خط أعلى؟»، و«الإنتاج رايح لأنهي بلد؟»، و«أنهي موديلات بتشيل المصنع؟». تلات أسئلة، وكل سؤال هيبقى جدول محوري ورسم.",
           "The planning engineer wrote the manager's questions on paper before opening Excel: “Which month and which line are highest?”, “Which country does the output go to?”, and “Which models carry the factory?” Three questions, and each will become a pivot table and a chart."),
@@ -98,7 +98,7 @@
         idea: u("دوسة واحدة… كل حاجة تتغيّر مع بعض.", "One click… everything changes together.")
       },
       {
-        id: "cards", art: "pd_cards", year: u("الكروت", "Cards"), mark: u("٠٨", "08"), era: u("GETPIVOTDATA", "GETPIVOTDATA"),
+        id: "cards", art: "pd_cards", year: u("الكروت", "Cards"), mark: u("٠٨", "08"), era: u("معادلات مش أرقام", "Formulas, not figures"),
         title: u("الكروت بتقرا من الجدول المحوري… مش مكتوبة بالإيد", "The cards read from the pivot table… they aren't typed"),
         story: [u("فوق الداشبورد ٤ كروت كبيرة: الأجهزة، والقيمة، ونسبة التصدير، وأعلى موديل. الأسهل إنك تكتب ٣٠٬٠٤٤ في الخانة وتلوّنها. بس الربع الجاي الرقم هيفضل ٣٠٬٠٤٤، والسلايسر مش هيأثر فيه.",
           "Across the top of the dashboard sit 4 big cards: sets, value, export share and the top model. The easy way is to type 30,044 into the cell and colour it. But next quarter the number would still say 30,044, and the slicers wouldn't touch it."),

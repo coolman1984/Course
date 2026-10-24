@@ -30,7 +30,7 @@
       {
         id: "pile", art: "pg_pile", year: u("الموقف", "Scene"), mark: u("٠١", "01"), era: u("١١ ملف", "11 files"),
         title: u("١١ ملف، و٣ برامج، ويوم كامل نسخ ولصق", "11 files, 3 programs, and a whole day of copy and paste"),
-        story: [u("كل ربع، حد في القسم التجاري بيقعد يوم كامل: يفتح ملفات الفروع ويجمع، ويفتح تقارير الـ PDF وينقل الأرقام بإيده، ويقرا مذكرة الجودة ويكتب المرتجعات. وفي الآخر ٨ شرائح للإدارة، ومحدش متأكد إن كل رقم فيها اتنقل صح.",
+        story: [u("كل ربع، حد في القسم التجاري بيصرف يوم كامل: يفتح ملفات الفروع ويجمع، ويفتح تقارير الـ PDF وينقل الأرقام بإيده، ويقرا مذكرة الجودة ويكتب المرتجعات. وفي الآخر ٨ شرائح للإدارة، ومحدش متأكد إن كل رقم فيها اتنقل صح.",
           "Every quarter someone in the commercial department spends a whole day: opening the branch files and adding up, opening the PDF reports and copying the figures by hand, reading the quality memo and typing the returns. At the end, 8 slides for management, and nobody sure every figure was carried over correctly."),
         u("المرة دي المدير التجاري طلب من مهندس التخطيط يعملها بنفس طريقة داشبورد الإنتاج. بس الفرق إن أغلب الأرقام مش في إكسل. والسؤال اللي ماشي معانا: إزاي أرقام في ٣ أشكال يبقوا جدول بيانات واحد أثق فيه؟",
           "This time the commercial director asked the planning engineer to do it the same way as the production dashboard. The difference is that most figures aren't in Excel. The question we carry: how do figures in 3 formats become one data table I can trust?")],
@@ -103,7 +103,7 @@
         story: [u("أول تشغيل وقف: «Export_Sales_2026-09.pdf: rows sum 3,107, printed TOTAL 3,083, difference 24». مهندس التخطيط فتح الـ PDF ودوّر على نص الفرق، ١٢: لقى في آخره سطر Kuwait مكتوب فيه «credit note» والكمية (12) والقيمة (40,560) بين قوسين.",
           "The first run stopped: “Export_Sales_2026-09.pdf: rows sum 3,107, printed TOTAL 3,083, difference 24”. The planning engineer opened the PDF and looked for half the difference, 12: at the end he found a Kuwait line reading “credit note” with the quantity (12) and the value (40,560) in brackets."),
         u("في المحاسبة القوسين معناهم سالب. الأداة شالت القوسين وقرت ١٢ موجب، فزوّدت ١٢ بدل ما تنقّص ١٢، والفرق بقى ٢٤. رجع للنموذج: «القوسين = سالب». التشغيل التاني عدّى، والمراجعة هي اللي مسكت الغلطة، مش العين.",
-          "In accounting, brackets mean negative. The tool removed the brackets and read 12 as positive, adding 12 instead of taking 12 away. He went back to the model: “Brackets = negative.” The second run passed, and it was the check that caught the mistake, not the eye.")],
+          "In accounting, brackets mean negative. The tool removed the brackets and read 12 as positive, adding 12 instead of taking 12 away, so the difference became 24. He went back to the model: “Brackets = negative.” The second run passed, and it was the check that caught the mistake, not the eye.")],
         answer: u("قارن كل ملف بالإجمالي المطبوع فيه، ووقّف لو مختلف. لأن غلطة القراية الصغيرة بتستخبى في آلاف الأرقام، والإجمالي بيكشفها في سطر.", "Compare every file with the total printed in it, and stop if they differ — a small reading mistake hides among thousands of figures, and the total exposes it in one line."),
         idea: u("الإجمالي المطبوع بيمسك غلطة القراية.", "The printed total catches a reading mistake.")
       },
