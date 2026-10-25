@@ -80,7 +80,7 @@
     },
     /* ---------------- UNIT 4 ---------------- */
     {
-      id: "w1", unit: "u3", pages: [26], diff: 1, min: 6, scene: "vscode", related: ["w2", "w5", "g2"], pre: [],
+      id: "w1", unit: "u3", pages: [26], diff: 1, min: 6, scene: "vscode", related: ["a5", "w5", "g2"], pre: [],
       title: { ar: "بيئة الشغل: محرر VS Code", en: "Your workspace: the VS Code editor" },
       sum: { ar: "مكان واحد تشوف فيه ملفاتك وتكتب وتشغّل الأوامر: خمس مناطق، أول خمس خطوات، وتلات أخطاء شائعة.", en: "One place to see your files, write and run commands: five areas, the first five steps, and three common mistakes." },
       book: [
@@ -97,7 +97,7 @@
         ],
         mech: [
           L("how", "لما تفتح **مجلد** بيبقى هو «المشروع»: المستكشف بيعرض كل ملفاته، والطرفية بتبدأ جوّاه، والمساعد بيقرأ كل اللي فيه. عشان كده فتح ملف لوحده غلط: المساعد مش هيشوف الـ Context.", "When you open a **folder** it becomes “the project”: the explorer shows all its files, the terminal starts inside it, and the assistant reads all of it. That’s why opening a single file is a mistake: the assistant can’t see the context."),
-          L("link", "نفس فكرة الـ Context من [[f4]]: المساعد البرمجي بيفهم بقدر ما بيشوف. وفي [[w2]] هتستخدم الطرفية لتشغيل Claude Code.", "Same context idea as [[f4]]: the assistant understands as much as it sees. In [[w2]] you’ll use the terminal to run Claude Code."),
+          L("link", "نفس فكرة الـ Context من [[f4]]: المساعد البرمجي بيفهم بقدر ما بيشوف. وفي [[a5]] هتستخدم الطرفية لتشغيل Claude Code.", "Same context idea as [[f4]]: the assistant understands as much as it sees. In [[a5]] you’ll use the terminal to run Claude Code."),
         ],
         practice: [
           L("example", "اعمل مجلد اسمه `sales-dashboard` (إنجليزي من غير مسافات) على الديسكتوب، افتحه من VS Code (File ← Open Folder)، افتح الطرفية وتأكد إن السطر بيخلص بـ `sales-dashboard`.", "Create a folder named `sales-dashboard` (English, no spaces) on the desktop, open it in VS Code (File → Open Folder), open the terminal and check the prompt ends with `sales-dashboard`."),
@@ -105,40 +105,7 @@
         ],
         adv: [
           L("mistakes", "- **الطرفية مفتوحة على مجلد تاني**: الأوامر بتشتغل في المكان الغلط.\n- **مجلد اسمه «مشروع المبيعات الجديد»**: بعض الأدوات بتتعثر في المسافات والعربي.", "- **The terminal open on another folder**: commands run in the wrong place.\n- **A folder called “New sales project” in Arabic with spaces**: some tools stumble on spaces and Arabic."),
-          L("whennot", "لو مش عايز تستخدم الطرفية أصلًا، فيه تطبيق ديسكتوب رسمي لـ Claude Code بواجهة رسومية ([[w2]]).", "If you don’t want the terminal at all, there’s an official Claude Code desktop app with a graphical interface ([[w2]])."),
-        ],
-      },
-    },
-    {
-      id: "w2", unit: "u3", pages: [27], diff: 2, min: 8, scene: "claude", related: ["w1", "p10", "g2"], pre: ["w1"],
-      title: { ar: "المساعد البرمجي Claude Code", en: "The coding assistant: Claude Code" },
-      sum: { ar: "بيقرأ مشروعك ويكتب الملفات ويشغّل الأوامر ويصلح الأخطاء؛ إنت بتراجع وتوافق. ومعاه CLAUDE.md و Prompt «الخطة قبل التنفيذ» وتلات ضوابط أمان.", en: "It reads your project, writes files, runs commands and fixes errors; you review and approve. Plus CLAUDE.md, the “plan before executing” prompt and three security controls." },
-      book: [
-        bp(27, "**((claude_code|Claude Code))** أداة برمجة من Anthropic بتشتغل في الطرفية أو جوّه المحرر، بتقرأ مشروعك كله وبتكتب الملفات وبتشغّل الأوامر وبتصلح أخطاءها لوحدها — بالعربي أو بالإنجليزي.", "**((claude_code|Claude Code))** is a coding tool from Anthropic that runs in the terminal or inside the editor; it reads your whole project, writes files, runs commands and fixes its own errors — in Arabic or English."),
-        bp(27, "الفرق في موقعك إنت: في المحادثة العادية بيديك كود نصي فإنت بتنسخه وتلصقه وتشغّله وترجع بالخطأ — **إنت الوسيط في كل خطوة**. Claude Code بيقرأ المشروع وبيعمل الملفات ويعدّلها على طول ويشغّل الأمر ويشوف الخطأ ويصلحه ويعيد التشغيل. **إنت بتراجع وتوافق بس.**", "The difference is where you stand: in ordinary chat it gives you text code to copy, paste, run and bring back errors — **you’re the middleman at every step**. Claude Code reads the project, creates and edits files directly, runs the command, sees the error, fixes it and reruns. **You only review and approve.**"),
-        bp(27, "المتطلبات: ويندوز 10 (1809) فأحدث أو macOS 13 أو لينكس الشائعة · ذاكرة 4 جيجابايت أو أكتر واتصال ثابت · اشتراك Pro أو Max أو Team أو Enterprise أو حساب Console (الخطة المجانية مش شاملة). وفي تطبيق ديسكتوب رسمي بواجهة رسومية — الأنسب لمن بيبدأ من الصفر.", "Requirements: Windows 10 (1809)+ or macOS 13+ or common Linux · 4 GB RAM+ and a constant connection · a Pro, Max, Team or Enterprise plan or a Console account (the free plan doesn’t include it). There’s also an official desktop app with a GUI — best for complete beginners."),
-        bp(27, "أول جلسة: تأكد بـ claude --version · شخّص بـ claude doctor · ابدأ من مجلد المشروع بأمر claude · نفّذ /init فيعمل ملف CLAUDE.md · **ابدأ بطلب قراءة مش تعديل** · راجع كل تعديل قبل الموافقة، خصوصًا في أول أسبوع.", "First session: check with claude --version · diagnose with claude doctor · start from the project folder with claude · run /init to create CLAUDE.md · **start with a read request, not an edit** · review every change before approving, especially the first week."),
-        bp(27, "**((claude_md|CLAUDE.md))** — أهم ملف في مشروعك: ملف نصي في جذر المشروع بيتقرا أوتوماتيك في بداية كل جلسة، فيه التقنيات وقواعد الكتابة وأوامر التشغيل واللي ممنوع تلمسه. كتابته مرة واحدة بتوفرّ إنك تشرح المشروع تاني في كل محادثة.", "**((claude_md|CLAUDE.md))** — your project’s most important file: a text file at the project root read automatically at the start of every session, holding the tech, writing rules, run commands and what must not be touched. Writing it once saves re-explaining the project every chat."),
-        bp(27, "Prompt يومي — الخطة قبل التنفيذ: «قبل ما تكتب أي كود، اعرض عليّ خطتك: إيه الملفات وإيه التغيير وإيه المخاطر. استنى موافقتي. ولو بتصلح خطأ، شخّص السبب الحقيقي مش العرض…»", "Daily prompt — plan before executing: “Before writing any code, show me your plan: which files, what changes, what risks. Wait for my approval. If you’re fixing a bug, diagnose its real cause, not the symptom…”"),
-        bp(27, "تلات ضوابط أمان من أول يوم: شغّله في **مجلد مشروع خاص** مش في مجلد فيه ملفاتك الشخصية أو بيانات حساسة · **ماتفعّلش الموافقة التلقائية** على كل الأوامر في بداية تعلمك حتى لو أبطأ · **ماتكتبش كلمات المرور جوّه الملفات** — بتتقرا من ملف إعدادات منفصل مش بيتشارك.", "Three security controls from day one: run it in **a dedicated project folder**, not one with personal files or sensitive data · **don’t enable auto-approve** for all commands while learning, even if slower · **never put passwords in files** — read them from a separate settings file that isn’t shared."),
-      ],
-      levels: {
-        simple: [
-          L("what", "مساعد برمجي شغال جوّه مشروعك: تقول له إنت عايز إيه بالعربي، بيقرأ الملفات، ويكتب الكود، ويشغّله، ويصلح الخطأ لو ظهر — وإنت بتراجع اللي بيعمله وتوافق.\n\nتشبيه: الفرق بين إن حد يملي عليك رسالة في التليفون وإنت اللي تكتبها وتنقلها بنفسك، وبين إن مساعد يقعد معاك ويكتبها على الكمبيوتر وإنت بتراجع كل سطر قدامك.", "A coding assistant working inside your project: you say what you want in plain language; it reads files, writes code, runs it and fixes errors — while you review and approve.\n\nThe difference between someone dictating a letter by phone while you type it, and an assistant typing it on your PC while you read over their shoulder."),
-          L("why", "لأن أكبر عقبة قدام غير المبرمج مش الفكرة لكن التنفيذ: الكود يتحط فين؟ ليه الخطأ ده ظهر؟ Claude Code بيشيل العقبة دي، ويفضل دورك إنك توصف المطلوب وتراجع النتيجة.", "Because a non-programmer’s biggest obstacle isn’t the idea but execution: where does the code go? why this error? Claude Code removes that, leaving you to describe what you want and review the result."),
-        ],
-        mech: [
-          L("how", "دورة الشغل: يقرأ المشروع (وCLAUDE.md) ← يعرض خطته ← يستنى موافقتك ← يعدّل الملفات ← يشغّل الأمر ← يشوف النتيجة أو الخطأ ← يصلح السبب ← يعيد التشغيل. دي حلقة «وكيل» حقيقية ([[t1]]): هدف وأدوات وتكرار.", "The loop: read the project (and CLAUDE.md) → show its plan → wait for your approval → edit files → run the command → see the result or error → fix the cause → rerun. A real “agent” loop ([[t1]]): goal, tools, repetition."),
-          L("inside", "CLAUDE.md هو «الذاكرة الثابتة» للمشروع: كل جلسة جديدة بتبدأ من غير ما تفتكر اللي فات، فالملف بيرجع له التعليمات المهمة أوتوماتيك (التقنيات، أوامر التشغيل، الممنوعات). اكتبه مختصر وكل تعليمة فيه تقدر تتأكد منها.", "CLAUDE.md is the project’s “fixed memory”: each new session starts without recalling the last, so the file automatically restores the key instructions (tech, run commands, don’ts). Keep it short, every instruction checkable."),
-          L("link", "Claude Code تطور طبيعي للـ Prompt الذهبي ([[p10]]): بدل ما تلصق الكود وتختبره بنفسك، هو بيعمل ده، ومبدأ «خمس حالات اختبار» و«ماتلمسش الأصل» زي ما هو. وفي [[g2]] هيتعامل مع Git عنك.", "Claude Code is the natural evolution of the golden prompt ([[p10]]): instead of pasting and testing code yourself, it does it, while “five test cases” and “don’t touch originals” stay the same. In [[g2]] it handles Git for you."),
-        ],
-        practice: [
-          L("example", "**أول طلب**: «اشرح لي المشروع ده: إيه الملفات وإيه وظيفة كل واحد؟» (قراءة مش تعديل). **تاني طلب**: Prompt CLAUDE.md. **تالت طلب**: «عايز أضيف فلتر بالمنطقة. قبل أي كود اعرض خطتك واستنى موافقتي».", "**First request**: “Explain this project: what files and what each does?” (read, not edit). **Second**: the CLAUDE.md prompt. **Third**: “I want a region filter. Before any code, show your plan and wait for my approval.”"),
-          L("apply", "لو عندك اشتراك مناسب، نفّذ «أول جلسة» بخطواتها الست على مجلد تجريبي فاضي — مش على مجلد فيه ملفات شغل حقيقية.", "If you have a suitable plan, do the six-step first session on an empty trial folder — not on a folder with real work files."),
-        ],
-        adv: [
-          L("mistakes", "- **الموافقة على كل حاجة من غير قراءة**، أو تفعيل الموافقة التلقائية بدري.\n- **تشغيله في مجلد المستندات الشخصية**.\n- **تقبل «اتصلح» من غير ما تشغّل التطبيق وتتأكد** — الـ Prompt اليومي بيطلب التشغيل صراحة.", "- **Approving everything without reading**, or enabling auto-approve too early.\n- **Running it in your personal documents folder**.\n- **Accepting “fixed” without running the app to confirm** — the daily prompt explicitly asks to run it."),
-          L("whennot", "لمهمة إكسل صغيرة، الـ Prompt الذهبي والماكرو يكفوا ([[p10]]). استخدم Claude Code لما المشروع يبقى ملفات كتير وتشغيل واختبار متكرر.", "For a small Excel task, the golden prompt and a macro are enough ([[p10]]). Use Claude Code when the project is several files with repeated running and testing."),
+          L("whennot", "لو مش عايز تستخدم الطرفية أصلًا، فيه تطبيق ديسكتوب رسمي لـ Claude Code بواجهة رسومية ([[a5]]).", "If you don’t want the terminal at all, there’s an official Claude Code desktop app with a graphical interface ([[a5]])."),
         ],
       },
     },
@@ -225,7 +192,7 @@
         mech: [
           L("how", "البيانات بتتحرك في اتجاه واحد: **/data** (أصل ماتلمسهوش) ← **/backend** (بيقرأ ويحسب) ← **/frontend** (بيعرض) ← **/output** (بيصدّر). وCLAUDE.md بيحكم كل ده بقواعد المشروع. ملف تشغيل واحد بيشغّل الخادم وبيفتح المتصفح.", "Data flows one way: **/data** (untouchable originals) → **/backend** (reads and computes) → **/frontend** (displays) → **/output** (exports). CLAUDE.md governs it all with project rules. One launcher starts the server and opens the browser."),
           L("inside", "ليه «بيانات حقيقية مش وهمية»؟ البيانات الوهمية نضيفة ومثالية، فكل حاجة بتشتغل من أول مرة. البيانات الحقيقية فيها فراغات وتواريخ غريبة وأسماء أعمدة مختلفة — والتطبيق لازم يتبني لها.", "Why “real data, not fake”? Fake data is clean and ideal, so everything works first time. Real data has blanks, odd dates and different column names — and the app must be built for that."),
-          L("link", "ده المشروع المرجعي ([[y7]]) بس بواجهة تطبيق. المراحل التمانية بتجمع الخادم ([[w4]]) والواجهة ([[w3]]) وCLAUDE.md ([[w2]]) والتحقق ([[d2]]).", "This is the reference project ([[y7]]) with an app front. The eight stages combine the server ([[w4]]), the front-end ([[w3]]), CLAUDE.md ([[w2]]) and verification ([[d2]])."),
+          L("link", "ده المشروع المرجعي ([[y7]]) بس بواجهة تطبيق. المراحل التمانية بتجمع الخادم ([[w4]]) والواجهة ([[w3]]) وCLAUDE.md ([[a5]]) والتحقق ([[d2]]).", "This is the reference project ([[y7]]) with an app front. The eight stages combine the server ([[w4]]), the front-end ([[w3]]), CLAUDE.md ([[a5]]) and verification ([[d2]])."),
         ],
         practice: [
           L("example", "تطبيق «متابعة الأعطال» لقسم الصيانة: /data فيه ملف أعطال شهري حقيقي، الخادم بيحسب متوسط زمن الإصلاح لكل ماكينة، الواجهة بتعرض كروت ورسم وجدول مع فلتر الشهر والخط، ومهندس الصيانة بيطابق متوسط شهر واحد يدويًا قبل الاعتماد.", "A “breakdown tracker” for maintenance: /data holds a real monthly breakdown file, the server computes mean time to repair per machine, the UI shows cards, a chart and a table with month and line filters, and the maintenance engineer matches one month’s average by hand before adoption."),
@@ -247,7 +214,7 @@
         } },
     },
     {
-      id: "w6", unit: "u5", pages: [31], diff: 2, min: 7, related: ["w5", "w2", "p2"], pre: ["w5"],
+      id: "w6", unit: "u5", pages: [31], diff: 2, min: 7, related: ["w5", "a5", "p2"], pre: ["w5"],
       title: { ar: "Prompts التنفيذ وقائمة الاعتماد", en: "Execution prompts and the acceptance checklist" },
       sum: { ar: "خمس Prompts ورا بعض بتبني التطبيق، ست أسئلة قبل ما تعتمده، مسرد سريع، والدرس الأهم: الترتيب.", en: "Five sequential prompts that build the app, six questions before adopting it, a quick glossary, and the key lesson: order." },
       book: [

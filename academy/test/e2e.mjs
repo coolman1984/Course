@@ -399,7 +399,7 @@ await session({ label: "model-deck-ar", viewport: { width: 1360, height: 900 } }
   await page.click('#sec-big [data-aih-go="11"]'); await page.waitForTimeout(700);
   const bfinal = await page.$eval("#sec-big [data-aih-q]", (e) => e.dataset.final === "true" && /فرع/.test(e.textContent));
   const bart = await page.$eval('#sec-big .aih-slide[data-i="11"] .aih-svg', (v) => v.querySelectorAll("rect,circle,path,text").length > 8);
-  bn === 12 && /(^|\s)1 من 8/.test(bcrumb) && bfinal && bart ? ok("unit 4 deck: 12 slides open the unit (lesson 1 of 8) and end on the question its Office lessons answer") : fail(`unit 4 deck: ${bn} slides, crumb «${bcrumb}», final ${bfinal}, art ${bart}`);
+  bn === 12 && /(^|\s)1 من 7/.test(bcrumb) && bfinal && bart ? ok("unit 4 deck: 12 slides open the unit (lesson 1 of 7) and end on the question its Office lessons answer") : fail(`unit 4 deck: ${bn} slides, crumb «${bcrumb}», final ${bfinal}, art ${bart}`);
   const leftBuilt = await page.evaluate(async () => {   // leaving the page stops on-demand drawing: no SVGs are built in the detached deck afterwards
     location.hash = "lesson-f6"; await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
     const deck = document.querySelector("#sec-window"); const before = deck.querySelectorAll(".aih-svg").length;
@@ -520,18 +520,19 @@ await session({ label: "unit-3-projects", viewport: { width: 1280, height: 860 }
   const head = await page.$eval("#sec-proj", (e) => ({ steps: e.querySelectorAll(".xp-ladder li").length, on: e.querySelector(".xp-ladder li.on")?.textContent.trim(), zip: e.querySelector("[data-dl]")?.textContent.trim(), docs: e.querySelectorAll("details").length }));
   head.steps === 3 && /^1/.test(head.on) && head.zip === "Unit3_Example_1_Production_Dashboard.zip" && head.docs === 4 ? ok("unit 3 project: lesson a2 shows example 1 of the three downloads, with README, two Prompts and the key") : fail("unit 3 project head: " + JSON.stringify(head));
   const [d1] = await Promise.all([page.waitForEvent("download"), page.click("#sec-proj [data-dl]")]);
-  const z1 = await unzip(d1), weeks = z1.names.filter((n) => /\/Data\/Weekly_Exports\/Confirmations_W\d\d( \(1\))?\.xlsx$/.test(n)).length;
-  weeks === 14 && z1.names.some((n) => n.endsWith("Data/Masters.xlsx")) && ["Prompt_1.txt", "Prompt_2.txt", "README.txt", "Answer_Key.txt"].every((f) => z1.names.includes("Unit3_Example_1_Production_Dashboard/" + f)) && !z1.bad
-    ? ok(`unit 3 example 1: ${z1.names.length} files, 14 weekly exports (one downloaded twice), Masters, two Prompts, every CRC valid`) : fail(`example 1 zip: ${z1.names.join(", ")} bad ${z1.bad}`);
+  const z1 = await unzip(d1), weeks = z1.names.filter((n) => /\/Data\/Weekly_Reports\/Week_\d\d\.xlsx$/.test(n)).length;
+  weeks === 13 && z1.names.some((n) => n.endsWith("Data/Masters.xlsx")) && z1.names.includes("Unit3_Example_1_Production_Dashboard/Final_Result/Production_Q3_Final.xlsx") && ["Prompt_1.txt", "Prompt_2.txt", "README.txt", "Answer_Key.txt"].every((f) => z1.names.includes("Unit3_Example_1_Production_Dashboard/" + f)) && !z1.bad
+    ? ok(`unit 3 example 1: ${z1.names.length} files, 13 weekly reports, Masters, the finished workbook, two Prompts, every CRC valid`) : fail(`example 1 zip: ${z1.names.join(", ")} bad ${z1.bad}`);
   await page.evaluate(() => (location.hash = "lesson-a3")); await page.waitForSelector("#sec-proj .xp-card");
   const pdfBtn = await page.$$eval("#sec-proj [data-f]", (b) => b.findIndex((x) => /Export_Sales_2026-08\.pdf/.test(x.textContent)));
   await page.click(`#sec-proj [data-f="${pdfBtn}"]`);
   const peek = await page.$eval("#sec-proj .xp-peek", (e) => e.textContent);
-  /Export Sales Summary - August 2026/.test(peek) && /\(continued\)/.test(peek) ? ok("unit 3 example 2: the PDF preview shows the report's text, page 2 included") : fail("PDF preview: " + peek.slice(0, 160));
+  /Export Sales - August 2026/.test(peek) && /CountryCode/.test(peek) && /NetSales/.test(peek) ? ok("unit 3 example 2: the PDF preview shows the report's title and its one table") : fail("PDF preview: " + peek.slice(0, 160));
   const [d2] = await Promise.all([page.waitForEvent("download"), page.click("#sec-proj [data-dl]")]);
   const z2 = await unzip(d2);
-  z2.names.filter((n) => n.endsWith(".pdf")).length === 6 && z2.names.filter((n) => n.endsWith(".docx")).length === 2 && z2.names.filter((n) => /\/Data\/Excel\/.*\.xlsx$/.test(n)).length === 4 && !z2.bad
-    ? ok("unit 3 example 2: 6 PDF reports, 2 Word memos and 4 workbooks, every CRC valid") : fail("example 2 zip: " + z2.names.join(", "));
+  const fin2 = ["Q3_Commercial_Final.xlsx", "Q3_Commercial_Review.pptx", "Q3_Commercial_Review.pdf"].every((f) => z2.names.includes("Unit3_Example_2_Commercial_Review/Final_Result/" + f));
+  z2.names.filter((n) => /\/Data\/PDF\/.*\.pdf$/.test(n)).length === 6 && z2.names.filter((n) => n.endsWith(".docx")).length === 2 && z2.names.filter((n) => /\/Data\/Excel\/.*\.xlsx$/.test(n)).length === 4 && fin2 && !z2.bad
+    ? ok("unit 3 example 2: 6 PDF reports, 2 Word memos, 4 workbooks and the finished workbook, deck and PDF, every CRC valid") : fail("example 2 zip: " + z2.names.join(", "));
   await page.evaluate(() => (location.hash = "lesson-a6")); await page.waitForSelector("#sec-proj .xp-card");
   const [d3] = await Promise.all([page.waitForEvent("download"), page.click("#sec-proj [data-dl]")]);
   const z3 = await unzip(d3);

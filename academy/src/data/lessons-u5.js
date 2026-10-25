@@ -5,7 +5,7 @@
   const L = (k, ar, en) => ({ k, ar, en });
   A.lessons = (A.lessons || []).concat([
     {
-      id: "g1", unit: "u5", pages: [32], diff: 1, min: 7, scene: "github", related: ["g2", "w2", "p8"], pre: ["w1"],
+      id: "g1", unit: "u5", pages: [32], diff: 1, min: 7, scene: "github", related: ["g2", "a5", "p8"], pre: ["w1"],
       title: { ar: "GitHub: ذاكرة مشروعك وسجل تاريخه", en: "GitHub: your project’s memory and history" },
       sum: { ar: "المشكلة اللي بيحلّها، والفرق بين Git وGitHub، وست فوايد، وسبعة مفاهيم بتشبيهات من المكتب، واستخدامات برّه البرمجة.", en: "The problem it solves, Git vs GitHub, six benefits, seven concepts with office analogies, and uses beyond programming." },
       book: [
@@ -23,7 +23,7 @@
         ],
         mech: [
           L("how", "بدل ما تنسخ الملف بأسماء جديدة، Git بيحتفظ بملف واحد وبيخزّن وراه **سلسلة نقاط حفظ**. كل نقطة عارفة اللي قبلها، وعندها رسالة وتاريخ وصاحب. الفرع (Branch) سلسلة جانبية بتجرّب فيها، ولو نجحت بتدمجها (Merge) في الرئيسية.", "Instead of copying the file under new names, Git keeps one file and stores **a chain of saved points** behind it. Each point knows its predecessor and has a message, date and author. A branch is a side chain for experiments; if it works you merge it into the main one."),
-          L("link", "نفس فكرة «توثيق القرارات» في المحاضر ([[p5]])، ونفس «العمل على نسخة» ([[p10]]) بس بأمان أكبر: الفرع نسخة تجريبية مش بتأذّي الأصل. وClaude Code بيقرأ التاريخ ده ([[w2]]).", "Same idea as documenting decisions in minutes ([[p5]]), and “work on a copy” ([[p10]]) but safer: a branch is a trial copy that can’t hurt the original. Claude Code reads this history ([[w2]])."),
+          L("link", "نفس فكرة «توثيق القرارات» في المحاضر ([[p5]])، ونفس «العمل على نسخة» ([[p10]]) بس بأمان أكبر: الفرع نسخة تجريبية مش بتأذّي الأصل. وClaude Code بيقرأ التاريخ ده ([[a5]]).", "Same idea as documenting decisions in minutes ([[p5]]), and “work on a copy” ([[p10]]) but safer: a branch is a trial copy that can’t hurt the original. Claude Code reads this history ([[a5]])."),
         ],
         practice: [
           L("example", "قسم الجودة بيحط «إجراءات الفحص» في مستودع على GitHub. لما مهندس يعدّل بند، بيفتح Pull Request والمدير بيراجع ويوافق، وفي السجل بيفضل: مين غيّر البند 4.2 وإمتى وليه — مفيد جدًا في المراجعات والتدقيق.", "Quality puts its “inspection procedures” in a GitHub repository. When an engineer edits a clause they open a pull request, the manager reviews and approves, and the log keeps who changed clause 4.2, when and why — very useful in audits."),
@@ -36,7 +36,7 @@
       },
     },
     {
-      id: "g2", unit: "u5", pages: [33], diff: 2, min: 8, scene: "gitflow", lab: "git", related: ["g1", "w2", "w5"], pre: ["g1"],
+      id: "g2", unit: "u5", pages: [33], diff: 2, min: 8, scene: "gitflow", lab: "git", related: ["g1", "a5", "w5"], pre: ["g1"],
       title: { ar: "GitHub عمليًا: الأوامر ودورة الشغل", en: "GitHub in practice: commands and workflow" },
       sum: { ar: "اتناشر أمر بيغطّوا 99% من الاستخدام: الإعداد، والدورة اليومية، والفروع والتراجع، والأخطاء الشائعة، و Prompt يغنيك عن حفظ الأوامر.", en: "Twelve commands cover 99% of use: setup, the daily cycle, branches and undo, common mistakes, and a prompt that saves memorising them." },
       book: [
@@ -56,7 +56,7 @@
         mech: [
           L("how", "في تلات «مناطق»: **منطقة الشغل** (ملفاتك زي ما بتعدّلها) ← add ← **منطقة التجهيز** (اللي اخترته للحفظ) ← commit ← **التاريخ المحلي** ← push ← **GitHub**. عشان كده commit مش بيحفظ حاجة لو ما عملتش add الأول — جرّبها في المختبر.", "There are three “areas”: **working area** (your files as you edit) → add → **staging area** (what you chose to save) → commit → **local history** → push → **GitHub**. That’s why commit saves nothing without add first — try it in the lab."),
           L("inside", "ليه push بيترفض أحيانًا؟ لأن زميلك رفع تعديلات إنت معاكش. الحل: pull الأول عشان يدمج شغله مع شغلك، وبعدها push. عشان كده الكتاب بيقول pull في أول كل يوم.", "Why is a push sometimes rejected? A teammate pushed changes you don’t have. The fix: pull first to merge their work with yours, then push. Hence the book’s advice to pull every morning."),
-          L("link", "الـ Prompt هنا بيخلي Claude Code ([[w2]]) يدير Git عنك، ودورك يفضل إنك تفهم إيه اللي بيحصل وتوافق — نفس فلسفة الكتاب في كل أبوابه.", "The prompt here makes Claude Code ([[w2]]) run Git for you, leaving you to understand and approve — the book’s philosophy everywhere."),
+          L("link", "الـ Prompt هنا بيخلي Claude Code ([[a5]]) يدير Git عنك، ودورك يفضل إنك تفهم إيه اللي بيحصل وتوافق — نفس فلسفة الكتاب في كل أبوابه.", "The prompt here makes Claude Code ([[a5]]) run Git for you, leaving you to understand and approve — the book’s philosophy everywhere."),
         ],
         practice: [
           L("example", "في [[git|مختبر Git]]: اضغط «عدّل ملف» ← status ← add ← اكتب رسالة واضحة ← commit ← push. بعدين افتح فرع `feature-chart`، احفظ عليه نقطة، ارجع لـ main وادمج. في الآخر اضغط «زميل يرفع تعديل» وحاول push — هيترفض لحد ما تعمل pull.", "In the [[git|Git lab]]: “Edit a file” → status → add → write a clear message → commit → push. Then open `feature-chart`, commit on it, go back to main and merge. Finally press “a teammate pushes” and try push — it’s rejected until you pull."),
@@ -276,7 +276,7 @@
         mech: [
           L("how", "**حلقة الوكيل**: هدف ← يخطط ← يستخدم أداة ← يشوف النتيجة ← يصحّح ← يكرر لحد النجاح أو الحد. **في الفريق**: المنسق بيقسّم المهمة، والوكلاء بينفّذوا بأدوار وصلاحيات محدودة، والمراجع بيرجّع الشغل لو في ثغرات، والمنفذ بيستنى موافقة الإنسان.", "**The agent loop**: goal → plan → use a tool → observe → correct → repeat until success or the limit. **In a team**: the coordinator splits the task, agents act with limited roles and permissions, the critic returns work with gaps, and the executor waits for human approval."),
           L("inside", "ليه «المنفذ والناقد» بينجح؟ لأن المراجعة من «عين تانية» بتكسر ميل المنفّذ يأكّد شغله — نفس فكرة «ما توافقني تلقائي» ([[p7]]) بس بين وكيلين. والحد الأقصى دورتين أو تلات، وبعدها الباقي يروح للإنسان.", "Why does “executor and critic” work? Review by “another pair of eyes” breaks the doer’s tendency to confirm its own work — the same idea as “don’t agree with me automatically” ([[p7]]) but between two agents. The cap is two or three rounds, then the rest goes to a human."),
-          L("link", "دي الدرجة التامنة في سلّم [[f2]]، وامتداد للوكيل اللي شفته في [[f7]]، واللي بيتولّى طبقة «الذكاء» في النظام ([[s1]]). Claude Code نفسه وكيل حقيقي ([[w2]]).", "This is step eight on the [[f2]] ladder, an extension of the agent in [[f7]], and the team that takes on the system’s “intelligence” layer ([[s1]]). Claude Code itself is a real agent ([[w2]])."),
+          L("link", "دي الدرجة التامنة في سلّم [[f2]]، وامتداد للوكيل اللي شفته في [[f7]]، واللي بيتولّى طبقة «الذكاء» في النظام ([[s1]]). Claude Code نفسه وكيل حقيقي ([[a5]]).", "This is step eight on the [[f2]] ladder, an extension of the agent in [[f7]], and the team that takes on the system’s “intelligence” layer ([[s1]]). Claude Code itself is a real agent ([[a5]])."),
         ],
         practice: [
           L("example", "تقرير المبيعات الأسبوعي بفريق من تلاتة: **الجامع** بيقرأ ملفات الفروع (قراءة بس) ← **المحلل** بيحسب الإجماليات والانحرافات ← **المراجع** بيتأكد إن مجموع الفروع بيطابق الإجمالي وإن لكل رقم مصدر، وبيرجّع الشغل للمحلل لو في غلط — بعدين إنسان أو محرر بيكتب الملخص ويوافق على الإرسال.", "The weekly sales report with a team of three: the **collector** reads branch files (read-only) → the **analyst** computes totals and deviations → the **critic** checks branch sums match the total and every number has a source, returning work to the analyst on error — then a human or editor writes the summary and approves sending."),

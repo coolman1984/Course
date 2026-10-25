@@ -22,6 +22,10 @@ let css = (read("styles.css") + "\n" + read("motion.css") + "\n" + read("history
 const pages = {};
 for (const f of readdirSync(join(src, "pages")).filter((x) => /^p\d+\.webp$/.test(x)).sort()) pages[Number(f.slice(1, 3))] = "data:image/webp;base64," + b64("pages/" + f);
 
+// the unit-3 examples' finished results (academy/tools/make-finals.py), offered inside each example's zip
+const finals = {};
+for (const f of readdirSync(join(src, "finals")).sort()) finals[f] = b64("finals/" + f);
+
 const guard = (s) => s.replace(/<\/script/gi, "<\\/script");
 const dataJs = DATA.map((f) => `/* ${f} */\n${read(f)}`).join("\n");
 const engineJs = ENGINE.map((f) => `/* ${f} */\n${read(f)}`).join("\n");
@@ -49,6 +53,7 @@ const body = `<a class="skip" href="#main" onclick="event.preventDefault();docum
 <div class="scrim" id="scrim"></div>
 <noscript><div style="padding:24px">هذه الأكاديمية تحتاج تفعيل JavaScript. — This academy needs JavaScript enabled.</div></noscript>
 <script type="application/json" id="book-pages">${JSON.stringify(pages)}</script>
+<script type="application/json" id="final-files">${JSON.stringify(finals)}</script>
 <script>${guard(dataJs)}</script>
 <script>${guard(engineJs)}</script>
 <script>${boot}</script>`;
@@ -67,4 +72,4 @@ writeFileSync(out, html);
 const fi = process.argv.indexOf("--fragment");
 if (fi > 0 && process.argv[fi + 1]) writeFileSync(process.argv[fi + 1], `${head.replace('<meta charset="utf-8">\n', "").replace(/<meta name="viewport"[^>]*>\n/, "")}\n${body}\n`);
 const kb = (n) => (n / 1024).toFixed(0) + " KB";
-console.log(`Built ${out} — ${kb(Buffer.byteLength(html))} (pages ${Object.keys(pages).length}, css ${kb(css.length)}, data ${kb(dataJs.length)}, engine ${kb(engineJs.length)})`);
+console.log(`Built ${out} — ${kb(Buffer.byteLength(html))} (pages ${Object.keys(pages).length}, finals ${Object.keys(finals).length}, css ${kb(css.length)}, data ${kb(dataJs.length)}, engine ${kb(engineJs.length)})`);

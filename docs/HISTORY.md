@@ -132,9 +132,17 @@ download complete (`data/office-projects.js`), and the last two lessons make the
 | 5 | a5 Claude Code in detail: web and PC, abilities, models and levels of thinking | — | «إمتى أستخدم Claude Code، وفين، وبأنهي موديل ومستوى تفكير؟» |
 | 6 | a6 Skills: work that succeeded repeats with one command | `Unit3_Skills_Kit.zip` | «إزاي الشغل اللي نجح مرة يتكرر بنفس الجودة كل مرة؟» |
 
-Example 1 plants title lines above the header, an export downloaded twice, blank markets, a new model and a new market
-missing from the two-column masters. Example 2 plants a June invoice and credit notes, months as columns, a sheet named
-September, PDFs that run onto page 2 with a credit note in brackets, models named in a Word memo, and targets in
-thousands. The kit writes real PDFs and Word files in the page, and a data test reads them back. Unit 2 now ends on the
+The kit writes real PDFs and Word files in the page, and a data test reads them back. Unit 2 now ends on the
 dashboard question; unit 3 ends on the file bigger than Excel, and the former unit 3 (b1 …) opens unit 4. Course plan 5
 clears the old unit 3 and 4 quiz scores once.
+
+## Unit 3, simplified (October)
+The old Claude Code basics lesson (w2) left unit 4: its book points now sit in a5 and a6, and its two quiz questions and
+prompts moved to a5. Both unit-3 examples were rebuilt clean, on request, so the lessons teach the method itself: 13
+weekly reports with the same columns are stacked into one big sheet, two columns are added with VLOOKUP (the model name
+and the country name, from a two-column Masters file), and the sheet becomes pivot tables, a report, charts and a
+dashboard. Example 2 gathers three branch workbooks, six one-table PDFs and two Word memos into Sales (with the same two
+VLOOKUPs), Shipments, Returns and Targets, checks shipped against sold, and ends in an 8-slide deck. Each download now
+holds its finished result in `Final_Result/` so learners can see the end before and after they build; the files are built
+by `academy/tools/make-finals.py`. Decks a1–a4, their drawings, questions and summaries were rewritten for the new figures.
+

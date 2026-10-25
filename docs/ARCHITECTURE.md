@@ -24,6 +24,12 @@ injects `src/ai-guide.txt` as `<script type="text/plain" id="ai-guide">` right a
 within the first ~250 characters of the file, so a chat model that reads only the start of a large upload still finds it.
 CI fails if the guide moves past character 2000.
 
+It also embeds unit 3's finished results, `src/finals/*` (the two examples' final workbooks, deck and PDF), as base64 in
+`<script type="application/json" id="final-files">`; `office-projects.js` adds them to each zip under `Final_Result/`, and
+`xlkit.js` writes them as they are. They are built offline, not in the page: `python3 academy/tools/make-finals.py` drives
+LibreOffice (UNO) and python-pptx from the same seeded data (`academy/tools/export-data.mjs`). Rerun it when a unit-3
+generator or figure changes; `data.test.mjs` reads the files back and fails if they disagree with `expected()`.
+
 ## Data model (`window.ACADEMY`)
 
 | Key | File | Notes |

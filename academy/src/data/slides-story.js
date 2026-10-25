@@ -1,8 +1,8 @@
 /* Example 2, part 2 — the story deck of lesson a4 (unit 3), on Unit3_Example_2_Commercial_Review.
    The planning engineer carries every slide with one question: «إزاي جدول البيانات يبقى عرض باوربوينت جاهز، وكل رقم فيه مظبوط؟».
-   The deck builds the review from the Fact table: the rates computed in pivot tables, the check before the deck, the
+   The deck builds the review from Q3_Commercial_DB: the rates computed in pivot tables, the check before the deck, the
    outline approved first, PowerPoint driven like Excel and Word, charts pasted as pictures, numbers read from the tables,
-   the empty slide for the director, one decimal place, the test that changes a figure, and the PDF copy. Figures are
+   the empty slide for the director, one decimal place, the test that changes a figure, and the PDF copy beside the finished result. Figures are
    the project's own. Drawings are the pp_* entries in engine/history.js. */
 "use strict";
 (function (A) {
@@ -11,8 +11,8 @@
     id: "pdeck", lesson: "a4",
     kicker: u("المثال التاني · الجزء التاني · الحكاية في ٨ دقايق", "Example 2 · part two · the story in 8 minutes"),
     title: u("من جدول البيانات لعرض باوربوينت بيتعمل لوحده", "From the data table to a PowerPoint deck that builds itself"),
-    lead: u("جدول Fact جاهز ومراجَع على ١٢ ملف، والاجتماع يوم الأحد. في الحكاية دي مهندس التخطيط بيخلّي الأداة تعمل الجداول والرسوم والعرض، وكل رقم في الشرايح يبقى نفس رقم الإكسل.",
-      "The Fact table is ready and checked against 12 files, and the meeting is on Sunday. In this story the planning engineer has the tool make the tables, the charts and the deck, with every number on the slides the same as in Excel."),
+    lead: u("ملف Q3_Commercial_DB جاهز ومراجَع على ١١ ملف، والاجتماع يوم الأحد. في الحكاية دي مهندس التخطيط بيخلّي الأداة تعمل الجداول والرسوم والعرض، وكل رقم في الشرايح يبقى نفس رقم الإكسل.",
+      "Q3_Commercial_DB is ready and checked against 11 files, and the meeting is on Sunday. In this story the planning engineer has the tool make the tables, the charts and the deck, with every number on the slides the same as in Excel."),
     answerLabel: u("القاعدة، وليه؟", "The rule, and why"),
     ideaLabel: u("الفكرة في جملة", "The idea in one line"),
     question: u("إزاي جدول البيانات يبقى عرض باوربوينت جاهز، وكل رقم فيه مظبوط؟", "How does the data table become a ready PowerPoint deck with every number right?"),
@@ -32,26 +32,26 @@
         title: u("العرض اليدوي: يوم كامل، ونسخة قديمة في النص", "The hand-made deck: a whole day, and an old version in the middle"),
         story: [u("الربع اللي فات، العرض اتعمل بالإيد: جدول في إكسل، ورسم، ونسخ، ولصق في باوربوينت، وكتابة الأرقام في الشرايح. يوم كامل. وفي الاجتماع حد لاحظ إن رقم التصدير في الشريحة ٣ مختلف عن الشريحة ٥: واحد اتنسخ من نسخة قديمة.",
           "Last quarter the deck was made by hand: a table in Excel, a chart, copy, paste into PowerPoint, typing the numbers on the slides. A whole day. In the meeting someone noticed the export figure on slide 3 differed from slide 5: one was copied from an old version."),
-        u("المرة دي عند مهندس التخطيط جدول Fact مراجَع. الفكرة إن كل حاجة في العرض تتبني منه بأداة: الأرقام والرسوم والشرايح. والسؤال اللي ماشي معانا: إزاي جدول البيانات يبقى عرض باوربوينت جاهز، وكل رقم فيه مظبوط؟",
-          "This time the planning engineer has a checked Fact table. The idea is that everything in the deck is built from it by a tool: the numbers, the charts and the slides. The question we carry: how does the data table become a ready PowerPoint deck with every number right?")],
+        u("المرة دي عند مهندس التخطيط ملف Q3_Commercial_DB مراجَع. الفكرة إن كل حاجة في العرض تتبني منه بأداة: الأرقام والرسوم والشرايح. والسؤال اللي ماشي معانا: إزاي جدول البيانات يبقى عرض باوربوينت جاهز، وكل رقم فيه مظبوط؟",
+          "This time the planning engineer has a checked Q3_Commercial_DB workbook. The idea is that everything in the deck is built from it by a tool: the numbers, the charts and the slides. The question we carry: how does the data table become a ready PowerPoint deck with every number right?")],
         answer: u("ابني العرض من مصدر واحد مراجَع، مش من نسخ متفرقة. لأن رقمين مختلفين لنفس الحاجة في عرض واحد بيضيّعوا الثقة في كل الأرقام.", "Build the deck from one checked source, not from scattered copies — two different numbers for the same thing in one deck destroy trust in every number."),
         idea: u("مصدر واحد… ولا رقمين مختلفين.", "One source… never two different numbers.")
       },
       {
         id: "rates", art: "pp_rates", year: u("الحساب", "Calculation"), mark: u("٠٢", "02"), era: u("في الجدول المحوري", "In the pivot table"),
         title: u("النسب بتتحسب في الجدول المحوري، مش في الشريحة", "The rates are worked out in the pivot table, not on the slide"),
-        story: [u("المدير عايز ٣ نسب: التحقيق = المبيعات ÷ المستهدف، والنولون للجهاز = FreightEGP ÷ ShippedUnits، ونسبة المرتجعات = ReturnUnits ÷ SalesQty. الأداة بتحسبهم جوّه الجداول المحورية من Fact، مش في الشريحة ولا في الآلة الحاسبة.",
-          "The director wants 3 rates: achievement = sales ÷ target, freight per set = FreightEGP ÷ ShippedUnits, and the return rate = ReturnUnits ÷ SalesQty. The tool works them out inside the pivot tables from Fact, not on the slide and not on a calculator."),
-        u("والنتيجة: الإسكندرية ١٠٦٫٢٪، والتصدير ١٠٣٫٢٪، والقاهرة ٩٦٫٦٪، والدلتا ٩١٫١٪. والنولون للجهاز: ١٩ جنيه في القاهرة، و١٧٩ في التصدير. كل نسبة ليها مكان واحد بتتحسب فيه، فلو البيانات اتغيّرت، النسبة تتغيّر في كل مكان مع بعض.",
-          "The result: Alexandria 106.2%, export 103.2%, Cairo 96.6%, Delta 91.1%. And freight per set: EGP 19 in Cairo, 179 for export. Every rate has one place where it's worked out, so if the data changes, the rate changes everywhere together.")],
+        story: [u("المدير عايز ٣ نسب: التحقيق = المبيعات ÷ المستهدف، والنولون للجهاز = FreightEGP ÷ Units، ونسبة المرتجعات = المرتجعات ÷ المباع. الأداة بتحسبهم جوّه الجداول المحورية من شيتات الملف، مش في الشريحة ولا في الآلة الحاسبة.",
+          "The director wants 3 rates: achievement = sales ÷ target, freight per set = FreightEGP ÷ Units, and the return rate = returns ÷ sold. The tool works them out inside the pivot tables from the workbook's sheets, not on the slide and not on a calculator."),
+        u("والنتيجة: الإسكندرية ١٠٨٫٦٪، والتصدير ١٠٣٫٠٪، والقاهرة ٩٦٫٦٪، والدلتا ٩١٫٨٪. والنولون للجهاز: ١٩٫٣ جنيه في القاهرة، و١٢٥٫٣ في التصدير. كل نسبة ليها مكان واحد بتتحسب فيه، فلو البيانات اتغيّرت، النسبة تتغيّر في كل مكان مع بعض.",
+          "The result: Alexandria 108.6%, export 103.0%, Cairo 96.6%, Delta 91.8%. And freight per set: EGP 19.3 in Cairo, 125.3 for export. Every rate has one place where it's worked out, so if the data changes, the rate changes everywhere together.")],
         answer: u("أي حساب يتعمل مرة واحدة في مكان واحد، وكل حاجة تقرا منه. لأن الحساب اللي بيتكرر في أكتر من مكان بيختلف أول ما مكان يتعدّل.", "Do any calculation once, in one place, and have everything read from it — a calculation repeated in several places diverges the moment one place is edited."),
         idea: u("كل نسبة ليها بيت واحد.", "Every rate has one home.")
       },
       {
         id: "check", art: "pp_check", year: u("المراجعة", "The check"), mark: u("٠٣", "03"), era: u("قبل العرض", "Before the deck"),
-        title: u("المراجعة قبل الشرايح: الجدول المحوري = Fact", "The check before the slides: the pivot table = Fact"),
-        story: [u("زي الداشبورد بالظبط: قبل ما الأداة تفتح باوربوينت، بتقارن مجموع NetSalesEGP في الجدول المحوري بمجموعه في Fact: ٢٩٨٬١٠٣٬٩٥٠ جنيه في الاتنين. ولو مختلفين، توقف وتكتب الفرق، والعرض ما يتعملش أصلًا.",
-          "Exactly as with the dashboard: before the tool opens PowerPoint, it compares the sum of NetSalesEGP in the pivot table with its sum in Fact: EGP 298,103,950 in both. If they differ, it stops and writes the difference, and the deck isn't made at all."),
+        title: u("المراجعة قبل الشرايح: الجدول المحوري = شيت Sales", "The check before the slides: the pivot table = the Sales sheet"),
+        story: [u("زي الداشبورد بالظبط: قبل ما الأداة تفتح باوربوينت، بتقارن مجموع NetSales في الجدول المحوري بمجموعه في شيت Sales: ٣٢٩٬٦٤٥٬٩٧٠ جنيه في الاتنين. ولو مختلفين، توقف وتكتب الفرق، والعرض ما يتعملش أصلًا.",
+          "Exactly as with the dashboard: before the tool opens PowerPoint, it compares the sum of NetSales in the pivot table with its sum in the Sales sheet: EGP 329,645,970 in both. If they differ, it stops and writes the difference, and the deck isn't made at all."),
         u("ليه توقف بدل ما تعمل العرض وتنبّه؟ لأن العرض بيتبعت. لو اتعمل بالرقم الغلط ووصل لإيميل الإدارة، التصحيح بعد كده بيبقى إيميل اعتذار. أما الأداة اللي ما بتطلّعش عرض غير لما الأرقام تتطابق، فبتحمي العرض نفسه.",
           "Why stop rather than make the deck and warn? Because decks get sent. Made with the wrong figure and landed in management's inbox, the correction afterwards becomes an apology e-mail. A tool that produces no deck until the figures match protects the deck itself.")],
         answer: u("خلّي الأداة ما تطلّعش الناتج اللي هيتبعت غير بعد ما المراجعة تعدّي. لأن الغلطة اللي اتبعتت أغلى بكتير من الغلطة اللي اتمسكت.", "Have the tool produce nothing that will be sent until the check passes — a mistake that was sent costs far more than one that was caught."),
@@ -90,18 +90,18 @@
       {
         id: "numbers", art: "pp_numbers", year: u("الأرقام", "Numbers"), mark: u("٠٧", "07"), era: u("من الجدول", "From the table"),
         title: u("كل رقم في الشرايح بيتقري من الجدول المحوري", "Every number on the slides is read from the pivot table"),
-        story: [u("الشريحة ٣ فيها رسم المبيعات قصاد المستهدف، وتحته ٤ أرقام: الإسكندرية ١٠٦٫٢٪، والتصدير ١٠٣٫٢٪، والقاهرة ٩٦٫٦٪، والدلتا ٩١٫١٪. الأداة ما كتبتش الأرقام دي من الـ Prompt ولا من ذاكرتها: قرتها من الجدول المحوري لحظة ما عملت الشريحة.",
-          "Slide 3 holds the sales-against-target chart, and under it 4 numbers: Alexandria 106.2%, export 103.2%, Cairo 96.6%, Delta 91.1%. The tool didn't write these numbers from the Prompt or from memory: it read them from the pivot table the moment it made the slide."),
-        u("ده الفرق بين أداة بتطلّع عرض وعرض اتكتب مرة. لو البيانات اتغيّرت (إشعار دائن اتأخر، أو مستهدف اتعدّل)، الأداة تتشغّل تاني والأرقام كلها تتغيّر صح. ومفيش رقم في العرض يقدر يختلف عن الإكسل.",
-          "That's the difference between a tool that produces a deck and a deck written once. If the data changes (a late credit note, a revised target), the tool runs again and every number changes correctly. And no number in the deck can ever differ from Excel.")],
+        story: [u("الشريحة ٣ فيها رسم المبيعات قصاد المستهدف، وتحته ٤ أرقام: الإسكندرية ١٠٨٫٦٪، والتصدير ١٠٣٫٠٪، والقاهرة ٩٦٫٦٪، والدلتا ٩١٫٨٪. الأداة ما كتبتش الأرقام دي من الـ Prompt ولا من ذاكرتها: قرتها من الجدول المحوري لحظة ما عملت الشريحة.",
+          "Slide 3 holds the sales-against-target chart, and under it 4 numbers: Alexandria 108.6%, export 103.0%, Cairo 96.6%, Delta 91.8%. The tool didn't write these numbers from the Prompt or from memory: it read them from the pivot table the moment it made the slide."),
+        u("ده الفرق بين أداة بتطلّع عرض وعرض اتكتب مرة. لو البيانات اتغيّرت (فاتورة اتأخرت، أو مستهدف اتعدّل)، الأداة تتشغّل تاني والأرقام كلها تتغيّر صح. ومفيش رقم في العرض يقدر يختلف عن الإكسل.",
+          "That's the difference between a tool that produces a deck and a deck written once. If the data changes (a late invoice, a revised target), the tool runs again and every number changes correctly. And no number in the deck can ever differ from Excel.")],
         answer: u("الأداة تكتب الأرقام في الشرايح من الجدول وقت التشغيل، مش من نص ثابت. لأن الرقم الثابت في الكود بيفضل زي ما هو والبيانات بتتغيّر.", "The tool writes the numbers on the slides from the table at run time, not from fixed text — a number fixed in the code stays put while the data changes."),
         idea: u("الشريحة بتقرا… ما بتحفظش.", "The slide reads… it doesn't memorise.")
       },
       {
         id: "empty", art: "pp_empty", year: u("الشريحة ٨", "Slide 8"), mark: u("٠٨", "08"), era: u("للنقاش", "For discussion"),
         title: u("الشريحة الأخيرة فاضية… عن قصد", "The last slide is empty… on purpose"),
-        story: [u("النموذج اقترح يكتب في الشريحة ٨: «التوصيات: زيادة الحوافز في الدلتا، وتقليل الشحن البحري». مهندس التخطيط رفض. الأرقام بتقول إن الدلتا ٩١٫١٪؛ ليه، وهنعمل إيه، ده رأي، والرأي بتاع المدير التجاري واللي بيعرفوا السوق.",
-          "The model offered to write on slide 8: “Recommendations: raise incentives in Delta, cut sea freight.” The planning engineer refused. The numbers say Delta is at 91.1%; why, and what to do, is opinion, and the opinion belongs to the commercial director and those who know the market."),
+        story: [u("النموذج اقترح يكتب في الشريحة ٨: «التوصيات: زيادة الحوافز في الدلتا، وتقليل الشحن البحري». مهندس التخطيط رفض. الأرقام بتقول إن الدلتا ٩١٫٨٪؛ ليه، وهنعمل إيه، ده رأي، والرأي بتاع المدير التجاري واللي بيعرفوا السوق.",
+          "The model offered to write on slide 8: “Recommendations: raise incentives in Delta, cut sea freight.” The planning engineer refused. The numbers say Delta is at 91.8%; why, and what to do, is opinion, and the opinion belongs to the commercial director and those who know the market."),
         u("فاكر درس العرض الإداري في الكتاب؟ «خلط الأدوار هو الغلطة القاتلة». الأداة مسؤولة عن صحة الأرقام، والمدير مسؤول عن القرار. فالشريحة ٨ عنوانها «للنقاش» وفاضية، والمدير بيكتب فيها بإيده قبل الاجتماع.",
           "Remember the book's management-pitch lesson? “Mixing roles is the fatal mistake.” The tool is responsible for the numbers being right, and the director for the decision. So slide 8 is titled “For discussion” and left empty, and the director writes on it himself before the meeting.")],
         answer: u("خلّي الأداة تعرض أرقام مراجَعة بس، وسيب الاستنتاج والقرار لصاحبه. لأن رأي مكتوب بثقة جوّه عرض رسمي بيبان كأنه قرار حد اتخذه.", "Have the tool show checked figures only, and leave the conclusion and decision to their owner — an opinion written confidently in an official deck looks like someone's decision."),
@@ -109,9 +109,9 @@
       },
       {
         id: "decimal", art: "pp_decimal", year: u("التفاصيل", "Details"), mark: u("٠٩", "09"), era: u("خانة واحدة", "One decimal"),
-        title: u("٢٫٥٥٨١٤٠٪ في الشريحة ٧", "2.558140% on slide 7"),
-        story: [u("أول عرض طلع في دقيقتين. مهندس التخطيط قرا كل شريحة قصاد مفتاح الإجابة، ولقى في الشريحة ٧ نسبة مرتجعات M110 مكتوبة ٢٫٥٥٨١٤٠٪. الرقم صح، بس شكله بيقول «محدش راجع». والمفتاح بيقول ٢٫٦٪.",
-          "The first deck came out in two minutes. The planning engineer read every slide against the answer key, and on slide 7 found M110's return rate written as 2.558140%. The figure is right, but it looks as if nobody checked. And the key says 2.6%."),
+        title: u("٢٫٣٧٤٣٠١٪ في الشريحة ٧", "2.374301% on slide 7"),
+        story: [u("أول عرض طلع في دقيقتين. مهندس التخطيط قرا كل شريحة قصاد مفتاح الإجابة، ولقى في الشريحة ٧ نسبة مرتجعات M110 مكتوبة ٢٫٣٧٤٣٠١٪. الرقم صح، بس شكله بيقول «محدش راجع». والمفتاح بيقول ٢٫٤٪.",
+          "The first deck came out in two minutes. The planning engineer read every slide against the answer key, and on slide 7 found M110's return rate written as 2.374301%. The figure is right, but it looks as if nobody checked. And the key says 2.4%."),
         u("رجع لنفس المحادثة: «كل النسب بخانة عشرية واحدة، والمبالغ بفاصل آلاف، وبالمليون في الشريحة ٢». التشغيل التاني طلع مظبوط. ومعاه حاجة صغيرة كمان: نفس الخط ونفس الألوان في كل الشرايح، زي ما الـ Prompt طلب.",
           "He went back to the same chat: “Every rate to one decimal place, amounts with thousands separators, and in millions on slide 2.” The second run came out right. With it came a small extra: the same font and colours on every slide, as the Prompt asked.")],
         answer: u("حدد شكل الأرقام في الـ Prompt: كام خانة عشرية، وفاصل الآلاف، والوحدة. لأن الرقم الصح بشكل غريب بيخلّي الناس تشك في كل العرض.", "Set the numbers' format in the Prompt: how many decimals, the thousands separator, and the unit — a right figure in an odd format makes people doubt the whole deck."),
@@ -120,8 +120,8 @@
       {
         id: "test", art: "pp_test", year: u("التجربة", "The test"), mark: u("١٠", "10"), era: u("غيّر رقم", "Change a figure"),
         title: u("غيّر رقم في نسخة… وشوف الشريحة تتغيّر", "Change a figure in a copy… and watch the slide change"),
-        story: [u("آخر اختبار قبل ما يبعت: في نسخة من الفولدر، فتح Fact وغيّر مبيعات الدلتا لشهر سبتمبر بزيادة مليون جنيه، وشغّل الأداة. العرض الجديد قال إن الدلتا بقت ٩٢٫٦٪ بدل ٩١٫١٪، والإجمالي في الشريحة ٢ زاد مليون. كل حاجة اتحركت مع بعض.",
-          "The last test before sending: in a copy of the folder he opened Fact, raised Delta's September sales by one million pounds, and ran the tool. The new deck said Delta was now at 92.6% instead of 91.1%, and the total on slide 2 rose by a million. Everything moved together."),
+        story: [u("آخر اختبار قبل ما يبعت: في نسخة من الفولدر، فتح شيت Sales وزوّد فاتورة دلتا في سبتمبر مليون جنيه، وشغّل الأداة. العرض الجديد قال إن الدلتا بقت ٩٣٫٤٪ بدل ٩١٫٨٪، والإجمالي في الشريحة ٢ زاد مليون. كل حاجة اتحركت مع بعض.",
+          "The last test before sending: in a copy of the folder he opened the Sales sheet, raised a Delta invoice in September by one million pounds, and ran the tool. The new deck said Delta was now at 93.4% instead of 91.8%, and the total on slide 2 rose by a million. Everything moved together."),
         u("الاختبار ده بيثبت حاجة المراجعة ما تثبتهاش: إن الأرقام في الشرايح مربوطة فعلًا بالبيانات، مش مكتوبة. ولما رجع الرقم لأصله، رجع العرض لأصله. دلوقتي يقدر يقول إن العرض ده هيتعمل صح الربع الجاي كمان.",
           "This test proves something the check doesn't: that the numbers on the slides are really tied to the data, not typed. When he put the figure back, the deck went back too. Now he can say this deck will be built correctly next quarter as well.")],
         answer: u("اختبر الأداة بتغيير رقم واحد في نسخة، وشوف هل الناتج اتغيّر بالظبط بقد التغيير. لأن ده الدليل إن الناتج مبني على البيانات مش منسوخ منها.", "Test the tool by changing one figure in a copy, and see whether the output changes by exactly that much — that's the proof the output is built on the data, not copied from it."),
@@ -132,8 +132,8 @@
         title: u("ملفين جنب بعض: العرض، ونسخة PDF", "Two files side by side: the deck, and a PDF copy"),
         story: [u("الأداة حفظت Q3_Commercial_Review.pptx وجنبه Q3_Commercial_Review.pdf. العرض للاجتماع وللي عايز يعدّل، والـ PDF للي هيقراه على الموبايل وهو رايح الاجتماع. ونفس السجل كتب: ٨ شرائح، و٦ رسوم، و٢٤ رقم اتقروا من الجداول المحورية.",
           "The tool saved Q3_Commercial_Review.pptx and beside it Q3_Commercial_Review.pdf. The deck for the meeting and for whoever wants to edit, the PDF for whoever reads it on a phone on the way to the meeting. The same log recorded: 8 slides, 6 charts, 24 numbers read from the pivot tables."),
-        u("المدير التجاري كتب في الشريحة ٨ تلات أسئلة للنقاش، والاجتماع خلص في نص ساعة بدل ساعتين. مفيش حد سأل «الرقم ده صح؟». والقسم التجاري كسب يوم كامل كل ربع، والأهم إنه كسب ثقة في الأرقام.",
-          "The commercial director wrote three questions for discussion on slide 8, and the meeting finished in half an hour instead of two. No one asked “is this number right?” The commercial department gained a whole day every quarter, and, more importantly, trust in the numbers.")],
+        u("وفي Final_Result نفس الملفين جاهزين، ومعاهم Q3_Commercial_Final.xlsx: مهندس التخطيط قارن عرضه بيهم شريحة شريحة، ونفس الأرقام. والمدير التجاري كتب في الشريحة ٨ تلات أسئلة، والاجتماع خلص في نص ساعة بدل ساعتين.",
+          "And Final_Result holds the same two files ready, with Q3_Commercial_Final.xlsx: the planning engineer compared his deck with them slide by slide, and the figures matched. The commercial director wrote three questions on slide 8, and the meeting finished in half an hour instead of two.")],
         answer: u("سلّم العرض بالشكل اللي كل قارئ محتاجه: ملف للتعديل وPDF للقراية. لأن العرض اللي ما بيتفتحش على الموبايل ما بيتقريش قبل الاجتماع.", "Deliver the deck in the form each reader needs: a file to edit and a PDF to read — a deck that won't open on a phone isn't read before the meeting."),
         idea: u("ملف للتعديل… وPDF للقراية.", "A file to edit… a PDF to read.")
       },

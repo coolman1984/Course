@@ -4,6 +4,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync, readdirSync } from "node:fs";
 import { execFileSync } from "node:child_process";
+import { inflateRawSync } from "node:zlib";
 import { fileURLToPath } from "node:url";
 import vm from "node:vm";
 import path from "node:path";
@@ -512,79 +513,94 @@ test("unit 3: six lessons in order, each opening with its own 12-slide story; un
   assert.equal(A.skillStory.finalQuestion.en, "And what if a file arrives that is bigger than Excel itself?", "unit 3 ends on the question b1 opens with");
 });
 
-test("the unit-3 projects: a correct tool, run on the files, finds exactly the figures the lessons and answer keys quote", () => {
+// a small zip reader for the finished results (stored or deflated entries, read through the central directory)
+const unzip = (buf) => {
+  const out = {}; let e = buf.length - 22; while (buf.readUInt32LE(e) !== 0x06054b50) e--;
+  let p = buf.readUInt32LE(e + 16);
+  for (let i = 0, n = buf.readUInt16LE(e + 10); i < n; i++) {
+    const method = buf.readUInt16LE(p + 10), size = buf.readUInt32LE(p + 20), nl = buf.readUInt16LE(p + 28), xl = buf.readUInt16LE(p + 30), cl = buf.readUInt16LE(p + 32), off = buf.readUInt32LE(p + 42);
+    const name = buf.toString("utf8", p + 46, p + 46 + nl), at = off + 30 + buf.readUInt16LE(off + 26) + buf.readUInt16LE(off + 28), raw = buf.subarray(at, at + size);
+    out[name] = (method === 8 ? inflateRawSync(raw) : raw).toString("utf8"); p += 46 + nl + xl + cl;
+  }
+  return out;
+};
+const FINALS = path.join(SRC, "finals");
+const loadFinals = () => { if (!A.finalFiles) A.finalFiles = Object.fromEntries(readdirSync(FINALS).map((f) => [f, readFileSync(path.join(FINALS, f)).toString("base64")])); };
+
+test("the unit-3 projects: clean files, and a correct tool run on them finds exactly the figures the lessons and answer keys quote", () => {
   if (!A.xlKit) { ctx.TextEncoder = TextEncoder; vm.runInContext(readFileSync(path.join(SRC, "engine", "xlkit.js"), "utf8"), ctx, { filename: "xlkit.js" }); }   // the PDF writer, to read the bytes back
-  const O = A.officeProjects, X = A.xlProjects, [P1, P2, P3] = O.list, sum = (a, f) => a.reduce((s, x) => s + f(x), 0);
+  loadFinals();
+  const O = A.officeProjects, [P1, P2, P3] = O.list, sum = (a, f) => a.reduce((s, x) => s + f(x), 0), r1 = (x) => Math.round(x * 10) / 10;
   const english = (v) => typeof v !== "string" || !/[؀-ۿ]/.test(v);
   assert.equal(O.list.map((p) => p.lessons.join("+")).join(" "), "a1+a2 a3+a4 a6");
   for (const p of O.list) for (const lang of ["ar", "en"]) {
     const names = p.bundle(lang).map((f) => f.path);
     for (const g of ["README.txt", "Answer_Key.txt", "Prompt_1.txt"]) assert.ok(names.includes(g), `${p.zip}: ${g}`);
+    for (const f of p.finalNames) assert.ok(names.includes("Final_Result/" + f), `${p.zip}: the finished result ${f}`);
     for (const id of p.prompts) assert.ok(A.prompts.some((x) => x.id === id && p.lessons.includes(x.lesson)), `${p.zip}: prompt ${id} belongs to its lessons`);
   }
-  for (const f of [...P1.files(), ...P2.files()]) {
+  for (const f of [...P1.data(), ...P2.data()]) {
     assert.ok(f.path.startsWith("Data/"), f.path);
     for (const sh of f.sheets || []) for (const r of sh.rows) assert.ok(r.every(english), `${f.path} holds English only`);
     for (const b of (f.docx && f.docx.blocks) || []) assert.ok(english(b.p || "") && (b.table || []).every((r) => r.every(english)), `${f.path} holds English only`);
   }
-  // example 1: find the header row by name, Prod Order unique, blank market = stock, unmatched kept
-  { const E = P1.expected(), files = P1.files(), masters = files.find((f) => f.path.endsWith("Masters.xlsx"));
-    const map = (sh) => Object.fromEntries(sh.rows.slice(1).map((r) => [r[0], r[1]])), models = map(masters.sheets[0]), markets = map(masters.sheets[1]);
-    assert.equal(masters.sheets.map((s) => s.rows[0].length).join(), "2,2", "two small databases of two columns");
-    const seen = new Set(), rows = []; let read = 0, skippedFiles = 0;
-    for (const f of files.filter((x) => x.path.includes("Weekly_Exports"))) {
-      const all = f.sheets[0].rows, h = all.findIndex((r) => r.includes("Prod Order")); assert.equal(h, 3, "headers sit on row 4");
-      const head = all[h], body = all.slice(h + 1).map((r) => Object.fromEntries(head.map((k, i) => [k, r[i]])));
-      read += body.length;
-      if (body.every((r) => seen.has(r["Prod Order"]))) { skippedFiles++; assert.ok(f.path.endsWith(E.dupFile)); continue; }
-      for (const r of body) { if (seen.has(r["Prod Order"])) continue; seen.add(r["Prod Order"]);
-        rows.push({ q: r["Confirmed Qty"], v: r["Std Value EGP"], line: r.Line, model: models[r.Material] || "(not in master)", country: r.Market === "" || r.Market == null ? "Unallocated (stock)" : markets[r.Market] || "(not in master)", month: new Date(Date.UTC(1899, 11, 30) + r["Posting Date"].d * 864e5).getUTCMonth() + 1 }); }
-    }
-    assert.equal(read, E.rowsRead); assert.equal(skippedFiles, 1); assert.equal(rows.length, E.rows); assert.equal(sum(rows, (r) => r.q), E.units); assert.equal(sum(rows, (r) => r.v), E.value);
-    const by = (k) => rows.reduce((o, r) => ((o[r[k]] = (o[r[k]] || 0) + r.q), o), {});
-    assert.deepEqual({ ...by("country") }, { ...E.countries }); assert.deepEqual({ ...by("month") }, { ...E.months }); assert.deepEqual({ ...by("line") }, { ...E.lines });
-    const m = Object.entries(by("model")).filter(([k]) => k !== "(not in master)").sort((a, b) => b[1] - a[1])[0]; assert.equal(m.join(), [E.topModel.name, E.topModel.units].join());
-    const ex = sum(rows.filter((r) => !["Egypt", "Unallocated (stock)"].includes(r.country)), (r) => r.q); assert.equal(Math.round((ex / E.units) * 1000) / 10, E.exportShare);
-    assert.equal(E.countries["(not in master)"], E.newMarket.units); assert.equal(E.units - E.newMarket.units, 29488, "the card that left out OM");
-    assert.equal(by("line").L01, 6311); }
-  // example 2: three Excel shapes, PDFs (read from the bytes), Word memos, into one long table
-  { const E = P2.expected(), files = P2.files(), F = (n) => files.find((f) => f.path.endsWith(n)), day = (v) => new Date(Date.UTC(1899, 11, 30) + v.d * 864e5);
-    const models = Object.fromEntries(F("Masters.xlsx").sheets[0].rows.slice(1).map((r) => [r[1], r[0]]));
-    const fact = [], add = (ch, m, measure, value) => fact.push({ ch, m, measure, value });
-    for (const r of F("Sales_Cairo_Q3.xlsx").sheets[0].rows.slice(1)) { const d = day(r[0]); if (d < new Date(Date.UTC(2026, 6, 1))) continue; add("Cairo", d.getUTCMonth() + 1, "SalesQty", r[4]); add("Cairo", d.getUTCMonth() + 1, "NetSalesEGP", r[5]); }
-    const alex = F("Sales_Alexandria_Q3.xlsx").sheets[0].rows; for (const r of alex.slice(1)) if (r[0] !== "Total") [7, 8, 9].forEach((m, i) => { add("Alexandria", m, "SalesQty", r[1 + i * 2]); add("Alexandria", m, "NetSalesEGP", r[2 + i * 2]); });
-    for (const sh of F("Sales_Delta_Q3.xlsx").sheets) { const m = { Jul: 7, Aug: 8, Sep: 9 }[sh.name.slice(0, 3)]; for (const r of sh.rows.slice(1)) if (r[0] !== "Total") { add("Delta", m, "SalesQty", r[1]); add("Delta", m, "NetSalesEGP", r[2]); } }
-    const num = (s) => (/^\(.*\)$/.test(s) ? -1 : 1) * Number(s.replace(/[(),]/g, ""));
-    const pdfLines = (f) => { const txt = Buffer.from(A.xlKit.pdf(f.pdf)).toString("latin1"), pages = txt.split("/Type /Page /Parent").length - 1, lines = {};
-      assert.equal(pages, f.pdf.pages.length, f.path + ": page count");
-      let pg = 0; for (const p of f.pdf.pages) { pg++; for (const it of p.items) { assert.ok(txt.includes("(" + String(it.t).replace(/[\\()]/g, (c) => "\\" + c) + ") Tj"), f.path + ": text in the bytes"); (lines[pg + ":" + it.y] = lines[pg + ":" + it.y] || []).push(it); } }
-      return Object.values(lines).map((l) => l.sort((a, b) => a.x - b.x).map((i) => String(i.t))); };
-    const pdfTotals = {};
+  // clean data: the same header everywhere, nothing blank, no repeated key, every code found in the masters
+  const clean = (rows, label, key) => { const seen = new Set();
+    for (const r of rows) { assert.ok(r.every((v) => v !== "" && v != null), `${label}: no blank cell`); if (key != null) { assert.ok(!seen.has(r[key]), `${label}: ${r[key]} repeated`); seen.add(r[key]); } } };
+  const mastersOf = (files) => { const m = files.find((f) => f.path.endsWith("Masters.xlsx")), map = (sh) => Object.fromEntries(sh.rows.slice(1).map((r) => [r[0], r[1]]));
+    assert.equal(m.sheets.map((s) => s.name + ":" + s.rows[0].join("+")).join(), "Models:ModelCode+ModelName,Countries:CountryCode+CountryName", "two small databases of two columns");
+    return { model: map(m.sheets[0]), country: map(m.sheets[1]) }; };
+  const vlookup = (map, code, label) => { assert.ok(code in map, `${label}: ${code} is in the masters, so VLOOKUP never shows #N/A`); return map[code]; };
+  // example 1: stack 13 weekly reports, add ModelName and CountryName by VLOOKUP, sum
+  { const E = P1.expected(), files = P1.data(), M = mastersOf(files), weeks = files.filter((x) => x.path.includes("Weekly_Reports"));
+    assert.equal(weeks.length, E.files); assert.equal(weeks.map((f) => f.path.split("/").pop()).join(), [...Array(13)].map((_, i) => `Week_${String(i + 1).padStart(2, "0")}.xlsx`).join());
+    const rows = [];
+    weeks.forEach((f, w) => { const [head, ...body] = f.sheets[0].rows; assert.equal(head.join(), O.head1.join(), f.path + ": headers in row 1"); assert.equal(body.length, E.weeks[w]);
+      for (const r of body) { const x = Object.fromEntries(head.map((k, i) => [k, r[i]]));
+        rows.push({ ...x, model: vlookup(M.model, x.ModelCode, f.path), country: vlookup(M.country, x.CountryCode, f.path), month: new Date(Date.UTC(1899, 11, 30) + x.Date.d * 864e5).getUTCMonth() + 1 }); }
+      clean(body, f.path); });
+    clean(rows.map((x) => [x.WorkOrder]), "WorkOrder across the quarter", 0);
+    assert.equal(rows.length, E.rows); assert.equal(sum(rows, (r) => r.Qty), E.units); assert.equal(sum(rows, (r) => r.Value), E.value);
+    const by = (k) => rows.reduce((o, r) => ((o[r[k]] = (o[r[k]] || 0) + r.Qty), o), {}), top = (o) => Object.entries(o).sort((a, b) => b[1] - a[1])[0];
+    assert.deepEqual({ ...by("country") }, { ...E.countries }); assert.deepEqual({ ...by("month") }, { ...E.months }); assert.deepEqual({ ...by("LineCode") }, { ...E.lines }); assert.deepEqual({ ...by("model") }, { ...E.models });
+    assert.equal(top(by("model")).join(), [E.topModel.name, E.topModel.units].join()); assert.equal(top(by("LineCode")).join(), [E.bestLine.line, E.bestLine.units].join());
+    assert.equal(r1(((E.units - by("country").Egypt) / E.units) * 100), E.exportShare); }
+  // example 2: three branch workbooks, six PDFs (read from the bytes), two Word memos, the same two VLOOKUPs
+  { const E = P2.expected(), files = P2.data(), M = mastersOf(files), F = (n) => files.find((f) => f.path.endsWith(n)), day = (v) => new Date(Date.UTC(1899, 11, 30) + v.d * 864e5);
+    assert.equal(files.length - 1, E.files, "11 source files plus the masters");
+    const num = (s) => Number(String(s).replace(/,/g, "")), sales = [];
+    for (const ch of ["Cairo", "Alexandria", "Delta"]) { const [head, ...body] = F(`Sales_${ch}_Q3.xlsx`).sheets[0].rows; assert.equal(head.join(), O.head2.join(), ch + ": the same columns");
+      clean(body, ch, 1); assert.equal(body.length, E.branchRows[ch]);
+      for (const r of body) sales.push({ ch, m: day(r[0]).getUTCMonth() + 1, cc: "EG", mc: r[2], q: r[3], v: r[4] }); }
+    const pdfLines = (f) => { const txt = Buffer.from(A.xlKit.pdf(f.pdf)).toString("latin1"), lines = {};
+      assert.equal(txt.split("/Type /Page /Parent").length - 1, 1, f.path + ": one page");
+      for (const it of f.pdf.pages[0].items) { assert.ok(txt.includes("(" + String(it.t).replace(/[\\()]/g, (c) => "\\" + c) + ") Tj"), f.path + ": text in the bytes"); (lines[it.y] = lines[it.y] || []).push(it); }
+      return Object.entries(lines).sort((a, b) => b[0] - a[0]).map(([, l]) => l.sort((a, b) => a.x - b.x).map((i) => String(i.t))); };
+    const table = (lines, head) => { const h = lines.findIndex((l) => l.join() === head); assert.ok(h > 0, "the table's header: " + head); return lines.slice(h + 1).filter((l) => l.length === head.split(",").length); };
+    const ships = [];
     for (const m of [7, 8, 9]) {
-      const ex = pdfLines(F(`Export_Sales_2026-0${m}.pdf`)), rows = ex.filter((l) => l.length === 5 && l[0] !== "Country" && l[0] !== "TOTAL"), tot = ex.find((l) => l[0] === "TOTAL");
-      assert.equal(sum(rows, (l) => num(l[3])), num(tot[1]), `export ${m}: rows = TOTAL`); assert.equal(sum(rows, (l) => num(l[4])), num(tot[2]));
-      for (const l of rows) { add("Export", m, "SalesQty", num(l[3])); add("Export", m, "NetSalesEGP", num(l[4])); }
-      const sp = pdfLines(F(`Outbound_Shipments_2026-0${m}.pdf`)), srows = sp.filter((l) => /^SHP-/.test(l[0])), stot = sp.find((l) => l[0] === "TOTAL");
-      assert.equal(sum(srows, (l) => num(l[4])), num(stot[2])); assert.equal(`${srows.length} shipments`, stot[1]);
-      for (const l of srows) { const ch = ["Cairo", "Alexandria", "Delta"].includes(l[2]) ? l[2] : "Export"; add(ch, m, "ShippedUnits", num(l[4])); add(ch, m, "FreightEGP", num(l[5])); }
-      pdfTotals[m] = { exportQty: num(tot[1]), shipments: srows.length };
+      const ex = table(pdfLines(F(`Export_Sales_2026-0${m}.pdf`)), "CountryCode,ModelCode,Qty,NetSales"); assert.equal(ex.length, E.exportRows[m]);
+      for (const l of ex) sales.push({ ch: "Export", m, cc: l[0], mc: l[1], q: num(l[2]), v: num(l[3]) });
+      for (const l of table(pdfLines(F(`Shipments_2026-0${m}.pdf`)), "Channel,Shipments,Units,FreightEGP")) ships.push({ ch: l[0], n: num(l[1]), u: num(l[2]), f: num(l[3]) });
     }
-    const ret = F("Returns_Memo_Q3.docx").docx.blocks.find((b) => b.table).table, ret0 = {};
-    for (const r of ret.slice(1)) { const code = models[r[0]]; assert.ok(code, "every returned model found by name"); ret0[code] = [1, 2, 3].reduce((s, i) => s + num(r[i]), 0); add("Returns", 0, "ReturnUnits", ret0[code]); }
-    const tg = F("Targets_Memo_Q3.docx").docx.blocks.find((b) => b.table).table; assert.ok(/000/.test(tg[0][2]), "targets are in thousands");
-    const target = Object.fromEntries(tg.slice(1).map((r) => [r[0], num(r[2]) * 1000]));
-    const S = (ch, measure) => sum(fact.filter((x) => (!ch || x.ch === ch) && x.measure === measure), (x) => x.value);
-    assert.equal(S(null, "SalesQty"), E.salesQty); assert.equal(S(null, "NetSalesEGP"), E.salesValue);
-    for (const ch of ["Cairo", "Alexandria", "Delta", "Export"]) {
-      assert.equal(S(ch, "NetSalesEGP"), E.channels[ch].v, ch); assert.equal(target[ch], E.target[ch].v, ch + " target");
-      assert.equal(Math.round((S(ch, "NetSalesEGP") / target[ch]) * 1000) / 10, E.achievement[ch], ch + " achievement");
-      assert.equal(Math.round((S(ch, "FreightEGP") / S(ch, "ShippedUnits")) * 10) / 10, E.freightPerUnit[ch], ch + " freight per set");
+    for (const s of sales) { s.model = vlookup(M.model, s.mc, "Sales"); s.country = vlookup(M.country, s.cc, "Sales"); }
+    clean(sales.map((s) => Object.values(s)), "Sales"); assert.equal(sales.length, E.salesRows);
+    const memo = (n) => F(n).docx.blocks.find((b) => b.table).table;
+    const ret = memo("Returns_Q3.docx"); assert.equal(ret[0].join(), "ModelCode,Jul,Aug,Sep"); clean(ret, "Returns", 0);
+    const returns = ret.slice(1).flatMap((r) => [1, 2, 3].map((i) => ({ mc: (vlookup(M.model, r[0], "Returns"), r[0]), q: num(r[i]) })));
+    const tg = memo("Targets_Q3.docx"); assert.equal(tg[0].join(), "Channel,TargetUnits,TargetSales"); const target = Object.fromEntries(tg.slice(1).map((r) => [r[0], num(r[2])]));
+    const S = (f, val) => sum(sales.filter(f), val);
+    assert.equal(S(() => true, (x) => x.q), E.salesQty); assert.equal(S(() => true, (x) => x.v), E.salesValue);
+    for (const ch of O.channels) {
+      assert.equal(S((x) => x.ch === ch, (x) => x.v), E.channels[ch].v, ch); assert.equal(target[ch], E.target[ch].v, ch + " target");
+      assert.equal(r1((S((x) => x.ch === ch, (x) => x.v) / target[ch]) * 100), E.achievement[ch], ch + " achievement");
+      const sh = ships.filter((x) => x.ch === ch); assert.equal(sum(sh, (x) => x.u), S((x) => x.ch === ch, (x) => x.q), ch + ": shipped = sold");
+      assert.equal(r1(sum(sh, (x) => x.f) / sum(sh, (x) => x.u)), E.freightPerUnit[ch], ch + " freight per set");
     }
-    assert.equal(S(null, "ShippedUnits"), E.shipUnits); assert.equal(S(null, "FreightEGP"), E.freight); assert.equal(sum(Object.values(ret0), (x) => x), E.returns);
-    assert.ok(F("Returns_Memo_Q3.docx").docx.blocks.some((b) => b.p && b.p.includes(Number(E.returns).toLocaleString("en-US") + " sets")), "the memo's text quotes its own total");
-    for (const t of E.pdfTotals) { assert.equal(pdfTotals[t.m].exportQty, t.exportQty); assert.equal(pdfTotals[t.m].shipments, t.shipments); }
-    assert.equal(sum(Object.values(pdfTotals), (x) => x.shipments), E.shipments);
-    assert.equal(Math.round(((S("Delta", "NetSalesEGP") + 1e6) / target.Delta) * 1000) / 10, 92.6, "the test slide: Delta + EGP 1 million"); }
+    assert.equal(sum(ships, (x) => x.n), E.shipments); assert.equal(sum(ships, (x) => x.u), E.shipUnits); assert.equal(sum(ships, (x) => x.f), E.freight); assert.equal(sum(returns, (x) => x.q), E.returns);
+    const rate = (mc) => sum(returns.filter((x) => x.mc === mc), (x) => x.q) / S((x) => x.mc === mc, (x) => x.q);
+    assert.equal(Object.keys(M.model).sort((a, b) => rate(b) - rate(a)).slice(0, 3).join(), E.topReturns.map((x) => x.mc).join(), "the three highest return rates");
+    assert.equal(r1(((E.channels.Delta.v + 1e6) / target.Delta) * 100), 93.4, "the test slide: Delta + EGP 1 million"); }
   // the skills kit: every SKILL.md opens with a name that matches its folder and a description
   { const skills = P3.files().filter((f) => f.path.endsWith("/SKILL.md"));
     assert.equal(skills.length, 3);
@@ -592,14 +608,44 @@ test("the unit-3 projects: a correct tool, run on the files, finds exactly the f
     for (const f of P3.files()) assert.ok(english(f.text), f.path + " in English"); }
 });
 
+test("the unit-3 finished results are real workbooks and decks holding the answer key's figures", () => {
+  const O = A.officeProjects, E1 = O.list[0].expected(), E2 = O.list[1].expected(), names = readdirSync(FINALS).sort();
+  assert.equal(names.join(), [...O.list[0].finalNames, ...O.list[1].finalNames].sort().join(), "the finals folder holds exactly the finished results the projects name (rebuild them with academy/tools/make-finals.py)");
+  const z = (f) => unzip(readFileSync(path.join(FINALS, f))), sheets = (x) => [...x["xl/workbook.xml"].matchAll(/<sheet name="([^"]+)"/g)].map((m) => m[1]);
+  const count = (s, re) => (s.match(re) || []).length, all = (x, pre) => Object.keys(x).filter((k) => k.startsWith(pre)).map((k) => x[k]).join("");
+  const cached = (x, v) => new RegExp(`<v>${v}</v>`).test(all(x, "xl/worksheets/"));
+  { const x = z("Production_Q3_Final.xlsx"), data = x[`xl/worksheets/sheet${sheets(x).indexOf("Data") + 1}.xml`];
+    assert.equal(sheets(x).join(), "Dashboard,Report,Pivots,Data,Models,Countries");
+    assert.equal(count(data, /VLOOKUP\(D\d+,Models!/g), E1.rows, "ModelName is a VLOOKUP on every row"); assert.equal(count(data, /VLOOKUP\(F\d+,Countries!/g), E1.rows, "CountryName is a VLOOKUP on every row");
+    assert.equal([...all(x, "xl/pivotTables/pivotTable").matchAll(/<pivotTableDefinition[^>]* name="([^"]+)"/g)].map((m) => m[1]).sort().join(), "PT_Country,PT_Model,PT_MonthLine");
+    assert.equal(Object.keys(x).filter((k) => /^xl\/charts\/chart\d+\.xml$/.test(k)).length, 4, "four charts");
+    for (const v of [E1.units, E1.value, E1.months[7], E1.lines.L01, E1.countries.Kenya, E1.topModel.units]) assert.ok(cached(x, v), "the workbook shows " + v);
+    // the dashboard follows the slicers: its figures and chart data read the pivot tables, and every chart reads the dashboard's own cells (review finding on PR 41)
+    const dash = x[`xl/worksheets/sheet${sheets(x).indexOf("Dashboard") + 1}.xml`], refs = [...all(x, "xl/charts/chart").matchAll(/<c:f>([^<]+)<\/c:f>/g)].map((m) => m[1]);
+    assert.ok(count(dash, /GETPIVOTDATA\(/g) >= 3 + 6 + 10 + 12 + 3, "the dashboard reads every figure from the pivot tables");
+    assert.ok(!/Report!|Data!/.test(dash.match(/<f[^>]*>[^<]*<\/f>/g).join("")), "no dashboard formula reads the unfiltered Report or Data sheets");
+    assert.ok(refs.length && refs.every((r) => /^Dashboard!/.test(r)), "every chart reads the pivot-driven cells: " + refs.join(" ")); }
+  { const x = z("Q3_Commercial_Final.xlsx"), s = sheets(x), sales = x[`xl/worksheets/sheet${s.indexOf("Sales") + 1}.xml`];
+    for (const k of ["Dashboard", "Report", "Pivots", "Sales", "Shipments", "Returns", "Targets", "Models", "Countries"]) assert.ok(s.includes(k), "sheet " + k);
+    assert.equal(count(sales, /VLOOKUP\([A-Z]+\d+,Countries!/g), E2.salesRows); assert.equal(count(sales, /VLOOKUP\([A-Z]+\d+,Models!/g), E2.salesRows);
+    assert.ok(Object.keys(x).some((k) => k.startsWith("xl/pivotTables/")) && Object.keys(x).some((k) => k.startsWith("xl/charts/")), "pivot tables and charts");
+    for (const v of [E2.salesValue, E2.salesQty, E2.channels.Delta.v, E2.target.Delta.v]) assert.ok(cached(x, v), "the workbook shows " + v); }
+  { const x = z("Q3_Commercial_Review.pptx"), slides = Object.keys(x).filter((k) => /^ppt\/slides\/slide\d+\.xml$/.test(k)), text = slides.map((k) => x[k]).join("");
+    assert.equal(slides.length, 8, "an 8-slide deck");
+    for (const v of [E2.achievement.Alexandria, E2.achievement.Delta, E2.freightPerSet, E2.topReturns[0].mc]) assert.ok(text.includes(String(v)), "the deck quotes " + v);
+    assert.ok(Object.keys(x).some((k) => k.startsWith("ppt/charts/")), "native charts"); }
+  { const pdf = readFileSync(path.join(FINALS, "Q3_Commercial_Review.pdf")).toString("latin1");
+    assert.ok(pdf.startsWith("%PDF-")); assert.equal(count(pdf, /\/Type\s*\/Page[^s]/g), 8, "the deck's PDF has its 8 pages"); }
+});
+
 test("the unit-3 lessons and decks quote their projects' figures, the same in Arabic and English", () => {
   const O = A.officeProjects, n = (x) => Number(x).toLocaleString("en-US"), E1 = O.list[0].expected(), E2 = O.list[1].expected();
   const text = (id) => JSON.stringify(A.lessons.find((l) => l.id === id).levels) + JSON.stringify(A.decks.find((d) => d.lesson === id));
   const has = (id, ...figs) => { const s = text(id); for (const f of figs) assert.ok(s.includes(String(f)), `${id} should quote ${f}`); };
-  has("a1", n(E1.rows), n(E1.units), n(E1.rowsRead), E1.dupRows, E1.newModel.units, E1.newMarket.units, E1.blank.units, n(E1.months[7]));
+  has("a1", n(E1.rows), n(E1.units), E1.files, n(E1.months[7]));
   has("a2", n(E1.units), E1.exportShare, n(E1.topModel.units), n(E1.lines.L01), n(E1.months[9]), n(E1.countries.Kenya));
-  has("a3", n(E2.salesQty), E2.shipments, n(E2.shipUnits), E2.pdfTotals[2].exportQty.toLocaleString("en-US"), E2.returns);
-  has("a4", n(E2.salesValue), E2.achievement.Alexandria, E2.achievement.Delta, E2.achievement.Export, E2.freightPerUnit.Export, E2.topReturn.rate);
+  has("a3", E2.salesRows, n(E2.salesQty), E2.shipments, E2.returns);
+  has("a4", E2.achievement.Alexandria, E2.achievement.Delta, E2.achievement.Export, E2.freightPerUnit.Export, E2.topReturns[0].mc);
   const ar = (s) => String(s).replace(/[٠-٩]/g, (d) => "٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/[٬,]/g, "").replace(/٫/g, ".");
   const nums = (s) => [...ar(s).matchAll(/\d+(?:\.\d+)?/g)].map((m) => m[0]).sort().join(" ");
   for (const l of A.lessons.filter((x) => x.unit === "u2")) for (const k of Object.keys(l.levels)) for (const x of l.levels[k])
@@ -607,16 +653,10 @@ test("the unit-3 lessons and decks quote their projects' figures, the same in Ar
 });
 
 test("unit-3 checks and rules can actually pass on the project's own data (review findings on PR 40)", () => {
-  const P = (id) => A.prompts.find((p) => p.id === id).text, O = A.officeProjects, E = O.list[0].expected();
-  // the top-10 model pivot can't equal the full total, so the check must name only the unfiltered pivots
-  const byModel = {}; for (const x of O.production()) { const k = x.mc; byModel[k] = (byModel[k] || 0) + x.q; }
-  const top10 = Object.values(byModel).sort((a, b) => b - a).slice(0, 10).reduce((s, x) => s + x, 0);
-  assert.ok(top10 < E.units, "the data has more than 10 models, so a top-10 pivot is a subset");
-  for (const lang of ["ar", "en"]) {
-    assert.ok(!/every pivot table|كل جدول محوري/.test(P("a2a")[lang]), `a2a (${lang}) checks a filtered top-10 pivot against the full total`);
-    assert.ok(/PT_MonthLine/.test(P("a2a")[lang].split(/before formatting|قبل التنسيق/)[1] || ""), `a2a (${lang}) names the unfiltered pivots in its check`);
-  }
-  const kit = O.skills["production-dashboard/reference/checks.md"]; assert.ok(!/every pivot table/.test(kit), "the kit's checks.md repeats the impossible check");
+  const P = (id) => A.prompts.find((p) => p.id === id).text, O = A.officeProjects;
+  // every pivot is compared with the full total, so none of them may be cut to a top 10
+  for (const lang of ["ar", "en"]) assert.ok(!/top 10|top-10|أعلى ١٠|أعلى 10/i.test(P("a2a")[lang]), `a2a (${lang}) filters a pivot it checks against the full total`);
+  assert.ok(!/top 10|top-10/i.test(O.skills["production-dashboard/reference/dashboard-spec.md"]), "the kit's spec filters a pivot its checks compare with the full total");
   // step 2 reads step 1's output: the shared rule must allow reading Output, while never writing to Data
   for (const id of ["a2a", "a4a"]) for (const lang of ["ar", "en"]) {
     const t = P(id)[lang];

@@ -47,7 +47,7 @@
         } },
     },
     {
-      id: "p2", unit: "u6", pages: [7], diff: 1, min: 5, scene: "technique", related: ["p1", "p3", "w2"], pre: ["p1"],
+      id: "p2", unit: "u6", pages: [7], diff: 1, min: 5, scene: "technique", related: ["p1", "p3", "a5"], pre: ["p1"],
       title: { ar: "الجملة اللي تمنع التخمين قبل ما يبدأ", en: "The guide’s strongest technique" },
       sum: { ar: "لو الطلب ناقصه معلومة مؤثرة، زي الشهر أو سعر الخامة، المساعد غالبًا هيفترض قيمة ويكمّل. جملة واحدة في أول الطلب بتخليه يسألك بدل ما يخمّن.", en: "One sentence at the start of every important request fixes three problems: silent assumptions, complexity and untested errors." },
       book: [
@@ -315,7 +315,7 @@
       },
     },
     {
-      id: "p10", unit: "u3", pages: [13, 14], diff: 2, min: 9, scene: "macro", related: ["p9", "y1", "w2"], pre: ["p9"],
+      id: "p10", unit: "u3", pages: [13, 14], diff: 2, min: 9, scene: "macro", related: ["p9", "y1", "a5"], pre: ["p9"],
       title: { ar: "إزاي تخلي الخطوات اللي بتكررها تحصل بضغطة؟", en: "First real automation: macros and AI-written code" },
       sum: { ar: "أي خطوات بتكررها كل يوم بنفس الترتيب، زي فتح ملف وتنسيقه ونسخ جدول منه، ممكن تتسجل مرة وتتنفذ بضغطة، بشرط تجربها على نسخة الأول.", en: "The macro recorder, then let AI write the code, two unbreakable rules, and the golden code prompt." },
       book: [
@@ -335,7 +335,7 @@
         mech: [
           L("how", "**المسار الأول**: سجّل الماكرو ← أوقف ← شغّل بزر. **المسار التاني**: الـ Prompt الذهبي ← الكود ← المطوّر ← وحدة ← لصق ← حفظ كملف ماكرو ← تشغيل على **نسخة** ← اختبار الحالات الخمس ← اعتماد.", "**Path one**: record → stop → run with a button. **Path two**: golden prompt → code → Developer → module → paste → save as macro file → run on a **copy** → test the five cases → adopt."),
           L("inside", "ليه «وحدات صغيرة»؟ لأن ((module|الوحدة)) الصغيرة اللي ليها وظيفة واحدة سهل تختبرها وتصلّحها لوحدها. الماكرو الضخم لما يغلط مش هتعرف الغلط فين — فيبقى إصلاحه شبه مستحيل.", "Why “small modules”? A small ((module|module)) with one job is easy to test and fix on its own. When a giant macro fails you can’t tell where — so it’s impossible to fix."),
-          L("link", "الـ Prompt الذهبي هو المعادلة الحاكمة ([[p1]]) مطبّقة على ملف، ومعاه أهم تقنية ([[p2]]) في صورة «خمس حالات اختبار». ونفس الفكرة بتكبر في أدوات البايثون ([[y1]]) وبعدين Claude Code اللي بيكتب ويشغّل ويختبر بنفسه ([[w2]]).", "The golden prompt is the governing equation ([[p1]]) applied to a file, with the strongest technique ([[p2]]) as “five test cases”. The same idea grows into Python tools ([[y1]]) and then Claude Code, which writes, runs and tests on its own ([[w2]])."),
+          L("link", "الـ Prompt الذهبي هو المعادلة الحاكمة ([[p1]]) مطبّقة على ملف، ومعاه أهم تقنية ([[p2]]) في صورة «خمس حالات اختبار». ونفس الفكرة بتكبر في أدوات البايثون ([[y1]]) وبعدين Claude Code اللي بيكتب ويشغّل ويختبر بنفسه ([[a5]]).", "The golden prompt is the governing equation ([[p1]]) applied to a file, with the strongest technique ([[p2]]) as “five test cases”. The same idea grows into Python tools ([[y1]]) and then Claude Code, which writes, runs and tests on its own ([[a5]])."),
         ],
         practice: [
           L("example", "مثال الكتاب: ملف فيه ورقة «البيانات الخام». المطلوب كود يحذف الصفوف الفاضية، ويوحّد تنسيق التاريخ، ويحذف التكرار بناءً على رقم الموظف، وبعدين ينشئ ورقة «التقرير» بملخص لكل إدارة — مع شرح فين يتحط الكود وإزاي يتشغّل خطوة بخطوة.", "The book’s example: a file with a “Raw data” sheet. The code should delete blank rows, unify the date format, remove duplicates by employee ID, then create a “Report” sheet with a summary per department — with an explanation of where to put the code and how to run it step by step."),

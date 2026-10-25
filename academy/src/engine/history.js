@@ -2214,110 +2214,111 @@
       <g ${an("rise", 1.0)}>${grid(b, 240, 5, 3, 32, 13, "f-s1", -1, 1.0)}</g><g ${an("fade", 1.3)}>${txt(b + d * 0, 278, tr("الجدول تحته الأول", "first, the table beneath it"), "t-mint", 11.5, b8)}</g>
       ${cap(tr("الداشبورد بيبدأ من الجدول", "a dashboard starts from its table"), 1.6)}`;
     },
-    pt_exports: () => {
-      const R = [["Production Confirmations - TV Assembly Plant", "f-s2", "t-ink3"], ["Period: 2026-07-01 to 2026-07-07", "f-s2", "t-ink3"], ["", "f-s2", "t-ink3"]];
-      return `<g ${an("fade", 0.05)}>${txt(240, 34, "Confirmations_W01.xlsx · Export", "t-ink2", 12, b8 + ' direction="ltr"')}</g>
-      ${R.map(([s, c, t], i) => `<g ${an("rise", 0.15 + i * 0.12)}><rect x="40" y="${50 + i * 26}" width="400" height="22" rx="4" class="${c}"/>${txt(36 + 14, 65 + i * 26, String(i + 1), "t-ink3", 9.5, b8 + ' direction="ltr"')}${s ? `<text x="64" y="${65 + i * 26}" class="${t}" font-size="10.5" font-weight="700" direction="ltr">${esc(s)}</text>` : ""}</g>`).join("")}
-      ${rowL(252, 140, ["Posting Date", "Prod Order", "Line", "Material", "Market", "Qty"], 62, 24, ["f-acc-soft", "f-mint", "f-acc-soft", "f-acc-soft", "f-acc-soft", "f-acc-soft"], ["t-acc", "t-white", "t-acc", "t-acc", "t-acc", "t-acc"], 8.5, 0.6)}
-      <g ${an("fade", 0.6)}>${txt(50, 144, "4", "t-mint", 9.5, b8 + ' direction="ltr"')}</g>
-      ${[0, 1].map((k) => rowL(252, 168 + k * 26, ["2026-07-01", String(4102001 + k), "L01", "M10" + (3 + k), ["KW", "EG"][k], ["48", "33"][k]], 62, 22, "f-s1", "t-ink", 8.5, 0.8 + k * 0.1)).join("")}
-      ${pill(240, 252, 330, 34, tr("دوّر على «Prod Order»… مش الصف الأول", "find “Prod Order”… not row 1"), "f-mint-soft s-mint", "t-mint", 11.5, 1.2)}
-      ${cap(tr("العناوين بتتلاقي بالاسم… مش بالمكان", "headers are found by name… not by place"), 1.6)}`;
+    pt_files: () => {
+      const f = mx(96), t = mx(310);
+      return `${[0, 1, 2].map((k) => `<g ${an("rise", 0.05 + k * 0.12)}>${xl(f + dirx() * k * 10, 66 + k * 12, 0.9)}</g>`).join("")}
+      <g ${an("fade", 0.45)}>${txt(f, 130, "Week_01 … Week_13", "t-ink", 11, b8 + ' direction="ltr"')}${txt(f, 148, tr("١٣ ملف · شيت Production", "13 files · sheet Production"), "t-ink3", 10, bold)}</g>
+      <g ${an("fade", 0.5)}>${txt(t, 46, tr("الصف الأول: العناوين", "row 1: the headers"), "t-mint", 11, b8)}</g>
+      ${rowL(t, 72, ["Date", "WorkOrder", "LineCode", "ModelCode"], 64, 24, "f-mint", "t-white", 8, 0.6)}
+      ${rowL(t, 100, ["CountryCode", "Qty", "Value"], 64, 24, "f-mint", "t-white", 8, 0.7)}
+      ${[0, 1].map((k) => rowL(t, 136 + k * 26, [["2026-07-01", "2026-07-01"][k], "WO-410200" + (1 + k), "L01", ["M103", "M108"][k]], 64, 22, "f-s1", "t-ink", 8, 0.85 + k * 0.1)).join("")}
+      ${[0, 1].map((k) => rowL(t, 190 + k * 26, [["SA", "EG"][k], ["48", "33"][k], ["276,960", "233,640"][k]], 64, 22, "f-s1", "t-ink", 8, 1.05 + k * 0.1)).join("")}
+      ${pill(240, 262, 360, 32, tr("نفس الأعمدة بنفس الترتيب · ولا خانة فاضية", "the same columns, same order · no blank cell"), "f-mint-soft s-mint", "t-mint", 11, 1.3)}
+      ${cap(tr("نفس الأعمدة… في كل ملف", "the same columns… in every file"), 1.6)}`;
     },
     pt_masters: () => {
       const a = mx(118), c = mx(358);
       return `<g ${an("fade", 0.05)}>${txt(a, 36, "Masters.xlsx", "t-ink2", 12, b8 + ' direction="ltr"')}</g>
       ${rowL(a, 62, ["ModelCode", "ModelName"], 84, 24, "f-acc-soft", "t-acc", 9, 0.1)}${[["M103", "32-inch Smart TV"], ["M108", "55-inch 4K TV"]].map((r, i) => rowL(a, 90 + i * 26, r, 84, 22, "f-s1", "t-ink", 8.5, 0.25 + i * 0.1)).join("")}
-      ${rowL(a, 168, ["MarketCode", "Country"], 84, 24, "f-amber-soft", "t-amber", 9, 0.5)}${[["SA", "Saudi Arabia"], ["EG", "Egypt"]].map((r, i) => rowL(a, 196 + i * 26, r, 84, 22, "f-s1", "t-ink", 8.5, 0.6 + i * 0.1)).join("")}
+      ${rowL(a, 168, ["CountryCode", "CountryName"], 84, 24, "f-amber-soft", "t-amber", 9, 0.5)}${[["SA", "Saudi Arabia"], ["EG", "Egypt"]].map((r, i) => rowL(a, 196 + i * 26, r, 84, 22, "f-s1", "t-ink", 8.5, 0.6 + i * 0.1)).join("")}
       ${arrow(a + dirx() * 96, 102, c - dirx() * 86, 112, 1.0)}${arrow(a + dirx() * 96, 208, c - dirx() * 86, 140, 1.1, "s-amber")}
       <g ${an("fade", 1.2)}>${txt(c, 92, "tblProduction", "t-ink2", 11.5, b8 + ' direction="ltr"')}</g>
-      ${rowL(c, 120, ["M103", "ModelName", "SA", "Country"], 50, 24, ["f-s2", "f-acc-soft", "f-s2", "f-amber-soft"], ["t-ink3", "t-acc", "t-ink3", "t-amber"], 7.5, 1.3)}
+      ${rowL(c, 120, ["M103", "Model", "SA", "Country"], 50, 24, ["f-s2", "f-acc-soft", "f-s2", "f-amber-soft"], ["t-ink3", "t-acc", "t-ink3", "t-amber"], 7.5, 1.3)}
       ${rowL(c, 148, ["M103", "32\" Smart", "SA", "Saudi"], 50, 22, ["f-s1", "f-acc-soft", "f-s1", "f-amber-soft"], ["t-ink", "t-acc", "t-ink", "t-amber"], 7.5, 1.4)}
+      <g ${an("fade", 1.5)}>${txt(c, 190, tr("١٢ موديل · ١٠ بلاد", "12 models · 10 countries"), "t-ink2", 11, b8)}</g>
       ${cap(tr("الكود للأداة… والاسم للمدير", "the code for the tool… the name for the manager"), 1.7, 292)}`;
     },
     pt_prompt: () => {
-      const p = mx(158), q = mx(370), d = dirx();
+      const p = mx(158), q = mx(370);
       return `${page(p, 140, 220, 220, "Prompt_1.txt", [], 0.05, "f-s1 s-acc")}
-      <g ${an("rise", 0.3)}>${box(p, 96, 190, 50, "f-acc-soft s-acc")}${txt(p, 92, tr("١ تحت بعض", "1 stacking"), "t-acc", 12, b8)}${txt(p, 110, tr("العناوين بالاسم · Prod Order", "headers by name · Prod Order"), "t-ink2", 9.5, bold)}</g>
-      <g ${an("rise", 0.5)}>${box(p, 156, 190, 50, "f-amber-soft s-amber")}${txt(p, 152, tr("٢ بحث وربط", "2 lookups"), "t-amber", 12, b8)}${txt(p, 170, "Models · Markets", "t-ink2", 9.5, bold + ' direction="ltr"')}</g>
+      <g ${an("rise", 0.3)}>${box(p, 96, 190, 50, "f-acc-soft s-acc")}${txt(p, 92, tr("١ تحت بعض", "1 stack"), "t-acc", 12, b8)}${txt(p, 110, "Week_01 … Week_13", "t-ink2", 9.5, bold + ' direction="ltr"')}</g>
+      <g ${an("rise", 0.5)}>${box(p, 156, 190, 50, "f-amber-soft s-amber")}${txt(p, 152, tr("٢ عمودين VLOOKUP", "2 two VLOOKUP columns"), "t-amber", 12, b8)}${txt(p, 170, "Models · Countries", "t-ink2", 9.5, bold + ' direction="ltr"')}</g>
       <g ${an("rise", 0.7)}>${box(p, 214, 190, 40, "f-mint-soft s-mint")}${txt(p, 219, tr("القواعد: اقرا بس · سجّل · وقّف", "rules: read only · log · stop"), "t-mint", 10, b8)}</g>
-      <g ${an("rise", 1.0)}>${bubble(q, 80, 176, 48, "f-s1 s-ink3", ar())}${txt(q, 76, tr("كود بحروف صغيرة؟", "a lower-case code?"), "t-ink", 10.5, b8)}${txt(q, 92, tr("← نفسه بعد التنضيف", "→ the same once tidied"), "t-mint", 10, bold)}</g>
-      <g ${an("rise", 1.3)}>${bubble(q, 164, 176, 48, "f-s1 s-ink3", ar())}${txt(q, 160, tr("الملف المتكرر؟", "the repeated file?"), "t-ink", 10.5, b8)}${txt(q, 176, tr("← يتساب كله", "→ skip all of it"), "t-mint", 10, bold)}</g>
+      <g ${an("rise", 1.0)}>${bubble(q, 80, 176, 48, "f-s1 s-ink3", ar())}${txt(q, 76, tr("قيم ولا معادلات؟", "values or formulas?"), "t-ink", 10.5, b8)}${txt(q, 92, tr("← معادلات", "→ formulas"), "t-mint", 10, bold)}</g>
+      <g ${an("rise", 1.3)}>${bubble(q, 164, 176, 48, "f-s1 s-ink3", ar())}${txt(q, 160, tr("الشهر تاريخ ولا نص؟", "month: date or text?"), "t-ink", 10.5, b8)}${txt(q, 176, tr("← نص 2026-07", "→ text 2026-07"), "t-mint", 10, bold)}</g>
       <g ${an("fade", 1.5)}>${txt(q, 228, tr("سؤالين… وقرارين", "two questions…"), "t-ink2", 11.5, b8)}${txt(q, 246, tr("بتوعك إنت", "two decisions, yours"), "t-ink2", 11.5, b8)}</g>
-      ${cap(tr("أداة واحدة… وقواعد مفصولة", "one tool… separated rules"), 1.7)}`;
+      ${cap(tr("أداة واحدة… وخطوات مفصولة", "one tool… separate steps"), 1.7)}`;
     },
-    pt_key: () => {
-      const t = mx(160), k = mx(380);
-      const R = [["4102001", "L01", "48", 0], ["4102002", "L01", "33", 0], ["4102003", "L02", "27", 0], ["4102002", "L01", "33", 1]];
-      return `<g ${an("fade", 0.05)}>${txt(t, 40, tr("أوامر التشغيل", "work orders"), "t-ink2", 12, b8)}</g>
-      ${rowL(t, 66, ["Prod Order", "Line", "Qty"], 82, 26, "f-acc-soft", "t-acc", 9.5, 0.1)}
-      ${R.map(([o, l, q, bad], i) => rowL(t, 98 + i * 30, [o, l, q], 82, 24, bad ? "f-rose-soft" : "f-s1", bad ? "t-rose" : "t-ink", 9.5, 0.25 + i * 0.12)).join("")}
-      ${check(t + dirx() * 142, 188, 0.9, false)}
-      <g ${an("pop", 0.6)}><circle cx="${k - 26}" cy="110" r="22" class="s-amber" stroke-width="6" fill="none"/><path d="M${k - 4} 110 h52 M${k + 30} 110 v14 M${k + 42} 110 v10" class="s-amber" stroke-width="6" stroke-linecap="round"/></g>
-      <g ${an("fade", 0.9)}>${txt(k, 160, tr("المفتاح", "the key"), "t-amber", 13, b8)}${txt(k, 180, tr("رقم ما يتكررش", "a number that never repeats"), "t-ink2", 10.5, bold)}</g>
-      ${pill(240, 256, 340, 34, tr("اتقرا قبل كده ← ما يتضافش تاني", "read before → not added again"), "f-mint-soft s-mint", "t-mint", 11.5, 1.2)}
-      ${cap(tr("رقم واحد بيقول: ده اتحسب قبل كده", "one number says: this was counted already"), 1.5)}`;
+    pt_stack: () => {
+      const f = mx(104), t = mx(340), d = dirx();
+      const W = [["Week_01", "97"], ["Week_02", "98"], ["…", ""], ["Week_13", "99"]];
+      return `${W.map(([w, r], i) => `<g ${an("rise", 0.05 + i * 0.12)}>${box(f, 64 + i * 42, 128, 32, i === 2 ? "f-s2 s-line2" : "f-s1 s-mint")}${txt(f, 68 + i * 42, w, "t-ink", 10.5, b8 + ' direction="ltr"')}</g>`).join("")}
+      ${arrow(f + d * 72, 128, t - d * 92, 128, 0.7, "s-mint")}
+      <g ${an("rise", 0.9)}>${grid(t, 128, 5, 9, 32, 16, "f-s1", 4, 0.9)}</g>
+      <g ${an("fade", 1.1)}>${txt(t, 52, tr("شيت Data", "the Data sheet"), "t-ink2", 11.5, b8)}${txt(t, 214, tr("١٬٢٦٧ صف", "1,267 rows"), "t-mint", 13, b8)}</g>
+      ${tag(t, 240, "SourceFile", "f-mint", "t-white", 10.5, 1.3)}
+      ${cap(tr("تحت بعض… وكل صف عارف جه منين", "stacked… and every row knows where it came from"), 1.6, 292)}`;
     },
-    pt_dup: () => {
-      const a = mx(120), b = mx(250), l = mx(380);
-      return `<g ${an("rise", 0.05)}>${fileIcon(a, 84, "s-acc")}${txt(a, 124, "W06.xlsx", "t-ink", 11, b8 + ' direction="ltr"')}${txt(a, 142, tr("٩٦ صف", "96 rows"), "t-ink3", 10.5, bold)}</g>
-      <g ${an("pop", 0.4)}>${txt(mx(185), 92, "=", "t-amber", 26, b8)}</g>
-      <g ${an("rise", 0.5)}>${fileIcon(b, 84, "s-amber")}${txt(b, 124, "W06 (1).xlsx", "t-amber", 11, b8 + ' direction="ltr"')}${txt(b, 142, tr("نفس الـ ٩٦", "the same 96"), "t-ink3", 10.5, bold)}</g>
-      <g ${an("rise", 0.8)}>${box(l, 96, 150, 76, "f-s2 s-line2")}${txt(l, 80, tr("السجل", "the log"), "t-ink", 11.5, b8)}${txt(l, 100, tr("كل الأوامر اتقرت", "all orders read"), "t-amber", 10, b8)}${txt(l, 118, tr("← الملف اتساب", "→ file skipped"), "t-mint", 10, b8)}</g>
-      ${term(240, 214, 380, 62, ["Confirmations_W06 (1).xlsx: all 96 orders", "already read, file skipped"], 1.1, 10.5, () => "t-crt")}
-      ${cap(tr("اتقرا مرة… يبقى ما يتحسبش تاني", "read once… never counted again"), 1.8)}`;
+    pt_vlookup: () => {
+      const t = mx(140), m = mx(368);
+      return `<g ${an("fade", 0.05)}><rect x="40" y="30" width="400" height="30" rx="6" class="f-s2"/><text x="52" y="50" class="t-ink" font-size="11.5" font-weight="700" direction="ltr">=VLOOKUP(D2, Models!A:B, 2, FALSE)</text></g>
+      ${rowL(t, 96, ["ModelCode", "ModelName"], 88, 24, ["f-acc-soft", "f-mint"], ["t-acc", "t-white"], 9, 0.2)}
+      ${rowL(t, 124, ["M103", "32-inch Smart TV"], 88, 22, ["f-acc-soft", "f-mint-soft"], ["t-acc", "t-mint"], 8, 0.4)}
+      ${rowL(m, 96, ["A", "B"], 88, 24, "f-s2", "t-ink3", 9, 0.5)}
+      ${[["M102", "32-inch HD TV", 0], ["M103", "32-inch Smart TV", 1], ["M104", "43-inch Full HD TV", 0]].map(([c, n, h], i) => rowL(m, 124 + i * 26, [c, n], 88, 22, h ? ["f-acc-soft", "f-mint-soft"] : "f-s1", h ? ["t-acc", "t-mint"] : "t-ink", 8, 0.6 + i * 0.1)).join("")}
+      <g ${an("fade", 0.55)}>${txt(m, 220, tr("شيت Models", "the Models sheet"), "t-ink2", 11, b8)}</g>
+      ${arrow(t + dirx() * 20, 138, m - dirx() * 98, 150, 1.0, "s-acc")}
+      ${pill(240, 258, 360, 32, tr("١ دوّر على الكود · ٢ هات العمود التاني · بالظبط", "1 find the code · 2 bring column 2 · exact"), "f-mint-soft s-mint", "t-mint", 10.5, 1.3)}
+      ${cap(tr("الكود يدوّر… والاسم ييجي لوحده", "the code looks up… the name arrives by itself"), 1.6)}`;
     },
-    pt_blank: () => {
-      const t = mx(160), w = mx(384), d = dirx();
-      return `${rowL(t, 64, ["Prod Order", "Market", "Qty"], 86, 26, "f-acc-soft", "t-acc", 9.5, 0.05)}
-      ${[["4102417", "EG", "40"], ["4102418", "", "22"], ["4102419", "SA", "31"]].map((r, i) => rowL(t, 96 + i * 30, r, 86, 24, i === 1 ? ["f-s1", "f-amber-soft", "f-s1"] : "f-s1", "t-ink", 9.5, 0.2 + i * 0.12)).join("")}
-      ${tag(t, 206, "Unallocated (stock)", "f-amber", "t-white", 10.5, 0.8)}
-      ${arrow(t, 172, t, 190, 0.7, "s-amber")}
-      <g ${an("rise", 1.0)}><path d="M${w - 60} 110 l60 -30 l60 30 v84 h-120z" class="f-s1 s-ink3" stroke-width="2.4" stroke-linejoin="round"/>${[0, 1, 2].map((k) => `<rect x="${w - 42 + k * 30}" y="150" width="24" height="24" rx="3" class="f-amber-soft s-amber" stroke-width="1.5"/>`).join("")}${txt(w, 136, tr("المخزن", "stock"), "t-ink", 11.5, b8)}</g>
-      <g ${an("fade", 1.2)}>${txt(w, 218, tr("٢٣ صف · ٥١٨ جهاز", "23 rows · 518 sets"), "t-amber", 11.5, b8)}</g>
-      ${pill(240, 260, 300, 32, tr("الفاضي هنا معناه: لسه ما اتباعش", "blank here means: not yet sold"), "f-mint-soft s-mint", "t-mint", 11, 1.4)}
-      ${cap(tr("الفاضي ممكن يبقى معلومة", "a blank can be information"), 1.6)}`;
+    pt_country: () => {
+      const t = mx(150), c = mx(370);
+      return `<g ${an("fade", 0.05)}><rect x="40" y="30" width="400" height="30" rx="6" class="f-s2"/><text x="52" y="50" class="t-ink" font-size="11.5" font-weight="700" direction="ltr">=VLOOKUP(F2, Countries!A:B, 2, FALSE)</text></g>
+      ${rowL(t, 96, ["CountryCode", "CountryName"], 92, 24, ["f-amber-soft", "f-mint"], ["t-amber", "t-white"], 9, 0.2)}
+      ${[["SA", "Saudi Arabia"], ["EG", "Egypt"], ["KE", "Kenya"]].map((r, i) => rowL(t, 124 + i * 26, r, 92, 22, ["f-s1", "f-mint-soft"], ["t-ink", "t-mint"], 8.5, 0.35 + i * 0.12)).join("")}
+      <g ${an("rise", 0.9)}>${box(c, 140, 150, 110, "f-s1 s-acc")}${txt(c, 112, tr("الشيت دلوقتي", "the sheet now"), "t-ink", 11.5, b8)}${txt(c, 140, tr("١١ عمود", "11 columns"), "t-acc", 18, b8)}${txt(c, 166, tr("٧ + اسمين + ٢ مساعدين", "7 + 2 names + 2 helpers"), "t-ink3", 10, bold)}</g>
+      ${pill(240, 248, 300, 32, "Kenya · 1,509", "f-acc-soft s-acc", "t-acc", 11.5, 1.2)}
+      ${cap(tr("معادلة واحدة… عمودين", "one formula… two columns"), 1.6)}`;
     },
-    pt_unmatched: () => {
-      const t = mx(150), u_ = mx(360);
-      return `${rowL(t, 62, ["Material", "ModelName"], 98, 26, "f-acc-soft", "t-acc", 9.5, 0.05)}
-      ${[["M108", "55-inch 4K TV"], ["M114", "(not in master)"], ["M102", "32-inch HD TV"]].map((r, i) => rowL(t, 94 + i * 30, r, 98, 24, i === 1 ? ["f-s1", "f-rose-soft"] : "f-s1", i === 1 ? ["t-ink", "t-rose"] : "t-ink", 9, 0.2 + i * 0.12)).join("")}
-      ${arrow(t + dirx() * 104, 124, u_ - dirx() * 96, 118, 0.8, "s-rose")}
-      <g ${an("rise", 0.9)}>${box(u_, 128, 184, 118, "f-s1 s-rose")}${txt(u_, 88, "Unmatched", "t-rose", 12.5, b8 + ' direction="ltr"')}</g>
-      ${rowL(u_, 114, ["Code", "Rows", "Qty"], 52, 22, "f-rose-soft", "t-rose", 9, 1.0)}${rowL(u_, 140, ["M114", "46", "874"], 52, 22, "f-s1", "t-ink", 9, 1.1)}${rowL(u_, 166, ["OM", "27", "556"], 52, 22, "f-s1", "t-ink", 9, 1.2)}
-      <g ${an("rise", 1.4)}>${person(t, 254, 0.9, "f-acc")}${txt(t + dirx() * 96, 236, tr("← التخطيط الرئيسي", "→ central planning"), "t-acc", 11, b8)}${txt(t + dirx() * 96, 254, tr("يحدّث Masters", "updates Masters"), "t-ink2", 10.5, bold)}</g>
-      ${cap(tr("اللي ما لقاش اسمه… يبان", "whatever finds no name… shows"), 1.6)}`;
+    pt_clean: () => {
+      const a = mx(130), b = mx(360);
+      return `${rowL(a, 62, ["ModelName", "CountryName"], 96, 26, "f-mint", "t-white", 9.5, 0.05)}
+      ${[["32-inch Smart TV", "Saudi Arabia"], ["55-inch 4K TV", "Egypt"], ["43-inch Full HD TV", "Kenya"], ["65-inch QLED TV", "Iraq"]].map((r, i) => rowL(a, 94 + i * 28, r, 96, 22, "f-s1", "t-ink", 8, 0.2 + i * 0.1)).join("")}
+      <g ${an("rise", 0.7)}>${box(b, 118, 160, 120, "f-s1 s-mint", 2.5)}${txt(b, 82, "#N/A", "t-ink3", 13, b8 + ' direction="ltr"')}${txt(b, 132, "0", "t-mint", 40, b8 + ' direction="ltr"')}${txt(b, 162, tr("من ٢٬٥٣٤ معادلة", "out of 2,534 formulas"), "t-ink2", 10.5, bold)}</g>
+      ${check(b, 206, 1.0)}
+      ${pill(240, 258, 360, 32, tr("كل كود في التقارير موجود في Masters", "every code in the reports is in Masters"), "f-mint-soft s-mint", "t-mint", 11, 1.2)}
+      ${cap(tr("صفر #N/A… يعني كل صف ليه اسم", "zero #N/A… means every row has a name"), 1.5)}`;
     },
     pt_table: () => {
       const c = 240;
       return `<g ${an("pop", 0.05)}>${tag(c, 44, "tblProduction", "f-acc", "t-white", 12, 0.05)}</g>
       <g ${an("rise", 0.2)}>${grid(c, 132, 6, 7, 46, 18, "f-s1", -1, 0.2)}</g>
       <g ${an("rise", 0.6)}><rect x="${c - 138}" y="196" width="276" height="34" rx="3" class="f-mint-soft s-mint" stroke-dasharray="5 4" stroke-width="1.6"/>${txt(c, 218, tr("صفوف الربع الجاي… الجدول بيكبر لوحده", "next quarter's rows… the table grows by itself"), "t-mint", 10.5, b8)}</g>
-      <g ${an("fade", 0.9)}>${txt(c, 256, tr("الجداول المحورية بتقرا «tblProduction»", "pivot tables read “tblProduction”"), "t-ink2", 11, b8)}${txt(c, 274, tr("مش «A1:K1303»", "not “A1:K1303”"), "t-rose", 11, b8)}</g>
+      <g ${an("fade", 0.9)}>${txt(c, 256, tr("الجداول المحورية بتقرا «tblProduction»", "pivot tables read “tblProduction”"), "t-ink2", 11, b8)}${txt(c, 274, tr("مش «A1:K1268»", "not “A1:K1268”"), "t-rose", 11, b8)}</g>
       ${cap(tr("الاسم بيفضل… والصفوف بتتغيّر", "the name stays… the rows change"), 1.3)}`;
     },
     pt_helpers: () => {
       const a = mx(130), b = mx(352);
       return `${rowL(a, 70, ["Month"], 110, 28, "f-mint", "t-white", 11, 0.05)}${["2026-07", "2026-08", "2026-09"].map((s, i) => rowL(a, 102 + i * 28, [s], 110, 24, "f-s1", "t-ink", 10, 0.15 + i * 0.1)).join("")}
-      ${rowL(b, 70, ["SourceFile"], 150, 28, "f-mint", "t-white", 11, 0.3)}${["Confirmations_W08.xlsx", "Confirmations_W09.xlsx", "Confirmations_W10.xlsx"].map((s, i) => rowL(b, 102 + i * 28, [s], 150, 24, i === 1 ? "f-amber-soft" : "f-s1", i === 1 ? "t-amber" : "t-ink", 9, 0.4 + i * 0.1)).join("")}
+      ${rowL(b, 70, ["SourceFile"], 150, 28, "f-mint", "t-white", 11, 0.3)}${["Week_08.xlsx", "Week_09.xlsx", "Week_10.xlsx"].map((s, i) => rowL(b, 102 + i * 28, [s], 150, 24, i === 1 ? "f-amber-soft" : "f-s1", i === 1 ? "t-amber" : "t-ink", 9, 0.4 + i * 0.1)).join("")}
       <g ${an("rise", 0.9)}>${bubble(a, 226, 170, 44, "f-acc-soft s-acc", !ar())}${txt(a, 231, tr("«يوليو كام؟»", "“how much in July?”"), "t-acc", 11, b8)}</g>
-      <g ${an("rise", 1.1)}>${bubble(b, 226, 190, 44, "f-amber-soft s-amber", ar())}${txt(b, 231, tr("«ليه الأسبوع ٩ قليل؟»", "“why is week 9 low?”"), "t-amber", 11, b8)}</g>
+      <g ${an("rise", 1.1)}>${bubble(b, 226, 190, 44, "f-amber-soft s-amber", ar())}${txt(b, 231, tr("«الأسبوع ٩ عمل كام؟»", "“what did week 9 make?”"), "t-amber", 11, b8)}</g>
       ${cap(tr("الجدول بيتبني على أسئلة الداشبورد", "the table is built for the dashboard's questions"), 1.4)}`;
     },
     pt_check: () => {
       const a = mx(140), k = mx(370), d = dirx();
-      const L = ar() ? ["١٤ ملف", "١٬٣٩٨ صف اتقروا", "٩٦ اتسابوا", "١٬٣٠٢ في الجدول", "٣٠٬٠٤٤ جهاز"] : ["14 files", "1,398 rows read", "96 skipped", "1,302 in the table", "30,044 sets"];
+      const L = ar() ? ["١٣ ملف", "١٬٢٦٧ صف", "٢٩٬٣٨٤ جهاز", "صفر #N/A"] : ["13 files", "1,267 rows", "29,384 sets", "zero #N/A"];
       return `<g ${an("rise", 0.05)}>${box(a, 142, 200, 224, "f-s2 s-line2")}${txt(a, 46, "Check", "t-ink", 12.5, b8 + ' direction="ltr"')}</g>
       <g ${an("rise", 0.25)}>${box(k, 142, 160, 224, "f-s1 s-amber")}${txt(k, 46, "Answer_Key.txt", "t-amber", 11, b8 + ' direction="ltr"')}</g>
       ${L.map((s, i) => `<g ${an("fade", 0.4 + i * 0.18)}>${txt(a, 82 + i * 38, s, "t-ink", 11, b8)}${txt(k, 82 + i * 38, s, "t-ink2", 11, bold)}</g>${check(mx(255), 78 + i * 38, 0.6 + i * 0.18)}`).join("")}
-      ${pill(240, 280, 320, 30, tr("وفلتر يوليو بإيده: ٩٬٧٣٧", "and July filtered by hand: 9,737"), "f-mint", "t-white", 11, 1.6)}`;
+      ${pill(240, 280, 320, 30, tr("وفلتر يوليو بإيده: ٩٬٧٣٧ · وزي Final_Result", "July by hand: 9,737 · and as in Final_Result"), "f-mint", "t-white", 11, 1.6)}`;
     },
     pt_cliff: () => {
       const a = mx(110), b = mx(350), d = dirx();
-      return `<g ${an("rise", 0.05)}>${grid(a, 112, 4, 8, 30, 14, "f-s1", -1, 0.05)}</g><g ${an("fade", 0.3)}>${txt(a, 190, tr("١٬٣٠٢ صف", "1,302 rows"), "t-ink", 12, b8)}</g>
+      return `<g ${an("rise", 0.05)}>${grid(a, 112, 4, 8, 30, 14, "f-s1", -1, 0.05)}</g><g ${an("fade", 0.3)}>${txt(a, 190, tr("١٬٢٦٧ صف", "1,267 rows"), "t-ink", 12, b8)}</g>
       ${arrow(a + d * 76, 112, b - d * 100, 112, 0.6, "s-acc", "6 5")}
       ${dash(b, 112, 180, 112, 0.9)}<g ${an("pop", 1.2)}><circle cx="${b}" cy="112" r="20" class="f-acc"/>${txt(b, 120, ar() ? "؟" : "?", "t-white", 22, b8)}</g>
-      <g ${an("rise", 1.0)}>${person(a, 268, 0.9, "f-ink2")}${bubble(a + d * 120, 232, 200, 40, "f-s1 s-ink3", !ar())}${txt(a + d * 120, 237, tr("«مش هقرا ١٬٣٠٢ صف»", "“I won't read 1,302 rows”"), "t-ink", 10.5, b8)}</g>
+      <g ${an("rise", 1.0)}>${person(a, 268, 0.9, "f-ink2")}${bubble(a + d * 120, 232, 200, 40, "f-s1 s-ink3", !ar())}${txt(a + d * 120, 237, tr("«مش هقرا ١٬٢٦٧ صف»", "“I won't read 1,267 rows”"), "t-ink", 10.5, b8)}</g>
       ${cap(tr("الدرس الجاي: الداشبورد", "next lesson: the dashboard"), 1.5, 302)}`;
     },
 
@@ -2332,40 +2333,39 @@
     pd_pivots: () => {
       const s = mx(84), P = [["PT_MonthLine", 64], ["PT_Country", 146], ["PT_Model", 228]], x = mx(324);
       return `<g ${an("rise", 0.05)}>${grid(s, 146, 3, 12, 34, 14, "f-s1", -1, 0.05)}</g><g ${an("fade", 0.2)}>${txt(s, 244, "tblProduction", "t-ink2", 11, b8 + ' direction="ltr"')}</g>
-      ${P.map(([n, y], i) => `${arrow(s + dirx() * 60, 146, x - dirx() * 112, y, 0.4 + i * 0.25)}<g ${an("rise", 0.5 + i * 0.25)}>${box(x, y, 210, 58, "f-acc-soft s-acc")}${txt(x, y - 8, n, "t-acc", 11.5, b8 + ' direction="ltr"')}${txt(x, y + 12, [tr("الشهر × الخط", "month × line"), tr("البلد: كمية وقيمة", "country: qty and value"), tr("أعلى ١٠ موديلات", "top 10 models")][i], "t-ink2", 10, bold)}</g>`).join("")}
+      ${P.map(([n, y], i) => `${arrow(s + dirx() * 60, 146, x - dirx() * 112, y, 0.4 + i * 0.25)}<g ${an("rise", 0.5 + i * 0.25)}>${box(x, y, 210, 58, "f-acc-soft s-acc")}${txt(x, y - 8, n, "t-acc", 11.5, b8 + ' direction="ltr"')}${txt(x, y + 12, [tr("الشهر × الخط", "month × line"), tr("البلد: كمية وقيمة", "country: qty and value"), tr("كل الموديلات، الأكبر الأول", "every model, largest first")][i], "t-ink2", 10, bold)}</g>`).join("")}
       ${cap(tr("الجدول المحوري بيحفظ الطريقة… مش الأرقام", "a pivot table keeps the method… not the figures"), 1.4, 296)}`;
     },
     pd_prompt: () => {
       const T = ["Pivots", "Report", "Charts", "Dashboard"], X = rowX(4, 92, 8);
       return `<g ${an("fade", 0.05)}>${txt(240, 40, "Production_Q3_Dashboard.xlsx", "t-ink2", 12, b8 + ' direction="ltr"')}</g>
       ${T.map((s, i) => `<g ${an("pop", 0.2 + i * 0.15)}><path d="M${X(i) - 44} 86 v-22 q0 -6 6 -6 h76 q6 0 6 6 v22z" class="${i === 0 ? "f-acc" : "f-acc-soft s-acc"}" stroke-width="1.5"/>${txt(X(i), 77, s, i === 0 ? "t-white" : "t-acc", 11, b8 + ' direction="ltr"')}${txt(X(i), 108, digits(i + 1), "t-ink3", 11, b8)}</g>`).join("")}
-      <g ${an("rise", 0.9)}>${box(240, 168, 380, 70, "f-mint-soft s-mint", 2.5)}${txt(240, 160, tr("قبل التنسيق:", "before formatting:"), "t-mint", 12, b8)}${txt(240, 182, tr("الجدول = الجداول الكاملة = الكارت", "table = the full pivots = the card"), "t-ink", 12, b8)}</g>
+      <g ${an("rise", 0.9)}>${box(240, 168, 380, 70, "f-mint-soft s-mint", 2.5)}${txt(240, 160, tr("قبل التنسيق:", "before formatting:"), "t-mint", 12, b8)}${txt(240, 182, tr("الجدول = الإجمالي في كل جدول محوري", "table = every pivot's grand total"), "t-ink", 12, b8)}</g>
       <g ${an("fade", 1.2)}>${txt(240, 240, tr("التنسيق بياخد أغلب الوقت…", "formatting takes most of the time…"), "t-ink2", 11, bold)}${txt(240, 258, tr("فالأرقام تتراجع قبله", "so the figures are checked first"), "t-ink2", 11, bold)}</g>
       ${cap(tr("الأرقام الأول… والألوان بعدين", "figures first… colours later"), 1.5)}`;
     },
-    pd_stop: () => {
-      const s = mx(410);
-      return `${term(mx(196), 102, 330, 108, ["Check failed:", "  card           29,488", "  tblProduction  30,044", "  difference        556"], 0.05, 11, (i) => (i === 3 ? "t-rose" : "t-crt"))}
-      <g ${an("pop", 1.2)}>${stopSign(s, 90, 26)}</g>
-      ${arrow(240, 166, 240, 196, 1.4, "s-amber")}
-      ${pill(240, 218, 330, 36, tr("٥٥٦ = سوق OM اللي مش في Masters", "556 = market OM, missing from Masters"), "f-amber-soft s-amber", "t-amber", 11.5, 1.5)}
-      ${pill(240, 262, 360, 32, tr("الكارت يقرا الإجمالي الكلي من PT_Country", "the card reads the grand total of PT_Country"), "f-mint", "t-white", 10.5, 1.8)}
-      ${cap(tr("الفرق رقم… والرقم ليه صاحب", "the difference is a number… with an owner"), 2.0)}`;
+    pd_pass: () => {
+      const s_ = mx(410);
+      return `${term(mx(196), 102, 330, 108, ["Check passed:", "  tblProduction  29,384", "  PT_MonthLine   29,384", "  PT_Country     29,384", "  PT_Model       29,384"], 0.05, 10.5, (i) => (i === 0 ? "t-mint" : "t-crt"))}
+      <g ${an("pop", 1.2)}><circle cx="${s_}" cy="90" r="26" class="f-mint"/><path d="M${s_ - 11} 90 l8 8 l15 -16" class="s-white" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+      ${pill(240, 218, 360, 36, tr("كل صف اتحسب في كل جدول محوري", "every row counted in every pivot table"), "f-mint-soft s-mint", "t-mint", 11.5, 1.5)}
+      ${pill(240, 262, 360, 32, tr("والمراجعة بتفضل في الأداة كل ربع", "and the check stays in the tool every quarter"), "f-acc-soft s-acc", "t-acc", 10.5, 1.8)}
+      ${cap(tr("بتعدّي النهارده… وبتحرس بكرة", "it passes today… and guards tomorrow"), 2.0)}`;
     },
     pd_report: () => {
-      const X = rowX(4, 104, 8), K = [[n_("30,044"), tr("جهاز", "sets")], [tr("٢٨٤٫٦ م", "284.6 M"), tr("جنيه", "EGP")], [n_("45.4") + "%", tr("تصدير", "export")], ['32" Smart', tr("أعلى موديل", "top model")]];
+      const X = rowX(4, 104, 8), K = [[n_("29,384"), tr("جهاز", "sets")], [tr("٢٧٩٫٢ م", "279.2 M"), tr("جنيه", "EGP")], [n_("47") + "%", tr("تصدير", "export")], ['32" Smart', tr("أعلى موديل", "top model")]];
       return `<g ${an("fade", 0.05)}>${txt(240, 36, tr("Report · الربع التالت", "Report · third quarter"), "t-ink2", 12, b8)}</g>
       ${K.map(([a, b], i) => card(X(i), 78, 100, 52, a, b, 0.2 + i * 0.15, "f-s1 s-acc", "t-acc", 13.5)).join("")}
-      ${cols(150, 238, [9737, 9844, 10463], 40, 24, 10463, 96, 0.9, ["f-acc-soft2", "f-acc-soft2", "f-acc"])}
-      <g ${an("fade", 1.1)}>${["Jul", "Aug", "Sep"].map((m, i) => `<text x="${170 + i * 64}" y="254" class="t-ink3" font-size="10" font-weight="700" text-anchor="middle" direction="ltr">${m}</text>`).join("")}<text x="298" y="136" class="t-acc" font-size="10.5" font-weight="800" text-anchor="middle" direction="ltr">10,463</text></g>
+      ${cols(150, 238, [9737, 9643, 10004], 40, 24, 10004, 96, 0.9, ["f-acc-soft2", "f-acc-soft2", "f-acc"])}
+      <g ${an("fade", 1.1)}>${["Jul", "Aug", "Sep"].map((m, i) => `<text x="${170 + i * 64}" y="254" class="t-ink3" font-size="10" font-weight="700" text-anchor="middle" direction="ltr">${m}</text>`).join("")}<text x="298" y="136" class="t-acc" font-size="10.5" font-weight="800" text-anchor="middle" direction="ltr">10,004</text></g>
       ${cap(tr("٤ أرقام فوق… والتفاصيل تحت", "4 figures on top… details below"), 1.3, 296)}`;
     },
     pd_charts: () => {
       const X = rowX(3, 140, 14);
-      return `<g ${an("rise", 0.05)}>${box(X(0), 130, 140, 150, "f-s1 s-line2")}</g>${cols(X(0) - 52, 186, [6311, 4954, 5074, 4971, 5353, 3381], 12, 6, 6311, 90, 0.2, ["f-acc", "f-acc-soft"])}
-      <g ${an("rise", 0.3)}>${box(X(1), 130, 140, 150, "f-s1 s-line2")}</g><g ${an("rise", 0.5)}>${[1, 0.24, 0.2, 0.17, 0.12].map((v, i) => `<rect x="${X(1) - 54}" y="${80 + i * 20}" width="${108 * v}" height="12" rx="3" class="${i ? "f-amber-soft" : "f-amber"}"/>`).join("")}</g>
-      <g ${an("rise", 0.6)}>${box(X(2), 130, 140, 150, "f-s1 s-line2")}</g>${donut(X(2), 128, 36, [[0.53, "f-mint"], [0.45, "f-acc"], [0.02, "f-amber"]], 0.8)}
-      <g ${an("fade", 1.0)}>${txt(X(0), 226, tr("الشهور والخطوط", "months and lines"), "t-ink2", 10.5, b8)}${txt(X(1), 226, tr("البلاد", "countries"), "t-ink2", 10.5, b8)}${txt(X(2), 226, tr("مصر · تصدير · مخزن", "Egypt · export · stock"), "t-ink2", 10, b8)}</g>
+      return `<g ${an("rise", 0.05)}>${box(X(0), 130, 140, 150, "f-s1 s-line2")}</g>${cols(X(0) - 52, 186, [5886, 5077, 5567, 4619, 4567, 3668], 12, 6, 5886, 90, 0.2, ["f-acc", "f-acc-soft"])}
+      <g ${an("rise", 0.3)}>${box(X(1), 130, 140, 150, "f-s1 s-line2")}</g><g ${an("rise", 0.5)}>${[1, 0.114, 0.113, 0.112, 0.097].map((v, i) => `<rect x="${X(1) - 54}" y="${80 + i * 20}" width="${108 * v}" height="12" rx="3" class="${i ? "f-amber-soft" : "f-amber"}"/>`).join("")}</g>
+      <g ${an("rise", 0.6)}>${box(X(2), 130, 140, 150, "f-s1 s-line2")}</g><g ${an("rise", 0.8)}>${[1, 0.93, 0.88, 0.84, 0.8].map((v, i) => `<rect x="${X(2) - 54}" y="${80 + i * 20}" width="${108 * v}" height="12" rx="3" class="${i ? "f-mint-soft" : "f-mint"}"/>`).join("")}</g>
+      <g ${an("fade", 1.0)}>${txt(X(0), 226, tr("الشهور والخطوط", "months and lines"), "t-ink2", 10.5, b8)}${txt(X(1), 226, tr("البلاد", "countries"), "t-ink2", 10.5, b8)}${txt(X(2), 226, tr("الموديلات", "models"), "t-ink2", 10.5, b8)}</g>
       ${pill(240, 262, 300, 30, tr("مش ١٠ رسوم «علشان يبان غني»", "not 10 charts “to look rich”"), "f-rose-soft s-rose", "t-rose", 11, 1.2)}
       ${cap(tr("رسوم أقل… فهم أسرع", "fewer charts… faster understanding"), 1.5)}`;
     },
@@ -2378,24 +2378,24 @@
     },
     pd_cards: () => {
       const a = mx(126), b = mx(354);
-      return `<g ${an("rise", 0.05)}>${box(a, 104, 170, 96, "f-s1 s-rose")}${txt(a, 106, n_("30,044"), "t-ink", 22, b8)}${txt(a, 132, tr("مكتوب بالإيد", "typed by hand"), "t-rose", 11, b8)}</g>${check(a + dirx() * 74, 62, 0.4, false)}
-      <g ${an("rise", 0.5)}>${box(b, 104, 190, 96, "f-s1 s-mint")}${txt(b, 106, n_("30,044"), "t-ink", 22, b8)}${txt(b, 132, tr("بيقرا من الجدول المحوري", "read from the pivot table"), "t-mint", 10.5, b8)}</g>${check(b + dirx() * 84, 62, 0.8)}
+      return `<g ${an("rise", 0.05)}>${box(a, 104, 170, 96, "f-s1 s-rose")}${txt(a, 106, n_("29,384"), "t-ink", 22, b8)}${txt(a, 132, tr("مكتوب بالإيد", "typed by hand"), "t-rose", 11, b8)}</g>${check(a + dirx() * 74, 62, 0.4, false)}
+      <g ${an("rise", 0.5)}>${box(b, 104, 190, 96, "f-s1 s-mint")}${txt(b, 106, n_("29,384"), "t-ink", 22, b8)}${txt(b, 132, tr("بيقرا من الجدول المحوري", "read from the pivot table"), "t-mint", 10.5, b8)}</g>${check(b + dirx() * 84, 62, 0.8)}
       <g ${an("fade", 0.9)}>${mono(40, 196, '=GETPIVOTDATA("Qty", PT_Country)', "t-acc", 12)}</g>
-      <g ${an("fade", 1.1)}>${txt(a, 236, tr("L01 ← لسه ٣٠٬٠٤٤", "L01 → still 30,044"), "t-rose", 11.5, b8)}${txt(b, 236, tr("L01 ← ٦٬٣١١", "L01 → 6,311"), "t-mint", 11.5, b8)}</g>
+      <g ${an("fade", 1.1)}>${txt(a, 236, tr("L01 ← لسه ٢٩٬٣٨٤", "L01 → still 29,384"), "t-rose", 11.5, b8)}${txt(b, 236, tr("L01 ← ٥٬٨٨٦", "L01 → 5,886"), "t-mint", 11.5, b8)}</g>
       ${cap(tr("الرقم المكتوب بالإيد… صح النهارده بس", "a typed figure… is right only today"), 1.4, 290)}`;
     },
     pd_test: () => {
       const a = mx(130), b = mx(350);
-      return `<g ${an("rise", 0.05)}>${tag(a, 60, "Line: L01", "f-acc", "t-white", 11, 0.05)}</g>${card(a, 124, 150, 64, n_("6,311"), tr("الكارت", "the card"), 0.3, "f-s1 s-acc", "t-acc", 20)}
-      <g ${an("rise", 0.5)}>${tag(b, 60, "Filter: Line = L01", "f-ink2", "t-white", 10.5, 0.5)}</g>${card(b, 124, 150, 64, n_("6,311"), tr("الفلتر بإيدك", "your filter"), 0.8, "f-s1 s-ink3", "t-ink", 20)}
+      return `<g ${an("rise", 0.05)}>${tag(a, 60, "Line: L01", "f-acc", "t-white", 11, 0.05)}</g>${card(a, 124, 150, 64, n_("5,886"), tr("الكارت", "the card"), 0.3, "f-s1 s-acc", "t-acc", 20)}
+      <g ${an("rise", 0.5)}>${tag(b, 60, "Filter: LineCode = L01", "f-ink2", "t-white", 10.5, 0.5)}</g>${card(b, 124, 150, 64, n_("5,886"), tr("الفلتر بإيدك", "your filter"), 0.8, "f-s1 s-ink3", "t-ink", 20)}
       <g ${an("pop", 1.1)}>${txt(240, 132, "=", "t-mint", 30, b8)}</g>
-      <g ${an("fade", 1.3)}>${txt(a, 196, "Kenya: " + n_("1,907"), "t-ink2", 11, b8 + ' direction="ltr"')}${txt(b, 196, "Kenya: " + n_("1,907"), "t-ink2", 11, b8 + ' direction="ltr"')}</g>${check(240, 192, 1.5)}
+      <g ${an("fade", 1.3)}>${txt(a, 196, "Kenya: " + n_("1,509"), "t-ink2", 11, b8 + ' direction="ltr"')}${txt(b, 196, "Kenya: " + n_("1,509"), "t-ink2", 11, b8 + ' direction="ltr"')}</g>${check(240, 192, 1.5)}
       ${pill(240, 246, 300, 32, tr("طريقين مختلفين… ونفس الرقم", "two routes… the same figure"), "f-mint", "t-white", 11.5, 1.6)}
       ${cap(tr("ودلوقتي بس يتبعت", "only now is it sent"), 1.8, 296)}`;
     },
     pd_refresh: () => {
       const X = rowX(3, 120, 30);
-      return `<g ${an("rise", 0.05)}>${[0, 1, 2].map((k) => fileIcon(X(0) - 20 + k * 20, 100, "s-acc", 0.05 + k * 0.1)).join("")}${txt(X(0), 146, tr("تصديرات جديدة", "new exports"), "t-ink", 11, b8)}</g>
+      return `<g ${an("rise", 0.05)}>${[0, 1, 2].map((k) => fileIcon(X(0) - 20 + k * 20, 100, "s-acc", 0.05 + k * 0.1)).join("")}${txt(X(0), 146, tr("تقارير جديدة", "new reports"), "t-ink", 11, b8)}</g>
       ${arrow(X(0) + dirx() * 50, 100, X(1) - dirx() * 50, 100, 0.5)}
       <g ${an("pop", 0.7)}>${box(X(1), 100, 100, 54, "f-acc-soft s-acc")}${txt(X(1), 98, tr("الأداة ١", "tool 1"), "t-acc", 12, b8)}${txt(X(1), 114, "tblProduction", "t-ink2", 9, bold + ' direction="ltr"')}</g>
       ${arrow(X(1) + dirx() * 54, 100, X(2) - dirx() * 56, 100, 0.9)}
@@ -2403,11 +2403,13 @@
       <g ${an("pop", 1.3)}><path d="M210 210 a30 30 0 1 1 8 22" class="s-mint" stroke-width="4" fill="none"/><path d="M205 226 l14 8 l2 -15" class="s-mint" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>${txt(318, 216, "Refresh All", "t-mint", 13, b8 + ' direction="ltr"')}</g>
       ${cap(tr("الطريقة محفوظة… والأرقام بتتجدد", "the method is kept… the figures renew"), 1.6, 290)}`;
     },
-    pd_send: () => {
-      return `<g ${an("rise", 0.05)}><rect x="110" y="34" width="260" height="150" rx="8" class="f-ink2"/>${dash(240, 108, 230, 128, 0.2)}</g>
-      <g ${an("rise", 0.6)}>${[150, 205, 275, 330].map((x, i) => person(x, 262, 0.95, i === 1 ? "f-acc" : "f-ink3")).join("")}</g>
-      <g ${an("fade", 0.9)}>${txt(mx(70), 214, tr("سبتمبر ١٠٬٤٦٣", "Sep 10,463"), "t-acc", 11, b8)}${txt(mx(410), 214, tr("L06 ٣٬٣٨١", "L06 3,381"), "t-amber", 11, b8)}</g>
-      ${cap(tr("النقاش راح للقرار… مش للأرقام", "the talk moved to the decision… not the figures"), 1.2, 302)}`;
+    pd_final: () => {
+      const a = mx(140), b = mx(362), T = ["Dashboard", "Report", "Pivots", "Data", "Models", "Countries"];
+      return `<g ${an("rise", 0.05)}>${xl(a, 52, 1)}${txt(a, 92, "Final_Result", "t-ink2", 11, b8 + ' direction="ltr"')}</g>
+      ${T.map((t, i) => `<g ${an("rise", 0.2 + i * 0.1)}>${box(a, 118 + i * 26, 150, 22, i < 2 ? "f-acc-soft s-acc" : "f-s1 s-line2")}${txt(a, 122 + i * 26, t, i < 2 ? "t-acc" : "t-ink2", 10, b8 + ' direction="ltr"')}</g>`).join("")}
+      ${[[tr("٢٧٩٫٢ م جنيه", "EGP 279.2 M"), 0], [tr("٤٧٪ تصدير", "47% export"), 1], [tr("سبتمبر ١٠٬٠٠٤", "Sep 10,004"), 2], ["L06 " + n_("3,668"), 3]].map(([t, i]) => `<g ${an("fade", 0.9 + i * 0.15)}>${box(b, 76 + i * 40, 170, 30, "f-s1 s-mint")}${txt(b, 81 + i * 40, t, "t-ink", 11, b8)}</g>${check(b + dirx() * 100, 76 + i * 40, 1.0 + i * 0.15)}`).join("")}
+      ${pill(b, 250, 200, 30, tr("نفس الأرقام بالظبط", "exactly the same figures"), "f-mint", "t-white", 11, 1.6)}
+      ${cap(tr("الشكل يختلف… والأرقام لأ", "the look may differ… the figures may not"), 1.8, 296)}`;
     },
     pd_cliff: () => {
       const a = mx(120), b = mx(360), d = dirx();
@@ -2426,36 +2428,29 @@
       ${cap(tr("كل نقل بالإيد… فرصة لغلطة", "every hand copy… a chance for a mistake"), 1.4, 290)}`;
     },
     pg_inventory: () => {
-      const R = [["Sales_Cairo_Q3.xlsx", tr("سطر لكل فاتورة", "row per invoice"), "xl"], ["Sales_Alexandria_Q3.xlsx", tr("الشهور أعمدة", "months as columns"), "xl"], ["Sales_Delta_Q3.xlsx", tr("شيت لكل شهر", "sheet per month"), "xl"], ["Export_Sales_*.pdf ×3", tr("جدول مطبوع", "printed table"), "pdf"], ["Outbound_Shipments_*.pdf ×3", tr("جدول مطبوع", "printed table"), "pdf"], ["*_Memo_Q3.docx ×2", tr("جدول جوّه نص", "table inside text"), "doc"]];
+      const R = [["Sales_Cairo_Q3.xlsx", tr("نفس الأعمدة", "the same columns"), "xl"], ["Sales_Alexandria_Q3.xlsx", tr("نفس الأعمدة", "the same columns"), "xl"], ["Sales_Delta_Q3.xlsx", tr("نفس الأعمدة", "the same columns"), "xl"], ["Export_Sales_*.pdf ×3", tr("جدول واحد", "one table"), "pdf"], ["Shipments_*.pdf ×3", tr("جدول واحد", "one table"), "pdf"], ["Returns · Targets .docx", tr("جدول جوّه نص", "table inside text"), "doc"]];
       return `${R.map(([f, s, k], i) => `<g ${an("rise", 0.1 + i * 0.15)}>${ofc(mx(50), 50 + i * 38, k, 0.7)}<text x="${ar() ? 410 : 70}" y="${54 + i * 38}" class="t-ink" font-size="10.5" font-weight="800" text-anchor="${ar() ? "end" : "start"}" direction="ltr">${esc(f)}</text>${txt(mx(372), 54 + i * 38, s, "t-ink2", 10.5, bold)}</g>`).join("")}
       ${pill(240, 276, 300, 30, tr("الجرد ده أول جزء في README", "this inventory opens the README"), "f-acc-soft s-acc", "t-acc", 11, 1.2)}`;
     },
-    pg_long: () => {
-      const a = mx(118), b = mx(340);
-      return `<g ${an("fade", 0.05)}>${txt(a, 40, tr("عريض: عمود لكل حاجة", "wide: a column per thing"), "t-rose", 11.5, b8)}</g>
-      <g ${an("rise", 0.1)}>${grid(a, 106, 9, 5, 21, 18, "f-s1", -1, 0.1)}</g><g ${an("fade", 0.4)}>${txt(a, 172, tr("مصدر جديد = أعمدة جديدة", "new source = new columns"), "t-ink3", 10.5, bold)}</g>
-      <g ${an("fade", 0.6)}>${txt(b, 40, tr("طويل: صف لكل رقم", "long: a row per figure"), "t-mint", 11.5, b8)}</g>
-      ${rowL(b, 68, ["Month", "Channel", "Measure", "Value"], 54, 22, "f-mint", "t-white", 8, 0.7)}
-      ${[["2026-07", "Cairo", "SalesQty", "212"], ["2026-07", "Cairo", "Freight", "2,800"], ["Q3", "Export", "Target", "130M"], ["2026-09", "Delta", "Returns", "4"]].map((r, i) => rowL(b, 94 + i * 24, r, 54, 20, "f-s1", "t-ink", 7.5, 0.85 + i * 0.1)).join("")}
-      <g ${an("fade", 1.3)}>${txt(b, 210, tr("٧ مقاييس · ٨ أعمدة بس", "7 measures · just 8 columns"), "t-ink2", 10.5, b8)}</g>
-      ${cap(tr("مصدر جديد = صفوف جديدة… مش أعمدة", "a new source = new rows… not columns"), 1.5, 290)}`;
+    pg_design: () => {
+      const a = mx(150), b = mx(374);
+      return `<g ${an("fade", 0.05)}>${txt(240, 34, "Q3_Commercial_DB.xlsx", "t-ink2", 12, b8 + ' direction="ltr"')}</g>
+      <g ${an("rise", 0.15)}>${box(a, 150, 220, 196, "f-s1 s-acc", 2.5)}${txt(a, 72, "Sales", "t-acc", 13, b8 + ' direction="ltr"')}</g>
+      ${["Month", "Channel", "CountryCode", "CountryName", "ModelCode", "ModelName", "Qty", "NetSales", "SourceFile"].map((c, i) => `<g ${an("fade", 0.3 + i * 0.06)}><rect x="${a - 92}" y="${84 + i * 18}" width="184" height="15" rx="3" class="${c.endsWith("Name") ? "f-mint-soft" : "f-s2"}"/>${txt(a, 95 + i * 18, c, c.endsWith("Name") ? "t-mint" : "t-ink2", 8.5, b8 + ' direction="ltr"')}</g>`).join("")}
+      ${["Shipments", "Returns", "Targets"].map((t, i) => `<g ${an("rise", 0.9 + i * 0.15)}>${box(b, 84 + i * 56, 140, 44, "f-amber-soft s-amber")}${txt(b, 89 + i * 56, t, "t-amber", 11.5, b8 + ' direction="ltr"')}</g>`).join("")}
+      <g ${an("fade", 1.4)}>${txt(b, 258, tr("٣ جداول صغيرة", "3 small tables"), "t-ink2", 11, b8)}</g>
+      ${cap(tr("شيت كبير… وجداول صغيرة جنبه", "one big sheet… small tables beside it"), 1.6, 290)}`;
     },
-    pg_shapes: () => {
-      const X = rowX(3, 140, 14);
-      return `<g ${an("rise", 0.05)}>${txt(X(0), 44, "Cairo", "t-ink", 12, b8 + ' direction="ltr"')}${grid(X(0), 100, 4, 6, 30, 14, "f-s1", -1, 0.05)}${txt(X(0), 162, tr("زي ما هو", "as it is"), "t-mint", 11, b8)}</g>
-      <g ${an("rise", 0.3)}>${txt(X(1), 44, "Alexandria", "t-ink", 12, b8 + ' direction="ltr"')}${rowL(X(1), 72, ["Jul", "Aug", "Sep", "Q3"], 28, 18, ["f-acc-soft", "f-acc-soft", "f-acc-soft", "f-rose-soft"], ["t-acc", "t-acc", "t-acc", "t-rose"], 8, 0.3)}${rowL(X(1), 128, ["Total"], 120, 18, "f-rose-soft", "t-rose", 8.5, 0.4)}${txt(X(1), 162, "unpivot", "t-mint", 11, b8 + ' direction="ltr"')}</g>
-      <g ${an("rise", 0.6)}>${txt(X(2), 44, "Delta", "t-ink", 12, b8 + ' direction="ltr"')}${["Jul", "Aug", "September"].map((s, i) => `<rect x="${X(2) - 60 + i * 30}" y="${70 + i * 18}" width="${i === 2 ? 64 : 34}" height="16" rx="3" class="${i === 2 ? "f-amber-soft" : "f-acc-soft"}"/><text x="${X(2) - 60 + i * 30 + (i === 2 ? 32 : 17)}" y="${82 + i * 18}" class="${i === 2 ? "t-amber" : "t-acc"}" font-size="8.5" font-weight="800" text-anchor="middle" direction="ltr">${s}</text>`).join("")}${txt(X(2), 162, tr("أول ٣ حروف", "first 3 letters"), "t-mint", 11, b8)}</g>
-      ${pill(240, 222, 360, 34, tr("«اقرا ملفات الفروع» = ٣ أشكال في جملة واحدة", "“read the branch files” = 3 shapes in one sentence"), "f-rose-soft s-rose", "t-rose", 10.5, 1.0)}
-      ${cap(tr("كل ملف بشكله… وكل شكل بقاعدته", "each file its shape… each shape its rule"), 1.3, 280)}`;
-    },
-    pg_cairo: () => {
-      const R = [["2026-06-30", "INV-C-49871", "INV", "36"], ["2026-07-01", "INV-C-50001", "INV", "64"], ["2026-08-21", "CN-C-50114", "CN", "-8"]];
-      return `${rowL(240, 54, ["Invoice Date", "Document", "Type", "Qty"], 96, 24, "f-acc-soft", "t-acc", 9, 0.05)}
-      ${R.map((r, i) => rowL(240, 84 + i * 28, r, 96, 22, i === 0 ? "f-rose-soft" : i === 2 ? "f-amber-soft" : "f-s1", i === 0 ? "t-rose" : i === 2 ? "t-amber" : "t-ink", 9, 0.2 + i * 0.15)).join("")}
-      ${pill(mx(130), 186, 200, 44, tr("يونيو ← برّه الربع، يتساب", "June → outside, left out"), "f-rose-soft s-rose", "t-rose", 10.5, 0.8)}
-      ${pill(mx(350), 186, 200, 44, tr("CN ← سالب، وبيتخصم", "CN → negative, deducted"), "f-amber-soft s-amber", "t-amber", 10.5, 1.1)}
-      <g ${an("fade", 1.3)}>${txt(240, 240, tr("الربع: ١ يوليو ← ٣٠ سبتمبر", "the quarter: 1 July → 30 September"), "t-ink", 12, b8)}</g>
-      ${cap(tr("الفترة ليها حدود… والسالب ليه معنى", "the period has limits… a negative has a meaning"), 1.5, 286)}`;
+    pg_branches: () => {
+      const f = mx(110), t = mx(340), d = dirx();
+      const B = [["Sales_Cairo_Q3", "71"], ["Sales_Alexandria_Q3", "61"], ["Sales_Delta_Q3", "63"]];
+      return `${B.map(([n, r], i) => `<g ${an("rise", 0.05 + i * 0.15)}>${xl(f + d * -70, 74 + i * 50, 0.8)}${txt(f + d * 14, 72 + i * 50, n, "t-ink", 9.5, b8 + ' direction="ltr"')}${txt(f + d * 14, 88 + i * 50, tr(digits(r) + " صف", r + " rows"), "t-ink3", 9.5, bold)}</g>`).join("")}
+      ${arrow(f + d * 86, 124, t - d * 96, 124, 0.6, "s-mint")}
+      ${rowL(t, 70, ["Month", "Channel", "CountryCode"], 62, 22, "f-mint", "t-white", 8, 0.8)}
+      ${[["2026-07", "Cairo", "EG"], ["2026-08", "Alexandria", "EG"], ["2026-09", "Delta", "EG"]].map((r, i) => rowL(t, 96 + i * 24, r, 62, 20, "f-s1", "t-ink", 8, 0.95 + i * 0.1)).join("")}
+      <g ${an("fade", 1.3)}>${txt(t, 186, tr("١٩٥ صف في Sales", "195 rows in Sales"), "t-mint", 12, b8)}</g>
+      ${pill(240, 238, 360, 32, tr("القناة من اسم الملف · البلد EG · الشهر من التاريخ", "channel from the file name · country EG · month from the date"), "f-acc-soft s-acc", "t-acc", 10, 1.4)}
+      ${cap(tr("اسم الملف… يبقى عمود", "the file name… becomes a column"), 1.6, 290)}`;
     },
     pg_word: () => {
       const a = mx(90), b = mx(240), c = mx(390), d = dirx();
@@ -2468,50 +2463,62 @@
       <g ${an("fade", 1.6)}>${txt(240, 252, tr("PDF ممسوح ضوئيًا (صورة)؟ ده محتاج طريقة تانية", "a scanned PDF (an image)? that needs another way"), "t-ink3", 10.5, bold)}</g>
       ${cap(tr("وورد بيقرا الـ PDF… والأداة بتقرا وورد", "Word reads the PDF… the tool reads Word"), 1.8, 296)}`;
     },
-    pg_pages: () => {
-      const a = mx(140), b = mx(340);
-      const P = (x, d, cont, total) => `<g ${an("rise", d)}><rect x="${x - 82}" y="40" width="164" height="210" rx="6" class="f-s1 s-line2" stroke-width="2"/>${cont ? txt(x, 60, "(continued)", "t-amber", 9.5, b8 + ' direction="ltr"') : txt(x, 60, "Export Sales", "t-ink", 10, b8 + ' direction="ltr"')}<rect x="${x - 70}" y="70" width="140" height="16" rx="3" class="${cont ? "f-amber-soft" : "f-acc-soft"}"/>${txt(x, 82, "Country · Model · Qty", cont ? "t-amber" : "t-acc", 8, b8 + ' direction="ltr"')}${[0, 1, 2, 3, 4].map((k) => `<rect x="${x - 70}" y="${96 + k * 18}" width="${[140, 120, 132, 110, 128][k]}" height="7" rx="3" class="f-s3"/>`).join("")}${total ? `<rect x="${x - 70}" y="196" width="140" height="18" rx="3" class="f-mint-soft"/>${txt(x, 209, "TOTAL  3,083", "t-mint", 9, b8 + ' direction="ltr"')}` : ""}${txt(x, 238, digits(cont ? 2 : 1), "t-ink3", 10, b8)}</g>`;
-      return `${P(a, 0.05, false, false)}${P(b, 0.4, true, true)}
-      <g ${an("fade", 0.9)}>${txt(240, 274, tr("العناوين المكررة تتساب · الفاصل يتشال · TOTAL للمراجعة", "repeated headers skipped · separators removed · TOTAL kept"), "t-ink2", 10.5, b8)}</g>
-      ${cap(tr("سطر TOTAL مش بيانات… ده المراجع", "the TOTAL line isn't data… it's the checker"), 1.2, 300)}`;
+    pg_export: () => {
+      const a = mx(130), b = mx(352), d = dirx();
+      return `<g ${an("rise", 0.05)}><rect x="${a - 82}" y="40" width="164" height="176" rx="6" class="f-s1 s-line2" stroke-width="2"/>${txt(a, 60, "Export Sales - Aug", "t-ink", 10, b8 + ' direction="ltr"')}<rect x="${a - 70}" y="70" width="140" height="16" rx="3" class="f-rose-soft"/>${txt(a, 82, "Country · Model · Qty · Net", "t-rose", 8, b8 + ' direction="ltr"')}${[0, 1, 2, 3, 4, 5].map((k) => `<rect x="${a - 70}" y="${96 + k * 18}" width="${[140, 120, 132, 110, 128, 136][k]}" height="7" rx="3" class="f-s3"/>`).join("")}</g>
+      <g ${an("fade", 0.3)}>${txt(a, 236, tr("٢٩ + ٤١ + ٤٤ = ١١٤ سطر", "29 + 41 + 44 = 114 lines"), "t-ink2", 11, b8)}</g>
+      ${arrow(a + d * 88, 128, b - d * 98, 128, 0.6)}
+      <g ${an("rise", 0.8)}>${box(b, 128, 184, 150, "f-s1 s-acc", 2.5)}${txt(b, 70, "Sales", "t-acc", 13, b8 + ' direction="ltr"')}<rect x="${b - 78}" y="84" width="156" height="58" rx="4" class="f-acc-soft"/>${txt(b, 118, tr("الفروع ١٩٥", "branches 195"), "t-acc", 11, b8)}<rect x="${b - 78}" y="148" width="156" height="44" rx="4" class="f-rose-soft"/>${txt(b, 175, tr("التصدير ١١٤", "export 114"), "t-rose", 11, b8)}</g>
+      ${pill(b, 236, 200, 30, tr("٣٠٩ صف · ٢٥٬٢٧٦ جهاز", "309 rows · 25,276 sets"), "f-mint", "t-white", 11, 1.2)}
+      ${cap(tr("مصادر مختلفة… شيت واحد", "different sources… one sheet"), 1.5, 292)}`;
     },
-    pg_bracket: () => {
-      return `${term(240, 78, 400, 82, ["Export_Sales_2026-09.pdf:", "  rows sum 3,107   printed TOTAL 3,083", "  difference 24"], 0.05, 11, (i) => (i === 2 ? "t-rose" : "t-crt"))}
-      ${rowL(240, 160, ["Kuwait", "M101", "credit note", "(12)", "(40,560)"], 76, 26, ["f-s1", "f-s1", "f-s1", "f-amber-soft", "f-amber-soft"], ["t-ink", "t-ink", "t-ink3", "t-amber", "t-amber"], 9, 0.8)}
-      ${pill(mx(140), 222, 200, 36, tr("اتقري موجب ← فرق ٢٤", "read as +12 → 24 off"), "f-rose-soft s-rose", "t-rose", 11, 1.1)}
-      ${pill(mx(350), 222, 180, 36, tr("القوسين = سالب", "brackets = negative"), "f-mint", "t-white", 11.5, 1.4)}
-      ${cap(tr("الإجمالي المطبوع بيمسك غلطة القراية", "the printed total catches a reading mistake"), 1.7, 284)}`;
+    pg_ship: () => {
+      const t = mx(170), k = mx(392);
+      return `${rowL(t, 52, ["Channel", "Shipments", "Units", "FreightEGP"], 70, 24, "f-rose-soft", "t-rose", 8.5, 0.05)}
+      ${[["Cairo", "12", "1,745", "33,600"], ["Alexandria", "10", "1,451", "42,000"], ["Delta", "13", "1,900", "45,500"], ["Export", "6", "2,242", "288,000"]].map((r, i) => rowL(t, 80 + i * 26, r, 70, 22, "f-s1", "t-ink", 8, 0.2 + i * 0.1)).join("")}
+      <g ${an("fade", 0.7)}>${txt(t, 202, tr("يوليو: سطر لكل قناة", "July: one line per channel"), "t-ink2", 10.5, b8)}</g>
+      <g ${an("rise", 0.9)}>${box(k, 120, 128, 120, "f-s1 s-amber")}${txt(k, 82, "Shipments", "t-amber", 11.5, b8 + ' direction="ltr"')}${txt(k, 116, tr("١٣٥ شحنة", "135 shipments"), "t-ink", 12, b8)}${txt(k, 140, n_("25,276"), "t-ink", 13, b8)}${txt(k, 158, tr("جهاز اتشحن", "sets shipped"), "t-ink3", 10, bold)}</g>
+      ${pill(240, 248, 340, 32, tr("اتشحن ٢٥٬٢٧٦ = اتباع ٢٥٬٢٧٦", "shipped 25,276 = sold 25,276"), "f-mint-soft s-mint", "t-mint", 11, 1.3)}
+      ${cap(tr("كل نوع… في شيته", "each kind… in its own sheet"), 1.6, 292)}`;
+    },
+    pg_lookup: () => {
+      return `<g ${an("fade", 0.05)}><rect x="40" y="30" width="400" height="30" rx="6" class="f-s2"/><text x="52" y="50" class="t-ink" font-size="11.5" font-weight="700" direction="ltr">=VLOOKUP(C2, Countries!A:B, 2, FALSE)</text></g>
+      ${rowL(240, 94, ["Channel", "CountryCode", "CountryName", "ModelCode", "ModelName"], 76, 24, ["f-s2", "f-s2", "f-mint", "f-s2", "f-mint"], ["t-ink2", "t-ink2", "t-white", "t-ink2", "t-white"], 7.5, 0.2)}
+      ${[["Cairo", "EG", "Egypt", "M103", "32\" Smart"], ["Export", "KE", "Kenya", "M110", "65\" 4K"], ["Export", "SA", "Saudi Arabia", "M108", "55\" 4K"]].map((r, i) => rowL(240, 122 + i * 26, r, 76, 22, ["f-s1", "f-s1", "f-mint-soft", "f-s1", "f-mint-soft"], ["t-ink", "t-ink", "t-mint", "t-ink", "t-mint"], 7.5, 0.4 + i * 0.12)).join("")}
+      ${pill(mx(140), 228, 190, 34, tr("٦١٨ معادلة", "618 formulas"), "f-acc-soft s-acc", "t-acc", 11.5, 1.0)}
+      ${pill(mx(350), 228, 170, 34, tr("صفر #N/A", "zero #N/A"), "f-mint", "t-white", 11.5, 1.2)}
+      ${cap(tr("نفس المعادلة… في مثال تاني", "the same formula… in another example"), 1.5, 290)}`;
     },
     pg_memos: () => {
       const a = mx(136), b = mx(370);
-      return `${page(a, 140, 220, 220, "Returns_Memo_Q3.docx", [150, 170, 120], 0.05)}
-      ${rowL(a, 150, ["Model", "Jul", "Aug", "Q3"], 46, 20, "f-acc-soft", "t-acc", 8, 0.3)}${rowL(a, 174, ["65-inch 4K", "7", "8", "22"], 46, 20, ["f-amber-soft", "f-s1", "f-s1", "f-rose-soft"], ["t-amber", "t-ink", "t-ink", "t-rose"], 7.5, 0.4)}
-      <g ${an("fade", 0.6)}>${txt(a, 222, tr("«٢٨٧ جهاز» في الفقرة", "“287 sets” in the text"), "t-mint", 10.5, b8)}</g>
-      ${arrow(a + dirx() * 116, 174, b - dirx() * 76, 120, 0.8, "s-amber")}
-      ${rowL(b, 90, ["ModelName", "ModelCode"], 70, 22, "f-acc-soft", "t-acc", 8, 0.9)}${rowL(b, 116, ["65-inch 4K TV", "M110"], 70, 20, ["f-amber-soft", "f-mint-soft"], ["t-amber", "t-mint"], 7.5, 1.0)}
-      <g ${an("fade", 1.2)}>${txt(b, 156, tr("الاسم ← الكود", "name → code"), "t-ink", 11.5, b8)}${txt(b, 176, tr("النص ← رقم · Q3 يتساب", "text → number · Q3 skipped"), "t-ink2", 10, bold)}</g>
-      ${cap(tr("كل المصادر بتتقابل على الكود", "every source meets on the code"), 1.4, 290)}`;
+      return `${page(a, 140, 220, 220, "Returns_Q3.docx", [150, 170, 120], 0.05)}
+      ${rowL(a, 150, ["ModelCode", "Jul", "Aug", "Sep"], 46, 20, "f-acc-soft", "t-acc", 7.5, 0.3)}${rowL(a, 174, ["M110", "14", "14", "6"], 46, 20, "f-s1", "t-ink", 7.5, 0.4)}
+      <g ${an("fade", 0.6)}>${txt(a, 222, tr("الشهور أعمدة", "months as columns"), "t-amber", 10.5, b8)}</g>
+      ${arrow(a + dirx() * 116, 174, b - dirx() * 90, 120, 0.8, "s-amber")}
+      ${rowL(b, 72, ["Month", "ModelCode", "Units"], 54, 22, "f-mint", "t-white", 8, 0.9)}${[["2026-07", "14"], ["2026-08", "14"], ["2026-09", "6"]].map(([m, q], i) => rowL(b, 98 + i * 24, [m, "M110", q], 54, 20, "f-s1", "t-ink", 7.5, 1.0 + i * 0.1)).join("")}
+      <g ${an("fade", 1.3)}>${txt(b, 190, tr("١٢ × ٣ = ٣٦ صف", "12 × 3 = 36 rows"), "t-ink", 11.5, b8)}${txt(b, 210, tr("المجموع ٢٨١ جهاز", "281 sets in all"), "t-mint", 10.5, b8)}</g>
+      ${cap(tr("أعمدة للعين… وصفوف للجدول المحوري", "columns for the eye… rows for the pivot table"), 1.5, 290)}`;
     },
-    pg_thousands: () => {
-      return `${rowL(240, 56, ["Channel", "Target Units", "Target Net Sales (EGP 000)"], 128, 26, ["f-acc-soft", "f-acc-soft", "f-amber"], ["t-acc", "t-acc", "t-white"], 8.5, 0.05)}
-      ${rowL(240, 86, ["Alexandria", "3,200", "35,000"], 128, 24, ["f-s1", "f-s1", "f-amber-soft"], ["t-ink", "t-ink", "t-amber"], 9.5, 0.2)}
-      ${pill(mx(130), 150, 200, 44, tr("زي ما هو: ١٠٦٬٢٤٣٪", "as it is: 106,243%"), "f-rose-soft s-rose", "t-rose", 11, 0.6)}
-      ${pill(mx(350), 150, 200, 44, tr("بعد الضرب في ١٬٠٠٠: ١٠٦٫٢٪", "× 1,000: 106.2%"), "f-mint", "t-white", 11.5, 0.9)}
-      <g ${an("rise", 1.2)}>${box(240, 222, 360, 44, "f-s2 s-line2")}${txt(240, 218, tr("الفقرة: «EGP 130 million» للتصدير", "the text: “EGP 130 million” for export"), "t-ink", 10.5, b8)}${txt(240, 234, tr("الجدول: ١٣٠٬٠٠٠ ← نفس الرقم", "the table: 130,000 → the same figure"), "t-ink2", 10, bold)}</g>
-      ${cap(tr("الوحدة جزء من الرقم", "the unit is part of the number"), 1.5, 290)}`;
+    pg_targets: () => {
+      const T = [["Cairo", "75"], ["Alexandria", "47"], ["Delta", "63"], ["Export", "144"]];
+      return `${rowL(240, 56, ["Channel", "TargetUnits", "TargetSales"], 120, 26, "f-acc-soft", "t-acc", 9, 0.05)}
+      ${T.map(([c, v], i) => rowL(240, 86 + i * 26, [c, "…", v + ",000,000"], 120, 22, "f-s1", "t-ink", 9, 0.2 + i * 0.1)).join("")}
+      <g ${an("rise", 0.8)}>${box(240, 214, 300, 40, "f-mint-soft s-mint")}${txt(240, 219, tr("المجموع ٣٢٩ مليون · التحقيق ١٠٠٫٢٪", "total 329 million · achievement 100.2%"), "t-mint", 11.5, b8)}</g>
+      ${pill(240, 262, 330, 30, tr("نفس اسم القناة في Sales وTargets", "the same channel name in Sales and Targets"), "f-acc-soft s-acc", "t-acc", 10.5, 1.2)}
+      ${cap(tr("نفس الاسم… في كل جدول", "the same name… in every table"), 1.5, 300)}`;
     },
     pg_sources: () => {
-      const R = [["Sales_Cairo_Q3.xlsx", "115", "OK"], ["Export_Sales_2026-09.pdf", "3,083", "OK"], ["Outbound_Shipments_2026-08.pdf", "7,570", "OK"], ["Targets_Memo_Q3.docx", "4", "OK"]];
-      return `<g ${an("fade", 0.05)}>${txt(240, 34, tr("شيت Sources · ١٢ سطر", "Sources sheet · 12 lines"), "t-ink2", 12, b8)}</g>
-      ${rowL(240, 60, ["File", "Total", "Status"], 150, 24, "f-acc-soft", "t-acc", 9, 0.1)}
+      const R = [["Sales_Cairo_Q3.xlsx", "71", "OK"], ["Export_Sales_2026-08.pdf", "41", "OK"], ["Shipments_2026-08.pdf", "4", "OK"], ["Targets_Q3.docx", "4", "OK"]];
+      return `<g ${an("fade", 0.05)}>${txt(240, 34, tr("شيت Sources · ١١ ملف", "Sources sheet · 11 files"), "t-ink2", 12, b8)}</g>
+      ${rowL(240, 60, ["File", "Rows", "Status"], 150, 24, "f-acc-soft", "t-acc", 9, 0.1)}
       ${R.map((r, i) => `${rowL(240, 88 + i * 26, r, 150, 22, ["f-s1", "f-s1", "f-mint-soft"], ["t-ink", "t-ink", "t-mint"], 8.5, 0.25 + i * 0.12)}`).join("")}
-      <g ${an("fade", 0.9)}>${txt(240, 210, tr("١٤٠ شحنة · ٢٤٬٥٠٢ جهاز اتباع", "140 shipments · 24,502 sets sold"), "t-ink", 12, b8)}</g>
+      <g ${an("fade", 0.9)}>${txt(240, 210, tr("اتشحن = اتباع · ١٢ من ١٢ OK", "shipped = sold · 12 of 12 OK"), "t-ink", 12, b8)}</g>
       ${pill(240, 252, 350, 32, tr("واختبار: غيّر رقم في PDF نسخة ← وقفت", "and a test: change a PDF copy → it stopped"), "f-mint", "t-white", 10.5, 1.2)}
-      ${cap(tr("١٢ ملف… ١٢ مراجعة", "12 files… 12 checks"), 1.5, 296)}`;
+      ${cap(tr("مصدرين… ونفس الرقم", "two sources… one figure"), 1.5, 296)}`;
     },
     pg_cliff: () => {
       const a = mx(120), b = mx(360), d = dirx();
-      return `<g ${an("rise", 0.05)}>${grid(a, 100, 4, 8, 30, 14, "f-s1", -1, 0.05)}${txt(a, 176, "Fact", "t-ink", 12, b8 + ' direction="ltr"')}</g>
+      return `<g ${an("rise", 0.05)}>${grid(a, 100, 4, 8, 30, 14, "f-s1", -1, 0.05)}${txt(a, 176, "Q3_Commercial_DB", "t-ink", 11, b8 + ' direction="ltr"')}</g>
       ${arrow(a + d * 76, 100, b - d * 70, 100, 0.5, "s-acc", "6 5")}
       <g ${an("pop", 0.8)}>${ofc(b, 100, "ppt", 2)}</g><g ${an("fade", 1.0)}>${txt(b, 158, tr("٨ شرائح · الأحد", "8 slides · Sunday"), "t-amber", 12, b8)}</g>
       <g ${an("pop", 1.2)}><circle cx="${b + d * 44}" cy="64" r="16" class="f-acc"/>${txt(b + d * 44, 70, ar() ? "؟" : "?", "t-white", 18, b8)}</g>
@@ -2527,12 +2534,12 @@
       <g ${an("rise", 0.7)}>${box(b + 50, 92, 90, 64, "f-s1 s-rose")}${txt(b + 50, 76, tr("شريحة ٥", "slide 5"), "t-ink3", 9.5, bold)}${txt(b + 50, 104, n_("128.7"), "t-rose", 14, b8)}</g>
       <g ${an("pop", 1.0)}>${txt(b, 102, "≠", "t-rose", 22, b8)}</g>
       ${pill(240, 196, 340, 36, tr("رقمين لنفس الحاجة ← الثقة ضاعت", "two numbers for one thing → trust lost"), "f-rose-soft s-rose", "t-rose", 11.5, 1.2)}
-      ${pill(240, 246, 340, 34, tr("المرة دي: مصدر واحد مراجَع (Fact)", "this time: one checked source (Fact)"), "f-mint", "t-white", 11.5, 1.5)}
+      ${pill(240, 246, 340, 34, tr("المرة دي: ملف واحد مراجَع", "this time: one checked workbook"), "f-mint", "t-white", 11.5, 1.5)}
       ${cap(tr("مصدر واحد… ولا رقمين مختلفين", "one source… never two different numbers"), 1.8, 296)}`;
     },
     pp_rates: () => {
-      const R = [[tr("التحقيق", "achievement"), "Sales ÷ Target"], [tr("النولون للجهاز", "freight per set"), "Freight ÷ Shipped"], [tr("المرتجعات", "return rate"), "Returns ÷ SalesQty"]];
-      const A_ = [["Alexandria", 106.2], ["Export", 103.2], ["Cairo", 96.6], ["Delta", 91.1]];
+      const R = [[tr("التحقيق", "achievement"), "Sales ÷ Target"], [tr("النولون للجهاز", "freight per set"), "FreightEGP ÷ Units"], [tr("المرتجعات", "return rate"), "Returns ÷ Qty"]];
+      const A_ = [["Alexandria", 108.6], ["Export", 103.0], ["Cairo", 96.6], ["Delta", 91.8]];
       return `${R.map(([n, f], i) => `<g ${an("rise", 0.1 + i * 0.2)}>${box(mx(124), 60 + i * 50, 196, 40, "f-acc-soft s-acc")}${txt(mx(124), 56 + i * 50, n, "t-acc", 11, b8)}${txt(mx(124), 72 + i * 50, f, "t-ink2", 9.5, bold + ' direction="ltr"')}</g>`).join("")}
       ${A_.map(([c, v], i) => `<g ${an("rise", 0.8 + i * 0.12)}><text x="${ar() ? 220 : 260}" y="${60 + i * 34}" class="t-ink2" font-size="10" font-weight="800" text-anchor="start" direction="ltr">${c}</text></g>${grow(260, 66 + i * 34, (v / 110) * 160, 10, v >= 100 ? "f-mint" : "f-amber", 0.9 + i * 0.12)}<g ${an("fade", 1.2 + i * 0.1)}>${txt(ar() ? 480 - 260 - (v / 110) * 160 - 22 : 260 + (v / 110) * 160 + 22, 76 + i * 34, n_(String(v)) + "%", v >= 100 ? "t-mint" : "t-amber", 10, b8 + ' direction="ltr"')}</g>`).join("")}
       ${pill(240, 246, 330, 32, tr("كل نسبة بتتحسب في مكان واحد بس", "every rate is worked out in one place"), "f-mint-soft s-mint", "t-mint", 11, 1.6)}
@@ -2540,8 +2547,8 @@
     },
     pp_check: () => {
       const a = mx(130), b = mx(350);
-      return `${card(a, 92, 170, 70, tr("٢٩٨٫١ م", "298.1 M"), tr("الجدول المحوري", "the pivot table"), 0.1, "f-s1 s-acc", "t-acc", 18)}
-      ${card(b, 92, 170, 70, tr("٢٩٨٫١ م", "298.1 M"), "Fact", 0.4, "f-s1 s-ink3", "t-ink", 18)}
+      return `${card(a, 92, 170, 70, tr("٣٢٩٫٦ م", "329.6 M"), tr("الجدول المحوري", "the pivot table"), 0.1, "f-s1 s-acc", "t-acc", 18)}
+      ${card(b, 92, 170, 70, tr("٣٢٩٫٦ م", "329.6 M"), tr("شيت Sales", "the Sales sheet"), 0.4, "f-s1 s-ink3", "t-ink", 18)}
       <g ${an("pop", 0.8)}>${txt(240, 100, "=", "t-mint", 30, b8)}</g>
       ${arrow(240, 140, 240, 176, 1.0, "s-mint")}
       <g ${an("pop", 1.2)}>${ofc(240, 206, "ppt", 1.3)}${txt(240 + dirx() * 96, 211, tr("وبعدين بس العرض", "only then the deck"), "t-mint", 11.5, b8)}</g>
@@ -2572,8 +2579,8 @@
     pp_numbers: () => {
       const s = mx(150), p = mx(364);
       return `<g ${an("rise", 0.05)}>${box(s, 130, 230, 170, "f-s1 s-amber", 2.5)}${txt(s, 62, tr("شريحة ٣", "slide 3"), "t-amber", 11.5, b8)}</g>
-      ${cols(s - 80, 160, [106.2, 103.2, 96.6, 91.1], 26, 16, 106.2, 74, 0.3, ["f-mint", "f-mint", "f-amber", "f-amber"])}
-      <g ${an("fade", 0.6)}>${[106.2, 103.2, 96.6, 91.1].map((v, i) => `<text x="${s - 67 + i * 42}" y="${190}" class="t-ink" font-size="9" font-weight="800" text-anchor="middle" direction="ltr">${v}%</text>`).join("")}</g>
+      ${cols(s - 80, 160, [108.6, 103.0, 96.6, 91.8], 26, 16, 108.6, 74, 0.3, ["f-mint", "f-mint", "f-amber", "f-amber"])}
+      <g ${an("fade", 0.6)}>${["108.6", "103.0", "96.6", "91.8"].map((v, i) => `<text x="${s - 67 + i * 42}" y="${190}" class="t-ink" font-size="9" font-weight="800" text-anchor="middle" direction="ltr">${v}%</text>`).join("")}</g>
       <g ${an("rise", 0.8)}>${box(p, 120, 130, 60, "f-acc-soft s-acc")}${txt(p, 116, tr("الجدول المحوري", "pivot table"), "t-acc", 11, b8)}${txt(p, 134, tr("وقت التشغيل", "at run time"), "t-ink2", 10, bold)}</g>
       <path ${an("draw", 1.0, "s-acc")} pathLength="1" d="M${p - dirx() * 66} 130 L${s + dirx() * 118} 150" stroke-width="2.5" fill="none" marker-end="url(#aih-arrow)"/>
       ${pill(240, 252, 330, 32, tr("مش من الـ Prompt ولا من ذاكرة النموذج", "not from the Prompt or the model's memory"), "f-mint-soft s-mint", "t-mint", 10.5, 1.3)}
@@ -2588,17 +2595,17 @@
       ${cap(tr("الأداة للأرقام… والقرار للمدير", "the tool for the figures… the decision for the director"), 1.5, 300)}`;
     },
     pp_decimal: () => {
-      return `<g ${an("rise", 0.05)}>${box(240, 76, 300, 64, "f-s1 s-rose")}${txt(240, 70, tr("الشريحة ٧ · M110", "slide 7 · M110"), "t-ink3", 10.5, bold)}${txt(240, 92, "2.558140%", "t-rose", 18, b8 + ' direction="ltr"')}</g>
+      return `<g ${an("rise", 0.05)}>${box(240, 76, 300, 64, "f-s1 s-rose")}${txt(240, 70, tr("الشريحة ٧ · M110", "slide 7 · M110"), "t-ink3", 10.5, bold)}${txt(240, 92, "2.374301%", "t-rose", 18, b8 + ' direction="ltr"')}</g>
       ${arrow(240, 114, 240, 146, 0.5, "s-mint")}
-      <g ${an("pop", 0.7)}>${box(240, 174, 300, 50, "f-s1 s-mint")}${txt(240, 181, n_("2.6") + "%", "t-mint", 18, b8 + ' direction="ltr"')}</g>
+      <g ${an("pop", 0.7)}>${box(240, 174, 300, 50, "f-s1 s-mint")}${txt(240, 181, n_("2.4") + "%", "t-mint", 18, b8 + ' direction="ltr"')}</g>
       <g ${an("fade", 1.0)}>${txt(240, 228, tr("نسب: خانة عشرية واحدة · مبالغ: فاصل آلاف", "rates: one decimal · amounts: separators"), "t-ink", 11, b8)}${txt(240, 248, tr("الشريحة ٢: بالمليون", "slide 2: in millions"), "t-ink2", 11, bold)}</g>
       ${cap(tr("الرقم الصح… محتاج شكل صح", "a right figure… needs a right format"), 1.3, 290)}`;
     },
     pp_test: () => {
       const a = mx(120), b = mx(360), d = dirx();
-      return `<g ${an("rise", 0.05)}>${rowL(a, 80, ["Delta", "Sep", "+1,000,000"], 58, 26, ["f-s1", "f-s1", "f-amber-soft"], ["t-ink", "t-ink", "t-amber"], 8.5, 0.05)}${txt(a, 122, tr("نسخة من Fact", "a copy of Fact"), "t-ink2", 11, b8)}</g>
+      return `<g ${an("rise", 0.05)}>${rowL(a, 80, ["Delta", "Sep", "+1,000,000"], 58, 26, ["f-s1", "f-s1", "f-amber-soft"], ["t-ink", "t-ink", "t-amber"], 8.5, 0.05)}${txt(a, 122, tr("نسخة من شيت Sales", "a copy of Sales"), "t-ink2", 11, b8)}</g>
       ${arrow(a + d * 100, 80, b - d * 76, 80, 0.5)}
-      <g ${an("pop", 0.8)}>${box(b, 84, 140, 72, "f-s1 s-mint")}${txt(b, 76, "Delta", "t-ink2", 11, b8 + ' direction="ltr"')}${txt(b, 100, tr("من ٩١٫١٪ لـ ٩٢٫٦٪", "91.1% → 92.6%"), "t-mint", 12, b8)}</g>
+      <g ${an("pop", 0.8)}>${box(b, 84, 140, 72, "f-s1 s-mint")}${txt(b, 76, "Delta", "t-ink2", 11, b8 + ' direction="ltr"')}${txt(b, 100, tr("من ٩١٫٨٪ لـ ٩٣٫٤٪", "91.8% → 93.4%"), "t-mint", 12, b8)}</g>
       <g ${an("fade", 1.1)}>${txt(240, 172, tr("والإجمالي في الشريحة ٢ زاد مليون", "and slide 2's total rose by a million"), "t-ink", 11.5, b8)}</g>
       ${pill(240, 222, 330, 34, tr("رجّع الرقم ← رجع العرض", "put it back → the deck goes back"), "f-acc-soft s-acc", "t-acc", 11.5, 1.3)}
       ${cap(tr("لو اتغيّر معاه… يبقى مربوط", "if it moves with it… it's connected"), 1.6, 280)}`;
@@ -2670,11 +2677,11 @@
     cc_plan: () => {
       const a = mx(140), b = mx(356);
       return `<g ${an("rise", 0.05)}>${page(a, 140, 220, 220, tr("الخطة · ٦ خطوات", "The plan · 6 steps"), [], 0.05, "f-s1 s-mint")}</g>
-      ${[tr("لقيت ٣ حاجات مختلفة:", "3 things differ:"), "September", tr("فاتورة ٣٠ يونيو", "a 30 June invoice"), tr("رقم بين قوسين", "a number in brackets")].map((s, i) => `<g ${an("fade", 0.3 + i * 0.2)}>${txt(a, 84 + i * 26, s, i ? "t-amber" : "t-ink", 11, b8)}</g>`).join("")}
+      ${[tr("قريت الـ ١١ ملف:", "read the 11 files:"), tr("Sales بعمودين VLOOKUP", "Sales with 2 VLOOKUPs"), "Shipments · Returns", "Targets · Sources"].map((s, i) => `<g ${an("fade", 0.3 + i * 0.2)}>${txt(a, 84 + i * 26, s, i ? "t-mint" : "t-ink", 11, b8)}</g>`).join("")}
       <g ${an("fade", 1.1)}>${txt(a, 196, tr("١ اقرا · ٢ اجمع · …", "1 read · 2 gather · …"), "t-ink3", 10.5, bold)}</g>
-      <g ${an("rise", 1.3)}>${bubble(b, 110, 190, 56, "f-acc-soft s-acc", ar())}${txt(b, 104, tr("«زوّد مقارنة", "“add the printed-"), "t-acc", 11, b8)}${txt(b, 122, tr("الإجمالي المطبوع»", "total comparison”"), "t-acc", 11, b8)}</g>
+      <g ${an("rise", 1.3)}>${bubble(b, 110, 190, 56, "f-acc-soft s-acc", ar())}${txt(b, 104, tr("«زوّد: اللي اتشحن", "“add: shipped"), "t-acc", 11, b8)}${txt(b, 122, tr("= اللي اتباع»", "= sold”"), "t-acc", 11, b8)}</g>
       <g ${an("pop", 1.6)}>${person(b, 216, 1, "f-ink2")}</g>${check(b + dirx() * 40, 176, 1.8)}
-      ${cap(tr("شاف الملفات… فلقى المشاكل بدري", "it saw the files… so it found the problems early"), 1.9, 296)}`;
+      ${cap(tr("شاف الملفات… قبل ولا سطر كود", "it saw the files… before a line of code"), 1.9, 296)}`;
     },
     cc_models: () => {
       const M = [["Fable 5.1", tr("الأقوى · مهام طويلة وغامضة", "most capable · long, ambiguous"), "f-acc-deep"], ["Opus 5.5", tr("الافتراضي · تفكير معقّد", "the default · complex reasoning"), "f-acc"], ["Sonnet 5.5", tr("الشغل اليومي", "everyday work"), "f-acc-soft2"], ["Haiku 5.5", tr("الأسرع · حاجات بسيطة", "fastest · simple things"), "f-mint"]];
@@ -2702,13 +2709,13 @@
     },
     cc_safe: () => {
       const R = ar() ? ["اشتغل على نسخة", "اقرا الخطة قبل الموافقة", "مفيش ملفات سرية على الويب", "راجع النتيجة بنفسك"] : ["work on a copy", "read the plan before approving", "no confidential files on the web", "check the result yourself"];
-      return `<g ${an("pop", 0.05)}>${card(240, 56, 200, 52, tr("٢٥ دقيقة", "25 minutes"), tr("١٤٠ شحنة · ٢٤٬٥٠٢ جهاز", "140 shipments · 24,502 sets"), 0.05, "f-mint-soft s-mint", "t-mint", 16)}</g>
+      return `<g ${an("pop", 0.05)}>${card(240, 56, 200, 52, tr("٢٥ دقيقة", "25 minutes"), tr("١٣٥ شحنة · ٢٥٬٢٧٦ جهاز", "135 shipments · 25,276 sets"), 0.05, "f-mint-soft s-mint", "t-mint", 16)}</g>
       ${R.map((s, i) => `<g ${an("rise", 0.4 + i * 0.2)}>${box(240, 116 + i * 40, 320, 32, "f-s1 s-line2")}<circle cx="${mx(102)}" cy="${116 + i * 40}" r="11" class="f-acc"/>${txt(mx(102), 120 + i * 40, digits(i + 1), "t-white", 11, b8)}${txt(250, 120 + i * 40, s, "t-ink", 11, b8)}</g>`).join("")}
       ${cap(tr("أسرع… والمراجعة لسه عليك", "faster… and the check is still yours"), 1.4, 300)}`;
     },
     cc_cliff: () => {
       const a = mx(130), b = mx(352), d = dirx();
-      return `<g ${an("rise", 0.05)}>${box(a, 100, 180, 130, "f-s1 s-line2")}${txt(a, 52, tr("اللي اتعلمه", "what it learned"), "t-ink", 11.5, b8)}${["September", tr("القوسين سالب", "brackets negative"), tr("المستهدف بالألف", "target in thousands"), tr("قارن TOTAL", "compare TOTAL")].map((s, i) => txt(a, 80 + i * 22, s, "t-ink2", 10.5, bold)).join("")}</g>
+      return `<g ${an("rise", 0.05)}>${box(a, 100, 180, 130, "f-s1 s-line2")}${txt(a, 52, tr("اللي اتعلمه", "what it learned"), "t-ink", 11.5, b8)}${[tr("Sales بعمودين VLOOKUP", "Sales + 2 VLOOKUPs"), tr("الشحنات لوحدها", "shipments apart"), tr("المرتجعات صفوف", "returns as rows"), tr("اتشحن = اتباع", "shipped = sold")].map((s, i) => txt(a, 80 + i * 22, s, "t-ink2", 10.5, bold)).join("")}</g>
       <g ${an("fade", 0.8)}><rect x="${a - 90}" y="35" width="180" height="130" rx="12" class="f-s2" opacity="0.7"/></g>
       ${arrow(a + d * 96, 100, b - d * 80, 100, 1.0, "s-rose", "6 5")}
       <g ${an("pop", 1.2)}>${box(b, 100, 150, 70, "f-s1 s-acc")}${txt(b, 96, tr("جلسة جديدة", "a new session"), "t-acc", 12, b8)}${txt(b, 116, tr("ما بتفتكرش", "remembers nothing"), "t-rose", 10.5, b8)}</g>
@@ -2719,7 +2726,7 @@
     /* ----- skills (data/skill-story.js) ----- */
     sk_lost: () => {
       const a = mx(126), b = mx(352), d = dirx();
-      return `<g ${an("rise", 0.05)}>${[0, 1, 2, 3].map((k) => fileIcon(a - 36 + k * 24, 80, "s-acc", 0.05 + k * 0.08)).join("")}${txt(a, 120, tr("تصديرات أكتوبر", "October's exports"), "t-ink", 11.5, b8)}</g>
+      return `<g ${an("rise", 0.05)}>${[0, 1, 2, 3].map((k) => fileIcon(a - 36 + k * 24, 80, "s-acc", 0.05 + k * 0.08)).join("")}${txt(a, 120, tr("تقارير أكتوبر", "October's reports"), "t-ink", 11.5, b8)}</g>
       <g ${an("rise", 0.4)}>${bubble(b, 76, 200, 60, "f-s1 s-ink3", ar())}${txt(b, 68, tr("«أنهي داشبورد؟", "“which dashboard?"), "t-ink", 11, b8)}${txt(b, 86, tr("القواعد إيه؟»", "what are the rules?”"), "t-ink", 11, b8)}</g>
       <g ${an("rise", 0.8)}>${box(a, 200, 170, 70, "f-s2 s-line2")}${txt(a, 192, tr("المحادثة القديمة", "the old chat"), "t-ink3", 11, b8)}${txt(a, 212, tr("قفلت", "closed"), "t-rose", 11, b8)}</g>
       <g ${an("rise", 1.0)}>${person(b, 230, 1, "f-ink2")}${txt(b, 268, tr("نص ساعة على التليفون", "half an hour on the phone"), "t-rose", 11, b8)}</g>
@@ -2736,14 +2743,14 @@
     sk_desc: () => {
       return `<g ${an("rise", 0.05)}>${box(240, 64, 380, 46, "f-rose-soft s-rose")}${mono(76, 69, 'description: "an Excel skill"', "t-rose", 11.5)}</g>${check(mx(420), 64, 0.4, false)}
       <g ${an("fade", 0.5)}>${txt(240, 112, tr("بتعمل إيه؟ إمتى؟ ← Claude ما لقاهاش", "does what? when? → Claude didn't find it"), "t-ink2", 11, bold)}</g>
-      <g ${an("rise", 0.8)}>${box(240, 182, 400, 84, "f-mint-soft s-mint")}${mono(52, 160, "description: Builds the quarterly", "t-mint", 10.5)}${mono(52, 178, "production table and dashboard from", "t-mint", 10.5)}${mono(52, 196, "Confirmations_Wnn.xlsx. Use when asked", "t-mint", 10.5)}${mono(52, 214, "to refresh the production dashboard...", "t-mint", 10.5)}</g>${check(mx(452), 150, 1.2)}
+      <g ${an("rise", 0.8)}>${box(240, 182, 400, 84, "f-mint-soft s-mint")}${mono(52, 160, "description: Builds the quarterly", "t-mint", 10.5)}${mono(52, 178, "production workbook and dashboard from", "t-mint", 10.5)}${mono(52, 196, "Week_nn.xlsx. Use when asked", "t-mint", 10.5)}${mono(52, 214, "to refresh the production dashboard...", "t-mint", 10.5)}</g>${check(mx(452), 150, 1.2)}
       ${cap(tr("وصف واضح… المهارة تتلاقي", "a clear description… the skill gets found"), 1.4, 268)}`;
     },
     sk_body: () => {
-      const P = ar() ? [["المدخلات", "الملفات · صف العناوين"], ["الخطوة ١", "الجدول وقواعده"], ["الخطوة ٢", "الداشبورد"], ["قبل «خلصت»", "كل المراجعات في السجل"]] : [["Inputs", "files · header row"], ["Step 1", "the table and its rules"], ["Step 2", "the dashboard"], ["Before “done”", "every check in the log"]];
+      const P = ar() ? [["المدخلات", "الملفات وأعمدتها"], ["الخطوة ١", "الشيت الكبير + VLOOKUP"], ["الخطوة ٢", "الداشبورد"], ["قبل «خلصت»", "كل المراجعات في السجل"]] : [["Inputs", "files and their columns"], ["Step 1", "big sheet + VLOOKUP"], ["Step 2", "the dashboard"], ["Before “done”", "every check in the log"]];
       return `<g ${an("fade", 0.05)}>${txt(240, 36, "SKILL.md", "t-acc", 12, b8 + ' direction="ltr"')}</g>
       ${P.map(([h, s], i) => `<g ${an("rise", 0.15 + i * 0.2)}>${box(240, 72 + i * 50, 340, 40, i === 3 ? "f-mint-soft s-mint" : "f-s1 s-acc")}${txt(mx(150), 77 + i * 50, h, i === 3 ? "t-mint" : "t-acc", 11.5, b8)}${txt(mx(310), 77 + i * 50, s, "t-ink", 11, bold)}</g>`).join("")}
-      <g ${an("fade", 1.1)}>${txt(240, 284, tr("كل قاعدة جت من حاجة حصلت: الملف المتكرر · الـ ٥٥٦", "each rule came from a real event: the repeated file · the 556"), "t-ink2", 10.5, bold)}</g>
+      <g ${an("fade", 1.1)}>${txt(240, 284, tr("كل قاعدة جت من شغل اتراجع: صفر #N/A · المراجعة قبل التنسيق", "each rule came from checked work: zero #N/A · check before formatting"), "t-ink2", 10.5, bold)}</g>
       ${cap(tr("كل قاعدة… جت من تجربة", "every rule… came from experience"), 1.3, 306)}`;
     },
     sk_refs: () => {
@@ -2786,7 +2793,7 @@
       const a = mx(130), b = mx(352);
       return `<g ${an("rise", 0.05)}>${bubble(a, 74, 210, 60, "f-acc-soft s-acc", !ar())}${txt(a, 66, tr("«حدّث داشبورد الإنتاج", "“refresh the production"), "t-acc", 10.5, b8)}${txt(a, 84, tr("من ملفات الأسبوع الجديدة»", "dashboard from the new files”"), "t-acc", 10.5, b8)}</g>
       <g ${an("fade", 0.3)}>${txt(a, 134, tr("جلسة جديدة · من غير شرح", "a new session · no explanation"), "t-ink3", 10.5, bold)}</g>
-      ${term(b, 112, 200, 120, ["skill: production-dashboard", "safe-office-automation", "build_table.ps1  OK", "build_dashboard.ps1  OK", "checks 5/5"], 0.6, 9.5)}
+      ${term(b, 112, 200, 120, ["skill: production-dashboard", "safe-office-automation", "build_table.ps1  OK", "build_dashboard.ps1  OK", "checks 4/4"], 0.6, 9.5)}
       <g ${an("rise", 1.4)}>${box(a, 206, 190, 40, "f-s1 s-line2")}${mono(a - 82, 211, "/production-dashboard", "t-acc", 11)}</g>${check(a + dirx() * 106, 206, 1.6)}
       ${cap(tr("لو اشتغلت من غير شرح… جاهزة", "if it works unexplained… it's ready"), 1.8, 290)}`;
     },

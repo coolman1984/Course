@@ -211,18 +211,18 @@
     ], 0, ["ارجع في نفس المحادثة، ومعاك الرسالة بالحرف وآخر سطور السجل واسم الملف ونسخة PowerShell، واطلب أقل تعديل ممكن في نسخة جديدة باسم جديد.", "Go back in the same chat with the message word for word, the last log lines, the file name and the PowerShell version, and ask for the smallest change in a new version under a new name."]),
 
     /* ---------- Unit 3: two big Office examples, Claude Code and skills ---------- */
-    Q("a1a", "a1", "predict", ["ملف Confirmations_W06 (1).xlsx هو نفس تصدير الأسبوع ٦ اتنزّل مرتين. أداة بتحط كل الملفات تحت بعض من غير ما تبص على Prod Order. يحصل إيه؟", "Confirmations_W06 (1).xlsx is week 6's export downloaded twice. A tool stacks every file without looking at Prod Order. What happens?"], [
-      o("الأسبوع ٦ يتحسب مرتين: ٩٦ صف زيادة، والإجمالي يكبر من غير رسالة", "Week 6 counts twice: 96 extra rows, and the total grows without a message"),
-      o("إكسل يرفض يفتح ملف اسمه فيه قوسين", "Excel refuses to open a file with brackets in its name", "إكسل بيفتحه عادي؛ الاسم مش مشكلة.", "Excel opens it normally; the name isn't the problem."),
-      o("الأداة توقف لوحدها لأن الملفين شبه بعض", "The tool stops by itself because the two files look alike", "مفيش حاجة تخليها توقف من غير قاعدة؛ هتجمع الاتنين.", "Nothing makes it stop without a rule; it adds both."),
-      o("مفيش فرق، لأن الأرقام نفسها", "No difference, because the figures are the same", "علشان الأرقام نفسها بالظبط، الإجمالي بيتضاعف للأسبوع ده.", "Precisely because the figures are the same, that week's total doubles.")
-    ], 0, ["Prod Order رقم فريد، فالأمر اللي اتقرا قبل كده ما يتضافش تاني، والملف اللي كل أوامره اتقرت بيتساب كله ويتسجّل.", "Prod Order is unique, so an order already read isn't added again, and a file whose orders were all read is skipped whole and logged."]),
-    Q("a1b", "a1", "mcq", ["الموديل M114 الجديد مش موجود في شيت Models. الأداة الصح تعمل إيه في صفوفه؟", "The new model M114 isn't in the Models sheet. What should a correct tool do with its rows?"], [
-      o("تسيبها في الجدول بـ ModelName = «(not in master)»، وتكتبها في Unmatched بعددها وكميتها", "Keep them in the table with ModelName = “(not in master)”, and list them on Unmatched with their count and quantity"),
-      o("تمسحها لأنها ناقصة", "Delete them because they're incomplete", "المسح بيقلل الإجمالي ٨٧٤ جهاز من غير ما حد يعرف.", "Deleting lowers the total by 874 sets without anyone knowing."),
-      o("تخمّن الاسم من موديل شبهه", "Guess the name from a similar model", "التخمين بيدخّل اسم غلط في التقرير، والأداة ما تخمّنش.", "Guessing puts a wrong name in the report; tools don't guess."),
-      o("توقف ومتكملش أي ملف", "Stop and process no file", "الوقفة هنا مالهاش لازمة: الكمية والقيمة معروفين، الناقص الاسم بس.", "Stopping isn't needed here: quantity and value are known; only the name is missing.")
-    ], 0, ["الصف اللي ما لقاش اسم بيفضل ويبان، والقرار (تحديث Masters) بيتاخد بعلم.", "A row with no name stays and shows, and the decision (updating Masters) is taken knowingly."]),
+    Q("a1a", "a1", "predict", ["في عمود ModelName المعادلة ‎=VLOOKUP(D2, Models!A:B, 2, FALSE). الكود في D2 هو M103. المعادلة هتجيب إيه؟", "The ModelName column holds =VLOOKUP(D2, Models!A:B, 2, FALSE). The code in D2 is M103. What does the formula bring back?"], [
+      o("اسم الموديل اللي جنب M103 في العمود التاني من شيت Models: 32-inch Smart TV", "The model name beside M103 in the second column of the Models sheet: 32-inch Smart TV"),
+      o("الكود نفسه M103", "The code itself, M103", "رقم ٢ في المعادلة معناه «هات العمود التاني»، مش الأول.", "The 2 in the formula means “bring the second column”, not the first."),
+      o("أقرب اسم في الترتيب لو M103 مش موجود", "The nearest name in order if M103 isn't there", "FALSE معناها مطابقة بالظبط؛ والكود موجود أصلًا.", "FALSE means an exact match; and the code is there anyway."),
+      o("مجموع كميات M103", "The total quantity of M103", "VLOOKUP بتجيب قيمة واحدة من القاعدة، ما بتجمعش.", "VLOOKUP brings one value from the database; it doesn't add up.")
+    ], 0, ["VLOOKUP بتدوّر على الكود في أول عمود في القاعدة، وتجيب اللي في العمود اللي رقمه في المعادلة من نفس الصف، وFALSE يعني بالظبط.", "VLOOKUP looks for the code in the database's first column and brings back the column whose number is in the formula from the same row; FALSE means exact."]),
+    Q("a1b", "a1", "mcq", ["الأداة حطت ١٣ ملف تحت بعض وأضافت عمودين VLOOKUP. إيه أهم مراجعة قبل ما تبني الداشبورد؟", "The tool stacked 13 files and added two VLOOKUP columns. What is the most important check before building the dashboard?"], [
+      o("عدد الصفوف ومجموع Qty = مجموع الـ ١٣ ملف، وصفر خانات #N/A", "The row count and the sum of Qty = the 13 files' totals, and zero #N/A cells"),
+      o("إن الألوان والخطوط شكلها حلو", "That the colours and fonts look good", "الشكل بييجي بعد ما الأرقام تتراجع.", "The look comes after the figures are checked."),
+      o("إن الملف اتحفظ باسم جديد", "That the file was saved under a new name", "مهم، بس ما بيقولش إن الأرقام صح.", "Useful, but it doesn't say the figures are right."),
+      o("إن عمود ModelName أعرض من ModelCode", "That the ModelName column is wider than ModelCode", "عرض العمود مالوش علاقة بصحة البيانات.", "Column width has nothing to do with the data being right.")
+    ], 0, ["١٬٢٦٧ صف و٢٩٬٣٨٤ جهاز زي مجموع الملفات، وصفر #N/A يعني كل كود لقى اسمه. ده الأساس اللي كل رقم في الداشبورد هيتبني عليه.", "1,267 rows and 29,384 sets, like the files' totals, and zero #N/A means every code found its name. That's the base every dashboard figure will be built on."]),
     Q("a2a", "a2", "spot", ["داشبورد فيه ٣ رسوم وسلايسر للخط. اخترت L01، فرسم الشهور اتغيّر، ورسم البلاد فضل زي ما هو. فين المشكلة؟", "A dashboard has 3 charts and a slicer for line. You pick L01: the months chart changes, the countries chart stays the same. Where's the problem?"], [
       o("السلايسر متوصل بجدول محوري واحد بس، مش بالتلاتة", "The slicer is connected to one pivot table only, not all three"),
       o("رسم البلاد لازم يتعمل من الأول", "The countries chart must be rebuilt", "الرسم سليم؛ اللي ناقص هو التوصيل بالسلايسر.", "The chart is fine; what's missing is its connection to the slicer."),
@@ -231,29 +231,29 @@
     ], 0, ["كل سلايسر لازم يتوصل بكل الجداول المحورية اللي في الداشبورد (Report Connections)، وإلا الأجزاء تعرض أرقام متناقضة.", "Every slicer must be connected to every pivot table on the dashboard (Report Connections), or the parts show contradicting figures."]),
     O("a2b", "a2", ["رتّب خطوات الأداة التانية في المثال الأول:", "Put the steps of example 1's second tool in order:"], [
       ["الجداول المحورية من tblProduction", "The pivot tables from tblProduction"],
-      ["المراجعة: الجدول = الجداول المحورية الكاملة = الكارت", "The check: the table = the full pivot tables = the card"],
+      ["المراجعة: مجموع الجدول = الإجمالي الكلي في كل جدول محوري", "The check: the table's sum = the grand total of every pivot table"],
       ["الرسوم والسلايسر", "The charts and the slicers"],
       ["التنسيق والألوان والطباعة", "Formatting, colours and printing"],
       ["تجربة سلايسر وقارن بفلتر على الجدول", "Try a slicer and compare with a filter on the table"]
     ], ["المراجعة قبل التنسيق، علشان ما تجمّلش رقم غلط، والتجربة الأخيرة بإيدك.", "The check before formatting, so you don't polish a wrong figure, and the last test by hand."]),
-    Q("a3a", "a3", "predict", ["في PDF سبتمبر سطر إشعار دائن مكتوب (12). الأداة قرت الرقم من غير القوسين. يحصل إيه؟", "September's PDF holds a credit-note line printed (12). The tool read the number without the brackets. What happens?"], [
-      o("مجموع الصفوف يطلع أكبر من TOTAL المطبوع بـ ٢٤، والأداة الصح توقف عند المقارنة", "The rows sum to 24 more than the printed TOTAL, and a correct tool stops at the comparison"),
-      o("مفيش فرق، لأن ١٢ رقم صغير", "No difference, because 12 is a small number", "صغير أو كبير، المبيعات بتزيد غلط، والمقارنة بتمسكه.", "Small or not, sales rise wrongly, and the comparison catches it."),
-      o("وورد يصلّح القوسين وهو بيحوّل الـ PDF", "Word fixes the brackets while converting the PDF", "وورد بيحوّل النص زي ما هو؛ معنى القوسين قاعدة إنت بتقولها.", "Word converts the text as it is; what brackets mean is a rule you state."),
-      o("الأداة تتجاهل السطر لأنه مش رقم", "The tool ignores the line because it isn't a number", "لو اتجاهله، الإجمالي برضه يختلف بـ ١٢.", "If ignored, the total still differs by 12.")
-    ], 0, ["القوسين = سالب. والأهم: كل PDF فيه TOTAL مطبوع، ومقارنته بمجموع الصفوف بتمسك أي غلطة قراءة.", "Brackets = negative. More importantly: every PDF prints a TOTAL, and comparing it with the sum of the rows catches any reading mistake."]),
-    Q("a3b", "a3", "compare", ["إيه أحسن شكل لجدول بيجمع ٧ مقاييس من ٨ مصادر؟", "What is the best shape for a table gathering 7 measures from 8 sources?"], [
-      o("جدول طويل: Month وChannel وCountry وModelCode وMeasure وValue وSource", "A long table: Month, Channel, Country, ModelCode, Measure, Value, Source"),
-      o("شيت لكل مصدر", "One sheet per source", "كده لسه ٨ أشكال، وأي تقرير لازم يجمّعهم من الأول.", "That's still 8 shapes, and every report must gather them again."),
-      o("عمود لكل مقياس ولكل شهر", "A column per measure and per month", "أي مقياس أو شهر جديد بيغيّر شكل الجدول وكل حاجة مبنية عليه.", "Any new measure or month changes the table's shape and everything built on it."),
-      o("نسخ الأرقام في ملف العرض على طول", "Copying the figures straight into the deck", "من غير جدول، مفيش مراجعة ولا تكرار.", "Without a table there's no check and no repeat.")
-    ], 0, ["الجدول الطويل بيخلّي أي مصدر جديد يضيف صفوف مش أعمدة، والجداول المحورية بتشتغل عليه على طول.", "A long table lets any new source add rows, not columns, and pivot tables work on it directly."]),
+    Q("a3a", "a3", "predict", ["الأداة جمعت مبيعات الفروع والتصدير في شيت Sales، وفيه مراجعة: لكل شهر وقناة، اللي اتشحن = اللي اتباع. في نسخة غيّرت رقم في PDF تصدير أغسطس. يحصل إيه؟", "The tool gathered branch and export sales into the Sales sheet, with a check: for each month and channel, shipped = sold. In a copy you changed a figure in August's export PDF. What happens?"], [
+      o("مراجعة أغسطس للتصدير تختلف، والأداة توقف وتكتب الشهر والقناة والفرق", "August's export check differs, and the tool stops and writes the month, the channel and the difference"),
+      o("مفيش حاجة، لأن الـ PDF اتقرا صح", "Nothing, because the PDF was read correctly", "القراية صح، بس الرقم بقى مختلف عن الشحنات، والمراجعة بتقارن الاتنين.", "The reading is right, but the figure now differs from the shipments, and the check compares the two."),
+      o("وورد يرفض يفتح الـ PDF", "Word refuses to open the PDF", "وورد بيفتحه عادي؛ الفرق في الأرقام.", "Word opens it normally; the difference is in the figures."),
+      o("الـ VLOOKUP يطلّع #N/A", "The VLOOKUP shows #N/A", "الأكواد زي ما هي؛ اللي اتغيّر كمية، مش كود.", "The codes are unchanged; what changed is a quantity, not a code.")
+    ], 0, ["رقمين لازم يتساووا من مصدرين مختلفين (الشحنات والمبيعات) هم أقوى مراجعة: أي تغيير في واحد منهم بيبان على طول.", "Two figures that must match from two different sources (shipments and sales) are the strongest check: any change to one shows at once."]),
+    Q("a3b", "a3", "compare", ["المرتجعات جاية في جدول وورد: ModelCode وJul وAug وSep. أحسن شكل ليها في شيت Returns؟", "Returns arrive in a Word table: ModelCode, Jul, Aug, Sep. The best shape for them in the Returns sheet?"], [
+      o("صف لكل موديل في كل شهر: Month وModelCode وModelName وUnits", "One row per model per month: Month, ModelCode, ModelName, Units"),
+      o("نفس شكل الوورد: الشهور أعمدة", "The same shape as Word: months as columns", "مريح للعين، بس الجدول المحوري محتاج الشهر في عمود واحد.", "Easy on the eye, but the pivot table needs the month in one column."),
+      o("رقم واحد: إجمالي المرتجعات بس", "One number: just the total returns", "كده ما تقدرش تحسب نسبة كل موديل.", "Then you can't work out each model's rate."),
+      o("تتكتب بالإيد في العرض", "Typed by hand into the deck", "من غير جدول، مفيش مراجعة ولا تكرار.", "Without a table there's no check and no repeat.")
+    ], 0, ["فك الأعمدة لصفوف (١٢ موديل × ٣ شهور = ٣٦ صف) بيخلّي الجدول المحوري يجمّع بالشهر وبالموديل على طول.", "Turning the columns into rows (12 models × 3 months = 36 rows) lets the pivot table add up by month and by model directly."]),
     Q("a4a", "a4", "mcq", ["ليه الشريحة ٨ في عرض المراجعة بتفضل فاضية؟", "Why does slide 8 of the review deck stay empty?"], [
       o("لأن الاستنتاج والقرار للمدير؛ الأداة بتعرض أرقام مراجَعة بس", "Because the conclusion and the decision belong to the director; the tool shows checked figures only"),
       o("لأن باوربوينت ما بيقدرش يكتب نص من أداة", "Because PowerPoint can't take text from a tool", "الأداة بتكتب كل العناوين والأرقام؛ الفراغ مقصود.", "The tool writes every title and number; the gap is deliberate."),
       o("علشان العرض يبقى عدد زوجي", "So the deck has an even number of slides", "مالوش علاقة بالعدد.", "It has nothing to do with the count."),
       o("لأن النموذج نسي يكتبها", "Because the model forgot it", "الـ Prompt طالبها فاضية بالنص.", "The Prompt asks for it empty in so many words.")
-    ], 0, ["الأداة بتقول «الدلتا ٩١٫١٪»؛ وليه، وهنعمل إيه، رأي المدير. خلط الأدوار بيطلّع عرض شكله مقنع ومضمونه مش بتاع حد.", "The tool says “Delta 91.1%”; why, and what to do, is the director's view. Mixing roles produces a convincing-looking deck whose content belongs to no one."]),
+    ], 0, ["الأداة بتقول «الدلتا ٩١٫٨٪»؛ وليه، وهنعمل إيه، رأي المدير. خلط الأدوار بيطلّع عرض شكله مقنع ومضمونه مش بتاع حد.", "The tool says “Delta 91.8%”; why, and what to do, is the director's view. Mixing roles produces a convincing-looking deck whose content belongs to no one."]),
     Q("a4b", "a4", "spot", ["مهندس كتب نسبة الدلتا في الشريحة ٣ بإيده علشان أسرع. الشهر الجاي إيه اللي ممكن يحصل؟", "An engineer typed Delta's rate on slide 3 by hand because it was faster. What may happen next month?"], [
       o("الأرقام تتحدّث في الإكسل والشريحة تفضل بالرقم القديم", "The figures update in Excel while the slide keeps the old number"),
       o("باوربوينت يحدّث الرقم لوحده", "PowerPoint updates the number by itself", "الرقم المكتوب بالإيد نص ثابت؛ ما بيتحدّثش.", "A hand-typed number is fixed text; it doesn't update."),
@@ -559,13 +559,13 @@
       o("تصفح النت", "Browsing the web", "مش متصفح.", "It isn’t a browser.")
     ], 0, ["المناطق الخمس: شريط النشاط، المستكشف، المحرر، الطرفية، لوحة الأوامر (ص 26).", "The five areas: activity bar, explorer, editor, terminal, command palette (p. 26)."]),
 
-    Q("w2a", "w2", "mcq", ["إيه ملف CLAUDE.md؟", "What is CLAUDE.md?"], [
+    Q("w2a", "a5", "mcq", ["إيه ملف CLAUDE.md؟", "What is CLAUDE.md?"], [
       o("ملف نصي في جذر المشروع بيتقرا تلقائي في بداية كل جلسة: التقنيات والقواعد وأوامر التشغيل وإيه اللي ماتلمسهوش", "A text file at the project root read automatically each session: tech, rules, run commands and what not to touch"),
       o("باسورد المساعد", "The assistant’s password", "ماتحطش أسرار فيه أبدًا.", "Never put secrets in it."),
       o("سجل الأخطاء", "The error log", "مش ده دوره.", "Not its role."),
       o("نسخة احتياطية من الكود", "A code backup", "النسخ الاحتياطي دور Git.", "Backup is Git’s job.")
     ], 0, ["الأمر ‎/init‎ بينشئه، وده أهم ملف في مشروعك (ص 27).", "The /init command creates it; it’s your project’s most important file (p. 27)."]),
-    Q("w2b", "w2", "spot", ["متدرّب أثناء التعلم فعّل «الموافقة التلقائية» لكل الأوامر، وشغّل المساعد في مجلد المستندات الشخصية. إيه المخالفات؟", "While learning, someone enabled auto-approve for all commands and ran the assistant in their personal documents folder. What’s violated?"], [
+    Q("w2b", "a5", "spot", ["متدرّب أثناء التعلم فعّل «الموافقة التلقائية» لكل الأوامر، وشغّل المساعد في مجلد المستندات الشخصية. إيه المخالفات؟", "While learning, someone enabled auto-approve for all commands and ran the assistant in their personal documents folder. What’s violated?"], [
       o("ضابطين أمنيين: مجلد مخصص للمشروع، وممنوع تفعيل الموافقة التلقائية", "Two security controls: a dedicated project folder, and no auto-approve"),
       o("مفيش حاجة؛ ده أسرع", "Nothing; it’s faster", "الكتاب بيقبل البطء مقابل الأمان أثناء التعلم.", "The book accepts slowness for safety while learning."),
       o("المجلد بس", "Only the folder", "الموافقة التلقائية مخالفة كمان.", "Auto-approve is a violation too."),

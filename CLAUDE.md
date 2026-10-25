@@ -56,9 +56,9 @@ Commit the rebuilt `AI_Academy.html` together with source changes. CI runs the s
 - Unit 1 (shown as 2) is f8 in detail, a ladder of projects: `x1 x2 x3 x4 x5 x7 x8 x6` (describe a file → first tool,
   ChatGPT/Gemini delivery → stack → lookups → report → purchase orders vs receipts → materials order from the plan →
   when a tool stops). Also pinned by a data test.
-- Unit 2 (shown as 3) is Office automation at scale: `a1 a2 a3 a4 a5 a6` (example 1: weekly exports → one table with two
-  lookups → pivots, report, charts, dashboard with slicers; example 2: Excel + PDF + Word → one long Fact table → report
-  and a PowerPoint deck; Claude Code in detail; skills). Pinned by a data test. Big data (`b1` …) opens unit 3 (shown as 4).
+- Unit 2 (shown as 3) is Office automation at scale: `a1 a2 a3 a4 a5 a6` (example 1: 13 weekly reports → one big sheet
+  with two VLOOKUP columns → pivots, report, charts, dashboard with slicers; example 2: Excel + PDF + Word → Sales with the
+  same two VLOOKUPs, Shipments, Returns, Targets → report and a PowerPoint deck; Claude Code in detail; skills). Pinned by a data test. Big data (`b1` …) opens unit 3 (shown as 4).
 - Unit 2's examples are a TV factory's production lines (purchasing and materials as the second example). Never name
   the factory or a company, and don't discuss personal accounts or what may be uploaded: talk about the automation itself,
   with ChatGPT and Gemini Enterprise side by side.
@@ -66,6 +66,10 @@ Commit the rebuilt `AI_Academy.html` together with source changes. CI runs the s
   (a1–a2), `Unit3_Example_2_Commercial_Review.zip` (a3–a4, with system PDFs and Word memos) and `Unit3_Skills_Kit.zip`
   (a6, three SKILL.md skills). Each example has a Prompt per step (`a1a`…`a4a`, ending with the Office tail: Excel, Word
   and PowerPoint through COM). A data test reads the generated PDF bytes and Word tables back like a correct tool.
+  Unit 3's data are clean on purpose (no missing, repeated or unknown values; every code is in Masters): the lessons
+  teach the method, not traps. Each example zip also carries its finished result (`Final_Result/`), built offline by
+  `academy/tools/make-finals.py` (LibreOffice + python-pptx) into `academy/src/finals/` and embedded by the build; a data
+  test reads those files back. Rerun the script whenever a generator or a figure changes, then rebuild.
   Lesson a5 states Claude Code's models and effort levels: when they change, update a5, `code-story.js` and `cc_*`.
 - Each unit-2 lesson has its own project (`A.xlProjects`, one zip `Lesson_N_<Name>.zip`): Excel files in English only
   (the factory's real files are English), README/Prompt/answer key in the reader's language. Each project adds one idea
