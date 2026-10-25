@@ -89,13 +89,13 @@
       },
       {
         id: "plan", art: "cc_plan", year: u("الخطة", "The plan"), mark: u("٠٧", "07"), era: u("Plan mode", "Plan mode"),
-        title: u("وضع الخطة: لقى ٣ حاجات قبل ولا سطر كود", "Plan mode: it found 3 things before a line of code"),
-        story: [u("مهندس التخطيط لصق الـ Prompt الجاهز من الدرس، وهو في وضع الخطة. Claude Code فتح كل ملف في Data بنفسه، ورجع بخطة من ٦ خطوات، وأولها: «لقيت ٣ حاجات مختلفة عن الوصف: الشيت التالت في ملف الدلتا اسمه September، وفي فاتورة بتاريخ ٣٠ يونيو، والـ PDF فيه رقم بين قوسين».",
-          "The planning engineer pasted this lesson's ready Prompt while in Plan mode. Claude Code opened every file in Data itself and came back with a 6-step plan, opening with: “I found 3 things that differ from the description: the third Delta sheet is named September, an invoice is dated 30 June, and a PDF holds a number in brackets.”"),
-        u("الحاجات دي في الشات كانت بتطلع بعد كام تشغيل فاشل. هنا طلعت قبل ما يتكتب سطر، لأنه شاف الملفات. ومهندس التخطيط قرا الخطة، ولقى خطوة الاختبار ناقصها مقارنة الـ TOTAL، فكتب: «زوّد مقارنة الإجمالي المطبوع». وبعدين وافق.",
-          "In the chat these things surfaced after a few failed runs. Here they surfaced before a line was written, because it saw the files. The planning engineer read the plan, found the test step missing the TOTAL comparison, and wrote: “Add the printed-total comparison.” Then he approved.")],
+        title: u("وضع الخطة: شاف الملفات قبل ولا سطر كود", "Plan mode: it saw the files before a line of code"),
+        story: [u("مهندس التخطيط لصق الـ Prompt الجاهز من الدرس، وهو في وضع الخطة. Claude Code فتح كل ملف في Data بنفسه، ورجع بخطة من ٦ خطوات: «قريت الـ ١١ ملف: ٣ إكسل بنفس الأعمدة، و٦ PDF كل واحد جدول، ومذكرتين وورد. هعمل Sales بعمودين VLOOKUP، وShipments، وReturns صف لكل شهر، وTargets، وSources».",
+          "The planning engineer pasted this lesson's ready Prompt while in Plan mode. Claude Code opened every file in Data itself and came back with a 6-step plan: “I read the 11 files: 3 Excel files with the same columns, 6 PDFs of one table each, and two Word memos. I will make Sales with two VLOOKUP columns, Shipments, Returns one row per month, Targets, and Sources.”"),
+        u("في الشات النموذج كان بيعرف الملفات من وصفك بس. هنا شافها بنفسه قبل ما يتكتب سطر. ومهندس التخطيط قرا الخطة، ولقى خطوة الاختبار ناقصها مقارنة الشحن بالبيع، فكتب: «زوّد: الأجهزة اللي اتشحنت = اللي اتباعت لكل شهر وقناة». وبعدين وافق.",
+          "In the chat the model knew the files only from your description. Here it saw them itself before a line was written. The planning engineer read the plan, found the test step missing the shipped-against-sold comparison, and wrote: “Add: sets shipped = sets sold for each month and channel.” Then he approved.")],
         answer: u("ابدأ أي مهمة على ملفات حقيقية بوضع الخطة، واقرا الخطة قبل ما توافق. لأن تعديل خطة أسهل بكتير من تصليح أداة.", "Start any task on real files in Plan mode, and read the plan before approving — editing a plan is far easier than fixing a tool."),
-        idea: u("شاف الملفات… فلقى المشاكل بدري.", "It saw the files… so it found the problems early.")
+        idea: u("شاف الملفات… قبل ولا سطر كود.", "It saw the files… before a line of code.")
       },
       {
         id: "models", art: "cc_models", year: u("الموديلات", "Models"), mark: u("٠٨", "08"), era: u("٤ عائلات", "4 families"),
@@ -112,8 +112,8 @@
         title: u("مستوى التفكير: من low لـ max", "The level of thinking: from low to max"),
         story: [u("غير الموديل، فيه «مستوى التفكير» بالأمر ‎/effort: قد إيه النموذج يفكر قبل ما يرد. low للتعديلات الصغيرة اللي هتراجعها بنفسك. medium الافتراضي في Opus 5.5 وSonnet 5.5 وHaiku 5.5، ويكفي أغلب الشغل. high لما المراجعة مهمة والحالات الغريبة متوقعة.",
           "Besides the model, there's the “level of thinking”, set with /effort: how much the model thinks before replying. low for small changes you'll review yourself. medium, the default on Opus 5.5, Sonnet 5.5 and Haiku 5.5, enough for most work. high when checking matters and odd cases are likely."),
-        u("وxhigh تفكير أعمق بتكلفة أكبر. وmax للمشاكل الصعبة جدًا اللي عايزه يشتغل فيها لوحده، وممكن يفكّر زيادة عن اللزوم. مهندس التخطيط بنى أداة المثال بـ high علشان فيها فخاخ، وغيّر الألوان بـ low. وفيه كمان ‎/fast: نفس Opus بردود أسرع.",
-          "xhigh is deeper thinking at a higher cost. max is for very hard problems you want it to work through alone, and it may overthink. The planning engineer built the example's tool on high because it has traps, and changed the colours on low. There's also /fast: the same Opus with faster replies.")],
+        u("وxhigh تفكير أعمق بتكلفة أكبر. وmax للمشاكل الصعبة جدًا اللي عايزه يشتغل فيها لوحده، وممكن يفكّر زيادة عن اللزوم. مهندس التخطيط بنى أداة المثال بـ high علشان فيها ١١ ملف و٣ برامج، وغيّر الألوان بـ low. وفيه كمان ‎/fast: نفس Opus بردود أسرع.",
+          "xhigh is deeper thinking at a higher cost. max is for very hard problems you want it to work through alone, and it may overthink. The planning engineer built the example's tool on high because it spans 11 files and 3 programs, and changed the colours on low. There's also /fast: the same Opus with faster replies.")],
         answer: u("ارفع مستوى التفكير لما الغلطة غالية والحالات كتير، ونزّله للحاجات اللي هتراجعها بعينك. لأن التفكير الزيادة وقت وتكلفة، مش ضمان.", "Raise the level of thinking when a mistake is costly and cases are many, and lower it for things you'll check by eye — extra thinking is time and cost, not a guarantee."),
         idea: u("فكّر على قد الغلطة.", "Think as much as the mistake costs.")
       },
@@ -130,8 +130,8 @@
       {
         id: "safe", art: "cc_safe", year: u("الأمان", "Safety"), mark: u("١١", "11"), era: u("٤ قواعد", "4 rules"),
         title: u("النتيجة في ٢٥ دقيقة… وأربع قواعد ما بتتكسرش", "The result in 25 minutes… and four rules that never break"),
-        story: [u("بعد الموافقة، Claude Code بنى الأداة، وشغّلها، ووقف لوحده عند القوسين في PDF سبتمبر، وصلّح، وشغّل تاني، وكتب شيت Sources كله OK: ١٤٠ شحنة، و٢٤٬٥٠٢ جهاز. ٢٥ دقيقة، ومهندس التخطيط بيقرا ويوافق بس. وقارن بنفسه بمفتاح الإجابة.",
-          "After approval, Claude Code built the tool, ran it, stopped by itself at the brackets in September's PDF, fixed it, ran again, and wrote a Sources sheet all OK: 140 shipments, 24,502 sets. 25 minutes, with the planning engineer only reading and approving. And he compared with the answer key himself."),
+        story: [u("بعد الموافقة، Claude Code بنى الأداة، وشغّلها، ووقف عند أول رسالة خطأ وصلّح لوحده، وشغّل تاني، وكتب شيت Sources كله OK: ١٣٥ شحنة، و٢٥٬٢٧٦ جهاز. ٢٥ دقيقة، ومهندس التخطيط بيقرا ويوافق بس. وقارن بنفسه بمفتاح الإجابة وبالنتيجة النهائية.",
+          "After approval, Claude Code built the tool, ran it, stopped at the first error message and fixed it by itself, ran again, and wrote a Sources sheet all OK: 135 shipments, 25,276 sets. 25 minutes, with the planning engineer only reading and approving. And he compared with the answer key and the finished result himself."),
         u("وكتب لنفسه ٤ قواعد: اشتغل على نسخة دايمًا. اقرا الخطة قبل الموافقة. ما تحطش ملفات سرية في مستودع على الويب. وراجع النتيجة بنفسك قبل ما تعتمدها، حتى لو Claude Code قال «خلصت والاختبارات عدّت». القرار والمسؤولية لسه عليك.",
           "And he wrote himself 4 rules: always work on a copy. Read the plan before approving. Never put confidential files in a repository on the web. And check the result yourself before relying on it, even when Claude Code says “done, tests passed”. The decision and the responsibility are still yours.")],
         answer: u("استخدم السرعة، بس خلّي المراجعة الأخيرة بتاعتك. لأن المساعد اللي بيشتغل لوحده بيغلط برضه، والفرق إن غلطته بتبقى أسرع.", "Use the speed, but keep the last check yours — an assistant working by itself still makes mistakes; they just come faster."),
@@ -140,8 +140,8 @@
       {
         id: "cliff", art: "cc_cliff", year: u("الدرس الجاي", "Next lesson"), mark: u("١٢", "12"), era: u("الشهر الجاي", "Next month"),
         title: u("كل حاجة اشتغلت… طب الشهر الجاي؟", "Everything worked… and next month?"),
-        story: [u("في الجلسة دي Claude Code اتعلّم حاجات كتير: إن الدلتا شيت لكل شهر، وإن القوسين سالب، وإن المستهدف بالألف، وإن الـ TOTAL لازم يتقارن. ومهندس التخطيط عارف إن الربع الجاي هيفتح جلسة جديدة، والجلسة الجديدة ما بتفتكرش الجلسة اللي فاتت.",
-          "In this session Claude Code learned a lot: that Delta has a sheet per month, that brackets are negative, that the target is in thousands, that the TOTAL must be compared. And the planning engineer knows next quarter he'll open a new session, and a new session doesn't remember the last one."),
+        story: [u("في الجلسة دي Claude Code اتعلّم حاجات كتير: إن المبيعات كلها في شيت واحد بعمودين VLOOKUP، والشحنات في شيت لوحدها، والمرتجعات صف لكل شهر، وإن الشحن لازم يساوي البيع. ومهندس التخطيط عارف إن الربع الجاي هيفتح جلسة جديدة، والجلسة الجديدة ما بتفتكرش الجلسة اللي فاتت.",
+          "In this session Claude Code learned a lot: that all sales go in one sheet with two VLOOKUP columns, shipments in a sheet of their own, returns one row per month, and that shipped must equal sold. And the planning engineer knows next quarter he'll open a new session, and a new session doesn't remember the last one."),
         u("وزميله في الإجازة الأسبوع الجاي محتاج يعمل داشبورد الإنتاج. هيشرحله كل حاجة من الأول؟ ولا هيسيبله ٣٤ رسالة يقراها؟ والسؤال اللي الدرس الجاي بيجاوبه: طب إزاي كل اللي اتعلمه ده ما يضيعش المرة الجاية؟",
           "And his colleague covering next week's leave needs to make the production dashboard. Will he explain everything from scratch? Or leave him 34 messages to read? And the question the next lesson answers: so how does everything it learned not get lost next time?")],
         answer: u("واجب الدرس: جرّب Claude Code على نسخة من المثال التاني بوضع الخطة، واقرا الخطة، وجرّب مستويين تفكير، وقارن بالمفتاح. لأن الأداة اللي ما جربتهاش بإيدك ما تعرفش تحكم عليها.", "This lesson's task: try Claude Code on a copy of example 2 in Plan mode, read the plan, try two levels of thinking, and compare with the key — you can't judge a tool you haven't tried yourself."),
