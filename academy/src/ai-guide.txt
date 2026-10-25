@@ -20,7 +20,7 @@ HOW THE COURSE IS ORGANISED (eight units, shown as 1–8; ids u0–u7; the book 
  1 Foundations   2 Excel automation step by step (8 projects, one zip each: describe a file, a first tool, the three
  tools of f8, purchasing and materials, fixing a tool that stops)   3 Office automation at scale (two big examples, Claude
  Code in detail, skills)   4 Big data, Office and PDF (b1 opens it: many files, quality, the editor, model levels;
- macros, Claude Code basics; cloud or local)   5 Dashboards (Codex, companies and models)   6 Small tools (shared
+ macros; cloud or local)   5 Dashboards (Codex, companies and models)   6 Small tools (shared
  features, saving versions, studying with AI)   7 Your assistant at work (prompts, decisions, pitch, career)
  8 The big picture (systems and digital teams, in general terms) and the graduation project.
 Unit 1 lessons, in teaching order:
@@ -57,11 +57,14 @@ WHERE THINGS ARE INSIDE THIS FILE (search for these names)
   Gemini Enterprise usually writes code in the reply: one code box per file, an "# END OF FILE" marker, Notepad
   "All files", encoding UTF-8 with BOM.
 - Unit 3 (`A.officeProjects`), same factory, three downloads: Example 1 `Unit3_Example_1_Production_Dashboard.zip`
-  (a1–a2: 13 weekly system exports with title lines above the header, one downloaded twice, + Masters.xlsx with two
-  two-column sheets → tblProduction with ModelName and Country → pivot tables, report, charts, dashboard with
-  slicers; 1,302 rows, 30,044 sets); Example 2 `Unit3_Example_2_Commercial_Review.zip` (a3–a4: 3 Excel files of three
-  shapes, 6 system PDFs read through Word, 2 Word memos → one long Fact table → report, charts, an 8-slide PowerPoint
-  deck; 24,502 sets sold, 140 shipments); and `Unit3_Skills_Kit.zip` (a6: three Claude Code skills, SKILL.md each).
+  (a1–a2: 13 clean weekly reports with the same columns + Masters.xlsx with two two-column sheets → one big sheet,
+  tblProduction, with ModelName and CountryName as VLOOKUP formulas → pivot tables, report, charts, dashboard with
+  slicers; 1,267 rows, 29,384 sets); Example 2 `Unit3_Example_2_Commercial_Review.zip` (a3–a4: 3 branch Excel files
+  with the same columns, 6 one-table PDFs read through Word, 2 Word memos → Sales (309 rows, the same two VLOOKUPs),
+  Shipments, Returns, Targets → report, charts, an 8-slide PowerPoint deck; 25,276 sets, 135 shipments); and
+  `Unit3_Skills_Kit.zip` (a6: three Claude Code skills, SKILL.md each). The data are clean on purpose (no missing,
+  repeated or unknown values), and each example zip holds its finished result in Final_Result/ (real workbooks with
+  VLOOKUP formulas, pivot tables and charts; example 2 also the deck and its PDF) to compare with.
   Prompts a1a–a4a end with the Office tail (Excel, Word and PowerPoint through COM, nothing installed); a5a is a
   first Claude Code session in Plan mode; a6a turns checked work into a skill. Lesson a5 covers where Claude Code
   runs (web, desktop app, terminal, editor), permission modes, models and /effort levels.

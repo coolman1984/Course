@@ -56,6 +56,7 @@ jobs:
           node --check academy/src/data/model-story.js
           test -s academy/src/history.css
           node --check academy/build.mjs
+          node --check academy/tools/export-data.mjs
           test -s academy/src/motion.css
       - name: Verify book mapping and all 41 new stories
         run: node --test academy/test/data.test.mjs

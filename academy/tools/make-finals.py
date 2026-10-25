@@ -199,6 +199,8 @@ def example1(office, D):
     # the dashboard: the four figures and three charts
     Dd = "Dashboard"
     b.put(Dd, (0, 0), [["Production dashboard - Q3 2026"]]); b.style(Dd, "A1", bold=True, size=18, color=INK)
+    b.put(Dd, (0, 1), [["Slicers: click a pivot table on the Pivots sheet, then PivotTable Analyze > Insert Slicer (Month, LineCode, CountryName), then Report Connections: tick all three tables."]])
+    b.style(Dd, "A2", color=0x6B7280)
     b.put(Dd, (0, 2), [["Total sets", "", "Value (EGP million)", "", "Export share", "", "Top model"],
                        ["=Report.A4", "", "=Report.B4/1000000", "", "=Report.C4", "", "=Report.D4"]])
     b.style(Dd, "A3:G3", bold=True, color=0x6B7280); b.style(Dd, "A4:G4", bold=True, size=16, color=ACC)

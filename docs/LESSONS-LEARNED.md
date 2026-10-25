@@ -87,6 +87,12 @@
   plus Masters. Every figure in a story should come from `expected()`, including how many files there are.
 - **Paths in a drawing start with a letter.** A label such as `.claude\skills` or `%USERPROFILE%` starts with a neutral
   character, and in an Arabic drawing the browser moves it. `project\.claude\skills` reads correctly in both languages.
+- **Teach the method on clean data first.** The first version of unit 3 planted many traps in its examples; learners
+  asked for the plain path: stack, VLOOKUP, pivot, dashboard, report. Clean data with a finished result to compare with
+  made the steps clear; the checks stay in every tool, because they will catch the day a real file is wrong.
+- **Binary results are built once, offline, and tested.** LibreOffice (UNO) writes real pivot tables and charts, and
+  exports formulas with their cached values, so a test can read the figures without Excel. Start chart axes at zero
+  and keep each chart on one scale; keep the finished files few and small (they are embedded in the page).
 - **The active deck dot widens with its label.** On a 340px phone, a long first-slide label pushed the timeline past
   the screen; keep the first slide's `year` short («الموقف»/Scene), and avoid one long word as an `era`.
 
