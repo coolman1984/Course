@@ -761,7 +761,8 @@
       }).join("")}</ol>`;
       const dots = `<span class="xp-lv" title="${esc(tx("الصعوبة", "Difficulty"))}">${[1, 2, 3, 4, 5].map((i) => `<i class="${i <= lv ? "on" : ""}"></i>`).join("")}</span>`;
       let peek = "";
-      if (f.pdf || f.docx || f.text !== undefined) {   // a system report, a memo or a skill file: its text as the reader will see it
+      if (f.b64) peek = `<div class="note">${ico("info")}<div>${esc(/\.pptx$/.test(f.path) ? tx("النتيجة النهائية: العرض جاهز. افتحه في باوربوينت بعد التنزيل.", "The finished result: the ready deck. Open it in PowerPoint after downloading.") : /\.pdf$/.test(f.path) ? tx("النتيجة النهائية: نسخة PDF من العرض.", "The finished result: a PDF copy of the deck.") : tx("النتيجة النهائية: الملف كامل بالجداول المحورية والرسوم. افتحه في إكسل بعد التنزيل، وقارن شغلك بيه.", "The finished result: the whole workbook with its pivot tables and charts. Open it in Excel after downloading, and compare your work with it."))}</div></div>`;
+      else if (f.pdf || f.docx || f.text !== undefined) {   // a system report, a memo or a skill file: its text as the reader will see it
         const all = lines(f), brk = all.findIndex((x) => /^— /.test(x));   // a long report: its start, the top of page 2, and its end
         const at = all.length <= 28 ? all : brk > 0 ? [...all.slice(0, Math.min(brk, 14)), "…", ...all.slice(brk, brk + 5), "…", ...all.slice(-3)] : [...all.slice(0, 22), "…", ...all.slice(-4)];
         peek = `<p class="small muted">${esc(f.pdf ? tx(`تقرير PDF من النظام: ${fmt(f.pdf.pages.length)} صفحة.`, `A PDF report from the system: ${fmt(f.pdf.pages.length)} page(s).`) : f.docx ? tx("مذكرة وورد: الفقرات والجداول.", "A Word memo: its paragraphs and tables.") : tx("ملف نصّي من المهارة.", "A text file of the skill."))}</p><pre class="ptext small ltr" dir="ltr" style="white-space:pre-wrap">${esc(at.join("\n"))}</pre>`;

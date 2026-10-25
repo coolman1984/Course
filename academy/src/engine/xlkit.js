@@ -117,7 +117,8 @@
     for (let i = 1 + name.length; i < 54; i++) b[i] = 32;
     return b;
   }
-  const fileData = (f) => (f.lock ? lockFile() : f.sheets ? workbook(f.sheets, false) : f.pdf ? pdf(f.pdf) : f.docx ? docx(f.docx) : f.text);
+  const b64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));   // a finished result embedded by the build
+  const fileData = (f) => (f.lock ? lockFile() : f.sheets ? workbook(f.sheets, false) : f.pdf ? pdf(f.pdf) : f.docx ? docx(f.docx) : f.b64 ? b64(f.b64) : f.text);
   function project(p, lang) {
     if (p.bundle) return zip(p.bundle(lang).map((f) => ({ name: p.folder + "/" + f.path, data: fileData(f) })));   // a unit-3 project lists every file itself
     const S = A.xlProjects, root = p.folder + "/";
