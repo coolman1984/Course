@@ -146,7 +146,7 @@
 
     /* ---- command palette preview: real prompts from the library ---- */
     const cmdk = A.$("#cmdk");
-    const picks = ["p5", "p7", "p9", "y4", "d1", "w2", "s2"].map((id) => A.prompts.find((x) => x.lesson === id)).filter(Boolean);
+    const picks = ["p5", "p7", "p9", "y4", "d1", "a5", "s2"].map((id) => A.prompts.find((x) => x.lesson === id)).filter(Boolean);
     const catName = (c) => { const x = A.meta.promptCats.find((k) => k.id === c); return x ? L(x.name) : c; };
     cmdk.innerHTML = `<button type="button" class="cmdk-in" id="cmdk-in">${ico("search")}<span>${esc(t("palPh"))}</span><kbd>Ctrl K</kbd></button>
       <div class="cmdk-list">${picks.map((x, i) => `<a class="cmdk-it${i === 2 ? " on" : ""}" href="#prompts-${x.id}">${ico((A.meta.promptCats.find((k) => k.id === x.cat) || {}).icon || "msg")}<span class="tt">${esc(L(x.title))}</span><span class="cmdk-k"><span class="chip">${esc(catName(x.cat))}</span>${x.p ? `<kbd>${ar ? "ص" : "p."}${x.p}</kbd>` : ""}</span></a>`).join("")}</div>

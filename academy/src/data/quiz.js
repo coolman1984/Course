@@ -559,13 +559,13 @@
       o("تصفح النت", "Browsing the web", "مش متصفح.", "It isn’t a browser.")
     ], 0, ["المناطق الخمس: شريط النشاط، المستكشف، المحرر، الطرفية، لوحة الأوامر (ص 26).", "The five areas: activity bar, explorer, editor, terminal, command palette (p. 26)."]),
 
-    Q("w2a", "w2", "mcq", ["إيه ملف CLAUDE.md؟", "What is CLAUDE.md?"], [
+    Q("w2a", "a5", "mcq", ["إيه ملف CLAUDE.md؟", "What is CLAUDE.md?"], [
       o("ملف نصي في جذر المشروع بيتقرا تلقائي في بداية كل جلسة: التقنيات والقواعد وأوامر التشغيل وإيه اللي ماتلمسهوش", "A text file at the project root read automatically each session: tech, rules, run commands and what not to touch"),
       o("باسورد المساعد", "The assistant’s password", "ماتحطش أسرار فيه أبدًا.", "Never put secrets in it."),
       o("سجل الأخطاء", "The error log", "مش ده دوره.", "Not its role."),
       o("نسخة احتياطية من الكود", "A code backup", "النسخ الاحتياطي دور Git.", "Backup is Git’s job.")
     ], 0, ["الأمر ‎/init‎ بينشئه، وده أهم ملف في مشروعك (ص 27).", "The /init command creates it; it’s your project’s most important file (p. 27)."]),
-    Q("w2b", "w2", "spot", ["متدرّب أثناء التعلم فعّل «الموافقة التلقائية» لكل الأوامر، وشغّل المساعد في مجلد المستندات الشخصية. إيه المخالفات؟", "While learning, someone enabled auto-approve for all commands and ran the assistant in their personal documents folder. What’s violated?"], [
+    Q("w2b", "a5", "spot", ["متدرّب أثناء التعلم فعّل «الموافقة التلقائية» لكل الأوامر، وشغّل المساعد في مجلد المستندات الشخصية. إيه المخالفات؟", "While learning, someone enabled auto-approve for all commands and ran the assistant in their personal documents folder. What’s violated?"], [
       o("ضابطين أمنيين: مجلد مخصص للمشروع، وممنوع تفعيل الموافقة التلقائية", "Two security controls: a dedicated project folder, and no auto-approve"),
       o("مفيش حاجة؛ ده أسرع", "Nothing; it’s faster", "الكتاب بيقبل البطء مقابل الأمان أثناء التعلم.", "The book accepts slowness for safety while learning."),
       o("المجلد بس", "Only the folder", "الموافقة التلقائية مخالفة كمان.", "Auto-approve is a violation too."),
