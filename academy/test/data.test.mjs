@@ -619,7 +619,12 @@ test("the unit-3 finished results are real workbooks and decks holding the answe
     assert.equal(count(data, /VLOOKUP\(D\d+,Models!/g), E1.rows, "ModelName is a VLOOKUP on every row"); assert.equal(count(data, /VLOOKUP\(F\d+,Countries!/g), E1.rows, "CountryName is a VLOOKUP on every row");
     assert.equal([...all(x, "xl/pivotTables/pivotTable").matchAll(/<pivotTableDefinition[^>]* name="([^"]+)"/g)].map((m) => m[1]).sort().join(), "PT_Country,PT_Model,PT_MonthLine");
     assert.equal(Object.keys(x).filter((k) => /^xl\/charts\/chart\d+\.xml$/.test(k)).length, 4, "four charts");
-    for (const v of [E1.units, E1.value, E1.months[7], E1.lines.L01, E1.countries.Kenya, E1.topModel.units]) assert.ok(cached(x, v), "the workbook shows " + v); }
+    for (const v of [E1.units, E1.value, E1.months[7], E1.lines.L01, E1.countries.Kenya, E1.topModel.units]) assert.ok(cached(x, v), "the workbook shows " + v);
+    // the dashboard follows the slicers: its figures and chart data read the pivot tables, and every chart reads the dashboard's own cells (review finding on PR 41)
+    const dash = x[`xl/worksheets/sheet${sheets(x).indexOf("Dashboard") + 1}.xml`], refs = [...all(x, "xl/charts/chart").matchAll(/<c:f>([^<]+)<\/c:f>/g)].map((m) => m[1]);
+    assert.ok(count(dash, /GETPIVOTDATA\(/g) >= 3 + 6 + 10 + 12 + 3, "the dashboard reads every figure from the pivot tables");
+    assert.ok(!/Report!|Data!/.test(dash.match(/<f[^>]*>[^<]*<\/f>/g).join("")), "no dashboard formula reads the unfiltered Report or Data sheets");
+    assert.ok(refs.length && refs.every((r) => /^Dashboard!/.test(r)), "every chart reads the pivot-driven cells: " + refs.join(" ")); }
   { const x = z("Q3_Commercial_Final.xlsx"), s = sheets(x), sales = x[`xl/worksheets/sheet${s.indexOf("Sales") + 1}.xml`];
     for (const k of ["Dashboard", "Report", "Pivots", "Sales", "Shipments", "Returns", "Targets", "Models", "Countries"]) assert.ok(s.includes(k), "sheet " + k);
     assert.equal(count(sales, /VLOOKUP\([A-Z]+\d+,Countries!/g), E2.salesRows); assert.equal(count(sales, /VLOOKUP\([A-Z]+\d+,Models!/g), E2.salesRows);

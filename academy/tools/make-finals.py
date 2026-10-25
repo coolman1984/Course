@@ -196,20 +196,30 @@ def example1(office, D):
     b.pivot("Pivots", "PT_Country", (0, 12), "Data", src, rows=["CountryName"], data=["Qty", "Value"])
     b.pivot("Pivots", "PT_Model", (5, 12), "Data", src, rows=["ModelName"], data=["Qty"])
     b.widths("Pivots", [5.0, 2.6, 3.2, 2.4, 2.4, 5.0, 2.6, 2.4])
-    # the dashboard: the four figures and three charts
+    # the dashboard: four figures and four charts, all read from the pivot tables (GETPIVOTDATA), so slicers connected
+    # to the pivot tables filter every figure and every chart on it; the Report sheet stays the full-quarter printout
     Dd = "Dashboard"
     b.put(Dd, (0, 0), [["Production dashboard - Q3 2026"]]); b.style(Dd, "A1", bold=True, size=18, color=INK)
     b.put(Dd, (0, 1), [["Slicers: click a pivot table on the Pivots sheet, then PivotTable Analyze > Insert Slicer (Month, LineCode, CountryName), then Report Connections: tick all three tables."]])
     b.style(Dd, "A2", color=0x6B7280)
+    PM, PC, PD = "$Pivots.$A$3", "$Pivots.$A$13", "$Pivots.$F$13"
+    gp = lambda field, pt, k=None, item=None: ('IFERROR(GETPIVOTDATA("%s";%s;"%s";%s);0)' % (field, pt, k, item)) if k else 'GETPIVOTDATA("%s";%s)' % (field, pt)
+    b.put(Dd, (9, 2), [["Chart data, read from the pivot tables (the slicers filter it)"]]); b.style(Dd, "J3", bold=True, color=0x6B7280)
+    b.put(Dd, (9, 4), [["Month", "Sets"]] + [[m, "=" + gp("Qty", PM, "Month", "J%d" % (6 + i))] for i, m in enumerate(months)])
+    b.put(Dd, (12, 4), [["Line", "Sets"]] + [[l, "=" + gp("Qty", PM, "LineCode", "M%d" % (6 + i))] for i, l in enumerate(lines)])
+    b.put(Dd, (9, 13), [["Country", "Sets"]] + [[c, "=" + gp("Qty", PC, "CountryName", "J%d" % (15 + i))] for i, c in enumerate(countries)])
+    b.put(Dd, (12, 13), [["Model", "Sets"]] + [[m, "=" + gp("Qty", PD, "ModelName", "M%d" % (15 + i))] for i, m in enumerate(models)])
+    for ref in ("J5:K5", "M5:N5", "J14:K14", "M14:N14"): b.head(Dd, ref)
+    for ref in ("K6:K8", "N6:N11", "K15:K24", "N15:N26"): b.style(Dd, ref, fmt="#,##0")
     b.put(Dd, (0, 2), [["Total sets", "", "Value (EGP million)", "", "Export share", "", "Top model"],
-                       ["=Report.A4", "", "=Report.B4/1000000", "", "=Report.C4", "", "=Report.D4"]])
+                       ["=" + gp("Qty", PC), "", "=" + gp("Value", PC) + "/1000000", "", "=1-" + gp("Qty", PC, "CountryName", '"Egypt"') + "/A4", "", "=INDEX($M$15:$M$26;MATCH(MAX($N$15:$N$26);$N$15:$N$26;0))"]])
     b.style(Dd, "A3:G3", bold=True, color=0x6B7280); b.style(Dd, "A4:G4", bold=True, size=16, color=ACC)
     b.style(Dd, "A4", fmt="#,##0"); b.style(Dd, "C4", fmt="#,##0.0"); b.style(Dd, "E4", fmt="0.0%")
-    b.widths(Dd, [3.4, 0.6, 4.4, 0.6, 3.4, 0.6, 5.0])
-    b.chart(Dd, "SetsByMonth", "Report!A6:B9", (0.3, 2.2, 11.5, 7.2), "column", "Sets by month")
-    b.chart(Dd, "SetsByLine", "Report!E6:F12", (12.2, 2.2, 11.5, 7.2), "column", "Sets by line")
-    b.chart(Dd, "SetsByCountry", "Report!A14:B24", (0.3, 9.8, 11.5, 8.0), "bar", "Sets by country")
-    b.chart(Dd, "SetsByModel", "Report!A25:B37", (12.2, 9.8, 11.5, 8.0), "bar", "Sets by model")
+    b.widths(Dd, [3.4, 0.6, 4.4, 0.6, 3.4, 0.6, 5.0, 0.6, 5.9, 4.6, 2.4, 0.6, 4.6, 2.4])
+    b.chart(Dd, "SetsByMonth", "Dashboard!J5:K8", (0.3, 2.2, 11.5, 7.2), "column", "Sets by month")
+    b.chart(Dd, "SetsByLine", "Dashboard!M5:N11", (12.2, 2.2, 11.5, 7.2), "column", "Sets by line")
+    b.chart(Dd, "SetsByCountry", "Dashboard!J14:K24", (0.3, 9.8, 11.5, 8.0), "bar", "Sets by country")
+    b.chart(Dd, "SetsByModel", "Dashboard!M14:N26", (12.2, 9.8, 11.5, 8.0), "bar", "Sets by model")
     b.save(os.path.join(OUT, "Production_Q3_Final.xlsx"))
 
 
