@@ -399,7 +399,7 @@ await session({ label: "model-deck-ar", viewport: { width: 1360, height: 900 } }
   await page.click('#sec-big [data-aih-go="11"]'); await page.waitForTimeout(700);
   const bfinal = await page.$eval("#sec-big [data-aih-q]", (e) => e.dataset.final === "true" && /فرع/.test(e.textContent));
   const bart = await page.$eval('#sec-big .aih-slide[data-i="11"] .aih-svg', (v) => v.querySelectorAll("rect,circle,path,text").length > 8);
-  bn === 12 && /(^|\s)1 من 8/.test(bcrumb) && bfinal && bart ? ok("unit 4 deck: 12 slides open the unit (lesson 1 of 8) and end on the question its Office lessons answer") : fail(`unit 4 deck: ${bn} slides, crumb «${bcrumb}», final ${bfinal}, art ${bart}`);
+  bn === 12 && /(^|\s)1 من 7/.test(bcrumb) && bfinal && bart ? ok("unit 4 deck: 12 slides open the unit (lesson 1 of 7) and end on the question its Office lessons answer") : fail(`unit 4 deck: ${bn} slides, crumb «${bcrumb}», final ${bfinal}, art ${bart}`);
   const leftBuilt = await page.evaluate(async () => {   // leaving the page stops on-demand drawing: no SVGs are built in the detached deck afterwards
     location.hash = "lesson-f6"; await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
     const deck = document.querySelector("#sec-window"); const before = deck.querySelectorAll(".aih-svg").length;
