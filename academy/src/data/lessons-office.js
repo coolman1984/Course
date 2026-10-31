@@ -68,7 +68,7 @@
         ],
         adv: [
           L("mistakes", "- تنسّق وتلوّن قبل المراجعة.\n- سلايسر متوصل بجدول محوري واحد بس، فرسم يتغيّر والتاني لأ.\n- رقم مكتوب بالإيد في التقرير، فالربع الجاي يفضل زي ما هو.\n- رسوم كتير بألوان كتير: ٣ رسوم بتجاوب ٣ أسئلة أحسن من ١٠.", "- Formatting and colouring before the check.\n- A slicer connected to one pivot table only, so one chart changes and the other doesn't.\n- A figure typed by hand in the report, so next quarter it stays the same.\n- Many charts in many colours: 3 charts answering 3 questions beat 10."),
-          L("whennot", "لو الداشبورد هيتشاف من ناس كتير على النت ومن الموبايل، أو البيانات بقت مئات الآلاف من الصفوف، إكسل مش المكان: الوحدة الخامسة بتبني لوحة معلومات برّه إكسل. والداشبورد جوّه إكسل أنسب حاجة لتقرير دوري لمدير واحد أو فريق صغير.", "If the dashboard will be seen by many people online and on phones, or the data has grown to hundreds of thousands of rows, Excel isn't the place: the fifth unit builds a dashboard outside Excel. A dashboard inside Excel suits a periodic report for one manager or a small team best."),
+          L("whennot", "لو الداشبورد هيتشاف من ناس كتير على النت ومن الموبايل، أو البيانات بقت مئات الآلاف من الصفوف، إكسل مش المكان: الوحدة السادسة بتبني لوحة معلومات برّه إكسل. والداشبورد جوّه إكسل أنسب حاجة لتقرير دوري لمدير واحد أو فريق صغير.", "If the dashboard will be seen by many people online and on phones, or the data has grown to hundreds of thousands of rows, Excel isn't the place: the sixth unit builds a dashboard outside Excel. A dashboard inside Excel suits a periodic report for one manager or a small team best."),
         ],
       },
     },
@@ -93,7 +93,7 @@
         ],
         adv: [
           L("mistakes", "- تنسخ من الـ PDF بالإيد «لأنه ملف واحد بس» كل شهر.\n- تحط كل مصدر في ملف لوحده بدل ملف واحد بجداول.\n- تكتب الأسماء بالإيد بدل VLOOKUP.\n- تثق في أرقام اتقرت من PDF من غير ما تقارن إجمالي كل ملف.", "- Copying from the PDF by hand every month “because it's only one file”.\n- Keeping each source in a file of its own instead of one workbook of tables.\n- Typing the names by hand instead of VLOOKUP.\n- Trusting figures read from a PDF without comparing each file's total."),
-          L("whennot", "لو النظام بيطلّع نفس الأرقام كملف إكسل أو CSV، اطلبه بدل الـ PDF: الملف أثبت من أي قراءة. والـ PDF الممسوح ضوئيًا (صورة مش نص) محتاج قراءة صور، والوحدة الرابعة بتتكلم عنه.", "If the system can export the same figures as an Excel or CSV file, ask for that instead of the PDF: a file is steadier than any reading. And a scanned PDF (an image, not text) needs image reading, which the fourth unit covers."),
+          L("whennot", "لو النظام بيطلّع نفس الأرقام كملف إكسل أو CSV، اطلبه بدل الـ PDF: الملف أثبت من أي قراءة. والـ PDF الممسوح ضوئيًا (صورة مش نص) محتاج قراءة صور، والوحدة الخامسة بتتكلم عنه.", "If the system can export the same figures as an Excel or CSV file, ask for that instead of the PDF: a file is steadier than any reading. And a scanned PDF (an image, not text) needs image reading, which the fifth unit covers."),
         ],
       },
     },

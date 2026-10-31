@@ -5,7 +5,7 @@
   const L = (k, ar, en) => ({ k, ar, en });
   A.lessons = (A.lessons || []).concat([
     {
-      id: "g1", unit: "u5", pages: [32], diff: 1, min: 7, scene: "github", related: ["g2", "a5", "p8"], pre: ["w1"],
+      id: "g1", unit: "u6", pages: [32], diff: 1, min: 7, scene: "github", related: ["g2", "a5", "p8"], pre: ["w1"],
       title: { ar: "GitHub: ذاكرة مشروعك وسجل تاريخه", en: "GitHub: your project’s memory and history" },
       sum: { ar: "المشكلة اللي بيحلّها، والفرق بين Git وGitHub، وست فوايد، وسبعة مفاهيم بتشبيهات من المكتب، واستخدامات برّه البرمجة.", en: "The problem it solves, Git vs GitHub, six benefits, seven concepts with office analogies, and uses beyond programming." },
       book: [
@@ -36,7 +36,7 @@
       },
     },
     {
-      id: "g2", unit: "u5", pages: [33], diff: 2, min: 8, scene: "gitflow", lab: "git", related: ["g1", "a5", "w5"], pre: ["g1"],
+      id: "g2", unit: "u6", pages: [33], diff: 2, min: 8, scene: "gitflow", lab: "git", related: ["g1", "a5", "w5"], pre: ["g1"],
       title: { ar: "GitHub عمليًا: الأوامر ودورة الشغل", en: "GitHub in practice: commands and workflow" },
       sum: { ar: "اتناشر أمر بيغطّوا 99% من الاستخدام: الإعداد، والدورة اليومية، والفروع والتراجع، والأخطاء الشائعة، و Prompt يغنيك عن حفظ الأوامر.", en: "Twelve commands cover 99% of use: setup, the daily cycle, branches and undo, common mistakes, and a prompt that saves memorising them." },
       book: [
@@ -78,7 +78,7 @@
         } },
     },
     {
-      id: "m1", unit: "u3", pages: [34], diff: 2, min: 9, scene: "moe", lab: "tokens", related: ["f1", "m2", "m3"], pre: ["f1"],
+      id: "m1", unit: "u4", pages: [34], diff: 2, min: 9, scene: "moe", lab: "tokens", related: ["f1", "m2", "m3"], pre: ["f1"],
       title: { ar: "النماذج: الأوزان والأحجام ومعنى «الذكاء»", en: "Models: weights, sizes and what “smart” means" },
       sum: { ar: "أربعة مفاهيم بيفكّوا كل الفروق (المعاملات، نافذة الـ Context، الخبراء المتفرقون، التوكنات)، وليه الأكبر مش الأفضل دايمًا، وطبقات النماذج وقاعدة الاختيار.", en: "Four concepts that explain every difference (parameters, context window, mixture of experts, tokens), why bigger isn’t always best, model tiers and the selection rule." },
       book: [
@@ -111,7 +111,7 @@
       },
     },
     {
-      id: "m2", unit: "u4", pages: [35], diff: 2, min: 8, related: ["m1", "m3", "t2"], pre: ["m1"],
+      id: "m2", unit: "u5", pages: [35], diff: 2, min: 8, related: ["m1", "m3", "t2"], pre: ["m1"],
       title: { ar: "خريطة الشركات والنماذج والأسعار — سبتمبر 2026", en: "Companies, models and prices — September 2026" },
       sum: { ar: "صورة السوق في لحظتها: العائلات الكبرى، ونطاقات الأسعار، وتلات فخاخ تسعيرية، والنماذج الصينية، و«مفتوح الأوزان» يعني إيه عمليًا.", en: "The market at that moment: major families, price ranges, three pricing traps, Chinese models, and what “open weights” means in practice." },
       book: [
@@ -152,7 +152,7 @@
         } },
     },
     {
-      id: "m3", unit: "u3", pages: [36], diff: 2, min: 7, lab: "local", related: ["m1", "m2", "f5"], pre: ["m1"],
+      id: "m3", unit: "u4", pages: [36], diff: 2, min: 7, lab: "local", related: ["m1", "m2", "f5"], pre: ["m1"],
       title: { ar: "تشغيل النماذج على جهازك", en: "Running models on your own machine" },
       sum: { ar: "نموذج جوّه حاسوبك من غير إنترنت ولا اشتراك وبياناتك ما بتخرجش من الجهاز: ليه بقى ممكن، وLM Studio وOllama، وإيه اللي يناسب جهازك، وإمتى تستخدمه.", en: "A model inside your PC with no internet, no subscription and no data leaving: why it’s possible now, LM Studio and Ollama, what fits your machine, and when to use it." },
       book: [
@@ -185,7 +185,7 @@
       },
     },
     {
-      id: "s1", unit: "u7", pages: [37], diff: 3, min: 8, scene: "layers", related: ["y7", "s2", "t1"], pre: ["y7"],
+      id: "s1", unit: "u8", pages: [37], diff: 3, min: 8, scene: "layers", related: ["y7", "s2", "t1"], pre: ["y7"],
       title: { ar: "النظام: اربط العمليات والبيانات في منظومة متكاملة", en: "The system: connect processes and data into one" },
       sum: { ar: "الفرق بين أداة ونظام، والاختبار الحاسم (عدّ النقلات اليدوية)، والطبقات الخمس، والمبادئ الأربعة، ورحلة حدث واحد.", en: "Tool vs system, the decisive test (count manual hand-offs), the five layers, the four principles, and one event’s journey." },
       book: [
@@ -217,7 +217,7 @@
       },
     },
     {
-      id: "s2", unit: "u7", pages: [38], diff: 3, min: 8, scene: "slice", lab: "system", related: ["s1", "p7", "t1"], pre: ["s1"],
+      id: "s2", unit: "u8", pages: [38], diff: 3, min: 8, scene: "slice", lab: "system", related: ["s1", "p7", "t1"], pre: ["s1"],
       title: { ar: "بناء النظام من غير ما ينهار: الشريحة العمودية", en: "Building the system without collapse: the vertical slice" },
       sum: { ar: "أكتر مشاريع المنظومات بتفشل لأنها بتبدأ كبيرة: ابنِ عمق مش عرض، والمراحل السبعة، وتلات أخطاء بتسقط المشروع، وتلات Prompts.", en: "Most system projects fail because they start big: build deep, not wide; seven stages; three project-killing mistakes; three prompts." },
       book: [
@@ -257,7 +257,7 @@
         } },
     },
     {
-      id: "t1", unit: "u7", pages: [39], diff: 3, min: 9, scene: "team", lab: "agents", related: ["f7", "s1", "t2"], pre: ["f7", "s1"],
+      id: "t1", unit: "u8", pages: [39], diff: 3, min: 9, scene: "team", lab: "agents", related: ["f7", "s1", "t2"], pre: ["f7", "s1"],
       title: { ar: "الفريق الرقمي الذكي", en: "The smart digital team" },
       sum: { ar: "الوكيل إيه (هدف وأدوات وتكرار)، وليه فريق مش وكيل واحد، والأدوار السبعة، وابدأ بتلتة، وتلات أنماط تنسيق.", en: "What an agent is (goal, tools, repetition), why a team rather than one agent, seven roles, start with three, and three coordination patterns." },
       book: [
@@ -298,7 +298,7 @@
         } },
     },
     {
-      id: "t2", unit: "u7", pages: [40], diff: 3, min: 8, scene: "card", related: ["t1", "m1", "s2"], pre: ["t1"],
+      id: "t2", unit: "u8", pages: [40], diff: 3, min: 8, scene: "card", related: ["t1", "m1", "s2"], pre: ["t1"],
       title: { ar: "تصميم الفريق الرقمي وحوكمته", en: "Designing and governing the digital team" },
       sum: { ar: "بطاقة تعريف الوكيل بخمس عناصر، وأربعة ضوابط حوكمة قبل أي تشغيل حقيقي، وأربعة Prompts للبناء والقياس، والخيط الجامع للكتاب.", en: "The five-element agent card, four governance controls before any real run, four prompts to build and measure, and the book’s unifying thread." },
       book: [

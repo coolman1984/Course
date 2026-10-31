@@ -284,6 +284,115 @@
       o("في أول كل Prompt", "At the start of every Prompt", "هتنساها مرة؛ CLAUDE.md بيتقري لوحده.", "You'll forget it once; CLAUDE.md is read by itself."),
       o("مش محتاجة تتكتب", "It needn't be written", "اللي ما يتكتبش ما يتطبقش.", "What isn't written isn't applied.")
     ], 0, ["CLAUDE.md لقواعد المشروع اللي بتتطبق دايمًا، والمهارة لطريقة شغل مهمة معيّنة، والـ Prompt لطلب مرة واحدة.", "CLAUDE.md holds the project's always-on rules, a skill holds the method for one task, and a Prompt is a one-time request."]),
+    /* ---------- Unit 4: tools the company trusts ---------- */
+    Q("k1a", "k1", "mcq", ["إيه الفرق الأساسي بين إنك تطلب كود في الشات العادي، وإنك تطلبه من Claude Code أو Codex في الطرفية؟", "What is the main difference between asking for code in ordinary chat and asking Claude Code or Codex in the terminal?"], [
+      o("الـ CLI بيشوف ملفاتك الحقيقية في الفولدر، وبيكتب ويشغّل بنفسه بعد موافقتك", "The CLI sees your real files in the folder, and writes and runs things itself after your approval"),
+      o("الـ CLI بيستخدم نموذج أذكى دايمًا", "The CLI always uses a smarter model", "ممكن نفس النموذج؛ الفرق إنه شايف الفولدر وبيشغّل.", "It may be the same model; the difference is that it sees the folder and runs things."),
+      o("الـ CLI مش محتاج موافقتك على أي حاجة", "The CLI needs no approval for anything", "بالعكس، بيستأذن قبل أي كتابة أو أمر.", "On the contrary, it asks before any write or command."),
+      o("الـ CLI بيشتغل من غير نت", "The CLI works without internet", "البرنامج على جهازك بس النموذج على السحابة.", "The program is on your machine, but the model is in the cloud.")
+    ], 0, ["في الشات إنت الوسيط بتنسخ وتلصق، والنموذج ما شافش ملفاتك. الـ CLI بيقرا الفولدر ويشغّل، وإنت بتراجع وتوافق.", "In chat you are the middleman copying and pasting, and the model never saw your files. The CLI reads the folder and runs things, while you review and approve."]),
+    Q("k1b", "k1", "spot", ["زميل فتح Claude Code على سطح المكتب، ووافق على «دايمًا» لكل الأوامر من أول دقيقة، وطلب «اعملي كل الأداة». إيه أخطر غلطة؟", "A colleague opened Claude Code on the Desktop, approved “always” for every command in the first minute, and asked “build me the whole tool”. What is the most serious mistake?"], [
+      o("الفولدر: سطح المكتب فيه كل ملفاته، والأداة تقدر تقرا وتعدّل أي حاجة جوّاه", "The folder: the Desktop holds all his files, and the tool can read and change anything inside it"),
+      o("إنه كتب بالعربي", "That he wrote in Arabic", "العربي شغال عادي.", "Arabic works fine."),
+      o("إنه ما استخدمش Codex", "That he didn't use Codex", "نفس المشكلة هتحصل في Codex.", "The same problem would happen in Codex."),
+      o("إن الطلب قصير", "That the request was short", "مشكلة، بس أخف من إن كل ملفاته مفتوحة قدامها.", "A problem, but lighter than having all his files open to it.")
+    ], 0, ["الفولدر اللي بتفتح فيه الأداة هو حدودها. فولدر مشروع لوحده، وموافقة خطوة خطوة في الأول، وطلب قراءة قبل أي تعديل.", "The folder you open the tool in is its boundary. A project folder of its own, approval step by step at first, and a read request before any change."]),
+    Q("k2a", "k2", "mcq", ["ليه قسم أمن المعلومات بيمنع pip install على لابتوب الشركة؟", "Why does the information-security team block pip install on the company laptop?"], [
+      o("لأن الباكدج كود من برّه بيشتغل بصلاحياتك، وممكن يكون فيه ثغرة أو نسخة متلاعب فيها، وبيسحب معاه باكدجات تانية", "Because a package is outside code running with your permissions; it may hold a hole or be a tampered copy, and it pulls in other packages"),
+      o("لأن الباكدجات بتبطّأ الجهاز", "Because packages slow the machine", "مش ده السبب؛ السبب الأمان.", "That isn't the reason; the reason is security."),
+      o("لأن Python ما بيشتغلش مع باكدجات على ويندوز", "Because Python doesn't work with packages on Windows", "بيشتغل؛ المنع قرار أمان.", "It does; the block is a security decision."),
+      o("لأن الباكدجات غالية", "Because packages are expensive", "أغلبها مجاني؛ المشكلة مصدرها.", "Most are free; the problem is their source.")
+    ], 0, ["المكتبة القياسية جاية مع Python من مصدرها الرسمي ومتراجعة؛ الباكدج كود غريب. علشان كده القاعدة: المكتبة القياسية بس، والنموذج يكتب الناقص بنفسه.", "The standard library ships with Python from its official source and is reviewed; a package is outside code. Hence the rule: the standard library only, and the model writes what is missing itself."]),
+    Q("k2b", "k2", "compare", ["الأداة محتاجة تجمع الكمية لكل بلد من ملف CSV. إيه البديل الصح لـ pandas؟", "The tool must sum the quantity per country from a CSV file. What is the right replacement for pandas?"], [
+      o("csv.DictReader وقاموس بيجمع، أو تحميل الملف في sqlite3 وGROUP BY", "csv.DictReader and a summing dictionary, or loading the file into sqlite3 with GROUP BY"),
+      o("تنزّل pandas من موقع تاني غير PyPI", "Download pandas from a site other than PyPI", "ده أخطر: نفس الكود من مصدر أقل ثقة.", "That is worse: the same code from a less trusted source."),
+      o("تنسخ ملفات pandas جوّه فولدرك", "Copy pandas' files into your folder", "لسه كود من برّه، بس من غير ما حد يعرف.", "Still outside code, only now nobody knows."),
+      o("مفيش بديل، لازم باكدج", "There's no replacement; a package is needed", "المكتبة القياسية فيها كل اللي محتاجه هنا.", "The standard library holds everything needed here.")
+    ], 0, ["المجموع لكل بلد كام سطر بالمكتبة القياسية. ولو الأسئلة كترت، sqlite3 جاية جوّه Python وبتجاوب بـ SQL.", "A per-country sum is a few lines with the standard library. And if questions multiply, sqlite3 comes inside Python and answers in SQL."]),
+    Q("k3a", "k3", "mcq", ["COM اختصار لإيه، وبيعمل إيه؟", "What does COM stand for, and what does it do?"], [
+      o("Component Object Model: طريقة من مايكروسوفت بتخلّي برنامج زي PowerShell يتحكم في إكسل ويقرا ويكتب ويحفظ", "Component Object Model: Microsoft's way of letting a program such as PowerShell drive Excel, reading, writing and saving"),
+      o("Computer Office Macro: ماكرو جاهز جوّه إكسل", "Computer Office Macro: a ready macro inside Excel", "مش ماكرو؛ هو طريقة تحكّم من برّه البرنامج.", "It isn't a macro; it is a way of driving the program from outside."),
+      o("Command Output Mode: طريقة طباعة في الطرفية", "Command Output Mode: a way of printing in the terminal", "مالوش علاقة بالطباعة.", "It has nothing to do with printing."),
+      o("باكدج Python لازم يتسطب", "A Python package that must be installed", "COM جزء من ويندوز؛ اللي محتاج باكدج هو Python لما يكلّمه (pywin32).", "COM is part of Windows; what needs a package is Python when it talks to it (pywin32).")
+    ], 0, ["إكسل بيقدّم كائن Excel.Application، وPowerShell بيعمله بسطر واحد. ومن غير أي تثبيت، لأن الاتنين جزء من ويندوز والأوفيس.", "Excel offers an Excel.Application object, and PowerShell creates it in one line, with no install, because both are part of Windows and Office."]),
+    Q("k3b", "k3", "predict", ["سكريبت PowerShell فتح إكسل بطريقة COM، وحصل خطأ في النص، ومفيش finally. إيه اللي هيحصل بعد كذا تشغيل؟", "A PowerShell script opened Excel through COM, an error happened midway, and there is no finally. What happens after several runs?"], [
+      o("نسخ إكسل كتير شغالة مستخبية في Task Manager، والجهاز يتقل والملفات تتقفل", "Many hidden copies of Excel running in Task Manager; the machine slows and files stay locked"),
+      o("إكسل بيقفل نفسه لوحده", "Excel closes itself", "مش لما سكريبت فتحه؛ بيفضل مستني.", "Not when a script opened it; it stays waiting."),
+      o("الويندوز بيمسح السكريبت", "Windows deletes the script", "مفيش حاجة كده.", "Nothing like that happens."),
+      o("ولا حاجة؛ الخطأ بيقفل كل حاجة", "Nothing; the error closes everything", "الخطأ بيوقف السكريبت بس، وإكسل يفضل.", "The error stops the script only; Excel remains.")
+    ], 0, ["finally بيتنفذ حتى بعد الخطأ: فيه Close وQuit وReleaseComObject. ومن غيره كل تشغيل فاشل بيسيب نسخة إكسل وراه.", "finally runs even after an error: it holds Close, Quit and ReleaseComObject. Without it, every failed run leaves a copy of Excel behind."]),
+    O("k4a", "k4", ["رتّب طريقة بناء المثال الأول:", "Put the way example 1 is built in order:"], [
+      ["Prompt_1: الأسبوعين تحت بعض، والسجل يقول ٣٦ صف و١٬٧٦٥", "Prompt_1: the two weeks stacked; the log says 36 rows and 1,765"],
+      ["Prompt_2: اسم البلد بـ VLOOKUP، ومفيش #N/A", "Prompt_2: the country name by VLOOKUP, with no #N/A"],
+      ["Prompt_3: التقرير وملف CSV، والإجمالي ١٬٧٦٥", "Prompt_3: the report and the CSV file; the total is 1,765"],
+      ["Run_All.bat: التلاتة ورا بعض بدبل كليك", "Run_All.bat: all three in order with a double-click"],
+    ], ["خطوة، وبعدين مراجعتها، وبعدين اللي بعدها. وفي الآخر ملف واحد بيشغّلهم كلهم ويقف لو واحدة وقفت.", "A step, then its check, then the next. And at the end one file runs them all and stops if one stops."]),
+    Q("k4b", "k4", "spot", ["ملف التشغيل فيه: python C:\\Users\\eng01\\Desktop\\tool\\step1.py. زميل شغّله على جهازه فما اشتغلش. ليه؟", "The launcher holds: python C:\\Users\\eng01\\Desktop\\tool\\step1.py. A colleague ran it on his machine and it failed. Why?"], [
+      o("المسار مكتوب لجهازها بس؛ الصح ‎%~dp0 يعني «الفولدر اللي الملف ده فيه»", "The path is written for her machine only; the right one is %~dp0, meaning “the folder this file is in”"),
+      o("Python مش بيشتغل من ملفات ‎.bat", "Python doesn't run from .bat files", "بيشتغل عادي.", "It runs fine."),
+      o("لازم يكتب py بدل python", "He must type py instead of python", "ممكن تفرق، بس المشكلة هنا المسار.", "It may matter, but the problem here is the path."),
+      o("الملف لازم يتشغّل كـ Administrator", "The file must be run as Administrator", "مش محتاج صلاحيات زيادة.", "It needs no extra permissions.")
+    ], 0, ["‎%~dp0 بيخلّي ملف التشغيل يلاقي السكريبت جنبه في أي فولدر وعلى أي جهاز.", "%~dp0 lets the launcher find the script beside it in any folder and on any machine."]),
+    Q("k5a", "k5", "spot", ["التقرير اشتغل من غير أي خطأ وقال «الكويت: ٨». الفلتر بالإيد على KW وجمع Qty قال ٣٨٥. فين المشكلة؟", "The report ran without any error and said “Kuwait: 8”. Filtering KW by hand and adding Qty gave 385. Where is the problem?"], [
+      o("السكريبت بيعدّ الصفوف (COUNTIF) بدل ما يجمع الكمية (SUMIF)", "The script counts rows (COUNTIF) instead of summing the quantity (SUMIF)"),
+      o("الفلتر بالإيد غلط؛ الكود دايمًا أدق", "The hand filter is wrong; code is always more accurate", "الكود بيعمل اللي اتكتب، مش اللي إنت قصدته.", "Code does what was written, not what you meant."),
+      o("ملف Week_01 ناقص", "The Week_01 file is incomplete", "السجل قال ٣٦ صف؛ الملفات سليمة.", "The log said 36 rows; the files are fine."),
+      o("الكويت مش في Masters", "Kuwait isn't in Masters", "كان هيطلع #N/A، مش ٨.", "It would show #N/A, not 8.")
+    ], 0, ["«اشتغل من غير أخطاء» مش معناها «الرقم صح». رقم واحد بالإيد بيكشف القاعدة الغلط في دقيقة.", "“Ran without errors” doesn't mean “the figure is right”. One figure done by hand exposes a wrong rule in a minute."]),
+    Q("k5b", "k5", "compare", ["عايز رأي في كود كتبه Claude في نفس المحادثة. أنهي طريقة أحسن؟", "You want an opinion on code Claude wrote in this same chat. Which way is better?"], [
+      o("جلسة جديدة أو نموذج تاني (Codex مثلًا) بقايمة المراجعة نفسها", "A new session or another model (Codex, for example) with the review checklist itself"),
+      o("تسأل نفس المحادثة: «الكود ده صح؟»", "Ask the same chat: “Is this code right?”", "النموذج بيميل يوافق على شغله.", "A model tends to agree with its own work."),
+      o("تقبله لو شكله مرتب", "Accept it if it looks tidy", "الشكل مش دليل على صحة الرقم.", "Looks are no proof the figure is right."),
+      o("تطلب منه يكتبه تاني من الأول", "Ask it to rewrite it from scratch", "نسخة تانية مش مراجعة.", "A second version isn't a review.")
+    ], 0, ["عينين جداد بنفس القايمة بيلاقوا اللي النموذج الأولاني ما شافوش.", "Fresh eyes with the same list find what the first model didn't see."]),
+    Q("k6a", "k6", "mcq", ["ليه SQLite مش محتاجة تثبيت على لابتوب عليه Python؟", "Why does SQLite need no install on a laptop with Python?"], [
+      o("لأنها جاية جوّه Python في وحدة sqlite3 من المكتبة القياسية، والقاعدة ملف واحد من غير خادم", "Because it comes inside Python as the sqlite3 module of the standard library, and the database is one file with no server"),
+      o("لأنها بتشتغل على السحابة", "Because it runs in the cloud", "بالعكس، ملف على جهازك.", "On the contrary, a file on your machine."),
+      o("لأنها جزء من إكسل", "Because it is part of Excel", "مالهاش علاقة بإكسل.", "It has nothing to do with Excel."),
+      o("لأنها مش قاعدة بيانات حقيقية", "Because it isn't a real database", "قاعدة كاملة، وأكتر واحدة مستخدمة في العالم.", "A full database, and the most used in the world.")
+    ], 0, ["sqlite3 من المكتبة القياسية: import sqlite3 وخلاص. وتتأكد بـ python -c \"import sqlite3; print(sqlite3.sqlite_version)\".", "sqlite3 is in the standard library: import sqlite3 and that's it. Check with python -c \"import sqlite3; print(sqlite3.sqlite_version)\"."]),
+    Q("k6b", "k6", "mcq", ["في SQL، إيه اللي بيعمل شغل VLOOKUP؟", "In SQL, what does VLOOKUP's job?"], [
+      o("JOIN: بيربط جدولين بعمود مشترك", "JOIN: it links two tables on a shared column"),
+      o("GROUP BY", "GROUP BY", "ده بيجمّع، زي الجدول المحوري.", "That groups, like a pivot table."),
+      o("WHERE", "WHERE", "ده بيفلتر.", "That filters."),
+      o("ORDER BY", "ORDER BY", "ده بيرتّب.", "That sorts.")
+    ], 0, ["JOIN Countries ON Countries.CountryCode = Exports.CountryCode بيجيب اسم البلد لكل صف، زي VLOOKUP بالظبط.", "JOIN Countries ON Countries.CountryCode = Exports.CountryCode brings each row its country name, exactly like VLOOKUP."]),
+    Q("k7a", "k7", "mcq", ["إيه أحسن مراجعة لأداة بتطلّع جدول من تقرير PDF؟", "What is the best check for a tool that extracts a table from a PDF report?"], [
+      o("مجموع الصفوف اللي طلعت = سطر Total اللي النظام طابعه في الـ PDF نفسه", "The sum of the extracted rows = the Total line the system printed in the PDF itself"),
+      o("إن الأداة اشتغلت من غير خطأ", "That the tool ran without error", "ممكن تفوّت صف وهي ساكتة.", "It can skip a row in silence."),
+      o("إن عدد الصفوف كبير", "That the row count is large", "الكبير مش معناه صح.", "Large doesn't mean right."),
+      o("إن الأرقام شكلها منطقي", "That the figures look reasonable", "الشكل مش مراجعة.", "Looks aren't a check.")
+    ], 0, ["سطر Total مراجعة جاهزة من المصدر نفسه: ٤٧٠ جهاز و٤٬١٦٨٬٠٠٠ جنيه لازم يطلعوا زيه بالظبط، وإلا توقف.", "The Total line is a ready check from the source itself: 470 sets and EGP 4,168,000 must match it exactly, or stop."]),
+    Q("k7b", "k7", "compare", ["النظام يقدر يطلّع نفس تقرير التصدير PDF أو CSV. تختار إيه؟", "The system can export the same export report as PDF or CSV. Which do you choose?"], [
+      o("CSV: الملف أثبت من أي قراءة PDF", "CSV: a file is more reliable than any PDF reading"),
+      o("PDF: شكله أحلى", "PDF: it looks nicer", "الشكل للقراءة؛ إحنا عايزين نحسب.", "Looks are for reading; we want to calculate."),
+      o("الاتنين وتاخد المتوسط", "Both, and take the average", "مش بنتوسط أرقام؛ بنختار المصدر الأثبت.", "We don't average figures; we choose the most reliable source."),
+      o("PDF، علشان نتعلّم الاستخراج", "PDF, to learn extraction", "التعلّم مكانه المثال؛ في الشغل الحقيقي خُد الأثبت.", "Learning belongs in the example; in real work take the most reliable.")
+    ], 0, ["زي ما الكتاب بيرتّب: الملف أو الـ API الأول. الـ PDF آخر حل، مش أول حل.", "As the book ranks it: a file or an API first. The PDF is the last resort, not the first."]),
+    Q("k8a", "k8", "spot", ["صفحة التقرير فيها <script src=\"https://cdn…/chart.js\">. المدير فتحها في الطيارة من غير نت. إيه اللي حصل؟", "The report page holds <script src=\"https://cdn…/chart.js\">. The manager opened it on a plane with no internet. What happened?"], [
+      o("الرسوم اختفت، لأن مكتبة الرسوم جاية من النت", "The charts vanished, because the chart library comes from the internet"),
+      o("الصفحة اشتغلت عادي", "The page worked normally", "من غير نت المكتبة ما بتتحمّلش.", "Without internet the library doesn't load."),
+      o("الأرقام اتغيرت", "The figures changed", "الأرقام ثابتة؛ الرسوم هي اللي اختفت.", "The figures stay; the charts are what vanished."),
+      o("المتصفح مسح الملف", "The browser deleted the file", "مفيش حاجة كده.", "Nothing like that happens.")
+    ], 0, ["كل حاجة جوّه الصفحة نفسها: الرسوم SVG مكتوبة نص، ومفيش رابط لبرّه. كده تشتغل في أي مكان، وما تبعتش طلب لبرّه الشركة.", "Everything inside the page itself: the charts are SVG written as text, with no outside link. That way it works anywhere and sends no request outside the company."]),
+    O("k8b", "k8", ["رتّب خطوات سكريبت صفحة الإدارة:", "Put the steps of the management page script in order:"], [
+      ["اقرا الأرقام من القاعدة بـ SQL", "Read the figures from the database with SQL"],
+      ["راجع إن الأجزاء بتساوي الإجمالي", "Check that the parts add up to the total"],
+      ["ارسم الرسوم SVG واكتب الجدول", "Draw the SVG charts and write the table"],
+      ["احفظ ملف HTML واحد واكتب في السجل", "Save one HTML file and write to the log"],
+    ], ["الأرقام الأول، وبعدين المراجعة، وبعدين الشكل. التجميل آخر حاجة.", "The figures first, then the check, then the look. Polish comes last."]),
+    Q("k9a", "k9", "compare", ["قاعدة «Python بالمكتبة القياسية بس» لازم تتطبق في كل جلسة، في Claude Code وفي Codex. مكانها فين؟", "The rule “Python with the standard library only” must apply in every session, in Claude Code and in Codex. Where does it go?"], [
+      o("CLAUDE.md وAGENTS.md، بنفس النص في الاتنين", "CLAUDE.md and AGENTS.md, with the same text in both"),
+      o("في المهارة بس", "In the skill only", "المهارة بتتقري لما مهمتها تيجي؛ القاعدة دي لازم دايمًا.", "A skill is read when its task comes; this rule must always apply."),
+      o("في أول كل Prompt", "At the start of every Prompt", "هتنساها في يوم.", "You will forget it one day."),
+      o("في CLAUDE.md بس", "In CLAUDE.md only", "كده Codex مش هيشوفها؛ Codex بيقرا AGENTS.md.", "Then Codex won't see it; Codex reads AGENTS.md.")
+    ], 0, ["كل أداة ليها ملف قواعد بتقراه أول كل جلسة. نفس النص في الملفين علشان الأداتين يشتغلوا بنفس القواعد.", "Each tool has a rules file it reads at the start of every session. The same text in both, so the two tools work by the same rules."]),
+    Q("k9b", "k9", "mcq", ["ليه طقم البداية فيه ملف Check_Setup.bat؟", "Why does the starter kit hold a Check_Setup.bat file?"], [
+      o("علشان تتأكد قبل أي حاجة إن PowerShell وPython والمكتبة القياسية موجودين على الجهاز", "To check, before anything else, that PowerShell, Python and the standard library are on the machine"),
+      o("علشان يسطّب Python لوحده", "To install Python by itself", "ما بيسطّبش حاجة؛ بيفحص بس، ولو ناقص اطلب من الـ IT.", "It installs nothing; it only checks, and if something is missing ask IT."),
+      o("علشان يشغّل المثالين", "To run both examples", "ده دور ملفات التشغيل في كل مثال.", "That is the job of each example's launchers."),
+      o("علشان يمسح فولدر Output", "To delete the Output folder", "ما بيلمسش أي ملفات.", "It touches no files.")
+    ], 0, ["أول سؤال قبل أي أداة: الجهاز عليه إيه؟ والملف بيجاوبه في ثانية: نسخة PowerShell، ونسخة Python، وسطر OK.", "The first question before any tool: what is on this machine? The file answers it in a second: the PowerShell version, the Python version, and an OK line."]),
     /* ---------- Unit 1: personal assistant & second brain ---------- */
     Q("p1a", "p1", "mcq", ["إيه المعادلة الحاكمة لأي Prompt كويس؟", "What is the governing equation of any good prompt?"], [
       o("هدف واضح + Context كافي + طلب محدد + شكل مخرج = نتيجة تنفع تنفّذها", "Clear goal + enough context + specific request + output format = an actionable result"),
@@ -545,7 +654,7 @@
       o("الوضع الداكن", "Dark mode", "تعديل بصري بسيط.", "A simple visual tweak.")
     ], 0, ["«المخرج المصقول مش بالضرورة صح» — المراجعة البشرية واجبة قبل أي مشاركة (ص 25).", "“A polished output isn’t necessarily correct” — human review is a must before any sharing (p. 25)."]),
 
-    /* ---------- Unit 4: building a web app ---------- */
+    /* ---------- (book) building a web app ---------- */
     Q("w1a", "w1", "spot", ["متدرب فتح ملف واحد في VS Code بدل المجلد، واسم المجلد «مشروع المبيعات النهائي». كام غلطة؟", "A trainee opened a single file in VS Code instead of the folder, and the folder is named “مشروع المبيعات النهائي”. How many mistakes?"], [
       o("غلطتين: فتح ملف بدل مجلد، ومسار بالعربي ومسافات", "Two: opening a file instead of a folder, and a path with Arabic and spaces"),
       o("مفيش حاجة", "None", "الاتنين من الأخطاء الشائعة التلاتة.", "Both are among the three common mistakes."),
@@ -621,7 +730,7 @@
       o("اسم مكتبة رسوم", "A chart library name", "مش مكتبة.", "Not a library.")
     ], 0, ["من مسرد الوحدة (ص 31).", "From the unit glossary (p. 31)."]),
 
-    /* ---------- Unit 5: GitHub, models, system, team ---------- */
+    /* ---------- (book) GitHub, models, system, team ---------- */
     Q("g1a", "g1", "compare", ["إيه الفرق بين Git وGitHub؟", "What’s the difference between Git and GitHub?"], [
       o("Git أداة على جهازك بتسجّل كل تغيير حتى من غير نت، وGitHub خدمة بتستضيف المشاريع على النت", "Git is a tool on your PC recording every change even offline; GitHub is a service hosting projects online"),
       o("هما نفس الحاجة", "They’re the same", "الكتاب بيفرّق بوضوح بين الأداة والخدمة.", "The book clearly separates the tool from the service."),

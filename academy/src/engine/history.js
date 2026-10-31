@@ -2806,13 +2806,15 @@
       ${cap(tr("اللي ما بيرجعش… بأمرك إنت", "what can't be undone… on your command"), 1.4, 286)}`;
     },
     sk_cliff: () => {
-      const f = mx(110), q = mx(392), d = dirx();
-      return `<g ${an("rise", 0.05)}>${[0, 1, 2, 3, 4].map((k) => `<rect x="${f - 60 + k * 4 * d}" y="${60 - k * 6}" width="120" height="170" rx="6" class="f-s1 s-line2" stroke-width="2"/>`).join("")}${txt(f, 140, tr("٣٠٠ ألف صف", "300,000 rows"), "t-ink", 14, b8)}${txt(f, 162, tr("خلايا مدموجة", "merged cells"), "t-ink3", 11, bold)}${txt(f, 180, tr("تواريخ كنص", "dates as text"), "t-ink3", 11, bold)}</g>
-      <g ${an("rise", 0.6)}>${box(240, 262, 300, 50, "f-s2 s-line2")}<rect x="${ar() ? 240 + 130 - 182 : 240 - 130}" y="252" width="182" height="12" rx="6" class="f-rose"/><rect x="${240 - 130}" y="252" width="260" height="12" rx="6" class="s-ink3" fill="none" stroke-width="1.5"/>${txt(240, 280, tr("٧٠٪ · لا يستجيب", "70% · Not responding"), "t-rose", 11.5, b8)}</g>
-      <g ${an("pop", 1.1)}>${xl(240, 120, 1.3)}<path d="M${240 - 18} 102 l36 36 M${240 + 18} 102 l-36 36" class="s-rose" stroke-width="4" stroke-linecap="round"/></g>
-      <path ${an("draw", 1.6, "s-acc")} pathLength="1" d="M${240 + d * 34} 120 C ${240 + d * 80} 120, ${q - d * 70} 110, ${q - d * 46} 110" stroke-width="3" stroke-dasharray="1" fill="none" marker-end="url(#aih-arrow)"/>
-      <g ${an("pop", 1.9)}><ellipse cx="${q}" cy="78" rx="40" ry="12" class="f-acc-soft s-acc" stroke-width="2.5"/><path d="M${q - 40} 78 v64 a40 12 0 0 0 80 0 v-64" class="f-acc-soft s-acc" stroke-width="2.5"/><path d="M${q - 40} 100 a40 12 0 0 0 80 0 M${q - 40} 121 a40 12 0 0 0 80 0" class="s-acc" fill="none" stroke-width="2"/>${txt(q, 120, ar() ? "؟" : "?", "t-acc", 26, b8)}</g>
-      <g ${an("fade", 2.2)}>${txt(q, 178, tr("الوحدة الجاية", "next unit"), "t-acc", 13, b8)}${txt(q, 196, tr("أكبر من إكسل", "bigger than Excel"), "t-ink2", 11.5, bold)}</g>`;
+      const f = mx(104), q = mx(372), d = dirx();
+      return `<g ${an("rise", 0.05)}>${["build_table.ps1", "build_dashboard.ps1", "review_pack.ps1"].map((n, i) => `${box(f, 78 + i * 46, 160, 36, "f-s1 s-line2")}${mono(f - 70, 83 + i * 46, n, "t-ink2", 10)}`).join("")}${txt(f, 222, tr("سكريبتات المهارات", "the skills' scripts"), "t-ink3", 10.5, bold)}</g>
+      ${arrow(f + d * 88, 124, 240 - d * 40, 124, 0.5)}
+      <g ${an("pop", 0.7)}><path d="M240 84 l34 12 v26 q0 30 -34 46 q-34 -16 -34 -46 v-26z" class="f-acc-soft s-acc" stroke-width="2.5"/>${txt(240, 136, ar() ? "؟" : "?", "t-acc", 26, b8)}</g>
+      <g ${an("rise", 1.0)}>${box(q, 84, 168, 40, "f-amber-soft s-amber")}${txt(q, 89, tr("«نازل من النت؟»", "“from the internet?”"), "t-amber", 11, b8)}</g>
+      <g ${an("rise", 1.25)}>${box(q, 136, 168, 40, "f-amber-soft s-amber")}${txt(q, 141, tr("«مين راجعه، وإزاي؟»", "“who reviewed it, how?”"), "t-amber", 11, b8)}</g>
+      <g ${an("rise", 1.5)}>${laptop(q, 204, 0.8)}${txt(q, 246, tr("مصنع تاني: مفيش Python", "another plant: no Python"), "t-rose", 10.5, b8)}</g>
+      <g ${an("fade", 1.9)}>${txt(240, 210, tr("الوحدة الجاية", "next unit"), "t-acc", 13, b8)}</g>
+      ${cap(tr("أداة هتتنقل لناس تانية… لازم تبقى آمنة ومتراجعة", "a tool moving to others… must be safe and checked"), 2.1, 296)}`;
     },
   });
 

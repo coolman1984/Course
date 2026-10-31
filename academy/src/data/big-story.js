@@ -1,4 +1,4 @@
-/* Big data — the story deck that opens unit 4 (lesson b1).
+/* Big data — the story deck that opens unit 5 (lesson b1).
    The sales supervisor of unit 1, facing the same kind of file that froze Excel at the end of unit 2, carries every slide with one
    question: «إزاي ٣٧ ملف يبقوا جدول واحد أقدر أثق فيه؟». The deck goes from many differently shaped files to one clean,
    checked table: agree on one shape, stack with a source column, check before analysing, clean by written rules, link to
@@ -12,8 +12,8 @@
     id: "big", lesson: "b1",
     kicker: u("البيانات الكبيرة · الحكاية كاملة في ٨ دقايق", "Big data · the whole story in 8 minutes"),
     title: u("من ملفات كتير لجدول واحد تثق فيه", "From many files to one table you can trust"),
-    lead: u("فاكر ملف الربع اللي وقّف إكسل في آخر الوحدة التانية؟ المشكلة دي مش في المصنع بس. في الحكاية دي هنرجع لمشرف المبيعات اللي قابلناه في الوحدة الأولى، وهو بيحوّل ملفات كتير، كل واحد شكله مختلف، لجدول واحد نضيف ومراجَع، ونتعرّف في السكة على فولدر المشروع والمحرر ومستويات ذكاء النماذج.",
-      "Remember the quarter's file that froze Excel at the end of unit 2? That problem isn't the factory's alone. In this story we return to the sales supervisor we met in unit 1, as he turns many files, each shaped differently, into one clean, checked table, and along the way we meet the project folder, the editor and the levels of model intelligence."),
+    lead: u("فاكر ملف الـ ٣٠٠ ألف صف اللي وقّف إكسل في آخر الوحدة اللي فاتت؟ المشكلة دي مش في المصنع بس. في الحكاية دي هنرجع لمشرف المبيعات اللي قابلناه في الوحدة الأولى، وهو بيحوّل ملفات كتير، كل واحد شكله مختلف، لجدول واحد نضيف ومراجَع، ونتعرّف في السكة على فولدر المشروع والمحرر ومستويات ذكاء النماذج.",
+      "Remember the 300,000-row file that froze Excel at the end of the last unit? That problem isn't the factory's alone. In this story we return to the sales supervisor we met in unit 1, as he turns many files, each shaped differently, into one clean, checked table, and along the way we meet the project folder, the editor and the levels of model intelligence."),
     answerLabel: u("القاعدة، وليه؟", "The rule, and why"),
     ideaLabel: u("الفكرة في جملة", "The idea in one line"),
     question: u("إزاي ٣٧ ملف يبقوا جدول واحد أقدر أثق فيه؟", "How do 37 files become one table I can trust?"),
