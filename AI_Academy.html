@@ -12369,7 +12369,159 @@ Start by presenting the "Context to fill in" block and your clarifying questions
 })(window.ACADEMY = window.ACADEMY || {});
 
 /* data/pdf-story.js */
+/* One PDF into a database — the story deck of lesson k7 (unit 4), on step 1 of Unit4_Example_2_PDF_to_HTML.
+   The planning engineer at the second plant carries every slide with one question: «إزاي أرقام الـ PDF توصل لقاعدة
+   البيانات من غير ما تتنقل بإيد؟». The deck goes from retyping to extraction: what data extraction is, text PDF or
+   scan, looking first, what is inside a PDF page, the rows between the header and the Total line, thousands separators,
+   the Total line as the check, the database with JOIN, the deliberate stop, and the better source; it ends on the
+   meeting tomorrow, which opens k8. Figures come from data/easy-projects.js. Drawings are the pd_* entries. */
 "use strict";
+(function (A) {
+  const u = (ar, en) => ({ ar, en });
+  A.pdfStory = {
+    id: "pdf", lesson: "k7",
+    kicker: u("من PDF لقاعدة بيانات · الحكاية في ٨ دقايق", "From a PDF to a database · the story in 8 minutes"),
+    title: u("الأرقام تطلع من الـ PDF… من غير ما حد يكتبها", "The figures leave the PDF… with nobody retyping them"),
+    lead: u("فاكر تقرير التصدير اللي زميلك بيكتبه بإيده كل شهر؟ في الحكاية دي مهندسة التخطيط بتطلّع أرقامه بسكريبت Python نقي، وبتراجعها على سطر الإجمالي اللي النظام نفسه طابعه.",
+      "Remember the export report your colleague retypes every month? In this story the planning engineer extracts its figures with a pure-Python script, and checks them against the Total line the system itself printed."),
+    answerLabel: u("القاعدة، وليه؟", "The rule, and why"),
+    ideaLabel: u("الفكرة في جملة", "The idea in one line"),
+    question: u("إزاي أرقام الـ PDF توصل لقاعدة البيانات من غير ما تتنقل بإيد؟", "How do a PDF's figures reach the database without being copied by hand?"),
+    finalQuestion: u("طب الإدارة هتشوف الأرقام دي إزاي؟", "And how will management see these figures?"),
+    note: u("الطريقة دي للـ PDF المكتوب اللي النظام بيطلّعه، مش للمستندات الممسوحة. الأرقام من المثال التاني، وكلها توضيحية.", "This method suits text PDFs printed by a system, not scanned documents. The figures come from the second example; all are illustrative."),
+    ui: {
+      prev: u("اللي فات", "Previous"), next: u("اللي بعده", "Next"),
+      play: u("شغّل الحكاية", "Play the story"), pause: u("وقّف", "Pause"), replay: u("من الأول", "From the start"),
+      skip: u("تخطّى للدرس", "Skip to the lesson"), start: u("نكمّل الدرس", "Continue the lesson"),
+      slideOf: u("{n} من {t}", "{n} of {t}"), timeline: u("خطوات الحكاية", "Story steps"),
+      deck: u("من PDF لقاعدة بيانات، في شرائح", "From a PDF to a database, in slides"), slide: u("شريحة", "slide"),
+      keys: u("استخدم الأسهم أو اسحب على الشاشة", "Use the arrow keys or swipe")
+    },
+    slides: [
+      {
+        id: "retype", art: "pd_retype", year: u("الموقف", "Scene"), mark: u("٠١", "01"), era: u("كتابة بالإيد", "Retyping"),
+        title: u("١٢ صف… بيتكتبوا بالإيد كل شهر", "12 rows… retyped every month"),
+        story: [u("زميلها في المبيعات بيفتح Export_Sales كل شهر، ويكتب الـ ١٢ صف في إكسل بإيده: البلد، والموديل، والكمية، والمبلغ. الشهر اللي فات كتب ١٬١٦٣٬٠٠٠ بدل ١٬١٣٦٬٠٠٠، ونسي صف كامل. محدش اكتشف غير المدير.",
+          "Her colleague in sales opens Export_Sales every month and types the 12 rows into Excel by hand: country, model, quantity, amount. Last month he typed 1,136,000 as 1,163,000, and skipped a whole row. Nobody noticed except the manager."),
+        u("«مش ذنبه. ١٢ صف بأرقام طويلة، والتركيز بيقل مع الوقت». مهندسة التخطيط فكّرت: الأرقام موجودة جوّه الملف، النظام كتبها. والسؤال اللي ماشي معانا: إزاي أرقام الـ PDF توصل لقاعدة البيانات من غير ما تتنقل بإيد؟",
+          "“It's not his fault. Twelve rows of long figures, and eyes get tired.” The planning engineer thought: the figures are inside the file; the system wrote them. The question we carry: how do a PDF's figures reach the database without being copied by hand?")],
+        answer: u("أي أرقام بتتنقل بالإيد من ملف لملف كل شهر، دوّر لها على طريقة تتنقل لوحدها. لأن النقل بالإيد بيغلط غلط صغير ساكت، والغلط الصغير بيكبر في التقارير.", "Any figures copied by hand from file to file every month need a way to move by themselves — hand copying makes small silent mistakes, and small mistakes grow in reports."),
+        idea: u("الأرقام موجودة… النظام كتبها.", "The figures are there… the system wrote them.")
+      },
+      {
+        id: "extract", art: "pd_extract", year: u("الاستخراج", "Extraction"), mark: u("٠٢", "02"), era: u("من القراية للحساب", "From reading to calculating"),
+        title: u("استخراج البيانات: من ملف للقراية لجدول للحساب", "Data extraction: from a file for reading to a table for calculating"),
+        story: [u("الزميل سمّاها: «استخراج البيانات. الـ PDF معمول علشان يتقري ويتطبع: شكله ثابت على أي جهاز. بس مش معمول علشان يتحسب: ما تقدريش تجمعي عمود فيه. الاستخراج بينقل الأرقام لجدول معمول للحساب».",
+          "The colleague named it: “Data extraction. A PDF is made to be read and printed: it looks the same on any machine. But it isn't made to be calculated: you can't sum a column in it. Extraction moves the figures into a table made for calculating.”"),
+        u("«والجدول ده هيروح فين؟» «لقاعدة البيانات اللي اتعلمتيها في الدرس اللي فات: Exports.db، جدول Exports جنب جدول Countries. ومن هناك أي سؤال SQL، وأي تقرير».",
+          "“And where will that table go?” “Into the database you learned last lesson: Exports.db, an Exports table next to a Countries table. From there, any SQL question, any report.”")],
+        answer: u("الـ PDF للقراية، والجدول للحساب: انقل الأرقام مرة بالكود، واحسب من الجدول. لأن الحساب من ملف معمول للقراية بيرجّعك للنقل بالإيد.", "The PDF is for reading and the table for calculating: move the figures once by code, and calculate from the table — calculating from a file made for reading drags you back to copying by hand."),
+        idea: u("الـ PDF يتقري… الجدول يتحسب.", "A PDF is read… a table is calculated.")
+      },
+      {
+        id: "text", art: "pd_text", year: u("مكتوب ولا صورة؟", "Text or image?"), mark: u("٠٣", "03"), era: u("اختبار في ثانية", "A one-second test"),
+        title: u("ظلّل كلمة… تتنسخ؟", "Select a word… does it copy?"),
+        story: [u("قبل أي حاجة، ظلّلت كلمة Kuwait في الـ PDF ونسختها في المفكرة: اتنسخت. «يبقى PDF مكتوب: جوّاه النص نفسه، والكود يقدر يقراه». ولو كان ورقة اتمسحت بالسكانر، كان هيبقى صورة، والكلمة ما كانتش هتتظلّل أصلًا.",
+          "Before anything, she selected the word Kuwait in the PDF and copied it into Notepad: it copied. “So it's a text PDF: it holds the text itself, and code can read it.” Had it been a scanned paper, it would be an image, and the word couldn't even be selected."),
+        u("«والممسوح؟» «محتاج قراءة صور، ودي ما بتتعملش بشكل معقول بـ Python النقي. ساعتها اسألي الـ IT، أو اطلبي من النظام نسخة تانية. والتقارير اللي النظام بيطلّعها لوحده، زي ده، غالبًا مكتوبة».",
+          "“And a scanned one?” “It needs image reading, which can't reasonably be done in pure Python. Then ask IT, or ask the system for another copy. Reports the system prints by itself, like this one, are usually text.”")],
+        answer: u("اختبر الـ PDF الأول: لو الكلمة بتتظلّل وتتنسخ يبقى ينفع يتقري بالكود. لأن الـ PDF الممسوح صورة، ومحتاج أداة تانية خالص.", "Test the PDF first: if a word selects and copies, code can read it — a scanned PDF is an image, and needs a different tool altogether."),
+        idea: u("اتنسخت؟ يبقى نص.", "It copied? Then it's text.")
+      },
+      {
+        id: "look", art: "pd_look", year: u("بص الأول", "Look first"), mark: u("٠٤", "04"), era: u("٢٠ سطر", "20 lines"),
+        title: u("أول خطوة: اطبعلي أول ٢٠ سطر", "First step: print me the first 20 lines"),
+        story: [u("لصقت Prompt_1، وأوله: «قبل أي استخراج، اكتب سكريبت صغير يطبع أول ٢٠ سطر نص من الـ PDF، واستنى أشوفهم معاك». السكريبت طبع: العنوان، وسطر الفترة، وسطر العناوين، والصفوف، وسطر Total، وسطر رقم الصفحة.",
+          "She pasted Prompt_1, which starts: “Before any extraction, write a small script that prints the PDF's first 20 lines of text, and wait for us to look at them together.” The script printed: the title, the period line, the header row, the rows, the Total line, and the page-number line."),
+        u("الأداة شافت الشكل الحقيقي قبل ما تخمّن: الأرقام فيها فاصلة الآلاف، والإجمالي في سطر لوحده أوله Total، وفيه سطور تحت الجدول مالهاش علاقة بالبيانات. كل ده بقى قواعد في السكريبت.",
+          "The tool saw the real shape before guessing: the figures carry thousands separators, the total sits on its own line starting with Total, and there are lines under the table unrelated to the data. All of that became rules in the script.")],
+        answer: u("خلّي الأداة تطبع شكل الـ PDF الحقيقي قبل ما تكتب الاستخراج. لأن كل PDF له شكله، والاستخراج المبني على تخمين بيقرا سطر غلط أو يفوّت سطر.", "Have the tool print the PDF's real shape before writing the extraction — each PDF has its own shape, and an extraction built on a guess reads the wrong line or skips one."),
+        idea: u("شوف الشكل… قبل ما تقرا.", "See the shape… before you read.")
+      },
+      {
+        id: "inside", art: "pd_inside", year: u("جوّه الـ PDF", "Inside a PDF"), mark: u("٠٥", "05"), era: u("x وy", "x and y"),
+        title: u("الصفحة جوّه الـ PDF: «اكتب ده هنا»", "A PDF page inside: “write this here”"),
+        story: [u("الزميل فتح الـ PDF كنص خام: سطور زي ‎1 0 0 1 40 643 Tm (KW) Tj. «الصفحة مش جدول: هي أوامر بتقول اكتب النص ده عند النقطة x وy. KW عند x = 40 وy = 643، والمبلغ بتاعه على نفس الـ y بس على اليمين».",
+          "The colleague opened the PDF as raw text: lines like 1 0 0 1 40 643 Tm (KW) Tj. “The page isn't a table: it's instructions saying write this text at point x, y. KW at x = 40 and y = 643, and its amount on the same y, but to the right.”"),
+        u("«فالسكريبت بيلم كل نص بمكانه، ويجمّع اللي على نفس الـ y في سطر واحد، ويرتّبه من الشمال لليمين. وأحيانًا الأوامر دي مضغوطة، فبيفتحها بـ zlib، ودي برضه من المكتبة القياسية». فاكرة خريطة البدائل؟ re وzlib بدل pdfplumber.",
+          "“So the script collects each text with its position, groups what sits on the same y into one line, and orders it left to right. Sometimes these instructions are compressed, so it opens them with zlib, also from the standard library.” Remember the replacements map? re and zlib instead of pdfplumber.")],
+        answer: u("الـ PDF من جوّه نصوص في أماكن: الصف هو كل اللي على نفس السطر. لأن فهم الشكل ده بيخلّيك تقرا أي تقرير نظام بالمكتبة القياسية من غير باكدج.", "Inside, a PDF is texts at positions: a row is everything on the same line — understanding that lets you read any system report with the standard library, no package."),
+        idea: u("الصف… هو كل اللي على نفس السطر.", "A row… is all that sits on one line.")
+      },
+      {
+        id: "rows", art: "pd_rows", year: u("الصفوف", "The rows"), mark: u("٠٦", "06"), era: u("من العناوين لـ Total", "Headers to Total"),
+        title: u("الصفوف: بعد العناوين… وقبل Total", "The rows: after the headers… before Total"),
+        story: [u("القاعدة اللي اتكتبت: دوّر على سطر العناوين بالظبط (CountryCode، ModelCode، Qty، NetSales). اللي بعده صفوف، لحد سطر أوله Total. أي سطر قبل العناوين أو بعد Total، زي العنوان ورقم الصفحة، مش بيانات.",
+          "The rule written: find the header line exactly (CountryCode, ModelCode, Qty, NetSales). What follows are rows, down to a line starting with Total. Any line before the headers or after Total, like the title or the page number, isn't data."),
+        u("والصف لازم يبقى ٤ قيم، وأوله كود بلد من حرفين. السكريبت طلّع ١٢ صف: ٤ بلاد × ٣ موديلات. «ولو النظام زوّد بلد الشهر الجاي؟ القاعدة هتلاقيه لوحدها، لأنها بتقرا لحد Total، مش عدد ثابت».",
+          "And a row must hold 4 values, starting with a two-letter country code. The script extracted 12 rows: 4 countries × 3 models. “And if the system adds a country next month? The rule finds it by itself, because it reads down to Total, not a fixed count.”")],
+        answer: u("حدّد الصفوف بعلامات في التقرير نفسه (العناوين وTotal)، مش بعدد ثابت ولا بمكان الحروف. لأن عدد الصفوف بيتغيّر كل شهر، والعلامات بتفضل.", "Mark out the rows with signs in the report itself (the headers and Total), never a fixed count or character positions — the row count changes every month; the signs stay."),
+        idea: u("العلامات بتفضل… العدد بيتغيّر.", "The signs stay… the count changes.")
+      },
+      {
+        id: "numbers", art: "pd_numbers", year: u("الأرقام", "Figures"), mark: u("٠٧", "07"), era: u("فاصلة الآلاف", "Thousands separators"),
+        title: u("«1,183,000» نص… مش رقم", "“1,183,000” is text… not a number"),
+        story: [u("الأرقام في الـ PDF مكتوبة زي ما الإنسان بيقراها: 1,183,000. بالنسبة للكود ده نص، فيه فاصلتين. لو حاول يجمعه هيقف، أو أسوأ: يقرا 1 بس ويكمّل. السكريبت بيشيل الفاصلة الأول، وبعدين يحوّله رقم صحيح: 1183000.",
+          "Figures in the PDF are written the way a person reads them: 1,183,000. To the code that's text with two commas. Trying to sum it, it stops, or worse: reads just 1 and carries on. The script removes the commas first, then turns it into a whole number: 1183000."),
+        u("«وفي بلاد تانية الفاصلة بتبقى نقطة، والنقطة فاصلة. علشان كده القاعدة مكتوبة صريحة في الطلب: الأرقام فيها فاصلة الآلاف». سطر واحد في الـ Prompt بيمنع غلطة كانت ممكن تعدّي من غير ما حد ياخد باله.",
+          "“In other countries the comma is a dot and the dot a comma. That's why the rule is written plainly in the request: the figures carry thousands separators.” One line in the Prompt prevents a mistake that could have slipped by unnoticed.")],
+        answer: u("قول شكل الأرقام صراحة في الطلب، واتأكد إن السكريبت بيحوّلها أرقام قبل الجمع. لأن رقم اتقرا نص بيطلّع مجموع غلط أو ناقص من غير رسالة.", "State the figures' format plainly in the request, and make sure the script turns them into numbers before summing — a figure read as text gives a wrong or partial sum without a message."),
+        idea: u("الفاصلة للعين… مش للحساب.", "The comma is for the eye… not for maths.")
+      },
+      {
+        id: "total", art: "pd_total", year: u("سطر الإجمالي", "The Total line"), mark: u("٠٨", "08"), era: u("المراجعة الجاهزة", "A ready check"),
+        title: u("النظام نفسه ادّانا المراجعة", "The system itself gave us the check"),
+        story: [u("آخر الجدول سطر Total: ٤٧٠ جهاز و٤٬١٦٨٬٠٠٠ جنيه. السكريبت جمع الـ ١٢ صف بنفسه، وقارن: ٤٧٠ = ٤٧٠، و٤٬١٦٨٬٠٠٠ = ٤٬١٦٨٬٠٠٠. وكتب في السجل: «١٢ صف، ٤٧٠ جهاز، ٤٬١٦٨٬٠٠٠ جنيه: نفس سطر Total».",
+          "At the table's end, the Total line: 470 sets and EGP 4,168,000. The script summed the 12 rows itself and compared: 470 = 470, and 4,168,000 = 4,168,000. It logged: “12 rows, 470 sets, EGP 4,168,000: the same as the Total line”."),
+        u("«لو صف ما اتقراش، أو رقم اتقرا غلط، المجموع مش هيساوي، والسكريبت هيقف قبل ما يكتب حاجة في القاعدة. ده أحسن من أي مراجعة إحنا نعملها، لأنه جاي من المصدر نفسه».",
+          "“If a row wasn't read, or a figure was read wrong, the sum won't match, and the script stops before writing anything to the database. That beats any check we could make, because it comes from the source itself.”")],
+        answer: u("لو التقرير فيه إجمالي، خلّي الأداة تقارن مجموعها بيه وتوقف لو اختلفوا. لأن الإجمالي اللي النظام طابعه مراجعة جاهزة من المصدر، ومجانية.", "If the report holds a total, have the tool compare its own sum with it and stop if they differ — a total printed by the system is a ready check from the source, and free."),
+        idea: u("الإجمالي المطبوع… مراجعة جاهزة.", "A printed total… a ready check.")
+      },
+      {
+        id: "db", art: "pd_db", year: u("القاعدة", "The database"), mark: u("٠٩", "09"), era: u("Exports وCountries", "Exports and Countries"),
+        title: u("الصفوف في القاعدة… والأسماء بـ JOIN", "The rows in the database… names by JOIN"),
+        story: [u("بعد ما المراجعة عدّت، السكريبت كتب Exports.db: جدول Exports فيه الـ ١٢ صف، ومعاهم Month من اسم الملف (2026-07) وSourceFile. وجدول Countries من Countries.csv. وبعد الكتابة سأل القاعدة تاني: COUNT وSUM. نفس الأرقام.",
+          "Once the check passed, the script wrote Exports.db: an Exports table holding the 12 rows, with Month from the file name (2026-07) and SourceFile. And a Countries table from Countries.csv. After writing it asked the database again: COUNT and SUM. The same figures."),
+        u("وبعدين سؤال واحد بـ JOIN: مبيعات كل بلد بالاسم. الإجابة: الكويت ١٬١٨٣٬٠٠٠، والسعودية ١٬١٣٦٬٠٠٠، والأردن ١٬٠٩١٬٠٠٠، والإمارات ٧٥٨٬٠٠٠. الأرقام اللي كانت بتتكتب بالإيد، بقت جاهزة في ثواني.",
+          "Then one question with JOIN: each country's sales by name. The answer: Kuwait 1,183,000, Saudi Arabia 1,136,000, Jordan 1,091,000 and the UAE 758,000. Figures that used to be retyped were ready in seconds.")],
+        answer: u("سجّل مع كل صف هو جه منين (الشهر والملف)، وراجع القاعدة بعد الكتابة. لأن الصف اللي مصدره معروف بيتراجع ويتصلّح، واللي مصدره مجهول بيفضل علامة استفهام.", "Record with each row where it came from (the month and the file), and check the database after writing — a row with a known source can be checked and fixed; one without stays a question mark."),
+        idea: u("كل صف… عارف جه منين.", "Every row… knows where it came from.")
+      },
+      {
+        id: "stop", art: "pd_stop", year: u("الوقفة", "The stop"), mark: u("١٠", "10"), era: u("تجربة متعمّدة", "A deliberate test"),
+        title: u("مسحت الكويت… والأداة وقفت", "She deleted Kuwait… and the tool stopped"),
+        story: [u("زي الدرس اللي فات، جرّبت غلطة متعمّدة: في نسخة من الفولدر، مسحت سطر KW من Countries.csv، وشغّلت. الأداة قرت الـ PDF، وراجعت الإجمالي، وبعدين وقفت: «أكواد بلاد مش موجودة في Countries.csv: KW». وما كتبتش ولا صف في القاعدة.",
+          "As in the last lesson, she tried a deliberate fault: in a copy of the folder she deleted the KW line from Countries.csv and ran it. The tool read the PDF, checked the total, then stopped: “country codes missing from Countries.csv: KW”. And wrote not a single row to the database."),
+        u("«لو كانت كمّلت، كانت الكويت هتطلع في التقرير من غير اسم، أو تختفي من JOIN خالص، ومبيعاتها ١٬١٨٣٬٠٠٠ هتضيع من الصورة». الوقفة الواضحة أحسن ألف مرة من تقرير ناقص شكله سليم.",
+          "“Had it carried on, Kuwait would have shown in the report with no name, or vanished from the JOIN entirely, and its 1,183,000 lost from the picture.” A clear stop is a thousand times better than an incomplete report that looks sound.")],
+        answer: u("جرّب الأداة على نسخة فيها كود ناقص من الماستر، ولازم توقف قبل ما تكتب. لأن الـ JOIN بيشيل الصفوف اللي ملهاش اسم من غير ما يقول.", "Test the tool on a copy with a code missing from the master, and it must stop before writing — a JOIN drops rows with no match without saying so."),
+        idea: u("الـ JOIN بيسكت… الأداة لازم تتكلم.", "A JOIN stays silent… the tool must speak.")
+      },
+      {
+        id: "better", art: "pd_better", year: u("الأحسن", "Better"), mark: u("١١", "11"), era: u("الـ PDF آخر حل", "PDF is the last resort"),
+        title: u("لو النظام يطلّع CSV… خُده", "If the system can export CSV… take it"),
+        story: [u("الزميل قالها بصراحة: «اللي عملناه شغال، بس لو النظام يقدر يطلّع نفس الأرقام Excel أو CSV، اطلبيها كده. الملف أثبت من أي قراءة PDF: لو النظام غيّر شكل التقرير، الاستخراج ممكن يحتاج تعديل، والـ CSV لأ».",
+          "The colleague told her frankly: “What we built works, but if the system can export the same figures as Excel or CSV, ask for that. A file is more stable than any PDF reading: if the system changes the report's layout, the extraction may need changes; a CSV won't.”"),
+        u("«وفاكرة الوحدة التالتة؟ هناك وورد هو اللي فتح الـ PDF بطريقة COM. طريقة تانية من غير Python، أبطأ، بس مفيدة لو الجهاز ما عليهوش Python». ترتيب الكتاب: الملف أو الـ API الأول، والباقي بعده.",
+          "“And remember unit 3? There Word opened the PDF through COM. Another way, with no Python: slower, but useful when the machine has no Python.” The book's order: a file or an API first, the rest after.")],
+        answer: u("اسأل الأول: النظام يقدر يطلّع الأرقام ملف بيانات؟ ولو لأ، استخرج من الـ PDF وراجع على الإجمالي. لأن أثبت مصدر هو اللي ما بيحتاجش قراءة أصلًا.", "Ask first: can the system export the figures as a data file? If not, extract from the PDF and check against the total — the most stable source is the one that needs no reading at all."),
+        idea: u("الـ PDF آخر حل… مش أول حل.", "The PDF is the last resort… not the first.")
+      },
+      {
+        id: "cliff", art: "pd_cliff", year: u("الخطوة الجاية", "Next step"), mark: u("١٢", "12"), era: u("اجتماع بكرة", "Tomorrow's meeting"),
+        title: u("الأرقام جاهزة… والاجتماع بكرة", "The figures are ready… and the meeting is tomorrow"),
+        story: [u("مدير المبيعات اتصل: «عندي اجتماع بكرة مع الإدارة، عايز أعرض أرقام التصدير. هفتحها على الموبايل، وأعرضها على شاشة القاعة. ومن غير ما حد يسطّب حاجة، والنت في القاعة ضعيف».",
+          "The sales manager called: “I have a meeting with management tomorrow, and I want to present the export figures. I'll open them on my phone, and show them on the room's screen. With nobody installing anything, and the internet in the room is weak.”"),
+        u("مهندسة التخطيط بصّت للقاعدة: Exports.db فيها كل حاجة، بس ملف ‎.db ما بيتفتحش على موبايل، والإدارة مش هتقرا جدول. والسؤال اللي الدرس الجاي بيبدأ بيه: طب الإدارة هتشوف الأرقام دي إزاي؟",
+          "The planning engineer looked at the database: Exports.db holds everything, but a .db file doesn't open on a phone, and management won't read a table. And the question the next lesson opens with: how will management see these figures?")],
+        answer: u("واجب الدرس: نزّل المثال التاني، وشغّل Prompt_1، وجرّب الوقفة بمسح الكويت من ملف البلاد في نسخة، وقارن صف واحد بعينك مع الـ PDF. لأن القاعدة دي هي اللي الصفحة الجاية هتتبني منها.", "This lesson's task: download the second example, run Prompt_1, test the stop by deleting Kuwait from the countries file in a copy, and compare one row by eye with the PDF — this database is what the next page is built from."),
+        idea: u("القاعدة للحساب… والإدارة محتاجة صورة.", "The database is for calculating… management needs a picture.")
+      }
+    ]
+  };
+  A.decks = (A.decks || []).concat([A.pdfStory]);
+})(window.ACADEMY = window.ACADEMY || {});
 
 /* data/page-story.js */
 "use strict";
@@ -20898,6 +21050,101 @@ pause
       <g ${an("pop", 1.1)}>${shield(q, 186, 1)}${txt(q, 196, ar() ? "؟" : "?", "t-acc", 20, b8)}</g>
       <g ${an("fade", 1.4)}>${txt(q, 246, tr("الدرس الجاي", "next lesson"), "t-acc", 12.5, b8)}</g>
       <g ${an("fade", 1.6)}>${txt(a, 244, tr("١٢ صف… محبوسين في ملف للقراية", "12 rows… locked in a file for reading"), "t-ink2", 11, b8)}</g>`;
+    },
+    /* ----- one PDF into a database (data/pdf-story.js) ----- */
+    pd_retype: () => {
+      const a = mx(126), b = mx(360), d = dirx();
+      return `<g ${an("rise", 0.05)}>${page(a, 120, 170, 170, "PDF", [130, 110, 130, 100, 130, 120, 110], 0.05, "f-s1 s-rose")}</g>
+      ${arrow(a + d * 90, 120, b - d * 90, 120, 0.4, "s-line2", "5 5")}<g ${an("fade", 0.5)}>${txt(240, 106, tr("بالإيد", "by hand"), "t-ink3", 11, b8)}</g>
+      <g ${an("rise", 0.6)}>${sheet(b, 120, 160, 120, "f-s1 s-line2", "Excel", 0.6)}</g>
+      <g ${an("rise", 1.0)}>${box(b, 222, 190, 46, "f-rose-soft s-rose")}${txt(b, 218, "1,136,000 → 1,163,000", "t-rose", 11, b8 + ltr)}${txt(b, 236, tr("وصف ناقص", "and a missing row"), "t-rose", 10.5, b8)}</g>
+      ${cap(tr("الأرقام موجودة… النظام كتبها", "the figures are there… the system wrote them"), 1.3, 290)}`;
+    },
+    pd_extract: () => {
+      const a = mx(110), m = 240, b = mx(370), d = dirx();
+      return `<g ${an("rise", 0.05)}>${page(a, 108, 130, 140, "PDF", [90, 70, 90, 80, 90], 0.05, "f-s1 s-rose")}${txt(a, 196, tr("للقراية", "for reading"), "t-rose", 11.5, b8)}</g>
+      ${arrow(a + d * 70, 108, m - d * 46, 108, 0.4)}
+      <g ${an("pop", 0.6)}>${box(m, 108, 84, 40, "f-acc s-acc")}${txt(m, 113, "Python", "t-white", 12, b8 + ltr)}</g>
+      ${arrow(m + d * 46, 108, b - d * 72, 108, 0.8)}
+      <g ${an("rise", 0.9)}>${grid(b, 108, 4, 5, 32, 22, "f-s1", 3, 0.9)}${txt(b, 196, tr("للحساب", "for calculating"), "t-mint", 11.5, b8)}</g>
+      ${pill(240, 244, 300, 34, "Exports.db: Exports + Countries", "f-mint-soft s-mint", "t-mint", 11.5, 1.2)}
+      ${cap(tr("الـ PDF يتقري… الجدول يتحسب", "a PDF is read… a table is calculated"), 1.5, 292)}`;
+    },
+    pd_text: () => {
+      const a = mx(130), b = mx(356);
+      return `<g ${an("rise", 0.05)}>${box(a, 104, 190, 120, "f-mint-soft s-mint")}${txt(a, 62, tr("PDF مكتوب", "a text PDF"), "t-mint", 12, b8)}<rect x="${a - 40}" y="84" width="80" height="22" rx="3" class="f-acc-soft"/>${txt(a, 100, "Kuwait", "t-acc", 13, b8 + ltr)}${txt(a, 136, tr("ظلّل ← انسخ ← اتنسخت", "select → copy → copied"), "t-ink2", 10.5, b8)}</g>${check(a, 188, 0.5)}
+      <g ${an("rise", 0.6)}>${box(b, 104, 190, 120, "f-s2 s-line2")}${txt(b, 62, tr("PDF ممسوح", "a scanned PDF"), "t-ink3", 12, b8)}<rect x="${b - 50}" y="78" width="100" height="56" rx="4" class="f-s3"/><path d="M${b - 46} 130 l26 -24 l18 14 l22 -22 l26 32z" class="f-s1"/></g>${check(b, 188, 0.9, false)}
+      <g ${an("fade", 1.1)}>${txt(b, 222, tr("صورة: محتاج أداة تانية", "an image: another tool"), "t-rose", 10.5, b8)}${txt(a, 222, tr("الكود يقدر يقراه", "code can read it"), "t-mint", 10.5, b8)}</g>
+      ${cap(tr("اتنسخت؟ يبقى نص", "it copied? then it's text"), 1.3, 280)}`;
+    },
+    pd_look: () => {
+      const L = ["Export Sales - July 2026", "Period: 2026-07-01 to 2026-07-31", "CountryCode  ModelCode  Qty  NetSales", "SA  M103  20  110,000", "...", "Total  470  4,168,000", "Page 1 of 1"];
+      return `${term(mx(200), 128, 340, 196, L, 0.05, 10.5, (i) => (i === 2 || i === 5 ? "t-white" : "t-crt"))}
+      ${[[2, tr("العناوين", "headers")], [5, tr("الإجمالي", "the total")], [6, tr("مش بيانات", "not data")]].map(([i, s], k) => `<g ${an("fade", 1.4 + k * 0.2)}>${txt(mx(426), 30 + 24 + i * 19.5 + 4, s, k === 2 ? "t-ink3" : "t-amber", 11, b8)}</g>`).join("")}
+      ${cap(tr("شوف الشكل… قبل ما تقرا", "see the shape… before you read"), 1.9, 256)}`;
+    },
+    pd_inside: () => {
+      return `${term(240, 66, 440, 64, ["1 0 0 1 40 643 Tm (KW) Tj", "1 0 0 1 524.28 643 Tm (385,000) Tj"], 0.05, 11)}
+      <g ${an("rise", 0.6)}><rect x="40" y="128" width="400" height="80" rx="6" class="f-s1 s-line2" stroke-width="2"/><line x1="40" y1="168" x2="440" y2="168" class="s-amber" stroke-width="1.5" stroke-dasharray="4 4"/>${txt(76, 172, "KW", "t-ink", 12, b8 + ltr)}${txt(184, 172, "M103", "t-ink", 12, b8 + ltr)}${txt(300, 172, "70", "t-ink", 12, b8 + ltr)}${txt(392, 172, "385,000", "t-ink", 12, b8 + ltr)}</g>
+      <g ${an("fade", 1.0)}>${txt(240, 226, tr("نفس y = نفس الصف · رتّب بـ x من الشمال لليمين", "same y = same row · order by x, left to right"), "t-amber", 11, b8)}</g>
+      ${pill(240, 258, 260, 30, "re + zlib", "f-mint-soft s-mint", "t-mint", 12, 1.3)}
+      ${cap(tr("الصف… هو كل اللي على نفس السطر", "a row… is all that sits on one line"), 1.5, 298)}`;
+    },
+    pd_rows: () => {
+      const R = [["Export Sales - July 2026", 0, 50, 34], ["CountryCode ModelCode Qty NetSales", 1, 92, 34], ["SA · AE · KW · JO  ×  M103 · M105 · M108", 2, 154, 76], ["Total  470  4,168,000", 1, 216, 34], ["Page 1 of 1", 0, 258, 34]];
+      return `${R.map(([s, k, y, h], i) => `<g ${an("rise", 0.05 + i * 0.18)}>${box(mx(200), y, 340, h, k === 2 ? "f-mint-soft s-mint" : k === 1 ? "f-amber-soft s-amber" : "f-s2 s-line2")}${txt(mx(200), k === 2 ? y - 6 : y + 4, s, k === 2 ? "t-mint" : k === 1 ? "t-amber" : "t-ink3", 10.5, b8 + ltr)}</g>`).join("")}
+      <g ${an("fade", 1.1)}>${txt(mx(200), 172, tr("١٢ صف = ٤ بلاد × ٣ موديلات", "12 rows = 4 countries × 3 models"), "t-mint", 11, b8)}</g>
+      <g ${an("fade", 1.3)}>${txt(mx(420), 96, tr("بداية", "start"), "t-amber", 11, b8)}${txt(mx(420), 220, tr("نهاية", "end"), "t-amber", 11, b8)}</g>
+      ${cap(tr("العلامات بتفضل… العدد بيتغيّر", "the signs stay… the count changes"), 1.5, 302)}`;
+    },
+    pd_numbers: () => {
+      const a = mx(130), b = mx(356);
+      return `<g ${an("rise", 0.05)}>${box(a, 90, 180, 70, "f-amber-soft s-amber")}${txt(a, 86, "\"1,183,000\"", "t-amber", 15, b8 + ltr)}${txt(a, 108, tr("نص للعين", "text for the eye"), "t-ink2", 10.5, bold)}</g>
+      ${arrow(a + dirx() * 94, 90, b - dirx() * 94, 90, 0.5)}<g ${an("fade", 0.6)}>${txt(240, 140, "replace(',', '')", "t-ink3", 10, bold + ltr)}</g>
+      <g ${an("rise", 0.7)}>${box(b, 90, 180, 70, "f-mint-soft s-mint")}${txt(b, 86, "1183000", "t-mint", 15, b8 + ltr)}${txt(b, 108, tr("رقم للحساب", "a number for maths"), "t-ink2", 10.5, bold)}</g>
+      <g ${an("rise", 1.0)}>${box(240, 196, 360, 56, "f-rose-soft s-rose")}${txt(240, 190, tr("من غير تحويل: يقرا 1 بس ويكمّل", "unconverted: reads just 1 and carries on"), "t-rose", 11, b8)}${txt(240, 210, tr("والجمع يطلع غلط من غير رسالة", "and the sum is wrong with no message"), "t-rose", 11, b8)}</g>
+      ${cap(tr("الفاصلة للعين… مش للحساب", "the comma is for the eye… not for maths"), 1.3, 268)}`;
+    },
+    pd_total: () => {
+      const a = mx(140), b = mx(356);
+      return `<g ${an("rise", 0.05)}>${box(a, 100, 200, 120, "f-s1 s-acc")}${txt(a, 60, tr("مجموع الـ ١٢ صف", "the 12 rows' sum"), "t-acc", 11.5, b8)}${txt(a, 98, "470", "t-ink", 16, b8 + ltr)}${txt(a, 126, "4,168,000", "t-ink", 16, b8 + ltr)}</g>
+      <g ${an("pop", 0.6)}>${txt(240 + dirx() * 8, 112, "=", "t-mint", 26, b8)}</g>
+      <g ${an("rise", 0.4)}>${box(b, 100, 170, 120, "f-amber-soft s-amber")}${txt(b, 60, tr("سطر Total في الـ PDF", "the PDF's Total line"), "t-amber", 11, b8)}${txt(b, 98, "470", "t-ink", 16, b8 + ltr)}${txt(b, 126, "4,168,000", "t-ink", 16, b8 + ltr)}</g>
+      ${check(240 + dirx() * 8, 150, 0.9)}
+      ${term(240, 214, 420, 40, ["12 rows, 470 sets, 4,168,000 EGP: the same as the Total line"], 1.1, 10)}
+      ${cap(tr("الإجمالي المطبوع… مراجعة جاهزة", "a printed total… a ready check"), 1.4, 266)}`;
+    },
+    pd_db: () => {
+      const R = [["Kuwait", 1183], ["Saudi Arabia", 1136], ["Jordan", 1091], ["UAE", 758]];
+      return `<g ${an("rise", 0.05)}>${box(mx(120), 72, 160, 54, "f-s1 s-acc")}${txt(mx(120), 68, "Exports", "t-acc", 12, b8 + ltr)}${txt(mx(120), 86, "12 · 2026-07 · SourceFile", "t-ink3", 9.5, bold + ltr)}${box(mx(360), 72, 160, 54, "f-mint-soft s-mint")}${txt(mx(360), 68, "Countries", "t-mint", 12, b8 + ltr)}${txt(mx(360), 86, tr("٥ بلاد", "5 countries"), "t-ink3", 10, bold)}</g>
+      <g ${an("pop", 0.5)}>${pill(240, 72, 56, 28, "JOIN", "f-amber s-amber", "t-white", 11, 0.5)}</g>
+      ${R.map(([c, v], i) => `<g ${an("fade", 0.7 + i * 0.12)}>${txt(mx(110), 146 + i * 30, c, "t-ink", 11, b8 + ltr)}</g>${grow(180, 134 + i * 30, v * 0.17, 18, i ? "f-acc-soft" : "f-acc", 0.7 + i * 0.12)}<g ${an("fade", 0.9 + i * 0.12)}>${txt(mx(180 + v * 0.17 + 36), 148 + i * 30, digits((v * 1000).toLocaleString("en-US")), "t-ink2", 10.5, b8)}</g>`).join("")}
+      ${cap(tr("كل صف… عارف جه منين", "every row… knows where it came from"), 1.4, 280)}`;
+    },
+    pd_stop: () => {
+      const a = mx(124), b = mx(356);
+      return `<g ${an("rise", 0.05)}>${box(a, 96, 170, 120, "f-s1 s-line2")}${txt(a, 52, "Countries.csv (copy)", "t-ink2", 10.5, b8 + ltr)}${["EG Egypt", "SA Saudi Arabia", "KW Kuwait", "AE UAE", "JO Jordan"].map((s, i) => txt(a, 76 + i * 18, s, i === 2 ? "t-rose" : "t-ink", 10.5, b8 + ltr)).join("")}</g>
+      <path ${an("draw", 0.5, "s-rose")} pathLength="1" d="M${a - 66} 108 L${a + 66} 108" stroke-width="3" fill="none"/>
+      ${term(b, 96, 220, 92, ["read PDF: 12 rows", "Total line: OK", "STOPPED: codes missing", "from Countries.csv: KW"], 0.7, 10.5, (i) => (i >= 2 ? "t-white" : "t-crt"))}
+      <g ${an("fade", 1.4)}>${txt(b, 162, tr("ولا صف اتكتب في القاعدة", "not one row written"), "t-mint", 11, b8)}</g>
+      ${pill(240, 222, 360, 34, tr("الـ JOIN بيسكت… الأداة لازم تتكلم", "a JOIN stays silent… the tool must speak"), "f-amber-soft s-amber", "t-amber", 11.5, 1.6)}
+      ${cap(tr("كود ناقص من الماستر؟ وقفة قبل الكتابة", "a code missing from the master? stop before writing"), 1.8, 272)}`;
+    },
+    pd_better: () => {
+      const X = rowX(3, 136, 14), S = [[tr("ملف / API", "file / API"), "CSV · Excel", "f-mint s-mint", "t-white"], [tr("وورد بـ COM", "Word via COM"), tr("من غير Python", "no Python"), "f-acc-soft s-acc", "t-acc"], [tr("قراية PDF", "reading PDF"), "re + zlib", "f-amber-soft s-amber", "t-amber"]];
+      return `<g ${an("fade", 0.05)}>${txt(240, 44, tr("ترتيب الكتاب: الأثبت الأول", "the book's order: most stable first"), "t-ink2", 12, b8)}</g>
+      ${S.map(([h, s, cls, tc], i) => `<g ${an("rise", 0.2 + i * 0.25)}>${box(X(i), 118 + i * 14, 136, 80, cls)}${txt(X(i), 112 + i * 14, h, tc, 12, b8)}${txt(X(i), 134 + i * 14, s, tc === "t-white" ? "t-white" : "t-ink2", 10.5, b8)}${txt(X(i), 68 + i * 14, digits(i + 1), "t-ink3", 14, b8)}</g>`).join("")}
+      ${pill(240, 236, 340, 34, tr("اسأل الأول: النظام يطلّع CSV؟", "ask first: can the system export CSV?"), "f-s1 s-line2", "t-ink", 11.5, 1.1)}
+      ${cap(tr("الـ PDF آخر حل… مش أول حل", "the PDF is the last resort… not the first"), 1.4, 286)}`;
+    },
+    pd_cliff: () => {
+      const a = mx(140), q = mx(396);
+      return `<g ${an("rise", 0.05)}>${fileIcon(a - dirx() * 50, 90, "s-mint", 0.05)}${txt(a - dirx() * 50, 128, "Exports.db", "t-mint", 11, b8 + ltr)}</g>
+      <g ${an("rise", 0.3)}><rect x="${a + dirx() * 40 - 24}" y="56" width="48" height="84" rx="8" class="f-s1 s-ink2" stroke-width="2.5"/><rect x="${a + dirx() * 40 - 18}" y="66" width="36" height="58" rx="2" class="f-s2"/>${txt(a + dirx() * 40, 100, "?", "t-rose", 18, b8)}</g>
+      <g ${an("fade", 0.6)}>${txt(a, 168, tr("‎.db ما بيتفتحش على موبايل", ".db won't open on a phone"), "t-rose", 11, b8)}</g>
+      <g ${an("rise", 0.8)}>${box(a, 220, 220, 44, "f-amber-soft s-amber")}${txt(a, 216, tr("اجتماع بكرة · نت ضعيف", "meeting tomorrow · weak internet"), "t-amber", 11, b8)}${txt(a, 232, tr("ومن غير تثبيت", "and no installs"), "t-amber", 10.5, b8)}</g>
+      <g ${an("pop", 1.2)}>${shield(q, 104, 1.1)}${txt(q, 120, ar() ? "؟" : "?", "t-acc", 22, b8)}</g>
+      <g ${an("fade", 1.5)}>${txt(q, 172, tr("الدرس الجاي", "next lesson"), "t-acc", 12.5, b8)}</g>`;
     },
   });
   /* ---------- end of unit 4 ---------- */

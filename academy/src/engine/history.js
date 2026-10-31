@@ -3408,6 +3408,101 @@
       <g ${an("fade", 1.4)}>${txt(q, 246, tr("الدرس الجاي", "next lesson"), "t-acc", 12.5, b8)}</g>
       <g ${an("fade", 1.6)}>${txt(a, 244, tr("١٢ صف… محبوسين في ملف للقراية", "12 rows… locked in a file for reading"), "t-ink2", 11, b8)}</g>`;
     },
+    /* ----- one PDF into a database (data/pdf-story.js) ----- */
+    pd_retype: () => {
+      const a = mx(126), b = mx(360), d = dirx();
+      return `<g ${an("rise", 0.05)}>${page(a, 120, 170, 170, "PDF", [130, 110, 130, 100, 130, 120, 110], 0.05, "f-s1 s-rose")}</g>
+      ${arrow(a + d * 90, 120, b - d * 90, 120, 0.4, "s-line2", "5 5")}<g ${an("fade", 0.5)}>${txt(240, 106, tr("بالإيد", "by hand"), "t-ink3", 11, b8)}</g>
+      <g ${an("rise", 0.6)}>${sheet(b, 120, 160, 120, "f-s1 s-line2", "Excel", 0.6)}</g>
+      <g ${an("rise", 1.0)}>${box(b, 222, 190, 46, "f-rose-soft s-rose")}${txt(b, 218, "1,136,000 → 1,163,000", "t-rose", 11, b8 + ltr)}${txt(b, 236, tr("وصف ناقص", "and a missing row"), "t-rose", 10.5, b8)}</g>
+      ${cap(tr("الأرقام موجودة… النظام كتبها", "the figures are there… the system wrote them"), 1.3, 290)}`;
+    },
+    pd_extract: () => {
+      const a = mx(110), m = 240, b = mx(370), d = dirx();
+      return `<g ${an("rise", 0.05)}>${page(a, 108, 130, 140, "PDF", [90, 70, 90, 80, 90], 0.05, "f-s1 s-rose")}${txt(a, 196, tr("للقراية", "for reading"), "t-rose", 11.5, b8)}</g>
+      ${arrow(a + d * 70, 108, m - d * 46, 108, 0.4)}
+      <g ${an("pop", 0.6)}>${box(m, 108, 84, 40, "f-acc s-acc")}${txt(m, 113, "Python", "t-white", 12, b8 + ltr)}</g>
+      ${arrow(m + d * 46, 108, b - d * 72, 108, 0.8)}
+      <g ${an("rise", 0.9)}>${grid(b, 108, 4, 5, 32, 22, "f-s1", 3, 0.9)}${txt(b, 196, tr("للحساب", "for calculating"), "t-mint", 11.5, b8)}</g>
+      ${pill(240, 244, 300, 34, "Exports.db: Exports + Countries", "f-mint-soft s-mint", "t-mint", 11.5, 1.2)}
+      ${cap(tr("الـ PDF يتقري… الجدول يتحسب", "a PDF is read… a table is calculated"), 1.5, 292)}`;
+    },
+    pd_text: () => {
+      const a = mx(130), b = mx(356);
+      return `<g ${an("rise", 0.05)}>${box(a, 104, 190, 120, "f-mint-soft s-mint")}${txt(a, 62, tr("PDF مكتوب", "a text PDF"), "t-mint", 12, b8)}<rect x="${a - 40}" y="84" width="80" height="22" rx="3" class="f-acc-soft"/>${txt(a, 100, "Kuwait", "t-acc", 13, b8 + ltr)}${txt(a, 136, tr("ظلّل ← انسخ ← اتنسخت", "select → copy → copied"), "t-ink2", 10.5, b8)}</g>${check(a, 188, 0.5)}
+      <g ${an("rise", 0.6)}>${box(b, 104, 190, 120, "f-s2 s-line2")}${txt(b, 62, tr("PDF ممسوح", "a scanned PDF"), "t-ink3", 12, b8)}<rect x="${b - 50}" y="78" width="100" height="56" rx="4" class="f-s3"/><path d="M${b - 46} 130 l26 -24 l18 14 l22 -22 l26 32z" class="f-s1"/></g>${check(b, 188, 0.9, false)}
+      <g ${an("fade", 1.1)}>${txt(b, 222, tr("صورة: محتاج أداة تانية", "an image: another tool"), "t-rose", 10.5, b8)}${txt(a, 222, tr("الكود يقدر يقراه", "code can read it"), "t-mint", 10.5, b8)}</g>
+      ${cap(tr("اتنسخت؟ يبقى نص", "it copied? then it's text"), 1.3, 280)}`;
+    },
+    pd_look: () => {
+      const L = ["Export Sales - July 2026", "Period: 2026-07-01 to 2026-07-31", "CountryCode  ModelCode  Qty  NetSales", "SA  M103  20  110,000", "...", "Total  470  4,168,000", "Page 1 of 1"];
+      return `${term(mx(200), 128, 340, 196, L, 0.05, 10.5, (i) => (i === 2 || i === 5 ? "t-white" : "t-crt"))}
+      ${[[2, tr("العناوين", "headers")], [5, tr("الإجمالي", "the total")], [6, tr("مش بيانات", "not data")]].map(([i, s], k) => `<g ${an("fade", 1.4 + k * 0.2)}>${txt(mx(426), 30 + 24 + i * 19.5 + 4, s, k === 2 ? "t-ink3" : "t-amber", 11, b8)}</g>`).join("")}
+      ${cap(tr("شوف الشكل… قبل ما تقرا", "see the shape… before you read"), 1.9, 256)}`;
+    },
+    pd_inside: () => {
+      return `${term(240, 66, 440, 64, ["1 0 0 1 40 643 Tm (KW) Tj", "1 0 0 1 524.28 643 Tm (385,000) Tj"], 0.05, 11)}
+      <g ${an("rise", 0.6)}><rect x="40" y="128" width="400" height="80" rx="6" class="f-s1 s-line2" stroke-width="2"/><line x1="40" y1="168" x2="440" y2="168" class="s-amber" stroke-width="1.5" stroke-dasharray="4 4"/>${txt(76, 172, "KW", "t-ink", 12, b8 + ltr)}${txt(184, 172, "M103", "t-ink", 12, b8 + ltr)}${txt(300, 172, "70", "t-ink", 12, b8 + ltr)}${txt(392, 172, "385,000", "t-ink", 12, b8 + ltr)}</g>
+      <g ${an("fade", 1.0)}>${txt(240, 226, tr("نفس y = نفس الصف · رتّب بـ x من الشمال لليمين", "same y = same row · order by x, left to right"), "t-amber", 11, b8)}</g>
+      ${pill(240, 258, 260, 30, "re + zlib", "f-mint-soft s-mint", "t-mint", 12, 1.3)}
+      ${cap(tr("الصف… هو كل اللي على نفس السطر", "a row… is all that sits on one line"), 1.5, 298)}`;
+    },
+    pd_rows: () => {
+      const R = [["Export Sales - July 2026", 0, 50, 34], ["CountryCode ModelCode Qty NetSales", 1, 92, 34], ["SA · AE · KW · JO  ×  M103 · M105 · M108", 2, 154, 76], ["Total  470  4,168,000", 1, 216, 34], ["Page 1 of 1", 0, 258, 34]];
+      return `${R.map(([s, k, y, h], i) => `<g ${an("rise", 0.05 + i * 0.18)}>${box(mx(200), y, 340, h, k === 2 ? "f-mint-soft s-mint" : k === 1 ? "f-amber-soft s-amber" : "f-s2 s-line2")}${txt(mx(200), k === 2 ? y - 6 : y + 4, s, k === 2 ? "t-mint" : k === 1 ? "t-amber" : "t-ink3", 10.5, b8 + ltr)}</g>`).join("")}
+      <g ${an("fade", 1.1)}>${txt(mx(200), 172, tr("١٢ صف = ٤ بلاد × ٣ موديلات", "12 rows = 4 countries × 3 models"), "t-mint", 11, b8)}</g>
+      <g ${an("fade", 1.3)}>${txt(mx(420), 96, tr("بداية", "start"), "t-amber", 11, b8)}${txt(mx(420), 220, tr("نهاية", "end"), "t-amber", 11, b8)}</g>
+      ${cap(tr("العلامات بتفضل… العدد بيتغيّر", "the signs stay… the count changes"), 1.5, 302)}`;
+    },
+    pd_numbers: () => {
+      const a = mx(130), b = mx(356);
+      return `<g ${an("rise", 0.05)}>${box(a, 90, 180, 70, "f-amber-soft s-amber")}${txt(a, 86, "\"1,183,000\"", "t-amber", 15, b8 + ltr)}${txt(a, 108, tr("نص للعين", "text for the eye"), "t-ink2", 10.5, bold)}</g>
+      ${arrow(a + dirx() * 94, 90, b - dirx() * 94, 90, 0.5)}<g ${an("fade", 0.6)}>${txt(240, 140, "replace(',', '')", "t-ink3", 10, bold + ltr)}</g>
+      <g ${an("rise", 0.7)}>${box(b, 90, 180, 70, "f-mint-soft s-mint")}${txt(b, 86, "1183000", "t-mint", 15, b8 + ltr)}${txt(b, 108, tr("رقم للحساب", "a number for maths"), "t-ink2", 10.5, bold)}</g>
+      <g ${an("rise", 1.0)}>${box(240, 196, 360, 56, "f-rose-soft s-rose")}${txt(240, 190, tr("من غير تحويل: يقرا 1 بس ويكمّل", "unconverted: reads just 1 and carries on"), "t-rose", 11, b8)}${txt(240, 210, tr("والجمع يطلع غلط من غير رسالة", "and the sum is wrong with no message"), "t-rose", 11, b8)}</g>
+      ${cap(tr("الفاصلة للعين… مش للحساب", "the comma is for the eye… not for maths"), 1.3, 268)}`;
+    },
+    pd_total: () => {
+      const a = mx(140), b = mx(356);
+      return `<g ${an("rise", 0.05)}>${box(a, 100, 200, 120, "f-s1 s-acc")}${txt(a, 60, tr("مجموع الـ ١٢ صف", "the 12 rows' sum"), "t-acc", 11.5, b8)}${txt(a, 98, "470", "t-ink", 16, b8 + ltr)}${txt(a, 126, "4,168,000", "t-ink", 16, b8 + ltr)}</g>
+      <g ${an("pop", 0.6)}>${txt(240 + dirx() * 8, 112, "=", "t-mint", 26, b8)}</g>
+      <g ${an("rise", 0.4)}>${box(b, 100, 170, 120, "f-amber-soft s-amber")}${txt(b, 60, tr("سطر Total في الـ PDF", "the PDF's Total line"), "t-amber", 11, b8)}${txt(b, 98, "470", "t-ink", 16, b8 + ltr)}${txt(b, 126, "4,168,000", "t-ink", 16, b8 + ltr)}</g>
+      ${check(240 + dirx() * 8, 150, 0.9)}
+      ${term(240, 214, 420, 40, ["12 rows, 470 sets, 4,168,000 EGP: the same as the Total line"], 1.1, 10)}
+      ${cap(tr("الإجمالي المطبوع… مراجعة جاهزة", "a printed total… a ready check"), 1.4, 266)}`;
+    },
+    pd_db: () => {
+      const R = [["Kuwait", 1183], ["Saudi Arabia", 1136], ["Jordan", 1091], ["UAE", 758]];
+      return `<g ${an("rise", 0.05)}>${box(mx(120), 72, 160, 54, "f-s1 s-acc")}${txt(mx(120), 68, "Exports", "t-acc", 12, b8 + ltr)}${txt(mx(120), 86, "12 · 2026-07 · SourceFile", "t-ink3", 9.5, bold + ltr)}${box(mx(360), 72, 160, 54, "f-mint-soft s-mint")}${txt(mx(360), 68, "Countries", "t-mint", 12, b8 + ltr)}${txt(mx(360), 86, tr("٥ بلاد", "5 countries"), "t-ink3", 10, bold)}</g>
+      <g ${an("pop", 0.5)}>${pill(240, 72, 56, 28, "JOIN", "f-amber s-amber", "t-white", 11, 0.5)}</g>
+      ${R.map(([c, v], i) => `<g ${an("fade", 0.7 + i * 0.12)}>${txt(mx(110), 146 + i * 30, c, "t-ink", 11, b8 + ltr)}</g>${grow(180, 134 + i * 30, v * 0.17, 18, i ? "f-acc-soft" : "f-acc", 0.7 + i * 0.12)}<g ${an("fade", 0.9 + i * 0.12)}>${txt(mx(180 + v * 0.17 + 36), 148 + i * 30, digits((v * 1000).toLocaleString("en-US")), "t-ink2", 10.5, b8)}</g>`).join("")}
+      ${cap(tr("كل صف… عارف جه منين", "every row… knows where it came from"), 1.4, 280)}`;
+    },
+    pd_stop: () => {
+      const a = mx(124), b = mx(356);
+      return `<g ${an("rise", 0.05)}>${box(a, 96, 170, 120, "f-s1 s-line2")}${txt(a, 52, "Countries.csv (copy)", "t-ink2", 10.5, b8 + ltr)}${["EG Egypt", "SA Saudi Arabia", "KW Kuwait", "AE UAE", "JO Jordan"].map((s, i) => txt(a, 76 + i * 18, s, i === 2 ? "t-rose" : "t-ink", 10.5, b8 + ltr)).join("")}</g>
+      <path ${an("draw", 0.5, "s-rose")} pathLength="1" d="M${a - 66} 108 L${a + 66} 108" stroke-width="3" fill="none"/>
+      ${term(b, 96, 220, 92, ["read PDF: 12 rows", "Total line: OK", "STOPPED: codes missing", "from Countries.csv: KW"], 0.7, 10.5, (i) => (i >= 2 ? "t-white" : "t-crt"))}
+      <g ${an("fade", 1.4)}>${txt(b, 162, tr("ولا صف اتكتب في القاعدة", "not one row written"), "t-mint", 11, b8)}</g>
+      ${pill(240, 222, 360, 34, tr("الـ JOIN بيسكت… الأداة لازم تتكلم", "a JOIN stays silent… the tool must speak"), "f-amber-soft s-amber", "t-amber", 11.5, 1.6)}
+      ${cap(tr("كود ناقص من الماستر؟ وقفة قبل الكتابة", "a code missing from the master? stop before writing"), 1.8, 272)}`;
+    },
+    pd_better: () => {
+      const X = rowX(3, 136, 14), S = [[tr("ملف / API", "file / API"), "CSV · Excel", "f-mint s-mint", "t-white"], [tr("وورد بـ COM", "Word via COM"), tr("من غير Python", "no Python"), "f-acc-soft s-acc", "t-acc"], [tr("قراية PDF", "reading PDF"), "re + zlib", "f-amber-soft s-amber", "t-amber"]];
+      return `<g ${an("fade", 0.05)}>${txt(240, 44, tr("ترتيب الكتاب: الأثبت الأول", "the book's order: most stable first"), "t-ink2", 12, b8)}</g>
+      ${S.map(([h, s, cls, tc], i) => `<g ${an("rise", 0.2 + i * 0.25)}>${box(X(i), 118 + i * 14, 136, 80, cls)}${txt(X(i), 112 + i * 14, h, tc, 12, b8)}${txt(X(i), 134 + i * 14, s, tc === "t-white" ? "t-white" : "t-ink2", 10.5, b8)}${txt(X(i), 68 + i * 14, digits(i + 1), "t-ink3", 14, b8)}</g>`).join("")}
+      ${pill(240, 236, 340, 34, tr("اسأل الأول: النظام يطلّع CSV؟", "ask first: can the system export CSV?"), "f-s1 s-line2", "t-ink", 11.5, 1.1)}
+      ${cap(tr("الـ PDF آخر حل… مش أول حل", "the PDF is the last resort… not the first"), 1.4, 286)}`;
+    },
+    pd_cliff: () => {
+      const a = mx(140), q = mx(396);
+      return `<g ${an("rise", 0.05)}>${fileIcon(a - dirx() * 50, 90, "s-mint", 0.05)}${txt(a - dirx() * 50, 128, "Exports.db", "t-mint", 11, b8 + ltr)}</g>
+      <g ${an("rise", 0.3)}><rect x="${a + dirx() * 40 - 24}" y="56" width="48" height="84" rx="8" class="f-s1 s-ink2" stroke-width="2.5"/><rect x="${a + dirx() * 40 - 18}" y="66" width="36" height="58" rx="2" class="f-s2"/>${txt(a + dirx() * 40, 100, "?", "t-rose", 18, b8)}</g>
+      <g ${an("fade", 0.6)}>${txt(a, 168, tr("‎.db ما بيتفتحش على موبايل", ".db won't open on a phone"), "t-rose", 11, b8)}</g>
+      <g ${an("rise", 0.8)}>${box(a, 220, 220, 44, "f-amber-soft s-amber")}${txt(a, 216, tr("اجتماع بكرة · نت ضعيف", "meeting tomorrow · weak internet"), "t-amber", 11, b8)}${txt(a, 232, tr("ومن غير تثبيت", "and no installs"), "t-amber", 10.5, b8)}</g>
+      <g ${an("pop", 1.2)}>${shield(q, 104, 1.1)}${txt(q, 120, ar() ? "؟" : "?", "t-acc", 22, b8)}</g>
+      <g ${an("fade", 1.5)}>${txt(q, 172, tr("الدرس الجاي", "next lesson"), "t-acc", 12.5, b8)}</g>`;
+    },
   });
   /* ---------- end of unit 4 ---------- */
 
