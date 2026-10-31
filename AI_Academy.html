@@ -12524,7 +12524,159 @@ Start by presenting the "Context to fill in" block and your clarifying questions
 })(window.ACADEMY = window.ACADEMY || {});
 
 /* data/page-story.js */
+/* An HTML page for management — the story deck of lesson k8 (unit 4), on step 2 of Unit4_Example_2_PDF_to_HTML.
+   The planning engineer at the second plant carries every slide with one question: «إزاي الأرقام تتعرض على الإدارة
+   في صفحة تتفتح في أي مكان؟». The deck goes from the database to one offline HTML file: what HTML is, figures read with
+   SQL, the check before design, three big figures, SVG charts with no library, no outside links, html.escape, the
+   Present button, the source line, and how far one file can go; it ends on rules scattered across many Prompts, which
+   opens k9. Figures come from data/easy-projects.js. Drawings are the pg_* entries in engine/history.js. */
 "use strict";
+(function (A) {
+  const u = (ar, en) => ({ ar, en });
+  A.pageStory = {
+    id: "page", lesson: "k8",
+    kicker: u("صفحة للإدارة · الحكاية في ٨ دقايق", "A page for management · the story in 8 minutes"),
+    title: u("صفحة واحدة… بتتفتح في أي مكان", "One page… that opens anywhere"),
+    lead: u("فاكر اجتماع بكرة، والموبايل، والنت الضعيف؟ في الحكاية دي مهندسة التخطيط بتحوّل قاعدة البيانات لملف HTML واحد: أرقام ورسوم وعرض، من غير نت ومن غير تثبيت، زي الكورس اللي إنت فيه بالظبط.",
+      "Remember tomorrow's meeting, the phone and the weak internet? In this story the planning engineer turns the database into one HTML file: figures, charts and a presentation, with no internet and no install, exactly like the course you are in."),
+    answerLabel: u("القاعدة، وليه؟", "The rule, and why"),
+    ideaLabel: u("الفكرة في جملة", "The idea in one line"),
+    question: u("إزاي الأرقام تتعرض على الإدارة في صفحة تتفتح في أي مكان؟", "How are the figures shown to management in a page that opens anywhere?"),
+    finalQuestion: u("طب القواعد دي كلها… هتفتكرها كل مرة؟", "And all these rules… will you remember them every time?"),
+    note: u("الصفحة بالإنجليزي زي ملفات المصنع؛ ونفس الطريقة بتشتغل بالعربي. الأرقام من المثال التاني، وكلها توضيحية.", "The page is in English like the plant's files; the same method works in Arabic. The figures come from the second example; all are illustrative."),
+    ui: {
+      prev: u("اللي فات", "Previous"), next: u("اللي بعده", "Next"),
+      play: u("شغّل الحكاية", "Play the story"), pause: u("وقّف", "Pause"), replay: u("من الأول", "From the start"),
+      skip: u("تخطّى للدرس", "Skip to the lesson"), start: u("نكمّل الدرس", "Continue the lesson"),
+      slideOf: u("{n} من {t}", "{n} of {t}"), timeline: u("خطوات الحكاية", "Story steps"),
+      deck: u("صفحة للإدارة، في شرائح", "A page for management, in slides"), slide: u("شريحة", "slide"),
+      keys: u("استخدم الأسهم أو اسحب على الشاشة", "Use the arrow keys or swipe")
+    },
+    slides: [
+      {
+        id: "meeting", art: "pg_meeting", year: u("الموقف", "Scene"), mark: u("٠١", "01"), era: u("اجتماع بكرة", "Tomorrow's meeting"),
+        title: u("موبايل، وشاشة قاعة، ونت ضعيف", "A phone, a room screen, and weak internet"),
+        story: [u("المدير عايز يعرض أرقام التصدير بكرة: على الموبايل في الطريق، وعلى شاشة القاعة في الاجتماع. باوربوينت محتاج برنامج، وإكسل صعب يتقري على موبايل، ولوحة على النت محتاجة نت وصلاحيات وناس من الـ IT.",
+          "The manager wants to present the export figures tomorrow: on his phone on the way, and on the room's screen in the meeting. PowerPoint needs a program, Excel is hard to read on a phone, and an online dashboard needs internet, permissions and people from IT."),
+        u("الزميل ضحك: «إنتي فاتحة الحل دلوقتي: الكورس ده نفسه ملف HTML واحد، بيتفتح من غير نت على أي جهاز». والسؤال اللي ماشي معانا: إزاي الأرقام تتعرض على الإدارة في صفحة تتفتح في أي مكان؟",
+          "The colleague laughed: “You have the answer open right now: this course is itself one HTML file that opens without internet on any device.” The question we carry: how are the figures shown to management in a page that opens anywhere?")],
+        answer: u("قبل ما تختار شكل التقرير، اسأل: هيتفتح فين، وعلى إيه، ومن غير إيه. لأن أحلى تقرير ما ينفعش لو ما اتفتحش عند اللي محتاجه.", "Before choosing a report's form, ask: where will it open, on what, and without what — the finest report is useless if it won't open for the person who needs it."),
+        idea: u("التقرير اللي ما بيتفتحش… مش موجود.", "A report that won't open… doesn't exist.")
+      },
+      {
+        id: "html", art: "pg_html", year: u("HTML", "HTML"), mark: u("٠٢", "02"), era: u("ملف واحد", "One file"),
+        title: u("HTML: هيكل، وشكل، وحركة… في ملف واحد", "HTML: structure, look and movement… in one file"),
+        story: [u("«HTML هو الهيكل: عنوان، وأرقام، وجدول. وCSS هو الشكل: الألوان والمسافات. وJavaScript هو الحركة: زرار يغيّر حاجة. الكتاب بيشبّهم بالخرسانة والتشطيب والكهربا. والتلاتة ممكن يتحطوا جوّه ملف واحد».",
+          "“HTML is the structure: a title, figures, a table. CSS is the look: colours and spacing. JavaScript is the movement: a button that changes something. The book compares them to concrete, finishing and wiring. All three can sit inside one file.”"),
+        u("«والملف ده بيتبعت في إيميل زي PDF، وبيتفتح في أي متصفح: كمبيوتر، أو موبايل، أو شاشة. بس على عكس الـ PDF، بيتحرك ويتعرض». والأحلى: Python النقي يقدر يكتبه سطر سطر، من غير أي باكدج.",
+          "“And that file is e-mailed like a PDF and opens in any browser: computer, phone or screen. But unlike a PDF, it moves and presents.” Better still: pure Python can write it line by line, with no package.")],
+        answer: u("لتقرير بيتبعت ويتعرض، فكّر في ملف HTML واحد. لأنه بيتفتح في أي متصفح من غير برنامج، ويقدر يبقى صفحة وعرض في نفس الوقت.", "For a report to be sent and presented, think of one HTML file — it opens in any browser with no program, and can be both a page and a presentation."),
+        idea: u("ملف واحد… صفحة وعرض.", "One file… a page and a presentation.")
+      },
+      {
+        id: "data", art: "pg_data", year: u("الأرقام", "Figures"), mark: u("٠٣", "03"), era: u("من القاعدة", "From the database"),
+        title: u("ولا رقم في الصفحة مكتوب بإيد", "Not one figure on the page typed by hand"),
+        story: [u("لصقت Prompt_2. السكريبت build_report.py بدأ يسأل القاعدة بـ SQL: الإجمالي، والبلاد بـ JOIN على Countries، والموديلات. كل رقم هيظهر في الصفحة جاي من جملة SQL، مش من حد كتبه.",
+          "She pasted Prompt_2. The script build_report.py began by asking the database in SQL: the total, the countries with a JOIN on Countries, and the models. Every figure to appear on the page comes from a SQL sentence, not from someone typing it."),
+        u("«ليه مهم؟» «علشان الشهر الجاي، لما ملف أغسطس ييجي، تشغّلي الخطوتين، والصفحة تطلع بأرقام أغسطس لوحدها. لو رقم واحد مكتوب بإيد، هيفضل رقم يوليو وانتي مش واخدة بالك».",
+          "“Why does it matter?” “Because next month, when August's file arrives, you run both steps and the page comes out with August's figures by itself. If one figure were typed by hand, it would stay July's without your noticing.”")],
+        answer: u("كل رقم في الصفحة لازم ييجي من القاعدة بـ SQL، مش مكتوب. لأن الرقم المكتوب بإيد بيفضل زي ما هو لما البيانات تتغيّر.", "Every figure on the page must come from the database by SQL, not typed — a hand-typed figure stays the same when the data changes."),
+        idea: u("الصفحة بتقرا… مش بتحفظ.", "The page reads… it doesn't remember.")
+      },
+      {
+        id: "check", art: "pg_check", year: u("المراجعة", "The check"), mark: u("٠٤", "04"), era: u("قبل الشكل", "Before the look"),
+        title: u("المراجعة قبل الألوان", "The check before the colours"),
+        story: [u("قبل ما يكتب سطر HTML واحد، السكريبت راجع: مجموع البلاد = الإجمالي؟ ٤٬١٦٨٬٠٠٠ = ٤٬١٦٨٬٠٠٠. مجموع الموديلات = الإجمالي؟ نفس الرقم. لو أي واحد اختلف، كان هيقف ويكتب السبب في السجل.",
+          "Before writing a single HTML line, the script checked: does the countries' sum equal the total? 4,168,000 = 4,168,000. Does the models' sum equal the total? The same figure. Had either differed, it would have stopped and logged the reason."),
+        u("«الكتاب بيقول: البيانات الأول، وبعدين صحة الأرقام، وبعدين العرض، وبعدين التجميل. صفحة حلوة برقم غلط أخطر من جدول وحش برقم صح، لأن الشكل الحلو بيقنع».",
+          "“The book says: the data first, then the figures' accuracy, then the presentation, then the polish. A beautiful page with a wrong figure is more dangerous than an ugly table with a right one, because a beautiful look convinces.”")],
+        answer: u("خلّي الأداة تراجع إن الأجزاء بتساوي الإجمالي قبل ما ترسم أي حاجة. لأن الشكل الحلو بيخلّي الرقم الغلط يبان مقنع.", "Have the tool check the parts add up to the total before drawing anything — a beautiful look makes a wrong figure seem convincing."),
+        idea: u("الشكل الحلو… بيقنع حتى لو غلط.", "A beautiful look… convinces even when wrong.")
+      },
+      {
+        id: "kpis", art: "pg_kpis", year: u("٣ أرقام", "3 figures"), mark: u("٠٥", "05"), era: u("أول ٣٠ ثانية", "The first 30 seconds"),
+        title: u("فوق: ٣ أرقام بس", "On top: just 3 figures"),
+        story: [u("أول حاجة في الصفحة: ٣ كروت. ٤٬١٦٨٬٠٠٠ جنيه صافي مبيعات. ٤٧٠ جهاز. والكويت أعلى بلد بـ ٢٨٪. المدير يفتح الصفحة، وفي تلات ثواني يعرف الشهر كان عامل إزاي.",
+          "The first thing on the page: 3 cards. EGP 4,168,000 net sales. 470 sets. And Kuwait the top country with 28%. The manager opens the page and in three seconds knows how the month went."),
+        u("«ليه مش عشرة؟» «الكتاب بيقول: الرسالة الأساسية لازم تتفهم في أول ٣٠ ثانية. عشرة أرقام فوق بعض محدش هيقراهم. التفاصيل تحت، للي عايز يتعمق».",
+          "“Why not ten?” “The book says: the main message must be understood in the first 30 seconds. Ten figures stacked up, nobody reads. The details go below, for whoever wants depth.”")],
+        answer: u("حط فوق الصفحة ٣ أرقام بس، أهمهم الأول. لأن المدير بيقرر يكمّل قراية ولا لأ من أول نظرة.", "Put just 3 figures at the top of the page, the most important first — the manager decides whether to read on at first glance."),
+        idea: u("٣ أرقام… في ٣ ثواني.", "3 figures… in 3 seconds.")
+      },
+      {
+        id: "svg", art: "pg_svg", year: u("الرسوم", "Charts"), mark: u("٠٦", "06"), era: u("SVG", "SVG"),
+        title: u("رسم من غير مكتبة رسوم", "A chart with no chart library"),
+        story: [u("الطبيعي إن الرسوم تيجي من مكتبة زي Plotly أو Chart.js. بس دي باكدج، أو ملف جاي من النت. فاكرة خريطة البدائل؟ plotly ← رسم SVG مكتوب نص. السكريبت كتب لكل بلد سطر: مستطيل عرضه على قد مبيعاتها، وجنبه الرقم.",
+          "Charts normally come from a library like Plotly or Chart.js. But that's a package, or a file from the internet. Remember the replacements map? plotly → an SVG chart written as text. The script wrote one line per country: a rectangle as wide as its sales, with the figure beside it."),
+        u("الكويت أعرض مستطيل بـ ١٬١٨٣٬٠٠٠، والإمارات أقصر واحد بـ ٧٥٨٬٠٠٠. حوالي ١٥ سطر Python، والرسم جوّه الصفحة نفسها، بيكبر ويصغر مع الشاشة من غير ما يتشوّش.",
+          "Kuwait is the widest rectangle at 1,183,000, and the UAE the shortest at 758,000. About 15 lines of Python, and the chart sits inside the page itself, growing and shrinking with the screen without blurring.")],
+        answer: u("ارسم الرسوم البسيطة SVG جوّه الصفحة، من غير مكتبة. لأن رسم الأعمدة مستطيلات بأطوال، والمكتبة الخارجية بتجيب باكدج أو رابط للنت.", "Draw simple charts as SVG inside the page, with no library — a bar chart is rectangles of different lengths, and an outside library brings a package or an internet link."),
+        idea: u("رسم الأعمدة… مستطيلات بأطوال.", "A bar chart… is rectangles of lengths.")
+      },
+      {
+        id: "offline", art: "pg_offline", year: u("من غير نت", "Offline"), mark: u("٠٧", "07"), era: u("ولا رابط برّه", "No outside link"),
+        title: u("ولا رابط لبرّه الصفحة", "Not a single link outside the page"),
+        story: [u("نسخة قديمة من الصفحة كان فيها سطر بيحمّل مكتبة رسوم من النت. الزميل فصل الواي فاي وفتحها: الأرقام ظهرت، والرسوم اختفت. «تخيّلي ده في الاجتماع. وكمان كل مرة الصفحة تتفتح بتبعت طلب لموقع برّه الشركة».",
+          "An old version of the page had a line loading a chart library from the internet. The colleague turned off Wi-Fi and opened it: the figures showed; the charts vanished. “Imagine that in the meeting. And every time the page opens, it sends a request to a site outside the company.”"),
+        u("القاعدة بقت مكتوبة في الطلب: ممنوع أي رابط لملف أو مكتبة برّه الصفحة. والمراجعة سهلة: افصلي النت وافتحي الصفحة. لو كل حاجة ظهرت، يبقى الصفحة مكتفية بنفسها.",
+          "The rule is now written into the request: no link to any file or library outside the page. And the check is easy: disconnect the internet and open the page. If everything shows, the page stands on its own.")],
+        answer: u("خلّي الصفحة مكتفية بنفسها: ولا رابط لملف أو مكتبة برّه. لأن الرابط الخارجي بيوقف الصفحة من غير نت، وبيبعت طلب لبرّه الشركة.", "Make the page self-contained: no link to any outside file or library — an outside link breaks the page offline and sends a request outside the company."),
+        idea: u("افصل النت… وافتح.", "Disconnect… and open.")
+      },
+      {
+        id: "escape", art: "pg_escape", year: u("الأمان", "Safety"), mark: u("٠٨", "08"), era: u("html.escape", "html.escape"),
+        title: u("كل قيمة بتعدّي على html.escape", "Every value passes through html.escape"),
+        story: [u("الزميل وقفها عند سطر في الكود: html.escape(name). «لو اسم فيه علامة < أو &، المتصفح ممكن يفهمها جزء من الصفحة نفسها مش كلام، والصفحة تتلخبط. وفي الأسوأ، حد يحط في البيانات كود يشتغل لما الصفحة تتفتح».",
+          "The colleague stopped her at one line of the code: html.escape(name). “If a name holds a < or & mark, the browser may take it as part of the page itself rather than text, and the page gets muddled. At worst, someone puts code in the data that runs when the page opens.”"),
+        u("«html من المكتبة القياسية، وescape بتحوّل العلامات دي لشكل بيتعرض كلام بس». نفس فكرة علامات ? في SQL: القيمة تفضل قيمة، عمرها ما تبقى أمر.",
+          "“html is in the standard library, and escape turns those marks into a form shown as text only.” The same idea as the ? marks in SQL: a value stays a value, never a command.")],
+        answer: u("عدّي كل قيمة جاية من البيانات على html.escape قبل ما تدخل الصفحة. لأن القيمة اللي فيها علامات HTML ممكن تكسر الصفحة أو تشغّل كود.", "Pass every value from the data through html.escape before it enters the page — a value holding HTML marks can break the page or run code."),
+        idea: u("القيمة تفضل قيمة… في الصفحة كمان.", "A value stays a value… in the page too.")
+      },
+      {
+        id: "present", art: "pg_present", year: u("العرض", "Presenting"), mark: u("٠٩", "09"), era: u("زرار Present", "The Present button"),
+        title: u("زرار واحد… والصفحة بقت شرايح", "One button… and the page became slides"),
+        story: [u("الصفحة فيها ٤ أقسام: الأرقام التلاتة، ورسم البلاد، ورسم الموديلات، والجدول. وفوق زرار Present. لما يتضغط، كل قسم بياخد الشاشة كلها، والأسهم بتنقل من قسم للتاني، زي عرض الباوربوينت بالظبط.",
+          "The page has 4 sections: the three figures, the countries chart, the models chart, and the table. At the top, a Present button. When pressed, each section takes the whole screen, and the arrow keys move between sections, just like a PowerPoint show."),
+        u("ده كله CSS وسطرين JavaScript جوّه نفس الملف. المدير ضغط Present على شاشة القاعة، وعدّى على التلات شرايح بالأسهم، وضغط Page علشان يرجع للصفحة العادية لما حد سأل على تفصيلة.",
+          "All of it is CSS and two lines of JavaScript inside the same file. The manager pressed Present on the room's screen, went through the sections with the arrow keys, and pressed Page to return to the normal page when someone asked about a detail.")],
+        answer: u("خلّي نفس الصفحة تتقري لوحدها وتتعرض في اجتماع. لأن ملف واحد للاتنين معناه رقم واحد في المكانين، من غير نسختين تختلف عن بعض.", "Let the same page be read alone and presented in a meeting — one file for both means one figure in both places, never two copies that drift apart."),
+        idea: u("نفس الملف… للقراية وللعرض.", "The same file… for reading and presenting.")
+      },
+      {
+        id: "source", art: "pg_source", year: u("المصدر", "The source"), mark: u("١٠", "10"), era: u("سطر تحت الجدول", "A line under the table"),
+        title: u("«الرقم ده مراجَع؟»… الإجابة مكتوبة", "“Is this figure checked?”… the answer is written"),
+        story: [u("في الاجتماع، عضو مجلس الإدارة سأل: «الرقم ده جه منين؟ ومراجَع؟». المدير شاور على سطر صغير تحت الجدول: «المصدر: Export_Sales_2026-07.pdf، ١٢ صف، اتراجع على سطر الإجمالي في التقرير. اتبنى ٢٠٢٦-٠٨-٠٢».",
+          "In the meeting, a board member asked: “Where did this figure come from? Is it checked?” The manager pointed to a small line under the table: “Source: Export_Sales_2026-07.pdf, 12 rows, checked against the report's Total line. Built 2026-08-02.”"),
+        u("سطر واحد جاوب السؤال من غير ما حد يتصل بمهندسة التخطيط. «الأرقام اللي من غير مصدر بتتسأل عليها، واللي معاها مصدرها بتتصدّق».",
+          "One line answered the question without anyone calling the planning engineer. “Figures without a source get questioned; figures that carry their source get believed.”")],
+        answer: u("حط تحت أي تقرير سطر بالمصدر، وعدد الصفوف، والمراجعة اللي اتعملت، ووقت البناء. لأن السؤال ده هييجي في أي اجتماع، والأحسن تكون الإجابة جوّه التقرير.", "Put a line under any report giving the source, the row count, the check made and the build time — that question comes in every meeting, and the answer is best inside the report."),
+        idea: u("الرقم اللي معاه مصدره… بيتصدّق.", "A figure carrying its source… is believed.")
+      },
+      {
+        id: "app", art: "pg_app", year: u("لحد فين؟", "How far?"), mark: u("١١", "11"), era: u("صفحة أو تطبيق", "Page or app"),
+        title: u("ملف واحد يقدر يبقى «تطبيق» صغير", "One file can become a small “app”"),
+        story: [u("«ينفع الصفحة يبقى فيها فلتر بالبلد؟» «ينفع: البيانات تتحط جوّه الصفحة نفسها، وJavaScript يرسم على حسب الاختيار. فلاتر، وتبويبات، وجداول بتتفرز، ولسه ملف واحد. والكورس ده مثال على كده».",
+          "“Could the page have a filter by country?” “Yes: the data goes inside the page itself, and JavaScript draws according to the choice. Filters, tabs, sortable tables, still one file. This course is an example of that.”"),
+        u("«وإمتى ما ينفعش؟» «لما ناس كتير بيعدّلوا في البيانات كل يوم، أو البيانات بتتغيّر لحظة بلحظة. ساعتها ده تطبيق حقيقي على خادم، مع الـ IT. والوحدة السابعة بتشرح البناء ده».",
+          "“And when won't it do?” “When many people edit the data every day, or the data changes by the minute. Then it's a real application on a server, with IT. The seventh unit explains that build.”")],
+        answer: u("ابدأ بملف HTML واحد، وكبّره بفلاتر لو محتاج، وانقل لتطبيق على خادم بس لما ناس كتير تعدّل أو البيانات تبقى لحظية. لأن كل خطوة لفوق معناها صيانة وصلاحيات أكتر.", "Start with one HTML file, grow it with filters if needed, and move to a server application only when many people edit or data becomes live — each step up means more maintenance and permissions."),
+        idea: u("ابدأ بملف… وكبّر لما تحتاج.", "Start with a file… grow when needed.")
+      },
+      {
+        id: "cliff", art: "pg_cliff", year: u("الخطوة الجاية", "Next step"), mark: u("١٢", "12"), era: u("مصنع تالت", "A third plant"),
+        title: u("مصنع تالت عايز نفس الأدوات… والقواعد في دماغها", "A third plant wants the same tools… and the rules are in her head"),
+        story: [u("الاجتماع نجح، والمدير بعت الصفحة لمصنع تالت. مهندس هناك اتصل: «عايز أعمل نفس الأدوات. أبدأ منين؟». مهندسة التخطيط بدأت تعدّ: PowerShell الأول، وPython النقي، وخطوة خطوة، والبوابات، والمراجعة السبعة، والسجل، وملف التشغيل…",
+          "The meeting went well, and the manager sent the page to a third plant. An engineer there called: “I want to build the same tools. Where do I start?” The planning engineer began counting: PowerShell first, pure Python, step by step, the gates, the seven-point review, the log, the launcher…"),
+        u("القواعد كانت متفرقة في ١٢ Prompt وفي دماغها هي. ولو نسيت قاعدة واحدة في طلب، النموذج هيرجع لـ pandas أو للأداة الكبيرة. والسؤال اللي الدرس الجاي بيبدأ بيه: طب القواعد دي كلها… هتفتكرها كل مرة؟",
+          "The rules were scattered across 12 Prompts and in her own head. And if she forgot one rule in a request, the model would go back to pandas or to the big tool. And the question the next lesson opens with: all these rules… will you remember them every time?")],
+        answer: u("واجب الدرس: شغّل Prompt_2 من المثال التاني، وافتح الصفحة، وقارن صف Total بالـ PDF، وافصل النت وافتحها تاني، وجرّب Present. لأن الصفحة دي هي آخر حلقة في السلسلة: من الـ PDF للإدارة.", "This lesson's task: run Prompt_2 of the second example, open the page, compare its Total row with the PDF, disconnect the internet and open it again, and try Present — this page is the last link in the chain: from the PDF to management."),
+        idea: u("القواعد اللي في دماغك… بتتنسي.", "Rules kept in your head… get forgotten.")
+      }
+    ]
+  };
+  A.decks = (A.decks || []).concat([A.pageStory]);
+})(window.ACADEMY = window.ACADEMY || {});
 
 /* data/rules-story.js */
 "use strict";
@@ -21145,6 +21297,96 @@ pause
       <g ${an("rise", 0.8)}>${box(a, 220, 220, 44, "f-amber-soft s-amber")}${txt(a, 216, tr("اجتماع بكرة · نت ضعيف", "meeting tomorrow · weak internet"), "t-amber", 11, b8)}${txt(a, 232, tr("ومن غير تثبيت", "and no installs"), "t-amber", 10.5, b8)}</g>
       <g ${an("pop", 1.2)}>${shield(q, 104, 1.1)}${txt(q, 120, ar() ? "؟" : "?", "t-acc", 22, b8)}</g>
       <g ${an("fade", 1.5)}>${txt(q, 172, tr("الدرس الجاي", "next lesson"), "t-acc", 12.5, b8)}</g>`;
+    },
+    /* ----- an HTML page for management (data/page-story.js) ----- */
+    pg_meeting: () => {
+      const X = rowX(3, 130, 16), S = [["PowerPoint", tr("محتاج برنامج", "needs a program")], ["Excel", tr("صعب على موبايل", "hard on a phone")], [tr("لوحة على النت", "online dashboard"), tr("نت وصلاحيات", "internet, access")]];
+      return `${S.map(([h, s], i) => `<g ${an("rise", 0.05 + i * 0.2)}>${box(X(i), 80, 130, 70, "f-s1 s-rose")}${txt(X(i), 76, h, "t-ink", 12, b8)}${txt(X(i), 96, s, "t-rose", 10.5, b8)}</g>`).join("")}
+      <g ${an("rise", 0.8)}><rect x="${240 - 26}" y="140" width="52" height="92" rx="9" class="f-s1 s-ink2" stroke-width="2.5"/><rect x="${240 - 20}" y="150" width="40" height="66" rx="2" class="f-acc-soft"/>${txt(240, 188, "HTML", "t-acc", 10, b8 + ltr)}</g>
+      <g ${an("fade", 1.1)}>${txt(mx(110), 190, tr("من غير نت", "offline"), "t-mint", 11.5, b8)}${txt(mx(370), 190, tr("أي جهاز", "any device"), "t-mint", 11.5, b8)}</g>
+      ${pill(240, 262, 340, 34, tr("الكورس ده نفسه ملف HTML واحد", "this course is itself one HTML file"), "f-mint-soft s-mint", "t-mint", 11.5, 1.3)}
+      ${cap(tr("التقرير اللي ما بيتفتحش… مش موجود", "a report that won't open… doesn't exist"), 1.6, 304)}`;
+    },
+    pg_html: () => {
+      const X = rowX(3, 132, 14), S = [["HTML", tr("الهيكل", "structure"), tr("الخرسانة", "concrete")], ["CSS", tr("الشكل", "look"), tr("التشطيب", "finishing")], ["JavaScript", tr("الحركة", "movement"), tr("الكهربا", "wiring")]];
+      return `<g ${an("rise", 0.05)}>${box(240, 110, 440, 140, "f-acc-soft s-acc")}${txt(240, 58, "Export_Report.html", "t-acc", 12.5, b8 + ltr)}</g>
+      ${S.map(([h, s, m], i) => `<g ${an("pop", 0.3 + i * 0.2)}>${box(X(i), 120, 132, 84, "f-s1 s-line2")}${txt(X(i), 108, h, "t-ink", 12.5, b8 + ltr)}${txt(X(i), 128, s, "t-acc", 11, b8)}${txt(X(i), 146, m, "t-ink3", 10, bold)}</g>`).join("")}
+      ${flowRow(["Python", "HTML", tr("إيميل", "e-mail"), tr("أي متصفح", "any browser")], 228, 96, 18, 1.0, "f-mint-soft s-mint", "t-mint", 11, 34)}
+      ${cap(tr("ملف واحد… صفحة وعرض", "one file… a page and a presentation"), 2.0, 290)}`;
+    },
+    pg_data: () => {
+      const a = mx(90), b = mx(392), d = dirx();
+      return `<g ${an("rise", 0.05)}>${fileIcon(a, 70, "s-mint", 0.05)}${txt(a, 108, "Exports.db", "t-mint", 11.5, b8 + ltr)}</g>
+      ${term(240, 70, 150, 64, ["SELECT ...", "JOIN Countries"], 0.3, 10.5)}
+      ${arrow(a + d * 22, 70, 240 - d * 79, 70, 0.4)}${arrow(240 + d * 79, 70, b - d * 64, 70, 0.6)}
+      <g ${an("rise", 0.7)}>${box(b, 70, 120, 64, "f-s1 s-acc")}${txt(b, 66, "4,168,000", "t-acc", 13, b8 + ltr)}${txt(b, 86, tr("من القاعدة", "from the database"), "t-ink3", 10, bold)}</g>
+      <g ${an("rise", 1.0)}>${box(240, 176, 380, 70, "f-rose-soft s-rose")}${txt(240, 166, tr("رقم مكتوب بإيد في الصفحة؟", "a figure typed into the page?"), "t-rose", 11.5, b8)}${txt(240, 188, tr("الشهر الجاي يفضل رقم يوليو", "next month it stays July's"), "t-ink2", 11, b8)}</g>
+      ${cap(tr("الصفحة بتقرا… مش بتحفظ", "the page reads… it doesn't remember"), 1.3, 254)}`;
+    },
+    pg_check: () => {
+      const R = [[tr("مجموع البلاد", "the countries' sum"), "4,168,000"], [tr("مجموع الموديلات", "the models' sum"), "4,168,000"], [tr("الإجمالي", "the total"), "4,168,000"]];
+      return `${R.map(([s, v], i) => `<g ${an("rise", 0.05 + i * 0.25)}>${box(mx(170), 62 + i * 52, 280, 40, i === 2 ? "f-acc-soft s-acc" : "f-s1 s-line2")}${txt(mx(110), 67 + i * 52, s, "t-ink2", 11, b8)}${txt(mx(240), 67 + i * 52, v, "t-ink", 12.5, b8 + ltr)}</g>`).join("")}
+      ${check(mx(340), 114, 0.9)}
+      ${flowRow([tr("البيانات", "data"), tr("صحة الأرقام", "accuracy"), tr("العرض", "presentation"), tr("التجميل", "polish")], 236, 100, 14, 1.1, ["f-acc s-acc", "f-acc s-acc", "f-s1 s-acc", "f-s2 s-line2"], ["t-white", "t-white", "t-acc", "t-ink3"], 11, 34)}
+      ${cap(tr("الشكل الحلو… بيقنع حتى لو غلط", "a beautiful look… convinces even when wrong"), 2.1, 290)}`;
+    },
+    pg_kpis: () => {
+      const X = rowX(3, 140, 12), K = [["4,168,000", tr("جنيه صافي مبيعات", "EGP net sales")], ["470", tr("جهاز اتصدّر", "sets exported")], ["Kuwait", tr("أعلى بلد: ٢٨٪", "top country: 28%")]];
+      return `<g ${an("fade", 0.05)}>${box(240, 104, 460, 124, "f-s1 s-line2")}${txt(240, 62, "The month in three figures", "t-ink", 12, b8 + ltr)}</g>
+      ${K.map(([v, s], i) => `<g ${an("pop", 0.3 + i * 0.25)}>${box(X(i), 112, 140, 70, "f-s2", 0)}${txt(X(i), 110, v, "t-acc", 17, b8 + ltr)}${txt(X(i), 132, s, "t-ink3", 10, bold)}</g>`).join("")}
+      <g ${an("fade", 1.2)}>${txt(240, 206, tr("التفاصيل تحت… للي عايز يتعمق", "details below… for whoever wants depth"), "t-ink2", 11, b8)}</g>
+      ${pill(240, 242, 260, 32, tr("٣ أرقام… في ٣ ثواني", "3 figures… in 3 seconds"), "f-acc-soft s-acc", "t-acc", 12, 1.4)}
+      ${cap(tr("الرسالة الأساسية في أول ٣٠ ثانية", "the main message in the first 30 seconds"), 1.6, 290)}`;
+    },
+    pg_svg: () => {
+      const R = [["Kuwait", 1183], ["Saudi Arabia", 1136], ["Jordan", 1091], ["UAE", 758]];
+      return `${R.map(([c, v], i) => `<g ${an("fade", 0.1 + i * 0.12)}>${txt(mx(70), 58 + i * 36, c, "t-ink", 11, b8 + ltr)}</g>${grow(130, 44 + i * 36, v * 0.2, 22, "f-acc", 0.1 + i * 0.12)}<g ${an("fade", 0.3 + i * 0.12)}>${txt(mx(130 + v * 0.2 + 36), 60 + i * 36, digits((v * 1000).toLocaleString("en-US")), "t-ink2", 10.5, b8)}</g>`).join("")}
+      ${term(240, 236, 440, 52, ["<rect x=\"190\" y=\"10\" width=\"560\" height=\"30\" class=\"bar\"/>", "# one line per country · about 15 lines of Python"], 0.9, 10, (i) => (i ? "t-white" : "t-crt"))}
+      ${cap(tr("رسم الأعمدة… مستطيلات بأطوال", "a bar chart… is rectangles of lengths"), 1.4, 290)}`;
+    },
+    pg_offline: () => {
+      const a = mx(130), b = mx(356);
+      return `<g ${an("rise", 0.05)}>${box(a, 104, 200, 130, "f-rose-soft s-rose")}${txt(a, 56, tr("مكتبة من النت", "a library from the net"), "t-rose", 11.5, b8)}${mono(a - 90, 80, "<script src=\"https://cdn…", "t-rose", 9.5)}${txt(a, 116, "4,168,000", "t-ink", 12, b8 + ltr)}<rect x="${a - 70}" y="128" width="140" height="30" rx="4" class="f-s1 s-line2" stroke-dasharray="4 4"/>${txt(a, 148, tr("الرسم اختفى", "the chart vanished"), "t-rose", 10.5, b8)}</g>
+      <g ${an("rise", 0.5)}>${box(b, 104, 200, 130, "f-mint-soft s-mint")}${txt(b, 56, tr("كل حاجة جوّه الصفحة", "everything inside"), "t-mint", 11.5, b8)}${txt(b, 116, "4,168,000", "t-ink", 12, b8 + ltr)}${grow(312, 130, 70, 14, "f-acc", 0.8)}${grow(312, 148, 50, 10, "f-acc-soft", 0.9)}</g>
+      <g ${an("pop", 1.1)}><path d="M${240 - 28} 210 q28 -24 56 0 M${240 - 18} 222 q18 -14 36 0" class="s-ink3" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="240" cy="232" r="4" class="f-ink3"/><path d="M${240 - 32} 238 L${240 + 32} 200" class="s-rose" stroke-width="3.5" stroke-linecap="round"/></g>
+      ${cap(tr("افصل النت… وافتح", "disconnect… and open"), 1.4, 280)}`;
+    },
+    pg_escape: () => {
+      const a = mx(130), b = mx(356);
+      return `${term(240, 52, 300, 40, ["html.escape(name)"], 0.05, 12)}
+      <g ${an("rise", 0.4)}>${box(a, 140, 190, 100, "f-amber-soft s-amber")}${txt(a, 112, tr("قيمة فيها علامات", "a value with marks"), "t-amber", 11, b8)}${txt(a, 144, "A&B <Ltd>", "t-ink", 14, b8 + ltr)}</g>
+      ${arrow(a + dirx() * 100, 140, b - dirx() * 100, 140, 0.7)}
+      <g ${an("rise", 0.9)}>${box(b, 140, 190, 100, "f-mint-soft s-mint")}${txt(b, 112, tr("بتتعرض كلام بس", "shown as text only"), "t-mint", 11, b8)}${txt(b, 144, "A&amp;B &lt;Ltd&gt;", "t-ink2", 11.5, b8 + ltr)}</g>
+      ${pill(240, 230, 360, 34, tr("زي علامات ? في SQL: القيمة تفضل قيمة", "like SQL's ? marks: a value stays a value"), "f-acc-soft s-acc", "t-acc", 11, 1.2)}
+      ${cap(tr("القيمة تفضل قيمة… في الصفحة كمان", "a value stays a value… in the page too"), 1.5, 280)}`;
+    },
+    pg_present: () => {
+      const X = rowX(4, 96, 14), S = [tr("٣ أرقام", "3 figures"), tr("البلاد", "countries"), tr("الموديلات", "models"), tr("الجدول", "the table")];
+      return `<g ${an("rise", 0.05)}>${box(240, 76, 300, 60, "f-s1 s-line2")}<rect x="${240 + 150 - 74}" y="54" width="62" height="24" rx="6" class="f-acc"/>${txt(240 + 150 - 43, 70, "Present", "t-white", 10.5, b8 + ltr)}${txt(240 - 30, 88, "Export_Report.html", "t-ink3", 10.5, bold + ltr)}</g>
+      ${S.map((s, i) => `<g ${an("pop", 0.5 + i * 0.2)}>${box(X(i), 170, 96, 64, i === 1 ? "f-acc s-acc" : "f-s2 s-line2")}${txt(X(i), 175, s, i === 1 ? "t-white" : "t-ink2", 11, b8)}</g>`).join("")}
+      <g ${an("fade", 1.4)}>${txt(240, 228, tr("← → بين الأقسام · Page يرجّع الصفحة", "← → between sections · Page returns to the page"), "t-ink2", 11, b8)}</g>
+      ${cap(tr("نفس الملف… للقراية وللعرض", "the same file… for reading and presenting"), 1.6, 274)}`;
+    },
+    pg_source: () => {
+      return `<g ${an("rise", 0.05)}>${box(240, 92, 420, 100, "f-s1 s-line2")}${[0, 1, 2].map((k) => `<rect x="60" y="${54 + k * 18}" width="360" height="10" rx="4" class="f-s3"/>`).join("")}<rect x="60" y="112" width="360" height="12" rx="4" class="f-ink3"/></g>
+      <g ${an("rise", 0.5)}>${box(240, 168, 440, 44, "f-amber-soft s-amber")}${txt(240, 164, "Source: Export_Sales_2026-07.pdf, 12 rows,", "t-amber", 10.5, b8 + ltr)}${txt(240, 180, "checked against the report's Total line. Built 2026-08-02.", "t-amber", 10.5, b8 + ltr)}</g>
+      <g ${an("rise", 0.9)}>${bubble(mx(150), 236, 220, 40, "f-s1 s-line2", !ar())}${txt(mx(150), 241, tr("«الرقم ده مراجَع؟»", "“is this figure checked?”"), "t-ink", 11.5, b8)}</g>
+      <g ${an("pop", 1.2)}>${check(mx(300), 236, 1.2)}${txt(mx(390), 241, tr("الإجابة مكتوبة", "the answer is written"), "t-mint", 11.5, b8)}</g>
+      ${cap(tr("الرقم اللي معاه مصدره… بيتصدّق", "a figure carrying its source… is believed"), 1.5, 292)}`;
+    },
+    pg_app: () => {
+      const X = rowX(3, 136, 14), S = [[tr("صفحة", "a page"), tr("أرقام ورسوم", "figures, charts"), "f-mint-soft s-mint", "t-mint"], [tr("صفحة بفلاتر", "a page with filters"), tr("لسه ملف واحد", "still one file"), "f-acc-soft s-acc", "t-acc"], [tr("تطبيق على خادم", "a server app"), tr("مع الـ IT", "with IT"), "f-amber-soft s-amber", "t-amber"]];
+      return `${S.map(([h, s, cls, tc], i) => `<g ${an("rise", 0.1 + i * 0.25)}>${box(X(i), 150 - i * 30, 136, 70 + i * 30, cls)}${txt(X(i), 140 - i * 30, h, tc, 12, b8)}${txt(X(i), 160 - i * 30, s, "t-ink2", 10.5, bold)}</g>`).join("")}
+      <g ${an("fade", 1.0)}>${txt(240, 230, tr("كل خطوة لفوق = صيانة وصلاحيات أكتر", "each step up = more upkeep and access"), "t-ink2", 11, b8)}</g>
+      ${cap(tr("ابدأ بملف… وكبّر لما تحتاج", "start with a file… grow when needed"), 1.3, 270)}`;
+    },
+    pg_cliff: () => {
+      const q = mx(398), R = ar() ? ["PowerShell الأول", "Python النقي", "خطوة خطوة", "البوابات", "المراجعة السبعة", "ملف التشغيل"] : ["PowerShell first", "pure Python", "step by step", "the gates", "the 7-point review", "the launcher"];
+      return `${R.map((s, i) => `<g ${an("rise", 0.05 + i * 0.12)}>${box(mx(80 + (i % 2) * 150), 64 + Math.floor(i / 2) * 50, 140, 36, "f-s1 s-line2", 2, 'stroke-dasharray="5 4"')}${txt(mx(80 + (i % 2) * 150), 69 + Math.floor(i / 2) * 50, s, "t-ink2", 11, b8)}</g>`).join("")}
+      <g ${an("fade", 0.9)}>${txt(mx(155), 222, tr("متفرقة في ١٢ Prompt… وفي دماغها", "scattered over 12 Prompts… and her head"), "t-rose", 11, b8)}</g>
+      <g ${an("pop", 1.2)}>${shield(q, 100, 1.1)}${txt(q, 116, ar() ? "؟" : "?", "t-acc", 22, b8)}</g>
+      <g ${an("fade", 1.5)}>${txt(q, 168, tr("الدرس الجاي", "next lesson"), "t-acc", 12.5, b8)}</g>
+      <g ${an("rise", 1.7)}>${person(q, 252, 0.8, "f-ink2")}${txt(q, 278, tr("مهندس مصنع تالت", "a third plant's engineer"), "t-ink2", 10.5, b8)}</g>`;
     },
   });
   /* ---------- end of unit 4 ---------- */

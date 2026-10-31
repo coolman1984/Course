@@ -3503,6 +3503,96 @@
       <g ${an("pop", 1.2)}>${shield(q, 104, 1.1)}${txt(q, 120, ar() ? "؟" : "?", "t-acc", 22, b8)}</g>
       <g ${an("fade", 1.5)}>${txt(q, 172, tr("الدرس الجاي", "next lesson"), "t-acc", 12.5, b8)}</g>`;
     },
+    /* ----- an HTML page for management (data/page-story.js) ----- */
+    pg_meeting: () => {
+      const X = rowX(3, 130, 16), S = [["PowerPoint", tr("محتاج برنامج", "needs a program")], ["Excel", tr("صعب على موبايل", "hard on a phone")], [tr("لوحة على النت", "online dashboard"), tr("نت وصلاحيات", "internet, access")]];
+      return `${S.map(([h, s], i) => `<g ${an("rise", 0.05 + i * 0.2)}>${box(X(i), 80, 130, 70, "f-s1 s-rose")}${txt(X(i), 76, h, "t-ink", 12, b8)}${txt(X(i), 96, s, "t-rose", 10.5, b8)}</g>`).join("")}
+      <g ${an("rise", 0.8)}><rect x="${240 - 26}" y="140" width="52" height="92" rx="9" class="f-s1 s-ink2" stroke-width="2.5"/><rect x="${240 - 20}" y="150" width="40" height="66" rx="2" class="f-acc-soft"/>${txt(240, 188, "HTML", "t-acc", 10, b8 + ltr)}</g>
+      <g ${an("fade", 1.1)}>${txt(mx(110), 190, tr("من غير نت", "offline"), "t-mint", 11.5, b8)}${txt(mx(370), 190, tr("أي جهاز", "any device"), "t-mint", 11.5, b8)}</g>
+      ${pill(240, 262, 340, 34, tr("الكورس ده نفسه ملف HTML واحد", "this course is itself one HTML file"), "f-mint-soft s-mint", "t-mint", 11.5, 1.3)}
+      ${cap(tr("التقرير اللي ما بيتفتحش… مش موجود", "a report that won't open… doesn't exist"), 1.6, 304)}`;
+    },
+    pg_html: () => {
+      const X = rowX(3, 132, 14), S = [["HTML", tr("الهيكل", "structure"), tr("الخرسانة", "concrete")], ["CSS", tr("الشكل", "look"), tr("التشطيب", "finishing")], ["JavaScript", tr("الحركة", "movement"), tr("الكهربا", "wiring")]];
+      return `<g ${an("rise", 0.05)}>${box(240, 110, 440, 140, "f-acc-soft s-acc")}${txt(240, 58, "Export_Report.html", "t-acc", 12.5, b8 + ltr)}</g>
+      ${S.map(([h, s, m], i) => `<g ${an("pop", 0.3 + i * 0.2)}>${box(X(i), 120, 132, 84, "f-s1 s-line2")}${txt(X(i), 108, h, "t-ink", 12.5, b8 + ltr)}${txt(X(i), 128, s, "t-acc", 11, b8)}${txt(X(i), 146, m, "t-ink3", 10, bold)}</g>`).join("")}
+      ${flowRow(["Python", "HTML", tr("إيميل", "e-mail"), tr("أي متصفح", "any browser")], 228, 96, 18, 1.0, "f-mint-soft s-mint", "t-mint", 11, 34)}
+      ${cap(tr("ملف واحد… صفحة وعرض", "one file… a page and a presentation"), 2.0, 290)}`;
+    },
+    pg_data: () => {
+      const a = mx(90), b = mx(392), d = dirx();
+      return `<g ${an("rise", 0.05)}>${fileIcon(a, 70, "s-mint", 0.05)}${txt(a, 108, "Exports.db", "t-mint", 11.5, b8 + ltr)}</g>
+      ${term(240, 70, 150, 64, ["SELECT ...", "JOIN Countries"], 0.3, 10.5)}
+      ${arrow(a + d * 22, 70, 240 - d * 79, 70, 0.4)}${arrow(240 + d * 79, 70, b - d * 64, 70, 0.6)}
+      <g ${an("rise", 0.7)}>${box(b, 70, 120, 64, "f-s1 s-acc")}${txt(b, 66, "4,168,000", "t-acc", 13, b8 + ltr)}${txt(b, 86, tr("من القاعدة", "from the database"), "t-ink3", 10, bold)}</g>
+      <g ${an("rise", 1.0)}>${box(240, 176, 380, 70, "f-rose-soft s-rose")}${txt(240, 166, tr("رقم مكتوب بإيد في الصفحة؟", "a figure typed into the page?"), "t-rose", 11.5, b8)}${txt(240, 188, tr("الشهر الجاي يفضل رقم يوليو", "next month it stays July's"), "t-ink2", 11, b8)}</g>
+      ${cap(tr("الصفحة بتقرا… مش بتحفظ", "the page reads… it doesn't remember"), 1.3, 254)}`;
+    },
+    pg_check: () => {
+      const R = [[tr("مجموع البلاد", "the countries' sum"), "4,168,000"], [tr("مجموع الموديلات", "the models' sum"), "4,168,000"], [tr("الإجمالي", "the total"), "4,168,000"]];
+      return `${R.map(([s, v], i) => `<g ${an("rise", 0.05 + i * 0.25)}>${box(mx(170), 62 + i * 52, 280, 40, i === 2 ? "f-acc-soft s-acc" : "f-s1 s-line2")}${txt(mx(110), 67 + i * 52, s, "t-ink2", 11, b8)}${txt(mx(240), 67 + i * 52, v, "t-ink", 12.5, b8 + ltr)}</g>`).join("")}
+      ${check(mx(340), 114, 0.9)}
+      ${flowRow([tr("البيانات", "data"), tr("صحة الأرقام", "accuracy"), tr("العرض", "presentation"), tr("التجميل", "polish")], 236, 100, 14, 1.1, ["f-acc s-acc", "f-acc s-acc", "f-s1 s-acc", "f-s2 s-line2"], ["t-white", "t-white", "t-acc", "t-ink3"], 11, 34)}
+      ${cap(tr("الشكل الحلو… بيقنع حتى لو غلط", "a beautiful look… convinces even when wrong"), 2.1, 290)}`;
+    },
+    pg_kpis: () => {
+      const X = rowX(3, 140, 12), K = [["4,168,000", tr("جنيه صافي مبيعات", "EGP net sales")], ["470", tr("جهاز اتصدّر", "sets exported")], ["Kuwait", tr("أعلى بلد: ٢٨٪", "top country: 28%")]];
+      return `<g ${an("fade", 0.05)}>${box(240, 104, 460, 124, "f-s1 s-line2")}${txt(240, 62, "The month in three figures", "t-ink", 12, b8 + ltr)}</g>
+      ${K.map(([v, s], i) => `<g ${an("pop", 0.3 + i * 0.25)}>${box(X(i), 112, 140, 70, "f-s2", 0)}${txt(X(i), 110, v, "t-acc", 17, b8 + ltr)}${txt(X(i), 132, s, "t-ink3", 10, bold)}</g>`).join("")}
+      <g ${an("fade", 1.2)}>${txt(240, 206, tr("التفاصيل تحت… للي عايز يتعمق", "details below… for whoever wants depth"), "t-ink2", 11, b8)}</g>
+      ${pill(240, 242, 260, 32, tr("٣ أرقام… في ٣ ثواني", "3 figures… in 3 seconds"), "f-acc-soft s-acc", "t-acc", 12, 1.4)}
+      ${cap(tr("الرسالة الأساسية في أول ٣٠ ثانية", "the main message in the first 30 seconds"), 1.6, 290)}`;
+    },
+    pg_svg: () => {
+      const R = [["Kuwait", 1183], ["Saudi Arabia", 1136], ["Jordan", 1091], ["UAE", 758]];
+      return `${R.map(([c, v], i) => `<g ${an("fade", 0.1 + i * 0.12)}>${txt(mx(70), 58 + i * 36, c, "t-ink", 11, b8 + ltr)}</g>${grow(130, 44 + i * 36, v * 0.2, 22, "f-acc", 0.1 + i * 0.12)}<g ${an("fade", 0.3 + i * 0.12)}>${txt(mx(130 + v * 0.2 + 36), 60 + i * 36, digits((v * 1000).toLocaleString("en-US")), "t-ink2", 10.5, b8)}</g>`).join("")}
+      ${term(240, 236, 440, 52, ["<rect x=\"190\" y=\"10\" width=\"560\" height=\"30\" class=\"bar\"/>", "# one line per country · about 15 lines of Python"], 0.9, 10, (i) => (i ? "t-white" : "t-crt"))}
+      ${cap(tr("رسم الأعمدة… مستطيلات بأطوال", "a bar chart… is rectangles of lengths"), 1.4, 290)}`;
+    },
+    pg_offline: () => {
+      const a = mx(130), b = mx(356);
+      return `<g ${an("rise", 0.05)}>${box(a, 104, 200, 130, "f-rose-soft s-rose")}${txt(a, 56, tr("مكتبة من النت", "a library from the net"), "t-rose", 11.5, b8)}${mono(a - 90, 80, "<script src=\"https://cdn…", "t-rose", 9.5)}${txt(a, 116, "4,168,000", "t-ink", 12, b8 + ltr)}<rect x="${a - 70}" y="128" width="140" height="30" rx="4" class="f-s1 s-line2" stroke-dasharray="4 4"/>${txt(a, 148, tr("الرسم اختفى", "the chart vanished"), "t-rose", 10.5, b8)}</g>
+      <g ${an("rise", 0.5)}>${box(b, 104, 200, 130, "f-mint-soft s-mint")}${txt(b, 56, tr("كل حاجة جوّه الصفحة", "everything inside"), "t-mint", 11.5, b8)}${txt(b, 116, "4,168,000", "t-ink", 12, b8 + ltr)}${grow(312, 130, 70, 14, "f-acc", 0.8)}${grow(312, 148, 50, 10, "f-acc-soft", 0.9)}</g>
+      <g ${an("pop", 1.1)}><path d="M${240 - 28} 210 q28 -24 56 0 M${240 - 18} 222 q18 -14 36 0" class="s-ink3" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="240" cy="232" r="4" class="f-ink3"/><path d="M${240 - 32} 238 L${240 + 32} 200" class="s-rose" stroke-width="3.5" stroke-linecap="round"/></g>
+      ${cap(tr("افصل النت… وافتح", "disconnect… and open"), 1.4, 280)}`;
+    },
+    pg_escape: () => {
+      const a = mx(130), b = mx(356);
+      return `${term(240, 52, 300, 40, ["html.escape(name)"], 0.05, 12)}
+      <g ${an("rise", 0.4)}>${box(a, 140, 190, 100, "f-amber-soft s-amber")}${txt(a, 112, tr("قيمة فيها علامات", "a value with marks"), "t-amber", 11, b8)}${txt(a, 144, "A&B <Ltd>", "t-ink", 14, b8 + ltr)}</g>
+      ${arrow(a + dirx() * 100, 140, b - dirx() * 100, 140, 0.7)}
+      <g ${an("rise", 0.9)}>${box(b, 140, 190, 100, "f-mint-soft s-mint")}${txt(b, 112, tr("بتتعرض كلام بس", "shown as text only"), "t-mint", 11, b8)}${txt(b, 144, "A&amp;B &lt;Ltd&gt;", "t-ink2", 11.5, b8 + ltr)}</g>
+      ${pill(240, 230, 360, 34, tr("زي علامات ? في SQL: القيمة تفضل قيمة", "like SQL's ? marks: a value stays a value"), "f-acc-soft s-acc", "t-acc", 11, 1.2)}
+      ${cap(tr("القيمة تفضل قيمة… في الصفحة كمان", "a value stays a value… in the page too"), 1.5, 280)}`;
+    },
+    pg_present: () => {
+      const X = rowX(4, 96, 14), S = [tr("٣ أرقام", "3 figures"), tr("البلاد", "countries"), tr("الموديلات", "models"), tr("الجدول", "the table")];
+      return `<g ${an("rise", 0.05)}>${box(240, 76, 300, 60, "f-s1 s-line2")}<rect x="${240 + 150 - 74}" y="54" width="62" height="24" rx="6" class="f-acc"/>${txt(240 + 150 - 43, 70, "Present", "t-white", 10.5, b8 + ltr)}${txt(240 - 30, 88, "Export_Report.html", "t-ink3", 10.5, bold + ltr)}</g>
+      ${S.map((s, i) => `<g ${an("pop", 0.5 + i * 0.2)}>${box(X(i), 170, 96, 64, i === 1 ? "f-acc s-acc" : "f-s2 s-line2")}${txt(X(i), 175, s, i === 1 ? "t-white" : "t-ink2", 11, b8)}</g>`).join("")}
+      <g ${an("fade", 1.4)}>${txt(240, 228, tr("← → بين الأقسام · Page يرجّع الصفحة", "← → between sections · Page returns to the page"), "t-ink2", 11, b8)}</g>
+      ${cap(tr("نفس الملف… للقراية وللعرض", "the same file… for reading and presenting"), 1.6, 274)}`;
+    },
+    pg_source: () => {
+      return `<g ${an("rise", 0.05)}>${box(240, 92, 420, 100, "f-s1 s-line2")}${[0, 1, 2].map((k) => `<rect x="60" y="${54 + k * 18}" width="360" height="10" rx="4" class="f-s3"/>`).join("")}<rect x="60" y="112" width="360" height="12" rx="4" class="f-ink3"/></g>
+      <g ${an("rise", 0.5)}>${box(240, 168, 440, 44, "f-amber-soft s-amber")}${txt(240, 164, "Source: Export_Sales_2026-07.pdf, 12 rows,", "t-amber", 10.5, b8 + ltr)}${txt(240, 180, "checked against the report's Total line. Built 2026-08-02.", "t-amber", 10.5, b8 + ltr)}</g>
+      <g ${an("rise", 0.9)}>${bubble(mx(150), 236, 220, 40, "f-s1 s-line2", !ar())}${txt(mx(150), 241, tr("«الرقم ده مراجَع؟»", "“is this figure checked?”"), "t-ink", 11.5, b8)}</g>
+      <g ${an("pop", 1.2)}>${check(mx(300), 236, 1.2)}${txt(mx(390), 241, tr("الإجابة مكتوبة", "the answer is written"), "t-mint", 11.5, b8)}</g>
+      ${cap(tr("الرقم اللي معاه مصدره… بيتصدّق", "a figure carrying its source… is believed"), 1.5, 292)}`;
+    },
+    pg_app: () => {
+      const X = rowX(3, 136, 14), S = [[tr("صفحة", "a page"), tr("أرقام ورسوم", "figures, charts"), "f-mint-soft s-mint", "t-mint"], [tr("صفحة بفلاتر", "a page with filters"), tr("لسه ملف واحد", "still one file"), "f-acc-soft s-acc", "t-acc"], [tr("تطبيق على خادم", "a server app"), tr("مع الـ IT", "with IT"), "f-amber-soft s-amber", "t-amber"]];
+      return `${S.map(([h, s, cls, tc], i) => `<g ${an("rise", 0.1 + i * 0.25)}>${box(X(i), 150 - i * 30, 136, 70 + i * 30, cls)}${txt(X(i), 140 - i * 30, h, tc, 12, b8)}${txt(X(i), 160 - i * 30, s, "t-ink2", 10.5, bold)}</g>`).join("")}
+      <g ${an("fade", 1.0)}>${txt(240, 230, tr("كل خطوة لفوق = صيانة وصلاحيات أكتر", "each step up = more upkeep and access"), "t-ink2", 11, b8)}</g>
+      ${cap(tr("ابدأ بملف… وكبّر لما تحتاج", "start with a file… grow when needed"), 1.3, 270)}`;
+    },
+    pg_cliff: () => {
+      const q = mx(398), R = ar() ? ["PowerShell الأول", "Python النقي", "خطوة خطوة", "البوابات", "المراجعة السبعة", "ملف التشغيل"] : ["PowerShell first", "pure Python", "step by step", "the gates", "the 7-point review", "the launcher"];
+      return `${R.map((s, i) => `<g ${an("rise", 0.05 + i * 0.12)}>${box(mx(80 + (i % 2) * 150), 64 + Math.floor(i / 2) * 50, 140, 36, "f-s1 s-line2", 2, 'stroke-dasharray="5 4"')}${txt(mx(80 + (i % 2) * 150), 69 + Math.floor(i / 2) * 50, s, "t-ink2", 11, b8)}</g>`).join("")}
+      <g ${an("fade", 0.9)}>${txt(mx(155), 222, tr("متفرقة في ١٢ Prompt… وفي دماغها", "scattered over 12 Prompts… and her head"), "t-rose", 11, b8)}</g>
+      <g ${an("pop", 1.2)}>${shield(q, 100, 1.1)}${txt(q, 116, ar() ? "؟" : "?", "t-acc", 22, b8)}</g>
+      <g ${an("fade", 1.5)}>${txt(q, 168, tr("الدرس الجاي", "next lesson"), "t-acc", 12.5, b8)}</g>
+      <g ${an("rise", 1.7)}>${person(q, 252, 0.8, "f-ink2")}${txt(q, 278, tr("مهندس مصنع تالت", "a third plant's engineer"), "t-ink2", 10.5, b8)}</g>`;
+    },
   });
   /* ---------- end of unit 4 ---------- */
 
