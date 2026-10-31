@@ -5,7 +5,7 @@
   const L = (k, ar, en) => ({ k, ar, en });
   A.lessons = (A.lessons || []).concat([
     {
-      id: "p1", unit: "u6", pages: [7], diff: 1, min: 9, scene: "equation", lab: "prompt", related: ["f4", "p2", "p3", "d1"], pre: ["f4"],
+      id: "p1", unit: "u7", pages: [7], diff: 1, min: 9, scene: "equation", lab: "prompt", related: ["f4", "p2", "p3", "d1"], pre: ["f4"],
       title: { ar: "إزاي تطلب منه حاجة ويطلع المطلوب من أول مرة؟", en: "The governing equation and the five elements" },
       sum: { ar: "الطلب العام زي «حلل الملف» بيرجّع نتيجة عامة. الطلب اللي فيه الهدف والظروف والمهمة بالظبط وشكل النتيجة بيطلّع المطلوب من أول مرة.", en: "Clear goal + enough context + specific request + output format = an actionable result; and the five elements of any good request." },
       book: [
@@ -47,7 +47,7 @@
         } },
     },
     {
-      id: "p2", unit: "u6", pages: [7], diff: 1, min: 5, scene: "technique", related: ["p1", "p3", "a5"], pre: ["p1"],
+      id: "p2", unit: "u7", pages: [7], diff: 1, min: 5, scene: "technique", related: ["p1", "p3", "a5"], pre: ["p1"],
       title: { ar: "الجملة اللي تمنع التخمين قبل ما يبدأ", en: "The guide’s strongest technique" },
       sum: { ar: "لو الطلب ناقصه معلومة مؤثرة، زي الشهر أو سعر الخامة، المساعد غالبًا هيفترض قيمة ويكمّل. جملة واحدة في أول الطلب بتخليه يسألك بدل ما يخمّن.", en: "One sentence at the start of every important request fixes three problems: silent assumptions, complexity and untested errors." },
       book: [
@@ -76,7 +76,7 @@
       },
     },
     {
-      id: "p3", unit: "u6", pages: [8], diff: 1, min: 6, related: ["p1", "p4", "p9"], pre: ["p1"],
+      id: "p3", unit: "u7", pages: [8], diff: 1, min: 6, related: ["p1", "p4", "p9"], pre: ["p1"],
       title: { ar: "أربع غلطات بتضيّع فايدة أي طلب", en: "Four mistakes that ruin results, three prompts that fix them" },
       sum: { ar: "أغلب إعادة الشغل جاية من أربع غلطات: وصف مبهم للبيانات، وقبول أول إجابة، وتجاهل الخلايا الفاضية والحالات الناقصة، والتجربة على الملف الأصلي على طول.", en: "Vague descriptions, accepting the first answer, ignoring missing cases, applying straight to the real file — and how to fix them." },
       book: [
@@ -106,7 +106,7 @@
       },
     },
     {
-      id: "p4", unit: "u6", pages: [8], diff: 1, min: 5, scene: "convo", related: ["p3", "p1", "t1"], pre: ["p1"],
+      id: "p4", unit: "u7", pages: [8], diff: 1, min: 5, scene: "convo", related: ["p3", "p1", "t1"], pre: ["p1"],
       title: { ar: "الرد مش عاجبك؟ إزاي تصلحه من غير ما تبدأ من الصفر", en: "Managing the conversation: what to do when you dislike the result" },
       sum: { ar: "لما الرد ما يعجبكش، ما تبدأش من الأول. حدّد العيب بالظبط، زي «الأرقام ناقصة» أو «الملخص طويل»، والمساعد هيصلّح الجزء ده بس.", en: "The biggest gap between beginner and skilled isn’t the first request but what follows: the five-step loop and three common situations." },
       book: [
@@ -136,7 +136,7 @@
       },
     },
     {
-      id: "p5", unit: "u6", pages: [8, 9, 10], diff: 1, min: 9, scene: "daily", related: ["p4", "p6", "p12"], pre: ["p1"],
+      id: "p5", unit: "u7", pages: [8, 9, 10], diff: 1, min: 9, scene: "daily", related: ["p4", "p6", "p12"], pre: ["p1"],
       title: { ar: "إزاي الذكاء الاصطناعي يرتّب يومك بدل ما يزوّده ضغط؟", en: "Productivity prompts and running your day" },
       sum: { ar: "الزحمة مش في عدد المهام، الزحمة في إنها مش مترتبة. المساعد يقدر يحوّل رسايلك ومحاضر اجتماعاتك لقائمة واضحة: مين يعمل إيه، وإمتى، وتبدأ بإيه.", en: "Organising the day, meetings, tasks, professional writing, research, follow-up, process improvement, delegation, triage and the all-in-one prompt." },
       book: [
@@ -177,7 +177,7 @@
         } },
     },
     {
-      id: "p6", unit: "u6", pages: [10, 11], diff: 2, min: 8, related: ["p5", "p7", "y4"], pre: ["p1"],
+      id: "p6", unit: "u7", pages: [10, 11], diff: 2, min: 8, related: ["p5", "p7", "y4"], pre: ["p1"],
       title: { ar: "قبل ما تدور على حل، افهم المشكلة الأول", en: "Strategic prompts: understanding, diagnosis and priorities" },
       sum: { ar: "«الإنتاج نزل» عَرَض، مش سبب. قبل ما تقترح حل، قسّم الرقم حسب الخط والوردية واليوم، واختبر كل تفسير بدليل.", en: "The previous section helps you get work done; this one helps you know which work is worth doing at all." },
       book: [
@@ -209,7 +209,7 @@
       },
     },
     {
-      id: "p7", unit: "u6", pages: [11], diff: 2, min: 8, scene: "strategic", related: ["p6", "s2", "y4"], pre: ["p6"],
+      id: "p7", unit: "u7", pages: [11], diff: 2, min: 8, scene: "strategic", related: ["p6", "s2", "y4"], pre: ["p6"],
       title: { ar: "إزاي تختار بين كذا قرار من غير ما تتحيز لرأيك؟", en: "Scenarios, challenging ideas and the all-in-one strategic prompt" },
       sum: { ar: "أول حل بييجي في بالك بيكسب انحيازك من غير ما تاخد بالك. اطلب من المساعد يبني بدائل ويعارض فكرتك بالأرقام قبل ما تصرف فلوس.", en: "Three scenarios, a pre-mortem, “don’t just agree with me”, missing information, and the prompt that enforces an order you can’t skip." },
       book: [
@@ -241,7 +241,7 @@
       },
     },
     {
-      id: "p8", unit: "u6", pages: [12, 13], diff: 2, min: 10, scene: "brain", lab: "brain", related: ["f1", "p11", "s1"], pre: ["p1"],
+      id: "p8", unit: "u7", pages: [12, 13], diff: 2, min: 10, scene: "brain", lab: "brain", related: ["f1", "p11", "s1"], pre: ["p1"],
       title: { ar: "إزاي تخلي ملفات القسم تبقى عقل تقدر تسأله؟", en: "The second brain: from scattered files to a knowledge system" },
       sum: { ar: "لما سياسات القسم تبقى متفرقة، كل حد بيجاوب من ذاكرته. لو جمعت المستندات المعتمدة في مكان واحد، تقدر تسألها وتاخد الإجابة ومعاها مرجعها.", en: "NotebookLM: you set the knowledge AI may think with, and every answer comes with a citation back to the source." },
       book: [
@@ -283,7 +283,7 @@
         } },
     },
     {
-      id: "p9", unit: "u3", pages: [13], diff: 2, min: 8, scene: "leap", lab: "formula", related: ["p3", "p10", "d1", "p1"], pre: ["f4", "f8"],
+      id: "p9", unit: "u4", pages: [13], diff: 2, min: 8, scene: "leap", lab: "formula", related: ["p3", "p10", "d1", "p1"], pre: ["f4", "f8"],
       title: { ar: "إزاي تخلي إكسل يعمل حساباتك من غير ما تحفظ معادلات؟", en: "The leap: Excel with AI" },
       sum: { ar: "مش لازم تحفظ معادلات إكسل. اشرح الحساب اللي محتاجه بالكلام، وخلّي المساعد يكتب المعادلة، واختبرها على كام صف قبل ما تعمّمها.", en: "Don’t start with code, start with a problem: the right formula request, its three elements, and the nine-stage ladder." },
       book: [
@@ -315,7 +315,7 @@
       },
     },
     {
-      id: "p10", unit: "u3", pages: [13, 14], diff: 2, min: 9, scene: "macro", related: ["p9", "y1", "a5"], pre: ["p9"],
+      id: "p10", unit: "u4", pages: [13, 14], diff: 2, min: 9, scene: "macro", related: ["p9", "y1", "a5"], pre: ["p9"],
       title: { ar: "إزاي تخلي الخطوات اللي بتكررها تحصل بضغطة؟", en: "First real automation: macros and AI-written code" },
       sum: { ar: "أي خطوات بتكررها كل يوم بنفس الترتيب، زي فتح ملف وتنسيقه ونسخ جدول منه، ممكن تتسجل مرة وتتنفذ بضغطة، بشرط تجربها على نسخة الأول.", en: "The macro recorder, then let AI write the code, two unbreakable rules, and the golden code prompt." },
       book: [
@@ -357,7 +357,7 @@
         } },
     },
     {
-      id: "p11", unit: "u6", pages: [14, 15], diff: 2, min: 8, scene: "capstone", related: ["p8", "y6", "d2"], pre: ["p8"],
+      id: "p11", unit: "u7", pages: [14, 15], diff: 2, min: 8, scene: "capstone", related: ["p8", "y6", "d2"], pre: ["p8"],
       title: { ar: "إزاي تحول التحليل لكلام الإدارة تفهمه وتقرر عليه؟", en: "From the report to a pitch that convinces management" },
       sum: { ar: "الإدارة مش محتاجة كل الأرقام اللي عندك. محتاجة تعرف إيه اللي اتغير، وليه، والقرار المطلوب منها، بالترتيب ده.", en: "Three tools, three roles; mixing them is the fatal mistake; story and review prompts; the capstone and its criteria." },
       book: [
@@ -397,7 +397,7 @@
         } },
     },
     {
-      id: "p12", unit: "u6", pages: [15, 16], diff: 1, min: 7, scene: "plan30", related: ["f2", "p2", "f5"], pre: ["p1"],
+      id: "p12", unit: "u7", pages: [15, 16], diff: 1, min: 7, scene: "plan30", related: ["f2", "p2", "f5"], pre: ["p1"],
       title: { ar: "إزاي تخلي اللي اتعلمته عادة شغل مش حماس يومين؟", en: "From a guide to a habit: the index, the plan and the checklist" },
       sum: { ar: "قيمة أي كورس بتتقاس بالعادة اللي بتفضل بعده. اختار مهمة واحدة متكررة، طبّق عليها كل أسبوع، وقيس الوقت والجودة قبل وبعد.", en: "Which prompt when, where to actually start, the 30-day plan, the checklist, and three mistakes that block the change." },
       book: [

@@ -27,7 +27,7 @@
 
   /* ---------- state (localStorage with safe fallback) ---------- */
   const KEY = "aiAcademy.v1";
-  const blank = () => ({ lang: "ar", theme: "auto", level: "simple", done: {}, visited: {}, last: null, quiz: {}, notes: {}, bookmarks: [], saved: [], project: {}, scroll: {}, view: {}, plan: 5 });
+  const blank = () => ({ lang: "ar", theme: "auto", level: "simple", done: {}, visited: {}, last: null, quiz: {}, notes: {}, bookmarks: [], saved: [], project: {}, scroll: {}, view: {}, plan: 6 });
   let memory = blank();
   let storageOk = true;
   let seen = null;   // the stored text as this tab last read or wrote it
@@ -46,7 +46,10 @@
         else if ((saved.plan || 1) < 4 && memory.scores) { delete memory.scores.u1; persist(); }
         // course plan 5 made unit 3 the Office automation unit (two examples, Claude Code, skills) and moved its lessons into unit 4
         if ((saved.plan || 1) < 5 && memory.scores) { for (const k of ["u2", "u3"]) delete memory.scores[k]; persist(); }
-        memory.plan = 5;
+        // course plan 6 added a new unit 4 (trusted tools: PowerShell, pure Python, SQLite, HTML): units 4–8 became 5–9 with their
+        // own lessons and questions, so each old score moves up one unit with them, and the new unit 4 starts empty
+        if ((saved.plan || 1) < 6 && memory.scores) { for (let k = 7; k >= 3; k--) { const v = memory.scores["u" + k]; delete memory.scores["u" + k]; if (v) memory.scores["u" + (k + 1)] = v; } persist(); }
+        memory.plan = 6;
       }
     } catch (e) { storageOk = false; }
   }

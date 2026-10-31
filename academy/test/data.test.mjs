@@ -2,7 +2,8 @@
 // Run: node --test academy/test/data.test.mjs
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync, readdirSync } from "node:fs";
+import { readFileSync, readdirSync, mkdtempSync, mkdirSync, writeFileSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { execFileSync } from "node:child_process";
 import { inflateRawSync } from "node:zlib";
 import { fileURLToPath } from "node:url";
@@ -103,7 +104,7 @@ function makeMockDocument() {
   };
   return { document, Node, main: byId.get("main") };
 }
-const DATA = ["ui", "meta", "stories", "scenes", "lessons-u0", "lessons-u1", "lessons-u2", "lessons-u3u4", "lessons-u5", "lessons-xl", "lessons-office", "course-order", "plain-talk-a", "plain-talk-b", "prompts", "situations", "quiz", "glossary", "compare", "history", "model-story", "context-story", "window-story", "agents-story", "work-story", "limits-story", "auto-story", "big-story", "kit-story", "deliver-story", "stack-story", "lookup-story", "report-story", "run-story", "match-story", "needs-story", "table-story", "dash-story", "gather-story", "slides-story", "code-story", "skill-story", "xl-sample", "office-projects"];
+const DATA = ["ui", "meta", "stories", "scenes", "lessons-u0", "lessons-u1", "lessons-u2", "lessons-u3u4", "lessons-u5", "lessons-xl", "lessons-office", "lessons-easy", "course-order", "plain-talk-a", "plain-talk-b", "prompts", "situations", "quiz", "glossary", "compare", "history", "model-story", "context-story", "window-story", "agents-story", "work-story", "limits-story", "auto-story", "big-story", "kit-story", "deliver-story", "stack-story", "lookup-story", "report-story", "run-story", "match-story", "needs-story", "table-story", "dash-story", "gather-story", "slides-story", "code-story", "skill-story", "cli-story", "pure-story", "com-story", "steps-story", "review-story", "sql-story", "pdf-story", "page-story", "rules-story", "xl-sample", "office-projects", "easy-solutions", "easy-projects"];
 const ENGINE = ["core", "scene", "render", "quiz", "labs", "xlkit", "tools"];
 const ctx = { window: { ACADEMY: {} } };
 vm.createContext(ctx);
@@ -369,8 +370,8 @@ test("the AI guide embedded in the HTML stays current: every unit-0 lesson and e
   for (const [name, v] of Object.entries(A)) if (A.decks.includes(v)) assert.ok(guide.includes("A." + name), `ai-guide.txt does not name the deck A.${name}`);
 });
 
-test("the course plan: eight units, every lesson placed exactly once, and each lesson file names the same unit", () => {
-  assert.equal(A.units.map((u) => u.n).join(" "), "1 2 3 4 5 6 7 8");
+test("the course plan: nine units, every lesson placed exactly once, and each lesson file names the same unit", () => {
+  assert.equal(A.units.map((u) => u.n).join(" "), "1 2 3 4 5 6 7 8 9");
   const placed = Object.values(A.courseOrder).flat();
   assert.equal(new Set(placed).size, placed.length, "a lesson is placed twice");
   assert.equal(placed.length, A.lessons.length, "a lesson is missing from the plan");
@@ -508,9 +509,9 @@ test("unit 3: six lessons in order, each opening with its own 12-slide story; un
   for (const [k, l] of [["tableStory", "a1"], ["dashStory", "a2"], ["gatherStory", "a3"], ["slidesStory", "a4"], ["codeStory", "a5"], ["skillStory", "a6"]]) {
     assert.equal(A[k].lesson, l, k); assert.equal(A[k].slides.length, 12, k + " has 12 slides");
   }
-  assert.equal(A.courseOrder.u3[0], "b1", "b1 opens unit 4");
+  assert.equal(A.courseOrder.u3[0], "k1", "k1 opens unit 4");
   assert.ok(/إكسل/.test(A.runStory.finalQuestion.ar) && /داشبورد/.test(A.runStory.finalQuestion.ar), "unit 2 ends on the dashboard question unit 3 answers");
-  assert.equal(A.skillStory.finalQuestion.en, "And what if a file arrives that is bigger than Excel itself?", "unit 3 ends on the question b1 opens with");
+  assert.equal(A.skillStory.finalQuestion.en, "So how do you build a tool the security team will approve?", "unit 3 ends on the question unit 4 answers");
 });
 
 // a small zip reader for the finished results (stored or deflated entries, read through the central directory)
@@ -664,4 +665,88 @@ test("unit-3 checks and rules can actually pass on the project's own data (revie
     assert.ok(/Output/.test(t) && /(never|ما تكتبش)/.test(t), `${id} (${lang}) still protects Data`);
   }
   assert.ok(!/Read only from the Data folder/.test(O.skills["safe-office-automation"]), "the safety skill forbids reading intermediate outputs");
+});
+
+test("unit 4: nine lessons in order, each opening with its own 12-slide story; it closes into b1", () => {
+  assert.equal(A.courseOrder.u3.join(" "), "k1 k2 k3 k4 k5 k6 k7 k8 k9", "unit 3 (shown as 4): the CLIs, pure Python, PowerShell and COM, two weeks, review, SQL, PDF, HTML, skills");
+  assert.equal(A.courseOrder.u4[0], "b1", "b1 opens unit 5");
+  for (const id of A.courseOrder.u3) assert.ok(A.decks.some((d) => d.lesson === id && d.slides.length === 12), id + " opens with a 12-slide story");
+  const last = A.decks.find((d) => d.lesson === "k9");
+  assert.equal(last.finalQuestion.en, "And what if a file arrives that is bigger than Excel itself?", "unit 4 ends on the question b1 opens with");
+  for (const id of ["k1", "k2", "k3", "k4", "k5", "k6", "k7", "k8", "k9"]) {
+    assert.ok(A.prompts.some((p) => p.lesson === id), id + ": at least one prompt"); assert.ok(A.quiz.filter((q) => q.lesson === id).length >= 2, id + ": two questions");
+  }
+});
+
+test("the unit-4 projects: clean files, a correct reading finds every figure the lessons and answer keys quote", () => {
+  const E = A.easyProjects, [P1, P2, P3] = E.list, sum = (a, f) => a.reduce((s, x) => s + f(x), 0);
+  assert.equal(E.list.map((p) => p.zip).join(" "), "Unit4_Example_1_Two_Weeks.zip Unit4_Example_2_PDF_to_HTML.zip Unit4_Starter_Kit.zip");
+  assert.equal(Object.keys(E.byLesson).sort().join(" "), "k4 k5 k6 k7 k8 k9");
+  // example 1: two weeks with the same columns, every code in Masters, read like a correct tool
+  { const X = P1.expected(), F = P1.data(), rows = [], names = {};
+    for (const [cc, name] of F.find((f) => f.path === "Data/Masters.xlsx").sheets[0].rows.slice(1)) names[cc] = name;
+    for (const f of F.filter((f) => /Week_0\d/.test(f.path))) { const [head, ...body] = f.sheets[0].rows; assert.equal(head.join(), E.head1.join(), f.path + ": the same columns");
+      for (const r of body) { assert.ok(r.every((v) => v !== null && v !== ""), f.path + ": no empty cell"); assert.ok(names[r[3]], f.path + ": every country in Masters"); rows.push({ f: f.path, line: r[1], cc: r[3], q: r[4] }); } }
+    assert.equal(rows.length, X.rows); assert.equal(sum(rows, (r) => r.q), X.units);
+    assert.equal(X.perWeek.map((w) => w.rows + ":" + w.units).join(), ["Data/Week_01.xlsx", "Data/Week_02.xlsx"].map((f) => rows.filter((r) => r.f === f).length + ":" + sum(rows.filter((r) => r.f === f), (r) => r.q)).join());
+    const by = (k) => { const o = {}; for (const r of rows) o[r[k]] = (o[r[k]] || 0) + r.q; return o; };
+    assert.deepEqual({ ...by("cc") }, { ...X.countries }); assert.deepEqual({ ...by("line") }, { ...X.lines });
+    assert.equal(rows.filter((r) => r.cc === "KW").length, 8, "k5's story: counting rows gives Kuwait 8");
+    const csv = E.twoWeeksCsv().replace(/^\ufeff/, "").trim().split("\r\n"); assert.equal(csv.length - 1, X.rows, "Two_Weeks.csv holds every row"); }
+  // example 2: the PDF's bytes hold one table whose rows add up to its own Total line
+  { const X = P2.expected(), f = P2.data().find((x) => x.pdf), txt = Buffer.from(A.xlKit.pdf(f.pdf)).toString("latin1"), lines = {};
+    for (const m of txt.matchAll(/1 0 0 1 (-?[\d.]+) (-?[\d.]+) Tm \(((?:\\.|[^\\)])*)\) Tj/g)) (lines[m[2]] = lines[m[2]] || []).push([+m[1], m[3]]);
+    const L = Object.entries(lines).sort((a, b) => b[0] - a[0]).map(([, l]) => l.sort((a, b) => a[0] - b[0]).map((x) => x[1]));
+    const h = L.findIndex((l) => l.join() === "CountryCode,ModelCode,Qty,NetSales"), t = L.findIndex((l) => l[0] === "Total"); assert.ok(h > 0 && t > h, "a header row and a Total line");
+    const body = L.slice(h + 1, t).map((l) => ({ cc: l[0], q: +l[2].replace(/,/g, ""), v: +l[3].replace(/,/g, "") }));
+    assert.equal(body.length, X.rows); assert.equal(sum(body, (r) => r.q), X.qty); assert.equal(sum(body, (r) => r.v), X.sales);
+    assert.equal(+L[t][1].replace(/,/g, ""), X.qty, "Total line: Qty"); assert.equal(+L[t][2].replace(/,/g, ""), X.sales, "Total line: NetSales");
+    const kw = sum(body.filter((r) => r.cc === X.top.code), (r) => r.v); assert.equal(kw, X.top.sales); assert.equal(Math.round((kw / X.sales) * 100), X.top.share); }
+  // the kit: the rules forbid packages and the internet, and both rules files say the same
+  { const K = Object.fromEntries(P3.data().map((f) => [f.path, f.text]));
+    assert.equal(K["CLAUDE.md"].split("\n").slice(1).join("\n"), K["AGENTS.md"].split("\n").slice(1).join("\n"), "CLAUDE.md and AGENTS.md hold the same rules");
+    assert.ok(/pip install/.test(E.rules) && /standard library/.test(E.rules) && /No internet/.test(E.rules) && /PowerShell first/.test(E.rules));
+    assert.ok(/^---\nname: trusted-tool\ndescription: /.test(K[".claude/skills/trusted-tool/SKILL.md"]), "SKILL.md starts with name and description");
+    assert.equal(P3.expected().rules, 13); }
+  // later steps read earlier steps' results (k6a: Output/Two_Weeks.csv, k8a: Output/Exports.db), so the rules must allow
+  // reading Output while still forbidding any write to Data (Codex review on PR 42)
+  assert.ok(/results from Output/.test(E.rules) && /Never change a file in Data/.test(E.rules), "the kit's rules let a step read Output, never write Data");
+  const R4 = A.prompts.find((p) => p.id === "k6a").text;
+  assert.ok(/results from Output/.test(R4.en) && /never write to Data/.test(R4.en) && /من Output/.test(R4.ar), "the shared unit-4 Prompt tail lets a step read Output");
+});
+
+test("the unit-4 reference solutions are pure Python and, run on the example files, write the figures of the answer key", () => {
+  const S = A.easySolutions, stdlib = new Set(["csv", "html", "re", "sqlite3", "sys", "zlib", "datetime", "pathlib"]);
+  for (const [name, code] of Object.entries(S)) for (const m of code.matchAll(/^(?:from (\w+)|import ([\w, ]+))/gm))
+    for (const mod of (m[1] || m[2]).split(",").map((x) => x.trim())) assert.ok(stdlib.has(mod), `${name}: imports ${mod}, outside the standard library`);
+  let py = null; try { execFileSync("python3", ["--version"]); py = "python3"; } catch { return; }   // no Python on this machine: the import check above still ran
+  const tmp = mkdtempSync(path.join(tmpdir(), "u4-")), write = (root, f) => { const p = path.join(tmp, root, f.path); mkdirSync(path.dirname(p), { recursive: true }); writeFileSync(p, Buffer.from(A.xlKit.fileData(f))); };
+  const [P1, P2] = A.easyProjects.list;
+  try {
+    for (const f of P2.files()) write("ex2", f);
+    execFileSync(py, ["-I", path.join(tmp, "ex2", "Solution", "extract_pdf.py")], { cwd: tmp }); execFileSync(py, ["-I", path.join(tmp, "ex2", "Solution", "build_report.py")], { cwd: tmp });
+    const X = P2.expected(), page = readFileSync(path.join(tmp, "ex2", "Output", "Export_Report.html"), "utf8"), n = (x) => Number(x).toLocaleString("en-US");
+    for (const v of [n(X.sales), n(X.qty), X.top.name, X.top.share + "%"]) assert.ok(page.includes(v), "the HTML page shows " + v);
+    assert.ok(!/https?:\/\//.test(page), "the page links to nothing outside itself");
+    assert.ok(readFileSync(path.join(tmp, "ex2", "Output", "Run_Log.txt"), "utf8").includes(`${X.rows} rows, ${n(X.qty)} sets, ${n(X.sales)} EGP: the same as the Total line`));
+    for (const f of P1.files()) write("ex1", f);
+    mkdirSync(path.join(tmp, "ex1", "Output"), { recursive: true }); writeFileSync(path.join(tmp, "ex1", "Output", "Two_Weeks.csv"), A.easyProjects.twoWeeksCsv());
+    execFileSync(py, ["-I", path.join(tmp, "ex1", "Solution", "load_sqlite.py")], { cwd: tmp });
+    const Y = P1.expected(), q = readFileSync(path.join(tmp, "ex1", "Output", "Query_Results.txt"), "utf8");
+    assert.ok(q.includes("Egypt | " + Y.egypt) && q.includes("Kuwait | " + Y.topExport.units) && q.includes("L01 | " + Y.lines.L01) && q.includes("Week_02.xlsx | 18 | " + Y.perWeek[1].units), "the SQL answers match the answer key");
+  } finally { rmSync(tmp, { recursive: true, force: true }); }
+});
+
+test("the unit-4 lessons quote their projects' figures, the same in Arabic and English", () => {
+  const E = A.easyProjects, n = (x) => Number(x).toLocaleString("en-US"), X1 = E.list[0].expected(), X2 = E.list[1].expected();
+  const text = (id) => JSON.stringify(A.lessons.find((l) => l.id === id).levels);
+  const has = (id, ...figs) => { const s = text(id); for (const f of figs) assert.ok(s.includes(String(f)), `${id} should quote ${f}`); };
+  has("k4", X1.rows, n(X1.units), X1.perWeek[0].units, X1.perWeek[1].units, X1.egypt, X1.exportShare, X1.topExport.units);
+  has("k5", X1.topExport.units); has("k6", X1.rows, n(X1.units), X1.egypt, X1.lines.L01, X1.perWeek[1].units);
+  has("k7", X2.rows, X2.qty, n(X2.sales), n(X2.top.sales)); has("k8", n(X2.sales), X2.qty, X2.top.share);
+  has("k9", E.list[2].expected().rules);
+  const ar = (s) => String(s).replace(/[٠-٩]/g, (d) => "٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/[٬,]/g, "").replace(/٫/g, ".");
+  const nums = (s) => [...ar(s).matchAll(/\d+(?:\.\d+)?/g)].map((m) => m[0]).sort().join(" ");
+  for (const l of A.lessons.filter((x) => x.unit === "u3")) for (const k of Object.keys(l.levels)) for (const x of l.levels[k])
+    assert.equal(nums(x.ar), nums(x.en), `${l.id}.${k}.${x.k}: Arabic and English quote different figures`);
 });

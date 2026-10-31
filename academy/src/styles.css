@@ -596,6 +596,7 @@ html[data-theme="dark"] .sit-code code{color:var(--ink)}
 .quiz{display:grid;gap:16px}
 .qhead{display:flex;flex-wrap:wrap;align-items:center;gap:10px;justify-content:space-between}
 .qtext{font-family:var(--font-display);font-size:1.12rem;font-weight:600;line-height:1.6}
+.qtext,.opt{overflow-wrap:anywhere}   /* a long path or command in a question wraps instead of widening a phone screen */
 .opts{display:grid;gap:8px}
 .opt{display:flex;gap:12px;align-items:flex-start;text-align:start;width:100%;padding:12px 14px;border-radius:var(--r-md);border:1.5px solid var(--line);background:var(--surface);color:var(--ink);font-size:15px;line-height:1.6;transition:border-color var(--dur),background var(--dur)}
 .opt:hover:not(:disabled){border-color:var(--accent)}

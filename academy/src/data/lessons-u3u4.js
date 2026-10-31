@@ -6,7 +6,7 @@
   A.lessons = (A.lessons || []).concat([
     /* ---------------- UNIT 3 ---------------- */
     {
-      id: "d1", unit: "u4", pages: [24], diff: 1, min: 7, scene: "prep", related: ["p9", "y4", "d2", "p1"], pre: ["f4"],
+      id: "d1", unit: "u5", pages: [24], diff: 1, min: 7, scene: "prep", related: ["p9", "y4", "d2", "p1"], pre: ["f4"],
       title: { ar: "جهّز البيانات وحدّد الغرض", en: "Preparing data and defining the purpose" },
       sum: { ar: "خمس دقائق تجهيز بتوفرّ ساعات مراجعة، وبعدين أول 3 مراحل: الغرض والجمهور، المؤشرات، والموافقة على التصميم قبل ما تبني.", en: "Five minutes of prep save hours of review, then the first three stages: purpose and audience, KPIs, and approving the design before building." },
       book: [
@@ -37,7 +37,7 @@
       },
     },
     {
-      id: "d2", unit: "u4", pages: [24, 25], diff: 2, min: 9, scene: "dash8", lab: "dashboard", related: ["d1", "y6", "w3"], pre: ["d1"],
+      id: "d2", unit: "u5", pages: [24, 25], diff: 2, min: 9, scene: "dash8", lab: "dashboard", related: ["d1", "y6", "w3"], pre: ["d1"],
       title: { ar: "البناء والتفاعل والتحقق والمشاركة", en: "Build, interact, verify and share" },
       sum: { ar: "المراحل من 4 لـ 8: البناء حسب التصور، فلاتر متزامنة، الهوية البصرية، التحقق من الأرقام، الحفظ والمشاركة — وست أماكن غلط شائعة.", en: "Stages 4 to 8: build to the outline, synced filters, visual identity, number verification, saving and sharing — and the six common pitfalls." },
       book: [
@@ -80,7 +80,7 @@
     },
     /* ---------------- UNIT 4 ---------------- */
     {
-      id: "w1", unit: "u3", pages: [26], diff: 1, min: 6, scene: "vscode", related: ["a5", "w5", "g2"], pre: [],
+      id: "w1", unit: "u4", pages: [26], diff: 1, min: 6, scene: "vscode", related: ["a5", "w5", "g2"], pre: [],
       title: { ar: "بيئة الشغل: محرر VS Code", en: "Your workspace: the VS Code editor" },
       sum: { ar: "مكان واحد تشوف فيه ملفاتك وتكتب وتشغّل الأوامر: خمس مناطق، أول خمس خطوات، وتلات أخطاء شائعة.", en: "One place to see your files, write and run commands: five areas, the first five steps, and three common mistakes." },
       book: [
@@ -110,7 +110,7 @@
       },
     },
     {
-      id: "w3", unit: "u5", pages: [28], diff: 2, min: 7, scene: "building", related: ["w4", "d2", "y6"], pre: ["w1"],
+      id: "w3", unit: "u6", pages: [28], diff: 2, min: 7, scene: "building", related: ["w4", "d2", "y6"], pre: ["w1"],
       title: { ar: "الواجهة الأمامية: اللي المستخدم بيشوفه", en: "The front-end: what the user sees" },
       sum: { ar: "HTML للهيكل، CSS للشكل، JavaScript للسلوك؛ أدوات بتوفر وقت، وقرار مهم: ماتبدأش بإطار عمل.", en: "HTML for structure, CSS for look, JavaScript for behaviour; time-saving tools, and one key decision: don’t start with a framework." },
       book: [
@@ -142,7 +142,7 @@
       },
     },
     {
-      id: "w4", unit: "u5", pages: [29], diff: 2, min: 8, scene: "request", lab: "request", related: ["w3", "w5", "s1"], pre: ["w3"],
+      id: "w4", unit: "u6", pages: [29], diff: 2, min: 8, scene: "request", lab: "request", related: ["w3", "w5", "s1"], pre: ["w3"],
       title: { ar: "الواجهة الخلفية: اللي المستخدم مش بيشوفه", en: "The back-end: what the user doesn’t see" },
       sum: { ar: "العقل اللي بيقرأ ويحسب ويطبق القواعد: ليه محتاجين خادم، الطقم الموصى بيه، رحلة طلب واحد، ومبادئ تصميم ماتتنازلش عنها.", en: "The brain that reads, computes and applies rules: why we need a server, the recommended kit, one request’s journey, and non-negotiable design principles." },
       book: [
@@ -174,7 +174,7 @@
       },
     },
     {
-      id: "w5", unit: "u5", pages: [30], diff: 2, min: 8, scene: "appbuild", related: ["w4", "w6", "y7"], pre: ["w4"],
+      id: "w5", unit: "u6", pages: [30], diff: 2, min: 8, scene: "appbuild", related: ["w4", "w6", "y7"], pre: ["w4"],
       title: { ar: "بناء تطبيق ويب كامل على جهازك", en: "Building a full web app on your machine" },
       sum: { ar: "ليه تطبيق ويب محلي، بنية خمس مجلدات، والمسار في تمان مراحل — والترتيب مش اقتراح.", en: "Why a local web app, a five-folder structure, and the eight-stage path — the order isn’t a suggestion." },
       book: [
@@ -214,7 +214,7 @@
         } },
     },
     {
-      id: "w6", unit: "u5", pages: [31], diff: 2, min: 7, related: ["w5", "a5", "p2"], pre: ["w5"],
+      id: "w6", unit: "u6", pages: [31], diff: 2, min: 7, related: ["w5", "a5", "p2"], pre: ["w5"],
       title: { ar: "Prompts التنفيذ وقائمة الاعتماد", en: "Execution prompts and the acceptance checklist" },
       sum: { ar: "خمس Prompts ورا بعض بتبني التطبيق، ست أسئلة قبل ما تعتمده، مسرد سريع، والدرس الأهم: الترتيب.", en: "Five sequential prompts that build the app, six questions before adopting it, a quick glossary, and the key lesson: order." },
       book: [

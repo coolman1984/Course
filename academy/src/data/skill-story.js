@@ -2,7 +2,7 @@
    The planning engineer carries every slide with one question: «إزاي الشغل اللي نجح مرة يتكرر بنفس الجودة كل مرة؟».
    The deck turns both examples into skills: what a skill is, the description, steps, rules and checks, reference files
    read on demand, scripts, where skills live, the kit's three skills, skill against CLAUDE.md and Prompt, the test in a
-   new session, skills that act only on command; and it ends on the file bigger than Excel that opens unit 4.
+   new session, skills that act only on command; and it ends on the security team's two questions that open unit 4.
    Drawings are the sk_* entries in engine/history.js. */
 "use strict";
 (function (A) {
@@ -16,7 +16,7 @@
     answerLabel: u("القاعدة، وليه؟", "The rule, and why"),
     ideaLabel: u("الفكرة في جملة", "The idea in one line"),
     question: u("إزاي الشغل اللي نجح مرة يتكرر بنفس الجودة كل مرة؟", "How does work that succeeded once repeat with the same quality every time?"),
-    finalQuestion: u("طب لو جالك ملف أكبر من إكسل نفسه؟", "And what if a file arrives that is bigger than Excel itself?"),
+    finalQuestion: u("طب الأداة اللي قسم الأمن يوافق عليها… بتتبني إزاي؟", "So how do you build a tool the security team will approve?"),
     note: u("طريقة رفع المهارات في التطبيق ممكن تتغيّر شكلها؛ الفكرة نفسها ثابتة. ملفات المهارات في طقم الدرس.", "How skills are uploaded in the app may change in look; the idea itself stays. The skill files are in this lesson's kit."),
     ui: {
       prev: u("اللي فات", "Previous"), next: u("اللي بعده", "Next"),
@@ -138,14 +138,14 @@
         idea: u("اللي ما بيرجعش… بأمرك إنت.", "What can't be undone… on your command.")
       },
       {
-        id: "cliff", art: "sk_cliff", year: u("الوحدة الجاية", "Next unit"), mark: u("١٢", "12"), era: u("ملف الإدارة", "Head office's file"),
-        title: u("كل حاجة بتتكرر… لحد ما وصل ملف الإدارة", "Everything repeats… until head office's file arrived"),
-        story: [u("ديسمبر: ٣ مهارات شغالة، والداشبورد بيتحدّث في ٥ دقايق، والمراجعة التجارية في ٢٠. لحد ما وصل ملف من نظام الإدارة: كل نتايج محطات الفحص للربع، ٣٠٠ ألف صف، وخلايا مدموجة في العناوين، وتواريخ مكتوبة كنص. والمطلوب ينضم للمراجعة.",
-          "December: 3 skills running, the dashboard refreshing in 5 minutes, the commercial review in 20. Until a file arrived from the management system: every test-station result for the quarter, 300,000 rows, merged cells in the headers, dates typed as text. And it was to join the review."),
-        u("الأداة عملت الصح ووقفت برسالة واضحة. بس المرة دي إكسل نفسه وقف عند ٧٠٪ ورسالة «لا يستجيب». إكسل اتعمل للجداول اللي بتشوفها بعينك، مش لمئات الآلاف من الصفوف. والسؤال اللي الوحدة الجاية بتبدأ بيه: طب لو جالك ملف أكبر من إكسل نفسه؟",
-          "The tool did the right thing and stopped with a clear message. But this time Excel itself froze at 70% with “Not responding”. Excel was built for tables you look at, not for hundreds of thousands of rows. And the question the next unit opens with: what if a file arrives that is bigger than Excel itself?")],
+        id: "cliff", art: "sk_cliff", year: u("الوحدة الجاية", "Next unit"), mark: u("١٢", "12"), era: u("مراجعة الأمن", "The security review"),
+        title: u("كل حاجة بتتكرر… لحد ما قسم الأمن سأل سؤالين", "Everything repeats… until the security team asked two questions"),
+        story: [u("ديسمبر: ٣ مهارات شغالة، والداشبورد بيتحدّث في ٥ دقايق، والمراجعة التجارية في ٢٠. والإدارة قررت تعمّم الأدوات دي على مصانع تانية. فقسم أمن المعلومات طلب يشوف السكريبتات قبل ما تتنقل لأي لابتوب.",
+          "December: 3 skills running, the dashboard refreshing in 5 minutes, the commercial review in 20. Management decided to roll these tools out to other factories. So the information-security team asked to see the scripts before they move to any laptop."),
+        u("القسم سأل سؤالين: «الكود ده بيستخدم أي حاجة نازلة من النت؟» و«مين راجعه، وإزاي؟». ومهندس في مصنع تاني قال إن اللابتوب بتاعه ما عليهوش Python أصلًا. والسؤال اللي الوحدة الجاية بتبدأ بيه: طب الأداة اللي قسم الأمن يوافق عليها… بتتبني إزاي؟",
+          "The team asked two questions: “Does this code use anything downloaded from the internet?” and “Who reviewed it, and how?” And an engineer at another factory said his laptop has no Python at all. The question the next unit opens with: so how do you build a tool the security team will approve?")],
         answer: u("واجب الوحدة: نزّل طقم المهارات، وحطه في فولدر المثالين، واختبره في جلسة جديدة، واكتب مهارتك الأولى لشغلك. لأن الشغل اللي بقى مهارة هو الشغل اللي بقى بتاع الفريق كله.", "This unit's task: download the skills kit, put it in the examples' folder, test it in a new session, and write your first skill for your own work — work that became a skill became the whole team's work."),
-        idea: u("إكسل اتعمل علشان تشوف البيانات… مش علشان يشيلها كلها.", "Excel was built for looking at data… not for holding all of it.")
+        idea: u("الأداة اللي هتتنقل لناس تانية… لازم تبقى آمنة ومتراجعة.", "A tool that will move to other people… must be safe and checked.")
       }
     ]
   };
