@@ -154,18 +154,28 @@ Units 4–8 became 5–9; course plan 6 moves each saved unit score up one unit 
 
 | # | Lesson | Download | Deck question |
 |---|---|---|---|
-| 1 | k1 Codex CLI and Claude Code CLI | — | «إزاي النموذج يشتغل جوّه فولدري، وأنا اللي بقرر؟» |
+| 1 | k1 Codex CLI and Claude Code CLI | — | «إزاي النموذج يشتغل جوّه فولدري، والقرار يفضل ليّا؟» |
 | 2 | k2 Pure Python: why packages are blocked | — | «إزاي أبني أداة من غير ولا باكدج من برّه؟» |
-| 3 | k3 PowerShell first, and what COM means | — | «إزاي سكريبت يشغّل إكسل كإنه إيدي؟» |
-| 4 | k4 Example 1, step by step, in one click | `Unit4_Example_1_Two_Weeks.zip` | «إزاي أبني الأداة خطوة خطوة، وتشتغل بضغطة؟» |
+| 3 | k3 PowerShell first, and what COM means | — | «إزاي سكريبت يشغّل إكسل كأنه إيدي؟» |
+| 4 | k4 Example 1, step by step, in one click | `Unit4_Example_1_Two_Weeks.zip` | «إزاي أبني الأداة خطوة بخطوة، وتشتغل بضغطة واحدة؟» |
 | 5 | k5 Reviewing code properly | (the same zip, Prompt_4) | «إزاي أعرف إن الكود صح، مش بس إنه اشتغل؟» |
 | 6 | k6 SQL and SQLite inside Python | (the same zip, Prompt_5) | «إزاي أسأل الجداول أسئلة كتير بسرعة، ومن غير تثبيت؟» |
-| 7 | k7 Example 2: one PDF into a database | `Unit4_Example_2_PDF_to_HTML.zip` | «إزاي أرقام الـ PDF توصل لقاعدة البيانات من غير ما تتنقل بإيد؟» |
+| 7 | k7 Example 2: one PDF into a database | `Unit4_Example_2_PDF_to_HTML.zip` | «إزاي أرقام الـ PDF توصل لقاعدة البيانات من غير ما حد ينقلها بإيده؟» |
 | 8 | k8 An HTML page for management, offline | (the same zip, Prompt_2) | «إزاي الأرقام تتعرض على الإدارة في صفحة تتفتح في أي مكان؟» |
 | 9 | k9 Skills and the rules files | `Unit4_Starter_Kit.zip` | «إزاي القواعد دي تتطبق كل مرة من غير ما أعيدها؟» |
 
 Example 1 is two weeks (36 rows, 1,765 sets) and one lookup (the country name); example 2 is one text PDF (12 rows and a
 Total line: 470 sets, EGP 4,168,000) loaded into SQLite and shown as one HTML page with a Present button. The Python steps
-ship a tested reference solution in `Solution/`. Unit 3 now ends on the security team's two questions, which unit 4
+first shipped as a reference solution in `Solution/`, since replaced by the ready tools (below). Unit 3 now ends on the security team's two questions, which unit 4
 answers; unit 4 ends on the file bigger than Excel that opens unit 5 (b1).
 
+
+## Ready tools, and unit 4 in plain Egyptian Arabic (October)
+Every example of units 3 and 4 now ships its finished automation in `Ready_Tool/`, so a lecture can run it at once:
+one double-click on `Run_Tool.bat` runs every step and stops at the first failed check. Office files go through
+PowerShell and COM (DRM-protected laptops let only Office open them), everything else is pure Python, and each tool
+carries `docs/SKILL.md`, `docs/HISTORY.md`, `docs/LESSONS.md` and `START_HERE.txt`. The scripts are real files in
+`academy/src/tools/`; the data tests run the Python steps on the generated files, through the COM export's CSV too, and
+check the PowerShell scripts' structure. Unit 4's lessons, decks, plain-language layer, intros and downloads were
+rewritten in smoother Egyptian Arabic, and its hero is now unit 3's planning engineer throughout (the planning
+engineer at a second plant is gone).

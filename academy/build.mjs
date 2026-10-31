@@ -11,7 +11,7 @@ const out = join(here, "..", "AI_Academy.html");
 const read = (p) => readFileSync(join(src, p), "utf8");
 const b64 = (p) => readFileSync(join(src, p)).toString("base64");
 
-const DATA = ["data/ui.js", "data/meta.js", "data/stories.js", "data/scenes.js", "data/lessons-u0.js", "data/lessons-u1.js", "data/lessons-u2.js", "data/lessons-u3u4.js", "data/lessons-u5.js", "data/lessons-xl.js", "data/lessons-office.js", "data/lessons-easy.js", "data/course-order.js", "data/plain-talk-a.js", "data/plain-talk-b.js", "data/prompts.js", "data/situations.js", "data/quiz.js", "data/glossary.js", "data/compare.js", "data/history.js", "data/model-story.js", "data/context-story.js", "data/window-story.js", "data/agents-story.js", "data/work-story.js", "data/limits-story.js", "data/auto-story.js", "data/big-story.js", "data/kit-story.js", "data/deliver-story.js", "data/stack-story.js", "data/lookup-story.js", "data/report-story.js", "data/run-story.js", "data/match-story.js", "data/needs-story.js", "data/table-story.js", "data/dash-story.js", "data/gather-story.js", "data/slides-story.js", "data/code-story.js", "data/skill-story.js", "data/cli-story.js", "data/pure-story.js", "data/com-story.js", "data/steps-story.js", "data/review-story.js", "data/sql-story.js", "data/pdf-story.js", "data/page-story.js", "data/rules-story.js", "data/xl-sample.js", "data/office-projects.js", "data/easy-solutions.js", "data/easy-projects.js"];
+const DATA = ["data/ui.js", "data/meta.js", "data/stories.js", "data/scenes.js", "data/lessons-u0.js", "data/lessons-u1.js", "data/lessons-u2.js", "data/lessons-u3u4.js", "data/lessons-u5.js", "data/lessons-xl.js", "data/lessons-office.js", "data/lessons-easy.js", "data/course-order.js", "data/plain-talk-a.js", "data/plain-talk-b.js", "data/prompts.js", "data/situations.js", "data/quiz.js", "data/glossary.js", "data/compare.js", "data/history.js", "data/model-story.js", "data/context-story.js", "data/window-story.js", "data/agents-story.js", "data/work-story.js", "data/limits-story.js", "data/auto-story.js", "data/big-story.js", "data/kit-story.js", "data/deliver-story.js", "data/stack-story.js", "data/lookup-story.js", "data/report-story.js", "data/run-story.js", "data/match-story.js", "data/needs-story.js", "data/table-story.js", "data/dash-story.js", "data/gather-story.js", "data/slides-story.js", "data/code-story.js", "data/skill-story.js", "data/cli-story.js", "data/pure-story.js", "data/com-story.js", "data/steps-story.js", "data/review-story.js", "data/sql-story.js", "data/pdf-story.js", "data/page-story.js", "data/rules-story.js", "data/xl-sample.js", "data/ready-tools.js", "data/office-projects.js", "data/easy-projects.js"];
 const ENGINE = ["engine/core.js", "engine/scene.js", "engine/render.js", "engine/quiz.js", "engine/labs.js", "engine/xlkit.js", "engine/tools.js", "engine/motion.js", "engine/history.js"];
 
 for (const f of [...DATA, ...ENGINE]) if (!existsSync(join(src, f))) throw new Error("Missing source file: " + f);
@@ -25,6 +25,15 @@ for (const f of readdirSync(join(src, "pages")).filter((x) => /^p\d+\.webp$/.tes
 // the unit-3 examples' finished results (academy/tools/make-finals.py), offered inside each example's zip
 const finals = {};
 for (const f of readdirSync(join(src, "finals")).sort()) finals[f] = b64("finals/" + f);
+
+// the ready tools (academy/src/tools/: scripts and their docs), offered inside each example's zip under Ready_Tool/
+const tools = {};
+const walk = (dir) => { for (const e of readdirSync(join(src, dir), { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
+  if (e.name === "__pycache__" || e.name.startsWith(".")) continue;
+  const p = dir + "/" + e.name;
+  if (e.isDirectory()) walk(p); else tools[p.slice("tools/".length)] = read(p);
+} };
+walk("tools");
 
 const guard = (s) => s.replace(/<\/script/gi, "<\\/script");
 const dataJs = DATA.map((f) => `/* ${f} */\n${read(f)}`).join("\n");
@@ -54,6 +63,7 @@ const body = `<a class="skip" href="#main" onclick="event.preventDefault();docum
 <noscript><div style="padding:24px">هذه الأكاديمية تحتاج تفعيل JavaScript. — This academy needs JavaScript enabled.</div></noscript>
 <script type="application/json" id="book-pages">${JSON.stringify(pages)}</script>
 <script type="application/json" id="final-files">${JSON.stringify(finals)}</script>
+<script type="application/json" id="tool-files">${JSON.stringify(tools).replace(/</g, "\\u003c")}</script>
 <script>${guard(dataJs)}</script>
 <script>${guard(engineJs)}</script>
 <script>${boot}</script>`;

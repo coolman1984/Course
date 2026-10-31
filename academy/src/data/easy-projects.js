@@ -7,7 +7,7 @@
    HTML page for management (pure Python). The starter kit (lesson k9) holds the rules files and a skill.
    Every data file is in English, like the factory's own; README, Prompts and answer keys follow the reader's language.
    Seeded generators build the same rows every time, and data.test.mjs recomputes every `expected` figure from the
-   files and runs the Solution/ scripts (data/easy-solutions.js) with python3. Everything is illustrative. */
+   files and runs the ready tools' Python steps (Ready_Tool/, academy/src/tools/) with python3. Everything is illustrative. */
 "use strict";
 (function (A) {
   const u = (ar, en) => ({ ar, en });
@@ -40,7 +40,7 @@
     ...[1, 2].map((w) => ({ path: "Data/" + weekFile(w), sheets: [{ name: "Production", rows: [HEAD1, ...twoWeeks().filter((x) => x.week === w).map((x) => [{ d: SERIAL0 + x.day }, x.line, x.mc, x.cc, x.q])] }] })),
     { path: "Data/Masters.xlsx", sheets: [{ name: "Countries", rows: [["CountryCode", "CountryName"], ...CT] }] },
   ];
-  // what step 3 writes (Output/Two_Weeks.csv), and step 5 reads: the test feeds this to Solution/load_sqlite.py
+  // what step 3 writes (Output/Two_Weeks.csv), and step 5 reads: the test feeds this to Ready_Tool/scripts/load_sqlite.py
   const twoWeeksCsv = () => "\ufeff" + [[...HEAD1, "SourceFile", "CountryName"].join(","), ...twoWeeks().map((x) => [iso(x.day), x.line, x.mc, x.cc, x.q, weekFile(x.week), countryName[x.cc]].join(","))].join("\r\n") + "\r\n";
   function ex1Expected() {
     const t = twoWeeks(), by = (f) => { const o = {}; for (const x of t) o[f(x)] = (o[f(x)] || 0) + x.q; return o; };
@@ -219,59 +219,56 @@ pause
   const bom = "\ufeff";
   const crlf = (s) => s.replace(/\r?\n/g, "\r\n");
   const prompt = (id, lang) => { const p = (A.prompts || []).find((x) => x.id === id); return p ? crlf(p.text[lang]) + "\r\n" : ""; };
-  const S = () => A.easySolutions || {};
-  const sol = (names) => names.map((f) => ({ path: "Solution/" + f, text: crlf(S()[f] || "") }));
-  const runBat = (py) => ({ path: "Solution/Run_" + py.replace(/\.py$/, "") + ".bat", text: crlf(`@echo off\ncd /d "%~dp0.."\npython "%~dp0${py}"\npause\nrem END OF FILE Run_${py.replace(/\.py$/, "")}.bat\n`) });
   const P = [];
   P.push({
     n: 1, lessons: ["k4", "k5", "k6"], lesson: "k4", slug: "Two_Weeks", short: u("أسبوعين", "Two weeks"),
-    title: u("المثال الأول، بسيط: أسبوعين في جدول واحد، واسم البلد، وتقرير، وقاعدة بيانات", "Example 1, simply: two weeks in one table, the country name, a report and a database"),
-    about: u("تقريرين إنتاج أسبوعيين بنفس الأعمدة (٣٦ صف بس)، وملف Masters فيه شيت واحد للبلاد. الأداة بتتبني ٥ خطوات صغيرة: تحت بعض، وبعدين اسم البلد بـ VLOOKUP، وبعدين تقرير قصير وملف CSV (كلهم بـ PowerShell وإكسل)، وبعدين مراجعة الكود، وفي الآخر قاعدة بيانات SQLite وتلات أسئلة بـ SQL (بـ Python النقي).",
+    title: u("المثال الأول، بشكل بسيط: أسبوعين في جدول واحد، واسم البلد، وتقرير، وقاعدة بيانات", "Example 1, simply: two weeks in one table, the country name, a report and a database"),
+    about: u("تقريرين إنتاج أسبوعيين بنفس الأعمدة (٣٦ صف بس)، وملف Masters فيه شيت واحد للبلاد. الأداة بتتبني في ٥ خطوات صغيرة: الأسبوعين تحت بعض، وبعدين اسم البلد بـ VLOOKUP، وبعدين تقرير قصير وملف CSV (كلهم بـ PowerShell وإكسل)، وبعدين مراجعة الكود، وفي الآخر قاعدة بيانات SQLite وتلات أسئلة بـ SQL (بـ Python النقي).",
       "Two weekly production reports with the same columns (36 rows only), and a Masters file with one sheet of countries. The tool is built in 5 small steps: stacking, then the country name by VLOOKUP, then a short report and a CSV file (all with PowerShell and Excel), then a review of the code, and finally a SQLite database and three SQL questions (with pure Python)."),
-    prompts: ["k4a", "k4b", "k4c", "k5a", "k6a"], data: ex1Files, expected: ex1Expected, solution: ["load_sqlite.py"],
-    head: u("المثال ١ من ٢", "Example 1 of 2"), note: u("ملفات البيانات بالإنجليزي، ومعاها README وPrompt لكل خطوة ومفتاح إجابة، والحل النموذجي لخطوة Python. فكّه في فولدر لوحده.", "The data files are in English, with a README, a Prompt per step, an answer key and the reference solution of the Python step. Unzip it into a folder of its own."),
+    prompts: ["k4a", "k4b", "k4c", "k5a", "k6a"], data: ex1Files, expected: ex1Expected, tool: "u4-ex1",
+    head: u("المثال ١ من ٢", "Example 1 of 2"), note: u("ملفات البيانات بالإنجليزي، ومعاها README، وPrompt لكل خطوة، ومفتاح الإجابة، والأداة الجاهزة كاملة (Ready_Tool) بتشتغل بضغطة واحدة. فكّه في فولدر لوحده.", "The data files are in English, with a README, a Prompt per step, the answer key, and the complete ready tool (Ready_Tool) that runs in one click. Unzip it into a folder of its own."),
   });
   P.push({
     n: 2, lessons: ["k7", "k8"], lesson: "k7", slug: "PDF_to_HTML", short: u("من PDF لصفحة", "PDF to a page"),
-    title: u("المثال التاني، بسيط: تقرير PDF واحد في قاعدة بيانات، وصفحة HTML للإدارة", "Example 2, simply: one PDF report into a database, and an HTML page for management"),
-    about: u("تقرير PDF واحد من النظام: مبيعات التصدير لشهر يوليو، جدول واحد ١٢ صف وتحته سطر الإجمالي. الأداة بـ Python النقي بتقرا النص من الـ PDF، وتراجع مجموع الصفوف على سطر الإجمالي، وتحطهم في قاعدة بيانات SQLite. وبعدين خطوة تانية بتعمل صفحة HTML واحدة: أرقام ورسوم وجدول، وزرار عرض للإدارة.",
+    title: u("المثال التاني، بشكل بسيط: تقرير PDF واحد في قاعدة بيانات، وصفحة HTML للإدارة", "Example 2, simply: one PDF report into a database, and an HTML page for management"),
+    about: u("تقرير PDF واحد من النظام: مبيعات التصدير لشهر يوليو، جدول واحد من ١٢ صف وتحته سطر الإجمالي. الأداة بـ Python النقي بتقرا النص من الـ PDF، وتراجع مجموع الصفوف على سطر الإجمالي، وتحطهم في قاعدة بيانات SQLite. وبعدين خطوة تانية بتعمل صفحة HTML واحدة: أرقام، ورسوم، وجدول، وزرار عرض للإدارة.",
       "One PDF report from the system: July's export sales, one 12-row table with a Total line under it. The pure-Python tool reads the PDF's text, checks the rows' sum against the Total line, and loads them into a SQLite database. Then a second step makes one HTML page: figures, charts, a table, and a Present button for management."),
-    prompts: ["k7a", "k8a"], data: ex2Files, expected: ex2Expected, solution: ["extract_pdf.py", "build_report.py"],
-    head: u("المثال ٢ من ٢", "Example 2 of 2"), note: u("الـ PDF وملف البلاد بالإنجليزي، ومعاهم README وPrompt لكل خطوة ومفتاح إجابة، والحل النموذجي بـ Python النقي. فكّه في فولدر لوحده.", "The PDF and the countries file are in English, with a README, a Prompt per step, an answer key and the pure-Python reference solution. Unzip it into a folder of its own."),
+    prompts: ["k7a", "k8a"], data: ex2Files, expected: ex2Expected, tool: "u4-ex2",
+    head: u("المثال ٢ من ٢", "Example 2 of 2"), note: u("الـ PDF وملف البلاد بالإنجليزي، ومعاهم README، وPrompt لكل خطوة، ومفتاح الإجابة، والأداة الجاهزة كاملة (Ready_Tool) بتشتغل بضغطة واحدة. فكّه في فولدر لوحده.", "The PDF and the countries file are in English, with a README, a Prompt per step, the answer key, and the complete ready tool (Ready_Tool) that runs in one click. Unzip it into a folder of its own."),
   });
   P.push({
     n: 3, lessons: ["k9"], lesson: "k9", slug: "Starter_Kit", short: u("طقم البداية", "Starter kit"),
     title: u("طقم البداية: ملفات القواعد ومهارة الأداة الآمنة", "The starter kit: the rules files and the trusted-tool skill"),
-    about: u("ملف CLAUDE.md لـ Claude Code، وملف AGENTS.md لـ Codex، بنفس قواعد الأمان: PowerShell الأول، وPython النقي، وخطوة خطوة، وسجل، ووقفة واضحة، وملف تشغيل. ومعاهم مهارة trusted-tool بمراجعها، وملف Check_Setup.bat بيتأكد إن PowerShell وPython موجودين على جهازك.",
+    about: u("ملف CLAUDE.md لـ Claude Code، وملف AGENTS.md لـ Codex، بنفس قواعد الأمان: PowerShell الأول، وPython النقي، وخطوة بخطوة، وسجل، ووقفة واضحة، وملف تشغيل. ومعاهم مهارة trusted-tool بملفات المرجع بتاعتها، وملف Check_Setup.bat بيتأكد إن PowerShell وPython موجودين على جهازك.",
       "A CLAUDE.md for Claude Code and an AGENTS.md for Codex, with the same security rules: PowerShell first, pure Python, step by step, a log, a clear stop, a launcher. With them, the trusted-tool skill and its references, and a Check_Setup.bat that checks PowerShell and Python are on your machine."),
     prompts: ["k9a"], data: () => Object.entries(KIT).map(([path, text]) => ({ path, text: path.endsWith(".bat") ? crlf(text) : text })), expected: () => ({ files: Object.keys(KIT).length, rules: (RULES.match(/^\d+\. /gm) || []).length }),
-    head: u("طقم البداية", "The starter kit"), note: u("الملفات بالإنجليزي، ومعاها README وPrompt. فكّه وانسخ الملفات لفولدر مشروعك جنب فولدر Data.", "The files are in English, with a README and a Prompt. Unzip it and copy the files into your project folder, next to the Data folder."),
+    head: u("طقم البداية", "The starter kit"), note: u("الملفات بالإنجليزي، ومعاها README وPrompt. فكّه، وانسخ الملفات لفولدر مشروعك جنب فولدر Data.", "The files are in English, with a README and a Prompt. Unzip it and copy the files into your project folder, next to the Data folder."),
   });
 
   /* ---------- the guide files ---------- */
   function guide(p, lang) {
     const t = T(lang), E = p.expected();
     if (p.n === 1) return {
-      data: [t("- Data/Week_01.xlsx وData/Week_02.xlsx: تقرير إنتاج لكل أسبوع، شيت Production، العناوين في الصف الأول:", "- Data/Week_01.xlsx and Data/Week_02.xlsx: one production report per week, sheet Production, headers in row 1:"), "  " + HEAD1.join(" | "),
-        t("- Data/Masters.xlsx: شيت واحد Countries فيه عمودين: CountryCode وCountryName.", "- Data/Masters.xlsx: one sheet, Countries, with two columns: CountryCode and CountryName.")],
-      rules: [t("- الملفين بنفس الأعمدة وبنفس الترتيب، وكل كود بلد موجود في Masters، ومفيش خلية فاضية.", "- Both files have the same columns in the same order, every country code is in Masters, and no cell is empty."), t("- Qty بعدد الأجهزة. المصنع بيشتغل من السبت للخميس، وفيه ٣ خطوط: L01 وL02 وL03.", "- Qty is in sets. The factory works Saturday to Thursday, on 3 lines: L01, L02 and L03."), t("- EG يعني السوق المحلي، وأي بلد تاني تصدير.", "- EG is the home market; any other country is export.")],
+      data: [t("- Data/Week_01.xlsx وData/Week_02.xlsx: تقرير إنتاج لكل أسبوع، في شيت Production، والعناوين في الصف الأول:", "- Data/Week_01.xlsx and Data/Week_02.xlsx: one production report per week, sheet Production, headers in row 1:"), "  " + HEAD1.join(" | "),
+        t("- Data/Masters.xlsx: فيه شيت واحد اسمه Countries بعمودين: CountryCode وCountryName.", "- Data/Masters.xlsx: one sheet, Countries, with two columns: CountryCode and CountryName.")],
+      rules: [t("- الملفين بنفس الأعمدة وبنفس الترتيب، وكل كود بلد موجود في Masters، ومفيش خانة فاضية.", "- Both files have the same columns in the same order, every country code is in Masters, and no cell is empty."), t("- Qty بعدد الأجهزة. والمصنع بيشتغل من السبت للخميس، على ٣ خطوط: L01 وL02 وL03.", "- Qty is in sets. The factory works Saturday to Thursday, on 3 lines: L01, L02 and L03."), t("- EG يعني السوق المحلي، وأي بلد تاني يبقى تصدير.", "- EG is the home market; any other country is export.")],
       out: [t("- الخطوة ١ (Prompt_1): Output/Two_Weeks.xlsx: شيت Data فيه الملفين تحت بعض، ومعاهم عمود SourceFile.", "- Step 1 (Prompt_1): Output/Two_Weeks.xlsx: a Data sheet holding both files stacked, with a SourceFile column."),
-        t("- الخطوة ٢ (Prompt_2): نفس الملف: عمود CountryName بمعادلة VLOOKUP من شيت Countries (اتنسخ جوّه الملف).", "- Step 2 (Prompt_2): the same workbook: a CountryName column as a VLOOKUP formula on the Countries sheet (copied inside the workbook)."),
-        t("- الخطوة ٣ (Prompt_3): شيت Report (الإجمالي، وكل بلد، وكل خط) وOutput/Two_Weeks.csv.", "- Step 3 (Prompt_3): a Report sheet (the total, each country, each line) and Output/Two_Weeks.csv."),
-        t("- الخطوة ٤ (Prompt_4): مراجعة الكود بقايمة المراجعة، من غير ما يتعدّل حاجة قبل ما توافق.", "- Step 4 (Prompt_4): a review of the code with the checklist, with nothing changed before you approve."),
-        t("- الخطوة ٥ (Prompt_5): Output/Factory.db (جدول Production) وOutput/Query_Results.txt (تلات أسئلة بـ SQL). الحل النموذجي في Solution/load_sqlite.py.", "- Step 5 (Prompt_5): Output/Factory.db (table Production) and Output/Query_Results.txt (three SQL questions). The reference solution is Solution/load_sqlite.py.")],
+        t("- الخطوة ٢ (Prompt_2): نفس الملف: عمود CountryName بمعادلة VLOOKUP من شيت Countries (بعد ما يتنسخ جوّه الملف).", "- Step 2 (Prompt_2): the same workbook: a CountryName column as a VLOOKUP formula on the Countries sheet (once it is copied inside the workbook)."),
+        t("- الخطوة ٣ (Prompt_3): شيت Report (الإجمالي، وكل بلد، وكل خط) وملف Output/Two_Weeks.csv.", "- Step 3 (Prompt_3): a Report sheet (the total, each country, each line) and Output/Two_Weeks.csv."),
+        t("- الخطوة ٤ (Prompt_4): مراجعة الكود بقايمة المراجعة، ومن غير ما يتعدّل أي حاجة قبل موافقتك.", "- Step 4 (Prompt_4): a review of the code with the checklist, with nothing changed before you approve."),
+        t("- الخطوة ٥ (Prompt_5): Output/Factory.db (جدول Production) وOutput/Query_Results.txt (تلات أسئلة بـ SQL). والأداة الجاهزة في Ready_Tool فيها الخطوات كلها.", "- Step 5 (Prompt_5): Output/Factory.db (table Production) and Output/Query_Results.txt (three SQL questions). The ready tool in Ready_Tool holds every step.")],
       key: [t(`- ملفات: ${E.files} · صفوف: ${E.rows} (${E.perWeek.map((w) => w.rows).join(" + ")}) · الأجهزة: ${n(E.units)} (${E.perWeek.map((w) => n(w.units)).join(" + ")})`, `- Files: ${E.files} · rows: ${E.rows} (${E.perWeek.map((w) => w.rows).join(" + ")}) · sets: ${n(E.units)} (${E.perWeek.map((w) => n(w.units)).join(" + ")})`),
         t(`- من ${E.first} لـ ${E.last} · مصر: ${n(E.egypt)} جهاز · التصدير: ${E.exportShare}٪ · أعلى بلد تصدير: ${E.topExport.name} (${n(E.topExport.units)})`, `- From ${E.first} to ${E.last} · Egypt: ${n(E.egypt)} sets · export: ${E.exportShare}% · top export country: ${E.topExport.name} (${n(E.topExport.units)})`),
         "", t("حسب البلد:", "By country:"), ...Object.entries(E.countries).sort((a, b) => b[1] - a[1]).map(([c, q]) => `  ${c} ${E.countryNames[c]}: ${n(q)}`),
         "", t("حسب الخط:", "By line:"), ...Object.entries(E.lines).sort().map(([c, q]) => `  ${c}: ${n(q)}`)],
     };
     if (p.n === 2) return {
-      data: [t("- Data/Export_Sales_2026-07.pdf: تقرير من النظام، صفحة واحدة، جدول واحد:", "- Data/Export_Sales_2026-07.pdf: a system report, one page, one table:"), "  CountryCode | ModelCode | Qty | NetSales", t("  وتحت الجدول سطر Total فيه إجمالي Qty وإجمالي NetSales.", "  and under the table a Total line with the total Qty and the total NetSales."),
-        t("- Data/Countries.csv: عمودين CountryCode وCountryName (نفس شيت Countries في المثال الأول، محفوظ CSV).", "- Data/Countries.csv: two columns, CountryCode and CountryName (the same Countries sheet as example 1, saved as CSV).")],
+      data: [t("- Data/Export_Sales_2026-07.pdf: تقرير من النظام، صفحة واحدة، فيها جدول واحد:", "- Data/Export_Sales_2026-07.pdf: a system report, one page, one table:"), "  CountryCode | ModelCode | Qty | NetSales", t("  وتحت الجدول سطر Total فيه إجمالي Qty وإجمالي NetSales.", "  and under the table a Total line with the total Qty and the total NetSales."),
+        t("- Data/Countries.csv: عمودين، CountryCode وCountryName (نفس شيت Countries في المثال الأول، محفوظ CSV).", "- Data/Countries.csv: two columns, CountryCode and CountryName (the same Countries sheet as example 1, saved as CSV).")],
       rules: [t("- الـ PDF مكتوب (نص مش صورة)، والأرقام فيها فاصلة الآلاف (1,234).", "- The PDF is a text PDF (not a scan), and its figures carry thousands separators (1,234)."), t("- كل المبالغ بالجنيه، والشهر من اسم الملف (2026-07).", "- Every amount is in EGP, and the month comes from the file name (2026-07)."), t("- مجموع الصفوف لازم يساوي سطر Total بالظبط، وإلا الأداة توقف.", "- The rows must add up to the Total line exactly, or the tool stops.")],
-      out: [t("- الخطوة ١ (Prompt_1): Output/Exports.db فيها جدولين: Exports (Month، CountryCode، ModelCode، Qty، NetSales، SourceFile) وCountries.", "- Step 1 (Prompt_1): Output/Exports.db holding two tables: Exports (Month, CountryCode, ModelCode, Qty, NetSales, SourceFile) and Countries."),
-        t("- الخطوة ٢ (Prompt_2): Output/Export_Report.html: صفحة واحدة من غير نت: ٣ أرقام، ورسمين، وجدول، وزرار Present.", "- Step 2 (Prompt_2): Output/Export_Report.html: one page with no internet: 3 figures, two charts, a table and a Present button."),
-        t("- الحل النموذجي في Solution/ (extract_pdf.py وbuild_report.py، وملف تشغيل لكل واحد). جرّب حلّك الأول.", "- The reference solution is in Solution/ (extract_pdf.py and build_report.py, with a launcher for each). Try your own first.")],
+      out: [t("- الخطوة ١ (Prompt_1): Output/Exports.db فيها جدولين: Exports (Month، CountryCode، ModelCode، Qty، NetSales، SourceFile)، وCountries.", "- Step 1 (Prompt_1): Output/Exports.db holding two tables: Exports (Month, CountryCode, ModelCode, Qty, NetSales, SourceFile) and Countries."),
+        t("- الخطوة ٢ (Prompt_2): Output/Export_Report.html: صفحة واحدة بتشتغل من غير نت: ٣ أرقام، ورسمين، وجدول، وزرار Present.", "- Step 2 (Prompt_2): Output/Export_Report.html: one page with no internet: 3 figures, two charts, a table and a Present button."),
+        t("- الأداة الجاهزة في Ready_Tool (extract_pdf.py وbuild_report.py، وملف تشغيل لكل خطوة، وRun_Tool.bat للاتنين). جرّب حلّك الأول، وبعدين قارن.", "- The ready tool is in Ready_Tool (extract_pdf.py and build_report.py, a launcher per step, and Run_Tool.bat for both). Try your own first, then compare.")],
       key: [t(`- صفوف: ${E.rows} · الأجهزة: ${n(E.qty)} · صافي المبيعات: ${n(E.sales)} جنيه`, `- Rows: ${E.rows} · sets: ${n(E.qty)} · net sales: EGP ${n(E.sales)}`),
         t(`- أعلى بلد: ${E.top.name} (${n(E.top.sales)} جنيه، ${E.top.share}٪)`, `- Top country: ${E.top.name} (EGP ${n(E.top.sales)}, ${E.top.share}%)`),
         "", t("حسب البلد (جنيه):", "By country (EGP):"), ...Object.entries(E.countries).sort((a, b) => b[1] - a[1]).map(([c, v]) => `  ${c} ${countryName[c]}: ${n(v)}`),
@@ -279,15 +276,15 @@ pause
     };
     return {
       data: [t("- CLAUDE.md: القواعد اللي Claude Code بيقراها أول كل جلسة.", "- CLAUDE.md: the rules Claude Code reads at the start of every session."), t("- AGENTS.md: نفس القواعد، للـ Codex.", "- AGENTS.md: the same rules, for Codex."),
-        t("- ‎.claude/skills/trusted-tool/: المهارة (SKILL.md) وفولدر reference فيه: PowerShell وCOM، وPython النقي، وقايمة المراجعة.", "- .claude/skills/trusted-tool/: the skill (SKILL.md) and a reference folder: PowerShell and COM, pure Python, and the review checklist."),
+        t("- ‎.claude/skills/trusted-tool/: المهارة (SKILL.md)، وفولدر reference فيه: PowerShell وCOM، وPython النقي، وقايمة المراجعة.", "- .claude/skills/trusted-tool/: the skill (SKILL.md) and a reference folder: PowerShell and COM, pure Python, and the review checklist."),
         t("- Check_Setup.bat: بيتأكد إن PowerShell وPython والمكتبة القياسية موجودين.", "- Check_Setup.bat: checks that PowerShell, Python and the standard library are there.")],
       rules: [t("- الملفات بالإنجليزي، علشان أي نموذج وأي زميل يقراها بنفس الشكل.", "- The files are in English, so any model and any colleague read them the same way."), t(`- القواعد ${E.rules}، ومتقسمة: إيه اللي يشتغل، وإزاي نبني، وقبل «خلصت».`, `- ${E.rules} rules, in three parts: what may run, how to build, and before “done”.`)],
       out: [t("- حط CLAUDE.md وAGENTS.md وفولدر ‎.claude في فولدر مشروعك، جنب فولدر Data.", "- Put CLAUDE.md, AGENTS.md and the .claude folder in your project folder, next to the Data folder.")],
       steps: [t("١. شغّل Check_Setup.bat واقرا النتيجة: نسخة PowerShell، ونسخة Python، وسطر OK.", "1. Run Check_Setup.bat and read the result: the PowerShell version, the Python version, and an OK line."),
         t("٢. انسخ الملفات لفولدر المثال الأول أو التاني.", "2. Copy the files into the folder of example 1 or 2."),
-        t("٣. افتح Claude Code أو Codex في الفولدر، واكتب: «ابنيلي أداة للمثال ده خطوة خطوة».", "3. Open Claude Code or Codex in the folder and write: “build me a tool for this example, step by step”."),
-        t("٤. لاحظ: النموذج هيعرض الخطوات ويستنى موافقتك، ومش هيستخدم باكدجات.", "4. Notice: the model shows the steps and waits for your approval, and uses no packages."),
-        t("٥. اكتب نسخة لشغلك إنت بـ Prompt_1.txt.", "5. Write a version for your own work with Prompt_1.txt.")],
+        t("٣. افتح Claude Code أو Codex في الفولدر، واكتب: «ابنيلي أداة للمثال ده خطوة بخطوة».", "3. Open Claude Code or Codex in the folder and write: “build me a tool for this example, step by step”."),
+        t("٤. لاحظ إن النموذج هيعرض الخطوات ويستنى موافقتك، ومش هيستخدم أي باكدج.", "4. Notice: the model shows the steps and waits for your approval, and uses no packages."),
+        t("٥. اكتب نسخة لشغلك إنت باستخدام Prompt_1.txt.", "5. Write a version for your own work with Prompt_1.txt.")],
       key: [t(`- ${E.files} ملفات · ${E.rules} قاعدة`, `- ${E.files} files · ${E.rules} rules`)],
     };
   }
@@ -298,7 +295,7 @@ pause
       t("٢. افتح Prompt_1.txt، وحط مسار الفولدر مكان [مسار الفولدر]، والصقه في Claude Code أو Codex جوّه الفولدر (أو في ChatGPT أو Gemini Enterprise).", "2. Open Prompt_1.txt, put your folder's path in place of [folder path], and paste it into Claude Code or Codex inside the folder (or into ChatGPT or Gemini Enterprise)."),
       t("٣. اقرا خطة الخطوة، ووافق، وشغّل ملف التشغيل بدبل كليك، واقرا Output\\Run_Log.txt.", "3. Read the step's plan, approve, run the launcher with a double-click, and read Output\\Run_Log.txt."),
       t("٤. ما تروحش للـ Prompt اللي بعده غير لما الخطوة دي تشتغل وتتراجع.", "4. Don't move to the next Prompt until this step runs and is checked."),
-      t("٥. قارن بـ Answer_Key.txt، وبعدين بالحل النموذجي في Solution.", "5. Compare with Answer_Key.txt, then with the reference solution in Solution."),
+      t("٥. قارن نتيجتك بـ Answer_Key.txt، وبالأداة الجاهزة: افتح Ready_Tool واعمل دبل كليك على Run_Tool.bat (التفاصيل في Ready_Tool\\START_HERE.txt).", "5. Compare your result with Answer_Key.txt and with the ready tool: open Ready_Tool and double-click Run_Tool.bat (details in Ready_Tool\\START_HERE.txt)."),
     ];
     return crlf([
       t(`الوحدة ٤ — ${p.title.ar}`, `Unit 4 — ${p.title.en}`),
@@ -306,7 +303,7 @@ pause
       t("الموقف", "The situation"), p.about[lang], "",
       t("في الفولدر", "In this folder"),
       p.n === 3 ? t("- ملفات القواعد والمهارة وملف الفحص.", "- The rules files, the skill and the check file.") : t("- Data/: الملفات اللي هتشتغل عليها (ما تعدّلش فيها).", "- Data/: the files you work on (don't edit them)."),
-      ...(p.solution ? [t("- Solution/: الحل النموذجي لخطوات Python، تقارن بيه بعد ما تبني.", "- Solution/: the reference solution of the Python steps, to compare with after you build.")] : []),
+      ...(p.tool ? [t("- Ready_Tool/: الأداة الجاهزة كاملة: Run_Tool.bat بيشغّل الخطوات كلها بضغطة، والسكريبتات في scripts، والتوثيق في docs (SKILL.md وHISTORY.md وLESSONS.md).", "- Ready_Tool/: the complete ready tool: Run_Tool.bat runs every step in one click, the scripts are in scripts, and the documentation in docs (SKILL.md, HISTORY.md and LESSONS.md).")] : []),
       t(`- ${files.join("، ")}: الـ Prompt جاهز تنسخه${files.length > 1 ? "، واحد لكل خطوة" : ""}.`, `- ${files.join(", ")}: the Prompt${files.length > 1 ? "s, one per step," : ""} ready to copy.`),
       t("- Answer_Key.txt: الأرقام الصح.", "- Answer_Key.txt: the right figures."), "",
       t("البيانات (الجزء ده بيروح للنموذج)", "The data (this part goes to the model)"), ...g.data, "",
@@ -321,9 +318,10 @@ pause
   }
   for (const p of P) {
     p.folder = `Unit4_${p.n === 3 ? "" : "Example_" + p.n + "_"}${p.slug}`; p.zip = p.folder + ".zip";
-    p.files = () => [...p.data(), ...(p.solution ? [...sol(p.solution), ...p.solution.map(runBat)] : [])];   // the data, then the reference solution
+    p.files = () => p.data();
+    p.readyTool = (lang) => (p.tool && A.readyTools ? A.readyTools.bundle(p.tool, lang) : []);   // Ready_Tool/: the finished automation, one click
     p.guides = (lang) => [{ path: "README.txt", text: bom + readme(p, lang) }, ...p.prompts.map((id, i) => ({ path: `Prompt_${i + 1}.txt`, text: bom + prompt(id, lang) })), { path: "Answer_Key.txt", text: bom + answerKey(p, lang) }];
-    p.bundle = (lang) => [...p.guides(lang), ...p.files()];
+    p.bundle = (lang) => [...p.guides(lang), ...p.files(), ...p.readyTool(lang)];
   }
   A.easyProjects = {
     list: P, byLesson: Object.fromEntries(P.flatMap((p) => p.lessons.map((l) => [l, p]))), guide, readme, answerKey,

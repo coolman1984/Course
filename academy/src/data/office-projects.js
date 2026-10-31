@@ -308,14 +308,14 @@ director's own conclusions: never write conclusions for them. Compare with Final
     title: u("المثال الأول: ١٣ تقرير أسبوعي في شيت واحد، وداشبورد جوّه إكسل", "Example 1: 13 weekly reports in one sheet, and a dashboard inside Excel"),
     about: u("١٣ تقرير إنتاج أسبوعي للربع التالت، كلهم بنفس الأعمدة. بيتحطوا تحت بعض في شيت واحد كبير، ويتضاف لهم عمودين بـ VLOOKUP من ملف Masters: اسم الموديل واسم البلد. وبعدين جداول محورية، وتقرير، ورسوم، وداشبورد. والنتيجة النهائية جاهزة في فولدر Final_Result تقارن بيها.",
       "13 weekly production reports for the third quarter, all with the same columns. They are stacked into one big sheet, and two columns are added with VLOOKUP from the Masters file: the model name and the country name. Then come pivot tables, a report, charts and a dashboard. The finished result is ready in the Final_Result folder to compare with."),
-    prompts: ["a1a", "a2a"], finalNames: ["Production_Q3_Final.xlsx"], data: ex1Files, expected: ex1Expected,
+    tool: "u3-ex1", prompts: ["a1a", "a2a"], finalNames: ["Production_Q3_Final.xlsx"], data: ex1Files, expected: ex1Expected,
   });
   P.push({
     n: 2, lessons: ["a3", "a4"], lesson: "a3", slug: "Commercial_Review", short: u("المراجعة التجارية", "Commercial review"),
     title: u("المثال التاني: إكسل وPDF ووورد في ملف واحد، وعرض باوربوينت في الآخر", "Example 2: Excel, PDF and Word in one workbook, and a PowerPoint deck at the end"),
     about: u("مراجعة الربع التالت التجارية من ١١ ملف في ٣ أشكال: ٣ ملفات إكسل لمبيعات الفروع بنفس الأعمدة، و٦ تقارير PDF (مبيعات التصدير والشحنات)، ومذكرتين وورد (المرتجعات والمستهدف). كلهم بيتجمعوا في ملف واحد بنفس عمودين الـ VLOOKUP، وبعدين تقرير ورسوم، وفي الآخر عرض باوربوينت. والنتيجة النهائية جاهزة في Final_Result.",
       "The third quarter's commercial review from 11 files in 3 formats: 3 Excel files of branch sales with the same columns, 6 PDF reports (export sales and shipments) and 2 Word memos (returns and targets). They are gathered into one workbook with the same two VLOOKUP columns, then a report and charts, and finally a PowerPoint deck. The finished result is ready in Final_Result."),
-    prompts: ["a3a", "a4a"], finalNames: ["Q3_Commercial_Final.xlsx", "Q3_Commercial_Review.pptx", "Q3_Commercial_Review.pdf"], data: ex2Files, expected: ex2Expected,
+    tool: "u3-ex2", prompts: ["a3a", "a4a"], finalNames: ["Q3_Commercial_Final.xlsx", "Q3_Commercial_Review.pptx", "Q3_Commercial_Review.pdf"], data: ex2Files, expected: ex2Expected,
   });
   P.push({
     n: 3, lessons: ["a6"], lesson: "a6", slug: "Skills_Kit", short: u("طقم المهارات", "Skills kit"),
@@ -385,6 +385,7 @@ director's own conclusions: never write conclusions for them. Compare with Final
       t("٤. احفظ الأداة جنب فولدر Data (نفس طريقة الوحدة التانية)، وشغّلها، واقرا Run_Log.txt.", "4. Save the tool next to the Data folder (the same way as in unit 2), run it and read Run_Log.txt."),
       t("٥. كمّل بـ Prompt_2.txt في نفس المحادثة.", "5. Go on with Prompt_2.txt in the same chat."),
       t("٦. قارن الناتج بـ Answer_Key.txt وبالنتيجة النهائية في Final_Result: نفس الأرقام ونفس الشكل.", "6. Compare your output with Answer_Key.txt and with the finished result in Final_Result: the same figures and the same layout."),
+      t("٧. وفي المحاضرة، لو الوقت ضيق: افتح Ready_Tool واعمل دبل كليك على Run_Tool.bat، والأداة الجاهزة هتطلّع نفس النتيجة على جهازك (التفاصيل في Ready_Tool\\START_HERE.txt).", "7. In a lecture, if time is short: open Ready_Tool and double-click Run_Tool.bat, and the ready tool produces the same result on your machine (details in Ready_Tool\\START_HERE.txt)."),
     ];
     return crlf([
       t(`الوحدة ٣ — ${p.title.ar}`, `Unit 3 — ${p.title.en}`),
@@ -393,6 +394,7 @@ director's own conclusions: never write conclusions for them. Compare with Final
       t("في الفولدر", "In this folder"),
       p.n === 3 ? t("- skills/: التلات مهارات.", "- skills/: the three skills.") : t("- Data/: الملفات اللي هتشتغل عليها (ما تعدّلش فيها).", "- Data/: the files you work on (don't edit them)."),
       ...(p.finalNames.length ? [t("- Final_Result/: النتيجة النهائية جاهزة، علشان تشوف شكلها قبل وبعد ما تبني.", "- Final_Result/: the finished result, so you can see it before and after you build.")] : []),
+      ...(p.tool ? [t("- Ready_Tool/: الأداة الجاهزة كاملة: Run_Tool.bat بيشغّل الخطوات كلها بضغطة (إكسل ووورد وباوربوينت بطريقة COM، والحساب بـ Python النقي)، والتوثيق في docs (SKILL.md وHISTORY.md وLESSONS.md).", "- Ready_Tool/: the complete ready tool: Run_Tool.bat runs every step in one click (Excel, Word and PowerPoint through COM, the arithmetic in pure Python), with its documentation in docs (SKILL.md, HISTORY.md and LESSONS.md).")] : []),
       t(`- ${files.join("، ")}: الـ Prompt جاهز تنسخه${files.length > 1 ? "، واحد لكل خطوة" : ""}.`, `- ${files.join(", ")}: the Prompt${files.length > 1 ? "s, one per step," : ""} ready to copy.`),
       t("- Answer_Key.txt: الأرقام الصح.", "- Answer_Key.txt: the right figures."), "",
       t("البيانات (الجزء ده بيروح للنموذج)", "The data (this part goes to the model)"), ...g.data, "",
@@ -409,7 +411,8 @@ director's own conclusions: never write conclusions for them. Compare with Final
     p.folder = `Unit3_${p.n === 3 ? "" : "Example_" + p.n + "_"}${p.slug}`; p.zip = p.folder + ".zip";
     p.files = () => [...p.data(), ...finalFiles(p.finalNames)];   // the data, then the finished result
     p.guides = (lang) => [{ path: "README.txt", text: bom + readme(p, lang) }, ...p.prompts.map((id, i) => ({ path: `Prompt_${i + 1}.txt`, text: bom + prompt(id, lang) })), { path: "Answer_Key.txt", text: bom + answerKey(p, lang) }];
-    p.bundle = (lang) => [...p.guides(lang), ...p.files()];
+    p.readyTool = (lang) => (p.tool && A.readyTools ? A.readyTools.bundle(p.tool, lang) : []);   // Ready_Tool/: the finished automation, one click
+    p.bundle = (lang) => [...p.guides(lang), ...p.files(), ...p.readyTool(lang)];
   }
   A.officeProjects = {
     list: P, byLesson: Object.fromEntries(P.flatMap((p) => p.lessons.map((l) => [l, p]))), guide, readme, answerKey,

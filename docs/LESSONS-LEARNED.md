@@ -103,6 +103,16 @@
   strings instead.
 - Keep the build list and the test's file list in sync. A test fails if a data file is missing from either.
 
+## Ready tools
+- **On DRM-protected laptops only Office may open Office files.** Read and write them through COM from PowerShell, and
+  let PowerShell (not Excel's Save As) write the CSV that Python reads: a file Excel saves may be encrypted too.
+- **Make the Python step readable both ways.** It prefers step 1's CSV export and falls back to reading .xlsx/.docx with
+  zipfile, so the same script works on an unprotected machine and in CI; a non-zip file stops it with a DRM message.
+- **CI cannot run PowerShell with Office.** Keep the logic in Python (tested), keep the .ps1 small and ASCII, and let the
+  data test check its structure (brackets, known commands, read-only opens, `finally` with Quit and release). Run a
+  changed tool once on Windows before release.
+- **Return arrays from PowerShell functions with `return , $grid`**, or a 2-D array is unrolled into the pipeline.
+
 ## Reviews
 - Treat automated review findings as claims: trace a real path to the failure, fix with a test, reply with the commit,
   resolve. Most were real (stale scores, prerequisites, unblank keys, resume indexes). Answer the rest on the thread

@@ -291,11 +291,11 @@
       o("الـ CLI مش محتاج موافقتك على أي حاجة", "The CLI needs no approval for anything", "بالعكس، بيستأذن قبل أي كتابة أو أمر.", "On the contrary, it asks before any write or command."),
       o("الـ CLI بيشتغل من غير نت", "The CLI works without internet", "البرنامج على جهازك بس النموذج على السحابة.", "The program is on your machine, but the model is in the cloud.")
     ], 0, ["في الشات إنت الوسيط بتنسخ وتلصق، والنموذج ما شافش ملفاتك. الـ CLI بيقرا الفولدر ويشغّل، وإنت بتراجع وتوافق.", "In chat you are the middleman copying and pasting, and the model never saw your files. The CLI reads the folder and runs things, while you review and approve."]),
-    Q("k1b", "k1", "spot", ["زميل فتح Claude Code على سطح المكتب، ووافق على «دايمًا» لكل الأوامر من أول دقيقة، وطلب «اعملي كل الأداة». إيه أخطر غلطة؟", "A colleague opened Claude Code on the Desktop, approved “always” for every command in the first minute, and asked “build me the whole tool”. What is the most serious mistake?"], [
+    Q("k1b", "k1", "spot", ["زميل فتح Claude Code على سطح المكتب، ووافق على «دايمًا» لكل الأوامر من أول دقيقة، وطلب «اعمل الأداة كلها». إيه أخطر غلطة؟", "A colleague opened Claude Code on the Desktop, approved “always” for every command in the first minute, and asked “build me the whole tool”. What is the most serious mistake?"], [
       o("الفولدر: سطح المكتب فيه كل ملفاته، والأداة تقدر تقرا وتعدّل أي حاجة جوّاه", "The folder: the Desktop holds all his files, and the tool can read and change anything inside it"),
       o("إنه كتب بالعربي", "That he wrote in Arabic", "العربي شغال عادي.", "Arabic works fine."),
       o("إنه ما استخدمش Codex", "That he didn't use Codex", "نفس المشكلة هتحصل في Codex.", "The same problem would happen in Codex."),
-      o("إن الطلب قصير", "That the request was short", "مشكلة، بس أخف من إن كل ملفاته مفتوحة قدامها.", "A problem, but lighter than having all his files open to it.")
+      o("إن الطلب قصير", "That the request was short", "مشكلة، لكنها أخف من إن كل ملفاته مفتوحة قدام الأداة.", "A problem, but lighter than having all his files open to it.")
     ], 0, ["الفولدر اللي بتفتح فيه الأداة هو حدودها. فولدر مشروع لوحده، وموافقة خطوة خطوة في الأول، وطلب قراءة قبل أي تعديل.", "The folder you open the tool in is its boundary. A project folder of its own, approval step by step at first, and a read request before any change."]),
     Q("k2a", "k2", "mcq", ["ليه قسم أمن المعلومات بيمنع pip install على لابتوب الشركة؟", "Why does the information-security team block pip install on the company laptop?"], [
       o("لأن الباكدج كود من برّه بيشتغل بصلاحياتك، وممكن يكون فيه ثغرة أو نسخة متلاعب فيها، وبيسحب معاه باكدجات تانية", "Because a package is outside code running with your permissions; it may hold a hole or be a tampered copy, and it pulls in other packages"),
@@ -316,7 +316,7 @@
       o("باكدج Python لازم يتسطب", "A Python package that must be installed", "COM جزء من ويندوز؛ اللي محتاج باكدج هو Python لما يكلّمه (pywin32).", "COM is part of Windows; what needs a package is Python when it talks to it (pywin32).")
     ], 0, ["إكسل بيقدّم كائن Excel.Application، وPowerShell بيعمله بسطر واحد. ومن غير أي تثبيت، لأن الاتنين جزء من ويندوز والأوفيس.", "Excel offers an Excel.Application object, and PowerShell creates it in one line, with no install, because both are part of Windows and Office."]),
     Q("k3b", "k3", "predict", ["سكريبت PowerShell فتح إكسل بطريقة COM، وحصل خطأ في النص، ومفيش finally. إيه اللي هيحصل بعد كذا تشغيل؟", "A PowerShell script opened Excel through COM, an error happened midway, and there is no finally. What happens after several runs?"], [
-      o("نسخ إكسل كتير شغالة مستخبية في Task Manager، والجهاز يتقل والملفات تتقفل", "Many hidden copies of Excel running in Task Manager; the machine slows and files stay locked"),
+      o("نسخ إكسل كتير شغالة في الخلفية في Task Manager، والجهاز يبطأ والملفات تفضل محجوزة", "Many hidden copies of Excel running in Task Manager; the machine slows and files stay locked"),
       o("إكسل بيقفل نفسه لوحده", "Excel closes itself", "مش لما سكريبت فتحه؛ بيفضل مستني.", "Not when a script opened it; it stays waiting."),
       o("الويندوز بيمسح السكريبت", "Windows deletes the script", "مفيش حاجة كده.", "Nothing like that happens."),
       o("ولا حاجة؛ الخطأ بيقفل كل حاجة", "Nothing; the error closes everything", "الخطأ بيوقف السكريبت بس، وإكسل يفضل.", "The error stops the script only; Excel remains.")
@@ -328,7 +328,7 @@
       ["Run_All.bat: التلاتة ورا بعض بدبل كليك", "Run_All.bat: all three in order with a double-click"],
     ], ["خطوة، وبعدين مراجعتها، وبعدين اللي بعدها. وفي الآخر ملف واحد بيشغّلهم كلهم ويقف لو واحدة وقفت.", "A step, then its check, then the next. And at the end one file runs them all and stops if one stops."]),
     Q("k4b", "k4", "spot", ["ملف التشغيل فيه: python C:\\Users\\eng01\\Desktop\\tool\\step1.py. زميل شغّله على جهازه فما اشتغلش. ليه؟", "The launcher holds: python C:\\Users\\eng01\\Desktop\\tool\\step1.py. A colleague ran it on his machine and it failed. Why?"], [
-      o("المسار مكتوب لجهازها بس؛ الصح ‎%~dp0 يعني «الفولدر اللي الملف ده فيه»", "The path is written for her machine only; the right one is %~dp0, meaning “the folder this file is in”"),
+      o("المسار مكتوب لجهاز واحد بس؛ والصح ‎%~dp0، يعني «الفولدر اللي الملف ده فيه»", "The path is written for one machine only; the right one is %~dp0, meaning “the folder this file is in”"),
       o("Python مش بيشتغل من ملفات ‎.bat", "Python doesn't run from .bat files", "بيشتغل عادي.", "It runs fine."),
       o("لازم يكتب py بدل python", "He must type py instead of python", "ممكن تفرق، بس المشكلة هنا المسار.", "It may matter, but the problem here is the path."),
       o("الملف لازم يتشغّل كـ Administrator", "The file must be run as Administrator", "مش محتاج صلاحيات زيادة.", "It needs no extra permissions.")

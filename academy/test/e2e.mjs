@@ -541,8 +541,8 @@ await session({ label: "unit-3-projects", viewport: { width: 1280, height: 860 }
   head.steps === 3 && /^1/.test(head.on) && head.zip === "Unit3_Example_1_Production_Dashboard.zip" && head.docs === 4 ? ok("unit 3 project: lesson a2 shows example 1 of the three downloads, with README, two Prompts and the key") : fail("unit 3 project head: " + JSON.stringify(head));
   const [d1] = await Promise.all([page.waitForEvent("download"), page.click("#sec-proj [data-dl]")]);
   const z1 = await unzip(d1), weeks = z1.names.filter((n) => /\/Data\/Weekly_Reports\/Week_\d\d\.xlsx$/.test(n)).length;
-  weeks === 13 && z1.names.some((n) => n.endsWith("Data/Masters.xlsx")) && z1.names.includes("Unit3_Example_1_Production_Dashboard/Final_Result/Production_Q3_Final.xlsx") && ["Prompt_1.txt", "Prompt_2.txt", "README.txt", "Answer_Key.txt"].every((f) => z1.names.includes("Unit3_Example_1_Production_Dashboard/" + f)) && !z1.bad
-    ? ok(`unit 3 example 1: ${z1.names.length} files, 13 weekly reports, Masters, the finished workbook, two Prompts, every CRC valid`) : fail(`example 1 zip: ${z1.names.join(", ")} bad ${z1.bad}`);
+  weeks === 13 && z1.names.some((n) => n.endsWith("Data/Masters.xlsx")) && z1.names.includes("Unit3_Example_1_Production_Dashboard/Final_Result/Production_Q3_Final.xlsx") && ["Prompt_1.txt", "Prompt_2.txt", "README.txt", "Answer_Key.txt", "Ready_Tool/Run_Tool.bat", "Ready_Tool/scripts/1_Export_With_Office.ps1", "Ready_Tool/scripts/2_Build_Tables.py", "Ready_Tool/scripts/3_Build_Dashboard.ps1", "Ready_Tool/docs/LESSONS.md"].every((f) => z1.names.includes("Unit3_Example_1_Production_Dashboard/" + f)) && !z1.bad
+    ? ok(`unit 3 example 1: ${z1.names.length} files, 13 weekly reports, Masters, the finished workbook, two Prompts, the ready tool, every CRC valid`) : fail(`example 1 zip: ${z1.names.join(", ")} bad ${z1.bad}`);
   await page.evaluate(() => (location.hash = "lesson-a3")); await page.waitForSelector("#sec-proj .xp-card");
   const pdfBtn = await page.$$eval("#sec-proj [data-f]", (b) => b.findIndex((x) => /Export_Sales_2026-08\.pdf/.test(x.textContent)));
   await page.click(`#sec-proj [data-f="${pdfBtn}"]`);
@@ -551,8 +551,8 @@ await session({ label: "unit-3-projects", viewport: { width: 1280, height: 860 }
   const [d2] = await Promise.all([page.waitForEvent("download"), page.click("#sec-proj [data-dl]")]);
   const z2 = await unzip(d2);
   const fin2 = ["Q3_Commercial_Final.xlsx", "Q3_Commercial_Review.pptx", "Q3_Commercial_Review.pdf"].every((f) => z2.names.includes("Unit3_Example_2_Commercial_Review/Final_Result/" + f));
-  z2.names.filter((n) => /\/Data\/PDF\/.*\.pdf$/.test(n)).length === 6 && z2.names.filter((n) => n.endsWith(".docx")).length === 2 && z2.names.filter((n) => /\/Data\/Excel\/.*\.xlsx$/.test(n)).length === 4 && fin2 && !z2.bad
-    ? ok("unit 3 example 2: 6 PDF reports, 2 Word memos, 4 workbooks and the finished workbook, deck and PDF, every CRC valid") : fail("example 2 zip: " + z2.names.join(", "));
+  z2.names.filter((n) => /\/Data\/PDF\/.*\.pdf$/.test(n)).length === 6 && z2.names.filter((n) => n.endsWith(".docx")).length === 2 && z2.names.filter((n) => /\/Data\/Excel\/.*\.xlsx$/.test(n)).length === 4 && fin2 && ["Run_Tool.bat", "scripts/4_Build_Deck.ps1", "docs/SKILL.md"].every((f) => z2.names.includes("Unit3_Example_2_Commercial_Review/Ready_Tool/" + f)) && !z2.bad
+    ? ok("unit 3 example 2: 6 PDF reports, 2 Word memos, 4 workbooks and the finished workbook, deck and PDF, the ready tool, every CRC valid") : fail("example 2 zip: " + z2.names.join(", "));
   await page.evaluate(() => (location.hash = "lesson-a6")); await page.waitForSelector("#sec-proj .xp-card");
   const [d3] = await Promise.all([page.waitForEvent("download"), page.click("#sec-proj [data-dl]")]);
   const z3 = await unzip(d3);
@@ -568,8 +568,8 @@ await session({ label: "unit-4-projects", viewport: { width: 1280, height: 860 }
   head.steps === 3 && /^1/.test(head.on) && head.zip === "Unit4_Example_1_Two_Weeks.zip" && head.docs === 7 && /١ من ٢/.test(head.top) ? ok("unit 4 project: lesson k5 shows example 1 of 2, with README, five Prompts and the key") : fail("unit 4 project head: " + JSON.stringify(head));
   const [d1] = await Promise.all([page.waitForEvent("download"), page.click("#sec-proj [data-dl]")]);
   const z1 = await unzip(d1), root = "Unit4_Example_1_Two_Weeks/";
-  ["Data/Week_01.xlsx", "Data/Week_02.xlsx", "Data/Masters.xlsx", "Solution/load_sqlite.py", "Solution/Run_load_sqlite.bat", "Prompt_5.txt", "README.txt", "Answer_Key.txt"].every((f) => z1.names.includes(root + f)) && !z1.bad
-    ? ok(`unit 4 example 1: ${z1.names.length} files, two weeks, Masters, five Prompts and the reference solution, every CRC valid`) : fail("unit 4 example 1 zip: " + z1.names.join(", "));
+  ["Data/Week_01.xlsx", "Data/Week_02.xlsx", "Data/Masters.xlsx", "Ready_Tool/Run_Tool.bat", "Ready_Tool/scripts/step1_stack.ps1", "Ready_Tool/scripts/load_sqlite.py", "Ready_Tool/scripts/Run_step5_load_sqlite.bat", "Ready_Tool/docs/SKILL.md", "Prompt_5.txt", "README.txt", "Answer_Key.txt"].every((f) => z1.names.includes(root + f)) && !z1.bad
+    ? ok(`unit 4 example 1: ${z1.names.length} files, two weeks, Masters, five Prompts and the ready tool, every CRC valid`) : fail("unit 4 example 1 zip: " + z1.names.join(", "));
   await page.evaluate(() => (location.hash = "lesson-k7")); await page.waitForSelector("#sec-proj .xp-card");
   const pdfBtn = await page.$$eval("#sec-proj [data-f]", (b) => b.findIndex((x) => /Export_Sales_2026-07\.pdf/.test(x.textContent)));
   await page.click(`#sec-proj [data-f="${pdfBtn}"]`);
@@ -577,8 +577,8 @@ await session({ label: "unit-4-projects", viewport: { width: 1280, height: 860 }
   /Export Sales - July 2026/.test(peek) && /Total/.test(peek) && /4,168,000/.test(peek) ? ok("unit 4 example 2: the PDF preview shows the table and its Total line") : fail("unit 4 PDF preview: " + peek.slice(0, 160));
   const [d2] = await Promise.all([page.waitForEvent("download"), page.click("#sec-proj [data-dl]")]);
   const z2 = await unzip(d2), r2 = "Unit4_Example_2_PDF_to_HTML/";
-  ["Data/Export_Sales_2026-07.pdf", "Data/Countries.csv", "Solution/extract_pdf.py", "Solution/build_report.py", "Prompt_1.txt", "Prompt_2.txt"].every((f) => z2.names.includes(r2 + f)) && !z2.bad
-    ? ok("unit 4 example 2: the PDF, the countries file, two Prompts and both reference scripts, every CRC valid") : fail("unit 4 example 2 zip: " + z2.names.join(", "));
+  ["Data/Export_Sales_2026-07.pdf", "Data/Countries.csv", "Ready_Tool/Run_Tool.bat", "Ready_Tool/scripts/extract_pdf.py", "Ready_Tool/scripts/build_report.py", "Ready_Tool/docs/HISTORY.md", "Prompt_1.txt", "Prompt_2.txt"].every((f) => z2.names.includes(r2 + f)) && !z2.bad
+    ? ok("unit 4 example 2: the PDF, the countries file, two Prompts and the ready tool, every CRC valid") : fail("unit 4 example 2 zip: " + z2.names.join(", "));
   await page.evaluate(() => (location.hash = "lesson-k9")); await page.waitForSelector("#sec-proj .xp-card");
   const [d3] = await Promise.all([page.waitForEvent("download"), page.click("#sec-proj [data-dl]")]);
   const z3 = await unzip(d3), r3 = "Unit4_Starter_Kit/";

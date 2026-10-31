@@ -69,10 +69,17 @@ WHERE THINGS ARE INSIDE THIS FILE (search for these names)
   `Unit3_Skills_Kit.zip` (a6: three Claude Code skills, SKILL.md each). The data are clean on purpose (no missing,
   repeated or unknown values), and each example zip holds its finished result in Final_Result/ (real workbooks with
   VLOOKUP formulas, pivot tables and charts; example 2 also the deck and its PDF) to compare with.
+  Every example zip of units 3 and 4 also holds Ready_Tool/: the finished automation, run with one double-click on
+  Ready_Tool\Run_Tool.bat (it runs every step in order and stops at the first failed check). Office files are read
+  and written by PowerShell through COM (on DRM-protected laptops, such as NASCA, only Office may open them); the
+  stacking, checks, figures, PDF text, SQLite and HTML are pure Python. Each tool carries docs/SKILL.md (a skill for
+  Claude Code or Codex), docs/HISTORY.md (how it was built, step by step), docs/LESSONS.md (lessons learned) and
+  START_HERE.txt. Run_Log.txt in Output\ explains any stop.
   Prompts a1a–a4a end with the Office tail (Excel, Word and PowerPoint through COM, nothing installed); a5a is a
   first Claude Code session in Plan mode; a6a turns checked work into a skill. Lesson a5 covers where Claude Code
   runs (web, desktop app, terminal, editor), permission modes, models and /effort levels.
-- Unit 4 (`A.easyProjects`) makes unit 3 very simple, in the same factory, under one security policy: PowerShell first
+- Unit 4 (`A.easyProjects`) makes unit 3 very simple, in the same factory and with the same hero (the planning
+  engineer), under one security policy: PowerShell first
   (Office through COM), Python with the standard library only (no pip, no packages: the model writes any missing
   function itself), no internet, one small checked step at a time, each with a .bat launcher (%~dp0). Downloads:
   `Unit4_Example_1_Two_Weeks.zip` (k4–k6: Week_01 and Week_02, 18 rows each, + Masters.xlsx with one Countries sheet →
@@ -80,7 +87,7 @@ WHERE THINGS ARE INSIDE THIS FILE (search for these names)
   1,765 sets, Egypt 880, Kuwait 385; prompts k4a, k4b, k4c, k5a, k6a); `Unit4_Example_2_PDF_to_HTML.zip` (k7–k8: one
   text PDF of July's export sales, 12 rows and a Total line, + Countries.csv → Exports.db checked against the Total
   line → Export_Report.html, offline, with a Present button; 470 sets, EGP 4,168,000, Kuwait 28%; prompts k7a, k8a);
-  both carry a pure-Python reference solution in Solution/. `Unit4_Starter_Kit.zip` (k9: CLAUDE.md and AGENTS.md with
+  both carry their ready tool in Ready_Tool/. `Unit4_Starter_Kit.zip` (k9: CLAUDE.md and AGENTS.md with
   the same 13 rules, the trusted-tool skill with three references, Check_Setup.bat). Lessons k1–k3 explain the two
   CLIs, why packages are blocked, and what COM stands for (Component Object Model); k5 is the seven-question review.
 

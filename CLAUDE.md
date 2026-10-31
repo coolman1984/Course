@@ -18,7 +18,10 @@ academy/src/ai-guide.txt   short guide for an AI reading the HTML; injected at t
 academy/src/data/*.js      all content (course-order plan, lessons, decks, prompts, quiz, glossary, plain-language layer, stories, ui,
                            xl-sample.js: the unit-2 projects, one per lesson;
                            office-projects.js: unit 3's two examples and skills kit;
-                           easy-projects.js + easy-solutions.js: unit 4's simple examples, starter kit, Python solutions)
+                           easy-projects.js: unit 4's simple examples and starter kit;
+                           ready-tools.js: puts each example's Ready_Tool/ into its zip)
+academy/src/tools/         the ready tools as real files: common/ (common.ps1, the COM export, helpers.py, shared
+                           lessons) and u3-ex1, u3-ex2, u4-ex1, u4-ex2 (Run_Tool.ps1, scripts/, docs/, START_HERE)
 academy/src/engine/*.js    behaviour (core router/search, render, decks in history.js, labs, motion, quiz, tools,
                            xlkit.js: writes each project as real .xlsx/.pdf/.docx files in one .zip, offline)
 academy/src/*.css          styles (styles.css, motion.css, history.css for decks)
@@ -60,7 +63,7 @@ Commit the rebuilt `AI_Academy.html` together with source changes. CI runs the s
 - Unit 2 (shown as 3) is Office automation at scale: `a1 a2 a3 a4 a5 a6` (example 1: 13 weekly reports → one big sheet
   with two VLOOKUP columns → pivots, report, charts, dashboard with slicers; example 2: Excel + PDF + Word → Sales with the
   same two VLOOKUPs, Shipments, Returns, Targets → report and a PowerPoint deck; Claude Code in detail; skills). Pinned by a data test.
-- Unit 3 (shown as 4) is unit 3's examples made very simple, under one security policy: `k1 k2 k3 k4 k5 k6 k7 k8 k9`
+- Unit 3 (shown as 4) is unit 3's examples made very simple, with the same hero (unit 3's planning engineer), under one security policy: `k1 k2 k3 k4 k5 k6 k7 k8 k9`
   (Codex CLI and Claude Code CLI → pure Python, why packages are blocked → PowerShell first and COM → two weeks step by
   step in one click → reviewing code → SQL and SQLite → one PDF into a database → an HTML page for management → skills
   and the rules files). Pinned by a data test. Big data (`b1` …) opens unit 4 (shown as 5).
@@ -81,8 +84,19 @@ Commit the rebuilt `AI_Academy.html` together with source changes. CI runs the s
   (k7–k8: one text PDF with a Total line + Countries.csv; Prompts `k7a k8a`) and `Unit4_Starter_Kit.zip` (k9: CLAUDE.md
   and AGENTS.md with the same rules, the trusted-tool skill, Check_Setup.bat). Every unit-4 tool Prompt ends with `RULE4`
   (PowerShell first for Office, Python's standard library only, no internet, one step, a launcher). The Python steps
-  ship a reference solution in `Solution/` (`data/easy-solutions.js`); a data test runs it with python3 on the
-  generated files and checks its figures, and checks it imports nothing outside the standard library.
+  ship in the example's ready tool (below); a data test runs them with python3 on the generated files and checks
+  their figures, and checks they import nothing outside the standard library.
+- **Ready tools**: every example zip of units 3 and 4 carries `Ready_Tool/`, the finished automation, so a lecture can
+  run it at once: `Run_Tool.bat` (one double-click) runs every step in order and stops at the first failed check.
+  Office files are read and written by Windows PowerShell 5.1 through COM (on DRM-protected laptops, such as NASCA,
+  only Office may open them; step 1 of unit 3's tools exports every sheet and Word table to CSV); everything else is
+  pure Python. Each tool has `docs/SKILL.md` (English), `docs/HISTORY.md` and `docs/LESSONS.md` and `START_HERE.txt`
+  (`*.ar.*` / `*.en.*`, picked by the reader's language). The files live in `academy/src/tools/` and the build embeds
+  them as `#tool-files`; `#@include helpers.py` and `<!-- @include … -->` pull shared files in. PowerShell scripts stay
+  ASCII (5.1 misreads UTF-8 without a BOM). Data tests run every Python step on the generated files (directly and
+  through the COM export's CSV), simulate a DRM-locked file, and check each PowerShell script's brackets, commands,
+  read-only opens and COM clean-up. PowerShell cannot run in CI: after changing a .ps1, run the tool once on Windows
+  with Office and read Output\Run_Log.txt.
 - Each unit-2 lesson has its own project (`A.xlProjects`, one zip `Lesson_N_<Name>.zip`): Excel files in English only
   (the factory's real files are English), README/Prompt/answer key in the reader's language. Each project adds one idea
   and its own planted problems. Data come from seeded generators; each project's `expected()` holds every figure the
