@@ -2818,6 +2818,327 @@
     },
   });
 
+  /* ---------- unit 4: tools the company trusts (data/cli-story.js … rules-story.js) ---------- */
+  const flowRow = (labels, y, w, gap, d0, cls = "f-s1 s-acc", tcls = "t-ink", size = 11, h = 40) => { const X = rowX(labels.length, w, gap);   // boxes in reading order, joined by arrows
+    return labels.map((s, i) => `${i ? arrow(X(i - 1) + dirx() * (w / 2 + 1), y, X(i) - dirx() * (w / 2 + 3), y, d0 + i * 0.25 - 0.12) : ""}<g ${an("rise", d0 + i * 0.25)}>${box(X(i), y, w, h, [].concat(cls)[i] || [].concat(cls)[0])}${txt(X(i), y + size * 0.36, s, [].concat(tcls)[i] || [].concat(tcls)[0], size, b8)}</g>`).join(""); };
+  const shield = (x, y, s = 1, cls = "f-acc-soft s-acc") =>   // spans y − 30s … y + 42s
+    `<path d="M${x} ${y - 30 * s} l${28 * s} ${10 * s} v${22 * s} q0 ${26 * s} ${-28 * s} ${40 * s} q${-28 * s} ${-14 * s} ${-28 * s} ${-40 * s} v${-22 * s}z" class="${cls}" stroke-width="2.4"/>`;
+  const winBox = (cx, cy, w, h, title, cls = "f-s1 s-line2", d = 0) =>   // a window: a title bar, an empty body
+    `<g ${an("rise", d)}>${box(cx, cy, w, h, cls)}<rect x="${cx - w / 2 + 2}" y="${cy - h / 2 + 2}" width="${w - 4}" height="20" rx="10" class="f-s2"/>${txt(cx, cy - h / 2 + 16, title, "t-ink2", 10.5, b8)}</g>`;
+  const cloud = (x, y, cls = "f-acc-soft s-acc") => `<ellipse cx="${x}" cy="${y}" rx="78" ry="38" class="${cls}" stroke-width="2.4"/>`;
+  const ltr = ' direction="ltr"';
+  const nb = (s) => s.replace(/^ +/, (m) => "\u00a0".repeat(m.length));   // keep a code line's indent: SVG text collapses leading spaces
+  Object.assign(ART, {
+    /* ----- the two CLIs (data/cli-story.js) ----- */
+    cl_copy: () => {
+      const a = mx(116), b = mx(364), d = dirx();
+      return `${winBox(a, 106, 170, 108, tr("الشات", "the chat"), "f-s1 s-line2", 0.05)}
+      <g ${an("fade", 0.2)}>${mono(a - 66, 132, "import ...", "t-ink3", 10.5)}${mono(a - 66, 152, "df['Quantity']", "t-rose", 10.5)}</g>
+      ${winBox(b, 106, 170, 108, tr("المفكرة", "Notepad"), "f-s1 s-line2", 0.3)}
+      <g ${an("fade", 0.45)}>${mono(b - 66, 132, "tool.py", "t-ink3", 10.5)}${mono(b - 66, 152, "KeyError", "t-rose", 10.5)}</g>
+      <path ${an("draw", 0.6, "s-acc")} pathLength="1" d="M${a + d * 50} 50 C ${a + d * 110} 24, ${b - d * 110} 24, ${b - d * 50} 50" stroke-width="2.5" fill="none" marker-end="url(#aih-arrow)"/>
+      <path ${an("draw", 0.8, "s-rose")} pathLength="1" d="M${b - d * 50} 162 C ${b - d * 110} 192, ${a + d * 110} 192, ${a + d * 50} 162" stroke-width="2.5" fill="none" marker-end="url(#aih-arrow)"/>
+      ${pill(240, 106, 76, 32, tr("٥ مرات", "5 times"), "f-rose-soft s-rose", "t-rose", 12, 1.0)}
+      <g ${an("rise", 1.2)}>${box(240, 236, 330, 40, "f-amber-soft s-amber")}${txt(240, 241, tr("الكود: Quantity · الملف: Qty", "the code: Quantity · the file: Qty"), "t-amber", 11.5, b8)}</g>
+      ${cap(tr("النموذج اللي ما شافش ملفك… بيخمّن", "a model that hasn't seen your file… guesses"), 1.5, 296)}`;
+    },
+    cl_cli: () => {
+      const X = rowX(3, 120, 18), W = [["C", "Command", tr("أمر", "command")], ["L", "Line", tr("سطر", "line")], ["I", "Interface", tr("واجهة", "interface")]];
+      return `${W.map(([c, w, a], i) => `<g ${an("pop", 0.05 + i * 0.2)}>${box(X(i), 80, 120, 88, "f-acc-soft s-acc")}${txt(X(i), 74, c, "t-acc", 26, b8 + ltr)}${txt(X(i), 96, w, "t-ink2", 11, b8 + ltr)}${txt(X(i), 112, a, "t-ink3", 10, bold)}</g>`).join("")}
+      ${term(240, 194, 380, 68, ["PS C:\\Automation\\Example_1> claude", "What should we work on?"], 0.8, 11)}
+      ${cap(tr("برنامج من غير زراير… بتكلّمه بالكتابة", "a program with no buttons… you talk to it by typing"), 1.6, 290)}`;
+    },
+    cl_two: () => {
+      const a = mx(126), b = mx(354);
+      const tool = (x, name, co, d) => `<g ${an("rise", d)}>${box(x, 106, 176, 124, "f-s1 s-acc")}<rect x="${x - 62}" y="60" width="124" height="52" rx="6" class="f-ink2"/>${mono(x - 52, 82, "> _", "t-crt", 12)}${txt(x, 140, name, "t-acc", 13, b8 + ltr)}${txt(x, 158, co, "t-ink3", 10.5, bold + ltr)}</g>`;
+      return `${tool(a, "Claude Code", "Anthropic", 0.05)}${tool(b, "Codex", "OpenAI", 0.3)}
+      ${pill(240, 106, 30, 32, "=", "f-mint-soft s-mint", "t-mint", 16, 0.6)}
+      ${flowRow([tr("فولدر", "folder"), tr("طلب", "request"), tr("موافقة", "approval"), tr("تشغيل", "run")], 222, 86, 22, 0.8, "f-acc-soft s-acc", "t-acc", 11, 34)}
+      ${cap(tr("أداتين… وطريقة واحدة", "two tools… one method"), 1.9, 290)}`;
+    },
+    cl_folder: () => {
+      const f = mx(168), x = mx(396);
+      return `<g ${an("rise", 0.05)}>${folder(f, 140, 252, 196, "f-mint-soft s-mint")}${txt(f, 68, tr("فولدر المثال الأول", "the first example's folder"), "t-mint", 11.5, b8)}</g>
+      <g ${an("fade", 0.3)}>${txt(f, 100, "Data\\   README.txt", "t-ink", 11.5, b8 + ltr)}</g>
+      <g ${an("rise", 0.5)}><rect x="${f - 92}" y="120" width="184" height="58" rx="8" class="f-ink2"/>${mono(f - 80, 144, "> claude", "t-crt", 12)}${mono(f - 80, 164, "reads Data\\ only", "t-crt", 10.5)}</g>
+      <g ${an("fade", 0.7)}>${txt(f, 212, tr("حدود الأداة", "the tool's boundary"), "t-mint", 12, b8)}</g>
+      <g ${an("rise", 0.9)}>${folder(x, 122, 124, 100, "f-s2 s-line2")}${txt(x, 196, tr("سطح المكتب", "the Desktop"), "t-ink2", 11, b8)}${txt(x, 214, tr("كل ملفاتك", "all your files"), "t-ink3", 10, bold)}</g>
+      <path ${an("draw", 1.1, "s-rose")} pathLength="1" d="M${x - 48} 82 L${x + 48} 162 M${x + 48} 82 L${x - 48} 162" stroke-width="4" fill="none" stroke-linecap="round"/>
+      ${cap(tr("الفولدر الصغير… حدود آمنة", "a small folder… safe boundaries"), 1.4, 290)}`;
+    },
+    cl_read: () => {
+      return `<g ${an("rise", 0.05)}>${bubble(240, 62, 390, 58, "f-acc-soft s-acc", !ar())}${txt(240, 58, tr("«اقرا README وفولدر Data، وقولّي فهمت إيه،", "“Read README and the Data folder, and tell me"), "t-acc", 11, b8)}${txt(240, 76, tr("من غير ما تعدّل أي حاجة»", "what you understood, changing nothing”"), "t-acc", 11, b8)}</g>
+      ${term(240, 170, 360, 102, ["2 weekly files, the same 5 columns", "Masters.xlsx: sheet Countries", "5 steps required", "Question: is Qty in sets?"], 0.5, 10.5)}
+      ${check(mx(442), 170, 1.6)}
+      ${cap(tr("الفهم الأول… وبعدين الكود", "understanding first… then the code"), 1.8, 290)}`;
+    },
+    cl_approve: () => {
+      const B = rowX(3, 112, 12);
+      return `${term(240, 72, 380, 62, ["Run step1_stack.ps1 ?", "powershell -File step1_stack.ps1"], 0.05, 11)}
+      <g ${an("rise", 0.6)}>${[tr("أيوه المرة دي", "yes, this time"), tr("أيوه دايمًا", "yes, always"), tr("لأ", "no")].map((s, i) => `${box(B(i), 148, 112, 40, i === 0 ? "f-mint s-mint" : i === 1 ? "f-amber-soft s-amber" : "f-s1 s-line2")}${txt(B(i), 152, s, i === 0 ? "t-white" : i === 1 ? "t-amber" : "t-ink2", 11, b8)}`).join("")}</g>
+      <g ${an("fade", 1.0)}>${txt(B(0), 188, tr("في الأول", "at first"), "t-mint", 10.5, b8)}${txt(B(1), 188, tr("لأوامر بتقرا بس", "read-only commands"), "t-amber", 10, b8)}</g>
+      ${pill(240, 234, 340, 32, tr("بيمسح أو بيبعت؟ وافق بنفسك كل مرة", "deletes or sends? approve it yourself every time"), "f-rose-soft s-rose", "t-rose", 11, 1.3)}
+      ${cap(tr("الموافقة مش زرار… دي مراجعة", "approval isn't a button… it's a review"), 1.6, 290)}`;
+    },
+    cl_plan: () => {
+      const P = ar() ? ["١. أفتح الملفين للقراءة بس", "٢. أحطهم تحت بعض + SourceFile", "٣. العدد والإجمالي في السجل", "٤. أحفظ في Output"] : ["1. open both files read-only", "2. stack them + SourceFile", "3. count and total in the log", "4. save to Output"];
+      return `<g ${an("fade", 0.05)}>${txt(mx(200), 42, tr("الخطة، قبل أي كود", "the plan, before any code"), "t-acc", 12.5, b8)}</g>
+      ${P.map((s, i) => `<g ${an("rise", 0.2 + i * 0.2)}>${box(mx(200), 76 + i * 44, 300, 36, i === 3 ? "f-amber-soft s-amber" : "f-s1 s-acc")}${txt(mx(200), 81 + i * 44, s, i === 3 ? "t-amber" : "t-ink", 11, b8)}</g>`).join("")}
+      <g ${an("pop", 1.1)}>${txt(mx(408), 212, tr("«هتحفظ فين؟»", "“saved where?”"), "t-amber", 11, b8)}</g>
+      ${check(mx(408), 120, 1.4)}<g ${an("fade", 1.4)}>${txt(mx(408), 152, tr("موافقة", "approved"), "t-mint", 11, b8)}</g>
+      ${cap(tr("سطر في الخطة… يوفّر عشرة في الكود", "one line of plan… saves ten of code"), 1.7, 290)}`;
+    },
+    cl_run: () => {
+      const c = mx(168), r = mx(398), N = ar() ? ["تكتب", "تشغّل", "تشوف الخطأ", "تصلّح"] : ["write", "run", "see the error", "fix"];
+      const P = [[c, 62], [c + 100, 140], [c, 218], [c - 100, 140]];
+      return `<g ${an("fade", 0.05)}><circle cx="${c}" cy="140" r="78" class="s-acc" fill="none" stroke-width="2.5" stroke-dasharray="6 6"/></g>
+      ${P.map(([x, y], i) => `<g ${an("pop", 0.2 + i * 0.25)}>${box(x, y, 98, 34, i === 2 ? "f-rose-soft s-rose" : "f-s1 s-acc")}${txt(x, y + 4, N[i], i === 2 ? "t-rose" : "t-ink", 11, b8)}</g>`).join("")}
+      <g ${an("fade", 1.2)}>${txt(c, 145, tr("دقيقة", "a minute"), "t-acc", 13, b8)}</g>
+      <g ${an("rise", 1.3)}>${person(r, 132, 1, "f-ink2")}${txt(r, 160, tr("بتقرا وتوافق", "reads and approves"), "t-ink2", 11, b8)}</g>
+      ${term(r, 222, 150, 56, ["36 rows", "1,765 sets"], 1.5, 10.5)}
+      ${cap(tr("هي بتكرر الخطوات… وإنت بتحكم", "it repeats the steps… you judge"), 1.9, 298)}`;
+    },
+    cl_rules: () => {
+      const a = mx(128), b = mx(352);
+      return `${term(240, 50, 180, 40, ["> /init"], 0.05, 12)}
+      ${arrow(240 - dirx() * 40, 72, a, 102, 0.4)}${arrow(240 + dirx() * 40, 72, b, 102, 0.4)}
+      <g ${an("rise", 0.6)}>${box(a, 138, 176, 62, "f-acc-soft s-acc")}${txt(a, 134, "CLAUDE.md", "t-acc", 13, b8 + ltr)}${txt(a, 154, "Claude Code", "t-ink3", 10.5, bold + ltr)}</g>
+      <g ${an("rise", 0.8)}>${box(b, 138, 176, 62, "f-mint-soft s-mint")}${txt(b, 134, "AGENTS.md", "t-mint", 13, b8 + ltr)}${txt(b, 154, "Codex", "t-ink3", 10.5, bold + ltr)}</g>
+      <g ${an("rise", 1.1)}>${box(240, 222, 400, 58, "f-s1 s-line2")}${txt(240, 216, tr("«اقرا من Data واكتب في Output بس»", "“read from Data, write to Output only”"), "t-ink", 11, b8)}${txt(240, 236, tr("«اعرض الخطة واستنى موافقتي»", "“show the plan and wait for my approval”"), "t-ink", 11, b8)}</g>
+      ${cap(tr("اللي بيتكرر… يتكتب مرة", "what repeats… is written once"), 1.5, 292)}`;
+    },
+    cl_install: () => {
+      const l = mx(112), c = mx(366), d = dirx();
+      return `<g ${an("rise", 0.05)}>${laptop(l, 112, 1.3)}${txt(l, 168, tr("البرنامج", "the program"), "t-ink", 11.5, b8)}${txt(l, 186, tr("على جهازك", "on your machine"), "t-ink3", 10.5, bold)}</g>
+      <g ${an("rise", 0.3)}>${cloud(c, 112)}${txt(c, 117, tr("النموذج", "the model"), "t-acc", 12.5, b8)}${txt(c, 168, tr("على السحابة", "in the cloud"), "t-ink", 11.5, b8)}</g>
+      ${arrow(l + d * 64, 100, c - d * 82, 100, 0.6)}${arrow(c - d * 82, 126, l + d * 64, 126, 0.8, "s-mint")}
+      <g ${an("fade", 0.9)}>${txt(239, 92, tr("اللي اتقرا", "what was read"), "t-ink3", 10, bold)}${txt(239, 144, tr("الرد", "the reply"), "t-mint", 10, bold)}</g>
+      ${pill(240, 232, 380, 36, tr("التثبيت: مرة واحدة، من الـ IT، بحساب الشركة", "install: once, by IT, on the company account"), "f-amber-soft s-amber", "t-amber", 11, 1.1)}
+      ${cap(tr("الأداة المعتمدة… من المصدر المعتمد", "an approved tool… from the approved source"), 1.4, 290)}`;
+    },
+    cl_compare: () => {
+      const a = mx(124), b = mx(356), L = ["2 files, 5 columns", "sheet Countries", "5 steps", "Qty in sets?"];
+      return `<g ${an("fade", 0.05)}>${txt(a, 48, "Claude Code", "t-acc", 12.5, b8 + ltr)}${txt(b, 48, "Codex", "t-acc", 12.5, b8 + ltr)}</g>
+      ${term(a, 122, 196, 104, L, 0.2, 10.5)}${term(b, 122, 196, 104, L, 0.5, 10.5)}
+      ${pill(240, 122, 28, 32, "=", "f-mint-soft s-mint", "t-mint", 16, 1.4)}
+      <g ${an("rise", 1.6)}>${box(240, 222, 380, 40, "f-acc-soft s-acc")}${txt(240, 227, tr("المشكلة كانت في اللي النموذج شافه", "the problem was what the model saw"), "t-acc", 11.5, b8)}</g>
+      ${cap(tr("نفس الطلب… نفس الفهم", "the same request… the same understanding"), 1.8, 290)}`;
+    },
+    cl_cliff: () => {
+      const t = mx(178), q = mx(398);
+      return `${term(t, 96, 316, 108, ["import pandas as pd", "ModuleNotFoundError: pandas", "> pip install pandas", "BLOCKED by company policy"], 0.05, 10.5, (i) => (i === 1 || i === 3 ? "t-white" : "t-crt"))}
+      <g ${an("pop", 1.2)}>${shield(q, 92, 1.1)}${txt(q, 108, ar() ? "؟" : "?", "t-acc", 22, b8)}</g>
+      <g ${an("fade", 1.5)}>${txt(q, 160, tr("الدرس الجاي", "next lesson"), "t-acc", 12.5, b8)}</g>
+      <g ${an("rise", 1.7)}>${box(240, 228, 400, 52, "f-amber-soft s-amber")}${txt(240, 224, tr("«الكود ده بيستخدم أي حاجة", "“does this code use anything"), "t-amber", 11.5, b8)}${txt(240, 242, tr("نازلة من النت؟»", "downloaded from the internet?”"), "t-amber", 11.5, b8)}</g>`;
+    },
+    /* ----- pure Python (data/pure-story.js) ----- */
+    pu_blocked: () => {
+      const t = mx(150), p = mx(380);
+      return `${term(t, 92, 260, 76, ["> pip install pandas", "BLOCKED by company policy"], 0.05, 11, (i) => (i ? "t-white" : "t-crt"))}
+      <g ${an("pop", 0.6)}>${shield(t, 196, 1)}${txt(t, 206, ar() ? "؟" : "?", "t-acc", 20, b8)}</g>
+      <g ${an("rise", 0.8)}>${person(p, 150, 1, "f-ink2")}${bubble(p, 70, 170, 50, "f-amber-soft s-amber", !ar())}${txt(p, 75, tr("«ليه ممنوع؟»", "“why is it blocked?”"), "t-amber", 11.5, b8)}</g>
+      <g ${an("rise", 1.2)}>${box(p, 212, 180, 54, "f-acc-soft s-acc")}${txt(p, 207, tr("الممنوع: كود من برّه", "blocked: outside code"), "t-acc", 11, b8)}${txt(p, 225, tr("من غير مراجعة", "with no review"), "t-acc", 11, b8)}</g>
+      ${cap(tr("الممنوع مش الأداة… الممنوع الكود الغريب", "what's blocked isn't the tool… it's unknown code"), 1.5, 292)}`;
+    },
+    pu_stdlib: () => {
+      const M = ["csv", "sqlite3", "zipfile", "re", "html", "json", "pathlib", "datetime"], X = rowX(4, 92, 10);
+      return `<g ${an("rise", 0.05)}><path d="M210 52 v-12 h60 v12" class="s-acc" stroke-width="3" fill="none"/>${box(240, 128, 420, 150, "f-acc-soft s-acc")}${txt(240, 76, tr("المكتبة القياسية: جاية مع Python", "the standard library: ships with Python"), "t-acc", 12.5, b8)}</g>
+      ${M.map((m, i) => `<g ${an("pop", 0.3 + i * 0.1)}>${box(X(i % 4), 110 + Math.floor(i / 4) * 50, 92, 36, "f-s1 s-line2")}${txt(X(i % 4), 115 + Math.floor(i / 4) * 50, m, "t-ink", 12, b8 + ltr)}</g>`).join("")}
+      <g ${an("rise", 1.3)}>${box(240, 238, 240, 36, "f-s1 s-mint")}${mono(178, 243, "import csv, sqlite3", "t-mint", 12)}</g>
+      ${cap(tr("الشنطة جاية مع اللغة… افتحها الأول", "the toolbox comes with the language… open it first"), 1.6, 290)}`;
+    },
+    pu_package: () => {
+      const c = mx(126), l = mx(370), d = dirx();
+      return `<g ${an("rise", 0.05)}>${cloud(c, 104)}${txt(c, 92, "PyPI", "t-acc", 14, b8 + ltr)}${[0, 1, 2, 3, 4].map((k) => `<rect x="${c - 50 + k * 20}" y="104" width="14" height="14" rx="3" class="f-s1 s-acc" stroke-width="1.5"/>`).join("")}</g>
+      <g ${an("fade", 0.3)}>${txt(c, 166, tr("مئات الآلاف · أي حد يرفع", "hundreds of thousands · anyone uploads"), "t-ink3", 10.5, bold)}</g>
+      ${arrow(c + d * 82, 104, l - d * 62, 104, 0.6)}<g ${an("fade", 0.7)}>${mono(205, 92, "pip install", "t-ink2", 11)}</g>
+      <g ${an("rise", 0.9)}>${laptop(l, 104, 1.3)}${txt(l, 160, tr("جهاز الشركة", "a company machine"), "t-ink", 11.5, b8)}</g>
+      <g ${an("rise", 1.2)}>${box(240, 228, 380, 44, "f-amber-soft s-amber")}${txt(240, 233, tr("كل باكدج = قرار بإدخال كود غريب", "every package = a decision to bring in unknown code"), "t-amber", 11.5, b8)}</g>
+      ${cap(tr("كل pip install… قرار", "every pip install… is a decision"), 1.5, 290)}`;
+    },
+    pu_risk: () => {
+      const X = rowX(3, 140, 14);
+      return `<g ${an("rise", 0.05)}>${box(X(0), 118, 140, 140, "f-s1 s-rose")}${txt(X(0), 72, tr("اسم شبه اسم", "a look-alike name"), "t-rose", 11, b8)}${txt(X(0), 112, "pandsa", "t-rose", 15, b8 + ltr)}${txt(X(0), 132, "≠", "t-ink3", 14, b8)}${txt(X(0), 154, "pandas", "t-mint", 15, b8 + ltr)}</g>
+      <g ${an("rise", 0.3)}>${box(X(1), 118, 140, 140, "f-s1 s-rose")}${txt(X(1), 72, tr("نسخة اتغيّرت", "a changed version"), "t-rose", 11, b8)}${txt(X(1), 112, "v2.1", "t-mint", 15, b8 + ltr)}${txt(X(1), 154, "v2.2", "t-rose", 15, b8 + ltr)}${arrow(X(1), 118, X(1), 138, 0.5, "s-rose")}</g>
+      <g ${an("rise", 0.6)}>${box(X(2), 118, 140, 140, "f-s1 s-rose")}${txt(X(2), 72, tr("واحد بيسحب عشرات", "one pulls dozens"), "t-rose", 11, b8)}<circle cx="${X(2)}" cy="104" r="9" class="f-rose"/>${[-40, -20, 0, 20, 40].map((dx) => `<line x1="${X(2)}" y1="112" x2="${X(2) + dx}" y2="146" class="s-line2" stroke-width="1.5"/><circle cx="${X(2) + dx}" cy="152" r="6" class="f-rose-soft s-rose" stroke-width="1.5"/>`).join("")}</g>
+      ${pill(240, 232, 360, 34, tr("وكلهم بيشتغلوا بصلاحياتك", "and all of them run with your permissions"), "f-amber-soft s-amber", "t-amber", 11.5, 1.0)}
+      ${cap(tr("باكدج واحد… ومعاه عشرات", "one package… and dozens with it"), 1.3, 290)}`;
+    },
+    pu_policy: () => {
+      const g = mx(130), q = mx(356);
+      return `<g ${an("rise", 0.05)}>${[0, 1, 2, 3].map((r) => [0, 1, 2, 3].map((c) => `<rect x="${g - 82 + c * 42}" y="${52 + r * 34}" width="34" height="26" rx="5" class="f-s1 ${(r + c) % 3 ? "s-line2" : "s-rose"}" stroke-width="1.6"/>${txt(g - 65 + c * 42, 70 + r * 34, "?", (r + c) % 3 ? "t-ink3" : "t-rose", 12, b8)}`).join("")).join("")}${txt(g, 208, tr("٤٠ مهندس · مئات النسخ", "40 engineers · hundreds of versions"), "t-ink3", 10.5, bold)}</g>
+      ${arrow(g + dirx() * 96, 120, q - dirx() * 92, 120, 0.5)}
+      <g ${an("rise", 0.7)}>${box(q, 120, 170, 140, "f-mint-soft s-mint")}${txt(q, 70, tr("قايمة معتمدة", "an approved list"), "t-mint", 12, b8)}${[0, 1, 2].map((k) => `${check(q - 54, 100 + k * 30, 0.9 + k * 0.15)}<rect x="${q - 34}" y="${94 + k * 30}" width="84" height="10" rx="5" class="f-s3"/>`).join("")}</g>
+      <g ${an("fade", 1.3)}>${txt(q, 208, tr("أو منع كامل", "or a full block"), "t-ink2", 11, b8)}</g>
+      ${cap(tr("القاعدة مش ضدك… هي اللي بتخلّي أداتك تتنقل", "the rule isn't against you… it lets your tool travel"), 1.5, 290)}`;
+    },
+    pu_check: () => {
+      const a = mx(130), b = mx(362);
+      return `${term(a, 96, 220, 76, ["> python --version", "Python 3.12.4"], 0.05, 12)}${check(a - dirx() * 96, 140, 0.8)}
+      <g ${an("fade", 0.9)}>${txt(a, 160, tr("موجودة", "it's there"), "t-mint", 12, b8)}</g>
+      <g ${an("rise", 1.0)}>${winBox(b, 96, 176, 96, "Microsoft Store", "f-s1 s-rose", 1.0)}${txt(b, 112, tr("«Get Python»", "“Get Python”"), "t-ink2", 12, b8)}</g>
+      <g ${an("fade", 1.3)}>${txt(b, 160, tr("مش موجودة: ما تنزّلهاش", "not there: don't download it"), "t-rose", 11, b8)}</g>
+      ${pill(240, 222, 300, 36, tr("الـ IT بالنسخة المعتمدة", "IT, with the approved version"), "f-acc-soft s-acc", "t-acc", 11.5, 1.5)}
+      ${cap(tr("سطر واحد… قبل أي أداة", "one line… before any tool"), 1.7, 290)}`;
+    },
+    pu_rule: () => {
+      const a = mx(124), t = mx(366), d = dirx();
+      return `<g ${an("rise", 0.05)}>${box(a, 132, 200, 170, "f-s1 s-line2")}${txt(a, 62, "Prompt", "t-ink3", 11, b8 + ltr)}<rect x="${a - 90}" y="74" width="180" height="54" rx="8" class="f-amber-soft s-amber" stroke-width="2"/>${txt(a, 96, tr("المكتبة القياسية بس", "standard library only"), "t-amber", 11.5, b8)}${txt(a, 114, tr("ممنوع pip install", "no pip install"), "t-amber", 11, b8)}${[0, 1, 2].map((k) => `<rect x="${a - 80}" y="${146 + k * 20}" width="${150 - k * 30}" height="9" rx="4.5" class="f-s3"${ar() ? ` transform="translate(${20 + k * 30} 0)"` : ""}/>`).join("")}</g>
+      ${arrow(a + d * 103, 132, t - d * 98, 132, 0.6)}
+      ${term(t, 132, 190, 108, ["import csv", "import sqlite3", "# 40 lines", "36 rows", "1,765 sets"], 0.8, 11)}
+      ${cap(tr("النموذج كان يقدر… بس محدش قاله", "the model could… nobody had told it"), 1.8, 290)}`;
+    },
+    pu_write: () => {
+      const L = ["def total_by_country(rows):", "    # replaces pandas groupby().sum()", "    totals = {}", "    for row in rows:", "        c = row['CountryCode']", "        totals[c] = totals.get(c, 0) + int(row['Qty'])", "    return totals"].map(nb);
+      return `${term(240, 108, 440, 168, L, 0.05, 10.5, (i) => (i === 1 ? "t-white" : "t-crt"))}
+      ${flowRow(["EG 880", "KW 385", "AE 245"], 230, 104, 18, 1.6, "f-mint-soft s-mint", "t-mint", 12, 36)}
+      ${cap(tr("أطول شوية… بس مفهوم", "a little longer… but understood"), 2.3, 290)}`;
+    },
+    pu_map: () => {
+      const R = [["pandas", "csv + sqlite3"], ["openpyxl", tr("PowerShell ← CSV", "PowerShell → CSV")], ["pdfplumber", "re + zlib"], ["plotly", tr("SVG مكتوب نص", "SVG as text")], ["requests", tr("مفيش نت", "no internet")]];
+      const a = mx(140), b = mx(330), d = dirx();
+      return `<g ${an("fade", 0.05)}>${txt(a, 40, tr("الباكدج", "the package"), "t-rose", 12, b8)}${txt(b, 40, tr("البديل من جوّه", "the replacement inside"), "t-mint", 12, b8)}</g>
+      ${R.map(([p, r], i) => `<g ${an("rise", 0.2 + i * 0.18)}>${box(a, 70 + i * 44, 140, 34, "f-rose-soft s-rose")}${txt(a, 75 + i * 44, p, "t-rose", 12, b8 + ltr)}${box(b, 70 + i * 44, 190, 34, "f-mint-soft s-mint")}${txt(b, 75 + i * 44, r, "t-mint", 11.5, b8)}</g>${arrow(a + d * 72, 70 + i * 44, b - d * 97, 70 + i * 44, 0.3 + i * 0.18, "s-line2")}`).join("")}
+      ${cap(tr("لكل باكدج… بديل من جوّه", "for every package… a replacement from inside"), 1.4, 296)}`;
+    },
+    pu_imports: () => {
+      const L = ["import csv", "from pathlib import Path", "...", "def save(rows):", "    import openpyxl", "    ..."].map(nb);
+      return `${term(mx(170), 108, 300, 150, L, 0.05, 11, (i) => (i === 4 ? "t-white" : "t-crt"))}
+      <g ${an("pop", 1.2)}><rect x="${mx(170) - 146}" y="${108 - 75 + 24 + 4 * 20 - 15}" width="292" height="21" rx="4" class="s-rose" fill="none" stroke-width="2.5"/></g>
+      <g ${an("rise", 1.4)}>${box(mx(398), 108, 150, 96, "f-rose-soft s-rose")}${txt(mx(398), 92, tr("في نص الملف", "mid-file"), "t-rose", 11.5, b8)}${txt(mx(398), 112, tr("عندك اشتغل", "worked for you"), "t-ink2", 10.5, bold)}${txt(mx(398), 130, tr("عند زميلك وقف", "stopped for a colleague"), "t-ink2", 10.5, bold)}</g>
+      <g ${an("rise", 1.7)}>${box(240, 224, 440, 40, "f-s1 s-line2")}${mono(30, 229, "stdlib_module_names: 'openpyxl' -> False", "t-acc", 11)}</g>
+      ${cap(tr("اشتغلت عندك… مش معناها اشتغلت", "it worked for you… doesn't mean it works"), 1.9, 290)}`;
+    },
+    pu_limits: () => {
+      const a = mx(130), b = mx(352);
+      return `<g ${an("rise", 0.05)}>${box(a, 100, 170, 110, "f-s1 s-line2")}<rect x="${a - 50}" y="62" width="100" height="62" rx="4" class="f-s3"/><circle cx="${a - 24}" cy="82" r="8" class="f-s1"/><path d="M${a - 46} 120 l26 -22 l18 14 l20 -20 l28 28z" class="f-s1"/>${txt(a, 144, tr("PDF ممسوح كصورة", "a PDF scanned as an image"), "t-ink", 11, b8)}</g>
+      <g ${an("fade", 0.4)}>${txt(a, 178, tr("محتاج قراءة صور", "needs image reading"), "t-rose", 11, b8)}</g>
+      <g ${an("rise", 0.6)}>${folder(b, 100, 150, 100, "f-s2 s-line2")}${txt(b, 178, tr("كود باكدج منسوخ", "copied package code"), "t-ink2", 11, b8)}</g>
+      <path ${an("draw", 0.9, "s-rose")} pathLength="1" d="M${b - 60} 56 L${b + 60} 146 M${b + 60} 56 L${b - 60} 146" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <g ${an("fade", 1.0)}>${txt(b, 196, tr("لسه كود من برّه", "still outside code"), "t-rose", 11, b8)}</g>
+      ${pill(240, 234, 300, 36, tr("اطلب رسمي… ما تتحايلش", "ask officially… don't dodge"), "f-acc-soft s-acc", "t-acc", 12, 1.3)}
+      ${cap(tr("اطلب… ما تتحايلش", "ask… don't dodge"), 1.5, 292)}`;
+    },
+    pu_cliff: () => {
+      const l = mx(150), q = mx(390);
+      return `<g ${an("rise", 0.05)}>${laptop(l, 94, 1.8)}<rect x="${l - 44}" y="70" width="88" height="40" rx="3" class="f-s1 s-rose" stroke-width="1.5"/>${txt(l, 94, "Microsoft Store", "t-rose", 9, b8 + ltr)}</g>
+      <g ${an("fade", 0.4)}>${txt(l, 168, tr("جهاز مشرف الخط", "the line supervisor's PC"), "t-ink", 11.5, b8)}${mono(l - 60, 190, "> python --version", "t-ink3", 10.5)}</g>
+      <g ${an("pop", 0.8)}>${box(q, 64, 120, 44, "f-amber-soft s-amber")}${txt(q, 69, tr("الـ IT: أسبوعين", "IT: two weeks"), "t-amber", 11.5, b8)}</g>
+      <g ${an("pop", 1.2)}>${shield(q, 150, 1)}${txt(q, 160, ar() ? "؟" : "?", "t-acc", 20, b8)}</g>
+      <g ${an("fade", 1.5)}>${txt(q, 212, tr("الدرس الجاي", "next lesson"), "t-acc", 12.5, b8)}</g>
+      <g ${an("rise", 1.7)}>${box(240, 254, 360, 40, "f-s1 s-acc")}${txt(240, 259, tr("طب ولو الجهاز ما عليهوش Python؟", "and if the machine has no Python?"), "t-acc", 12, b8)}</g>`;
+    },
+    /* ----- PowerShell and COM (data/com-story.js) ----- */
+    co_found: () => {
+      const a = mx(126), b = mx(356);
+      return `<g ${an("rise", 0.05)}>${winBox(a, 100, 180, 100, "Microsoft Store", "f-s1 s-rose", 0.05)}${txt(a, 118, tr("«Get Python»", "“Get Python”"), "t-ink2", 12, b8)}</g>
+      <g ${an("fade", 0.3)}>${txt(a, 172, tr("python: مش موجودة", "python: not there"), "t-rose", 11.5, b8)}</g>
+      ${term(b, 100, 200, 76, ["> $PSVersionTable.PSVersion", "5.1"], 0.6, 11)}${check(b, 160, 1.2)}
+      <g ${an("fade", 1.3)}>${txt(b, 192, tr("PowerShell: موجود", "PowerShell: there"), "t-mint", 11.5, b8)}</g>
+      ${pill(240, 238, 340, 36, tr("جاي مع الويندوز نفسه", "ships with Windows itself"), "f-acc-soft s-acc", "t-acc", 12, 1.5)}
+      ${cap(tr("الأداة كانت موجودة… محدش بص", "the tool was there… nobody looked"), 1.8, 292)}`;
+    },
+    co_ps: () => {
+      const X = rowX(4, 100, 10), P = [tr("ويندوز ١٠ و١١", "Windows 10, 11"), tr("نسخة 5.1", "version 5.1"), tr("من مايكروسوفت", "by Microsoft"), tr("الـ IT بيستخدمه", "IT uses it")];
+      return `${term(240, 80, 300, 64, ["PS C:\\>", "Windows PowerShell 5.1"], 0.05, 12)}
+      ${P.map((s, i) => `<g ${an("pop", 0.5 + i * 0.15)}>${box(X(i), 158, 100, 52, "f-mint-soft s-mint")}${check(X(i), 138, 0.6 + i * 0.15)}${txt(X(i), 172, s, "t-mint", 10.5, b8)}</g>`).join("")}
+      ${flowRow(["PowerShell", "Python"], 236, 150, 60, 1.3, ["f-acc s-acc", "f-s1 s-acc"], ["t-white", "t-acc"], 12, 36)}
+      <g ${an("fade", 1.6)}>${txt(240, 270, tr("الأول · وبعدين للبيانات", "first · then for data"), "t-ink3", 10.5, bold)}</g>
+      ${cap(tr("الموجود في كل مكان… أول اختيار", "what's everywhere… comes first"), 1.8, 298)}`;
+    },
+    co_com: () => {
+      const a = mx(120), b = mx(364), d = dirx();
+      return `<g ${an("fade", 0.05)}>${txt(240, 40, "Component Object Model", "t-acc", 13, b8 + ltr)}</g>
+      ${term(a, 112, 200, 70, ["$xl = New-Object", "  -ComObject Excel.Application"].map(nb), 0.2, 10.5)}
+      ${arrow(a + d * 104, 112, b - d * 54, 112, 0.7)}
+      <g ${an("pop", 0.9)}>${xl(b, 112, 1.6)}<path d="M${b - 34} 84 a40 40 0 0 1 0 56" class="s-mint" stroke-width="2" fill="none" stroke-dasharray="3 4"/></g>
+      <g ${an("fade", 1.1)}>${txt(b, 162, tr("إكسل في الخلفية", "Excel in the background"), "t-ink", 11.5, b8)}</g>
+      ${flowRow([tr("افتح", "open"), tr("اقرا", "read"), tr("اكتب", "write"), tr("احفظ", "save")], 226, 82, 22, 1.3, "f-acc-soft s-acc", "t-acc", 11, 34)}
+      ${cap(tr("سطر واحد… وإكسل بيستنى أوامرك", "one line… and Excel awaits your orders"), 2.3, 290)}`;
+    },
+    co_tree: () => {
+      const N = ["Application", "Workbooks", "Workbook", "Worksheets", "Worksheet", "Range"], S = ar() ? ["البرنامج", "كل الملفات", "ملف واحد", "كل الشيتات", "شيت واحد", "خلية"] : ["the program", "all files", "one file", "all sheets", "one sheet", "a cell"];
+      return `${N.map((n, i) => `<g ${an("rise", 0.05 + i * 0.18)}>${box(mx(110 + i * 30), 40 + i * 42, 150, 32, i === 5 ? "f-acc s-acc" : "f-s1 s-acc")}${txt(mx(110 + i * 30), 45 + i * 42, i === 5 ? "Range(\"A1\")" : n, i === 5 ? "t-white" : "t-acc", 11.5, b8 + ltr)}${txt(mx(110 + i * 30) + dirx() * 128, 45 + i * 42, S[i], "t-ink2", 10.5, bold)}</g>`).join("")}
+      ${cap(tr("كل سطر… عنوان في الشجرة", "every line… an address in the tree"), 1.5, 306)}`;
+    },
+    co_readonly: () => {
+      const f = mx(130), o = mx(370), d = dirx();
+      return `${term(240, 52, 420, 44, ["$xl.Workbooks.Open($path, 0, $true)"], 0.05, 11.5)}
+      <g ${an("pop", 0.5)}><rect x="${240 + 120}" y="40" width="50" height="22" rx="5" class="s-amber" fill="none" stroke-width="2.5"/></g>
+      <g ${an("fade", 0.7)}>${txt(365 + 20, 92, "read-only", "t-amber", 11, b8 + ltr)}</g>
+      <g ${an("rise", 0.9)}>${folder(f, 170, 150, 110, "f-mint-soft s-mint")}${txt(f, 160, "Data\\", "t-mint", 13, b8 + ltr)}${txt(f, 182, "Week_01.xlsx", "t-ink2", 10.5, bold + ltr)}</g>
+      <g ${an("fade", 1.1)}>${txt(f, 248, tr("ما يتلمسش", "never touched"), "t-mint", 11.5, b8)}</g>
+      ${arrow(f + d * 80, 170, o - d * 80, 170, 1.2)}
+      <g ${an("rise", 1.3)}>${folder(o, 170, 150, 110, "f-amber-soft s-amber")}${txt(o, 160, "Output\\", "t-amber", 13, b8 + ltr)}${txt(o, 182, "Run_Log.txt", "t-ink2", 10.5, bold + ltr)}</g>
+      <g ${an("fade", 1.4)}>${txt(o, 248, tr("هنا بس بنكتب", "the only place we write"), "t-amber", 11.5, b8)}</g>
+      ${cap(tr("الأصل… ما يتلمسش", "the original… stays untouched"), 1.6, 290)}`;
+    },
+    co_array: () => {
+      const a = mx(126), b = mx(356), d = dirx();
+      return `<g ${an("fade", 0.05)}>${txt(a, 42, tr("خلية خلية", "cell by cell"), "t-rose", 12.5, b8)}${txt(b, 42, tr("مرة واحدة", "all at once"), "t-mint", 12.5, b8)}</g>
+      <g ${an("rise", 0.2)}>${[0, 1, 2, 3, 4, 5].map((r) => [0, 1, 2, 3, 4].map((c) => `<rect x="${a - 70 + c * 28}" y="${60 + r * 20}" width="24" height="16" rx="3" class="f-rose-soft"/>`).join("")).join("")}</g>
+      ${[0, 1, 2, 3, 4].map((k) => `<path ${an("draw", 0.4 + k * 0.12, "s-rose")} pathLength="1" d="M${a - 58 + k * 28} 62 q${d * 10} -14 ${d * 20} 0" stroke-width="1.5" fill="none"/>`).join("")}
+      <g ${an("fade", 1.0)}>${txt(a, 200, tr("٩٠ رحلة · ٤٠ ثانية", "90 trips · 40 seconds"), "t-rose", 12, b8)}</g>
+      <g ${an("rise", 0.6)}><rect x="${b - 72}" y="60" width="144" height="116" rx="6" class="f-mint-soft s-mint" stroke-width="2"/>${[0, 1, 2, 3, 4].map((r) => `<line x1="${b - 72}" y1="${80 + r * 20}" x2="${b + 72}" y2="${80 + r * 20}" class="s-mint" stroke-width="1"/>`).join("")}</g>
+      <g ${an("fade", 1.2)}>${txt(b, 200, tr("رحلة واحدة · ٤ ثواني", "1 trip · 4 seconds"), "t-mint", 12, b8)}</g>
+      ${term(240, 246, 300, 40, ["$data = $ws.UsedRange.Value2"], 1.3, 11.5)}
+      ${cap(tr("رحلة واحدة… بدل ألف", "one trip… instead of a thousand"), 1.7, 296)}`;
+    },
+    co_alerts: () => {
+      const a = mx(140), b = mx(366);
+      return `<g ${an("rise", 0.05)}>${box(a, 104, 210, 120, "f-s2 s-line2", 2, 'stroke-dasharray="6 5"')}${txt(a, 62, tr("إكسل مخفي", "hidden Excel"), "t-ink3", 11, b8)}</g>
+      <g ${an("pop", 0.4)}>${box(a, 112, 170, 66, "f-s1 s-amber")}${txt(a, 106, tr("تحب تحفظ التغييرات؟", "Save changes?"), "t-amber", 11.5, b8)}${txt(a, 128, tr("نعم · لا", "Yes · No"), "t-ink3", 10.5, bold)}</g>
+      <g ${an("fade", 0.8)}>${txt(a, 190, tr("مستني… ١٠ دقايق", "waiting… 10 minutes"), "t-rose", 11.5, b8)}</g>
+      ${term(b, 104, 210, 66, ["$xl.Visible = $false", "$xl.DisplayAlerts = $false"], 1.0, 10.5)}
+      <g ${an("fade", 1.5)}>${txt(b, 160, tr("والحفظ مكتوب صراحة", "saving stated in code"), "t-mint", 11, b8)}</g>
+      ${pill(240, 236, 320, 34, tr("إكسل عمره ما يسأل", "Excel never asks"), "f-mint-soft s-mint", "t-mint", 12, 1.6)}
+      ${cap(tr("إكسل المخفي… ما ينفعش يسأل", "a hidden Excel… mustn't ask"), 1.8, 290)}`;
+    },
+    co_finally: () => {
+      const a = mx(130), b = mx(356);
+      return `<g ${an("rise", 0.05)}>${winBox(a, 118, 200, 160, "Task Manager", "f-s1 s-line2", 0.05)}${[0, 1, 2, 3, 4].map((k) => `${xl(a - 66, 70 + k * 30, 0.55)}${txt(a + 10, 75 + k * 30, "EXCEL.EXE", "t-rose", 10.5, b8 + ltr)}`).join("")}</g>
+      ${term(b, 112, 220, 132, ["try {", "    ... work ...", "}", "finally {", "    $wb.Close($false)", "    $xl.Quit()"].map(nb), 0.6, 10.5, (i) => (i >= 3 ? "t-white" : "t-crt"))}
+      <g ${an("fade", 1.5)}>${txt(b, 198, tr("بيتنفّذ دايمًا، حتى بعد الخطأ", "always runs, even after an error"), "t-mint", 10.5, b8)}</g>
+      ${pill(240, 244, 330, 34, tr("Task Manager نضيف بعد كل تشغيل", "Task Manager clear after every run"), "f-mint-soft s-mint", "t-mint", 11, 1.7)}
+      ${cap(tr("اللي فتحته… اقفله، حتى لو غلطت", "what you open… close, even after a mistake"), 1.9, 292)}`;
+    },
+    co_python: () => {
+      const a = mx(110), m = 240, b = mx(370), d = dirx();
+      return `<g ${an("rise", 0.05)}>${box(a, 92, 160, 74, "f-acc-soft s-acc")}${txt(a, 86, "PowerShell", "t-acc", 13, b8 + ltr)}${txt(a, 106, tr("إكسل · وورد · باوربوينت", "Excel · Word · PowerPoint"), "t-ink2", 10, bold)}</g>
+      <g ${an("rise", 0.3)}>${fileIcon(m, 92, "s-amber", 0.3)}${txt(m, 132, "CSV", "t-amber", 12, b8 + ltr)}</g>
+      ${arrow(a + d * 82, 92, m - d * 22, 92, 0.5)}${arrow(m + d * 22, 92, b - d * 82, 92, 0.7)}
+      <g ${an("rise", 0.6)}>${box(b, 92, 160, 74, "f-mint-soft s-mint")}${txt(b, 86, "Python", "t-mint", 13, b8 + ltr)}${txt(b, 106, tr("بيانات · قاعدة · صفحة", "data · database · page"), "t-ink2", 10, bold)}</g>
+      <g ${an("rise", 1.0)}>${box(240, 196, 300, 50, "f-rose-soft s-rose")}${mono(240 - 116, 192, "import win32com  # pywin32", "t-rose", 11)}${txt(240, 213, tr("باكدج: ممنوع", "a package: blocked"), "t-rose", 10.5, b8)}</g>
+      <path ${an("draw", 1.3, "s-rose")} pathLength="1" d="M${240 - 150} 196 L${240 + 150} 196" stroke-width="2.5" fill="none"/>
+      ${cap(tr("كل أداة في مكانها… والـ CSV بينهم", "each tool in its place… CSV between them"), 1.6, 270)}`;
+    },
+    co_bat: () => {
+      return `<g ${an("rise", 0.05)}>${fileIcon(mx(70), 72, "s-acc", 0.05)}${txt(mx(70), 108, "Run_Count.bat", "t-acc", 10.5, b8 + ltr)}</g>
+      ${term(mx(280), 72, 340, 64, ["powershell -NoProfile -ExecutionPolicy Bypass", "  -File \"%~dp0count_rows.ps1\"   &   pause"].map(nb), 0.3, 10)}
+      <g ${an("rise", 0.9)}>${box(mx(150), 178, 200, 56, "f-acc-soft s-acc")}${txt(mx(150), 172, "%~dp0", "t-acc", 13, b8 + ltr)}${txt(mx(150), 194, tr("الفولدر اللي الملف ده فيه", "the folder this file is in"), "t-ink2", 10.5, bold)}</g>
+      <g ${an("rise", 1.1)}>${box(mx(362), 178, 190, 56, "f-amber-soft s-amber")}${txt(mx(362), 172, "Bypass", "t-amber", 13, b8 + ltr)}${txt(mx(362), 194, tr("للسكريبت ده بس، اللي اتراجع", "this reviewed script only"), "t-ink2", 10.5, bold)}</g>
+      ${pill(240, 252, 260, 34, tr("دبل كليك… وخلاص", "a double-click… that's it"), "f-mint s-mint", "t-white", 12, 1.4)}
+      ${cap(tr("دبل كليك… ومش محتاج يعرف حاجة", "a double-click… and they need to know nothing"), 1.7, 298)}`;
+    },
+    co_bom: () => {
+      const a = mx(130), b = mx(356);
+      return `<g ${an("rise", 0.05)}>${box(a, 92, 190, 70, "f-rose-soft s-rose")}${txt(a, 86, "Ã˜ÂªÃ™â€¦", "t-rose", 14, b8 + ltr)}${txt(a, 108, "UTF-8", "t-ink3", 10.5, bold + ltr)}</g>
+      ${arrow(a + dirx() * 100, 92, b - dirx() * 100, 92, 0.5)}
+      <g ${an("rise", 0.7)}>${box(b, 92, 190, 70, "f-mint-soft s-mint")}${txt(b, 86, tr("تم: ١٨ صف في Week_01", "Done: 18 rows in Week_01"), "t-mint", 11.5, b8)}${txt(b, 108, "UTF-8 with BOM", "t-ink3", 10.5, bold + ltr)}</g>
+      <g ${an("rise", 1.0)}>${winBox(240, 196, 300, 74, tr("حفظ باسم", "Save as"), "f-s1 s-line2", 1.0)}${txt(240, 222, tr("الترميز: UTF-8 with BOM", "Encoding: UTF-8 with BOM"), "t-acc", 11.5, b8)}</g>
+      ${cap(tr("علامة صغيرة… والعربي يتقري صح", "a small mark… and the Arabic reads right"), 1.4, 278)}`;
+    },
+    co_cliff: () => {
+      const q = mx(396);
+      return `<g ${an("rise", 0.05)}>${[0, 1, 2, 3].map((k) => `<rect x="${mx(160) - 110 + k * 4}" y="${44 + k * 4}" width="220" height="170" rx="8" class="f-ink2"/>`).join("")}</g>
+      ${term(mx(160) + 12, 136, 220, 170, ["# step1 + step2 + step3", "...", "line 200", "line 214  ERROR", "Exception calling", "\"Item\" with \"1\" argument", "...", "line 300"], 0.3, 10.5, (i) => (i === 3 ? "t-white" : "t-crt"))}
+      <g ${an("pop", 1.3)}>${shield(q, 112, 1.1)}${txt(q, 128, ar() ? "؟" : "?", "t-acc", 22, b8)}</g>
+      <g ${an("fade", 1.6)}>${txt(q, 180, tr("الدرس الجاي", "next lesson"), "t-acc", 12.5, b8)}</g>
+      <g ${an("rise", 1.8)}>${box(240, 260, 380, 40, "f-amber-soft s-amber")}${txt(240, 265, tr("الغلطة في أنهي جزء؟", "which part holds the mistake?"), "t-amber", 12, b8)}</g>`;
+    },
+  });
+  /* ---------- end of unit 4 ---------- */
+
   const defs = `<svg class="aih-defs" width="0" height="0" aria-hidden="true" focusable="false"><defs><marker id="aih-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" class="f-ink2"/></marker></defs></svg>`;
   const drawing = (key, label) => `<svg class="aih-svg" viewBox="0 0 480 320" role="img" aria-label="${esc(label)}">${ART[key] ? ART[key]() : ""}</svg>`;
 

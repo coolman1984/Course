@@ -48,6 +48,18 @@ jobs:
           node --check academy/src/data/slides-story.js
           node --check academy/src/data/code-story.js
           node --check academy/src/data/skill-story.js
+          node --check academy/src/data/cli-story.js
+          node --check academy/src/data/pure-story.js
+          node --check academy/src/data/com-story.js
+          node --check academy/src/data/steps-story.js
+          node --check academy/src/data/review-story.js
+          node --check academy/src/data/sql-story.js
+          node --check academy/src/data/pdf-story.js
+          node --check academy/src/data/page-story.js
+          node --check academy/src/data/rules-story.js
+          node --check academy/src/data/lessons-easy.js
+          node --check academy/src/data/easy-projects.js
+          node --check academy/src/data/easy-solutions.js
           node --check academy/src/data/office-projects.js
           node --check academy/src/data/lessons-office.js
           node --check academy/src/engine/labs.js

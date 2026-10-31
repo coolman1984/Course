@@ -104,7 +104,7 @@ function makeMockDocument() {
   };
   return { document, Node, main: byId.get("main") };
 }
-const DATA = ["ui", "meta", "stories", "scenes", "lessons-u0", "lessons-u1", "lessons-u2", "lessons-u3u4", "lessons-u5", "lessons-xl", "lessons-office", "lessons-easy", "course-order", "plain-talk-a", "plain-talk-b", "prompts", "situations", "quiz", "glossary", "compare", "history", "model-story", "context-story", "window-story", "agents-story", "work-story", "limits-story", "auto-story", "big-story", "kit-story", "deliver-story", "stack-story", "lookup-story", "report-story", "run-story", "match-story", "needs-story", "table-story", "dash-story", "gather-story", "slides-story", "code-story", "skill-story", "xl-sample", "office-projects", "easy-solutions", "easy-projects"];
+const DATA = ["ui", "meta", "stories", "scenes", "lessons-u0", "lessons-u1", "lessons-u2", "lessons-u3u4", "lessons-u5", "lessons-xl", "lessons-office", "lessons-easy", "course-order", "plain-talk-a", "plain-talk-b", "prompts", "situations", "quiz", "glossary", "compare", "history", "model-story", "context-story", "window-story", "agents-story", "work-story", "limits-story", "auto-story", "big-story", "kit-story", "deliver-story", "stack-story", "lookup-story", "report-story", "run-story", "match-story", "needs-story", "table-story", "dash-story", "gather-story", "slides-story", "code-story", "skill-story", "cli-story", "pure-story", "com-story", "steps-story", "review-story", "sql-story", "pdf-story", "page-story", "rules-story", "xl-sample", "office-projects", "easy-solutions", "easy-projects"];
 const ENGINE = ["core", "scene", "render", "quiz", "labs", "xlkit", "tools"];
 const ctx = { window: { ACADEMY: {} } };
 vm.createContext(ctx);

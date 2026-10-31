@@ -12,7 +12,7 @@ const file = "file://" + resolve(new URL("../../AI_Academy.html", import.meta.ur
 const args = process.argv.slice(2), si = args.indexOf("--shots"), shots = si >= 0 ? args.splice(si, 2)[1] : null;
 if (shots) mkdirSync(shots, { recursive: true });
 // deck id → lesson that opens with it
-const DECKS = { history: "f1", model: "f2", context: "f4", window: "f6", agents: "f7", work: "f3", limits: "f5", auto: "f8", big: "b1", kit: "x1", deliver: "x2", stack: "x3", lookup: "x4", report: "x5", match: "x7", needs: "x8", run: "x6", ptable: "a1", pdash: "a2", gather: "a3", pdeck: "a4", ccode: "a5", skillset: "a6" };
+const DECKS = { history: "f1", model: "f2", context: "f4", window: "f6", agents: "f7", work: "f3", limits: "f5", auto: "f8", big: "b1", kit: "x1", deliver: "x2", stack: "x3", lookup: "x4", report: "x5", match: "x7", needs: "x8", run: "x6", ptable: "a1", pdash: "a2", gather: "a3", pdeck: "a4", ccode: "a5", skillset: "a6", cli: "k1", pure: "k2", com: "k3", steps: "k4", review: "k5", sql: "k6", pdf: "k7", page: "k8", rules: "k9" };
 // intentional overlaps: the history deck's stacked rule cards
 const ALLOW = [["history", 4, "IF", "THEN"]];
 const want = args.length ? args : Object.keys(DECKS);
