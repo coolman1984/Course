@@ -190,7 +190,7 @@ you need with the standard library, which ships inside Python itself.
 1. The plan: does the step do one job, and the job I asked for?
 2. Imports: only the standard library (Python), only built-in commands and COM (PowerShell). No pip, no internet.
 3. Data\\ is opened read-only and nothing is written there.
-4. The log: files read, rows, totals, every check, and the result of each.
+4. The log: files read, rows, totals, each table's sum against the total, every check and its result.
 5. The numbers: one total checked by hand (filter the source in Excel, or add a few rows on paper).
 6. The bad file: run it once on a copy with one column renamed. It must stop with a clear message.
 7. Clean-up: after a run, Task Manager shows no EXCEL.EXE left behind.

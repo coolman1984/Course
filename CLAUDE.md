@@ -17,7 +17,8 @@ academy/build.mjs          bundles everything into AI_Academy.html (DATA and ENG
 academy/src/ai-guide.txt   short guide for an AI reading the HTML; injected at the very top of <head>
 academy/src/data/*.js      all content (course-order plan, lessons, decks, prompts, quiz, glossary, plain-language layer, stories, ui,
                            xl-sample.js: the unit-2 projects, one per lesson;
-                           office-projects.js: unit 3's two examples and skills kit)
+                           office-projects.js: unit 3's two examples and skills kit;
+                           easy-projects.js + easy-solutions.js: unit 4's simple examples, starter kit, Python solutions)
 academy/src/engine/*.js    behaviour (core router/search, render, decks in history.js, labs, motion, quiz, tools,
                            xlkit.js: writes each project as real .xlsx/.pdf/.docx files in one .zip, offline)
 academy/src/*.css          styles (styles.css, motion.css, history.css for decks)
@@ -47,7 +48,7 @@ Commit the rebuilt `AI_Academy.html` together with source changes. CI runs the s
   with the same figures and the same lesson links** (a data test enforces equal `[[lesson]]` links per explanation).
 - A lesson (`A.lessons`): `id, unit, pages, diff, min, scene?, lab?, related, pre, title, sum, book[], levels{simple,
   mech, practice, adv}`. **`data/course-order.js` places every lesson**: its unit and its number (units are shown
-  as 1–8, ids `u0`–`u7`; the book is a reference, not the order). Ids never change (links and saved progress depend on
+  as 1–9, ids `u0`–`u8`; the book is a reference, not the order). Ids never change (links and saved progress depend on
   them); a lesson's `unit` field must match the plan (a data test checks it). Every lesson also needs: an entry in `plain-talk-a/b.js` (9 strings; it replaces the displayed Arabic
   title and summary), a 7-string intro in `stories.js`, at least one prompt and one quiz question, and its book pages in
   `meta.js` coverage. Rich text: `**bold**`, `[[lessonId]]`, `((glossaryId|label))`.
@@ -58,7 +59,11 @@ Commit the rebuilt `AI_Academy.html` together with source changes. CI runs the s
   when a tool stops). Also pinned by a data test.
 - Unit 2 (shown as 3) is Office automation at scale: `a1 a2 a3 a4 a5 a6` (example 1: 13 weekly reports → one big sheet
   with two VLOOKUP columns → pivots, report, charts, dashboard with slicers; example 2: Excel + PDF + Word → Sales with the
-  same two VLOOKUPs, Shipments, Returns, Targets → report and a PowerPoint deck; Claude Code in detail; skills). Pinned by a data test. Big data (`b1` …) opens unit 3 (shown as 4).
+  same two VLOOKUPs, Shipments, Returns, Targets → report and a PowerPoint deck; Claude Code in detail; skills). Pinned by a data test.
+- Unit 3 (shown as 4) is unit 3's examples made very simple, under one security policy: `k1 k2 k3 k4 k5 k6 k7 k8 k9`
+  (Codex CLI and Claude Code CLI → pure Python, why packages are blocked → PowerShell first and COM → two weeks step by
+  step in one click → reviewing code → SQL and SQLite → one PDF into a database → an HTML page for management → skills
+  and the rules files). Pinned by a data test. Big data (`b1` …) opens unit 4 (shown as 5).
 - Unit 2's examples are a TV factory's production lines (purchasing and materials as the second example). Never name
   the factory or a company, and don't discuss personal accounts or what may be uploaded: talk about the automation itself,
   with ChatGPT and Gemini Enterprise side by side.
@@ -71,6 +76,13 @@ Commit the rebuilt `AI_Academy.html` together with source changes. CI runs the s
   `academy/tools/make-finals.py` (LibreOffice + python-pptx) into `academy/src/finals/` and embedded by the build; a data
   test reads those files back. Rerun the script whenever a generator or a figure changes, then rebuild.
   Lesson a5 states Claude Code's models and effort levels: when they change, update a5, `code-story.js` and `cc_*`.
+- Unit 4's downloads are `A.easyProjects` (`data/easy-projects.js`): `Unit4_Example_1_Two_Weeks.zip` (k4–k6: two weekly
+  reports, 36 rows, + Masters with one Countries sheet; Prompts `k4a k4b k4c k5a k6a`), `Unit4_Example_2_PDF_to_HTML.zip`
+  (k7–k8: one text PDF with a Total line + Countries.csv; Prompts `k7a k8a`) and `Unit4_Starter_Kit.zip` (k9: CLAUDE.md
+  and AGENTS.md with the same rules, the trusted-tool skill, Check_Setup.bat). Every unit-4 tool Prompt ends with `RULE4`
+  (PowerShell first for Office, Python's standard library only, no internet, one step, a launcher). The Python steps
+  ship a reference solution in `Solution/` (`data/easy-solutions.js`); a data test runs it with python3 on the
+  generated files and checks its figures, and checks it imports nothing outside the standard library.
 - Each unit-2 lesson has its own project (`A.xlProjects`, one zip `Lesson_N_<Name>.zip`): Excel files in English only
   (the factory's real files are English), README/Prompt/answer key in the reader's language. Each project adds one idea
   and its own planted problems. Data come from seeded generators; each project's `expected()` holds every figure the
@@ -79,7 +91,7 @@ Commit the rebuilt `AI_Academy.html` together with source changes. CI runs the s
 
 ## Story decks
 
-Each lesson of units 0, 1 and 2, and the first lesson of each later unit (unit 4: `b1`), opens with a 12-slide deck: `academy/src/data/<name>-story.js` registers `A.<name>Story` in `A.decks`
+Each lesson of units 0, 1, 2 and 3, and the first lesson of each later unit (unit 5: `b1`), opens with a 12-slide deck: `academy/src/data/<name>-story.js` registers `A.<name>Story` in `A.decks`
 with `lesson: "<id>"`; the player is `A.mountDeck` in `engine/history.js` (one player for all decks).
 
 Writing rules:

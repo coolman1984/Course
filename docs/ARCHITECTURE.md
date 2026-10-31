@@ -35,7 +35,7 @@ generator or figure changes; `data.test.mjs` reads the files back and fails if t
 | Key | File | Notes |
 |---|---|---|
 | `A.ui` | `data/ui.js` | every interface string, `u(ar, en)` |
-| `A.units`, `A.coverage`, `A.labs`, `A.meta.showcase` | `data/meta.js` | eight units; book-page coverage 1–41; the home "before/after" showcase per unit |
+| `A.units`, `A.coverage`, `A.labs`, `A.meta.showcase` | `data/meta.js` | nine units; book-page coverage 1–41; the home "before/after" showcase per unit |
 | `A.lessons` | `data/lessons-*.js` | one object per lesson (see CLAUDE.md for the fields) |
 | `A.courseOrder` | `data/course-order.js` | **the plan**: which lessons each unit holds, in teaching order; sets `unit`, sorts `A.lessons`, computes `unit.bookPages` |
 | `A.decks` | `data/*-story.js`, `data/history.js` | 12-slide story decks, each tied to a lesson by `lesson` |
@@ -80,6 +80,8 @@ resume points, and `plan` (the course-plan version).
   score cleared once.
 - `plan: 5` made unit 3 (`u2`) the Office automation unit (lessons a1–a6) and moved its old lessons into unit 4 (`u3`):
   a save from plan 4 or earlier has the `u2` and `u3` best scores cleared once.
+- `plan: 6` added a new unit 4 (`u3`, lessons k1–k9) and moved units 4–8 to 5–9 (`u4`–`u8`): a save from plan 5 or
+  earlier has each `u3`–`u7` best score moved up one unit with its lessons, and the new `u3` starts empty.
 - Import/export writes and reads the same object as a JSON file.
 - **One setting lives elsewhere:** the site's reduce-motion switch (`engine/motion.js`) is stored under its own key,
   `academy.motion` (`"off"` or `"on"`). It is not part of import/export or `S.reset()`. The operating-system

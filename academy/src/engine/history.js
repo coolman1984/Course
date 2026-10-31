@@ -3593,6 +3593,94 @@
       <g ${an("fade", 1.5)}>${txt(q, 168, tr("الدرس الجاي", "next lesson"), "t-acc", 12.5, b8)}</g>
       <g ${an("rise", 1.7)}>${person(q, 252, 0.8, "f-ink2")}${txt(q, 278, tr("مهندس مصنع تالت", "a third plant's engineer"), "t-ink2", 10.5, b8)}</g>`;
     },
+    /* ----- skills and the rules files (data/rules-story.js) ----- */
+    ru_scattered: () => {
+      return `${[0, 1, 2, 3, 4, 5].map((k) => `<g ${an("rise", 0.05 + k * 0.1)}>${box(mx(70 + (k % 3) * 82), 70 + Math.floor(k / 3) * 70, 70, 54, "f-s1 s-line2")}${txt(mx(70 + (k % 3) * 82), 66 + Math.floor(k / 3) * 70, "Prompt", "t-ink3", 10, b8 + ltr)}${txt(mx(70 + (k % 3) * 82), 84 + Math.floor(k / 3) * 70, digits(k + 1), "t-ink2", 12, b8)}</g>`).join("")}
+      <g ${an("fade", 0.8)}>${txt(mx(152), 196, tr("… لحد ١٢", "… up to 12"), "t-ink3", 11, b8)}</g>
+      <g ${an("rise", 1.0)}>${box(mx(378), 82, 170, 52, "f-rose-soft s-rose")}${txt(mx(378), 78, tr("نسي «المكتبة القياسية»", "forgot “standard library”"), "t-rose", 10.5, b8)}${txt(mx(378), 96, tr("← رجع pandas", "→ pandas came back"), "t-ink2", 10.5, bold)}</g>
+      <g ${an("rise", 1.3)}>${box(mx(378), 152, 170, 52, "f-rose-soft s-rose")}${txt(mx(378), 148, tr("نسي «الخطة الأول»", "forgot “plan first”"), "t-rose", 10.5, b8)}${txt(mx(378), 166, tr("← ٢٠٠ سطر مرة واحدة", "→ 200 lines at once"), "t-ink2", 10.5, bold)}</g>
+      ${cap(tr("القاعدة جوّه Prompt… بتتنسي", "a rule inside a Prompt… gets forgotten"), 1.6, 270)}`;
+    },
+    ru_list: () => {
+      const C = [[tr("إيه اللي يشتغل", "what may run"), "1–4", "f-acc-soft s-acc", "t-acc"], [tr("إزاي نبني", "how to build"), "5–10", "f-mint-soft s-mint", "t-mint"], [tr("قبل «خلصت»", "before “done”"), "11–13", "f-amber-soft s-amber", "t-amber"]], X = rowX(3, 140, 14);
+      const S = [[tr("PowerShell الأول", "PowerShell first"), tr("Python النقي", "pure Python"), tr("مفيش نت", "no internet")], [tr("خطوة واحدة", "one step"), tr("Data للقراءة", "Data read-only"), tr("سجل · وقفة", "log · stop")], [tr("المراجعات", "the checks"), tr("شرح في سطرين", "2-line explanation"), tr("رقم بإيدك", "a figure by hand")]];
+      return `${C.map(([h, n, cls, tc], i) => `<g ${an("rise", 0.1 + i * 0.25)}>${box(X(i), 130, 140, 170, cls)}${txt(X(i), 66, h, tc, 12, b8)}${txt(X(i), 88, n, "t-ink3", 11, b8 + ltr)}${S[i].map((s, k) => txt(X(i), 124 + k * 30, s, "t-ink", 10.5, b8)).join("")}</g>`).join("")}
+      ${cap(tr("١٣ قاعدة… كل واحدة وراها حكاية", "13 rules… each with a story behind it"), 1.1, 250)}`;
+    },
+    ru_files: () => {
+      const a = mx(128), b = mx(352);
+      return `<g ${an("rise", 0.05)}>${box(a, 112, 180, 150, "f-acc-soft s-acc")}${txt(a, 56, "CLAUDE.md", "t-acc", 13, b8 + ltr)}<rect x="${a - 76}" y="68" width="152" height="16" rx="4" class="f-acc"/>${txt(a, 80, "Claude Code", "t-white", 9.5, b8 + ltr)}${[0, 1, 2, 3, 4].map((k) => `<rect x="${a - 70}" y="${96 + k * 16}" width="140" height="8" rx="4" class="f-s1"/>`).join("")}</g>
+      <g ${an("rise", 0.3)}>${box(b, 112, 180, 150, "f-mint-soft s-mint")}${txt(b, 56, "AGENTS.md", "t-mint", 13, b8 + ltr)}<rect x="${b - 76}" y="68" width="152" height="16" rx="4" class="f-mint"/>${txt(b, 80, "Codex", "t-white", 9.5, b8 + ltr)}${[0, 1, 2, 3, 4].map((k) => `<rect x="${b - 70}" y="${96 + k * 16}" width="140" height="8" rx="4" class="f-s1"/>`).join("")}</g>
+      <g ${an("pop", 0.7)}>${txt(240, 140, "=", "t-ink2", 24, b8)}</g>
+      <g ${an("fade", 0.9)}>${txt(240, 210, tr("أول سطر بس مختلف · الـ ١٣ قاعدة هي هي", "only the first line differs · the same 13 rules"), "t-ink2", 11, b8)}</g>
+      ${cap(tr("أداتين… وقواعد واحدة", "two tools… one set of rules"), 1.2, 262)}`;
+    },
+    ru_skill: () => {
+      const f = mx(110);
+      return `<g ${an("rise", 0.05)}>${folder(f, 120, 170, 140)}${txt(f, 76, "trusted-tool", "t-amber", 12, b8 + ltr)}${["SKILL.md", "reference/"].map((s, i) => txt(f, 116 + i * 24, s, "t-ink2", 11, b8 + ltr)).join("")}</g>
+      ${[tr("اقرا README وData", "read README and Data"), tr("قسّم خطوات واستنى", "split into steps, wait"), tr("ابني خطوة وشغّلها", "build a step, run it"), tr("راجعها بالقايمة", "review it with the list"), tr("وبعدين اللي بعدها", "then the next")].map((s, i) => `<g ${an("rise", 0.3 + i * 0.15)}>${box(mx(330), 52 + i * 40, 230, 32, i === 3 ? "f-mint-soft s-mint" : "f-s1 s-acc")}${txt(mx(330), 56 + i * 40, digits(i + 1) + ". " + s, i === 3 ? "t-mint" : "t-ink", 11, b8)}</g>`).join("")}
+      ${cap(tr("القاعدة دايمًا… والطريقة وقت المهمة", "rules always… the method when the task comes"), 1.3, 262)}`;
+    },
+    ru_desc: () => {
+      return `<g ${an("rise", 0.05)}>${box(240, 60, 380, 40, "f-rose-soft s-rose")}${mono(80, 65, "description: an automation skill", "t-rose", 11.5)}</g>${check(mx(452), 60, 0.4, false)}
+      <g ${an("rise", 0.7)}>${box(240, 160, 430, 120, "f-mint-soft s-mint")}${["description: Builds a small automation tool that", "the security team accepts - PowerShell for Office,", "pure Python for data, PDF, SQLite and HTML -", "step by step. Use when asked to automate a report,", "combine Excel files, read a PDF into a table..."].map((s, i) => mono(36, 120 + i * 18, s, "t-mint", 10.5)).join("")}</g>${check(mx(462), 110, 1.3)}
+      ${cap(tr("الوصف العام… مهارة ما بتتلاقيش", "a vague description… a skill never found"), 1.5, 260)}`;
+    },
+    ru_refs: () => {
+      const s = mx(90), X = mx(346), R = ["powershell-com.md", "pure-python.md", "review-checklist.md"], W = [tr("شكل أي سكريبت أوفيس", "any Office script's shape"), tr("خريطة البدائل", "the replacements map"), tr("المراجعة التسعة", "the nine checks")];
+      return `<g ${an("rise", 0.05)}>${box(s, 120, 150, 90, "f-acc-soft s-acc")}${txt(s, 112, "SKILL.md", "t-acc", 12, b8 + ltr)}${txt(s, 132, tr("قصير", "short"), "t-ink2", 10.5, bold)}</g>
+      ${R.map((r, i) => `${arrow(s + dirx() * 78, 120, X - dirx() * 96, 62 + i * 58, 0.4 + i * 0.15, "s-line2", "4 4")}<g ${an("rise", 0.5 + i * 0.15)}>${box(X, 62 + i * 58, 184, 46, "f-s1 s-line2")}${txt(X, 58 + i * 58, r, "t-ink", 10.5, b8 + ltr)}${txt(X, 76 + i * 58, W[i], "t-ink3", 10, bold)}</g>`).join("")}
+      <g ${an("fade", 1.1)}>${txt(240, 252, tr("الوصف دايمًا · المهارة لما المهمة تيجي · المرجع لما خطوة تحتاجه", "description always · skill when the task comes · reference when needed"), "t-ink", 10, b8)}</g>
+      ${cap(tr("مساحة العمل فاضية… للشغل نفسه", "the workspace stays free… for the work"), 1.3, 290)}`;
+    },
+    ru_setup: () => {
+      return `<g ${an("pop", 0.05)}>${fileIcon(mx(60), 66, "s-acc", 0.05)}${txt(mx(60), 104, "Check_Setup.bat", "t-acc", 10, b8 + ltr)}</g>
+      ${term(mx(286), 96, 340, 128, ["=== PowerShell ===", "5.1.19041", "=== Python ===", "Python 3.12.4", "OK - SQLite 3.45.3"], 0.3, 10.5, (i) => (i === 4 ? "t-white" : "t-crt"))}${check(mx(286) + dirx() * 150, 150, 1.4)}
+      <g ${an("rise", 1.5)}>${box(240, 214, 420, 40, "f-amber-soft s-amber")}${txt(240, 219, tr("ناقصة؟ اطلب Python المعتمدة من الـ IT، ما تنزّلهاش بنفسك", "missing? ask IT for the approved Python; don't download it"), "t-amber", 10.5, b8)}</g>
+      ${cap(tr("جهازهم مش جهازك… افحص", "their machine isn't yours… check"), 1.7, 270)}`;
+    },
+    ru_test: () => {
+      const a = mx(126), b = mx(352);
+      return `<g ${an("rise", 0.05)}>${bubble(a, 70, 200, 50, "f-acc-soft s-acc", !ar())}${txt(a, 75, tr("«ابنيلي أداة للمثال ده»", "“build me a tool for this example”"), "t-acc", 10.5, b8)}</g>
+      <g ${an("fade", 0.3)}>${txt(a, 122, tr("جلسة جديدة · ولا قاعدة في الطلب", "new session · no rule in the request"), "t-ink3", 10.5, bold)}</g>
+      ${term(b, 128, 230, 168, ["read AGENTS.md", "5 steps:", " 1 stack (PowerShell)", " 2 country name", " 3 report", " 4 review", " 5 SQLite (stdlib)", "plan for step 1... go on?"].map(nb), 0.6, 9.5)}
+      ${check(a, 176, 1.8)}<g ${an("fade", 1.9)}>${txt(a, 206, tr("واستنى الموافقة", "and waited for approval"), "t-mint", 11, b8)}</g>
+      ${cap(tr("لو اشتغلت من غير شرح… الطقم جاهز", "if it works unexplained… the kit is ready"), 2.1, 284)}`;
+    },
+    ru_update: () => {
+      const L = ar() ? ["١. الخطة", "٢. من برّه؟", "٣. Data للقراءة", "٤. السجل + مجموع كل جدول", "٥. رقم بإيدك", "٦. ملف غلط", "٧. Task Manager نضيف", "٨. الشرح", "٩. رأي تاني"] : ["1. the plan", "2. outside?", "3. Data read-only", "4. log + each table's sum", "5. a figure by hand", "6. a wrong file", "7. Task Manager clear", "8. the explanation", "9. a second opinion"];
+      return `${L.map((s, i) => `<g ${an("rise", 0.05 + i * 0.08)}>${box(mx(150), 36 + i * 27, 240, 23, i === 3 || i === 6 ? "f-amber-soft s-amber" : "f-s1 s-line2")}${txt(mx(150), 41 + i * 27, s, i === 3 || i === 6 ? "t-amber" : "t-ink", 10.5, b8)}</g>`).join("")}
+      <g ${an("rise", 0.9)}>${box(mx(390), 116, 140, 56, "f-rose-soft s-rose")}${txt(mx(390), 112, tr("«الكويت ٨»", "“Kuwait 8”"), "t-rose", 11.5, b8)}${txt(mx(390), 130, tr("← سطر ٤", "→ line 4"), "t-ink2", 10.5, bold)}</g>
+      <g ${an("rise", 1.1)}>${box(mx(390), 196, 140, 56, "f-rose-soft s-rose")}${txt(mx(390), 192, tr("إكسل مستخبي", "hidden Excel"), "t-rose", 11.5, b8)}${txt(mx(390), 210, tr("← سطر ٧", "→ line 7"), "t-ink2", 10.5, bold)}</g>
+      ${cap(tr("الغلطة اللي اتكتبت… ما بتتكررش", "a mistake written down… doesn't repeat"), 1.4, 290)}`;
+    },
+    ru_same: () => {
+      const a = mx(128), b = mx(352);
+      return `<g ${an("rise", 0.05)}>${box(a, 92, 180, 100, "f-acc-soft s-acc")}${txt(a, 62, "CLAUDE.md", "t-acc", 12.5, b8 + ltr)}${txt(a, 96, tr("+ «التاريخ yyyy-mm-dd»", "+ “dates yyyy-mm-dd”"), "t-mint", 10.5, b8)}</g>
+      <g ${an("rise", 0.3)}>${box(b, 92, 180, 100, "f-mint-soft s-mint")}${txt(b, 62, "AGENTS.md", "t-mint", 12.5, b8 + ltr)}${txt(b, 96, tr("القاعدة ناقصة", "the rule is missing"), "t-rose", 10.5, b8)}</g>
+      <g ${an("pop", 0.6)}>${txt(240, 100, "≠", "t-rose", 24, b8)}</g>
+      <g ${an("fade", 0.8)}>${txt(240, 168, tr("مصنعين · تاريخين بشكلين · تقارير مش متطابقة", "two plants · two date formats · reports don't match"), "t-rose", 10.5, b8)}</g>
+      ${pill(240, 214, 380, 34, tr("التعديل في الملفين مع بعض · وعلى GitHub", "change both files together · keep them on GitHub"), "f-acc-soft s-acc", "t-acc", 11, 1.0)}
+      ${cap(tr("ملفين… نسخة واحدة", "two files… one copy"), 1.3, 262)}`;
+    },
+    ru_verdict: () => {
+      const a = mx(120), b = mx(352);
+      return `<g ${an("rise", 0.05)}>${folder(a, 104, 170, 130)}${txt(a, 62, tr("طقم البداية", "the starter kit"), "t-amber", 11.5, b8)}${["AGENTS.md", "review-checklist.md", "Run_Log.txt"].map((s, i) => txt(a, 98 + i * 22, s, "t-ink2", 10.5, b8 + ltr)).join("")}</g>
+      ${arrow(a + dirx() * 92, 104, b - dirx() * 66, 104, 0.4)}
+      <g ${an("pop", 0.6)}>${shield(b, 100, 1.2)}${check(b, 112, 0.9)}</g>
+      <g ${an("rise", 1.0)}>${box(mx(120), 214, 200, 48, "f-s1 s-acc")}${txt(mx(120), 208, tr("«نازل من النت؟»", "“from the internet?”"), "t-acc", 10.5, b8)}${txt(mx(120), 226, "AGENTS.md", "t-ink3", 10, bold + ltr)}</g>
+      <g ${an("rise", 1.2)}>${box(mx(352), 214, 200, 48, "f-s1 s-acc")}${txt(mx(352), 208, tr("«مين راجعه، وإزاي؟»", "“who reviewed it, how?”"), "t-acc", 10.5, b8)}${txt(mx(352), 226, "review-checklist.md", "t-ink3", 10, bold + ltr)}</g>
+      ${cap(tr("الإجابة في ملف… مش في كلام", "the answer in a file… not in words"), 1.5, 280)}`;
+    },
+    ru_cliff: () => {
+      const f = mx(110), q = mx(392), d = dirx();
+      return `<g ${an("rise", 0.05)}>${[0, 1, 2, 3, 4].map((k) => `<rect x="${f - 60 + k * 4 * d}" y="${60 - k * 6}" width="120" height="170" rx="6" class="f-s1 s-line2" stroke-width="2"/>`).join("")}${txt(f, 140, tr("٣٠٠ ألف صف", "300,000 rows"), "t-ink", 14, b8)}${txt(f, 162, tr("خلايا مدموجة", "merged cells"), "t-ink3", 11, bold)}${txt(f, 180, tr("تواريخ كنص", "dates as text"), "t-ink3", 11, bold)}</g>
+      <g ${an("rise", 0.6)}>${box(240, 262, 300, 50, "f-s2 s-line2")}<rect x="${ar() ? 240 + 130 - 182 : 240 - 130}" y="252" width="182" height="12" rx="6" class="f-rose"/><rect x="${240 - 130}" y="252" width="260" height="12" rx="6" class="s-ink3" fill="none" stroke-width="1.5"/>${txt(240, 280, tr("٧٠٪ · لا يستجيب", "70% · Not responding"), "t-rose", 11.5, b8)}</g>
+      <g ${an("pop", 1.1)}>${xl(240, 120, 1.3)}<path d="M${240 - 18} 102 l36 36 M${240 + 18} 102 l-36 36" class="s-rose" stroke-width="4" stroke-linecap="round"/></g>
+      <path ${an("draw", 1.6, "s-acc")} pathLength="1" d="M${240 + d * 34} 120 C ${240 + d * 80} 120, ${q - d * 70} 110, ${q - d * 46} 110" stroke-width="3" stroke-dasharray="1" fill="none" marker-end="url(#aih-arrow)"/>
+      <g ${an("pop", 1.9)}><ellipse cx="${q}" cy="78" rx="40" ry="12" class="f-acc-soft s-acc" stroke-width="2.5"/><path d="M${q - 40} 78 v64 a40 12 0 0 0 80 0 v-64" class="f-acc-soft s-acc" stroke-width="2.5"/><path d="M${q - 40} 100 a40 12 0 0 0 80 0 M${q - 40} 121 a40 12 0 0 0 80 0" class="s-acc" fill="none" stroke-width="2"/>${txt(q, 120, ar() ? "؟" : "?", "t-acc", 26, b8)}</g>
+      <g ${an("fade", 2.2)}>${txt(q, 178, tr("الوحدة الجاية", "next unit"), "t-acc", 13, b8)}${txt(q, 196, tr("أكبر من إكسل", "bigger than Excel"), "t-ink2", 11.5, bold)}</g>`;
+    },
   });
   /* ---------- end of unit 4 ---------- */
 

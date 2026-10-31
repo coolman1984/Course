@@ -73,13 +73,13 @@ Dates are 2026. Pull-request numbers are in brackets.
 ## The site today
 | | |
 |---|---|
-| Units | 8 |
-| Lessons | 59, each at four levels |
-| Story decks | 23 (12 slides each): all of units 1, 2 and 3, and unit 4's opening story |
+| Units | 9 |
+| Lessons | 67, each at four levels |
+| Story decks | 32 (12 slides each): all of units 1, 2, 3 and 4, and unit 5's opening story |
 | Animated scenes | 35 |
 | Labs | 14 (8 real calculations, 6 simulations) |
-| Prompts | 122 |
-| Questions | 118 |
+| Prompts | 133 |
+| Questions | 136 |
 | Glossary terms | 83 |
 | File size | about 7 MB, zero network requests |
 
@@ -145,4 +145,27 @@ dashboard. Example 2 gathers three branch workbooks, six one-table PDFs and two 
 VLOOKUPs), Shipments, Returns and Targets, checks shipped against sold, and ends in an 8-slide deck. Each download now
 holds its finished result in `Final_Result/` so learners can see the end before and after they build; the files are built
 by `academy/tools/make-finals.py`. Decks a1–a4, their drawings, questions and summaries were rewritten for the new figures.
+
+## Unit 4: tools the company trusts (October)
+A new unit 4 makes unit 3's examples very simple, so the model solves them first time and the learner sees every step,
+under one security policy: PowerShell first for Office (through COM), Python's standard library only (no pip, no
+packages; the model writes any missing function itself), no internet, one checked step at a time, each with a launcher.
+Units 4–8 became 5–9; course plan 6 moves each saved unit score up one unit with its questions.
+
+| # | Lesson | Download | Deck question |
+|---|---|---|---|
+| 1 | k1 Codex CLI and Claude Code CLI | — | «إزاي النموذج يشتغل جوّه فولدري، وأنا اللي بقرر؟» |
+| 2 | k2 Pure Python: why packages are blocked | — | «إزاي أبني أداة من غير ولا باكدج من برّه؟» |
+| 3 | k3 PowerShell first, and what COM means | — | «إزاي سكريبت يشغّل إكسل كإنه إيدي؟» |
+| 4 | k4 Example 1, step by step, in one click | `Unit4_Example_1_Two_Weeks.zip` | «إزاي أبني الأداة خطوة خطوة، وتشتغل بضغطة؟» |
+| 5 | k5 Reviewing code properly | (the same zip, Prompt_4) | «إزاي أعرف إن الكود صح، مش بس إنه اشتغل؟» |
+| 6 | k6 SQL and SQLite inside Python | (the same zip, Prompt_5) | «إزاي أسأل الجداول أسئلة كتير بسرعة، ومن غير تثبيت؟» |
+| 7 | k7 Example 2: one PDF into a database | `Unit4_Example_2_PDF_to_HTML.zip` | «إزاي أرقام الـ PDF توصل لقاعدة البيانات من غير ما تتنقل بإيد؟» |
+| 8 | k8 An HTML page for management, offline | (the same zip, Prompt_2) | «إزاي الأرقام تتعرض على الإدارة في صفحة تتفتح في أي مكان؟» |
+| 9 | k9 Skills and the rules files | `Unit4_Starter_Kit.zip` | «إزاي القواعد دي تتطبق كل مرة من غير ما أعيدها؟» |
+
+Example 1 is two weeks (36 rows, 1,765 sets) and one lookup (the country name); example 2 is one text PDF (12 rows and a
+Total line: 470 sets, EGP 4,168,000) loaded into SQLite and shown as one HTML page with a Present button. The Python steps
+ship a tested reference solution in `Solution/`. Unit 3 now ends on the security team's two questions, which unit 4
+answers; unit 4 ends on the file bigger than Excel that opens unit 5 (b1).
 
