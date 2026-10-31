@@ -30,6 +30,13 @@ It also embeds unit 3's finished results, `src/finals/*` (the two examples' fina
 LibreOffice (UNO) and python-pptx from the same seeded data (`academy/tools/export-data.mjs`). Rerun it when a unit-3
 generator or figure changes; `data.test.mjs` reads the files back and fails if they disagree with `expected()`.
 
+The build also embeds the ready tools, `src/tools/**` (scripts and docs as text), as `<script type="application/json"
+id="tool-files">` (every `<` escaped as `\u003c`). `data/ready-tools.js` turns one tool folder into the `Ready_Tool/`
+files of an example's zip: the shared `common/` files go to `scripts/`, `#@include helpers.py` and
+`<!-- @include lessons-common.ar.md -->` are replaced by the shared file, `NAME.ar.md` / `NAME.en.md` become `NAME.md`
+in the reader's language, and `.bat`/`.ps1` get Windows line ends. `office-projects.js` and `easy-projects.js` add
+`p.readyTool(lang)` to each bundle.
+
 ## Data model (`window.ACADEMY`)
 
 | Key | File | Notes |

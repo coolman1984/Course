@@ -385,6 +385,7 @@ director's own conclusions: never write conclusions for them. Compare with Final
       t("٤. احفظ الأداة جنب فولدر Data (نفس طريقة الوحدة التانية)، وشغّلها، واقرا Run_Log.txt.", "4. Save the tool next to the Data folder (the same way as in unit 2), run it and read Run_Log.txt."),
       t("٥. كمّل بـ Prompt_2.txt في نفس المحادثة.", "5. Go on with Prompt_2.txt in the same chat."),
       t("٦. قارن الناتج بـ Answer_Key.txt وبالنتيجة النهائية في Final_Result: نفس الأرقام ونفس الشكل.", "6. Compare your output with Answer_Key.txt and with the finished result in Final_Result: the same figures and the same layout."),
+      t("٧. وفي المحاضرة، لو الوقت ضيق: افتح Ready_Tool واعمل دبل كليك على Run_Tool.bat، والأداة الجاهزة هتطلّع نفس النتيجة على جهازك (التفاصيل في Ready_Tool\\START_HERE.txt).", "7. In a lecture, if time is short: open Ready_Tool and double-click Run_Tool.bat, and the ready tool produces the same result on your machine (details in Ready_Tool\\START_HERE.txt)."),
     ];
     return crlf([
       t(`الوحدة ٣ — ${p.title.ar}`, `Unit 3 — ${p.title.en}`),
@@ -393,6 +394,7 @@ director's own conclusions: never write conclusions for them. Compare with Final
       t("في الفولدر", "In this folder"),
       p.n === 3 ? t("- skills/: التلات مهارات.", "- skills/: the three skills.") : t("- Data/: الملفات اللي هتشتغل عليها (ما تعدّلش فيها).", "- Data/: the files you work on (don't edit them)."),
       ...(p.finalNames.length ? [t("- Final_Result/: النتيجة النهائية جاهزة، علشان تشوف شكلها قبل وبعد ما تبني.", "- Final_Result/: the finished result, so you can see it before and after you build.")] : []),
+      ...(p.tool ? [t("- Ready_Tool/: الأداة الجاهزة كاملة: Run_Tool.bat بيشغّل الخطوات كلها بضغطة (إكسل ووورد وباوربوينت بطريقة COM، والحساب بـ Python النقي)، والتوثيق في docs (SKILL.md وHISTORY.md وLESSONS.md).", "- Ready_Tool/: the complete ready tool: Run_Tool.bat runs every step in one click (Excel, Word and PowerPoint through COM, the arithmetic in pure Python), with its documentation in docs (SKILL.md, HISTORY.md and LESSONS.md).")] : []),
       t(`- ${files.join("، ")}: الـ Prompt جاهز تنسخه${files.length > 1 ? "، واحد لكل خطوة" : ""}.`, `- ${files.join(", ")}: the Prompt${files.length > 1 ? "s, one per step," : ""} ready to copy.`),
       t("- Answer_Key.txt: الأرقام الصح.", "- Answer_Key.txt: the right figures."), "",
       t("البيانات (الجزء ده بيروح للنموذج)", "The data (this part goes to the model)"), ...g.data, "",
