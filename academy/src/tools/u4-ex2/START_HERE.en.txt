@@ -1,0 +1,18 @@
+The ready tool - unit 4, example 2: from a PDF report to a page for management
+=============================================================================
+
+One click:
+1. Unzip into a folder of its own, and keep the Data and Ready_Tool folders side by side as they are.
+2. Open the Ready_Tool folder and double-click Run_Tool.bat.
+3. At the end you must see the line ALL STEPS PASSED, and the page opens in the browser by itself.
+
+To explain it step by step: in the scripts folder run Run_step1_extract_pdf.bat, then Run_step2_build_report.bat.
+
+What appears in the Output folder:
+- Exports.db: a SQLite database holding the table Exports (12 rows) and the table Countries.
+- Export_Report.html: one page that works offline: 3 figures, two charts, a table and a Present button.
+- Run_Log.txt: the log of every step and every check.
+
+What the laptop needs: Python 3 with its standard library only, and any browser.
+If the tool stops: read the last lines on the screen or in Output\Run_Log.txt.
+The documentation is in the docs folder: SKILL.md, HISTORY.md and LESSONS.md.

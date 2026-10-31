@@ -1,0 +1,22 @@
+The ready tool - unit 4, example 1: two weeks in one table
+==========================================================
+
+One click:
+1. Unzip into a folder of its own, and keep the Data and Ready_Tool folders side by side as they are.
+2. Open the Ready_Tool folder and double-click Run_Tool.bat: every step runs, one after the other.
+3. At the end you must see the line ALL STEPS PASSED, and Two_Weeks.xlsx opens by itself.
+
+To explain it step by step in a lecture: open the scripts folder and run each step with its own launcher:
+Run_step1_stack.bat, then Run_step2_lookup.bat, then Run_step3_report.bat, then Run_step5_load_sqlite.bat.
+(Step 4 is the code review; it has no launcher.)
+
+What appears in the Output folder:
+- Two_Weeks.xlsx: the Data sheet (36 rows and a CountryName column by VLOOKUP), the Countries sheet, and a Report
+  sheet made of formulas.
+- Two_Weeks.csv: the same table as plain text.
+- Factory.db and Query_Results.txt: a SQLite database and the answers to three SQL questions.
+- Run_Log.txt: the log of every step and every check.
+
+What the laptop needs: Excel and Windows PowerShell, and Python 3 with its standard library only.
+If the tool stops: read the last lines on the screen or in Output\Run_Log.txt.
+The documentation is in the docs folder: SKILL.md, HISTORY.md and LESSONS.md.

@@ -1,0 +1,22 @@
+The ready tool - unit 3, example 2: the commercial review
+=========================================================
+
+One click:
+1. Unzip into a folder of its own, and keep the Data and Ready_Tool folders side by side as they are.
+2. Open the Ready_Tool folder and double-click Run_Tool.bat.
+3. The tool runs 4 steps, and each step writes what it did. At the end you must see the line ALL STEPS PASSED, and
+   the deck opens by itself.
+
+What appears in the Output folder:
+- Q3_Commercial_Review.xlsx: the tables (Sales with two VLOOKUP columns, Shipments, Returns, Targets, Sources), the
+  pivot tables, the report and the charts.
+- Q3_Commercial_Review.pptx and a PDF of it: 8 slides, every number read from the workbook.
+- Check_Report.txt: the figures that must come out; compare them with Answer_Key.txt.
+- Run_Log.txt: the log of every step and every check.
+
+What the laptop needs:
+- Excel, Word and PowerPoint (2016 or later) and Windows PowerShell.
+- Python 3 with its standard library only, no package.
+
+If the tool stops: read the last lines on the screen or in Output\Run_Log.txt. They give the file and the reason.
+The documentation is in the docs folder: SKILL.md, HISTORY.md and LESSONS.md.

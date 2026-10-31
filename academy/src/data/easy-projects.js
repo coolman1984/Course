@@ -219,16 +219,13 @@ pause
   const bom = "\ufeff";
   const crlf = (s) => s.replace(/\r?\n/g, "\r\n");
   const prompt = (id, lang) => { const p = (A.prompts || []).find((x) => x.id === id); return p ? crlf(p.text[lang]) + "\r\n" : ""; };
-  const S = () => A.easySolutions || {};
-  const sol = (names) => names.map((f) => ({ path: "Solution/" + f, text: crlf(S()[f] || "") }));
-  const runBat = (py) => ({ path: "Solution/Run_" + py.replace(/\.py$/, "") + ".bat", text: crlf(`@echo off\ncd /d "%~dp0.."\npython "%~dp0${py}"\npause\nrem END OF FILE Run_${py.replace(/\.py$/, "")}.bat\n`) });
   const P = [];
   P.push({
     n: 1, lessons: ["k4", "k5", "k6"], lesson: "k4", slug: "Two_Weeks", short: u("أسبوعين", "Two weeks"),
     title: u("المثال الأول، بسيط: أسبوعين في جدول واحد، واسم البلد، وتقرير، وقاعدة بيانات", "Example 1, simply: two weeks in one table, the country name, a report and a database"),
     about: u("تقريرين إنتاج أسبوعيين بنفس الأعمدة (٣٦ صف بس)، وملف Masters فيه شيت واحد للبلاد. الأداة بتتبني ٥ خطوات صغيرة: تحت بعض، وبعدين اسم البلد بـ VLOOKUP، وبعدين تقرير قصير وملف CSV (كلهم بـ PowerShell وإكسل)، وبعدين مراجعة الكود، وفي الآخر قاعدة بيانات SQLite وتلات أسئلة بـ SQL (بـ Python النقي).",
       "Two weekly production reports with the same columns (36 rows only), and a Masters file with one sheet of countries. The tool is built in 5 small steps: stacking, then the country name by VLOOKUP, then a short report and a CSV file (all with PowerShell and Excel), then a review of the code, and finally a SQLite database and three SQL questions (with pure Python)."),
-    prompts: ["k4a", "k4b", "k4c", "k5a", "k6a"], data: ex1Files, expected: ex1Expected, solution: ["load_sqlite.py"],
+    prompts: ["k4a", "k4b", "k4c", "k5a", "k6a"], data: ex1Files, expected: ex1Expected, tool: "u4-ex1",
     head: u("المثال ١ من ٢", "Example 1 of 2"), note: u("ملفات البيانات بالإنجليزي، ومعاها README وPrompt لكل خطوة ومفتاح إجابة، والحل النموذجي لخطوة Python. فكّه في فولدر لوحده.", "The data files are in English, with a README, a Prompt per step, an answer key and the reference solution of the Python step. Unzip it into a folder of its own."),
   });
   P.push({
@@ -236,7 +233,7 @@ pause
     title: u("المثال التاني، بسيط: تقرير PDF واحد في قاعدة بيانات، وصفحة HTML للإدارة", "Example 2, simply: one PDF report into a database, and an HTML page for management"),
     about: u("تقرير PDF واحد من النظام: مبيعات التصدير لشهر يوليو، جدول واحد ١٢ صف وتحته سطر الإجمالي. الأداة بـ Python النقي بتقرا النص من الـ PDF، وتراجع مجموع الصفوف على سطر الإجمالي، وتحطهم في قاعدة بيانات SQLite. وبعدين خطوة تانية بتعمل صفحة HTML واحدة: أرقام ورسوم وجدول، وزرار عرض للإدارة.",
       "One PDF report from the system: July's export sales, one 12-row table with a Total line under it. The pure-Python tool reads the PDF's text, checks the rows' sum against the Total line, and loads them into a SQLite database. Then a second step makes one HTML page: figures, charts, a table, and a Present button for management."),
-    prompts: ["k7a", "k8a"], data: ex2Files, expected: ex2Expected, solution: ["extract_pdf.py", "build_report.py"],
+    prompts: ["k7a", "k8a"], data: ex2Files, expected: ex2Expected, tool: "u4-ex2",
     head: u("المثال ٢ من ٢", "Example 2 of 2"), note: u("الـ PDF وملف البلاد بالإنجليزي، ومعاهم README وPrompt لكل خطوة ومفتاح إجابة، والحل النموذجي بـ Python النقي. فكّه في فولدر لوحده.", "The PDF and the countries file are in English, with a README, a Prompt per step, an answer key and the pure-Python reference solution. Unzip it into a folder of its own."),
   });
   P.push({
@@ -306,7 +303,7 @@ pause
       t("الموقف", "The situation"), p.about[lang], "",
       t("في الفولدر", "In this folder"),
       p.n === 3 ? t("- ملفات القواعد والمهارة وملف الفحص.", "- The rules files, the skill and the check file.") : t("- Data/: الملفات اللي هتشتغل عليها (ما تعدّلش فيها).", "- Data/: the files you work on (don't edit them)."),
-      ...(p.solution ? [t("- Solution/: الحل النموذجي لخطوات Python، تقارن بيه بعد ما تبني.", "- Solution/: the reference solution of the Python steps, to compare with after you build.")] : []),
+      ...(p.tool ? [t("- Solution/: الحل النموذجي لخطوات Python، تقارن بيه بعد ما تبني.", "- Solution/: the reference solution of the Python steps, to compare with after you build.")] : []),
       t(`- ${files.join("، ")}: الـ Prompt جاهز تنسخه${files.length > 1 ? "، واحد لكل خطوة" : ""}.`, `- ${files.join(", ")}: the Prompt${files.length > 1 ? "s, one per step," : ""} ready to copy.`),
       t("- Answer_Key.txt: الأرقام الصح.", "- Answer_Key.txt: the right figures."), "",
       t("البيانات (الجزء ده بيروح للنموذج)", "The data (this part goes to the model)"), ...g.data, "",
@@ -321,9 +318,10 @@ pause
   }
   for (const p of P) {
     p.folder = `Unit4_${p.n === 3 ? "" : "Example_" + p.n + "_"}${p.slug}`; p.zip = p.folder + ".zip";
-    p.files = () => [...p.data(), ...(p.solution ? [...sol(p.solution), ...p.solution.map(runBat)] : [])];   // the data, then the reference solution
+    p.files = () => p.data();
+    p.readyTool = (lang) => (p.tool && A.readyTools ? A.readyTools.bundle(p.tool, lang) : []);   // Ready_Tool/: the finished automation, one click
     p.guides = (lang) => [{ path: "README.txt", text: bom + readme(p, lang) }, ...p.prompts.map((id, i) => ({ path: `Prompt_${i + 1}.txt`, text: bom + prompt(id, lang) })), { path: "Answer_Key.txt", text: bom + answerKey(p, lang) }];
-    p.bundle = (lang) => [...p.guides(lang), ...p.files()];
+    p.bundle = (lang) => [...p.guides(lang), ...p.files(), ...p.readyTool(lang)];
   }
   A.easyProjects = {
     list: P, byLesson: Object.fromEntries(P.flatMap((p) => p.lessons.map((l) => [l, p]))), guide, readme, answerKey,

@@ -308,14 +308,14 @@ director's own conclusions: never write conclusions for them. Compare with Final
     title: u("المثال الأول: ١٣ تقرير أسبوعي في شيت واحد، وداشبورد جوّه إكسل", "Example 1: 13 weekly reports in one sheet, and a dashboard inside Excel"),
     about: u("١٣ تقرير إنتاج أسبوعي للربع التالت، كلهم بنفس الأعمدة. بيتحطوا تحت بعض في شيت واحد كبير، ويتضاف لهم عمودين بـ VLOOKUP من ملف Masters: اسم الموديل واسم البلد. وبعدين جداول محورية، وتقرير، ورسوم، وداشبورد. والنتيجة النهائية جاهزة في فولدر Final_Result تقارن بيها.",
       "13 weekly production reports for the third quarter, all with the same columns. They are stacked into one big sheet, and two columns are added with VLOOKUP from the Masters file: the model name and the country name. Then come pivot tables, a report, charts and a dashboard. The finished result is ready in the Final_Result folder to compare with."),
-    prompts: ["a1a", "a2a"], finalNames: ["Production_Q3_Final.xlsx"], data: ex1Files, expected: ex1Expected,
+    tool: "u3-ex1", prompts: ["a1a", "a2a"], finalNames: ["Production_Q3_Final.xlsx"], data: ex1Files, expected: ex1Expected,
   });
   P.push({
     n: 2, lessons: ["a3", "a4"], lesson: "a3", slug: "Commercial_Review", short: u("المراجعة التجارية", "Commercial review"),
     title: u("المثال التاني: إكسل وPDF ووورد في ملف واحد، وعرض باوربوينت في الآخر", "Example 2: Excel, PDF and Word in one workbook, and a PowerPoint deck at the end"),
     about: u("مراجعة الربع التالت التجارية من ١١ ملف في ٣ أشكال: ٣ ملفات إكسل لمبيعات الفروع بنفس الأعمدة، و٦ تقارير PDF (مبيعات التصدير والشحنات)، ومذكرتين وورد (المرتجعات والمستهدف). كلهم بيتجمعوا في ملف واحد بنفس عمودين الـ VLOOKUP، وبعدين تقرير ورسوم، وفي الآخر عرض باوربوينت. والنتيجة النهائية جاهزة في Final_Result.",
       "The third quarter's commercial review from 11 files in 3 formats: 3 Excel files of branch sales with the same columns, 6 PDF reports (export sales and shipments) and 2 Word memos (returns and targets). They are gathered into one workbook with the same two VLOOKUP columns, then a report and charts, and finally a PowerPoint deck. The finished result is ready in Final_Result."),
-    prompts: ["a3a", "a4a"], finalNames: ["Q3_Commercial_Final.xlsx", "Q3_Commercial_Review.pptx", "Q3_Commercial_Review.pdf"], data: ex2Files, expected: ex2Expected,
+    tool: "u3-ex2", prompts: ["a3a", "a4a"], finalNames: ["Q3_Commercial_Final.xlsx", "Q3_Commercial_Review.pptx", "Q3_Commercial_Review.pdf"], data: ex2Files, expected: ex2Expected,
   });
   P.push({
     n: 3, lessons: ["a6"], lesson: "a6", slug: "Skills_Kit", short: u("طقم المهارات", "Skills kit"),
@@ -409,7 +409,8 @@ director's own conclusions: never write conclusions for them. Compare with Final
     p.folder = `Unit3_${p.n === 3 ? "" : "Example_" + p.n + "_"}${p.slug}`; p.zip = p.folder + ".zip";
     p.files = () => [...p.data(), ...finalFiles(p.finalNames)];   // the data, then the finished result
     p.guides = (lang) => [{ path: "README.txt", text: bom + readme(p, lang) }, ...p.prompts.map((id, i) => ({ path: `Prompt_${i + 1}.txt`, text: bom + prompt(id, lang) })), { path: "Answer_Key.txt", text: bom + answerKey(p, lang) }];
-    p.bundle = (lang) => [...p.guides(lang), ...p.files()];
+    p.readyTool = (lang) => (p.tool && A.readyTools ? A.readyTools.bundle(p.tool, lang) : []);   // Ready_Tool/: the finished automation, one click
+    p.bundle = (lang) => [...p.guides(lang), ...p.files(), ...p.readyTool(lang)];
   }
   A.officeProjects = {
     list: P, byLesson: Object.fromEntries(P.flatMap((p) => p.lessons.map((l) => [l, p]))), guide, readme, answerKey,

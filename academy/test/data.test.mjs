@@ -104,7 +104,7 @@ function makeMockDocument() {
   };
   return { document, Node, main: byId.get("main") };
 }
-const DATA = ["ui", "meta", "stories", "scenes", "lessons-u0", "lessons-u1", "lessons-u2", "lessons-u3u4", "lessons-u5", "lessons-xl", "lessons-office", "lessons-easy", "course-order", "plain-talk-a", "plain-talk-b", "prompts", "situations", "quiz", "glossary", "compare", "history", "model-story", "context-story", "window-story", "agents-story", "work-story", "limits-story", "auto-story", "big-story", "kit-story", "deliver-story", "stack-story", "lookup-story", "report-story", "run-story", "match-story", "needs-story", "table-story", "dash-story", "gather-story", "slides-story", "code-story", "skill-story", "cli-story", "pure-story", "com-story", "steps-story", "review-story", "sql-story", "pdf-story", "page-story", "rules-story", "xl-sample", "office-projects", "easy-solutions", "easy-projects"];
+const DATA = ["ui", "meta", "stories", "scenes", "lessons-u0", "lessons-u1", "lessons-u2", "lessons-u3u4", "lessons-u5", "lessons-xl", "lessons-office", "lessons-easy", "course-order", "plain-talk-a", "plain-talk-b", "prompts", "situations", "quiz", "glossary", "compare", "history", "model-story", "context-story", "window-story", "agents-story", "work-story", "limits-story", "auto-story", "big-story", "kit-story", "deliver-story", "stack-story", "lookup-story", "report-story", "run-story", "match-story", "needs-story", "table-story", "dash-story", "gather-story", "slides-story", "code-story", "skill-story", "cli-story", "pure-story", "com-story", "steps-story", "review-story", "sql-story", "pdf-story", "page-story", "rules-story", "xl-sample", "ready-tools", "office-projects", "easy-projects"];
 const ENGINE = ["core", "scene", "render", "quiz", "labs", "xlkit", "tools"];
 const ctx = { window: { ACADEMY: {} } };
 vm.createContext(ctx);
@@ -715,25 +715,144 @@ test("the unit-4 projects: clean files, a correct reading finds every figure the
   assert.ok(/results from Output/.test(R4.en) && /never write to Data/.test(R4.en) && /من Output/.test(R4.ar), "the shared unit-4 Prompt tail lets a step read Output");
 });
 
-test("the unit-4 reference solutions are pure Python and, run on the example files, write the figures of the answer key", () => {
-  const S = A.easySolutions, stdlib = new Set(["csv", "html", "re", "sqlite3", "sys", "zlib", "datetime", "pathlib"]);
-  for (const [name, code] of Object.entries(S)) for (const m of code.matchAll(/^(?:from (\w+)|import ([\w, ]+))/gm))
-    for (const mod of (m[1] || m[2]).split(",").map((x) => x.trim())) assert.ok(stdlib.has(mod), `${name}: imports ${mod}, outside the standard library`);
-  let py = null; try { execFileSync("python3", ["--version"]); py = "python3"; } catch { return; }   // no Python on this machine: the import check above still ran
-  const tmp = mkdtempSync(path.join(tmpdir(), "u4-")), write = (root, f) => { const p = path.join(tmp, root, f.path); mkdirSync(path.dirname(p), { recursive: true }); writeFileSync(p, Buffer.from(A.xlKit.fileData(f))); };
-  const [P1, P2] = A.easyProjects.list;
+/* ---------- the ready tools (Ready_Tool/ in each example zip of units 3 and 4: academy/src/tools/) ---------- */
+const TOOLS = path.join(SRC, "tools");
+const loadTools = () => {
+  if (A.toolFiles && Object.keys(A.toolFiles).length) return;
+  const out = {}, walk = (d) => { for (const e of readdirSync(path.join(TOOLS, d), { withFileTypes: true })) {
+    if (e.name === "__pycache__") continue; const p = d ? d + "/" + e.name : e.name;
+    if (e.isDirectory()) walk(p); else out[p] = readFileSync(path.join(TOOLS, p), "utf8"); } };
+  walk(""); A.toolFiles = out;
+};
+const STDLIB = new Set(["csv", "html", "json", "math", "re", "sqlite3", "sys", "zipfile", "zlib", "datetime", "pathlib", "xml"]);
+const toolProjects = () => { loadTools(); return [...A.officeProjects.list, ...A.easyProjects.list].filter((p) => p.tool); };
+const writeBundle = (root, files) => { for (const f of files) { const p = path.join(root, f.path); mkdirSync(path.dirname(p), { recursive: true }); writeFileSync(p, Buffer.from(A.xlKit.fileData(f))); } };
+const havePython = () => { try { execFileSync("python3", ["--version"]); return true; } catch { return false; } };
+const runPy = (root, script) => { try { execFileSync("python3", ["-I", path.join(root, "Ready_Tool", "scripts", script)], { cwd: tmpdir(), stdio: "pipe" }); return { code: 0 }; } catch (e) { return { code: e.status, out: String(e.stdout) }; } };
+const summaryOf = (root) => JSON.parse(readFileSync(path.join(root, "Output", "Work", "summary.json"), "utf8"));
+const sameFigures = (got, exp, label) => { for (const k of Object.keys(exp)) assert.equal(JSON.stringify(got[k], Object.keys(got[k] || {}).sort()), JSON.stringify(exp[k], Object.keys(exp[k] || {}).sort()), `${label}: ${k}`); };
+// what step 1 (1_Export_With_Office.ps1) writes: every sheet's Value2 as CSV (dates as Excel day numbers), every Word table
+const csvField = (v) => { const s = v == null ? "" : typeof v === "object" ? String(v.d) : String(v); return /[",\r\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+const writeExports = (root, files) => {
+  const dir = path.join(root, "Output", "Work", "Export"); mkdirSync(dir, { recursive: true });
+  const name = (f, part) => f.path.slice("Data/".length).replace(/\//g, "__") + "__" + part + ".csv";
+  for (const f of files) {
+    for (const sh of f.sheets || []) writeFileSync(path.join(dir, name(f, sh.name)), "﻿" + sh.rows.map((r) => r.map(csvField).join(",")).join("\r\n") + "\r\n");
+    ((f.docx && f.docx.blocks) || []).filter((b) => b.table).forEach((b, i) => writeFileSync(path.join(dir, name(f, "Table" + (i + 1))), "﻿" + b.table.map((r) => r.map(csvField).join(",")).join("\r\n") + "\r\n"));
+  }
+};
+
+test("ready tools: every example of units 3 and 4 ships one, complete, in both languages", () => {
+  const P = toolProjects();
+  assert.equal(P.map((p) => p.zip + ":" + p.tool).join(" "), "Unit3_Example_1_Production_Dashboard.zip:u3-ex1 Unit3_Example_2_Commercial_Review.zip:u3-ex2 Unit4_Example_1_Two_Weeks.zip:u4-ex1 Unit4_Example_2_PDF_to_HTML.zip:u4-ex2");
+  for (const p of P) for (const lang of ["ar", "en"]) {
+    const files = Object.fromEntries(p.bundle(lang).filter((f) => f.path.startsWith("Ready_Tool/")).map((f) => [f.path.slice(11), f.text]));
+    const label = `${p.zip} (${lang})`;
+    for (const need of ["Run_Tool.bat", "Run_Tool.ps1", "START_HERE.txt", "scripts/common.ps1", "docs/SKILL.md", "docs/HISTORY.md", "docs/LESSONS.md"]) assert.ok(files[need], `${label}: Ready_Tool/${need}`);
+    assert.ok(/^---\nname: [a-z-]+\ndescription: .{80,}\n---\n/.test(files["docs/SKILL.md"]), `${label}: SKILL.md starts with name and description`);
+    assert.ok(!/@include/.test(Object.values(files).join("")), `${label}: every include resolved`);
+    assert.ok(/Lessons that repeat|دروس بتتكرر/.test(files["docs/LESSONS.md"]), `${label}: LESSONS.md holds the shared lessons`);
+    if (lang === "ar") for (const d of ["START_HERE.txt", "docs/HISTORY.md", "docs/LESSONS.md"]) assert.ok(/[؀-ۿ]/.test(files[d]), `${label}: ${d} is in Arabic`);
+    // the one-click run: every step the orchestrator names exists, and every launcher points at a file that exists
+    const steps = [...files["Run_Tool.ps1"].matchAll(/File = "([^"]+)"/g)].map((m) => m[1]);
+    assert.ok(steps.length >= 2, `${label}: Run_Tool.ps1 lists its steps`);
+    for (const s of steps) assert.ok(files["scripts/" + s], `${label}: step ${s} exists`);
+    assert.ok(steps.some((s) => s.endsWith(".py")) ? true : true);
+    for (const [f, t] of Object.entries(files).filter(([f]) => f.endsWith(".bat"))) {
+      assert.ok(/\r\n/.test(t) && !/[^\r]\n/.test(t), `${label}: ${f} has Windows line ends`);
+      for (const m of t.matchAll(/%~dp0([\w.]+\.(?:ps1|py))/g)) assert.ok(files[(f.includes("/") ? "scripts/" : "") + m[1]], `${label}: ${f} runs ${m[1]}, which exists`);
+    }
+    // the Python steps: standard library only
+    for (const [f, t] of Object.entries(files).filter(([f]) => f.endsWith(".py")))
+      for (const m of t.matchAll(/^(?:from ([\w.]+) import|import ([\w., ]+))/gm)) for (const mod of (m[1] || m[2]).split(",").map((x) => x.trim().split(/[.\s]/)[0]))
+        assert.ok(STDLIB.has(mod), `${label}: ${f} imports ${mod}, outside the standard library`);
+  }
+});
+
+test("ready tools: the PowerShell scripts are well formed, ASCII, and close Office even after an error", () => {
+  loadTools();
+  const F = A.toolFiles, ps = Object.keys(F).filter((f) => f.endsWith(".ps1"));
+  const common = F["common/common.ps1"], defined = new Set([...Object.values(F).join("\n").matchAll(/^\s*function ([\w-]+)/gm)].map((m) => m[1]));
+  const cmdlets = new Set(["New-Object", "Join-Path", "Test-Path", "Split-Path", "Resolve-Path", "New-Item", "Remove-Item", "Move-Item", "Get-ChildItem", "Get-Content", "Get-Date", "Get-Command", "Import-Csv", "ConvertFrom-Json", "ConvertTo-Json", "Write-Host", "Out-Host", "Out-Null", "Where-Object", "ForEach-Object", "Select-Object", "Unblock-File", "Invoke-Item"]);
+  // a small tokenizer: strings, comments and here-strings out, then brackets must balance
+  const strip = (src) => { let out = "", i = 0; const n = src.length;
+    while (i < n) { const c = src[i];
+      if (c === "#") { while (i < n && src[i] !== "\n") i++; continue; }
+      if (c === "<" && src[i + 1] === "#") { const j = src.indexOf("#>", i + 2); assert.ok(j > 0, "block comment closed"); i = j + 2; continue; }
+      if (c === "'") { i++; while (i < n && !(src[i] === "'" && src[i + 1] !== "'")) { if (src[i] === "'") i++; i++; } assert.ok(i < n, "a '...' string is closed"); i++; out += "''"; continue; }
+      if (c === '"') { i++; while (i < n && src[i] !== '"') { if (src[i] === "`") i++; else if (src[i] === '"' && src[i + 1] === '"') i++; i++; } assert.ok(i < n, 'a "..." string is closed'); i++; out += '""'; continue; }
+      out += c; i++; }
+    return out; };
+  for (const f of ps) {
+    const src = F[f];
+    assert.ok(/^[\x09\x0a\x0d\x20-\x7e]*$/.test(src), `${f}: ASCII only (Windows PowerShell 5.1 misreads UTF-8 without a BOM)`);
+    const code = strip(src), stack = [], pair = { ")": "(", "}": "{", "]": "[" };
+    for (const [k, ch] of [...code].entries()) {
+      if ("({[".includes(ch)) stack.push(ch);
+      else if (")}]".includes(ch)) assert.equal(stack.pop(), pair[ch], `${f}: brackets balance (near «${code.slice(Math.max(0, k - 60), k + 1)}»)`);
+    }
+    assert.equal(stack.length, 0, `${f}: every bracket is closed`);
+    // every command at the start of a statement is a function of the tool or a built-in cmdlet
+    for (const m of code.matchAll(/(?:^|[;{(|=]\s*|\n\s*)(?:&\s*)?([A-Z][a-z]+-[A-Z][A-Za-z]+)\b/g)) assert.ok(defined.has(m[1]) || cmdlets.has(m[1]), `${f}: ${m[1]} is defined`);
+    if (f === "common/common.ps1") continue;
+    assert.ok(/^\$StepName = "[\w]+"\r?\n\. \(Join-Path \$PSScriptRoot "(?:scripts\\)?common\.ps1"\)/m.test(src), `${f}: names its step, then loads common.ps1`);
+    if (/-ComObject/.test(src)) {
+      const fin = src.slice(src.lastIndexOf("} finally {"));
+      assert.ok(/\.Quit\(\)/.test(fin) && /Close-Com/.test(fin) && /Clear-Com/.test(fin), `${f}: the last finally quits Office and releases COM`);
+      assert.ok(/\} catch \{\r?\n\s+Write-Log \("STOPPED: "/.test(src) && /exit \$code\s*$/.test(src), `${f}: a stop is logged and the exit code returned`);
+      for (const line of src.split(/\r?\n/).filter((l) => /(Workbooks|Documents)\.Open\(/.test(l)))
+        assert.ok(/,\s*(?:0|\$false),\s*\$true\)/.test(line) || (/Open\(\$path\)/.test(line) && /\$path = Join-Path \$OutDir/.test(src)), `${f}: a source file opens read-only («${line.trim()}»)`);
+    }
+    assert.ok(!/SaveAs\([^)]*DataDir/.test(src) && !/Join-Path \$DataDir[^\n]*\)\.Save/.test(src), `${f}: nothing is saved into Data`);
+  }
+  assert.ok(/ExecutionPolicy Bypass -File "%~dp0Run_Tool\.ps1"/.test(F["common/Run_Tool.bat"]), "Run_Tool.bat starts Run_Tool.ps1 next to it");
+  assert.ok(/WindowsApps|Microsoft Store/.test(common) && /sys\.version_info\[0\]/.test(common), "Find-Python skips the Store shortcut and asks Python its version");
+});
+
+test("ready tools: the Python steps, run on the example files, compute every figure of the answer keys", { skip: !havePython() && "no python3 on this machine" }, () => {
+  if (!A.xlKit) { ctx.TextEncoder = TextEncoder; vm.runInContext(readFileSync(path.join(SRC, "engine", "xlkit.js"), "utf8"), ctx, { filename: "xlkit.js" }); }
+  ctx.atob = ctx.atob || atob; loadFinals(); loadTools();
+  const [U1, U2] = A.officeProjects.list, [K1, K2] = A.easyProjects.list, n = (x) => Number(x).toLocaleString("en-US");
+  const tmp = mkdtempSync(path.join(tmpdir(), "tools-"));
   try {
-    for (const f of P2.files()) write("ex2", f);
-    execFileSync(py, ["-I", path.join(tmp, "ex2", "Solution", "extract_pdf.py")], { cwd: tmp }); execFileSync(py, ["-I", path.join(tmp, "ex2", "Solution", "build_report.py")], { cwd: tmp });
-    const X = P2.expected(), page = readFileSync(path.join(tmp, "ex2", "Output", "Export_Report.html"), "utf8"), n = (x) => Number(x).toLocaleString("en-US");
-    for (const v of [n(X.sales), n(X.qty), X.top.name, X.top.share + "%"]) assert.ok(page.includes(v), "the HTML page shows " + v);
-    assert.ok(!/https?:\/\//.test(page), "the page links to nothing outside itself");
-    assert.ok(readFileSync(path.join(tmp, "ex2", "Output", "Run_Log.txt"), "utf8").includes(`${X.rows} rows, ${n(X.qty)} sets, ${n(X.sales)} EGP: the same as the Total line`));
-    for (const f of P1.files()) write("ex1", f);
-    mkdirSync(path.join(tmp, "ex1", "Output"), { recursive: true }); writeFileSync(path.join(tmp, "ex1", "Output", "Two_Weeks.csv"), A.easyProjects.twoWeeksCsv());
-    execFileSync(py, ["-I", path.join(tmp, "ex1", "Solution", "load_sqlite.py")], { cwd: tmp });
-    const Y = P1.expected(), q = readFileSync(path.join(tmp, "ex1", "Output", "Query_Results.txt"), "utf8");
-    assert.ok(q.includes("Egypt | " + Y.egypt) && q.includes("Kuwait | " + Y.topExport.units) && q.includes("L01 | " + Y.lines.L01) && q.includes("Week_02.xlsx | 18 | " + Y.perWeek[1].units), "the SQL answers match the answer key");
+    for (const [p, script] of [[U1, "2_Build_Tables.py"], [U2, "2_Build_Tables.py"]]) {
+      // a. on a laptop without DRM: Python reads the .xlsx and .docx files themselves
+      const a = path.join(tmp, p.tool + "-direct"); writeBundle(a, p.bundle("en"));
+      assert.equal(runPy(a, script).code, 0, `${p.tool}: step 2 runs on the files themselves`);
+      sameFigures(summaryOf(a), p.expected(), `${p.tool} (direct)`);
+      const key = readFileSync(path.join(a, "Answer_Key.txt"), "utf8"), check = readFileSync(path.join(a, "Output", "Check_Report.txt"), "utf8");
+      for (const line of key.split(/\r?\n/).filter((l) => /^\s{2}\S/.test(l))) assert.ok(check.includes(line.trim()), `${p.tool}: Check_Report.txt holds the key's line «${line.trim()}»`);
+      // b. under the DRM: every Office file is unreadable to Python, and step 1 exported them through COM
+      const b = path.join(tmp, p.tool + "-drm"); writeBundle(b, p.bundle("en"));
+      const office = p.data().filter((f) => f.sheets || f.docx);
+      for (const f of office) writeFileSync(path.join(b, f.path), Buffer.from("NASCA-DRM encrypted " + f.path));
+      const stopped = runPy(b, script);
+      assert.equal(stopped.code, 1, `${p.tool}: a locked file without step 1's export stops the step`);
+      assert.ok(/protected by the DRM/.test(stopped.out) && /Run_Tool\.bat/.test(stopped.out), `${p.tool}: the stop says why and what to run`);
+      writeExports(b, office);
+      assert.equal(runPy(b, script).code, 0, `${p.tool}: step 2 runs on step 1's CSV exports`);
+      sameFigures(summaryOf(b), p.expected(), `${p.tool} (through the COM export)`);
+    }
+    // a file that breaks the description must stop the tool with a clear message, never run on
+    { const c = path.join(tmp, "u3-ex1-bad"); writeBundle(c, U1.bundle("en"));
+      const f = U1.data().find((x) => x.path.endsWith("Week_05.xlsx")), bad = { ...f, sheets: [{ ...f.sheets[0], rows: [f.sheets[0].rows[0].map((h) => (h === "Qty" ? "Quantity" : h)), ...f.sheets[0].rows.slice(1)] }] };
+      writeBundle(c, [bad]);
+      const r = runPy(c, "2_Build_Tables.py"); assert.equal(r.code, 1); assert.ok(/Week_05\.xlsx, sheet Production: the columns are .*Quantity/.test(r.out), "a renamed column stops step 2 by name"); }
+    // unit 4, example 2: both steps, end to end
+    { const d = path.join(tmp, "u4-ex2"); writeBundle(d, K2.bundle("ar"));
+      for (const s of ["extract_pdf.py", "build_report.py"]) assert.equal(runPy(d, s).code, 0, "u4-ex2: " + s);
+      const X = K2.expected(), page = readFileSync(path.join(d, "Output", "Export_Report.html"), "utf8");
+      for (const v of [n(X.sales), n(X.qty), X.top.name, X.top.share + "%"]) assert.ok(page.includes(v), "the HTML page shows " + v);
+      assert.ok(!/https?:\/\//.test(page), "the page links to nothing outside itself");
+      assert.ok(readFileSync(path.join(d, "Output", "Run_Log.txt"), "utf8").includes(`${X.rows} rows, ${n(X.qty)} sets, ${n(X.sales)} EGP: the same as the Total line`)); }
+    // unit 4, example 1: step 5 on the CSV step 3 writes (the same bytes as step3_report.ps1: BOM, CRLF, yyyy-mm-dd)
+    { const e = path.join(tmp, "u4-ex1"); writeBundle(e, K1.bundle("ar"));
+      mkdirSync(path.join(e, "Output"), { recursive: true }); writeFileSync(path.join(e, "Output", "Two_Weeks.csv"), A.easyProjects.twoWeeksCsv());
+      assert.equal(runPy(e, "load_sqlite.py").code, 0, "u4-ex1: load_sqlite.py");
+      const Y = K1.expected(), q = readFileSync(path.join(e, "Output", "Query_Results.txt"), "utf8");
+      assert.ok(q.includes("Egypt | " + Y.egypt) && q.includes("Kuwait | " + Y.topExport.units) && q.includes("L01 | " + Y.lines.L01) && q.includes("Week_02.xlsx | 18 | " + Y.perWeek[1].units), "the SQL answers match the answer key");
+      const ps = A.toolFiles["u4-ex1/scripts/step3_report.ps1"];
+      assert.ok(ps.includes('"Date,LineCode,ModelCode,CountryCode,Qty,SourceFile,CountryName"') && A.easyProjects.twoWeeksCsv().startsWith("﻿Date,LineCode,ModelCode,CountryCode,Qty,SourceFile,CountryName\r\n"), "step 3 writes the header step 5 reads"); }
   } finally { rmSync(tmp, { recursive: true, force: true }); }
 });
 
