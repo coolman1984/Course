@@ -3136,6 +3136,191 @@
       <g ${an("fade", 1.6)}>${txt(q, 180, tr("الدرس الجاي", "next lesson"), "t-acc", 12.5, b8)}</g>
       <g ${an("rise", 1.8)}>${box(240, 260, 380, 40, "f-amber-soft s-amber")}${txt(240, 265, tr("الغلطة في أنهي جزء؟", "which part holds the mistake?"), "t-amber", 12, b8)}</g>`;
     },
+    /* ----- step by step (data/steps-story.js) ----- */
+    st_monster: () => {
+      const a = mx(140), q = mx(376);
+      return `<g ${an("rise", 0.05)}>${[0, 1, 2].map((k) => `<rect x="${a - 90 + k * 6}" y="${46 + k * 6}" width="180" height="200" rx="8" class="f-ink2"/>`).join("")}</g>
+      ${term(a + 12, 158, 180, 200, ["# 300 lines", "...", "fix 1: 40 lines", "...", "fix 2: 30 lines", "...", "line 214 ?"], 0.3, 10.5, (i) => (i === 6 ? "t-white" : "t-crt"))}
+      <g ${an("rise", 1.0)}>${box(q, 96, 170, 70, "f-rose-soft s-rose")}${txt(q, 90, tr("الإجمالي غريب", "an odd total"), "t-rose", 12, b8)}${txt(q, 110, tr("بعد كل تصليح", "after every fix"), "t-ink2", 10.5, bold)}</g>
+      <g ${an("rise", 1.3)}>${box(q, 190, 170, 70, "f-s1 s-line2")}${txt(q, 184, tr("أنهي جزء صح؟", "which part is right?"), "t-ink", 12, b8)}${txt(q, 204, tr("مش معروف", "unknown"), "t-ink3", 10.5, bold)}</g>
+      ${cap(tr("الأداة الكبيرة… بتخبّي غلطتها", "a big tool… hides its mistake"), 1.6, 292)}`;
+    },
+    st_small: () => {
+      const a = mx(130), b = mx(352), d = dirx();
+      return `<g ${an("rise", 0.05)}>${[0, 1, 2, 3, 4, 5].map((k) => `<rect x="${a - 70 + k * 10}" y="${50 + k * 8}" width="90" height="70" rx="5" class="f-s2 s-line2" stroke-width="1.5"/>`).join("")}${txt(a, 170, tr("١٣ أسبوع · عمودين VLOOKUP", "13 weeks · 2 VLOOKUP columns"), "t-ink3", 10.5, bold)}</g>
+      ${arrow(a + d * 92, 96, b - d * 92, 96, 0.5)}
+      <g ${an("rise", 0.7)}>${sheet(b - 46, 96, 82, 64, "f-s1 s-acc", "Week_01", 0.7)}${sheet(b + 46, 96, 82, 64, "f-s1 s-acc", "Week_02", 0.8)}${txt(b, 152, tr("١٨ + ١٨ = ٣٦ صف", "18 + 18 = 36 rows"), "t-acc", 12, b8)}${txt(b, 172, tr("بحث واحد: اسم البلد", "one lookup: the country"), "t-ink2", 10.5, bold)}</g>
+      ${pill(240, 236, 330, 36, tr("على ٣٦ صف… تعدّي بإيدك", "with 36 rows… you can count by hand"), "f-mint-soft s-mint", "t-mint", 12, 1.2)}
+      ${cap(tr("مثال صغير… طريقة كاملة", "a small example… a complete method"), 1.5, 290)}`;
+    },
+    st_split: () => {
+      const X = rowX(3, 130, 24), S = [tr("تحت بعض", "stack"), tr("اسم البلد", "country name"), tr("تقرير + CSV", "report + CSV")];
+      return `${S.map((s, i) => `<g ${an("rise", 0.1 + i * 0.3)}>${box(X(i), 112, 130, 140, "f-s1 s-acc")}${txt(X(i), 66, tr("الخطوة ", "Step ") + digits(i + 1), "t-acc", 12.5, b8)}${txt(X(i), 92, s, "t-ink", 11.5, b8)}${[`Prompt_${i + 1}.txt`, `step${i + 1}.ps1`, `Run_Step${i + 1}.bat`].map((f, k) => txt(X(i), 122 + k * 20, f, "t-ink3", 10, bold + ltr)).join("")}</g>${i ? arrow(X(i - 1) + dirx() * 66, 112, X(i) - dirx() * 68, 112, 0.25 + i * 0.3) : ""}`).join("")}
+      ${pill(240, 230, 360, 34, tr("وظيفة واحدة · سكريبت واحد · سطور في السجل", "one job · one script · lines in the log"), "f-acc-soft s-acc", "t-acc", 11, 1.1)}
+      ${cap(tr("خطوة واحدة… مكان واحد للغلطة", "one step… one place for the mistake"), 1.4, 290)}`;
+    },
+    st_step1: () => {
+      const a = mx(110), b = mx(330), d = dirx();
+      return `<g ${an("rise", 0.05)}>${sheet(a, 76, 100, 60, "f-s1 s-acc", "Week_01", 0.05)}${sheet(a, 152, 100, 60, "f-s1 s-acc", "Week_02", 0.2)}</g>
+      ${arrow(a + d * 54, 76, b - d * 104, 108, 0.5)}${arrow(a + d * 54, 152, b - d * 104, 120, 0.6)}
+      ${term(b, 114, 200, 116, ["Week_01.xlsx  18 rows  845", "Week_02.xlsx  18 rows  920", "Data          36 rows  1,765", "", "step1_stack.ps1: 60 lines"].filter(Boolean), 0.8, 10.5, (i) => (i === 2 ? "t-white" : "t-crt"))}
+      <g ${an("fade", 1.8)}>${txt(240, 228, tr("فتح للقراءة · قراية مرة · SourceFile · كتابة مرة · finally", "read-only · read once · SourceFile · write once · finally"), "t-ink2", 10.5, b8)}</g>
+      ${cap(tr("٦٠ سطر مفهومين… أحسن من ٣٠٠", "60 understood lines… beat 300"), 2.0, 286)}`;
+    },
+    st_gate: () => {
+      const g = mx(240);
+      return `${flowRow([tr("الخطوة ١", "Step 1"), tr("البوابة", "the gate"), tr("الخطوة ٢", "Step 2")], 70, 120, 34, 0.05, ["f-s1 s-acc", "f-amber s-amber", "f-s2 s-line2"], ["t-acc", "t-white", "t-ink3"], 12)}
+      <g ${an("rise", 0.9)}>${box(240, 160, 300, 86, "f-amber-soft s-amber")}${txt(240, 140, "18 + 18 = 36", "t-ink", 13, b8 + ltr)}${txt(240, 162, "845 + 920 = 1,765", "t-ink", 13, b8 + ltr)}${txt(240, 186, tr("Week_01 في إكسل: ٨٤٥", "Week_01 in Excel: 845"), "t-amber", 11.5, b8)}</g>${check(240 + dirx() * 168, 160, 1.4)}
+      ${pill(240, 238, 340, 34, tr("رقم بتتأكد منه بنفسك… وبعدين تكمّل", "a figure you confirm yourself… then go on"), "f-mint-soft s-mint", "t-mint", 11, 1.6)}
+      ${cap(tr("كل خطوة… ليها بوابة", "every step… has a gate"), 1.8, 290)}`;
+    },
+    st_step2: () => {
+      const H = ["CountryCode", "Qty", "CountryName"], R = [["EG", "45", "Egypt"], ["KW", "40", "Kuwait"], ["KW", "55", "Kuwait"]], X = rowX(3, 120, 6);
+      return `<g ${an("rise", 0.05)}>${H.map((h, i) => `${box(X(i), 52, 120, 30, i === 2 ? "f-mint s-mint" : "f-acc-soft s-acc")}${txt(X(i), 56, h, i === 2 ? "t-white" : "t-acc", 11, b8 + ltr)}`).join("")}</g>
+      ${R.map((r, k) => `<g ${an("rise", 0.3 + k * 0.15)}>${r.map((v, i) => `${box(X(i), 88 + k * 32, 120, 28, i === 2 ? "f-mint-soft s-mint" : "f-s1 s-line2")}${txt(X(i), 92 + k * 32, v, i === 2 ? "t-mint" : "t-ink", 11, b8 + ltr)}`).join("")}</g>`).join("")}
+      <g ${an("rise", 1.0)}>${box(240, 210, 420, 34, "f-s1 s-mint")}${mono(48, 215, "=VLOOKUP(D2, Countries!A:B, 2, FALSE)", "t-mint", 12)}</g>
+      <g ${an("fade", 1.3)}>${txt(240, 250, tr("٣٦ معادلة · #N/A صفر · الصفوف لسه ٣٦", "36 formulas · zero #N/A · still 36 rows"), "t-ink2", 11, b8)}</g>
+      ${cap(tr("عمود جديد… والصفوف زي ما هي", "a new column… the rows unchanged"), 1.5, 290)}`;
+    },
+    st_step3: () => {
+      const a = mx(120), m = 240, b = mx(370), d = dirx();
+      return `<g ${an("rise", 0.05)}>${box(a, 100, 170, 120, "f-acc-soft s-acc")}${txt(a, 58, "PowerShell", "t-acc", 12, b8 + ltr)}${txt(a, 86, "Report", "t-ink", 12, b8 + ltr)}${txt(a, 108, tr("الإجمالي ١٬٧٦٥", "total 1,765"), "t-ink2", 11, bold)}${txt(a, 128, tr("كل بلد · كل خط", "each country · line"), "t-ink3", 10, bold)}</g>
+      ${arrow(a + d * 88, 100, m - d * 26, 100, 0.5)}
+      <g ${an("rise", 0.7)}>${fileIcon(m, 100, "s-amber", 0.7)}${txt(m, 140, "Two_Weeks.csv", "t-amber", 10.5, b8 + ltr)}${txt(m, 156, tr("٣٦ صف", "36 rows"), "t-ink3", 10, bold)}</g>
+      ${arrow(m + d * 26, 100, b - d * 72, 100, 1.0, "s-line2", "5 5")}
+      <g ${an("fade", 1.1)}>${box(b, 100, 140, 70, "f-s2 s-mint", 2, 'stroke-dasharray="5 5"')}${txt(b, 96, "Python", "t-mint", 12, b8 + ltr)}${txt(b, 114, tr("الخطوة الجاية", "the next step"), "t-ink3", 10, bold)}</g>
+      ${pill(240, 222, 320, 36, tr("الـ CSV… الجسر بين الأداتين", "the CSV… the bridge between the tools"), "f-amber-soft s-amber", "t-amber", 12, 1.4)}
+      ${cap(tr("PowerShell خلّص الإكسل… وPython يكمّل", "PowerShell finished Excel… Python carries on"), 1.7, 286)}`;
+    },
+    st_dp0: () => {
+      const a = mx(130), b = mx(356);
+      return `<g ${an("rise", 0.05)}>${box(a, 96, 200, 92, "f-rose-soft s-rose")}${mono(a - 90, 82, "C:\\Users\\...\\Desktop", "t-rose", 10.5)}${mono(a - 90, 100, "\\tool\\step1.ps1", "t-rose", 10.5)}${txt(a, 124, tr("مسار جهازها هي", "her machine's path"), "t-ink2", 10.5, b8)}</g>
+      <g ${an("fade", 0.4)}>${txt(a, 162, tr("عند مشرف الخط: الملف مش موجود", "on the supervisor's PC: not found"), "t-rose", 10.5, b8)}</g>
+      <g ${an("rise", 0.7)}>${box(b, 96, 200, 92, "f-mint-soft s-mint")}${mono(b - 90, 90, "%~dp0step1.ps1", "t-mint", 12)}${txt(b, 118, tr("فولدر ملف التشغيل نفسه", "the launcher's own folder"), "t-ink2", 10.5, b8)}</g>
+      <g ${an("fade", 1.0)}>${txt(b, 162, tr("أي جهاز · أي فولدر", "any machine · any folder"), "t-mint", 11, b8)}</g>
+      <g ${an("rise", 1.2)}>${folder(240, 228, 120, 70, "f-amber-soft s-amber")}${laptop(240 - dirx() * 120, 232, 0.8)}${laptop(240 + dirx() * 120, 232, 0.8)}</g>
+      ${cap(tr("الفولدر يتنقل… والأداة تشتغل", "the folder moves… the tool runs"), 1.5, 296)}`;
+    },
+    st_exit: () => {
+      return `${flowRow([tr("الخطوة ١", "Step 1"), tr("الخطوة ٢", "Step 2"), tr("التقرير", "the report")], 62, 120, 34, 0.05, ["f-rose-soft s-rose", "f-s1 s-line2", "f-s1 s-line2"], ["t-rose", "t-ink2", "t-ink2"], 12)}
+      <g ${an("fade", 0.7)}>${txt(rowX(3, 120, 34)(0), 102, tr("«Week_02 مش موجود»", "“Week_02 not found”"), "t-rose", 10.5, b8)}${txt(rowX(3, 120, 34)(2), 102, tr("بأسبوع واحد!", "one week only!"), "t-rose", 10.5, b8)}</g>
+      ${term(240, 180, 400, 92, ["step1_stack.ps1   -> exit 1", "if errorlevel 1 goto :stop", "Run_All: STOPPED at step 1"], 1.0, 11, (i) => (i === 2 ? "t-white" : "t-crt"))}
+      ${cap(tr("الوقفة لازم تتسمع… مش تتكتب بس", "a stop must be heard… not just written"), 1.7, 270)}`;
+    },
+    st_runall: () => {
+      const a = mx(56), d = dirx();
+      return `<g ${an("pop", 0.05)}>${fileIcon(a, 74, "s-mint", 0.05)}${txt(a, 112, "Run_All.bat", "t-mint", 11, b8 + ltr)}</g>
+      ${flowRow(["1", "2", "3"], 74, 64, 26, 0.4, "f-mint-soft s-mint", "t-mint", 13, 40).replace(/x="(\d+(\.\d+)?)"/g, (m) => m)}
+      <g ${an("fade", 1.2)}>${txt(mx(400), 80, tr("٢٠ ثانية", "20 seconds"), "t-ink2", 12, b8)}</g>
+      <g ${an("rise", 1.3)}>${box(240, 168, 380, 80, "f-s1 s-line2")}${txt(240, 146, "Output\\", "t-amber", 12, b8 + ltr)}${txt(240, 168, "Two_Weeks.xlsx  ·  Two_Weeks.csv", "t-ink", 11, b8 + ltr)}${txt(240, 188, "Run_Log.txt", "t-ink", 11, b8 + ltr)}</g>
+      <g ${an("rise", 1.6)}>${person(mx(110), 262, 0.8, "f-ink2")}${txt(mx(110) + d * 96, 248, tr("مشرف الخط: «تم»", "the supervisor: “Done”"), "t-ink", 11.5, b8)}</g>
+      ${cap(tr("ليك: تلات خطوات… ليه: ضغطة واحدة", "for you: three steps… for them: one click"), 1.9, 300)}`;
+    },
+    st_scale: () => {
+      const a = mx(130), b = mx(350), d = dirx();
+      return `<g ${an("rise", 0.05)}>${sheet(a - 30, 92, 70, 54, "f-s1 s-acc", "W01", 0.05)}${sheet(a + 30, 92, 70, 54, "f-s1 s-acc", "W02", 0.1)}${txt(a, 148, tr("أسبوعين", "two weeks"), "t-acc", 12, b8)}</g>
+      ${arrow(a + d * 76, 92, b - d * 96, 92, 0.4)}
+      <g ${an("rise", 0.6)}>${[0, 1, 2, 3, 4, 5, 6].map((k) => `<rect x="${b - 80 + k * 18}" y="${66 + (k % 2) * 6}" width="44" height="40" rx="4" class="f-s1 s-acc" stroke-width="1.5"/>`).join("")}${txt(b, 148, tr("١٣ أسبوع", "13 weeks"), "t-acc", 12, b8)}</g>
+      ${term(240, 210, 380, 60, ["Run_All.bat   log: 13 lines", "code changed: 0 lines"], 1.0, 11, (i) => (i ? "t-white" : "t-crt"))}
+      ${cap(tr("صغير في التجربة… كبير في الاستخدام", "small to test… large to use"), 1.5, 280)}`;
+    },
+    st_cliff: () => {
+      const a = mx(150), q = mx(398);
+      const rows = [["Egypt", "18"], ["Kuwait", "8"], ["UAE", "5"]];
+      return `<g ${an("rise", 0.05)}>${box(a, 112, 220, 150, "f-s1 s-line2")}${txt(a, 56, "Report", "t-ink", 12, b8 + ltr)}${txt(a, 80, tr("الإجمالي ١٬٧٦٥", "total 1,765"), "t-mint", 12, b8)}${check(a + dirx() * 86, 76, 0.4)}${rows.map(([c, v], k) => `${txt(a - 40, 112 + k * 22, c, k === 1 ? "t-rose" : "t-ink2", 11, b8 + ltr)}${txt(a + 60, 112 + k * 22, v, k === 1 ? "t-rose" : "t-ink2", 11, b8 + ltr)}`).join("")}</g>
+      <g ${an("pop", 0.6)}><rect x="${a - 96}" y="${112 + 22 - 15}" width="192" height="21" rx="4" class="s-rose" fill="none" stroke-width="2.5"/></g>
+      <g ${an("rise", 0.9)}>${bubble(q, 72, 170, 58, "f-amber-soft s-amber", ar())}${txt(q, 66, tr("«الكويت ٨ بس؟", "“Kuwait only 8?"), "t-amber", 11.5, b8)}${txt(q, 84, tr("شاحنين أكتر بكتير»", "we shipped far more”"), "t-amber", 11, b8)}</g>
+      <g ${an("pop", 1.3)}>${shield(q, 172, 1)}${txt(q, 182, ar() ? "؟" : "?", "t-acc", 20, b8)}</g>
+      <g ${an("fade", 1.6)}>${txt(q, 232, tr("الدرس الجاي", "next lesson"), "t-acc", 12.5, b8)}</g>
+      <g ${an("rise", 1.8)}>${box(a, 236, 220, 40, "f-s1 s-rose")}${txt(a, 241, tr("اشتغل من غير ولا خطأ", "ran without a single error"), "t-rose", 11.5, b8)}</g>`;
+    },
+    /* ----- reviewing code (data/review-story.js) ----- */
+    rv_eight: () => {
+      const a = mx(130), b = mx(360);
+      return `<g ${an("rise", 0.05)}>${bubble(a, 74, 200, 54, "f-acc-soft s-acc", !ar())}${txt(a, 79, tr("«الرقم ده صح؟»", "“Is this figure right?”"), "t-acc", 12, b8)}</g>
+      <g ${an("rise", 0.5)}>${bubble(b, 150, 210, 70, "f-s1 s-line2", ar())}${txt(b, 144, tr("«أيوه، الكود بيحسب", "“Yes, the code calculates"), "t-ink2", 11, b8)}${txt(b, 162, tr("البلاد صح»", "the countries correctly”"), "t-ink2", 11, b8)}</g>
+      <g ${an("fade", 0.9)}>${txt(b, 208, tr("نفس النموذج اللي كتب الكود", "the same model that wrote it"), "t-rose", 10.5, b8)}</g>
+      ${pill(240, 250, 300, 34, tr("«صح؟» مش مراجعة", "“right?” isn't a review"), "f-amber-soft s-amber", "t-amber", 12, 1.2)}
+      ${cap(tr("المراجعة لازم تيجي من برّه", "the review must come from outside"), 1.5, 296)}`;
+    },
+    rv_ran: () => {
+      const a = mx(126), b = mx(354);
+      return `<g ${an("rise", 0.05)}>${term(a, 100, 200, 84, ["line 41  ERROR", "Cannot find Qty"], 0.05, 11, () => "t-white")}${txt(a, 170, tr("بتصرخ: سهلة", "shouts: easy"), "t-mint", 12, b8)}</g>
+      <g ${an("rise", 0.4)}>${term(b, 100, 200, 84, ["Report: done", "Kuwait  8"], 0.4, 11)}${txt(b, 170, tr("ساكتة: خطيرة", "silent: dangerous"), "t-rose", 12, b8)}</g>
+      ${pill(240, 230, 360, 36, tr("المراجعة: «الأرقام صح؟» مش «اشتغل؟»", "review: “are the figures right?”, not “did it run?”"), "f-acc-soft s-acc", "t-acc", 11, 1.0)}
+      ${cap(tr("الغلطة الساكتة… هي الخطيرة", "the silent mistake… is the dangerous one"), 1.3, 290)}`;
+    },
+    rv_plan: () => {
+      const P = ar() ? ["# اقرا Data", "# اعمل جدول البلاد", "# اعمل جدول الخطوط", "# احفظ CSV"] : ["# read Data", "# build the countries table", "# build the lines table", "# save CSV"];
+      return `${P.map((s, i) => `<g ${an("rise", 0.1 + i * 0.2)}>${box(mx(170), 62 + i * 44, 260, 36, "f-s1 s-acc")}${txt(mx(170), 67 + i * 44, s, "t-ink", 11.5, b8)}</g>${check(mx(318), 62 + i * 44, 0.3 + i * 0.2)}`).join("")}
+      <g ${an("rise", 1.0)}>${box(mx(400), 106, 120, 80, "f-s2 s-line2", 2, 'stroke-dasharray="5 5"')}${txt(mx(400), 98, tr("جزء زيادة؟", "an extra part?"), "t-ink3", 11, b8)}${txt(mx(400), 118, tr("مفيش", "none"), "t-mint", 12, b8)}</g>
+      ${cap(tr("الكود يعمل اللي طلبته… بس", "the code does what you asked… only"), 1.3, 268)}`;
+    },
+    rv_imports: () => {
+      const W = ["import", "pip", "Invoke-WebRequest", "http"], X = rowX(4, 114, 6);
+      return `${W.map((w, i) => `<g ${an("pop", 0.05 + i * 0.15)}>${box(X(i), 56, 114, 34, "f-amber-soft s-amber")}${txt(X(i), 60, w, "t-amber", 9.5, b8 + ltr)}</g>`).join("")}
+      ${term(mx(150), 150, 260, 92, ["step1..3.ps1:", "  New-Object -ComObject Excel...", "load_sqlite.py:", "  import csv, sqlite3"].map(nb), 0.6, 10.5)}
+      <g ${an("rise", 1.2)}>${shield(mx(390), 140, 1)}${check(mx(390), 140, 1.4)}</g>
+      <g ${an("fade", 1.5)}>${txt(mx(390), 206, tr("المكتبة القياسية بس", "standard library only"), "t-mint", 11, b8)}</g>
+      ${cap(tr("سؤال الأمن… اسأله إنت الأول", "the security question… ask it first"), 1.7, 270)}`;
+    },
+    rv_log: () => {
+      return `${term(240, 104, 420, 120, ["step1  Week_01 18 rows 845 · Week_02 18 rows 920", "step1  Data 36 rows 1,765", "step2  #N/A: 0", "step3  Report: done"], 0.05, 11, (i) => (i === 3 ? "t-white" : "t-crt"))}
+      <g ${an("pop", 1.1)}><rect x="${240 - 206}" y="${104 - 60 + 24 + 3 * 20 - 15}" width="412" height="21" rx="4" class="s-rose" fill="none" stroke-width="2.5"/></g>
+      <g ${an("rise", 1.3)}>${box(240, 214, 420, 40, "f-mint-soft s-mint")}${mono(52, 219, "step3  Report 1,765 · countries 36 (!) · lines 1,765", "t-mint", 10.5)}</g>
+      ${cap(tr("«done» مش سجل… الرقم هو اللي بيكشف", "“done” isn't a log… the figure exposes"), 1.6, 274)}`;
+    },
+    rv_hand: () => {
+      const a = mx(140), b = mx(360);
+      return `<g ${an("rise", 0.05)}>${box(a, 102, 210, 130, "f-s1 s-acc")}${txt(a, 56, tr("إكسل: فلتر KW", "Excel: filter KW"), "t-acc", 11.5, b8)}${[0, 1, 2, 3].map((k) => `<rect x="${a - 90}" y="${70 + k * 20}" width="180" height="15" rx="3" class="f-acc-soft"/>`).join("")}${txt(a, 160, "SUM(Qty) = 385", "t-mint", 13, b8 + ltr)}</g>
+      <g ${an("rise", 0.5)}>${box(b, 102, 170, 130, "f-rose-soft s-rose")}${txt(b, 56, tr("التقرير", "the report"), "t-rose", 11.5, b8)}${txt(b, 106, "Kuwait  8", "t-rose", 16, b8 + ltr)}${txt(b, 142, tr("= عدد الصفوف", "= the row count"), "t-ink2", 11, b8)}</g>
+      <g ${an("rise", 1.0)}>${box(240, 214, 360, 40, "f-amber-soft s-amber")}${mono(240 - 130, 219, "COUNTIF  ->  SUMIF", "t-amber", 13)}</g>
+      ${cap(tr("فلتر وجمع… يكشفوا كلمة غلط", "a filter and a sum… expose one wrong word"), 1.3, 274)}`;
+    },
+    rv_wrong: () => {
+      const a = mx(126), b = mx(356);
+      return `<g ${an("rise", 0.05)}>${sheet(a, 70, 150, 64, "f-s1 s-amber", "Week_02 (copy)", 0.05)}${txt(a, 124, "Qty → Quantity", "t-amber", 12, b8 + ltr)}</g>
+      <g ${an("rise", 0.5)}>${box(b, 82, 190, 72, "f-rose-soft s-rose")}${txt(b, 76, tr("قبل: كمّلت", "before: carried on"), "t-rose", 11.5, b8)}${txt(b, 96, tr("الإجمالي ٨٤٥ · ولا رسالة", "total 845 · no message"), "t-ink2", 10.5, bold)}</g>
+      ${term(240, 186, 420, 56, ["Week_02.xlsx: no Qty column  ->  STOPPED"], 1.0, 11.5, () => "t-white")}
+      <g ${an("fade", 1.3)}>${txt(240, 236, tr("بعد التصليح: وقفت برسالة فيها الملف والعمود", "after the fix: stopped, naming the file and the column"), "t-mint", 11, b8)}</g>
+      ${cap(tr("غلّط الملف بإيدك… قبل ما يتغلّط لوحده", "break the file yourself… before it breaks on its own"), 1.5, 282)}`;
+    },
+    rv_explain: () => {
+      const a = mx(130), b = mx(354);
+      return `<g ${an("rise", 0.05)}>${box(a, 100, 200, 100, "f-mint-soft s-mint")}${txt(a, 66, tr("الشرح", "the explanation"), "t-mint", 12, b8)}${txt(a, 100, tr("«بيجمع الكمية", "“sums the quantity"), "t-ink", 11.5, b8)}${txt(a, 120, tr("لكل بلد»", "per country”"), "t-ink", 11.5, b8)}</g>
+      ${term(b, 100, 210, 100, ["# countries table", "=COUNTIF(D:D, \"KW\")"], 0.4, 11)}
+      <g ${an("pop", 0.9)}>${txt(240, 104, "≠", "t-rose", 26, b8)}</g>
+      ${pill(240, 206, 340, 36, tr("قال يجمع؟ دوّر على SUM في الجزء ده", "it says sum? look for SUM in that part"), "f-amber-soft s-amber", "t-amber", 11, 1.1)}
+      ${cap(tr("الشرح بيقول يجمع… الكود بيعدّ", "the explanation says sum… the code counts"), 1.4, 262)}`;
+    },
+    rv_second: () => {
+      const a = mx(110), b = mx(300), d = dirx();
+      return `<g ${an("rise", 0.05)}>${box(a, 76, 150, 50, "f-acc-soft s-acc")}${txt(a, 72, "Claude Code", "t-acc", 12, b8 + ltr)}${txt(a, 90, tr("كتب الكود", "wrote the code"), "t-ink3", 10, bold)}</g>
+      <g ${an("rise", 0.3)}>${box(a, 160, 150, 50, "f-mint-soft s-mint")}${txt(a, 156, "Codex", "t-mint", 12, b8 + ltr)}${txt(a, 174, tr("بيراجع · Prompt_4", "reviews · Prompt_4"), "t-ink3", 10, bold)}</g>
+      ${term(b + d * 30, 140, 270, 108, ["1. COUNTIF instead of SUMIF", "2. Masters.xlsx not read-only", "3. step 3 log: no figures"], 0.8, 10.5)}
+      ${pill(240, 236, 360, 34, tr("أداة واحدة؟ جلسة جديدة بنفس القايمة", "one tool? a new session, same list"), "f-s1 s-line2", "t-ink2", 11, 1.5)}
+      ${cap(tr("اللي ما كتبش… بيشوف أحسن", "whoever didn't write it… sees better"), 1.8, 288)}`;
+    },
+    rv_good: () => {
+      const L = ["# ---- settings -------------------", "$Columns = 'Date','LineCode','ModelCode',", "           'CountryCode','Qty'", "# ---- countries table: SUMIF -----", "# ---- log: each table's sum ------"];
+      return `${term(240, 98, 440, 128, L.map(nb), 0.05, 10.5, (i) => (i === 0 || i === 3 || i === 4 ? "t-white" : "t-crt"))}
+      ${flowRow([tr("وظيفة لكل جزء", "a job per part"), tr("تعليقات", "comments"), tr("ثوابت فوق", "constants first"), tr("سجل بالأرقام", "a log of figures")], 206, 104, 10, 0.8, "f-mint-soft s-mint", "t-mint", 10.5, 36)}
+      ${cap(tr("الكود الكويس… هو اللي تقدر تراجعه", "good code… is code you can review"), 1.9, 270)}`;
+    },
+    rv_fix: () => {
+      const a = mx(130), b = mx(352);
+      return `<g ${an("rise", 0.05)}>${box(a, 92, 190, 90, "f-rose-soft s-rose")}${txt(a, 76, tr("تكتب ٣٨٥ بإيدها؟", "type 385 by hand?"), "t-ink2", 11.5, b8)}${txt(a, 98, tr("الأسبوع الجاي: ٨ تاني", "next week: 8 again"), "t-rose", 11, b8)}</g>
+      <g ${an("rise", 0.6)}>${box(b, 92, 190, 90, "f-mint-soft s-mint")}${txt(b, 72, tr("التصليح في الكود", "the fix in the code"), "t-mint", 11.5, b8)}${mono(b - 76, 98, "SUMIF · read-only", "t-mint", 11)}${mono(b - 76, 116, "log: figures", "t-mint", 11)}</g>
+      ${flowRow(["Kuwait 385", "Egypt 880", tr("التصدير ٥٠٪", "export 50%"), "1,765"], 206, 100, 12, 1.0, "f-s1 s-mint", "t-ink", 11, 36)}
+      ${cap(tr("التصليح بالإيد… بيرجع الأسبوع الجاي", "a hand fix… comes back next week"), 1.9, 266)}`;
+    },
+    rv_cliff: () => {
+      const q = mx(396), Q = ar() ? ["أنهي خط عمل أكتر M108؟", "الكويت جالها منين؟", "أسبوع ١ ولا ٢؟", "…"] : ["which line made most M108?", "where did Kuwait's come from?", "week 1 or week 2?", "…"];
+      return `${Q.map((s, i) => `<g ${an("rise", 0.1 + i * 0.25)}>${bubble(mx(170), 56 + i * 52, 260, 40, "f-amber-soft s-amber", !ar())}${txt(mx(170), 61 + i * 52, s, "t-amber", 11, b8)}</g>`).join("")}
+      <g ${an("pop", 1.2)}>${shield(q, 112, 1.1)}${txt(q, 128, ar() ? "؟" : "?", "t-acc", 22, b8)}</g>
+      <g ${an("fade", 1.5)}>${txt(q, 180, tr("الدرس الجاي", "next lesson"), "t-acc", 12.5, b8)}</g>
+      <g ${an("fade", 1.7)}>${txt(240, 280, tr("٣٦ صف… والأسئلة مش هتخلص", "36 rows… and the questions never end"), "t-ink2", 12, b8)}</g>`;
+    },
   });
   /* ---------- end of unit 4 ---------- */
 

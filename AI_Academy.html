@@ -11904,10 +11904,314 @@ Start by presenting the "Context to fill in" block and your clarifying questions
 })(window.ACADEMY = window.ACADEMY || {});
 
 /* data/steps-story.js */
+/* Step by step — the story deck of lesson k4 (unit 4), on Unit4_Example_1_Two_Weeks.
+   The planning engineer at the second plant carries every slide with one question: «إزاي أبني الأداة خطوة خطوة،
+   وتشتغل بضغطة؟». The deck rebuilds the 300-line tool as three small steps: why the example is small, splitting the
+   work, step 1 and its log, checking before moving on, step 2 (VLOOKUP), step 3 (the report and the CSV), the %~dp0
+   path, the error code, Run_All, and the same method at 13 weeks; it ends on a figure the manager doubts, which opens
+   k5. Figures come from data/easy-projects.js. Drawings are the st_* entries in engine/history.js. */
 "use strict";
+(function (A) {
+  const u = (ar, en) => ({ ar, en });
+  A.stepsStory = {
+    id: "steps", lesson: "k4",
+    kicker: u("خطوة خطوة · الحكاية في ٨ دقايق", "Step by step · the story in 8 minutes"),
+    title: u("تلات خطوات صغيرة… وضغطة واحدة", "Three small steps… and one click"),
+    lead: u("فاكر الـ ٣٠٠ سطر اللي وقفوا عند سطر ٢١٤ من غير ما تعرف الغلطة فين؟ في الحكاية دي مهندسة التخطيط بتبني نفس الأداة تاني، بس خطوة خطوة، على أبسط مثال ممكن.",
+      "Remember the 300 lines that stopped at line 214 with no clue where the mistake was? In this story the planning engineer builds the same tool again, but step by step, on the simplest possible example."),
+    answerLabel: u("القاعدة، وليه؟", "The rule, and why"),
+    ideaLabel: u("الفكرة في جملة", "The idea in one line"),
+    question: u("إزاي أبني الأداة خطوة خطوة، وتشتغل بضغطة؟", "How do I build the tool step by step, running in one click?"),
+    finalQuestion: u("طب الكود اشتغل… أعرف منين إنه صح؟", "The code ran… but how do I know it's right?"),
+    note: u("الأرقام من ملفات المثال الأول اللي بتنزل مع الدرس، وكلها توضيحية.", "The figures come from the first example's files, downloaded with the lesson; all are illustrative."),
+    ui: {
+      prev: u("اللي فات", "Previous"), next: u("اللي بعده", "Next"),
+      play: u("شغّل الحكاية", "Play the story"), pause: u("وقّف", "Pause"), replay: u("من الأول", "From the start"),
+      skip: u("تخطّى للدرس", "Skip to the lesson"), start: u("نكمّل الدرس", "Continue the lesson"),
+      slideOf: u("{n} من {t}", "{n} of {t}"), timeline: u("خطوات الحكاية", "Story steps"),
+      deck: u("خطوة خطوة، في شرائح", "Step by step, in slides"), slide: u("شريحة", "slide"),
+      keys: u("استخدم الأسهم أو اسحب على الشاشة", "Use the arrow keys or swipe")
+    },
+    slides: [
+      {
+        id: "monster", art: "st_monster", year: u("الموقف", "Scene"), mark: u("٠١", "01"), era: u("أداة واحدة كبيرة", "One big tool"),
+        title: u("٣٠٠ سطر… ومحدش عارف الغلطة فين", "300 lines… and nobody knows where the mistake is"),
+        story: [u("الأداة الكبيرة وقفت عند سطر ٢١٤. مهندسة التخطيط طلبت من الأداة تصلّحها، فغيّرت ٤٠ سطر، واشتغلت، بس طلّعت إجمالي غريب. طلبت تصليح تاني، فاتغيّر ٣٠ سطر كمان. بعد ساعة، الكود بقى مختلف تمامًا، وهي مش عارفة أي جزء فيه صح.",
+          "The big tool stopped at line 214. The planning engineer asked the tool to fix it; it changed 40 lines and ran, but gave an odd total. She asked for another fix, and 30 more lines changed. An hour later the code was completely different, and she couldn't tell which part of it was right."),
+        u("الزميل قالها: «إنتي طلبتي كل حاجة مرة واحدة، فلما غلطت، الغلطة ممكن تبقى في أي حتة. تعالي نبنيها تاني، حتة حتة». والسؤال اللي ماشي معانا: إزاي أبني الأداة خطوة خطوة، وتشتغل بضغطة؟",
+          "The colleague told her: “You asked for everything at once, so when it went wrong, the mistake could be anywhere. Let's build it again, piece by piece.” The question we carry: how do I build the tool step by step, running in one click?")],
+        answer: u("ما تطلبش الأداة كلها في طلب واحد. لأن الأداة الكبيرة لما تغلط بتخلّي الغلطة في أي مكان، والتصليح بيغيّر حاجات كانت سليمة.", "Don't ask for the whole tool in one request — when a big tool goes wrong the mistake could be anywhere, and each fix changes things that were sound."),
+        idea: u("الأداة الكبيرة… بتخبّي غلطتها.", "A big tool… hides its mistake.")
+      },
+      {
+        id: "small", art: "st_small", year: u("المثال", "The example"), mark: u("٠٢", "02"), era: u("أصغر حاجة ممكنة", "As small as possible"),
+        title: u("أسبوعين بدل ١٣، وعمود واحد بدل اتنين", "Two weeks instead of 13, one column instead of two"),
+        story: [u("الزميل صغّر المثال بقصد: أسبوعين بس، Week_01 وWeek_02، كل واحد ١٨ صف (٦ أيام × ٣ خطوط)، بخمس أعمدة. وملف Masters فيه شيت واحد: البلاد. وبحث واحد بس: اسم البلد. «على ٣٦ صف تقدري تعدّي بإيدك، وتعرفي الأداة صح ولا لأ».",
+          "The colleague shrank the example on purpose: two weeks only, Week_01 and Week_02, 18 rows each (6 days × 3 lines), with five columns. And a Masters file with one sheet: the countries. And only one lookup: the country name. “With 36 rows you can count by hand, and know whether the tool is right.”"),
+        u("«والمثال الصغير ده هيعلّمني إيه في الشغل الحقيقي؟» «الطريقة نفسها. لو اشتغلت على أسبوعين بالخطوات دي، هتشتغل على ١٣ أسبوع من غير تغيير، لأن اللي بيتغيّر عدد الملفات بس».",
+          "“And what will this small example teach me for real work?” “The method itself. If it works on two weeks with these steps, it works on 13 weeks unchanged, because only the number of files changes.”")],
+        answer: u("ابدأ أي أداة على أصغر مثال تقدر تراجعه بإيدك. لأن النموذج بيحل المثال الصغير من أول مرة، وإنت تقدر تتأكد منه بنفسك.", "Start any tool on the smallest example you can check by hand — the model solves a small example first time, and you can verify it yourself."),
+        idea: u("مثال صغير… طريقة كاملة.", "A small example… a complete method.")
+      },
+      {
+        id: "split", art: "st_split", year: u("التقسيم", "Splitting"), mark: u("٠٣", "03"), era: u("٣ خطوات", "3 steps"),
+        title: u("كل خطوة: وظيفة واحدة، وPrompt واحد", "Each step: one job, one Prompt"),
+        story: [u("قسموا الشغل على ورقة: الخطوة ١ تحت بعض بس. الخطوة ٢ اسم البلد بس. الخطوة ٣ التقرير وملف CSV بس. كل خطوة ليها Prompt لوحدها، وسكريبت لوحده، وملف تشغيل لوحده، وسطور في السجل بتقول اشتغلت إزاي.",
+          "They split the work on paper: step 1, stacking only. Step 2, the country name only. Step 3, the report and a CSV file only. Each step has its own Prompt, its own script, its own launcher, and lines in the log saying how it ran."),
+        u("«ليه مش خطوتين؟» «لأن كل خطوة لازم تبقى صغيرة لدرجة إنك تراجعيها في دقيقة. ولو خطوة غلطت، الغلطة في السكريبت ده بس، والتصليح ما يلمسش الخطوات اللي اتراجعت».",
+          "“Why not two steps?” “Because each step must be small enough to check in a minute. And if a step goes wrong, the mistake is in that script alone, and the fix doesn't touch the steps already checked.”")],
+        answer: u("قسّم الأداة لخطوات كل واحدة ليها وظيفة واحدة وسكريبت واحد. لأن الغلطة بتفضل محبوسة في خطوتها، والتصليح ما يأثرش على اللي اتراجع.", "Split the tool into steps, each with one job and one script — a mistake stays locked in its own step, and the fix can't damage what was already checked."),
+        idea: u("خطوة واحدة… مكان واحد للغلطة.", "One step… one place for the mistake.")
+      },
+      {
+        id: "step1", art: "st_step1", year: u("الخطوة ١", "Step 1"), mark: u("٠٤", "04"), era: u("تحت بعض", "Stacking"),
+        title: u("الخطوة ١: الأسبوعين تحت بعض", "Step 1: the two weeks stacked"),
+        story: [u("لصقت Prompt_1 بس: «الخطوة ١ بس…». الأداة عرضت الخطة في ٤ سطور، وافقت، فكتبت step1_stack.ps1 وRun_Step1.bat. دبل كليك، والسجل قال: Week_01 ‏١٨ صف و٨٤٥ جهاز، Week_02 ‏١٨ صف و٩٢٠ جهاز، وشيت Data فيه ٣٦ صف و١٬٧٦٥ جهاز.",
+          "She pasted Prompt_1 alone: “Step 1 only…”. The tool showed the plan in 4 lines; she approved, and it wrote step1_stack.ps1 and Run_Step1.bat. A double-click, and the log said: Week_01 18 rows and 845 sets, Week_02 18 rows and 920 sets, and the Data sheet holds 36 rows and 1,765 sets."),
+        u("السكريبت ٦٠ سطر بس. قرته كله، وفهمت كل جزء: فتح للقراءة، وقراية مرة واحدة، وعمود SourceFile، وكتابة مرة واحدة، وfinally في الآخر. لأول مرة حسّت إنها فاهمة الكود اللي هتشغّله.",
+          "The script is just 60 lines. She read all of it and understood every part: open read-only, read once, the SourceFile column, write once, and finally at the end. For the first time she felt she understood the code she would run.")],
+        answer: u("كل خطوة لازم تكتب في السجل العدد والإجمالي لكل ملف وللناتج. لأن الأرقام دي هي اللي بتقولك الخطوة اشتغلت صح، مش «خلصت من غير أخطاء».", "Every step must log the count and total for each file and for the output — those figures tell you the step worked right, not “finished without errors”."),
+        idea: u("٦٠ سطر مفهومين… أحسن من ٣٠٠ مش مفهومين.", "60 understood lines… beat 300 that aren't.")
+      },
+      {
+        id: "gate", art: "st_gate", year: u("البوابة", "The gate"), mark: u("٠٥", "05"), era: u("قبل اللي بعده", "Before the next"),
+        title: u("ما تفتحش Prompt_2… غير لما الأرقام تطلع", "Don't open Prompt_2… until the figures check out"),
+        story: [u("قبل ما تكمّل، قارنت: ١٨ + ١٨ = ٣٦. و٨٤٥ + ٩٢٠ = ١٬٧٦٥. وفتحت Week_01 في إكسل وعملت جمع لعمود Qty: ٨٤٥. الخطوة ١ صح. ساعتها بس فتحت Prompt_2.",
+          "Before going on, she compared: 18 + 18 = 36. And 845 + 920 = 1,765. She opened Week_01 in Excel and summed the Qty column: 845. Step 1 is right. Only then did she open Prompt_2."),
+        u("الزميل سمّاها «البوابة»: كل خطوة ليها بوابة، والبوابة رقم بتتأكد منه بنفسك. «لو عدّيتي البوابة من غير ما تبصي، وغلطة الخطوة ١ وصلت للخطوة ٣، هترجعي تدوّري في التلاتة».",
+          "The colleague called it “the gate”: every step has a gate, and the gate is a figure you confirm yourself. “If you pass the gate without looking, and step 1's mistake reaches step 3, you'll be back searching all three.”")],
+        answer: u("ما تروحش للخطوة اللي بعدها غير لما رقم من الخطوة دي يطلع زي حسابك بإيدك. لأن الغلطة اللي بتعدّي البوابة بتتخبّى جوّه الخطوات اللي بعدها.", "Don't move to the next step until a figure from this one matches your own count by hand — a mistake that passes the gate hides inside the steps after it."),
+        idea: u("كل خطوة… ليها بوابة.", "Every step… has a gate.")
+      },
+      {
+        id: "step2", art: "st_step2", year: u("الخطوة ٢", "Step 2"), mark: u("٠٦", "06"), era: u("اسم البلد", "The country name"),
+        title: u("الخطوة ٢: VLOOKUP واحد بس", "Step 2: just one VLOOKUP"),
+        story: [u("Prompt_2 طلب حاجة واحدة: انسخ شيت Countries جوّه Two_Weeks.xlsx، وضيف عمود CountryName بمعادلة ‎=VLOOKUP(كود البلد, Countries!A:B, 2, FALSE)، معادلة مش قيم. السجل قال: ٣٦ معادلة، و#N/A صفر، والصفوف لسه ٣٦.",
+          "Prompt_2 asked for one thing: copy the Countries sheet into Two_Weeks.xlsx and add a CountryName column as =VLOOKUP(country code, Countries!A:B, 2, FALSE), a formula, not values. The log said: 36 formulas, zero #N/A, and still 36 rows."),
+        u("فتحت الملف ودوست على خانة جنب KW: لقت المعادلة، ونتيجتها Kuwait. «فاكرة الوحدة التالتة؟ كان فيها عمودين VLOOKUP. هنا واحد، علشان نفهمه كويس. والتاني في شغلك هيبقى نفس السطر بالظبط».",
+          "She opened the workbook and clicked a cell beside KW: she found the formula, and its result, Kuwait. “Remember unit 3? It had two VLOOKUP columns. Here there's one, so we understand it well. The second, in your own work, will be exactly the same line.”")],
+        answer: u("ضيف الحاجة الجديدة وحدها في خطوتها، وراجع إن الخطوة ما غيّرتش عدد الصفوف. لأن أي خطوة بتزوّد أو بتشيل صفوف من غير ما تقصد بتغيّر كل الأرقام اللي بعدها.", "Add the new thing alone in its own step, and check the step didn't change the row count — any step that adds or drops rows by accident changes every figure after it."),
+        idea: u("عمود جديد… والصفوف زي ما هي.", "A new column… the rows unchanged.")
+      },
+      {
+        id: "step3", art: "st_step3", year: u("الخطوة ٣", "Step 3"), mark: u("٠٧", "07"), era: u("تقرير وCSV", "Report and CSV"),
+        title: u("الخطوة ٣: التقرير… وملف للخطوة الجاية", "Step 3: the report… and a file for the next step"),
+        story: [u("Prompt_3 طلب شيت Report: الإجمالي، وجدول لكل بلد، وجدول لكل خط، كلهم معادلات. وطلب كمان يحفظ شيت Data كملف Two_Weeks.csv، علشان Python يقراه في الخطوة الجاية. السجل قال: إجمالي Report ‏١٬٧٦٥، نفس Data، والـ CSV فيه ٣٦ صف.",
+          "Prompt_3 asked for a Report sheet: the total, a table per country and a table per line, all formulas. It also asked to save the Data sheet as Two_Weeks.csv, so Python can read it in the next step. The log said: the Report total is 1,765, the same as Data, and the CSV holds 36 rows."),
+        u("الخطوة دي فيها نقطة التقاء الأداتين: PowerShell خلّص شغل الإكسل، وساب ملف CSV بسيط. «من هنا Python النقي يكمّل، من غير ما يفتح إكسل خالص». مهندسة التخطيط بصّت على الإجمالي، وقالت: تمام.",
+          "This step is where the two tools meet: PowerShell finished the Excel work and left a simple CSV file. “From here pure Python carries on, without ever opening Excel.” The planning engineer looked at the total and said: fine.")],
+        answer: u("خلّي آخر خطوة PowerShell تسيب ملف CSV للخطوة اللي بعدها. لأن الـ CSV بيتقري بالمكتبة القياسية، فـ Python يكمّل من غير إكسل ومن غير باكدج.", "Have the last PowerShell step leave a CSV file for the next step — CSV reads with the standard library, so Python carries on with no Excel and no package."),
+        idea: u("الـ CSV… الجسر بين الأداتين.", "The CSV… the bridge between the tools.")
+      },
+      {
+        id: "dp0", art: "st_dp0", year: u("المسار", "The path"), mark: u("٠٨", "08"), era: u("على أي جهاز", "On any machine"),
+        title: u("اشتغلت عندها… ووقفت عند مشرف الخط", "It ran for her… and stopped for the line supervisor"),
+        story: [u("نسخت الفولدر لجهاز مشرف الخط ودوست Run_Step1.bat: «الملف مش موجود». فتحت الملف لقت المسار C:\\Users\\…\\Desktop\\tool، مسار جهازها هي. الأداة كتبته كده علشان كانت شغالة هناك.",
+          "She copied the folder to the line supervisor's PC and double-clicked Run_Step1.bat: “file not found”. She opened the file and found the path C:\\Users\\…\\Desktop\\tool, her own machine's path. The tool wrote it that way because that's where it had been running."),
+        u("التصليح: ‎%~dp0 في ملف التشغيل، يعني «الفولدر اللي ملف ‎.bat ده فيه»، وجوّه السكريبت المسارات بتبدأ من فولدر السكريبت نفسه. ومن ساعتها الفولدر بيتنقل لأي جهاز وأي مكان ويشتغل.",
+          "The fix: %~dp0 in the launcher, meaning “the folder this .bat file is in”, and inside the script every path starts from the script's own folder. Since then the folder moves to any machine and any place, and runs.")],
+        answer: u("المسارات كلها تبدأ من فولدر الأداة نفسها، عمرها ما تبقى مسار جهازك. لأن الأداة اللي هتتنقل لزميل لازم تلاقي ملفاتها في أي مكان اتحطت فيه.", "Every path starts from the tool's own folder, never your machine's — a tool that moves to a colleague must find its files wherever it is placed."),
+        idea: u("الفولدر يتنقل… والأداة تشتغل.", "The folder moves… the tool runs.")
+      },
+      {
+        id: "exit", art: "st_exit", year: u("رقم الخطأ", "Exit code"), mark: u("٠٩", "09"), era: u("الوقفة اللي بتتسمع", "A stop that's heard"),
+        title: u("لما خطوة تقف… اللي بعدها لازم تعرف", "When a step stops… the next must know"),
+        story: [u("جرّبت حاجة: غيّرت اسم Week_02 في نسخة، ودوست الخطوات ورا بعض. الخطوة ١ وقفت برسالة واضحة: «Week_02.xlsx مش موجود». بس الخطوة ٢ اشتغلت بعدها على ملف ناقص، وطلّعت تقرير بأسبوع واحد.",
+          "She tried something: renamed Week_02 in a copy, and ran the steps one after another. Step 1 stopped with a clear message: “Week_02.xlsx not found”. But step 2 then ran on an incomplete file and produced a report with one week."),
+        u("الحل: كل سكريبت لما يقف بيرجّع رقم خطأ: exit 1. وملف التشغيل اللي بيجمعهم بيسأل بعد كل خطوة: «رجعت خطأ؟ يبقى أقف». كده الوقفة بتتسمع، مش بتتكتب في السجل وخلاص.",
+          "The fix: every script returns an error number when it stops: exit 1. And the launcher that chains them asks after each step: “did it return an error? Then I stop.” That way the stop is heard, not just written in the log.")],
+        answer: u("خلّي أي خطوة لما تقف ترجّع رقم خطأ، والخطوة اللي بعدها ما تشتغلش. لأن خطوة شغالة على ناتج ناقص بتطلّع رقم غلط شكله سليم.", "Have any step that stops return an error number, so the next step doesn't run — a step working on an incomplete output produces a wrong figure that looks sound."),
+        idea: u("الوقفة لازم تتسمع… مش تتكتب بس.", "A stop must be heard… not just written.")
+      },
+      {
+        id: "runall", art: "st_runall", year: u("ضغطة واحدة", "One click"), mark: u("١٠", "10"), era: u("Run_All", "Run_All"),
+        title: u("التلات خطوات… في دبل كليك واحد", "All three steps… in one double-click"),
+        story: [u("آخر حاجة: ملف Run_All.bat بيشغّل الخطوة ١ وبعدها ٢ وبعدها ٣، ويقف لو أي واحدة رجّعت خطأ. مسحت فولدر Output كله، ودوست Run_All. بعد ٢٠ ثانية: Two_Weeks.xlsx بالتقرير، وTwo_Weeks.csv، وRun_Log.txt فيه سطور التلات خطوات.",
+          "One last thing: a Run_All.bat file runs step 1, then 2, then 3, and stops if any returns an error. She deleted the whole Output folder and double-clicked Run_All. Twenty seconds later: Two_Weeks.xlsx with its report, Two_Weeks.csv, and Run_Log.txt holding the lines of all three steps."),
+        u("مشرف الخط جرّبها بنفسه: دبل كليك، واستنى، وقرا آخر سطر في النافذة: «تم». ما فتحش إكسل، ولا كتب أمر، ولا عرف إن فيه تلات سكريبتات أصلًا.",
+          "The line supervisor tried it himself: a double-click, a wait, and he read the last line in the window: “Done”. He never opened Excel, never typed a command, and didn't even know there were three scripts.")],
+        answer: u("بعد ما كل خطوة تتراجع لوحدها، اربطهم في ملف تشغيل واحد بيقف عند أول خطأ. لأن اللي هيستخدم الأداة محتاج ضغطة واحدة، وإنت محتاج كل خطوة لوحدها وقت التصليح.", "Once each step is checked alone, chain them in one launcher that stops at the first error — the user needs one click, while you need each step alone when fixing."),
+        idea: u("ليك: تلات خطوات… ليه: ضغطة واحدة.", "For you: three steps… for them: one click.")
+      },
+      {
+        id: "scale", art: "st_scale", year: u("١٣ أسبوع", "13 weeks"), mark: u("١١", "11"), era: u("نفس الطريقة", "Same method"),
+        title: u("ولما الأسابيع تبقى ١٣؟", "And when the weeks become 13?"),
+        story: [u("سألت: «طب الشغل الحقيقي ١٣ أسبوع». الزميل حط ١١ ملف زيادة في فولدر Data بنفس الأعمدة، ودوس Run_All. السجل طلع أطول: ١٣ سطر بدل ٢، وكل الأرقام اتحسبت. ولا سطر كود اتغيّر.",
+          "She asked: “But real work is 13 weeks.” The colleague put 11 more files with the same columns into the Data folder and double-clicked Run_All. The log came out longer: 13 lines instead of 2, and every figure was computed. Not a single line of code changed."),
+        u("«الخطوات ما بتتأثرش بعدد الملفات: الخطوة ١ بتقرا اللي في الفولدر، أيًا كان عدده. علشان كده بنبدأ صغير: مش علشان الشغل صغير، علشان الطريقة تتراجع وهي صغيرة».",
+          "“The steps don't care how many files there are: step 1 reads whatever is in the folder. That's why we start small: not because the work is small, but so the method is checked while it's small.”")],
+        answer: u("ابني الطريقة على مثال صغير، وكبّر البيانات بعدين. لأن الطريقة اللي اتراجعت على ٣٦ صف بتشتغل على آلاف، والعكس صعب جدًا.", "Build the method on a small example, and grow the data later — a method checked on 36 rows works on thousands; the reverse is very hard."),
+        idea: u("صغير في التجربة… كبير في الاستخدام.", "Small to test… large to use.")
+      },
+      {
+        id: "cliff", art: "st_cliff", year: u("الخطوة الجاية", "Next step"), mark: u("١٢", "12"), era: u("رقم غريب", "An odd figure"),
+        title: u("التقرير طلع… والمدير سأل عن رقم", "The report came out… and the manager asked about a figure"),
+        story: [u("بعتت التقرير لمدير المصنع. رد بعد دقيقتين: «الكويت ٨ أجهزة بس في أسبوعين؟ إحنا شاحنين لهم أكتر من كده بكتير». فتحت شيت Report: الإجمالي ١٬٧٦٥ صح، بس جدول البلاد قال فعلًا: الكويت ٨.",
+          "She sent the report to the plant manager. He replied two minutes later: “Kuwait only 8 sets in two weeks? We've shipped them far more than that.” She opened the Report sheet: the total, 1,765, is right, but the countries table did say: Kuwait 8."),
+        u("الأداة اشتغلت من غير ولا خطأ، والبوابة الوحيدة اللي راجعتها كانت الإجمالي. والسؤال اللي الدرس الجاي بيبدأ بيه: طب الكود اشتغل… أعرف منين إنه صح؟",
+          "The tool ran without a single error, and the only gate she checked was the total. And the question the next lesson opens with: the code ran… but how do I know it's right?")],
+        answer: u("واجب الدرس: نزّل المثال الأول، وابنيه بالتلات Prompts ورا بعض، ومع كل خطوة راجع رقم بإيدك قبل اللي بعدها، وفي الآخر شغّل Run_All بعد ما تمسح Output. لأن الخطوات الصغيرة هي اللي هنراجعها بالتفصيل في الدرس الجاي.", "This lesson's task: download the first example, build it with the three Prompts in order, check one figure by hand at each step before the next, and finally run Run_All after deleting Output — these small steps are what we review in detail next lesson."),
+        idea: u("الإجمالي صح… مش معناه إن كل رقم صح.", "A right total… doesn't mean every figure is right.")
+      }
+    ]
+  };
+  A.decks = (A.decks || []).concat([A.stepsStory]);
+})(window.ACADEMY = window.ACADEMY || {});
 
 /* data/review-story.js */
+/* Reviewing code properly — the story deck of lesson k5 (unit 4).
+   The planning engineer at the second plant carries every slide with one question: «إزاي أعرف إن الكود صح، مش بس إنه
+   اشتغل؟». The deck walks the seven-point review on example 1's scripts: the plan, the imports, the log, a figure by
+   hand (Kuwait 8 against 385: COUNTIF instead of SUMIF), the wrong file, the explanation, a second model; then code
+   that is easy to review, and fixing the rule rather than the output; it ends on many new questions, which opens k6.
+   Figures come from data/easy-projects.js. Drawings are the rv_* entries in engine/history.js. */
 "use strict";
+(function (A) {
+  const u = (ar, en) => ({ ar, en });
+  A.reviewStory = {
+    id: "review", lesson: "k5",
+    kicker: u("مراجعة الكود · الحكاية في ٨ دقايق", "Reviewing code · the story in 8 minutes"),
+    title: u("اشتغل… بس هل هو صح؟", "It ran… but is it right?"),
+    lead: u("فاكر «الكويت ٨» اللي المدير سأل عنها؟ في الحكاية دي مهندسة التخطيط بتتعلّم تراجع الكود من غير ما تبقى مبرمجة: سبع أسئلة بسيطة، كل واحد بيمسك نوع غلط.",
+      "Remember “Kuwait 8”, which the manager asked about? In this story the planning engineer learns to review code without being a programmer: seven simple questions, each catching one kind of mistake."),
+    answerLabel: u("القاعدة، وليه؟", "The rule, and why"),
+    ideaLabel: u("الفكرة في جملة", "The idea in one line"),
+    question: u("إزاي أعرف إن الكود صح، مش بس إنه اشتغل؟", "How do I know the code is right, not just that it ran?"),
+    finalQuestion: u("طب لو الأسئلة على الجدول كترت؟", "And what if the questions about the table multiply?"),
+    note: u("القايمة دي نفسها موجودة في Prompt_4 وفي طقم البداية. الأرقام من المثال الأول، وكلها توضيحية.", "This very checklist is in Prompt_4 and in the starter kit. The figures come from the first example; all are illustrative."),
+    ui: {
+      prev: u("اللي فات", "Previous"), next: u("اللي بعده", "Next"),
+      play: u("شغّل الحكاية", "Play the story"), pause: u("وقّف", "Pause"), replay: u("من الأول", "From the start"),
+      skip: u("تخطّى للدرس", "Skip to the lesson"), start: u("نكمّل الدرس", "Continue the lesson"),
+      slideOf: u("{n} من {t}", "{n} of {t}"), timeline: u("خطوات الحكاية", "Story steps"),
+      deck: u("مراجعة الكود، في شرائح", "Reviewing code, in slides"), slide: u("شريحة", "slide"),
+      keys: u("استخدم الأسهم أو اسحب على الشاشة", "Use the arrow keys or swipe")
+    },
+    slides: [
+      {
+        id: "eight", art: "rv_eight", year: u("الموقف", "Scene"), mark: u("٠١", "01"), era: u("رقم المدير", "The manager's figure"),
+        title: u("«الكويت ٨ بس؟»", "“Kuwait only 8?”"),
+        story: [u("المدير كان متأكد إن الكويت أكتر من ٨ بكتير. مهندسة التخطيط رجعت للأداة، وكتبت: «الرقم ده صح؟». الأداة ردت: «أيوه، الكود بيحسب البلاد صح». نفس النموذج اللي كتب الكود، بيأكد على كوده.",
+          "The manager was sure Kuwait was far more than 8. The planning engineer went back to the tool and wrote: “Is this figure right?” The tool replied: “Yes, the code calculates the countries correctly.” The same model that wrote the code, vouching for its own code."),
+        u("الزميل قالها: «السؤال ده ما بيراجعش حاجة. المراجعة أسئلة محددة إنتي تجاوبيها بنفسك، ومحتاجة دقايق. ومش لازم تبقي مبرمجة». والسؤال اللي ماشي معانا: إزاي أعرف إن الكود صح، مش بس إنه اشتغل؟",
+          "The colleague told her: “That question reviews nothing. A review is specific questions you answer yourself, taking minutes. And you needn't be a programmer.” The question we carry: how do I know the code is right, not just that it ran?")],
+        answer: u("ما تسألش النموذج «الكود ده صح؟» وتستنى تطمين. لأن النموذج بيميل يوافق على شغله، والمراجعة لازم تيجي من برّه.", "Don't ask the model “is this code right?” and wait for reassurance — a model tends to agree with its own work; the review must come from outside."),
+        idea: u("«صح؟» مش مراجعة.", "“Is it right?” isn't a review.")
+      },
+      {
+        id: "ran", art: "rv_ran", year: u("اشتغل ≠ صح", "Ran ≠ right"), mark: u("٠٢", "02"), era: u("نوعين من الغلط", "Two kinds of mistake"),
+        title: u("الغلطة اللي بتصرخ… والغلطة الساكتة", "The mistake that shouts… and the silent one"),
+        story: [u("«فيه نوعين غلط. نوع بيصرخ: السكريبت يقف برسالة حمرا. ده سهل، الأداة نفسها بتصلّحه. ونوع ساكت: السكريبت يخلص ويقول تم، والرقم غلط. ده اللي بيوصل للمدير».",
+          "“There are two kinds of mistake. One shouts: the script stops with a red message. That's easy; the tool fixes it itself. The other is silent: the script finishes, says done, and the figure is wrong. That's the one that reaches the manager.”"),
+        u("«الكويت ٨ غلطة ساكتة: ولا رسالة، ولا خطأ، والإجمالي كمان صح. علشان كده المراجعة مش «اشتغل؟»: المراجعة «الأرقام اللي طلعت صح؟»، ودي ليها أسئلة».",
+          "“Kuwait 8 is a silent mistake: no message, no error, and the total is even right. That's why a review isn't “did it run?”: a review is “are the figures right?”, and that has its questions.”")],
+        answer: u("دوّر على الغلط الساكت، مش بس الغلط اللي بيوقف الأداة. لأن الأداة اللي بتقف بتنبّهك، واللي بتكمّل غلط بتسيبك تبعت رقم غلط بثقة.", "Hunt for silent mistakes, not only those that stop the tool — a tool that stops warns you; one that carries on wrongly lets you send a wrong figure with confidence."),
+        idea: u("الغلطة الساكتة… هي الخطيرة.", "The silent mistake… is the dangerous one.")
+      },
+      {
+        id: "plan", art: "rv_plan", year: u("١ الخطة", "1 The plan"), mark: u("٠٣", "03"), era: u("بيعمل إيه؟", "What does it do?"),
+        title: u("السؤال الأول: الخطوة بتعمل اللي طلبته بس؟", "Question 1: does the step do only what I asked?"),
+        story: [u("فتحت step3_report.ps1 وقرت التعليقات اللي فوق كل جزء: «اقرا Data»، «اعمل جدول البلاد»، «اعمل جدول الخطوط»، «احفظ CSV». أربع أجزاء، كلهم من الطلب. مفيش جزء زيادة، زي «امسح الملفات القديمة» أو «ابعت إيميل».",
+          "She opened step3_report.ps1 and read the comments above each part: “read Data”, “build the countries table”, “build the lines table”, “save CSV”. Four parts, all from the request. No extra part, such as “delete old files” or “send an e-mail”."),
+        u("«ده أسهل سؤال، وبيمسك أخطر حاجة: كود بيعمل حاجة إنتي ما طلبتيهاش. ولو فيه جزء مش فاهماه، اسألي عليه قبل أي حاجة».",
+          "“That's the easiest question, and it catches the most dangerous thing: code doing something you didn't ask for. And if there's a part you don't understand, ask about it before anything else.”")],
+        answer: u("اقرا عناوين أجزاء السكريبت وقارنها بطلبك. لأن أي جزء زيادة ممكن يعمل حاجة ما بترجعش، وانت مش واخد بالك.", "Read the headings of the script's parts and compare them with your request — any extra part might do something irreversible without your noticing."),
+        idea: u("الكود يعمل اللي طلبته… بس.", "The code does what you asked… only.")
+      },
+      {
+        id: "imports", art: "rv_imports", year: u("٢ من برّه؟", "2 Outside?"), mark: u("٠٤", "04"), era: u("أول السكريبت", "The script's top"),
+        title: u("السؤال التاني: بيستخدم حاجة من برّه؟", "Question 2: does it use anything from outside?"),
+        story: [u("دوّرت في السكريبتات التلاتة على كلمات بعينها: import، وpip، وInvoke-WebRequest، وhttp. في سكريبتات PowerShell ما لقتش غير New-Object -ComObject Excel.Application. وفي سكريبت Python الخطوة ٥: import csv وimport sqlite3 بس.",
+          "She searched the three scripts for specific words: import, pip, Invoke-WebRequest, and http. In the PowerShell scripts she found nothing but New-Object -ComObject Excel.Application. In step 5's Python script: import csv and import sqlite3 only."),
+        u("«ده سؤال قسم الأمن الأول بالحرف. لو جاوبتيه إنتي قبل ما تبعتي الأداة، هتجاوبيهم في دقيقة لما يسألوا». وكتبت في السجل بتاعها: المكتبة القياسية بس، ومفيش نت.",
+          "“That's the security team's first question, word for word. If you answer it before sending the tool, you'll answer them in a minute when they ask.” And she wrote in her own notes: standard library only, no internet.")],
+        answer: u("دوّر في كل سكريبت على الكلمات اللي بتجيب حاجة من برّه، قبل ما تبعته لحد. لأن سؤال قسم الأمن هييجي، والأحسن تبقى إنت اللي سألته الأول.", "Search every script for the words that fetch something from outside, before sending it anywhere — the security team's question will come, and it's better that you asked it first."),
+        idea: u("سؤال الأمن… اسأله إنت الأول.", "The security question… ask it first.")
+      },
+      {
+        id: "log", art: "rv_log", year: u("٣ السجل", "3 The log"), mark: u("٠٥", "05"), era: u("الأرقام في السجل", "Figures in the log"),
+        title: u("السؤال التالت: السجل بيقول إيه؟", "Question 3: what does the log say?"),
+        story: [u("فتحت Run_Log.txt: الخطوة ١ كتبت عدد صفوف وإجمالي كل ملف. والخطوة ٢ كتبت عدد #N/A. بس الخطوة ٣ كتبت سطر واحد: «Report: done». ولا رقم من جدول البلاد.",
+          "She opened Run_Log.txt: step 1 logged each file's row count and total. Step 2 logged the number of #N/A. But step 3 logged one line: “Report: done”. Not one figure from the countries table."),
+        u("«السجل اللي بيقول done بس مش سجل. السجل لازم يكتب الأرقام اللي تقدري تقارنيها: إجمالي التقرير، ومجموع جدول البلاد، ومجموع جدول الخطوط». ولو كان كتب مجموع جدول البلاد، كان هيطلع ٣٦ مش ١٬٧٦٥، والغلطة كانت هتبان.",
+          "“A log that only says done isn't a log. A log must record the figures you can compare: the report's total, the countries table's sum, the lines table's sum.” Had it logged the countries table's sum, it would have shown 36, not 1,765, and the mistake would have shown.")],
+        answer: u("كل خطوة لازم تكتب في السجل أرقام تتقارن، مش «تم». لأن الرقم في السجل بيكشف الغلط الساكت قبل ما حد يفتح التقرير.", "Every step must log figures that can be compared, not “done” — a figure in the log exposes a silent mistake before anyone opens the report."),
+        idea: u("«done» مش سجل.", "“done” isn't a log.")
+      },
+      {
+        id: "hand", art: "rv_hand", year: u("٤ بإيدك", "4 By hand"), mark: u("٠٦", "06"), era: u("رقم واحد", "One figure"),
+        title: u("السؤال الرابع: رقم واحد بإيدك", "Question 4: one figure by hand"),
+        story: [u("فتحت الملفين في إكسل، وفلترت CountryCode على KW، وجمعت Qty: ٣٨٥. التقرير قال ٨. وبعدين عدّت الصفوف المفلترة: ٨ صفوف. الأداة كانت بتعدّ الصفوف بدل ما تجمع الكمية: COUNTIF بدل SUMIF.",
+          "She opened both files in Excel, filtered CountryCode on KW, and summed Qty: 385. The report said 8. Then she counted the filtered rows: 8 rows. The tool was counting rows instead of summing the quantity: COUNTIF instead of SUMIF."),
+        u("كلمة واحدة في معادلة. والإجمالي اللي فوق كان صح، لأنه SUM على العمود كله، فما حدش شك. «رقم واحد من المصدر، بتحسبيه بإيدك، بيمسك اللي ولا سجل ولا نموذج مسكه».",
+          "One word in one formula. And the total above was right, because it was a SUM over the whole column, so nobody doubted it. “One figure from the source, worked out by hand, catches what no log and no model caught.”")],
+        answer: u("احسب رقم واحد على الأقل من المصدر بإيدك، وقارنه بالأداة. لأن الحساب بالإيد هو المراجعة الوحيدة اللي ما بتعتمدش على الكود اللي بتراجعه.", "Work out at least one figure from the source by hand, and compare it with the tool — a hand calculation is the only check that doesn't rely on the code under review."),
+        idea: u("فلتر وجمع… يكشفوا كلمة غلط.", "A filter and a sum… expose one wrong word.")
+      },
+      {
+        id: "wrong", art: "rv_wrong", year: u("٥ ملف غلط", "5 Wrong file"), mark: u("٠٧", "07"), era: u("تجربة قاسية", "A harsh test"),
+        title: u("السؤال الخامس: لو الملف جه غلط؟", "Question 5: what if a file arrives wrong?"),
+        story: [u("عملت نسخة من الفولدر، وغيّرت في Week_02 اسم العمود Qty لـ Quantity، ودوست Run_All. الخطوة ١ ما وقفتش: كمّلت، وكتبت صفوف Week_02 بكمية فاضية، والإجمالي طلع ٨٤٥ بدل ١٬٧٦٥. من غير ولا رسالة.",
+          "She made a copy of the folder, renamed the Qty column in Week_02 to Quantity, and ran Run_All. Step 1 didn't stop: it carried on, wrote Week_02's rows with an empty quantity, and the total came out 845 instead of 1,765. Without a single message."),
+        u("ده بالظبط اللي ممكن يحصل الشهر الجاي لو النظام غيّر اسم عمود. طلبت تصليح: «لو أي عمود من الخمسة مش موجود بالاسم، وقّف برسالة فيها اسم الملف والعمود». جرّبت تاني: «Week_02.xlsx: مفيش عمود Qty». وقفت.",
+          "That's exactly what could happen next month if the system renames a column. She asked for a fix: “If any of the five columns is missing by name, stop with a message naming the file and the column.” She tried again: “Week_02.xlsx: no Qty column”. It stopped.")],
+        answer: u("جرّب الأداة على نسخة فيها غلطة متعمّدة، ولازم تقف برسالة واضحة. لأن الأداة اللي بتكمّل على ملف غلط هتكمّل كده يوم ما الملف الحقيقي يتغيّر.", "Try the tool on a copy with a deliberate fault, and it must stop with a clear message — a tool that carries on through a wrong file will do the same the day the real file changes."),
+        idea: u("غلّط الملف بإيدك… قبل ما يتغلّط لوحده.", "Break the file yourself… before it breaks on its own.")
+      },
+      {
+        id: "explain", art: "rv_explain", year: u("٦ الشرح", "6 Explanation"), mark: u("٠٨", "08"), era: u("سطرين لكل جزء", "Two lines a part"),
+        title: u("السؤال السادس: اشرحلي كل جزء في سطرين", "Question 6: explain each part in two lines"),
+        story: [u("طلبت من الأداة: «اشرحلي كل جزء في step3_report.ps1 في سطرين، بكلام بسيط». الشرح قال عن جدول البلاد: «بيجمع الكمية لكل بلد». بس الكود تحته كان فيه COUNTIF. الشرح بيوصف اللي المفروض، والكود بيعمل حاجة تانية.",
+          "She asked the tool: “Explain each part of step3_report.ps1 in two plain lines.” The explanation said of the countries table: “sums the quantity per country”. But the code beneath it held COUNTIF. The explanation described what was intended; the code did something else."),
+        u("«المقارنة بين الشرح والكود من أحسن المراجعات. مش لازم تفهمي كل كلمة: لو الشرح قال يجمع، دوّري على SUM في الجزء ده. ولو مش لاقياها، يبقى فيه حاجة».",
+          "“Comparing the explanation with the code is one of the best checks. You needn't understand every word: if the explanation says it sums, look for SUM in that part. If it isn't there, something's off.”")],
+        answer: u("اطلب شرح كل جزء بكلام بسيط، وقارن الشرح بالكلمات اللي في الكود. لأن الفرق بين اللي النموذج فاكره واللي كتبه هو مكان الغلطة بالظبط.", "Ask for each part explained in plain words, and compare it with the words in the code — the gap between what the model thinks it wrote and what it wrote is exactly where the mistake is."),
+        idea: u("الشرح بيقول يجمع… الكود بيعدّ.", "The explanation says sum… the code counts.")
+      },
+      {
+        id: "second", art: "rv_second", year: u("٧ رأي تاني", "7 Second opinion"), mark: u("٠٩", "09"), era: u("عينين جداد", "Fresh eyes"),
+        title: u("السؤال السابع: نموذج تاني بنفس القايمة", "Question 7: another model, the same list"),
+        story: [u("الكود اتكتب في Claude Code. فتحت Codex في نفس الفولدر، ولصقت Prompt_4: قايمة المراجعة السبعة، و«ما تعدّلش حاجة». Codex رجع بتلات ملاحظات: COUNTIF بدل SUMIF، وMasters.xlsx بيتفتح من غير read-only، وسجل الخطوة ٣ مفيهوش أرقام.",
+          "The code was written in Claude Code. She opened Codex in the same folder and pasted Prompt_4: the seven-point checklist, and “change nothing”. Codex came back with three notes: COUNTIF instead of SUMIF, Masters.xlsx opened without read-only, and step 3's log holding no figures."),
+        u("التانية ما كانتش واخدة بالها منها خالص. «النموذج التاني ما كتبش الكود، فمش بيدافع عنه. ونفس الكلام لو العكس: اللي يكتبه Codex، Claude يراجعه». ولو مفيش غير أداة واحدة، جلسة جديدة بتعمل نص الفايدة.",
+          "She hadn't noticed the second one at all. “The other model didn't write the code, so it doesn't defend it. The same holds the other way round: what Codex writes, Claude reviews.” With only one tool, a new session gives half the benefit.")],
+        answer: u("ادّي الكود لنموذج تاني أو جلسة جديدة بنفس القايمة، ومن غير ما يعدّل. لأن اللي ما كتبش الكود بيشوف اللي كاتبه اتعوّد عليه.", "Give the code to another model or a new session with the same list, and without editing — whoever didn't write the code sees what its writer got used to."),
+        idea: u("اللي ما كتبش… بيشوف أحسن.", "Whoever didn't write it… sees better.")
+      },
+      {
+        id: "good", art: "rv_good", year: u("كود يتراجع", "Reviewable code"), mark: u("١٠", "10"), era: u("من أول الطلب", "From the request"),
+        title: u("أسهل كود يتراجع… اتطلب صح من الأول", "The easiest code to review… was asked for properly"),
+        story: [u("الزميل قالها: «المراجعة بتبدأ قبل الكود. قولي في الطلب: كل جزء ليه وظيفة واحدة واسم بيقول بيعمل إيه، وتعليق فوقه بكلام بسيط، والمسارات وأسماء الأعمدة في أول السكريبت، ووقفة برسالة واضحة، وسطر في السجل لكل مراجعة».",
+          "The colleague told her: “Review starts before the code. Say in the request: each part has one job and a name saying what it does, a plain comment above it, the paths and column names at the top of the script, a stop with a clear message, and one log line per check.”"),
+        u("طلبت الخطوة ٣ تاني بالكلام ده. السكريبت الجديد كان أطول ١٥ سطر، بس كل جزء ليه عنوان، وأسماء الأعمدة الخمسة مكتوبة في أول سطرين، والسجل بيكتب مجموع كل جدول. «الكود الكويس هو الكود اللي إنتي تقدري تراجعيه».",
+          "She asked for step 3 again with those words. The new script was 15 lines longer, but every part had a heading, the five column names were written in the first two lines, and the log recorded each table's sum. “Good code is code you can review.”")],
+        answer: u("اطلب في الـ Prompt كود سهل يتراجع: وظيفة لكل جزء، وتعليقات، وثوابت فوق، وسجل بالأرقام. لأن الكود اللي تقدر تراجعه هو الكود اللي تقدر تثق فيه.", "Ask in the Prompt for code that's easy to review: one job per part, comments, constants on top, a log of figures — code you can review is code you can trust."),
+        idea: u("الكود الكويس… هو اللي تقدر تراجعه.", "Good code… is code you can review.")
+      },
+      {
+        id: "fix", art: "rv_fix", year: u("التصليح", "The fix"), mark: u("١١", "11"), era: u("في القاعدة", "In the rule"),
+        title: u("صلّح القاعدة… مش الرقم", "Fix the rule… not the figure"),
+        story: [u("كان أسهل حاجة إنها تكتب ٣٨٥ بإيدها مكان ٨ في التقرير وتبعته. بس الأسبوع الجاي الأداة هتطلّع نفس الغلطة تاني. فطلبت التصليح في الكود: SUMIF بدل COUNTIF، وMasters للقراءة بس، والسجل بالأرقام.",
+          "The easiest thing would have been to type 385 by hand in place of 8 and send the report. But next week the tool would produce the same mistake again. So she asked for the fix in the code: SUMIF instead of COUNTIF, Masters read-only, and the log with figures."),
+        u("مسحت Output، ودوست Run_All، وراجعت تاني: الكويت ٣٨٥، ومصر ٨٨٠، والتصدير ٥٠٪، ومجموع جدول البلاد ١٬٧٦٥ زي الإجمالي. وبعتت للمدير: «اتصلّح، والسبب كان في قاعدة الحساب، ودي الأرقام الصح».",
+          "She deleted Output, double-clicked Run_All, and checked again: Kuwait 385, Egypt 880, export 50%, and the countries table's sum 1,765, the same as the total. She wrote to the manager: “Fixed; the cause was the calculation rule, and these are the right figures.”")],
+        answer: u("صلّح الغلط في قاعدة الكود وشغّل من الأول، ما تصلّحش الناتج بإيدك. لأن التصليح بالإيد بيختفي مع أول تشغيل جاي، والغلطة بترجع.", "Fix the mistake in the code's rule and run from scratch; never patch the output by hand — a hand fix vanishes on the next run, and the mistake returns."),
+        idea: u("التصليح بالإيد… بيرجع الأسبوع الجاي.", "A hand fix… comes back next week.")
+      },
+      {
+        id: "cliff", art: "rv_cliff", year: u("الخطوة الجاية", "Next step"), mark: u("١٢", "12"), era: u("أسئلة كتير", "Many questions"),
+        title: u("المدير اطمّن… وبعت ٦ أسئلة جديدة", "The manager was reassured… and sent 6 new questions"),
+        story: [u("المدير رد: «تمام. طب عايز أعرف: أنهي خط عمل أكتر M108؟ والكويت جالها منين؟ وأسبوع ١ ولا ٢ كان أحسن لكل بلد؟» وكمّل لحد ٦ أسئلة. كل سؤال معناه فلتر جديد، أو تعديل في الأداة.",
+          "The manager replied: “Good. Now I want to know: which line made the most M108? Where did Kuwait's sets come from? Was week 1 or week 2 better for each country?” And on to 6 questions. Each question meant a new filter, or a change to the tool."),
+        u("مهندسة التخطيط بصّت للجدول: ٣٦ صف بس، والأسئلة مش هتخلص. وكل تعديل في الأداة يعني مراجعة من الأول. والسؤال اللي الدرس الجاي بيبدأ بيه: طب لو الأسئلة على الجدول كترت؟",
+          "The planning engineer looked at the table: just 36 rows, and the questions would never end. And every change to the tool means a review from scratch. And the question the next lesson opens with: what if the questions about the table multiply?")],
+        answer: u("واجب الدرس: استخدم Prompt_4 في جلسة جديدة على سكريبتات الخطوات التلاتة، واعمل بإيدك رقم بالفلتر ونسخة فيها عمود اسمه اتغيّر، واكتب أخطر غلطة لقيتها. لأن القايمة دي هتتحفظ في طقم البداية في آخر الوحدة.", "This lesson's task: use Prompt_4 in a new session on the three steps' scripts, do one figure by hand with a filter and one copy with a renamed column, and write down the worst mistake you found — this checklist is saved in the starter kit at the end of the unit."),
+        idea: u("الأداة المراجَعة… بتجيب أسئلة أكتر.", "A checked tool… brings more questions.")
+      }
+    ]
+  };
+  A.decks = (A.decks || []).concat([A.reviewStory]);
+})(window.ACADEMY = window.ACADEMY || {});
 
 /* data/sql-story.js */
 "use strict";
@@ -20170,6 +20474,191 @@ pause
       <g ${an("pop", 1.3)}>${shield(q, 112, 1.1)}${txt(q, 128, ar() ? "؟" : "?", "t-acc", 22, b8)}</g>
       <g ${an("fade", 1.6)}>${txt(q, 180, tr("الدرس الجاي", "next lesson"), "t-acc", 12.5, b8)}</g>
       <g ${an("rise", 1.8)}>${box(240, 260, 380, 40, "f-amber-soft s-amber")}${txt(240, 265, tr("الغلطة في أنهي جزء؟", "which part holds the mistake?"), "t-amber", 12, b8)}</g>`;
+    },
+    /* ----- step by step (data/steps-story.js) ----- */
+    st_monster: () => {
+      const a = mx(140), q = mx(376);
+      return `<g ${an("rise", 0.05)}>${[0, 1, 2].map((k) => `<rect x="${a - 90 + k * 6}" y="${46 + k * 6}" width="180" height="200" rx="8" class="f-ink2"/>`).join("")}</g>
+      ${term(a + 12, 158, 180, 200, ["# 300 lines", "...", "fix 1: 40 lines", "...", "fix 2: 30 lines", "...", "line 214 ?"], 0.3, 10.5, (i) => (i === 6 ? "t-white" : "t-crt"))}
+      <g ${an("rise", 1.0)}>${box(q, 96, 170, 70, "f-rose-soft s-rose")}${txt(q, 90, tr("الإجمالي غريب", "an odd total"), "t-rose", 12, b8)}${txt(q, 110, tr("بعد كل تصليح", "after every fix"), "t-ink2", 10.5, bold)}</g>
+      <g ${an("rise", 1.3)}>${box(q, 190, 170, 70, "f-s1 s-line2")}${txt(q, 184, tr("أنهي جزء صح؟", "which part is right?"), "t-ink", 12, b8)}${txt(q, 204, tr("مش معروف", "unknown"), "t-ink3", 10.5, bold)}</g>
+      ${cap(tr("الأداة الكبيرة… بتخبّي غلطتها", "a big tool… hides its mistake"), 1.6, 292)}`;
+    },
+    st_small: () => {
+      const a = mx(130), b = mx(352), d = dirx();
+      return `<g ${an("rise", 0.05)}>${[0, 1, 2, 3, 4, 5].map((k) => `<rect x="${a - 70 + k * 10}" y="${50 + k * 8}" width="90" height="70" rx="5" class="f-s2 s-line2" stroke-width="1.5"/>`).join("")}${txt(a, 170, tr("١٣ أسبوع · عمودين VLOOKUP", "13 weeks · 2 VLOOKUP columns"), "t-ink3", 10.5, bold)}</g>
+      ${arrow(a + d * 92, 96, b - d * 92, 96, 0.5)}
+      <g ${an("rise", 0.7)}>${sheet(b - 46, 96, 82, 64, "f-s1 s-acc", "Week_01", 0.7)}${sheet(b + 46, 96, 82, 64, "f-s1 s-acc", "Week_02", 0.8)}${txt(b, 152, tr("١٨ + ١٨ = ٣٦ صف", "18 + 18 = 36 rows"), "t-acc", 12, b8)}${txt(b, 172, tr("بحث واحد: اسم البلد", "one lookup: the country"), "t-ink2", 10.5, bold)}</g>
+      ${pill(240, 236, 330, 36, tr("على ٣٦ صف… تعدّي بإيدك", "with 36 rows… you can count by hand"), "f-mint-soft s-mint", "t-mint", 12, 1.2)}
+      ${cap(tr("مثال صغير… طريقة كاملة", "a small example… a complete method"), 1.5, 290)}`;
+    },
+    st_split: () => {
+      const X = rowX(3, 130, 24), S = [tr("تحت بعض", "stack"), tr("اسم البلد", "country name"), tr("تقرير + CSV", "report + CSV")];
+      return `${S.map((s, i) => `<g ${an("rise", 0.1 + i * 0.3)}>${box(X(i), 112, 130, 140, "f-s1 s-acc")}${txt(X(i), 66, tr("الخطوة ", "Step ") + digits(i + 1), "t-acc", 12.5, b8)}${txt(X(i), 92, s, "t-ink", 11.5, b8)}${[`Prompt_${i + 1}.txt`, `step${i + 1}.ps1`, `Run_Step${i + 1}.bat`].map((f, k) => txt(X(i), 122 + k * 20, f, "t-ink3", 10, bold + ltr)).join("")}</g>${i ? arrow(X(i - 1) + dirx() * 66, 112, X(i) - dirx() * 68, 112, 0.25 + i * 0.3) : ""}`).join("")}
+      ${pill(240, 230, 360, 34, tr("وظيفة واحدة · سكريبت واحد · سطور في السجل", "one job · one script · lines in the log"), "f-acc-soft s-acc", "t-acc", 11, 1.1)}
+      ${cap(tr("خطوة واحدة… مكان واحد للغلطة", "one step… one place for the mistake"), 1.4, 290)}`;
+    },
+    st_step1: () => {
+      const a = mx(110), b = mx(330), d = dirx();
+      return `<g ${an("rise", 0.05)}>${sheet(a, 76, 100, 60, "f-s1 s-acc", "Week_01", 0.05)}${sheet(a, 152, 100, 60, "f-s1 s-acc", "Week_02", 0.2)}</g>
+      ${arrow(a + d * 54, 76, b - d * 104, 108, 0.5)}${arrow(a + d * 54, 152, b - d * 104, 120, 0.6)}
+      ${term(b, 114, 200, 116, ["Week_01.xlsx  18 rows  845", "Week_02.xlsx  18 rows  920", "Data          36 rows  1,765", "", "step1_stack.ps1: 60 lines"].filter(Boolean), 0.8, 10.5, (i) => (i === 2 ? "t-white" : "t-crt"))}
+      <g ${an("fade", 1.8)}>${txt(240, 228, tr("فتح للقراءة · قراية مرة · SourceFile · كتابة مرة · finally", "read-only · read once · SourceFile · write once · finally"), "t-ink2", 10.5, b8)}</g>
+      ${cap(tr("٦٠ سطر مفهومين… أحسن من ٣٠٠", "60 understood lines… beat 300"), 2.0, 286)}`;
+    },
+    st_gate: () => {
+      const g = mx(240);
+      return `${flowRow([tr("الخطوة ١", "Step 1"), tr("البوابة", "the gate"), tr("الخطوة ٢", "Step 2")], 70, 120, 34, 0.05, ["f-s1 s-acc", "f-amber s-amber", "f-s2 s-line2"], ["t-acc", "t-white", "t-ink3"], 12)}
+      <g ${an("rise", 0.9)}>${box(240, 160, 300, 86, "f-amber-soft s-amber")}${txt(240, 140, "18 + 18 = 36", "t-ink", 13, b8 + ltr)}${txt(240, 162, "845 + 920 = 1,765", "t-ink", 13, b8 + ltr)}${txt(240, 186, tr("Week_01 في إكسل: ٨٤٥", "Week_01 in Excel: 845"), "t-amber", 11.5, b8)}</g>${check(240 + dirx() * 168, 160, 1.4)}
+      ${pill(240, 238, 340, 34, tr("رقم بتتأكد منه بنفسك… وبعدين تكمّل", "a figure you confirm yourself… then go on"), "f-mint-soft s-mint", "t-mint", 11, 1.6)}
+      ${cap(tr("كل خطوة… ليها بوابة", "every step… has a gate"), 1.8, 290)}`;
+    },
+    st_step2: () => {
+      const H = ["CountryCode", "Qty", "CountryName"], R = [["EG", "45", "Egypt"], ["KW", "40", "Kuwait"], ["KW", "55", "Kuwait"]], X = rowX(3, 120, 6);
+      return `<g ${an("rise", 0.05)}>${H.map((h, i) => `${box(X(i), 52, 120, 30, i === 2 ? "f-mint s-mint" : "f-acc-soft s-acc")}${txt(X(i), 56, h, i === 2 ? "t-white" : "t-acc", 11, b8 + ltr)}`).join("")}</g>
+      ${R.map((r, k) => `<g ${an("rise", 0.3 + k * 0.15)}>${r.map((v, i) => `${box(X(i), 88 + k * 32, 120, 28, i === 2 ? "f-mint-soft s-mint" : "f-s1 s-line2")}${txt(X(i), 92 + k * 32, v, i === 2 ? "t-mint" : "t-ink", 11, b8 + ltr)}`).join("")}</g>`).join("")}
+      <g ${an("rise", 1.0)}>${box(240, 210, 420, 34, "f-s1 s-mint")}${mono(48, 215, "=VLOOKUP(D2, Countries!A:B, 2, FALSE)", "t-mint", 12)}</g>
+      <g ${an("fade", 1.3)}>${txt(240, 250, tr("٣٦ معادلة · #N/A صفر · الصفوف لسه ٣٦", "36 formulas · zero #N/A · still 36 rows"), "t-ink2", 11, b8)}</g>
+      ${cap(tr("عمود جديد… والصفوف زي ما هي", "a new column… the rows unchanged"), 1.5, 290)}`;
+    },
+    st_step3: () => {
+      const a = mx(120), m = 240, b = mx(370), d = dirx();
+      return `<g ${an("rise", 0.05)}>${box(a, 100, 170, 120, "f-acc-soft s-acc")}${txt(a, 58, "PowerShell", "t-acc", 12, b8 + ltr)}${txt(a, 86, "Report", "t-ink", 12, b8 + ltr)}${txt(a, 108, tr("الإجمالي ١٬٧٦٥", "total 1,765"), "t-ink2", 11, bold)}${txt(a, 128, tr("كل بلد · كل خط", "each country · line"), "t-ink3", 10, bold)}</g>
+      ${arrow(a + d * 88, 100, m - d * 26, 100, 0.5)}
+      <g ${an("rise", 0.7)}>${fileIcon(m, 100, "s-amber", 0.7)}${txt(m, 140, "Two_Weeks.csv", "t-amber", 10.5, b8 + ltr)}${txt(m, 156, tr("٣٦ صف", "36 rows"), "t-ink3", 10, bold)}</g>
+      ${arrow(m + d * 26, 100, b - d * 72, 100, 1.0, "s-line2", "5 5")}
+      <g ${an("fade", 1.1)}>${box(b, 100, 140, 70, "f-s2 s-mint", 2, 'stroke-dasharray="5 5"')}${txt(b, 96, "Python", "t-mint", 12, b8 + ltr)}${txt(b, 114, tr("الخطوة الجاية", "the next step"), "t-ink3", 10, bold)}</g>
+      ${pill(240, 222, 320, 36, tr("الـ CSV… الجسر بين الأداتين", "the CSV… the bridge between the tools"), "f-amber-soft s-amber", "t-amber", 12, 1.4)}
+      ${cap(tr("PowerShell خلّص الإكسل… وPython يكمّل", "PowerShell finished Excel… Python carries on"), 1.7, 286)}`;
+    },
+    st_dp0: () => {
+      const a = mx(130), b = mx(356);
+      return `<g ${an("rise", 0.05)}>${box(a, 96, 200, 92, "f-rose-soft s-rose")}${mono(a - 90, 82, "C:\\Users\\...\\Desktop", "t-rose", 10.5)}${mono(a - 90, 100, "\\tool\\step1.ps1", "t-rose", 10.5)}${txt(a, 124, tr("مسار جهازها هي", "her machine's path"), "t-ink2", 10.5, b8)}</g>
+      <g ${an("fade", 0.4)}>${txt(a, 162, tr("عند مشرف الخط: الملف مش موجود", "on the supervisor's PC: not found"), "t-rose", 10.5, b8)}</g>
+      <g ${an("rise", 0.7)}>${box(b, 96, 200, 92, "f-mint-soft s-mint")}${mono(b - 90, 90, "%~dp0step1.ps1", "t-mint", 12)}${txt(b, 118, tr("فولدر ملف التشغيل نفسه", "the launcher's own folder"), "t-ink2", 10.5, b8)}</g>
+      <g ${an("fade", 1.0)}>${txt(b, 162, tr("أي جهاز · أي فولدر", "any machine · any folder"), "t-mint", 11, b8)}</g>
+      <g ${an("rise", 1.2)}>${folder(240, 228, 120, 70, "f-amber-soft s-amber")}${laptop(240 - dirx() * 120, 232, 0.8)}${laptop(240 + dirx() * 120, 232, 0.8)}</g>
+      ${cap(tr("الفولدر يتنقل… والأداة تشتغل", "the folder moves… the tool runs"), 1.5, 296)}`;
+    },
+    st_exit: () => {
+      return `${flowRow([tr("الخطوة ١", "Step 1"), tr("الخطوة ٢", "Step 2"), tr("التقرير", "the report")], 62, 120, 34, 0.05, ["f-rose-soft s-rose", "f-s1 s-line2", "f-s1 s-line2"], ["t-rose", "t-ink2", "t-ink2"], 12)}
+      <g ${an("fade", 0.7)}>${txt(rowX(3, 120, 34)(0), 102, tr("«Week_02 مش موجود»", "“Week_02 not found”"), "t-rose", 10.5, b8)}${txt(rowX(3, 120, 34)(2), 102, tr("بأسبوع واحد!", "one week only!"), "t-rose", 10.5, b8)}</g>
+      ${term(240, 180, 400, 92, ["step1_stack.ps1   -> exit 1", "if errorlevel 1 goto :stop", "Run_All: STOPPED at step 1"], 1.0, 11, (i) => (i === 2 ? "t-white" : "t-crt"))}
+      ${cap(tr("الوقفة لازم تتسمع… مش تتكتب بس", "a stop must be heard… not just written"), 1.7, 270)}`;
+    },
+    st_runall: () => {
+      const a = mx(56), d = dirx();
+      return `<g ${an("pop", 0.05)}>${fileIcon(a, 74, "s-mint", 0.05)}${txt(a, 112, "Run_All.bat", "t-mint", 11, b8 + ltr)}</g>
+      ${flowRow(["1", "2", "3"], 74, 64, 26, 0.4, "f-mint-soft s-mint", "t-mint", 13, 40).replace(/x="(\d+(\.\d+)?)"/g, (m) => m)}
+      <g ${an("fade", 1.2)}>${txt(mx(400), 80, tr("٢٠ ثانية", "20 seconds"), "t-ink2", 12, b8)}</g>
+      <g ${an("rise", 1.3)}>${box(240, 168, 380, 80, "f-s1 s-line2")}${txt(240, 146, "Output\\", "t-amber", 12, b8 + ltr)}${txt(240, 168, "Two_Weeks.xlsx  ·  Two_Weeks.csv", "t-ink", 11, b8 + ltr)}${txt(240, 188, "Run_Log.txt", "t-ink", 11, b8 + ltr)}</g>
+      <g ${an("rise", 1.6)}>${person(mx(110), 262, 0.8, "f-ink2")}${txt(mx(110) + d * 96, 248, tr("مشرف الخط: «تم»", "the supervisor: “Done”"), "t-ink", 11.5, b8)}</g>
+      ${cap(tr("ليك: تلات خطوات… ليه: ضغطة واحدة", "for you: three steps… for them: one click"), 1.9, 300)}`;
+    },
+    st_scale: () => {
+      const a = mx(130), b = mx(350), d = dirx();
+      return `<g ${an("rise", 0.05)}>${sheet(a - 30, 92, 70, 54, "f-s1 s-acc", "W01", 0.05)}${sheet(a + 30, 92, 70, 54, "f-s1 s-acc", "W02", 0.1)}${txt(a, 148, tr("أسبوعين", "two weeks"), "t-acc", 12, b8)}</g>
+      ${arrow(a + d * 76, 92, b - d * 96, 92, 0.4)}
+      <g ${an("rise", 0.6)}>${[0, 1, 2, 3, 4, 5, 6].map((k) => `<rect x="${b - 80 + k * 18}" y="${66 + (k % 2) * 6}" width="44" height="40" rx="4" class="f-s1 s-acc" stroke-width="1.5"/>`).join("")}${txt(b, 148, tr("١٣ أسبوع", "13 weeks"), "t-acc", 12, b8)}</g>
+      ${term(240, 210, 380, 60, ["Run_All.bat   log: 13 lines", "code changed: 0 lines"], 1.0, 11, (i) => (i ? "t-white" : "t-crt"))}
+      ${cap(tr("صغير في التجربة… كبير في الاستخدام", "small to test… large to use"), 1.5, 280)}`;
+    },
+    st_cliff: () => {
+      const a = mx(150), q = mx(398);
+      const rows = [["Egypt", "18"], ["Kuwait", "8"], ["UAE", "5"]];
+      return `<g ${an("rise", 0.05)}>${box(a, 112, 220, 150, "f-s1 s-line2")}${txt(a, 56, "Report", "t-ink", 12, b8 + ltr)}${txt(a, 80, tr("الإجمالي ١٬٧٦٥", "total 1,765"), "t-mint", 12, b8)}${check(a + dirx() * 86, 76, 0.4)}${rows.map(([c, v], k) => `${txt(a - 40, 112 + k * 22, c, k === 1 ? "t-rose" : "t-ink2", 11, b8 + ltr)}${txt(a + 60, 112 + k * 22, v, k === 1 ? "t-rose" : "t-ink2", 11, b8 + ltr)}`).join("")}</g>
+      <g ${an("pop", 0.6)}><rect x="${a - 96}" y="${112 + 22 - 15}" width="192" height="21" rx="4" class="s-rose" fill="none" stroke-width="2.5"/></g>
+      <g ${an("rise", 0.9)}>${bubble(q, 72, 170, 58, "f-amber-soft s-amber", ar())}${txt(q, 66, tr("«الكويت ٨ بس؟", "“Kuwait only 8?"), "t-amber", 11.5, b8)}${txt(q, 84, tr("شاحنين أكتر بكتير»", "we shipped far more”"), "t-amber", 11, b8)}</g>
+      <g ${an("pop", 1.3)}>${shield(q, 172, 1)}${txt(q, 182, ar() ? "؟" : "?", "t-acc", 20, b8)}</g>
+      <g ${an("fade", 1.6)}>${txt(q, 232, tr("الدرس الجاي", "next lesson"), "t-acc", 12.5, b8)}</g>
+      <g ${an("rise", 1.8)}>${box(a, 236, 220, 40, "f-s1 s-rose")}${txt(a, 241, tr("اشتغل من غير ولا خطأ", "ran without a single error"), "t-rose", 11.5, b8)}</g>`;
+    },
+    /* ----- reviewing code (data/review-story.js) ----- */
+    rv_eight: () => {
+      const a = mx(130), b = mx(360);
+      return `<g ${an("rise", 0.05)}>${bubble(a, 74, 200, 54, "f-acc-soft s-acc", !ar())}${txt(a, 79, tr("«الرقم ده صح؟»", "“Is this figure right?”"), "t-acc", 12, b8)}</g>
+      <g ${an("rise", 0.5)}>${bubble(b, 150, 210, 70, "f-s1 s-line2", ar())}${txt(b, 144, tr("«أيوه، الكود بيحسب", "“Yes, the code calculates"), "t-ink2", 11, b8)}${txt(b, 162, tr("البلاد صح»", "the countries correctly”"), "t-ink2", 11, b8)}</g>
+      <g ${an("fade", 0.9)}>${txt(b, 208, tr("نفس النموذج اللي كتب الكود", "the same model that wrote it"), "t-rose", 10.5, b8)}</g>
+      ${pill(240, 250, 300, 34, tr("«صح؟» مش مراجعة", "“right?” isn't a review"), "f-amber-soft s-amber", "t-amber", 12, 1.2)}
+      ${cap(tr("المراجعة لازم تيجي من برّه", "the review must come from outside"), 1.5, 296)}`;
+    },
+    rv_ran: () => {
+      const a = mx(126), b = mx(354);
+      return `<g ${an("rise", 0.05)}>${term(a, 100, 200, 84, ["line 41  ERROR", "Cannot find Qty"], 0.05, 11, () => "t-white")}${txt(a, 170, tr("بتصرخ: سهلة", "shouts: easy"), "t-mint", 12, b8)}</g>
+      <g ${an("rise", 0.4)}>${term(b, 100, 200, 84, ["Report: done", "Kuwait  8"], 0.4, 11)}${txt(b, 170, tr("ساكتة: خطيرة", "silent: dangerous"), "t-rose", 12, b8)}</g>
+      ${pill(240, 230, 360, 36, tr("المراجعة: «الأرقام صح؟» مش «اشتغل؟»", "review: “are the figures right?”, not “did it run?”"), "f-acc-soft s-acc", "t-acc", 11, 1.0)}
+      ${cap(tr("الغلطة الساكتة… هي الخطيرة", "the silent mistake… is the dangerous one"), 1.3, 290)}`;
+    },
+    rv_plan: () => {
+      const P = ar() ? ["# اقرا Data", "# اعمل جدول البلاد", "# اعمل جدول الخطوط", "# احفظ CSV"] : ["# read Data", "# build the countries table", "# build the lines table", "# save CSV"];
+      return `${P.map((s, i) => `<g ${an("rise", 0.1 + i * 0.2)}>${box(mx(170), 62 + i * 44, 260, 36, "f-s1 s-acc")}${txt(mx(170), 67 + i * 44, s, "t-ink", 11.5, b8)}</g>${check(mx(318), 62 + i * 44, 0.3 + i * 0.2)}`).join("")}
+      <g ${an("rise", 1.0)}>${box(mx(400), 106, 120, 80, "f-s2 s-line2", 2, 'stroke-dasharray="5 5"')}${txt(mx(400), 98, tr("جزء زيادة؟", "an extra part?"), "t-ink3", 11, b8)}${txt(mx(400), 118, tr("مفيش", "none"), "t-mint", 12, b8)}</g>
+      ${cap(tr("الكود يعمل اللي طلبته… بس", "the code does what you asked… only"), 1.3, 268)}`;
+    },
+    rv_imports: () => {
+      const W = ["import", "pip", "Invoke-WebRequest", "http"], X = rowX(4, 114, 6);
+      return `${W.map((w, i) => `<g ${an("pop", 0.05 + i * 0.15)}>${box(X(i), 56, 114, 34, "f-amber-soft s-amber")}${txt(X(i), 60, w, "t-amber", 9.5, b8 + ltr)}</g>`).join("")}
+      ${term(mx(150), 150, 260, 92, ["step1..3.ps1:", "  New-Object -ComObject Excel...", "load_sqlite.py:", "  import csv, sqlite3"].map(nb), 0.6, 10.5)}
+      <g ${an("rise", 1.2)}>${shield(mx(390), 140, 1)}${check(mx(390), 140, 1.4)}</g>
+      <g ${an("fade", 1.5)}>${txt(mx(390), 206, tr("المكتبة القياسية بس", "standard library only"), "t-mint", 11, b8)}</g>
+      ${cap(tr("سؤال الأمن… اسأله إنت الأول", "the security question… ask it first"), 1.7, 270)}`;
+    },
+    rv_log: () => {
+      return `${term(240, 104, 420, 120, ["step1  Week_01 18 rows 845 · Week_02 18 rows 920", "step1  Data 36 rows 1,765", "step2  #N/A: 0", "step3  Report: done"], 0.05, 11, (i) => (i === 3 ? "t-white" : "t-crt"))}
+      <g ${an("pop", 1.1)}><rect x="${240 - 206}" y="${104 - 60 + 24 + 3 * 20 - 15}" width="412" height="21" rx="4" class="s-rose" fill="none" stroke-width="2.5"/></g>
+      <g ${an("rise", 1.3)}>${box(240, 214, 420, 40, "f-mint-soft s-mint")}${mono(52, 219, "step3  Report 1,765 · countries 36 (!) · lines 1,765", "t-mint", 10.5)}</g>
+      ${cap(tr("«done» مش سجل… الرقم هو اللي بيكشف", "“done” isn't a log… the figure exposes"), 1.6, 274)}`;
+    },
+    rv_hand: () => {
+      const a = mx(140), b = mx(360);
+      return `<g ${an("rise", 0.05)}>${box(a, 102, 210, 130, "f-s1 s-acc")}${txt(a, 56, tr("إكسل: فلتر KW", "Excel: filter KW"), "t-acc", 11.5, b8)}${[0, 1, 2, 3].map((k) => `<rect x="${a - 90}" y="${70 + k * 20}" width="180" height="15" rx="3" class="f-acc-soft"/>`).join("")}${txt(a, 160, "SUM(Qty) = 385", "t-mint", 13, b8 + ltr)}</g>
+      <g ${an("rise", 0.5)}>${box(b, 102, 170, 130, "f-rose-soft s-rose")}${txt(b, 56, tr("التقرير", "the report"), "t-rose", 11.5, b8)}${txt(b, 106, "Kuwait  8", "t-rose", 16, b8 + ltr)}${txt(b, 142, tr("= عدد الصفوف", "= the row count"), "t-ink2", 11, b8)}</g>
+      <g ${an("rise", 1.0)}>${box(240, 214, 360, 40, "f-amber-soft s-amber")}${mono(240 - 130, 219, "COUNTIF  ->  SUMIF", "t-amber", 13)}</g>
+      ${cap(tr("فلتر وجمع… يكشفوا كلمة غلط", "a filter and a sum… expose one wrong word"), 1.3, 274)}`;
+    },
+    rv_wrong: () => {
+      const a = mx(126), b = mx(356);
+      return `<g ${an("rise", 0.05)}>${sheet(a, 70, 150, 64, "f-s1 s-amber", "Week_02 (copy)", 0.05)}${txt(a, 124, "Qty → Quantity", "t-amber", 12, b8 + ltr)}</g>
+      <g ${an("rise", 0.5)}>${box(b, 82, 190, 72, "f-rose-soft s-rose")}${txt(b, 76, tr("قبل: كمّلت", "before: carried on"), "t-rose", 11.5, b8)}${txt(b, 96, tr("الإجمالي ٨٤٥ · ولا رسالة", "total 845 · no message"), "t-ink2", 10.5, bold)}</g>
+      ${term(240, 186, 420, 56, ["Week_02.xlsx: no Qty column  ->  STOPPED"], 1.0, 11.5, () => "t-white")}
+      <g ${an("fade", 1.3)}>${txt(240, 236, tr("بعد التصليح: وقفت برسالة فيها الملف والعمود", "after the fix: stopped, naming the file and the column"), "t-mint", 11, b8)}</g>
+      ${cap(tr("غلّط الملف بإيدك… قبل ما يتغلّط لوحده", "break the file yourself… before it breaks on its own"), 1.5, 282)}`;
+    },
+    rv_explain: () => {
+      const a = mx(130), b = mx(354);
+      return `<g ${an("rise", 0.05)}>${box(a, 100, 200, 100, "f-mint-soft s-mint")}${txt(a, 66, tr("الشرح", "the explanation"), "t-mint", 12, b8)}${txt(a, 100, tr("«بيجمع الكمية", "“sums the quantity"), "t-ink", 11.5, b8)}${txt(a, 120, tr("لكل بلد»", "per country”"), "t-ink", 11.5, b8)}</g>
+      ${term(b, 100, 210, 100, ["# countries table", "=COUNTIF(D:D, \"KW\")"], 0.4, 11)}
+      <g ${an("pop", 0.9)}>${txt(240, 104, "≠", "t-rose", 26, b8)}</g>
+      ${pill(240, 206, 340, 36, tr("قال يجمع؟ دوّر على SUM في الجزء ده", "it says sum? look for SUM in that part"), "f-amber-soft s-amber", "t-amber", 11, 1.1)}
+      ${cap(tr("الشرح بيقول يجمع… الكود بيعدّ", "the explanation says sum… the code counts"), 1.4, 262)}`;
+    },
+    rv_second: () => {
+      const a = mx(110), b = mx(300), d = dirx();
+      return `<g ${an("rise", 0.05)}>${box(a, 76, 150, 50, "f-acc-soft s-acc")}${txt(a, 72, "Claude Code", "t-acc", 12, b8 + ltr)}${txt(a, 90, tr("كتب الكود", "wrote the code"), "t-ink3", 10, bold)}</g>
+      <g ${an("rise", 0.3)}>${box(a, 160, 150, 50, "f-mint-soft s-mint")}${txt(a, 156, "Codex", "t-mint", 12, b8 + ltr)}${txt(a, 174, tr("بيراجع · Prompt_4", "reviews · Prompt_4"), "t-ink3", 10, bold)}</g>
+      ${term(b + d * 30, 140, 270, 108, ["1. COUNTIF instead of SUMIF", "2. Masters.xlsx not read-only", "3. step 3 log: no figures"], 0.8, 10.5)}
+      ${pill(240, 236, 360, 34, tr("أداة واحدة؟ جلسة جديدة بنفس القايمة", "one tool? a new session, same list"), "f-s1 s-line2", "t-ink2", 11, 1.5)}
+      ${cap(tr("اللي ما كتبش… بيشوف أحسن", "whoever didn't write it… sees better"), 1.8, 288)}`;
+    },
+    rv_good: () => {
+      const L = ["# ---- settings -------------------", "$Columns = 'Date','LineCode','ModelCode',", "           'CountryCode','Qty'", "# ---- countries table: SUMIF -----", "# ---- log: each table's sum ------"];
+      return `${term(240, 98, 440, 128, L.map(nb), 0.05, 10.5, (i) => (i === 0 || i === 3 || i === 4 ? "t-white" : "t-crt"))}
+      ${flowRow([tr("وظيفة لكل جزء", "a job per part"), tr("تعليقات", "comments"), tr("ثوابت فوق", "constants first"), tr("سجل بالأرقام", "a log of figures")], 206, 104, 10, 0.8, "f-mint-soft s-mint", "t-mint", 10.5, 36)}
+      ${cap(tr("الكود الكويس… هو اللي تقدر تراجعه", "good code… is code you can review"), 1.9, 270)}`;
+    },
+    rv_fix: () => {
+      const a = mx(130), b = mx(352);
+      return `<g ${an("rise", 0.05)}>${box(a, 92, 190, 90, "f-rose-soft s-rose")}${txt(a, 76, tr("تكتب ٣٨٥ بإيدها؟", "type 385 by hand?"), "t-ink2", 11.5, b8)}${txt(a, 98, tr("الأسبوع الجاي: ٨ تاني", "next week: 8 again"), "t-rose", 11, b8)}</g>
+      <g ${an("rise", 0.6)}>${box(b, 92, 190, 90, "f-mint-soft s-mint")}${txt(b, 72, tr("التصليح في الكود", "the fix in the code"), "t-mint", 11.5, b8)}${mono(b - 76, 98, "SUMIF · read-only", "t-mint", 11)}${mono(b - 76, 116, "log: figures", "t-mint", 11)}</g>
+      ${flowRow(["Kuwait 385", "Egypt 880", tr("التصدير ٥٠٪", "export 50%"), "1,765"], 206, 100, 12, 1.0, "f-s1 s-mint", "t-ink", 11, 36)}
+      ${cap(tr("التصليح بالإيد… بيرجع الأسبوع الجاي", "a hand fix… comes back next week"), 1.9, 266)}`;
+    },
+    rv_cliff: () => {
+      const q = mx(396), Q = ar() ? ["أنهي خط عمل أكتر M108؟", "الكويت جالها منين؟", "أسبوع ١ ولا ٢؟", "…"] : ["which line made most M108?", "where did Kuwait's come from?", "week 1 or week 2?", "…"];
+      return `${Q.map((s, i) => `<g ${an("rise", 0.1 + i * 0.25)}>${bubble(mx(170), 56 + i * 52, 260, 40, "f-amber-soft s-amber", !ar())}${txt(mx(170), 61 + i * 52, s, "t-amber", 11, b8)}</g>`).join("")}
+      <g ${an("pop", 1.2)}>${shield(q, 112, 1.1)}${txt(q, 128, ar() ? "؟" : "?", "t-acc", 22, b8)}</g>
+      <g ${an("fade", 1.5)}>${txt(q, 180, tr("الدرس الجاي", "next lesson"), "t-acc", 12.5, b8)}</g>
+      <g ${an("fade", 1.7)}>${txt(240, 280, tr("٣٦ صف… والأسئلة مش هتخلص", "36 rows… and the questions never end"), "t-ink2", 12, b8)}</g>`;
     },
   });
   /* ---------- end of unit 4 ---------- */
