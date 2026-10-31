@@ -59,7 +59,7 @@ jobs:
           node --check academy/src/data/rules-story.js
           node --check academy/src/data/lessons-easy.js
           node --check academy/src/data/easy-projects.js
-          node --check academy/src/data/easy-solutions.js
+          node --check academy/src/data/ready-tools.js
           node --check academy/src/data/office-projects.js
           node --check academy/src/data/lessons-office.js
           node --check academy/src/engine/labs.js
