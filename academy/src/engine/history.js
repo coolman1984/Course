@@ -3321,6 +3321,93 @@
       <g ${an("fade", 1.5)}>${txt(q, 180, tr("الدرس الجاي", "next lesson"), "t-acc", 12.5, b8)}</g>
       <g ${an("fade", 1.7)}>${txt(240, 280, tr("٣٦ صف… والأسئلة مش هتخلص", "36 rows… and the questions never end"), "t-ink2", 12, b8)}</g>`;
     },
+    /* ----- SQL and SQLite (data/sql-story.js) ----- */
+    sq_questions: () => {
+      const X = rowX(3, 120, 14);
+      return `${[0, 1, 2, 3, 4, 5].map((k) => `<g ${an("rise", 0.05 + k * 0.12)}>${sheet(X(k % 3), 74 + Math.floor(k / 3) * 84, 120, 64, "f-s1 s-line2", tr("شيت ", "Sheet ") + digits(k + 1), 0.05 + k * 0.12)}</g>`).join("")}
+      <g ${an("fade", 0.9)}>${txt(240, 210, tr("فلتر M108 · فلتر KW · أسبوع ١ قصاد ٢ · …", "filter M108 · filter KW · week 1 vs 2 · …"), "t-ink3", 11, bold)}</g>
+      ${pill(240, 246, 340, 36, tr("الفلتر ده اتشال ولا لأ؟", "was that filter cleared or not?"), "f-rose-soft s-rose", "t-rose", 12, 1.1)}
+      ${cap(tr("السؤال المكتوب… بيتقري ويتكرر", "a written question… is read and repeated"), 1.4, 292)}`;
+    },
+    sq_sql: () => {
+      const W = [["SELECT", tr("هات", "bring")], ["CountryName, SUM(Qty)", tr("البلد ومجموع الكمية", "country, total qty")], ["FROM Production", tr("من جدول الإنتاج", "from production")], ["GROUP BY CountryName", tr("مجمّعة بالبلد", "grouped by country")]];
+      return `<g ${an("fade", 0.05)}>${txt(240, 38, "Structured Query Language", "t-acc", 13, b8 + ltr)}</g>
+      ${W.map(([s, m], i) => `<g ${an("rise", 0.2 + i * 0.2)}>${box(mx(150), 72 + i * 46, 220, 36, "f-ink2", 0)}${mono(mx(150) - 98, 77 + i * 46, s, "t-crt", 11)}${txt(mx(370), 77 + i * 46, m, "t-ink", 11.5, b8)}</g>${arrow(mx(150) + dirx() * 114, 72 + i * 46, mx(370) - dirx() * 72, 72 + i * 46, 0.3 + i * 0.2, "s-line2")}`).join("")}
+      <g ${an("fade", 1.2)}>${txt(240, 268, tr("IBM · السبعينات · لسه في كل قاعدة بيانات", "IBM · the seventies · still in every database"), "t-ink3", 11, bold)}</g>
+      ${cap(tr("جملة قريبة من الكلام… عاشت خمسين سنة", "a sentence close to speech… has lived fifty years"), 1.4, 298)}`;
+    },
+    sq_sqlite: () => {
+      const a = mx(130), b = mx(356);
+      const cyl = (x, y, cls) => `<ellipse cx="${x}" cy="${y - 34}" rx="44" ry="12" class="${cls}" stroke-width="2.5"/><path d="M${x - 44} ${y - 34} v62 a44 12 0 0 0 88 0 v-62" class="${cls}" stroke-width="2.5"/><path d="M${x - 44} ${y - 12} a44 12 0 0 0 88 0" class="${cls.replace(/f-\S+ ?/, "")}" fill="none" stroke-width="1.8"/>`;
+      return `<g ${an("rise", 0.05)}><rect x="${a - 70}" y="56" width="140" height="110" rx="10" class="f-s2 s-line2" stroke-width="2"/>${cyl(a, 116, "f-s1 s-line2")}${txt(a, 190, tr("خادم · صلاحيات · IT", "a server · access · IT"), "t-ink3", 10.5, bold)}</g>
+      <g ${an("rise", 0.5)}>${fileIcon(b, 110, "s-mint", 0.5)}${txt(b, 152, "Factory.db", "t-mint", 13, b8 + ltr)}${txt(b, 174, tr("ملف واحد · على جهازك", "one file · on your machine"), "t-ink2", 11, b8)}</g>
+      ${flowRow([tr("كل موبايل", "every phone"), tr("كل متصفح", "every browser"), tr("أكتر قاعدة مستخدمة", "the most used")], 232, 130, 14, 0.9, "f-acc-soft s-acc", "t-acc", 10.5, 34)}
+      ${cap(tr("قاعدة بيانات… بتتنسخ زي أي ملف", "a database… copied like any file"), 1.6, 288)}`;
+    },
+    sq_inside: () => {
+      return `<g ${an("rise", 0.05)}>${box(240, 92, 400, 96, "f-acc-soft s-acc")}${txt(240, 64, tr("Python · المكتبة القياسية", "Python · the standard library"), "t-acc", 12, b8)}${["csv", "sqlite3", "zipfile", "re", "html"].map((m, i) => `${box(rowX(5, 70, 8)(i), 104, 70, 32, i === 1 ? "f-mint s-mint" : "f-s1 s-line2")}${txt(rowX(5, 70, 8)(i), 108, m, i === 1 ? "t-white" : "t-ink2", 11, b8 + ltr)}`).join("")}</g>
+      ${term(240, 196, 420, 56, ["> python -c \"import sqlite3; print(sqlite3.sqlite_version)\"", "3.45.3"], 0.6, 10.5)}
+      ${pill(240, 254, 300, 32, tr("مفيش تثبيت · مفيش موافقة جديدة", "no install · no new approval"), "f-mint-soft s-mint", "t-mint", 11.5, 1.3)}
+      ${cap(tr("import sqlite3… وخلاص", "import sqlite3… that's it"), 1.5, 296)}`;
+    },
+    sq_create: () => {
+      const C = [["Date", "TEXT"], ["LineCode", "TEXT"], ["ModelCode", "TEXT"], ["CountryCode", "TEXT"], ["Qty", "INTEGER"], ["SourceFile", "TEXT"], ["CountryName", "TEXT"]];
+      return `<g ${an("fade", 0.05)}>${mono(mx(180) - 110, 42, "CREATE TABLE Production (", "t-acc", 12)}</g>
+      ${C.map(([c, t], i) => `<g ${an("rise", 0.15 + i * 0.1)}>${box(mx(130), 66 + i * 30, 140, 26, "f-s1 s-line2")}${txt(mx(130), 70 + i * 30, c, "t-ink", 11, b8 + ltr)}${box(mx(250), 66 + i * 30, 90, 26, i === 4 ? "f-amber s-amber" : "f-s2 s-line2")}${txt(mx(250), 70 + i * 30, t, i === 4 ? "t-white" : "t-ink3", 10.5, b8 + ltr)}</g>`).join("")}
+      <g ${an("rise", 1.0)}>${box(mx(394), 156, 140, 92, "f-amber-soft s-amber")}${txt(mx(394), 136, tr("رقم كنص؟", "a number as text?"), "t-amber", 11.5, b8)}${txt(mx(394), 160, tr("٩ قبل ١٠٠", "9 before 100"), "t-rose", 12, b8)}${txt(mx(394), 182, tr("ترتيب غلط", "wrong order"), "t-ink2", 10.5, bold)}</g>
+      ${cap(tr("CREATE TABLE… دليل البيانات للقاعدة", "CREATE TABLE… the data dictionary for the database"), 1.3, 290)}`;
+    },
+    sq_insert: () => {
+      const a = mx(130), b = mx(356);
+      return `${term(240, 54, 440, 40, ["INSERT INTO Production VALUES (?, ?, ?, ?, ?, ?, ?)"], 0.05, 11)}
+      <g ${an("rise", 0.6)}>${box(a, 150, 190, 104, "f-mint-soft s-mint")}${txt(a, 116, "?", "t-mint", 22, b8 + ltr)}${txt(a, 146, tr("القيمة تفضل قيمة", "a value stays a value"), "t-mint", 11.5, b8)}${txt(a, 168, "O'Brien  ✓", "t-ink2", 11, b8 + ltr)}</g>
+      <g ${an("rise", 0.9)}>${box(b, 150, 190, 104, "f-rose-soft s-rose")}${txt(b, 116, tr("لزق القيم", "gluing values"), "t-rose", 12, b8)}${mono(b - 84, 148, "... VALUES ('O'Brien')", "t-rose", 10.5)}${txt(b, 172, tr("الجملة اتكسرت", "the sentence broke"), "t-ink2", 11, b8)}</g>
+      ${cap(tr("القيمة تفضل قيمة… مش أمر", "a value stays a value… never a command"), 1.3, 268)}`;
+    },
+    sq_check: () => {
+      const a = mx(130), b = mx(356);
+      return `<g ${an("rise", 0.05)}>${fileIcon(a, 72, "s-amber", 0.05)}${txt(a, 110, "Two_Weeks.csv", "t-amber", 11, b8 + ltr)}${txt(a, 132, tr("٣٦ صف · ١٬٧٦٥", "36 rows · 1,765"), "t-ink", 12, b8)}</g>
+      <g ${an("rise", 0.3)}>${fileIcon(b, 72, "s-mint", 0.3)}${txt(b, 110, "Factory.db", "t-mint", 11, b8 + ltr)}${txt(b, 132, tr("٣٦ صف · ١٬٧٦٥", "36 rows · 1,765"), "t-ink", 12, b8)}</g>
+      <g ${an("pop", 0.7)}>${txt(240, 104, "=", "t-mint", 26, b8)}</g>
+      ${term(240, 196, 420, 60, ["SELECT COUNT(*), SUM(Qty) FROM Production", "36 | 1765"], 0.9, 11)}
+      ${cap(tr("اسأل القاعدة… مش الكود", "ask the database… not the code"), 1.5, 268)}`;
+    },
+    sq_select: () => {
+      const R = [["Egypt", 880], ["Kuwait", 385], ["United Arab Emirates", 245], ["Jordan", 135], ["Saudi Arabia", 120]];
+      return `${term(240, 52, 440, 40, ["SELECT CountryName, SUM(Qty) ... GROUP BY CountryName"], 0.05, 10.5)}
+      ${R.map(([c, v], i) => `<g ${an("fade", 0.4 + i * 0.12)}>${txt(mx(118), 104 + i * 32, c, "t-ink", 11, b8 + ltr)}</g>${grow(196, 92 + i * 32, v * 0.24, 18, i ? "f-acc-soft" : "f-acc", 0.4 + i * 0.12)}<g ${an("fade", 0.6 + i * 0.12)}>${txt(mx(196 + v * 0.24 + 22), 106 + i * 32, digits(v), "t-ink2", 11, b8)}</g>`).join("")}
+      ${cap(tr("GROUP BY… الجدول المحوري بالكلام", "GROUP BY… the pivot table in words"), 1.3, 280)}`;
+    },
+    sq_where: () => {
+      const R = [["L03", 345], ["L01", 210], ["L02", 45]];
+      return `${term(240, 62, 440, 56, ["SELECT LineCode, SUM(Qty) FROM Production", "WHERE ModelCode = 'M108' GROUP BY LineCode"], 0.05, 10.5, (i) => (i ? "t-white" : "t-crt"))}
+      ${R.map(([c, v], i) => `<g ${an("fade", 0.6 + i * 0.15)}>${txt(mx(110), 140 + i * 40, c, "t-ink", 12, b8 + ltr)}</g>${grow(150, 126 + i * 40, v * 0.62, 22, i ? "f-mint-soft" : "f-mint", 0.6 + i * 0.15)}<g ${an("fade", 0.8 + i * 0.15)}>${txt(mx(150 + v * 0.62 + 22), 142 + i * 40, digits(v), "t-ink2", 11.5, b8)}</g>`).join("")}
+      ${cap(tr("الفلتر جوّه السؤال… بيخلص بخلاصه", "a filter inside the question… ends with it"), 1.4, 280)}`;
+    },
+    sq_join: () => {
+      const a = mx(120), b = mx(360), d = dirx();
+      const tbl = (x, title, H, R, cls, d0) => `<g ${an("rise", d0)}>${box(x, 112, 170, 130, cls)}${txt(x, 62, title, "t-ink", 12, b8 + ltr)}${H.map((h, i) => txt(x - 40 + i * 80, 86, h, "t-acc", 10, b8 + ltr)).join("")}${R.map((r, k) => r.map((v, i) => txt(x - 40 + i * 80, 108 + k * 20, v, "t-ink2", 10.5, bold + ltr)).join("")).join("")}</g>`;
+      return `${tbl(a, "Production", ["Country…", "Qty"], [["EG", "45"], ["KW", "40"], ["KW", "55"]], "f-s1 s-acc", 0.05)}
+      ${tbl(b, "Countries", ["Code", "Name"], [["EG", "Egypt"], ["KW", "Kuwait"], ["AE", "UAE"]], "f-mint-soft s-mint", 0.3)}
+      <path ${an("draw", 0.7, "s-amber")} pathLength="1" d="M${a} 180 C ${a} 214, ${b} 214, ${b} 182" stroke-width="2.5" fill="none" stroke-dasharray="1" marker-end="url(#aih-arrow)"/>
+      ${pill(240, 238, 300, 34, tr("JOIN … ON CountryCode = Code", "JOIN … ON CountryCode = Code"), "f-amber-soft s-amber", "t-amber", 11, 1.0)}
+      ${cap(tr("JOIN… هو VLOOKUP بالكلام", "JOIN… is VLOOKUP in words"), 1.3, 288)}`;
+    },
+    sq_limits: () => {
+      const a = mx(130), b = mx(356);
+      return `<g ${an("rise", 0.05)}>${box(a, 104, 190, 120, "f-mint-soft s-mint")}${txt(a, 62, tr("مناسبة لـ", "suits"), "t-mint", 12, b8)}${[tr("جهاز واحد", "one machine"), tr("جداول بتتسأل كتير", "much-asked tables"), tr("أسئلة بتتكرر", "repeating questions")].map((s, k) => `${check(a - 70, 92 + k * 26, 0.2 + k * 0.1)}${txt(a + 14, 97 + k * 26, s, "t-ink", 11, b8)}`).join("")}</g>
+      <g ${an("rise", 0.5)}>${box(b, 104, 190, 120, "f-rose-soft s-rose")}${txt(b, 62, tr("مش مناسبة لـ", "doesn't suit"), "t-rose", 12, b8)}${[tr("٢٠ حد بيكتبوا معًا", "20 writers at once"), tr("فتح ‎.db في إكسل", "opening .db in Excel"), tr("جدول وسؤال واحد", "one table, one question")].map((s, k) => `${check(b - 70, 92 + k * 26, 0.6 + k * 0.1, false)}${txt(b + 14, 97 + k * 26, s, "t-ink", 11, b8)}`).join("")}</g>
+      ${pill(240, 222, 340, 34, tr("قاعدة على خادم ← مع الـ IT", "a server database → with IT"), "f-s1 s-line2", "t-ink2", 11.5, 1.0)}
+      ${cap(tr("لكل أداة… حجم بتلمع فيه", "every tool… has its size"), 1.3, 270)}`;
+    },
+    sq_cliff: () => {
+      const a = mx(150), q = mx(398);
+      return `<g ${an("rise", 0.05)}>${box(a, 124, 200, 190, "f-s1 s-line2")}<rect x="${a - 100}" y="29" width="200" height="22" rx="10" class="f-rose-soft"/>${txt(a, 45, "Export_Sales_2026-07.pdf", "t-rose", 10, b8 + ltr)}${[0, 1, 2, 3, 4, 5, 6].map((k) => `<rect x="${a - 80}" y="${64 + k * 18}" width="160" height="9" rx="4" class="f-s3"/>`).join("")}<rect x="${a - 80}" y="196" width="160" height="10" rx="4" class="f-ink3"/>${txt(a, 192, "Total", "t-ink", 10, b8 + ltr)}</g>
+      <g ${an("rise", 0.6)}>${person(q, 76, 0.9, "f-ink2")}${txt(q, 102, tr("زميل بيكتب بإيده", "a colleague retyping"), "t-ink2", 10.5, b8)}${txt(q, 120, tr("غلطتين الشهر اللي فات", "2 errors last month"), "t-rose", 10.5, b8)}</g>
+      <g ${an("pop", 1.1)}>${shield(q, 186, 1)}${txt(q, 196, ar() ? "؟" : "?", "t-acc", 20, b8)}</g>
+      <g ${an("fade", 1.4)}>${txt(q, 246, tr("الدرس الجاي", "next lesson"), "t-acc", 12.5, b8)}</g>
+      <g ${an("fade", 1.6)}>${txt(a, 244, tr("١٢ صف… محبوسين في ملف للقراية", "12 rows… locked in a file for reading"), "t-ink2", 11, b8)}</g>`;
+    },
   });
   /* ---------- end of unit 4 ---------- */
 
