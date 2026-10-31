@@ -100,7 +100,8 @@
 ## How to build
 5. One step at a time. Each step is one small script with one job: it reads, works, checks itself and writes.
    Show me the plan for the step and wait for my approval; then build it, run it, and show me the log.
-6. Read from Data\\ only, write to Output\\ only. Never change a file in Data\\.
+6. Read the source files from Data\\ and earlier steps' results from Output\\; write only to Output\\.
+   Never change a file in Data\\.
 7. Every script adds its lines to Output\\Run_Log.txt: what it read, how many rows, every check and its result.
 8. Stop with a clear message when anything is unexpected: a missing file, a missing column, totals that don't match.
    Never carry on silently.

@@ -708,6 +708,11 @@ test("the unit-4 projects: clean files, a correct reading finds every figure the
     assert.ok(/pip install/.test(E.rules) && /standard library/.test(E.rules) && /No internet/.test(E.rules) && /PowerShell first/.test(E.rules));
     assert.ok(/^---\nname: trusted-tool\ndescription: /.test(K[".claude/skills/trusted-tool/SKILL.md"]), "SKILL.md starts with name and description");
     assert.equal(P3.expected().rules, 13); }
+  // later steps read earlier steps' results (k6a: Output/Two_Weeks.csv, k8a: Output/Exports.db), so the rules must allow
+  // reading Output while still forbidding any write to Data (Codex review on PR 42)
+  assert.ok(/results from Output/.test(E.rules) && /Never change a file in Data/.test(E.rules), "the kit's rules let a step read Output, never write Data");
+  const R4 = A.prompts.find((p) => p.id === "k6a").text;
+  assert.ok(/results from Output/.test(R4.en) && /never write to Data/.test(R4.en) && /من Output/.test(R4.ar), "the shared unit-4 Prompt tail lets a step read Output");
 });
 
 test("the unit-4 reference solutions are pure Python and, run on the example files, write the figures of the answer key", () => {
